@@ -243,6 +243,85 @@ create table app.match_change_impacts (
   check ((state = 'resolved') = (handled_by_auth_user_id is not null and handled_at is not null))
 );
 
+create table app.shift_publication_batches (
+  id uuid primary key default gen_random_uuid(),
+  tenant_id uuid not null,
+  published_by_auth_user_id uuid not null,
+  booking_opens_at timestamptz not null,
+  shift_count integer not null check (shift_count > 0),
+  idempotency_key uuid not null,
+  published_at timestamptz not null default statement_timestamp(),
+  created_at timestamptz not null default statement_timestamp(),
+  version bigint not null default 1 check (version > 0),
+  unique (tenant_id, id),
+  unique (tenant_id, published_by_auth_user_id, idempotency_key),
+  foreign key (tenant_id) references app.tenants(id) on delete restrict,
+  foreign key (published_by_auth_user_id) references auth.users(id) on delete restrict
+);
+
+create table app.shift_publication_batch_items (
+  id uuid primary key default gen_random_uuid(),
+  tenant_id uuid not null,
+  batch_id uuid not null,
+  shift_id uuid not null,
+  expected_shift_version bigint not null check (expected_shift_version > 0),
+  published_shift_version bigint not null check (published_shift_version > expected_shift_version),
+  publication_event_id uuid not null,
+  published_snapshot jsonb not null check (jsonb_typeof(published_snapshot) = 'object'),
+  offer_intent_count integer not null default 0 check (offer_intent_count >= 0),
+  created_at timestamptz not null default statement_timestamp(),
+  unique (tenant_id, id),
+  unique (tenant_id, batch_id, shift_id),
+  unique (tenant_id, shift_id),
+  foreign key (tenant_id, batch_id)
+    references app.shift_publication_batches(tenant_id, id) on delete restrict,
+  foreign key (tenant_id, shift_id) references app.shifts(tenant_id, id) on delete restrict,
+  foreign key (tenant_id, publication_event_id)
+    references app.domain_events(tenant_id, id) on delete restrict
+);
+
+create table app.shift_change_proposals (
+  id uuid primary key default gen_random_uuid(),
+  tenant_id uuid not null,
+  shift_id uuid not null,
+  expected_shift_version bigint not null check (expected_shift_version > 0),
+  proposed_title text not null check (nullif(btrim(proposed_title), '') is not null),
+  proposed_starts_at timestamptz not null,
+  proposed_ends_at timestamptz not null,
+  proposed_location_id uuid,
+  material_change boolean not null,
+  impact_snapshot jsonb not null check (jsonb_typeof(impact_snapshot) = 'object'),
+  impact_hash bytea not null check (octet_length(impact_hash) = 32),
+  state text not null default 'previewed' check (state in ('previewed', 'applied')),
+  proposed_by_auth_user_id uuid not null,
+  applied_by_auth_user_id uuid,
+  applied_at timestamptz,
+  applied_shift_version bigint check (applied_shift_version is null or applied_shift_version > 0),
+  applied_event_id uuid,
+  idempotency_key uuid not null,
+  created_at timestamptz not null default statement_timestamp(),
+  updated_at timestamptz not null default statement_timestamp(),
+  version bigint not null default 1 check (version > 0),
+  unique (tenant_id, id),
+  unique (tenant_id, proposed_by_auth_user_id, idempotency_key),
+  foreign key (tenant_id, shift_id) references app.shifts(tenant_id, id) on delete restrict,
+  foreign key (tenant_id, proposed_location_id) references app.locations(tenant_id, id) on delete restrict,
+  foreign key (tenant_id, applied_event_id) references app.domain_events(tenant_id, id) on delete restrict,
+  foreign key (proposed_by_auth_user_id) references auth.users(id) on delete restrict,
+  foreign key (applied_by_auth_user_id) references auth.users(id) on delete restrict,
+  check (proposed_ends_at > proposed_starts_at),
+  check (
+    (state = 'previewed' and applied_by_auth_user_id is null and applied_at is null
+      and applied_shift_version is null and applied_event_id is null)
+    or
+    (state = 'applied' and applied_by_auth_user_id is not null and applied_at is not null
+      and applied_shift_version is not null and applied_event_id is not null)
+  )
+);
+
+create index shift_change_proposals_shift_state_idx
+  on app.shift_change_proposals (tenant_id, shift_id, state, created_at);
+
 create table app.scheduled_occurrences (
   id uuid primary key default gen_random_uuid(),
   tenant_id uuid not null,
@@ -1795,6 +1874,12 @@ for each row execute function internal.reject_immutable_change();
 create trigger match_revisions_immutable
 before update or delete on app.match_revisions
 for each row execute function internal.reject_immutable_change();
+create trigger shift_publication_batches_immutable
+before update or delete on app.shift_publication_batches
+for each row execute function internal.reject_immutable_change();
+create trigger shift_publication_batch_items_immutable
+before update or delete on app.shift_publication_batch_items
+for each row execute function internal.reject_immutable_change();
 create trigger kanban_card_history_immutable
 before update or delete on app.kanban_card_history
 for each row execute function internal.reject_immutable_change();
@@ -1820,6 +1905,7 @@ begin
     'committee_documents', 'committee_document_versions', 'committee_document_acl',
     'integration_connections', 'integration_runs', 'matches', 'match_revisions',
     'match_shift_links', 'match_change_impacts', 'scheduled_occurrences',
+    'shift_publication_batches', 'shift_publication_batch_items', 'shift_change_proposals',
     'events', 'event_occurrences', 'event_attendees',
     'kanban_boards', 'kanban_columns', 'kanban_cards', 'kanban_card_assignees',
     'kanban_card_subtasks', 'kanban_subtask_assignees', 'kanban_card_history',
@@ -1861,6 +1947,7 @@ create policy command_owner_insert on app.shifts
   for insert to cluvo_command_owner with check (true);
 create policy command_owner_update on app.shifts
   for update to cluvo_command_owner using (true) with check (true);
+grant update on app.shift_positions to cluvo_command_owner;
 
 create policy own_team_memberships on app.team_person_memberships
   for select to authenticated
@@ -1965,6 +2052,49 @@ create policy visible_match_change_impacts on app.match_change_impacts
 create policy import_managers_scheduled_occurrences on app.scheduled_occurrences
   for select to authenticated
   using ((select internal.has_permission(tenant_id, 'match.import', 'tenant', tenant_id)));
+
+create policy shift_managers_publication_batches on app.shift_publication_batches
+  for select to authenticated
+  using (
+    exists (
+      select 1
+      from app.shift_publication_batch_items as item
+      join app.shifts as shift_row
+        on shift_row.tenant_id = item.tenant_id
+       and shift_row.id = item.shift_id
+      where item.tenant_id = shift_publication_batches.tenant_id
+        and item.batch_id = shift_publication_batches.id
+        and internal.has_permission(
+          shift_row.tenant_id, 'shift.manage', 'committee', shift_row.committee_id
+        )
+    )
+  );
+create policy shift_managers_publication_batch_items on app.shift_publication_batch_items
+  for select to authenticated
+  using (
+    exists (
+      select 1
+      from app.shifts as shift_row
+      where shift_row.tenant_id = shift_publication_batch_items.tenant_id
+        and shift_row.id = shift_publication_batch_items.shift_id
+        and internal.has_permission(
+          shift_row.tenant_id, 'shift.manage', 'committee', shift_row.committee_id
+        )
+    )
+  );
+create policy shift_managers_change_proposals on app.shift_change_proposals
+  for select to authenticated
+  using (
+    exists (
+      select 1
+      from app.shifts as shift_row
+      where shift_row.tenant_id = shift_change_proposals.tenant_id
+        and shift_row.id = shift_change_proposals.shift_id
+        and internal.has_permission(
+          shift_row.tenant_id, 'shift.manage', 'committee', shift_row.committee_id
+        )
+    )
+  );
 
 create policy visible_events on app.events
   for select to authenticated
@@ -2318,6 +2448,7 @@ grant select on
   app.committee_documents, app.committee_document_versions, app.committee_document_acl,
   app.integration_connections, app.integration_runs, app.matches, app.match_revisions,
   app.match_shift_links, app.match_change_impacts, app.scheduled_occurrences,
+  app.shift_publication_batches, app.shift_publication_batch_items, app.shift_change_proposals,
   app.events, app.event_occurrences, app.event_attendees,
   app.kanban_boards, app.kanban_columns, app.kanban_cards, app.kanban_card_assignees,
   app.kanban_card_subtasks, app.kanban_subtask_assignees, app.kanban_card_history,
@@ -2517,6 +2648,1028 @@ revoke execute on function internal.claim_idempotency(uuid, text, uuid, bytea)
   from public, anon, authenticated, service_role;
 revoke execute on function internal.finish_idempotency(uuid, text, uuid, jsonb)
   from public, anon, authenticated, service_role;
+
+create or replace function internal.shift_change_impact_snapshot(
+  p_tenant_id uuid,
+  p_shift_id uuid,
+  p_expected_shift_version bigint,
+  p_proposed_title text,
+  p_proposed_starts_at timestamptz,
+  p_proposed_ends_at timestamptz,
+  p_proposed_location_id uuid
+)
+returns jsonb
+language sql
+stable
+security definer
+set search_path = ''
+as $function$
+  with shift_row as (
+    select shift_value.*,
+      (
+        shift_value.starts_at is distinct from p_proposed_starts_at
+        or shift_value.ends_at is distinct from p_proposed_ends_at
+        or shift_value.location_id is distinct from p_proposed_location_id
+      ) as material_change
+    from app.shifts as shift_value
+    where shift_value.tenant_id = p_tenant_id
+      and shift_value.id = p_shift_id
+  ),
+  affected_booking as (
+    select booking.tenant_id,
+           booking.id as booking_id,
+           booking.executor_person_id,
+           booking.obligation_id,
+           booking.state
+    from app.shift_positions as position
+    join app.bookings as booking
+      on booking.tenant_id = position.tenant_id
+     and booking.position_id = position.id
+     and booking.state in ('booked', 'reconfirmation_required', 'transfer_pending')
+    where position.tenant_id = p_tenant_id
+      and position.shift_id = p_shift_id
+  ),
+  booking_blocker as (
+    select affected_booking.booking_id,
+           affected_booking.executor_person_id,
+           'transfer_pending'::text as blocker_kind
+    from affected_booking
+    cross join shift_row
+    where shift_row.material_change
+      and affected_booking.state = 'transfer_pending'
+  ),
+  booking_conflict as (
+    select affected_booking.booking_id,
+           affected_booking.executor_person_id,
+           other_booking.id as conflicting_booking_id
+    from affected_booking
+    join app.bookings as other_booking
+      on other_booking.tenant_id = affected_booking.tenant_id
+     and other_booking.executor_person_id = affected_booking.executor_person_id
+     and other_booking.id <> affected_booking.booking_id
+     and other_booking.state in (
+       'booked', 'reconfirmation_required', 'transfer_pending', 'performed_pending'
+     )
+    join app.shift_positions as other_position
+      on other_position.tenant_id = other_booking.tenant_id
+     and other_position.id = other_booking.position_id
+     and other_position.shift_id <> p_shift_id
+    where tstzrange(
+      coalesce(other_booking.pending_starts_at, other_booking.starts_at_snapshot),
+      coalesce(other_booking.pending_ends_at, other_booking.ends_at_snapshot),
+      '[)'
+    ) && tstzrange(p_proposed_starts_at, p_proposed_ends_at, '[)')
+  ),
+  eligibility_blocker as (
+    select affected_booking.booking_id,
+           affected_booking.executor_person_id,
+           'unavailability'::text as blocker_kind,
+           unavailable.id as reference_id
+    from affected_booking
+    cross join shift_row
+    join app.unavailability_periods as unavailable
+      on unavailable.tenant_id = affected_booking.tenant_id
+     and unavailable.person_id = affected_booking.executor_person_id
+     and tstzrange(unavailable.starts_at, unavailable.ends_at, '[)')
+       && tstzrange(p_proposed_starts_at, p_proposed_ends_at, '[)')
+    where shift_row.material_change
+
+    union all
+
+    select affected_booking.booking_id,
+           affected_booking.executor_person_id,
+           'minimum_age'::text as blocker_kind,
+           null::uuid as reference_id
+    from affected_booking
+    cross join shift_row
+    join app.persons as person
+      on person.tenant_id = affected_booking.tenant_id
+     and person.id = affected_booking.executor_person_id
+    join app.tenants as tenant
+      on tenant.id = affected_booking.tenant_id
+    join app.shift_requirements as requirement
+      on requirement.tenant_id = shift_row.tenant_id
+     and requirement.shift_id = shift_row.id
+     and requirement.minimum_age is not null
+    where shift_row.material_change
+      and (
+        person.birth_date is null
+        or person.birth_date_precision <> 'day'
+        or person.birth_date + make_interval(years => requirement.minimum_age)
+          > (p_proposed_starts_at at time zone tenant.timezone)::date
+      )
+
+    union all
+
+    select affected_booking.booking_id,
+           affected_booking.executor_person_id,
+           'qualification'::text as blocker_kind,
+           requirement.qualification_type_id as reference_id
+    from affected_booking
+    cross join shift_row
+    join app.shift_requirements as requirement
+      on requirement.tenant_id = shift_row.tenant_id
+     and requirement.shift_id = shift_row.id
+     and requirement.qualification_type_id is not null
+    where shift_row.material_change
+      and not exists (
+        select 1
+        from app.person_qualifications as qualification
+        where qualification.tenant_id = affected_booking.tenant_id
+          and qualification.person_id = affected_booking.executor_person_id
+          and qualification.qualification_type_id = requirement.qualification_type_id
+          and qualification.achieved_at <= p_proposed_starts_at
+          and (
+            qualification.expires_at is null
+            or qualification.expires_at >= p_proposed_ends_at
+          )
+          and qualification.revoked_at is null
+      )
+
+    union all
+
+    select affected_booking.booking_id,
+           affected_booking.executor_person_id,
+           'executor_obligation_grant'::text as blocker_kind,
+           affected_booking.obligation_id as reference_id
+    from affected_booking
+    cross join shift_row
+    where shift_row.material_change
+      and not exists (
+        select 1
+        from app.executor_obligation_grants as executor_grant
+        where executor_grant.tenant_id = affected_booking.tenant_id
+          and executor_grant.person_id = affected_booking.executor_person_id
+          and executor_grant.obligation_id = affected_booking.obligation_id
+          and executor_grant.valid_from <= p_proposed_starts_at
+          and (
+            executor_grant.valid_until is null
+            or executor_grant.valid_until >= p_proposed_ends_at
+          )
+          and executor_grant.revoked_at is null
+      )
+  )
+  select jsonb_build_object(
+    'shift_id', shift_row.id,
+    'expected_shift_version', p_expected_shift_version,
+    'material_change', shift_row.material_change,
+    'requires_reconfirmation',
+      shift_row.material_change and exists (select 1 from affected_booking),
+    'has_booking_blockers', exists (select 1 from booking_blocker),
+    'has_booking_conflicts', exists (select 1 from booking_conflict),
+    'has_eligibility_blockers', exists (select 1 from eligibility_blocker),
+    'old', jsonb_build_object(
+      'title', shift_row.title,
+      'starts_at', shift_row.starts_at,
+      'ends_at', shift_row.ends_at,
+      'location_id', shift_row.location_id
+    ),
+    'proposed', jsonb_build_object(
+      'title', p_proposed_title,
+      'starts_at', p_proposed_starts_at,
+      'ends_at', p_proposed_ends_at,
+      'location_id', p_proposed_location_id
+    ),
+    'affected_bookings', coalesce(
+      (
+        select jsonb_agg(
+          jsonb_build_object(
+            'booking_id', affected_booking.booking_id,
+            'executor_person_id', affected_booking.executor_person_id,
+            'obligation_id', affected_booking.obligation_id,
+            'state', affected_booking.state
+          ) order by affected_booking.booking_id
+        )
+        from affected_booking
+      ),
+      '[]'::jsonb
+    ),
+    'booking_blockers', coalesce(
+      (
+        select jsonb_agg(
+          jsonb_build_object(
+            'booking_id', booking_blocker.booking_id,
+            'executor_person_id', booking_blocker.executor_person_id,
+            'blocker_kind', booking_blocker.blocker_kind
+          ) order by booking_blocker.booking_id, booking_blocker.blocker_kind
+        )
+        from booking_blocker
+      ),
+      '[]'::jsonb
+    ),
+    'booking_conflicts', coalesce(
+      (
+        select jsonb_agg(
+          jsonb_build_object(
+            'booking_id', booking_conflict.booking_id,
+            'executor_person_id', booking_conflict.executor_person_id,
+            'conflicting_booking_id', booking_conflict.conflicting_booking_id
+          ) order by booking_conflict.booking_id, booking_conflict.conflicting_booking_id
+        )
+        from booking_conflict
+      ),
+      '[]'::jsonb
+    ),
+    'eligibility_blockers', coalesce(
+      (
+        select jsonb_agg(
+          jsonb_build_object(
+            'booking_id', eligibility_blocker.booking_id,
+            'executor_person_id', eligibility_blocker.executor_person_id,
+            'blocker_kind', eligibility_blocker.blocker_kind,
+            'reference_id', eligibility_blocker.reference_id
+          ) order by eligibility_blocker.booking_id,
+                     eligibility_blocker.blocker_kind,
+                     eligibility_blocker.reference_id nulls first
+        )
+        from eligibility_blocker
+      ),
+      '[]'::jsonb
+    )
+  )
+  from shift_row;
+$function$;
+
+alter function internal.shift_change_impact_snapshot(
+  uuid, uuid, bigint, text, timestamptz, timestamptz, uuid
+) owner to cluvo_command_owner;
+revoke execute on function internal.shift_change_impact_snapshot(
+  uuid, uuid, bigint, text, timestamptz, timestamptz, uuid
+) from public, anon, authenticated, service_role;
+grant execute on function internal.shift_change_impact_snapshot(
+  uuid, uuid, bigint, text, timestamptz, timestamptz, uuid
+) to cluvo_command_owner;
+
+create or replace function internal.publish_shift_batch(
+  p_tenant_id uuid,
+  p_shift_ids uuid[],
+  p_expected_versions bigint[],
+  p_booking_opens_at timestamptz,
+  p_idempotency_key uuid
+)
+returns jsonb
+language plpgsql
+security definer
+set search_path = ''
+as $function$
+declare
+  v_actor uuid := (select internal.current_actor_uid());
+  v_request record;
+  v_shift app.shifts%rowtype;
+  v_recipient record;
+  v_batch_id uuid := gen_random_uuid();
+  v_event_id uuid;
+  v_intent_id uuid;
+  v_offer_category_id uuid;
+  v_offer_count integer;
+  v_total_offer_count integer := 0;
+  v_event_ids uuid[] := array[]::uuid[];
+  v_request_hash bytea;
+  v_previous jsonb;
+  v_result jsonb;
+begin
+  if v_actor is null or not internal.is_active_member(p_tenant_id) then
+    raise exception using errcode = '42501', message = 'FORBIDDEN';
+  end if;
+  if p_idempotency_key is null
+    or p_shift_ids is null
+    or p_expected_versions is null
+    or p_booking_opens_at is null
+    or cardinality(p_shift_ids) = 0
+    or cardinality(p_shift_ids) > 100
+    or cardinality(p_shift_ids) is distinct from cardinality(p_expected_versions)
+    or exists (select 1 from unnest(p_shift_ids) as item(shift_id) where item.shift_id is null)
+    or exists (select 1 from unnest(p_expected_versions) as item(expected_version) where item.expected_version is null)
+    or (
+      select count(distinct item.shift_id)
+      from unnest(p_shift_ids) as item(shift_id)
+    ) <> cardinality(p_shift_ids) then
+    raise exception using errcode = '22023', message = 'INVALID_COMMAND';
+  end if;
+  v_request_hash := extensions.digest(convert_to(jsonb_build_object(
+    'shift_ids', to_jsonb(p_shift_ids),
+    'expected_versions', to_jsonb(p_expected_versions),
+    'booking_opens_at', p_booking_opens_at
+  )::text, 'UTF8'), 'sha256');
+  v_previous := internal.claim_idempotency(
+    p_tenant_id, 'publish_shift_batch', p_idempotency_key, v_request_hash
+  );
+  if v_previous is not null then
+    return v_previous;
+  end if;
+
+  select category.id into v_offer_category_id
+  from app.notification_categories as category
+  where category.tenant_id = p_tenant_id
+    and category.category_key = 'task.offer';
+  if v_offer_category_id is null then
+    raise exception using errcode = '55000', message = 'TASK_OFFER_CATEGORY_REQUIRED';
+  end if;
+
+  -- Validate and lock the complete request before publishing any member.
+  for v_request in
+    select requested.shift_id, requested.expected_version
+    from unnest(p_shift_ids, p_expected_versions)
+      as requested(shift_id, expected_version)
+    order by requested.shift_id
+  loop
+    select * into v_shift
+    from app.shifts as shift_row
+    where shift_row.tenant_id = p_tenant_id
+      and shift_row.id = v_request.shift_id
+    for update;
+    if not found then
+      raise exception using errcode = 'P0002', message = 'NOT_FOUND';
+    end if;
+    if not internal.has_permission(
+      p_tenant_id, 'shift.manage', 'committee', v_shift.committee_id
+    ) then
+      raise exception using errcode = '42501', message = 'FORBIDDEN';
+    end if;
+    if v_shift.version <> v_request.expected_version then
+      raise exception using errcode = '40001', message = 'STALE_VERSION';
+    end if;
+    if v_shift.state <> 'draft' then
+      raise exception using errcode = '55000', message = 'SHIFT_NOT_DRAFT';
+    end if;
+    if p_booking_opens_at >= v_shift.starts_at then
+      raise exception using errcode = '22023', message = 'INVALID_BOOKING_WINDOW';
+    end if;
+    if not exists (
+      select 1
+      from app.shift_positions as position
+      where position.tenant_id = p_tenant_id
+        and position.shift_id = v_shift.id
+        and position.state = 'open'
+    ) or exists (
+      select 1
+      from app.shift_positions as position
+      where position.tenant_id = p_tenant_id
+        and position.shift_id = v_shift.id
+        and position.state <> 'cancelled'
+        and (
+          position.starts_at is distinct from v_shift.starts_at
+          or position.ends_at is distinct from v_shift.ends_at
+        )
+    ) then
+      raise exception using errcode = '23514', message = 'INVALID_SHIFT_CAPACITY';
+    end if;
+  end loop;
+
+  insert into app.shift_publication_batches (
+    id, tenant_id, published_by_auth_user_id, booking_opens_at,
+    shift_count, idempotency_key
+  ) values (
+    v_batch_id, p_tenant_id, v_actor, p_booking_opens_at,
+    cardinality(p_shift_ids), p_idempotency_key
+  );
+
+  for v_request in
+    select requested.shift_id, requested.expected_version
+    from unnest(p_shift_ids, p_expected_versions)
+      as requested(shift_id, expected_version)
+    order by requested.shift_id
+  loop
+    update app.shifts as shift_row
+    set state = 'published',
+        published_at = statement_timestamp(),
+        booking_opens_at = p_booking_opens_at,
+        updated_at = statement_timestamp(),
+        version = shift_row.version + 1
+    where shift_row.tenant_id = p_tenant_id
+      and shift_row.id = v_request.shift_id
+    returning shift_row.* into strict v_shift;
+
+    v_event_id := gen_random_uuid();
+    insert into app.domain_events (
+      id, tenant_id, aggregate_type, aggregate_id, aggregate_version,
+      event_type, payload_minimal
+    ) values (
+      v_event_id, p_tenant_id, 'shift', v_shift.id, v_shift.version,
+      'task.published', jsonb_build_object('publication_batch_id', v_batch_id)
+    );
+    v_event_ids := array_append(v_event_ids, v_event_id);
+    v_offer_count := 0;
+
+    for v_recipient in
+      select distinct link.person_id
+      from app.account_person_links as link
+      join app.persons as person
+        on person.tenant_id = link.tenant_id
+       and person.id = link.person_id
+       and person.status = 'active'
+      where link.tenant_id = p_tenant_id
+        and link.revoked_at is null
+        and internal.person_has_permission(
+          p_tenant_id, link.person_id, 'shift.view', 'committee', v_shift.committee_id
+        )
+      order by link.person_id
+    loop
+      v_intent_id := gen_random_uuid();
+      insert into app.notification_intents (
+        id, tenant_id, domain_event_id, recipient_person_id, category_id,
+        channels, dedupe_key, safe_title, safe_body, source_path, status
+      ) values (
+        v_intent_id, p_tenant_id, v_event_id, v_recipient.person_id,
+        v_offer_category_id, array['inbox'],
+        format('task-offer:%s:%s', v_shift.id, v_recipient.person_id),
+        'Nieuwe taak beschikbaar', 'Er is een nieuwe clubtaak gepubliceerd.',
+        format('/shifts/%s', v_shift.id), 'queued'
+      );
+      insert into app.task_offer_candidates (
+        tenant_id, intent_id, recipient_person_id, shift_id,
+        publication_event_id, usable_until
+      ) values (
+        p_tenant_id, v_intent_id, v_recipient.person_id, v_shift.id,
+        v_event_id, coalesce(v_shift.booking_closes_at, v_shift.starts_at)
+      );
+      insert into app.notification_outbox (
+        tenant_id, intent_id, recipient_person_id, channel,
+        dedupe_key, body_hash, due_at
+      ) values (
+        p_tenant_id, v_intent_id, v_recipient.person_id, 'inbox',
+        format('inbox:task-offer:%s:%s', v_shift.id, v_recipient.person_id),
+        extensions.digest(
+          convert_to('Nieuwe taak beschikbaar|Er is een nieuwe clubtaak gepubliceerd.', 'UTF8'),
+          'sha256'
+        ),
+        statement_timestamp()
+      );
+      v_offer_count := v_offer_count + 1;
+    end loop;
+
+    insert into app.shift_publication_batch_items (
+      tenant_id, batch_id, shift_id, expected_shift_version,
+      published_shift_version, publication_event_id, published_snapshot,
+      offer_intent_count
+    ) values (
+      p_tenant_id, v_batch_id, v_shift.id, v_request.expected_version,
+      v_shift.version, v_event_id,
+      jsonb_build_object(
+        'title', v_shift.title,
+        'starts_at', v_shift.starts_at,
+        'ends_at', v_shift.ends_at,
+        'location_id', v_shift.location_id,
+        'credit_minutes', v_shift.credit_minutes,
+        'capacity', (
+          select count(*)
+          from app.shift_positions as position
+          where position.tenant_id = p_tenant_id
+            and position.shift_id = v_shift.id
+            and position.state <> 'cancelled'
+        )
+      ),
+      v_offer_count
+    );
+    v_total_offer_count := v_total_offer_count + v_offer_count;
+  end loop;
+
+  insert into app.audit_events (
+    tenant_id, actor_auth_user_id, action, resource_type, resource_id,
+    idempotency_key, payload_minimal
+  ) values (
+    p_tenant_id, v_actor, 'shift.batch.published', 'shift_publication_batch', v_batch_id,
+    p_idempotency_key,
+    jsonb_build_object(
+      'shift_count', cardinality(p_shift_ids),
+      'offer_intent_count', v_total_offer_count
+    )
+  );
+
+  v_result := jsonb_build_object(
+    'ok', true,
+    'resource_id', v_batch_id,
+    'version', 1,
+    'published_shift_ids', to_jsonb(p_shift_ids),
+    'offer_intent_count', v_total_offer_count,
+    'event_ids', to_jsonb(v_event_ids)
+  );
+  perform internal.finish_idempotency(
+    p_tenant_id, 'publish_shift_batch', p_idempotency_key, v_result
+  );
+  return v_result;
+end;
+$function$;
+
+create or replace function api.publish_shift_batch(
+  p_tenant_id uuid,
+  p_shift_ids uuid[],
+  p_expected_versions bigint[],
+  p_booking_opens_at timestamptz,
+  p_idempotency_key uuid
+)
+returns jsonb
+language sql
+security invoker
+set search_path = ''
+as $function$
+  select internal.publish_shift_batch(
+    p_tenant_id, p_shift_ids, p_expected_versions,
+    p_booking_opens_at, p_idempotency_key
+  );
+$function$;
+
+alter function internal.publish_shift_batch(uuid, uuid[], bigint[], timestamptz, uuid)
+  owner to cluvo_command_owner;
+revoke execute on function internal.publish_shift_batch(uuid, uuid[], bigint[], timestamptz, uuid)
+  from public, anon, service_role;
+grant execute on function internal.publish_shift_batch(uuid, uuid[], bigint[], timestamptz, uuid)
+  to authenticated;
+revoke execute on function api.publish_shift_batch(uuid, uuid[], bigint[], timestamptz, uuid)
+  from public, anon, service_role;
+grant execute on function api.publish_shift_batch(uuid, uuid[], bigint[], timestamptz, uuid)
+  to authenticated;
+
+create or replace function internal.preview_shift_change(
+  p_tenant_id uuid,
+  p_shift_id uuid,
+  p_expected_shift_version bigint,
+  p_proposed_title text,
+  p_proposed_starts_at timestamptz,
+  p_proposed_ends_at timestamptz,
+  p_proposed_location_id uuid,
+  p_idempotency_key uuid
+)
+returns jsonb
+language plpgsql
+security definer
+set search_path = ''
+as $function$
+declare
+  v_actor uuid := (select internal.current_actor_uid());
+  v_shift app.shifts%rowtype;
+  v_proposal_id uuid := gen_random_uuid();
+  v_impact jsonb;
+  v_impact_hash bytea;
+  v_request_hash bytea;
+  v_previous jsonb;
+  v_result jsonb;
+begin
+  if v_actor is null or not internal.is_active_member(p_tenant_id) then
+    raise exception using errcode = '42501', message = 'FORBIDDEN';
+  end if;
+  if p_idempotency_key is null
+    or p_expected_shift_version is null
+    or nullif(btrim(p_proposed_title), '') is null
+    or char_length(p_proposed_title) > 200
+    or p_proposed_starts_at is null
+    or p_proposed_ends_at is null
+    or p_proposed_ends_at <= p_proposed_starts_at then
+    raise exception using errcode = '22023', message = 'INVALID_COMMAND';
+  end if;
+  v_request_hash := extensions.digest(convert_to(jsonb_build_object(
+    'shift_id', p_shift_id,
+    'expected_shift_version', p_expected_shift_version,
+    'proposed_title', p_proposed_title,
+    'proposed_starts_at', p_proposed_starts_at,
+    'proposed_ends_at', p_proposed_ends_at,
+    'proposed_location_id', p_proposed_location_id
+  )::text, 'UTF8'), 'sha256');
+  v_previous := internal.claim_idempotency(
+    p_tenant_id, 'preview_shift_change', p_idempotency_key, v_request_hash
+  );
+  if v_previous is not null then
+    return v_previous;
+  end if;
+  if p_proposed_starts_at <= statement_timestamp() then
+    raise exception using
+      errcode = '55000',
+      message = 'PROPOSED_SHIFT_ALREADY_STARTED';
+  end if;
+
+  select * into v_shift
+  from app.shifts as shift_row
+  where shift_row.tenant_id = p_tenant_id
+    and shift_row.id = p_shift_id
+  for update;
+  if not found or not internal.has_permission(
+    p_tenant_id, 'shift.manage', 'committee', v_shift.committee_id
+  ) then
+    raise exception using errcode = '42501', message = 'FORBIDDEN';
+  end if;
+  if v_shift.version <> p_expected_shift_version then
+    raise exception using errcode = '40001', message = 'STALE_VERSION';
+  end if;
+  if v_shift.state <> 'published' then
+    raise exception using errcode = '55000', message = 'SHIFT_NOT_PUBLISHED';
+  end if;
+  if statement_timestamp() >= v_shift.starts_at then
+    raise exception using errcode = '55000', message = 'SHIFT_ALREADY_STARTED';
+  end if;
+  if p_proposed_location_id is not null and not exists (
+    select 1
+    from app.locations as location
+    where location.tenant_id = p_tenant_id
+      and location.id = p_proposed_location_id
+      and location.active
+  ) then
+    raise exception using errcode = '22023', message = 'INVALID_LOCATION';
+  end if;
+
+  v_impact := internal.shift_change_impact_snapshot(
+    p_tenant_id, p_shift_id, p_expected_shift_version,
+    p_proposed_title, p_proposed_starts_at, p_proposed_ends_at,
+    p_proposed_location_id
+  );
+  v_impact_hash := extensions.digest(convert_to(v_impact::text, 'UTF8'), 'sha256');
+
+  insert into app.shift_change_proposals (
+    id, tenant_id, shift_id, expected_shift_version,
+    proposed_title, proposed_starts_at, proposed_ends_at, proposed_location_id,
+    material_change, impact_snapshot, impact_hash,
+    proposed_by_auth_user_id, idempotency_key
+  ) values (
+    v_proposal_id, p_tenant_id, p_shift_id, p_expected_shift_version,
+    p_proposed_title, p_proposed_starts_at, p_proposed_ends_at, p_proposed_location_id,
+    (v_impact ->> 'material_change')::boolean, v_impact, v_impact_hash,
+    v_actor, p_idempotency_key
+  );
+
+  insert into app.audit_events (
+    tenant_id, actor_auth_user_id, action, resource_type, resource_id,
+    scope_kind, scope_id, idempotency_key, payload_minimal
+  ) values (
+    p_tenant_id, v_actor, 'shift.change.previewed', 'shift_change_proposal', v_proposal_id,
+    'committee', v_shift.committee_id, p_idempotency_key,
+    jsonb_build_object(
+      'shift_id', p_shift_id,
+      'material_change', (v_impact ->> 'material_change')::boolean,
+      'affected_booking_count', jsonb_array_length(v_impact -> 'affected_bookings')
+    )
+  );
+
+  v_result := jsonb_build_object(
+    'ok', true,
+    'resource_id', v_proposal_id,
+    'version', 1,
+    'impact_hash', encode(v_impact_hash, 'hex'),
+    'impact', v_impact,
+    'event_ids', '[]'::jsonb
+  );
+  perform internal.finish_idempotency(
+    p_tenant_id, 'preview_shift_change', p_idempotency_key, v_result
+  );
+  return v_result;
+end;
+$function$;
+
+create or replace function api.preview_shift_change(
+  p_tenant_id uuid,
+  p_shift_id uuid,
+  p_expected_shift_version bigint,
+  p_proposed_title text,
+  p_proposed_starts_at timestamptz,
+  p_proposed_ends_at timestamptz,
+  p_proposed_location_id uuid,
+  p_idempotency_key uuid
+)
+returns jsonb
+language sql
+security invoker
+set search_path = ''
+as $function$
+  select internal.preview_shift_change(
+    p_tenant_id, p_shift_id, p_expected_shift_version,
+    p_proposed_title, p_proposed_starts_at, p_proposed_ends_at,
+    p_proposed_location_id, p_idempotency_key
+  );
+$function$;
+
+alter function internal.preview_shift_change(
+  uuid, uuid, bigint, text, timestamptz, timestamptz, uuid, uuid
+) owner to cluvo_command_owner;
+revoke execute on function internal.preview_shift_change(
+  uuid, uuid, bigint, text, timestamptz, timestamptz, uuid, uuid
+) from public, anon, service_role;
+grant execute on function internal.preview_shift_change(
+  uuid, uuid, bigint, text, timestamptz, timestamptz, uuid, uuid
+) to authenticated;
+revoke execute on function api.preview_shift_change(
+  uuid, uuid, bigint, text, timestamptz, timestamptz, uuid, uuid
+) from public, anon, service_role;
+grant execute on function api.preview_shift_change(
+  uuid, uuid, bigint, text, timestamptz, timestamptz, uuid, uuid
+) to authenticated;
+
+create or replace function internal.apply_shift_change(
+  p_tenant_id uuid,
+  p_proposal_id uuid,
+  p_expected_proposal_version bigint,
+  p_confirmed_impact_hash text,
+  p_idempotency_key uuid
+)
+returns jsonb
+language plpgsql
+security definer
+set search_path = ''
+as $function$
+declare
+  v_actor uuid := (select internal.current_actor_uid());
+  v_proposal app.shift_change_proposals%rowtype;
+  v_shift app.shifts%rowtype;
+  v_booking app.bookings%rowtype;
+  v_change_category_id uuid;
+  v_event_id uuid := gen_random_uuid();
+  v_intent_id uuid;
+  v_impact jsonb;
+  v_impact_hash bytea;
+  v_request_hash bytea;
+  v_previous jsonb;
+  v_old_starts_at timestamptz;
+  v_old_ends_at timestamptz;
+  v_affected_count integer;
+  v_result jsonb;
+begin
+  if v_actor is null or not internal.is_active_member(p_tenant_id) then
+    raise exception using errcode = '42501', message = 'FORBIDDEN';
+  end if;
+  if p_idempotency_key is null
+    or p_expected_proposal_version is null
+    or p_confirmed_impact_hash is null
+    or p_confirmed_impact_hash !~ '^[0-9A-Fa-f]{64}$' then
+    raise exception using errcode = '22023', message = 'INVALID_COMMAND';
+  end if;
+
+  v_request_hash := extensions.digest(convert_to(jsonb_build_object(
+    'proposal_id', p_proposal_id,
+    'expected_proposal_version', p_expected_proposal_version,
+    'confirmed_impact_hash', lower(p_confirmed_impact_hash)
+  )::text, 'UTF8'), 'sha256');
+  v_previous := internal.claim_idempotency(
+    p_tenant_id, 'apply_shift_change', p_idempotency_key, v_request_hash
+  );
+  if v_previous is not null then
+    return v_previous;
+  end if;
+
+  select * into v_proposal
+  from app.shift_change_proposals as proposal
+  where proposal.tenant_id = p_tenant_id
+    and proposal.id = p_proposal_id
+  for update;
+  if not found then
+    raise exception using errcode = '42501', message = 'FORBIDDEN';
+  end if;
+  if v_proposal.version <> p_expected_proposal_version then
+    raise exception using errcode = '40001', message = 'STALE_VERSION';
+  end if;
+  if v_proposal.state <> 'previewed' then
+    raise exception using errcode = '55000', message = 'PROPOSAL_ALREADY_APPLIED';
+  end if;
+  select * into v_shift
+  from app.shifts as shift_row
+  where shift_row.tenant_id = p_tenant_id
+    and shift_row.id = v_proposal.shift_id
+  for update;
+  if not found or not internal.has_permission(
+    p_tenant_id, 'shift.manage', 'committee', v_shift.committee_id
+  ) then
+    raise exception using errcode = '42501', message = 'FORBIDDEN';
+  end if;
+  if v_shift.version <> v_proposal.expected_shift_version then
+    raise exception using errcode = '40001', message = 'STALE_VERSION';
+  end if;
+  if v_shift.state <> 'published' then
+    raise exception using errcode = '55000', message = 'SHIFT_NOT_PUBLISHED';
+  end if;
+  if v_proposal.proposed_starts_at <= statement_timestamp() then
+    raise exception using
+      errcode = '55000',
+      message = 'PROPOSED_SHIFT_ALREADY_STARTED';
+  end if;
+  if statement_timestamp() >= v_shift.starts_at then
+    raise exception using errcode = '55000', message = 'SHIFT_ALREADY_STARTED';
+  end if;
+
+  perform position.id
+  from app.shift_positions as position
+  where position.tenant_id = p_tenant_id
+    and position.shift_id = v_shift.id
+  order by position.id
+  for update;
+  perform booking.id
+  from app.shift_positions as position
+  join app.bookings as booking
+    on booking.tenant_id = position.tenant_id
+   and booking.position_id = position.id
+   and booking.state in ('booked', 'reconfirmation_required', 'transfer_pending')
+  where position.tenant_id = p_tenant_id
+    and position.shift_id = v_shift.id
+  order by booking.id
+  for update of booking;
+
+  v_impact := internal.shift_change_impact_snapshot(
+    p_tenant_id, v_shift.id, v_proposal.expected_shift_version,
+    v_proposal.proposed_title, v_proposal.proposed_starts_at,
+    v_proposal.proposed_ends_at, v_proposal.proposed_location_id
+  );
+  v_impact_hash := extensions.digest(convert_to(v_impact::text, 'UTF8'), 'sha256');
+  if v_impact_hash <> v_proposal.impact_hash
+    or encode(v_impact_hash, 'hex') <> lower(p_confirmed_impact_hash) then
+    raise exception using errcode = '40001', message = 'STALE_IMPACT';
+  end if;
+  v_affected_count := jsonb_array_length(v_impact -> 'affected_bookings');
+  if jsonb_array_length(v_impact -> 'booking_blockers') > 0 then
+    raise exception using
+      errcode = '55000',
+      message = 'TRANSFER_PENDING_BLOCKS_SHIFT_CHANGE';
+  end if;
+  if jsonb_array_length(v_impact -> 'eligibility_blockers') > 0 then
+    raise exception using errcode = '42501', message = 'NOT_ELIGIBLE_IMPACT';
+  end if;
+  if jsonb_array_length(v_impact -> 'booking_conflicts') > 0 then
+    raise exception using errcode = '23P01', message = 'PERSON_OVERLAP_IMPACT';
+  end if;
+
+  if v_proposal.material_change and v_affected_count > 0 then
+    select category.id into v_change_category_id
+    from app.notification_categories as category
+    where category.tenant_id = p_tenant_id
+      and category.category_key = 'shift.change';
+    if v_change_category_id is null then
+      raise exception using errcode = '55000', message = 'SHIFT_CHANGE_CATEGORY_REQUIRED';
+    end if;
+  end if;
+
+  v_old_starts_at := v_shift.starts_at;
+  v_old_ends_at := v_shift.ends_at;
+  update app.shifts as shift_row
+  set title = v_proposal.proposed_title,
+      starts_at = v_proposal.proposed_starts_at,
+      ends_at = v_proposal.proposed_ends_at,
+      location_id = v_proposal.proposed_location_id,
+      updated_at = statement_timestamp(),
+      version = shift_row.version + 1
+  where shift_row.tenant_id = p_tenant_id
+    and shift_row.id = v_shift.id
+  returning shift_row.* into strict v_shift;
+
+  if v_old_starts_at is distinct from v_shift.starts_at
+    or v_old_ends_at is distinct from v_shift.ends_at then
+    update app.shift_positions as position
+    set starts_at = v_shift.starts_at,
+        ends_at = v_shift.ends_at,
+        updated_at = statement_timestamp(),
+        version = position.version + 1
+    where position.tenant_id = p_tenant_id
+      and position.shift_id = v_shift.id
+      and position.state <> 'cancelled';
+  end if;
+
+  insert into app.domain_events (
+    id, tenant_id, aggregate_type, aggregate_id, aggregate_version,
+    event_type, payload_minimal
+  ) values (
+    v_event_id, p_tenant_id, 'shift', v_shift.id, v_shift.version,
+    case when v_proposal.material_change
+      then 'shift.materially_changed'
+      else 'shift.text_corrected'
+    end,
+    jsonb_build_object(
+      'proposal_id', v_proposal.id,
+      'affected_booking_count', v_affected_count,
+      'requires_reconfirmation',
+        (v_impact ->> 'requires_reconfirmation')::boolean
+    )
+  );
+
+  if v_proposal.material_change then
+    for v_booking in
+      select booking.*
+      from app.shift_positions as position
+      join app.bookings as booking
+        on booking.tenant_id = position.tenant_id
+       and booking.position_id = position.id
+       and booking.state in ('booked', 'reconfirmation_required')
+      where position.tenant_id = p_tenant_id
+        and position.shift_id = v_shift.id
+      order by booking.id
+    loop
+      update app.bookings as booking_row
+      set state = 'reconfirmation_required',
+          pending_starts_at = v_shift.starts_at,
+          pending_ends_at = v_shift.ends_at,
+          updated_at = statement_timestamp(),
+          version = booking_row.version + 1
+      where booking_row.tenant_id = p_tenant_id
+        and booking_row.id = v_booking.id
+      returning booking_row.* into strict v_booking;
+
+      insert into app.booking_events (
+        tenant_id, booking_id, event_type, actor_auth_user_id,
+        reason_code, payload
+      ) values (
+        p_tenant_id, v_booking.id, 'reconfirmation_required', v_actor,
+        'material_shift_change',
+        jsonb_build_object(
+          'proposal_id', v_proposal.id,
+          'shift_version', v_shift.version,
+          'impact_hash', encode(v_impact_hash, 'hex')
+        )
+      );
+
+      v_intent_id := gen_random_uuid();
+      insert into app.notification_intents (
+        id, tenant_id, domain_event_id, recipient_person_id, category_id,
+        channels, dedupe_key, safe_title, safe_body, source_path, status
+      ) values (
+        v_intent_id, p_tenant_id, v_event_id, v_booking.executor_person_id,
+        v_change_category_id, array['inbox'],
+        format('shift-change:%s:%s', v_proposal.id, v_booking.id),
+        'Dienst gewijzigd',
+        'De tijd of locatie van een geboekte dienst is gewijzigd. Bevestig opnieuw.',
+        format('/bookings/%s', v_booking.id), 'queued'
+      );
+      insert into app.notification_outbox (
+        tenant_id, intent_id, recipient_person_id, channel,
+        dedupe_key, body_hash, due_at
+      ) values (
+        p_tenant_id, v_intent_id, v_booking.executor_person_id, 'inbox',
+        format('inbox:shift-change:%s:%s', v_proposal.id, v_booking.id),
+        extensions.digest(
+          convert_to(
+            'Dienst gewijzigd|De tijd of locatie van een geboekte dienst is gewijzigd. Bevestig opnieuw.',
+            'UTF8'
+          ),
+          'sha256'
+        ),
+        statement_timestamp()
+      );
+    end loop;
+  end if;
+
+  update app.shift_change_proposals as proposal
+  set state = 'applied',
+      applied_by_auth_user_id = v_actor,
+      applied_at = statement_timestamp(),
+      applied_shift_version = v_shift.version,
+      applied_event_id = v_event_id,
+      updated_at = statement_timestamp(),
+      version = proposal.version + 1
+  where proposal.tenant_id = p_tenant_id
+    and proposal.id = v_proposal.id
+  returning proposal.* into strict v_proposal;
+
+  insert into app.audit_events (
+    tenant_id, actor_auth_user_id, action, resource_type, resource_id,
+    scope_kind, scope_id, idempotency_key, payload_minimal
+  ) values (
+    p_tenant_id, v_actor, 'shift.change.applied', 'shift', v_shift.id,
+    'committee', v_shift.committee_id, p_idempotency_key,
+    jsonb_build_object(
+      'proposal_id', v_proposal.id,
+      'shift_version', v_shift.version,
+      'material_change', v_proposal.material_change,
+      'affected_booking_count', v_affected_count
+    )
+  );
+
+  v_result := jsonb_build_object(
+    'ok', true,
+    'resource_id', v_shift.id,
+    'version', v_shift.version,
+    'proposal_id', v_proposal.id,
+    'proposal_version', v_proposal.version,
+    'affected_booking_count', v_affected_count,
+    'reconfirmation_required',
+      (v_impact ->> 'requires_reconfirmation')::boolean,
+    'event_ids', jsonb_build_array(v_event_id)
+  );
+  perform internal.finish_idempotency(
+    p_tenant_id, 'apply_shift_change', p_idempotency_key, v_result
+  );
+  return v_result;
+end;
+$function$;
+
+create or replace function api.apply_shift_change(
+  p_tenant_id uuid,
+  p_proposal_id uuid,
+  p_expected_proposal_version bigint,
+  p_confirmed_impact_hash text,
+  p_idempotency_key uuid
+)
+returns jsonb
+language sql
+security invoker
+set search_path = ''
+as $function$
+  select internal.apply_shift_change(
+    p_tenant_id, p_proposal_id, p_expected_proposal_version,
+    p_confirmed_impact_hash, p_idempotency_key
+  );
+$function$;
+
+alter function internal.apply_shift_change(uuid, uuid, bigint, text, uuid)
+  owner to cluvo_command_owner;
+revoke execute on function internal.apply_shift_change(uuid, uuid, bigint, text, uuid)
+  from public, anon, service_role;
+grant execute on function internal.apply_shift_change(uuid, uuid, bigint, text, uuid)
+  to authenticated;
+revoke execute on function api.apply_shift_change(uuid, uuid, bigint, text, uuid)
+  from public, anon, service_role;
+grant execute on function api.apply_shift_change(uuid, uuid, bigint, text, uuid)
+  to authenticated;
 
 create or replace function internal.complete_kanban_card(
   p_tenant_id uuid,

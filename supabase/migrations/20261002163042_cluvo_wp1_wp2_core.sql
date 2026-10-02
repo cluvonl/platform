@@ -722,6 +722,8 @@ create table app.bookings (
   booked_by_auth_user_id uuid not null,
   starts_at_snapshot timestamptz not null,
   ends_at_snapshot timestamptz not null,
+  pending_starts_at timestamptz,
+  pending_ends_at timestamptz,
   credit_minutes_snapshot integer not null check (credit_minutes_snapshot >= 0),
   cancellation_deadline_snapshot timestamptz not null,
   task_version_snapshot uuid not null,
@@ -737,7 +739,9 @@ create table app.bookings (
   foreign key (tenant_id, obligation_id) references app.obligations(tenant_id, id) on delete restrict,
   foreign key (tenant_id, task_version_snapshot) references app.task_type_versions(tenant_id, id) on delete restrict,
   foreign key (booked_by_auth_user_id) references auth.users(id) on delete restrict,
-  check (ends_at_snapshot > starts_at_snapshot)
+  check (ends_at_snapshot > starts_at_snapshot),
+  check ((pending_starts_at is null) = (pending_ends_at is null)),
+  check (pending_ends_at is null or pending_ends_at > pending_starts_at)
 );
 
 create unique index bookings_active_position_uq
@@ -749,7 +753,11 @@ alter table app.bookings
   exclude using gist (
     tenant_id with =,
     executor_person_id with =,
-    tstzrange(starts_at_snapshot, ends_at_snapshot, '[)') with &&
+    tstzrange(
+      coalesce(pending_starts_at, starts_at_snapshot),
+      coalesce(pending_ends_at, ends_at_snapshot),
+      '[)'
+    ) with &&
   ) where (state in ('booked', 'reconfirmation_required', 'transfer_pending', 'performed_pending'));
 
 create index bookings_obligation_state_idx
@@ -2280,7 +2288,11 @@ begin
     where existing_booking.tenant_id = p_tenant_id
       and existing_booking.executor_person_id = p_executor_person_id
       and existing_booking.state in ('booked', 'reconfirmation_required', 'transfer_pending', 'performed_pending')
-      and tstzrange(existing_booking.starts_at_snapshot, existing_booking.ends_at_snapshot, '[)')
+      and tstzrange(
+        coalesce(existing_booking.pending_starts_at, existing_booking.starts_at_snapshot),
+        coalesce(existing_booking.pending_ends_at, existing_booking.ends_at_snapshot),
+        '[)'
+      )
         && tstzrange(v_shift.starts_at, v_shift.ends_at, '[)')
   ) then
     raise exception using errcode = '23P01', message = 'PERSON_OVERLAP';

@@ -13,6 +13,12 @@ insert into app.permissions (permission_key, description) values
   ('waitlist.manage', 'Offer a released position to the next waitlist candidate')
 on conflict (permission_key) do nothing;
 
+-- Planning capacity is category policy, not a UI convention.  The plan-board
+-- command below enforces this value for every input route (form and drag).
+alter table app.task_categories
+  add column minimum_positions integer not null default 1
+  check (minimum_positions between 1 and 100);
+
 create table app.volunteer_role_catalog (
   id uuid primary key default gen_random_uuid(),
   tenant_id uuid not null,
@@ -500,7 +506,8 @@ grant insert on
   app.booking_cancellations
 to cluvo_command_owner;
 
-grant update on app.shift_positions to cluvo_command_owner;
+grant select, insert, update on app.shifts to cluvo_command_owner;
+grant select, insert, update on app.shift_positions to cluvo_command_owner;
 
 do $rls$
 declare
@@ -533,6 +540,12 @@ end
 $rls$;
 
 create policy wp3_command_owner_update on app.shift_positions
+  for update to cluvo_command_owner using (true) with check (true);
+create policy wp3_command_owner_insert on app.shift_positions
+  for insert to cluvo_command_owner with check (true);
+create policy wp3_command_owner_insert on app.shifts
+  for insert to cluvo_command_owner with check (true);
+create policy wp3_command_owner_update on app.shifts
   for update to cluvo_command_owner using (true) with check (true);
 
 -- Published role definitions are visible to active members.  Appointment and
@@ -4024,6 +4037,509 @@ revoke execute on function api.finalize_exception_case(uuid, uuid, bigint, text,
   from public, anon, service_role;
 grant execute on function api.finalize_exception_case(uuid, uuid, bigint, text, text, text, uuid)
   to authenticated;
+
+-- A16 uses one canonical command for draft form submissions and drag
+-- operations. Published shifts must use the A17 preview/hash/apply path so its
+-- booking impact and notification outbox cannot be bypassed. A draft move
+-- preserves duration and capacity; a draft resize may alter either.
+create or replace function internal.manage_planboard_shift(
+  p_tenant_id uuid,
+  p_shift_id uuid,
+  p_action text,
+  p_input_mode text,
+  p_expected_shift_version bigint,
+  p_type_version_id uuid,
+  p_committee_id uuid,
+  p_category_id uuid,
+  p_title text,
+  p_starts_at timestamptz,
+  p_ends_at timestamptz,
+  p_position_count integer,
+  p_idempotency_key uuid
+)
+returns table (ok boolean, resource_id uuid, version bigint, event_ids uuid[], result jsonb)
+language plpgsql
+security definer
+set search_path = ''
+as $function$
+declare
+  v_actor uuid := (select internal.current_actor_uid());
+  v_claim record;
+  v_shift app.shifts%rowtype;
+  v_target_shift_id uuid := coalesce(p_shift_id, gen_random_uuid());
+  v_event_id uuid := gen_random_uuid();
+  v_event_type text;
+  v_credit_minutes integer;
+  v_cancellation_minutes integer;
+  v_type_category_id uuid;
+  v_category_committee_id uuid;
+  v_minimum_positions integer;
+  v_task_active boolean;
+  v_existing_position_count integer := 0;
+  v_active_booking_count integer := 0;
+  v_reconfirmation_count integer := 0;
+  v_overlap_count integer := 0;
+  v_schedule_changed boolean := false;
+  v_new_version bigint;
+  v_position_ids jsonb;
+  v_result jsonb;
+begin
+  if v_actor is null
+    or not internal.is_active_member(p_tenant_id)
+    or p_action not in ('create', 'move', 'resize')
+    or p_input_mode not in ('form', 'drag')
+    or p_expected_shift_version is null
+    or p_type_version_id is null
+    or p_committee_id is null
+    or p_category_id is null
+    or nullif(btrim(p_title), '') is null
+    or p_starts_at is null
+    or p_ends_at is null
+    or p_ends_at <= p_starts_at
+    or p_position_count is null
+    or p_position_count < 1
+    or p_position_count > 100
+    or p_idempotency_key is null
+    or (p_action = 'create' and (p_shift_id is not null or p_expected_shift_version <> 0))
+    or (p_action <> 'create' and (p_shift_id is null or p_expected_shift_version < 1)) then
+    raise exception using errcode = '22023', message = 'INVALID_COMMAND';
+  end if;
+
+  if not internal.has_permission(
+    p_tenant_id, 'shift.manage', 'committee', p_committee_id
+  ) then
+    raise exception using errcode = '42501', message = 'FORBIDDEN';
+  end if;
+
+  select
+    type_version.credit_minutes,
+    coalesce(
+      type_version.cancellation_minutes_override,
+      (
+        select settings.cancellation_minutes
+        from app.tenant_settings_versions as settings
+        where settings.tenant_id = p_tenant_id
+          and settings.effective_from <= statement_timestamp()
+        order by settings.effective_from desc, settings.revision desc
+        limit 1
+      ),
+      2880
+    ),
+    task_type.category_id,
+    category.committee_id,
+    category.minimum_positions,
+    task_type.active
+  into
+    v_credit_minutes,
+    v_cancellation_minutes,
+    v_type_category_id,
+    v_category_committee_id,
+    v_minimum_positions,
+    v_task_active
+  from app.task_type_versions as type_version
+  join app.task_types as task_type
+    on task_type.tenant_id = type_version.tenant_id
+   and task_type.id = type_version.task_type_id
+  join app.task_categories as category
+    on category.tenant_id = task_type.tenant_id
+   and category.id = task_type.category_id
+  where type_version.tenant_id = p_tenant_id
+    and type_version.id = p_type_version_id;
+
+  if not found
+    or not coalesce(v_task_active, false)
+    or v_type_category_id <> p_category_id
+    or v_category_committee_id <> p_committee_id then
+    raise exception using errcode = '22023', message = 'TASK_CONFIGURATION_MISMATCH';
+  end if;
+  if p_position_count < v_minimum_positions then
+    raise exception using errcode = '23514', message = 'MINIMUM_STAFFING';
+  end if;
+
+  select * into v_claim
+  from internal.claim_idempotency(
+    p_tenant_id,
+    'manage_planboard_shift',
+    p_idempotency_key,
+    jsonb_build_object(
+      'shift_id', p_shift_id,
+      'action', p_action,
+      'input_mode', p_input_mode,
+      'expected_shift_version', p_expected_shift_version,
+      'type_version_id', p_type_version_id,
+      'committee_id', p_committee_id,
+      'category_id', p_category_id,
+      'title', btrim(p_title),
+      'starts_at', p_starts_at,
+      'ends_at', p_ends_at,
+      'position_count', p_position_count
+    )
+  );
+  if v_claim.replay_result is not null then
+    return query select
+      true,
+      (v_claim.replay_result ->> 'resource_id')::uuid,
+      (v_claim.replay_result ->> 'version')::bigint,
+      array(
+        select value::uuid
+        from jsonb_array_elements_text(v_claim.replay_result -> 'event_ids')
+      ),
+      v_claim.replay_result -> 'result';
+    return;
+  end if;
+
+  if p_action = 'create' then
+    insert into app.shifts (
+      id, tenant_id, type_version_id, committee_id, category_id, title,
+      starts_at, ends_at, credit_minutes, cancellation_minutes, state
+    ) values (
+      v_target_shift_id, p_tenant_id, p_type_version_id, p_committee_id,
+      p_category_id, btrim(p_title), p_starts_at, p_ends_at,
+      v_credit_minutes, v_cancellation_minutes, 'draft'
+    );
+
+    insert into app.shift_positions (
+      tenant_id, shift_id, ordinal, starts_at, ends_at, state
+    )
+    select
+      p_tenant_id, v_target_shift_id, ordinal,
+      p_starts_at, p_ends_at, 'open'
+    from generate_series(1, p_position_count) as series(ordinal);
+
+    v_new_version := 1;
+    v_event_type := 'shift.plan_created';
+  else
+    select shift_row.* into v_shift
+    from app.shifts as shift_row
+    where shift_row.tenant_id = p_tenant_id
+      and shift_row.id = p_shift_id
+    for update;
+    if not found then
+      raise exception using errcode = 'P0002', message = 'NOT_FOUND';
+    end if;
+    if not internal.has_permission(
+      p_tenant_id, 'shift.manage', 'committee', v_shift.committee_id
+    ) then
+      raise exception using errcode = '42501', message = 'FORBIDDEN';
+    end if;
+    if v_shift.state = 'published' then
+      raise exception using
+        errcode = 'P0001',
+        message = 'PUBLISHED_SHIFT_REQUIRES_CHANGE_PROPOSAL';
+    end if;
+    if v_shift.state <> 'draft' then
+      raise exception using errcode = 'P0001', message = 'SHIFT_NOT_PLANNABLE';
+    end if;
+    if v_shift.version <> p_expected_shift_version then
+      raise exception using errcode = '40001', message = 'STALE_VERSION';
+    end if;
+    if v_shift.type_version_id <> p_type_version_id
+      or v_shift.committee_id <> p_committee_id
+      or v_shift.category_id <> p_category_id
+      or v_shift.title <> btrim(p_title) then
+      raise exception using errcode = '22023', message = 'SHIFT_IDENTITY_MISMATCH';
+    end if;
+
+    perform 1
+    from app.shift_positions as position
+    where position.tenant_id = p_tenant_id
+      and position.shift_id = p_shift_id
+    order by position.id
+    for update;
+
+    perform 1
+    from app.bookings as booking
+    join app.shift_positions as position
+      on position.tenant_id = booking.tenant_id
+     and position.id = booking.position_id
+    where booking.tenant_id = p_tenant_id
+      and position.shift_id = p_shift_id
+    order by booking.id
+    for update of booking;
+
+    select count(*)::integer into v_existing_position_count
+    from app.shift_positions as position
+    where position.tenant_id = p_tenant_id
+      and position.shift_id = p_shift_id
+      and position.state <> 'cancelled';
+
+    if p_action = 'move' and (
+      p_position_count <> v_existing_position_count
+      or p_ends_at - p_starts_at <> v_shift.ends_at - v_shift.starts_at
+    ) then
+      raise exception using errcode = '22023', message = 'MOVE_SHAPE_MISMATCH';
+    end if;
+
+    v_schedule_changed := p_starts_at <> v_shift.starts_at
+      or p_ends_at <> v_shift.ends_at;
+
+    if v_schedule_changed and v_shift.starts_at <= statement_timestamp() then
+      raise exception using errcode = 'P0001', message = 'SHIFT_ALREADY_STARTED';
+    end if;
+    if v_schedule_changed and exists (
+      select 1
+      from app.bookings as booking
+      join app.shift_positions as position
+        on position.tenant_id = booking.tenant_id
+       and position.id = booking.position_id
+      where booking.tenant_id = p_tenant_id
+        and position.shift_id = p_shift_id
+        and booking.state in ('transfer_pending', 'performed_pending', 'confirmed', 'no_show')
+    ) then
+      raise exception using errcode = 'P0001', message = 'BOOKING_STATE_BLOCKS_PLAN_CHANGE';
+    end if;
+
+    if p_position_count < v_existing_position_count and exists (
+      select 1
+      from app.bookings as booking
+      join app.shift_positions as position
+        on position.tenant_id = booking.tenant_id
+       and position.id = booking.position_id
+      where booking.tenant_id = p_tenant_id
+        and position.shift_id = p_shift_id
+        and position.ordinal > p_position_count
+        and booking.state in (
+          'booked', 'reconfirmation_required', 'transfer_pending', 'performed_pending'
+        )
+    ) then
+      raise exception using errcode = 'P0001', message = 'POSITION_OCCUPIED';
+    end if;
+
+    select count(*)::integer into v_active_booking_count
+    from app.bookings as booking
+    join app.shift_positions as position
+      on position.tenant_id = booking.tenant_id
+     and position.id = booking.position_id
+    where booking.tenant_id = p_tenant_id
+      and position.shift_id = p_shift_id
+      and booking.state in (
+        'booked', 'reconfirmation_required', 'transfer_pending', 'performed_pending'
+      );
+
+    if v_schedule_changed then
+      select count(*)::integer into v_overlap_count
+      from app.bookings as affected_booking
+      join app.shift_positions as affected_position
+        on affected_position.tenant_id = affected_booking.tenant_id
+       and affected_position.id = affected_booking.position_id
+      where affected_booking.tenant_id = p_tenant_id
+        and affected_position.shift_id = p_shift_id
+        and affected_booking.state in ('booked', 'reconfirmation_required')
+        and exists (
+          select 1
+          from app.bookings as other_booking
+          join app.shift_positions as other_position
+            on other_position.tenant_id = other_booking.tenant_id
+           and other_position.id = other_booking.position_id
+          where other_booking.tenant_id = affected_booking.tenant_id
+            and other_booking.executor_person_id = affected_booking.executor_person_id
+            and other_position.shift_id <> p_shift_id
+            and other_booking.state in (
+              'booked', 'reconfirmation_required', 'transfer_pending', 'performed_pending'
+            )
+            and tstzrange(
+              other_booking.starts_at_snapshot,
+              other_booking.ends_at_snapshot,
+              '[)'
+            ) && tstzrange(p_starts_at, p_ends_at, '[)')
+        );
+      if v_overlap_count > 0 then
+        raise exception using errcode = '23P01', message = 'PERSON_OVERLAP_IMPACT';
+      end if;
+    end if;
+
+    update app.shift_positions as position
+    set starts_at = p_starts_at,
+        ends_at = p_ends_at,
+        state = case
+          when position.ordinal > p_position_count then 'cancelled'
+          when position.state = 'cancelled' then 'open'
+          else position.state
+        end,
+        updated_at = statement_timestamp(),
+        version = position.version + 1
+    where position.tenant_id = p_tenant_id
+      and position.shift_id = p_shift_id
+      and (
+        position.starts_at <> p_starts_at
+        or position.ends_at <> p_ends_at
+        or (position.ordinal > p_position_count and position.state <> 'cancelled')
+        or (position.ordinal <= p_position_count and position.state = 'cancelled')
+      );
+
+    insert into app.shift_positions (
+      tenant_id, shift_id, ordinal, starts_at, ends_at, state
+    )
+    select
+      p_tenant_id, p_shift_id, ordinal,
+      p_starts_at, p_ends_at, 'open'
+    from generate_series(1, p_position_count) as series(ordinal)
+    where not exists (
+      select 1
+      from app.shift_positions as existing_position
+      where existing_position.tenant_id = p_tenant_id
+        and existing_position.shift_id = p_shift_id
+        and existing_position.ordinal = ordinal
+    );
+
+    if v_schedule_changed then
+      with affected_bookings as (
+        update app.bookings as booking
+        set state = 'reconfirmation_required',
+            updated_at = statement_timestamp(),
+            version = booking.version + 1
+        from app.shift_positions as position
+        where position.tenant_id = booking.tenant_id
+          and position.id = booking.position_id
+          and booking.tenant_id = p_tenant_id
+          and position.shift_id = p_shift_id
+          and booking.state in ('booked', 'reconfirmation_required')
+        returning booking.tenant_id, booking.id
+      ), inserted_events as (
+        insert into app.booking_events (
+          tenant_id, booking_id, event_type, actor_auth_user_id, reason_code, payload
+        )
+        select
+          affected.tenant_id, affected.id, 'booking.reconfirmation_required',
+          v_actor, 'shift_schedule_changed',
+          jsonb_build_object(
+            'shift_id', p_shift_id,
+            'starts_at', p_starts_at,
+            'ends_at', p_ends_at,
+            'input_mode', p_input_mode
+          )
+        from affected_bookings as affected
+        returning booking_id
+      )
+      select count(*)::integer into v_reconfirmation_count
+      from inserted_events;
+    end if;
+
+    update app.shifts as shift_row
+    set starts_at = p_starts_at,
+        ends_at = p_ends_at,
+        updated_at = statement_timestamp(),
+        version = shift_row.version + 1
+    where shift_row.tenant_id = p_tenant_id
+      and shift_row.id = p_shift_id
+    returning shift_row.version into v_new_version;
+
+    v_target_shift_id := p_shift_id;
+    v_event_type := case p_action
+      when 'move' then 'shift.plan_moved'
+      else 'shift.plan_resized'
+    end;
+  end if;
+
+  select coalesce(jsonb_agg(position.id order by position.ordinal), '[]'::jsonb)
+  into v_position_ids
+  from app.shift_positions as position
+  where position.tenant_id = p_tenant_id
+    and position.shift_id = v_target_shift_id
+    and position.ordinal <= p_position_count
+    and position.state <> 'cancelled';
+
+  insert into app.audit_events (
+    tenant_id, actor_auth_user_id, action, resource_type, resource_id,
+    scope_kind, scope_id, reason_code, idempotency_key, payload_minimal
+  ) values (
+    p_tenant_id, v_actor, v_event_type, 'shift', v_target_shift_id,
+    'committee', p_committee_id, p_input_mode, p_idempotency_key,
+    jsonb_build_object(
+      'action', p_action,
+      'position_count', p_position_count,
+      'active_booking_count', v_active_booking_count,
+      'reconfirmation_count', v_reconfirmation_count,
+      'overlap_count', v_overlap_count
+    )
+  );
+
+  insert into app.domain_events (
+    id, tenant_id, aggregate_type, aggregate_id, aggregate_version,
+    event_type, payload_minimal
+  ) values (
+    v_event_id, p_tenant_id, 'shift', v_target_shift_id, v_new_version,
+    v_event_type,
+    jsonb_build_object(
+      'input_mode', p_input_mode,
+      'starts_at', p_starts_at,
+      'ends_at', p_ends_at,
+      'position_count', p_position_count,
+      'reconfirmation_count', v_reconfirmation_count
+    )
+  );
+
+  v_result := jsonb_build_object(
+    'resource_id', v_target_shift_id,
+    'version', v_new_version,
+    'event_ids', jsonb_build_array(v_event_id),
+    'result', jsonb_build_object(
+      'action', p_action,
+      'input_mode', p_input_mode,
+      'position_ids', v_position_ids,
+      'position_count', p_position_count,
+      'minimum_positions', v_minimum_positions,
+      'active_booking_count', v_active_booking_count,
+      'reconfirmation_count', v_reconfirmation_count,
+      'overlap_count', v_overlap_count
+    )
+  );
+  perform internal.complete_idempotency(v_claim.record_id, v_result);
+
+  return query select
+    true, v_target_shift_id, v_new_version, array[v_event_id], v_result -> 'result';
+end;
+$function$;
+
+alter function internal.manage_planboard_shift(
+  uuid, uuid, text, text, bigint, uuid, uuid, uuid, text,
+  timestamptz, timestamptz, integer, uuid
+) owner to cluvo_command_owner;
+revoke execute on function internal.manage_planboard_shift(
+  uuid, uuid, text, text, bigint, uuid, uuid, uuid, text,
+  timestamptz, timestamptz, integer, uuid
+) from public, anon, service_role;
+grant execute on function internal.manage_planboard_shift(
+  uuid, uuid, text, text, bigint, uuid, uuid, uuid, text,
+  timestamptz, timestamptz, integer, uuid
+) to authenticated;
+
+create or replace function api.manage_planboard_shift(
+  p_tenant_id uuid,
+  p_shift_id uuid,
+  p_action text,
+  p_input_mode text,
+  p_expected_shift_version bigint,
+  p_type_version_id uuid,
+  p_committee_id uuid,
+  p_category_id uuid,
+  p_title text,
+  p_starts_at timestamptz,
+  p_ends_at timestamptz,
+  p_position_count integer,
+  p_idempotency_key uuid
+)
+returns table (ok boolean, resource_id uuid, version bigint, event_ids uuid[], result jsonb)
+language sql
+security invoker
+set search_path = ''
+as $function$
+  select * from internal.manage_planboard_shift(
+    p_tenant_id, p_shift_id, p_action, p_input_mode,
+    p_expected_shift_version, p_type_version_id, p_committee_id,
+    p_category_id, p_title, p_starts_at, p_ends_at,
+    p_position_count, p_idempotency_key
+  );
+$function$;
+
+revoke execute on function api.manage_planboard_shift(
+  uuid, uuid, text, text, bigint, uuid, uuid, uuid, text,
+  timestamptz, timestamptz, integer, uuid
+) from public, anon, service_role;
+grant execute on function api.manage_planboard_shift(
+  uuid, uuid, text, text, bigint, uuid, uuid, uuid, text,
+  timestamptz, timestamptz, integer, uuid
+) to authenticated;
 
 -- Direct client mutations remain forbidden.  API functions are the only write
 -- surface and derive actors from the JWT-backed internal.current_actor_uid().

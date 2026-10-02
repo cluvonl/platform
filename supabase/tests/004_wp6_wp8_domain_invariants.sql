@@ -265,7 +265,8 @@ select is((select dst_resolution from internal.resolve_local_slot('2026-10-25', 
 -- A20/A21: per-person/task dedupe, one local-day digest, immutable template
 -- versions, and a delivery state that does not overclaim provider evidence.
 insert into app.notification_categories (id, tenant_id, category_key, name, essential) values
-  ('67000000-0000-4000-8000-000000000001', '62000000-0000-4000-8000-000000000001', 'task.offer', 'Taakaanbod', false);
+  ('67000000-0000-4000-8000-000000000001', '62000000-0000-4000-8000-000000000001', 'task.offer', 'Taakaanbod', false),
+  ('6b000000-0000-4000-8000-000000000001', '62000000-0000-4000-8000-000000000001', 'shift.change', 'Dienstwijziging', true);
 insert into app.domain_events (id, tenant_id, aggregate_type, aggregate_id, aggregate_version, event_type) values
   ('67000000-0000-4000-8000-000000000002', '62000000-0000-4000-8000-000000000001', 'shift', current_setting('cluvo.test.shift')::uuid, 2, 'task.offer.created'),
   ('67000000-0000-4000-8000-000000000003', '62000000-0000-4000-8000-000000000001', 'shift', current_setting('cluvo.test.shift')::uuid, 3, 'task.offer.created');
@@ -334,6 +335,751 @@ select throws_ok(
 );
 select isnt((select status from app.notification_outbox where id = '67000000-0000-4000-8000-000000000008'),
             'delivered', 'A21: provider acceptance is not reported as delivery');
+
+-- A17 D/I: a concept batch publishes atomically, creates offers exactly once,
+-- and material changes use a confirmed impact preview plus the local outbox.
+insert into app.locations (id, tenant_id, name) values
+  ('6b000000-0000-4000-8000-000000000002', '62000000-0000-4000-8000-000000000001', 'Veld B');
+insert into app.shifts (
+  id, tenant_id, type_version_id, committee_id, category_id, title,
+  starts_at, ends_at, credit_minutes, cancellation_minutes, state
+) values
+  ('6b000000-0000-4000-8000-000000000003', '62000000-0000-4000-8000-000000000001',
+   '65000000-0000-4000-8000-000000000004', '64000000-0000-4000-8000-000000000001',
+   '65000000-0000-4000-8000-000000000002', 'Conceptdienst ochtend',
+   '2099-11-07 09:00:00+01', '2099-11-07 11:00:00+01', 90, 2880, 'draft'),
+  ('6b000000-0000-4000-8000-000000000004', '62000000-0000-4000-8000-000000000001',
+   '65000000-0000-4000-8000-000000000004', '64000000-0000-4000-8000-000000000001',
+   '65000000-0000-4000-8000-000000000002', 'Conceptdienst middag',
+   '2099-11-07 11:00:00+01', '2099-11-07 13:00:00+01', 90, 2880, 'draft');
+insert into app.shift_positions (
+  id, tenant_id, shift_id, ordinal, starts_at, ends_at
+) values
+  ('6b000000-0000-4000-8000-000000000005', '62000000-0000-4000-8000-000000000001',
+   '6b000000-0000-4000-8000-000000000003', 1,
+   '2099-11-07 09:00:00+01', '2099-11-07 11:00:00+01'),
+  ('6b000000-0000-4000-8000-000000000006', '62000000-0000-4000-8000-000000000001',
+   '6b000000-0000-4000-8000-000000000004', 1,
+   '2099-11-07 11:00:00+01', '2099-11-07 13:00:00+01');
+select is(
+  (select count(*)::integer from app.task_offer_candidates
+   where shift_id in ('6b000000-0000-4000-8000-000000000003','6b000000-0000-4000-8000-000000000004')),
+  0, 'A17: concept shifts create no offer candidates'
+);
+
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000002', true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000002","role":"authenticated"}', true);
+select throws_ok(
+  $$select api.publish_shift_batch(
+      '62000000-0000-4000-8000-000000000001',
+      array['6b000000-0000-4000-8000-000000000003','6b000000-0000-4000-8000-000000000004']::uuid[],
+      array[1,1]::bigint[], '2000-01-01 00:00:00+01',
+      '6b000000-0000-4000-8000-000000000007')$$,
+  '42501', 'FORBIDDEN', 'A17: a member without planning mandate cannot publish a batch'
+);
+reset role;
+select is(
+  (select count(*)::integer from app.shifts
+   where id in ('6b000000-0000-4000-8000-000000000003','6b000000-0000-4000-8000-000000000004')
+     and state = 'draft'),
+  2, 'A17: rejected publication leaves the complete batch in draft'
+);
+
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select throws_ok(
+  $$select api.publish_shift_batch(
+      '62000000-0000-4000-8000-000000000001',
+      array['6b000000-0000-4000-8000-000000000003','6b000000-0000-4000-8000-000000000004']::uuid[],
+      array[1,2]::bigint[], '2000-01-01 00:00:00+01',
+      '6b000000-0000-4000-8000-000000000008')$$,
+  '40001', 'STALE_VERSION', 'A17: one stale member rejects the atomic publication batch'
+);
+select lives_ok(
+  $$select api.publish_shift_batch(
+      '62000000-0000-4000-8000-000000000001',
+      array['6b000000-0000-4000-8000-000000000003','6b000000-0000-4000-8000-000000000004']::uuid[],
+      array[1,1]::bigint[], '2000-01-01 00:00:00+01',
+      '6b000000-0000-4000-8000-000000000009')$$,
+  'A17: an authorized concept batch publishes atomically'
+);
+select lives_ok(
+  $$select api.publish_shift_batch(
+      '62000000-0000-4000-8000-000000000001',
+      array['6b000000-0000-4000-8000-000000000003','6b000000-0000-4000-8000-000000000004']::uuid[],
+      array[1,1]::bigint[], '2000-01-01 00:00:00+01',
+      '6b000000-0000-4000-8000-000000000009')$$,
+  'A17: publication retry returns the original result'
+);
+reset role;
+select is(
+  (select count(*)::integer from app.shifts
+   where id in ('6b000000-0000-4000-8000-000000000003','6b000000-0000-4000-8000-000000000004')
+     and state = 'published' and booking_opens_at <= statement_timestamp()),
+  2, 'A17: publication opens booking for every batch member'
+);
+select is((select count(*)::integer from app.shift_publication_batches), 1,
+          'A17: idempotent publication creates one batch record');
+select is((select count(*)::integer from app.shift_publication_batch_items), 2,
+          'A17: the one batch records both published shifts');
+select throws_ok(
+  $$update app.shift_publication_batches set shift_count = shift_count
+    where id = (select id from app.shift_publication_batches limit 1)$$,
+  '55000', 'shift_publication_batches is append-only',
+  'A17: publication batch history is immutable'
+);
+select throws_ok(
+  $$update app.shift_publication_batch_items set offer_intent_count = offer_intent_count
+    where id = (select id from app.shift_publication_batch_items limit 1)$$,
+  '55000', 'shift_publication_batch_items is append-only',
+  'A17: publication item history is immutable'
+);
+select is(
+  (select count(*)::integer
+   from app.domain_events
+   where aggregate_id in ('6b000000-0000-4000-8000-000000000003','6b000000-0000-4000-8000-000000000004')
+     and event_type = 'task.published'),
+  2, 'A17: first publication creates one stable event per shift'
+);
+select is(
+  (select count(*)::integer
+   from app.notification_intents as intent
+   join app.domain_events as event_row
+     on event_row.tenant_id = intent.tenant_id and event_row.id = intent.domain_event_id
+   where event_row.aggregate_id in ('6b000000-0000-4000-8000-000000000003','6b000000-0000-4000-8000-000000000004')
+     and event_row.event_type = 'task.published'),
+  4, 'A17: first publication creates targeted offer intents once'
+);
+select is(
+  (select count(*)::integer
+   from app.notification_outbox as outbox
+   join app.notification_intents as intent
+     on intent.tenant_id = outbox.tenant_id and intent.id = outbox.intent_id
+   join app.domain_events as event_row
+     on event_row.tenant_id = intent.tenant_id and event_row.id = intent.domain_event_id
+   where event_row.aggregate_id in ('6b000000-0000-4000-8000-000000000003','6b000000-0000-4000-8000-000000000004')
+     and event_row.event_type = 'task.published' and outbox.status = 'queued'),
+  4, 'A17 I: offer intents are queued in the local outbox'
+);
+
+insert into app.households (id, tenant_id, label, intake_code_hash) values (
+  '6b000000-0000-4000-8000-000000000010', '62000000-0000-4000-8000-000000000001',
+  'A17 huishouden', extensions.digest(convert_to('a17-household', 'UTF8'), 'sha256')
+);
+insert into app.seasons (
+  id, tenant_id, name, starts_on, ends_on, winter_cutoff_at, status
+) values (
+  '6b000000-0000-4000-8000-000000000011', '62000000-0000-4000-8000-000000000001',
+  '2099 / 2100', '2099-07-01', '2100-06-30', '2100-01-01 00:00:00+01', 'active'
+);
+insert into app.obligations (
+  id, tenant_id, season_id, assessed_household_id,
+  base_target_minutes, effective_target_minutes, effective_winter_minutes
+) values (
+  '6b000000-0000-4000-8000-000000000012', '62000000-0000-4000-8000-000000000001',
+  '6b000000-0000-4000-8000-000000000011', '6b000000-0000-4000-8000-000000000010',
+  720, 720, 360
+);
+insert into app.executor_obligation_grants (
+  id, tenant_id, person_id, obligation_id, valid_from, valid_until,
+  approved_by_auth_user_id
+) values (
+  '6b000000-0000-4000-8000-000000000038',
+  '62000000-0000-4000-8000-000000000001',
+  '63000000-0000-4000-8000-000000000002',
+  '6b000000-0000-4000-8000-000000000012',
+  '2099-11-07 09:00:00+01', '2099-11-07 13:00:00+01',
+  '61000000-0000-4000-8000-000000000001'
+);
+insert into app.bookings (
+  id, tenant_id, position_id, executor_person_id, obligation_id, state,
+  booked_by_auth_user_id, starts_at_snapshot, ends_at_snapshot,
+  credit_minutes_snapshot, cancellation_deadline_snapshot,
+  task_version_snapshot, idempotency_key
+) values (
+  '6b000000-0000-4000-8000-000000000013', '62000000-0000-4000-8000-000000000001',
+  '6b000000-0000-4000-8000-000000000005', '63000000-0000-4000-8000-000000000002',
+  '6b000000-0000-4000-8000-000000000012', 'booked',
+  '61000000-0000-4000-8000-000000000002',
+  '2099-11-07 09:00:00+01', '2099-11-07 11:00:00+01', 90,
+  '2099-11-05 09:00:00+01', '65000000-0000-4000-8000-000000000004',
+  '6b000000-0000-4000-8000-000000000014'
+);
+insert into app.bookings (
+  id, tenant_id, position_id, executor_person_id, obligation_id, state,
+  booked_by_auth_user_id, starts_at_snapshot, ends_at_snapshot,
+  credit_minutes_snapshot, cancellation_deadline_snapshot,
+  task_version_snapshot, idempotency_key
+) values (
+  '6b000000-0000-4000-8000-000000000020', '62000000-0000-4000-8000-000000000001',
+  '6b000000-0000-4000-8000-000000000006', '63000000-0000-4000-8000-000000000002',
+  '6b000000-0000-4000-8000-000000000012', 'booked',
+  '61000000-0000-4000-8000-000000000002',
+  '2099-11-07 11:00:00+01', '2099-11-07 13:00:00+01', 90,
+  '2099-11-05 11:00:00+01', '65000000-0000-4000-8000-000000000004',
+  '6b000000-0000-4000-8000-000000000021'
+);
+
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select set_config('cluvo.test.a17_small_proposal', preview.result ->> 'resource_id', true),
+       set_config('cluvo.test.a17_small_hash', preview.result ->> 'impact_hash', true)
+from (
+  select api.preview_shift_change(
+    '62000000-0000-4000-8000-000000000001', '6b000000-0000-4000-8000-000000000003', 2,
+    'Conceptdienst ochtend – tekst gecorrigeerd',
+    '2099-11-07 09:00:00+01', '2099-11-07 11:00:00+01', null,
+    '6b000000-0000-4000-8000-000000000015'
+  ) as result
+) as preview;
+select lives_ok(
+  format(
+    'select api.apply_shift_change(%L,%L,1,%L,%L)',
+    '62000000-0000-4000-8000-000000000001',
+    current_setting('cluvo.test.a17_small_proposal'),
+    current_setting('cluvo.test.a17_small_hash'),
+    '6b000000-0000-4000-8000-000000000016'
+  ),
+  'A17: a small text correction applies from its exact impact preview'
+);
+select lives_ok(
+  format(
+    'select api.apply_shift_change(%L,%L,1,%L,%L)',
+    '62000000-0000-4000-8000-000000000001',
+    current_setting('cluvo.test.a17_small_proposal'),
+    current_setting('cluvo.test.a17_small_hash'),
+    '6b000000-0000-4000-8000-000000000016'
+  ),
+  'A17: small-change apply is idempotent'
+);
+reset role;
+select is((select version from app.shifts where id = '6b000000-0000-4000-8000-000000000003'),
+          3::bigint, 'A17: text correction advances the shift optimistically once');
+select is((select state from app.bookings where id = '6b000000-0000-4000-8000-000000000013'),
+          'booked', 'A17: a small text correction does not request reconfirmation');
+select is(
+  (select count(*)::integer
+   from app.notification_intents as intent
+   join app.domain_events as event_row
+     on event_row.tenant_id = intent.tenant_id and event_row.id = intent.domain_event_id
+   where event_row.aggregate_id in ('6b000000-0000-4000-8000-000000000003','6b000000-0000-4000-8000-000000000004')
+     and event_row.event_type = 'task.published'),
+  4, 'A17: a text correction creates no new task offers'
+);
+select is(
+  (select count(*)::integer
+   from app.notification_intents as intent
+   join app.notification_categories as category
+     on category.tenant_id = intent.tenant_id and category.id = intent.category_id
+   where category.category_key = 'shift.change'),
+  0, 'A17: a text correction creates no change information intent'
+);
+select is(
+  (select count(*)::integer
+   from app.notification_outbox as outbox
+   join app.notification_intents as intent
+     on intent.tenant_id = outbox.tenant_id and intent.id = outbox.intent_id
+   join app.notification_categories as category
+     on category.tenant_id = intent.tenant_id and category.id = intent.category_id
+   where category.category_key = 'shift.change'),
+  0, 'A17 I: a text correction creates no change outbox unit'
+);
+select ok(
+  (select pending_starts_at is null and pending_ends_at is null
+   from app.bookings
+   where id = '6b000000-0000-4000-8000-000000000013'),
+  'A17: a text-only correction creates no pending interval reservation'
+);
+
+-- Both command phases reject a proposed interval once its start is no longer
+-- in the future. The short wait deterministically models time passing between
+-- preview and apply without changing persisted proposal evidence.
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select throws_ok(
+  $$select api.preview_shift_change(
+      '62000000-0000-4000-8000-000000000001', '6b000000-0000-4000-8000-000000000003', 3,
+      'Niet meer toekomstige wijziging', statement_timestamp(),
+      statement_timestamp() + interval '1 hour', null,
+      '6b000000-0000-4000-8000-000000000039')$$,
+  '55000', 'PROPOSED_SHIFT_ALREADY_STARTED',
+  'A17: preview rejects a proposed start at or before the server clock'
+);
+select set_config('cluvo.test.a17_elapsed_proposal', preview.result ->> 'resource_id', true),
+       set_config('cluvo.test.a17_elapsed_hash', preview.result ->> 'impact_hash', true)
+from (
+  select api.preview_shift_change(
+    '62000000-0000-4000-8000-000000000001', '6b000000-0000-4000-8000-000000000003', 3,
+    'Tijd verloopt na preview',
+    statement_timestamp() + interval '100 milliseconds',
+    statement_timestamp() + interval '1 hour', null,
+    '6b000000-0000-4000-8000-000000000040'
+  ) as result
+) as preview;
+select pg_sleep(0.2);
+select lives_ok(
+  format(
+    'select api.preview_shift_change(%L,%L,3,%L,%L,%L,null,%L)',
+    proposal.tenant_id,
+    proposal.shift_id,
+    proposal.proposed_title,
+    proposal.proposed_starts_at,
+    proposal.proposed_ends_at,
+    proposal.idempotency_key
+  ),
+  'A17: exact preview retry replays even after the proposed start elapses'
+)
+from app.shift_change_proposals as proposal
+where proposal.id = current_setting('cluvo.test.a17_elapsed_proposal')::uuid;
+select throws_ok(
+  format(
+    'select api.apply_shift_change(%L,%L,1,%L,%L)',
+    '62000000-0000-4000-8000-000000000001',
+    current_setting('cluvo.test.a17_elapsed_proposal'),
+    current_setting('cluvo.test.a17_elapsed_hash'),
+    '6b000000-0000-4000-8000-000000000041'
+  ),
+  '55000', 'PROPOSED_SHIFT_ALREADY_STARTED',
+  'A17: apply rechecks the proposed start after time passes since preview'
+);
+reset role;
+select is(
+  (select version from app.shifts where id = '6b000000-0000-4000-8000-000000000003'),
+  3::bigint, 'A17: elapsed proposed intervals leave the shift unchanged'
+);
+
+-- A material change may not invalidate an open transfer flow.
+update app.bookings
+set state = 'transfer_pending',
+    updated_at = statement_timestamp(),
+    version = version + 1
+where id = '6b000000-0000-4000-8000-000000000013';
+insert into app.transfer_requests (
+  id, tenant_id, origin_booking_id, origin_version_snapshot, state,
+  expires_at, requested_by_auth_user_id, idempotency_key
+) values (
+  '6b000000-0000-4000-8000-000000000024',
+  '62000000-0000-4000-8000-000000000001',
+  '6b000000-0000-4000-8000-000000000013', 2, 'open',
+  '2100-01-01 00:00:00+01', '61000000-0000-4000-8000-000000000002',
+  '6b000000-0000-4000-8000-000000000025'
+);
+
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select set_config('cluvo.test.a17_transfer_proposal', preview.result ->> 'resource_id', true),
+       set_config('cluvo.test.a17_transfer_hash', preview.result ->> 'impact_hash', true)
+from (
+  select api.preview_shift_change(
+    '62000000-0000-4000-8000-000000000001', '6b000000-0000-4000-8000-000000000003', 3,
+    'Conceptdienst ochtend – tekst gecorrigeerd',
+    '2099-11-07 08:00:00+01', '2099-11-07 10:00:00+01',
+    '6b000000-0000-4000-8000-000000000002',
+    '6b000000-0000-4000-8000-000000000026'
+  ) as result
+) as preview;
+reset role;
+select ok(
+  (select impact_snapshot -> 'booking_blockers'
+   from app.shift_change_proposals
+   where id = current_setting('cluvo.test.a17_transfer_proposal')::uuid)
+    @> '[{"blocker_kind":"transfer_pending"}]'::jsonb,
+  'A17: impact preview marks a transfer-pending booking as a blocker'
+);
+
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select throws_ok(
+  format(
+    'select api.apply_shift_change(%L,%L,1,%L,%L)',
+    '62000000-0000-4000-8000-000000000001',
+    current_setting('cluvo.test.a17_transfer_proposal'),
+    current_setting('cluvo.test.a17_transfer_hash'),
+    '6b000000-0000-4000-8000-000000000027'
+  ),
+  '55000', 'TRANSFER_PENDING_BLOCKS_SHIFT_CHANGE',
+  'A17: material change cannot strand an open transfer request'
+);
+reset role;
+select is(
+  (select state from app.transfer_requests
+   where id = '6b000000-0000-4000-8000-000000000024'),
+  'open', 'A17: blocked material change preserves the open transfer request'
+);
+select is(
+  (select state from app.bookings
+   where id = '6b000000-0000-4000-8000-000000000013'),
+  'transfer_pending', 'A17: blocked material change preserves transfer-pending state'
+);
+update app.transfer_requests
+set state = 'withdrawn', updated_at = statement_timestamp(), version = version + 1
+where id = '6b000000-0000-4000-8000-000000000024';
+update app.bookings
+set state = 'booked', updated_at = statement_timestamp(), version = version + 1
+where id = '6b000000-0000-4000-8000-000000000013';
+
+-- The proposed interval must retain the configured per-person conditions for
+-- each occupied booking. Buddy/minimum-experienced staffing is not modelled by
+-- this command yet and remains explicit open A17/A27 scope.
+insert into app.qualification_types (id, tenant_id, name) values (
+  '6b000000-0000-4000-8000-000000000028',
+  '62000000-0000-4000-8000-000000000001', 'A17 intervalkwalificatie'
+);
+insert into app.shift_requirements (
+  id, tenant_id, shift_id, minimum_age, qualification_type_id
+) values (
+  '6b000000-0000-4000-8000-000000000029',
+  '62000000-0000-4000-8000-000000000001',
+  '6b000000-0000-4000-8000-000000000003', 120,
+  '6b000000-0000-4000-8000-000000000028'
+);
+insert into app.unavailability_periods (
+  id, tenant_id, person_id, starts_at, ends_at, private_note
+) values (
+  '6b000000-0000-4000-8000-000000000030',
+  '62000000-0000-4000-8000-000000000001',
+  '63000000-0000-4000-8000-000000000002',
+  '2099-11-07 08:30:00+01', '2099-11-07 09:30:00+01', 'synthetische A17-test'
+);
+insert into app.person_qualifications (
+  id, tenant_id, person_id, qualification_type_id,
+  achieved_at, expires_at, verified_by_auth_user_id
+) values (
+  '6b000000-0000-4000-8000-000000000033',
+  '62000000-0000-4000-8000-000000000001',
+  '63000000-0000-4000-8000-000000000002',
+  '6b000000-0000-4000-8000-000000000028',
+  '2099-01-01 00:00:00+01', '2099-11-07 09:00:00+01',
+  '61000000-0000-4000-8000-000000000003'
+);
+
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select set_config('cluvo.test.a17_eligibility_proposal', preview.result ->> 'resource_id', true),
+       set_config('cluvo.test.a17_eligibility_hash', preview.result ->> 'impact_hash', true)
+from (
+  select api.preview_shift_change(
+    '62000000-0000-4000-8000-000000000001', '6b000000-0000-4000-8000-000000000003', 3,
+    'Conceptdienst ochtend – tekst gecorrigeerd',
+    '2099-11-07 08:00:00+01', '2099-11-07 10:00:00+01',
+    '6b000000-0000-4000-8000-000000000002',
+    '6b000000-0000-4000-8000-000000000031'
+  ) as result
+) as preview;
+reset role;
+select ok(
+  (select impact_snapshot -> 'eligibility_blockers'
+   from app.shift_change_proposals
+   where id = current_setting('cluvo.test.a17_eligibility_proposal')::uuid)
+    @> '[{"blocker_kind":"unavailability"},{"blocker_kind":"minimum_age"},{"blocker_kind":"qualification"}]'::jsonb,
+  'A17: preview reports unavailability, age and qualification blockers'
+);
+
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select throws_ok(
+  format(
+    'select api.apply_shift_change(%L,%L,1,%L,%L)',
+    '62000000-0000-4000-8000-000000000001',
+    current_setting('cluvo.test.a17_eligibility_proposal'),
+    current_setting('cluvo.test.a17_eligibility_hash'),
+    '6b000000-0000-4000-8000-000000000032'
+  ),
+  '42501', 'NOT_ELIGIBLE_IMPACT',
+  'A17: apply blocks a proposed interval on a configured eligibility failure'
+);
+reset role;
+select is(
+  (select version from app.shifts where id = '6b000000-0000-4000-8000-000000000003'),
+  3::bigint, 'A17: eligibility blockers leave the published shift unchanged'
+);
+
+update app.shift_requirements
+set minimum_age = 18
+where id = '6b000000-0000-4000-8000-000000000029';
+update app.unavailability_periods
+set starts_at = '2099-11-06 08:30:00+01',
+    ends_at = '2099-11-06 09:30:00+01',
+    updated_at = statement_timestamp(),
+    version = version + 1
+where id = '6b000000-0000-4000-8000-000000000030';
+update app.person_qualifications
+set expires_at = '2100-01-01 00:00:00+01'
+where id = '6b000000-0000-4000-8000-000000000033';
+
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select set_config('cluvo.test.a17_grant_proposal', preview.result ->> 'resource_id', true),
+       set_config('cluvo.test.a17_grant_hash', preview.result ->> 'impact_hash', true)
+from (
+  select api.preview_shift_change(
+    '62000000-0000-4000-8000-000000000001', '6b000000-0000-4000-8000-000000000003', 3,
+    'Conceptdienst ochtend – tekst gecorrigeerd',
+    '2099-11-07 08:00:00+01', '2099-11-07 10:00:00+01',
+    '6b000000-0000-4000-8000-000000000002',
+    '6b000000-0000-4000-8000-000000000042'
+  ) as result
+) as preview;
+reset role;
+select is(
+  jsonb_array_length((select impact_snapshot -> 'eligibility_blockers'
+                      from app.shift_change_proposals
+                      where id = current_setting('cluvo.test.a17_grant_proposal')::uuid)),
+  1, 'A17: an uncovered proposed interval has one remaining eligibility blocker'
+);
+select ok(
+  (select impact_snapshot -> 'eligibility_blockers'
+   from app.shift_change_proposals
+   where id = current_setting('cluvo.test.a17_grant_proposal')::uuid)
+    @> '[{"blocker_kind":"executor_obligation_grant","reference_id":"6b000000-0000-4000-8000-000000000012"}]'::jsonb,
+  'A17: impact snapshot identifies the uncovered executor-obligation grant'
+);
+
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select throws_ok(
+  format(
+    'select api.apply_shift_change(%L,%L,1,%L,%L)',
+    '62000000-0000-4000-8000-000000000001',
+    current_setting('cluvo.test.a17_grant_proposal'),
+    current_setting('cluvo.test.a17_grant_hash'),
+    '6b000000-0000-4000-8000-000000000043'
+  ),
+  '42501', 'NOT_ELIGIBLE_IMPACT',
+  'A17: apply blocks a proposed interval outside the executor-obligation grant'
+);
+reset role;
+select is(
+  (select version from app.shifts where id = '6b000000-0000-4000-8000-000000000003'),
+  3::bigint, 'A17: uncovered grant leaves the published shift unchanged'
+);
+update app.executor_obligation_grants
+set valid_from = '2099-11-07 07:00:00+01'
+where id = '6b000000-0000-4000-8000-000000000038';
+
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select set_config('cluvo.test.a17_material_proposal', preview.result ->> 'resource_id', true),
+       set_config('cluvo.test.a17_material_hash', preview.result ->> 'impact_hash', true)
+from (
+  select api.preview_shift_change(
+    '62000000-0000-4000-8000-000000000001', '6b000000-0000-4000-8000-000000000003', 3,
+    'Conceptdienst ochtend – tekst gecorrigeerd',
+    '2099-11-07 10:00:00+01', '2099-11-07 12:00:00+01',
+    '6b000000-0000-4000-8000-000000000002',
+    '6b000000-0000-4000-8000-000000000017'
+  ) as result
+) as preview;
+reset role;
+select is(
+  jsonb_array_length((select impact_snapshot -> 'affected_bookings'
+                      from app.shift_change_proposals
+                      where id = current_setting('cluvo.test.a17_material_proposal')::uuid)),
+  1, 'A17: material-change preview records the exact affected booking'
+);
+select is(
+  jsonb_array_length((select impact_snapshot -> 'booking_conflicts'
+                      from app.shift_change_proposals
+                      where id = current_setting('cluvo.test.a17_material_proposal')::uuid)),
+  1, 'A17: impact preview exposes a new overlap with another active booking'
+);
+
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select throws_ok(
+  format(
+    'select api.apply_shift_change(%L,%L,1,%L,%L)',
+    '62000000-0000-4000-8000-000000000001',
+    current_setting('cluvo.test.a17_material_proposal'),
+    current_setting('cluvo.test.a17_material_hash'),
+    '6b000000-0000-4000-8000-000000000018'
+  ),
+  '23P01', 'PERSON_OVERLAP_IMPACT',
+  'A17: a material time change cannot create an executor overlap'
+);
+reset role;
+select is((select version from app.shifts where id = '6b000000-0000-4000-8000-000000000003'),
+          3::bigint, 'A17: blocked overlap leaves the shift unchanged');
+
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select set_config('cluvo.test.a17_material_proposal', preview.result ->> 'resource_id', true),
+       set_config('cluvo.test.a17_material_hash', preview.result ->> 'impact_hash', true)
+from (
+  select api.preview_shift_change(
+    '62000000-0000-4000-8000-000000000001', '6b000000-0000-4000-8000-000000000003', 3,
+    'Conceptdienst ochtend – tekst gecorrigeerd',
+    '2099-11-07 08:00:00+01', '2099-11-07 10:00:00+01',
+    '6b000000-0000-4000-8000-000000000002',
+    '6b000000-0000-4000-8000-000000000022'
+  ) as result
+) as preview;
+reset role;
+select is(
+  jsonb_array_length((select impact_snapshot -> 'booking_conflicts'
+                      from app.shift_change_proposals
+                      where id = current_setting('cluvo.test.a17_material_proposal')::uuid)),
+  0, 'A17: revised material impact has no executor overlap'
+);
+
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select lives_ok(
+  format(
+    'select api.apply_shift_change(%L,%L,1,%L,%L)',
+    '62000000-0000-4000-8000-000000000001',
+    current_setting('cluvo.test.a17_material_proposal'),
+    current_setting('cluvo.test.a17_material_hash'),
+    '6b000000-0000-4000-8000-000000000023'
+  ),
+  'A17: non-conflicting confirmed material impact applies atomically'
+);
+select lives_ok(
+  format(
+    'select api.apply_shift_change(%L,%L,1,%L,%L)',
+    '62000000-0000-4000-8000-000000000001',
+    current_setting('cluvo.test.a17_material_proposal'),
+    current_setting('cluvo.test.a17_material_hash'),
+    '6b000000-0000-4000-8000-000000000023'
+  ),
+  'A17: material-change apply retry is idempotent'
+);
+reset role;
+select is((select version from app.shifts where id = '6b000000-0000-4000-8000-000000000003'),
+          4::bigint, 'A17: material change advances the shift once');
+select is((select location_id from app.shifts where id = '6b000000-0000-4000-8000-000000000003'),
+          '6b000000-0000-4000-8000-000000000002'::uuid,
+          'A17: confirmed material change stores the reviewed location');
+select is((select id from app.shift_positions where id = '6b000000-0000-4000-8000-000000000005'),
+          '6b000000-0000-4000-8000-000000000005'::uuid,
+          'A17: moving time preserves the concrete position identity');
+select is((select starts_at from app.shift_positions where id = '6b000000-0000-4000-8000-000000000005'),
+          '2099-11-07 07:00:00+00'::timestamptz,
+          'A17: the concrete position receives the reviewed new time');
+select is((select state from app.bookings where id = '6b000000-0000-4000-8000-000000000013'),
+          'reconfirmation_required',
+          'A17: only the affected occupied booking requires reconfirmation');
+select is((select state from app.bookings where id = '6b000000-0000-4000-8000-000000000020'),
+          'booked', 'A17: an unaffected booking remains booked');
+select ok(
+  (select starts_at_snapshot = '2099-11-07 09:00:00+01'::timestamptz
+          and ends_at_snapshot = '2099-11-07 11:00:00+01'::timestamptz
+          and pending_starts_at = '2099-11-07 08:00:00+01'::timestamptz
+          and pending_ends_at = '2099-11-07 10:00:00+01'::timestamptz
+   from app.bookings
+   where id = '6b000000-0000-4000-8000-000000000013'),
+  'A17: reconfirmation reserves the proposed interval without rewriting booking history'
+);
+select is(
+  (select published_snapshot
+   from app.shift_publication_batch_items
+   where shift_id = '6b000000-0000-4000-8000-000000000003'),
+  jsonb_build_object(
+    'title', 'Conceptdienst ochtend',
+    'starts_at', '2099-11-07 09:00:00+01'::timestamptz,
+    'ends_at', '2099-11-07 11:00:00+01'::timestamptz,
+    'location_id', null::uuid,
+    'credit_minutes', 90,
+    'capacity', 1
+  ),
+  'A17: immutable publication history keeps the exact pre-edit shift snapshot'
+);
+select is(
+  (select count(*)::integer from app.booking_events
+   where booking_id = '6b000000-0000-4000-8000-000000000013'
+     and reason_code = 'material_shift_change'),
+  1, 'A17: material change records one booking impact event despite retry'
+);
+select is(
+  (select count(*)::integer
+   from app.notification_intents as intent
+   join app.notification_categories as category
+     on category.tenant_id = intent.tenant_id and category.id = intent.category_id
+   where category.category_key = 'shift.change'
+     and intent.recipient_person_id = '63000000-0000-4000-8000-000000000002'),
+  1, 'A17: material change creates one targeted information intent'
+);
+select is(
+  (select count(*)::integer
+   from app.notification_outbox as outbox
+   join app.notification_intents as intent
+     on intent.tenant_id = outbox.tenant_id and intent.id = outbox.intent_id
+   join app.notification_categories as category
+     on category.tenant_id = intent.tenant_id and category.id = intent.category_id
+   where category.category_key = 'shift.change'
+     and intent.recipient_person_id = '63000000-0000-4000-8000-000000000002'
+     and outbox.status = 'queued'),
+  1, 'A17 I: targeted change information is queued once in the local outbox'
+);
+
+-- The pending interval participates in the database-wide overlap invariant.
+insert into app.shifts (
+  id, tenant_id, type_version_id, committee_id, category_id, title,
+  starts_at, ends_at, credit_minutes, cancellation_minutes, state, published_at
+) values (
+  '6b000000-0000-4000-8000-000000000034',
+  '62000000-0000-4000-8000-000000000001',
+  '65000000-0000-4000-8000-000000000004',
+  '64000000-0000-4000-8000-000000000001',
+  '65000000-0000-4000-8000-000000000002',
+  'Overlap alleen met pending interval',
+  '2099-11-07 08:30:00+01', '2099-11-07 09:00:00+01',
+  30, 2880, 'published', statement_timestamp()
+);
+insert into app.shift_positions (
+  id, tenant_id, shift_id, ordinal, starts_at, ends_at
+) values (
+  '6b000000-0000-4000-8000-000000000035',
+  '62000000-0000-4000-8000-000000000001',
+  '6b000000-0000-4000-8000-000000000034', 1,
+  '2099-11-07 08:30:00+01', '2099-11-07 09:00:00+01'
+);
+select throws_ok(
+  $$insert into app.bookings (
+      id, tenant_id, position_id, executor_person_id, obligation_id, state,
+      booked_by_auth_user_id, starts_at_snapshot, ends_at_snapshot,
+      credit_minutes_snapshot, cancellation_deadline_snapshot,
+      task_version_snapshot, idempotency_key
+    ) values (
+      '6b000000-0000-4000-8000-000000000036',
+      '62000000-0000-4000-8000-000000000001',
+      '6b000000-0000-4000-8000-000000000035',
+      '63000000-0000-4000-8000-000000000002',
+      '6b000000-0000-4000-8000-000000000012', 'booked',
+      '61000000-0000-4000-8000-000000000002',
+      '2099-11-07 08:30:00+01', '2099-11-07 09:00:00+01', 30,
+      '2099-11-05 08:30:00+01', '65000000-0000-4000-8000-000000000004',
+      '6b000000-0000-4000-8000-000000000037'
+    )$$,
+  '23P01', null,
+  'A17: a later booking cannot overlap the reserved reconfirmation interval'
+);
+
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select throws_ok(
+  $$select api.preview_shift_change(
+      '62000000-0000-4000-8000-000000000001', '6b000000-0000-4000-8000-000000000003', 3,
+      'Verouderde wijziging', '2099-11-07 10:00:00+01', '2099-11-07 12:00:00+01',
+      '6b000000-0000-4000-8000-000000000002', '6b000000-0000-4000-8000-000000000019')$$,
+  '40001', 'STALE_VERSION', 'A17: an obsolete expected version cannot create a new impact preview'
+);
+reset role;
 
 -- A22/A23: exact text, explicit guardian acceptance, and questions without
 -- accidental acceptance.

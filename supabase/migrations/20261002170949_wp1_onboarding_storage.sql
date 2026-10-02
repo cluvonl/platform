@@ -24,14 +24,66 @@ create unique index household_invitations_active_email_uq
   on app.household_invitations (tenant_id, household_id, invited_email_hash)
   where delivery_status in ('pending', 'sent');
 
+-- A household split is a reviewed dossier transition, not a side effect of a
+-- second account or intake.  The applied decision identifies the shared child,
+-- the parent moving to the new dossier and the explicit link to the already
+-- existing seasonal obligation.
+create table app.household_change_cases (
+  id uuid primary key default gen_random_uuid(),
+  tenant_id uuid not null,
+  kind text not null check (kind = 'split'),
+  source_household_id uuid not null,
+  destination_household_id uuid not null,
+  shared_child_person_id uuid not null,
+  destination_parent_person_id uuid not null,
+  obligation_id uuid not null,
+  obligation_link_kind text not null
+    check (obligation_link_kind in ('contributor', 'progress_only')),
+  source_household_version bigint not null check (source_household_version > 0),
+  status text not null default 'applied' check (status = 'applied'),
+  decision_reason text not null check (nullif(btrim(decision_reason), '') is not null),
+  decided_by_auth_user_id uuid not null,
+  idempotency_key uuid not null,
+  decided_at timestamptz not null default statement_timestamp(),
+  created_at timestamptz not null default statement_timestamp(),
+  version bigint not null default 1 check (version > 0),
+  unique (tenant_id, id),
+  unique (tenant_id, destination_household_id),
+  unique (tenant_id, decided_by_auth_user_id, idempotency_key),
+  foreign key (tenant_id, source_household_id)
+    references app.households(tenant_id, id) on delete restrict,
+  foreign key (tenant_id, destination_household_id)
+    references app.households(tenant_id, id) on delete restrict,
+  foreign key (tenant_id, shared_child_person_id)
+    references app.persons(tenant_id, id) on delete restrict,
+  foreign key (tenant_id, destination_parent_person_id)
+    references app.persons(tenant_id, id) on delete restrict,
+  foreign key (tenant_id, obligation_id)
+    references app.obligations(tenant_id, id) on delete restrict,
+  foreign key (decided_by_auth_user_id) references auth.users(id) on delete restrict,
+  check (source_household_id <> destination_household_id),
+  check (shared_child_person_id <> destination_parent_person_id)
+);
+
+alter table app.household_change_cases enable row level security;
+alter table app.household_change_cases force row level security;
+revoke all on table app.household_change_cases from public, anon, authenticated, service_role;
+
+create trigger household_change_cases_immutable
+before update or delete on app.household_change_cases
+for each row execute function internal.reject_immutable_change();
+
 grant insert on
   app.persons,
+  app.households,
   app.household_invitations,
   app.account_profiles,
   app.account_person_links,
   app.tenant_memberships,
   app.household_person_links,
   app.household_access_grants,
+  app.household_obligation_links,
+  app.household_change_cases,
   app.executor_obligation_grants,
   app.access_grants,
   app.intake_profiles
@@ -44,14 +96,24 @@ grant update on
   app.tenant_memberships
 to cluvo_command_owner;
 
+grant update (separated_parents, updated_at, version)
+  on app.households to cluvo_command_owner;
+grant update (ends_at)
+  on app.household_person_links to cluvo_command_owner;
+grant update (revoked_at, updated_at, version)
+  on app.household_access_grants to cluvo_command_owner;
+
+grant select on app.household_change_cases to cluvo_command_owner;
+
 do $command_policies$
 declare
   relation_name text;
 begin
   foreach relation_name in array array[
-    'persons', 'household_invitations', 'account_profiles',
+    'persons', 'households', 'household_invitations', 'account_profiles',
     'account_person_links', 'tenant_memberships', 'household_person_links',
-    'household_access_grants', 'executor_obligation_grants', 'access_grants',
+    'household_access_grants', 'household_obligation_links',
+    'household_change_cases', 'executor_obligation_grants', 'access_grants',
     'intake_profiles'
   ]
   loop
@@ -62,7 +124,8 @@ begin
   end loop;
 
   foreach relation_name in array array[
-    'persons', 'household_invitations', 'account_profiles', 'tenant_memberships'
+    'persons', 'households', 'household_invitations', 'account_profiles',
+    'tenant_memberships', 'household_person_links', 'household_access_grants'
   ]
   loop
     execute format(
@@ -649,6 +712,484 @@ $function$;
 revoke execute on function api.accept_household_invitation(text)
   from public, anon, service_role;
 grant execute on function api.accept_household_invitation(text) to authenticated;
+
+create policy wp1_command_owner_select on app.household_change_cases
+  for select to cluvo_command_owner using (true);
+
+create or replace function internal.apply_household_split(
+  p_tenant_id uuid,
+  p_source_household_id uuid,
+  p_expected_source_version bigint,
+  p_shared_child_person_id uuid,
+  p_destination_parent_person_id uuid,
+  p_destination_label text,
+  p_destination_intake_code_hash_hex text,
+  p_obligation_id uuid,
+  p_obligation_link_kind text,
+  p_decision_reason text,
+  p_idempotency_key uuid
+)
+returns table (
+  ok boolean,
+  resource_id uuid,
+  version bigint,
+  event_ids uuid[],
+  result jsonb
+)
+language plpgsql
+security definer
+set search_path = ''
+as $function$
+declare
+  v_actor uuid := internal.current_actor_uid();
+  v_claim record;
+  v_source app.households%rowtype;
+  v_destination_parent_auth_user_id uuid;
+  v_destination_parent_kind text;
+  v_destination_household_id uuid := gen_random_uuid();
+  v_case_id uuid := gen_random_uuid();
+  v_event_id uuid := gen_random_uuid();
+  v_effective_at timestamptz := statement_timestamp();
+  v_result jsonb;
+begin
+  if v_actor is null
+    or not internal.is_active_member(p_tenant_id)
+    or not internal.has_permission(
+      p_tenant_id,
+      'household.review',
+      'household',
+      p_source_household_id
+    )
+  then
+    raise exception using errcode = '42501', message = 'FORBIDDEN';
+  end if;
+  if p_expected_source_version is null
+    or p_expected_source_version < 1
+    or p_source_household_id is null
+    or p_shared_child_person_id is null
+    or p_destination_parent_person_id is null
+    or p_shared_child_person_id = p_destination_parent_person_id
+    or nullif(btrim(p_destination_label), '') is null
+    or length(btrim(p_destination_label)) > 200
+    or p_destination_intake_code_hash_hex is null
+    or p_destination_intake_code_hash_hex !~ '^[0-9a-f]{64}$'
+    or p_obligation_id is null
+    or p_obligation_link_kind is null
+    or p_obligation_link_kind not in ('contributor', 'progress_only')
+    or nullif(btrim(p_decision_reason), '') is null
+    or length(btrim(p_decision_reason)) > 2000
+    or p_idempotency_key is null
+  then
+    raise exception using errcode = '22023', message = 'INVALID_HOUSEHOLD_SPLIT';
+  end if;
+
+  select * into v_claim
+  from internal.claim_idempotency(
+    p_tenant_id,
+    'apply_household_split',
+    p_idempotency_key,
+    jsonb_build_object(
+      'source_household_id', p_source_household_id,
+      'expected_source_version', p_expected_source_version,
+      'shared_child_person_id', p_shared_child_person_id,
+      'destination_parent_person_id', p_destination_parent_person_id,
+      'destination_label', btrim(p_destination_label),
+      'destination_intake_code_hash', p_destination_intake_code_hash_hex,
+      'obligation_id', p_obligation_id,
+      'obligation_link_kind', p_obligation_link_kind,
+      'decision_reason', btrim(p_decision_reason)
+    )
+  );
+  if v_claim.replay_result is not null then
+    return query select
+      true,
+      (v_claim.replay_result ->> 'resource_id')::uuid,
+      (v_claim.replay_result ->> 'version')::bigint,
+      array(
+        select value::uuid
+        from jsonb_array_elements_text(v_claim.replay_result -> 'event_ids')
+      ),
+      v_claim.replay_result -> 'result';
+    return;
+  end if;
+
+  select household.* into v_source
+  from app.households as household
+  where household.tenant_id = p_tenant_id
+    and household.id = p_source_household_id
+  for update;
+  if not found or v_source.status = 'archived' then
+    raise exception using errcode = 'P0002', message = 'NOT_FOUND';
+  end if;
+  if v_source.version <> p_expected_source_version then
+    raise exception using errcode = '40001', message = 'STALE_VERSION';
+  end if;
+
+  perform obligation.id
+  from app.obligations as obligation
+  where obligation.tenant_id = p_tenant_id
+    and obligation.id = p_obligation_id
+    and obligation.assessed_household_id = p_source_household_id
+    and obligation.status in ('active', 'review_hold', 'fulfilled')
+  for update;
+  if not found or not exists (
+    select 1
+    from app.household_obligation_links as obligation_link
+    where obligation_link.tenant_id = p_tenant_id
+      and obligation_link.household_id = p_source_household_id
+      and obligation_link.obligation_id = p_obligation_id
+      and obligation_link.link_kind = 'liable'
+      and obligation_link.starts_at <= v_effective_at
+      and (obligation_link.ends_at is null or obligation_link.ends_at > v_effective_at)
+  ) then
+    raise exception using errcode = 'P0002', message = 'OBLIGATION_NOT_LINKED';
+  end if;
+
+  perform 1
+  from app.household_person_links as child_link
+  where child_link.tenant_id = p_tenant_id
+    and child_link.household_id = p_source_household_id
+    and child_link.person_id = p_shared_child_person_id
+    and child_link.kind = 'member'
+    and child_link.starts_at <= v_effective_at
+    and (child_link.ends_at is null or child_link.ends_at > v_effective_at);
+  if not found then
+    raise exception using errcode = '42501', message = 'SHARED_CHILD_NOT_IN_SOURCE_HOUSEHOLD';
+  end if;
+
+  perform 1
+  from app.household_person_links as parent_link
+  where parent_link.tenant_id = p_tenant_id
+    and parent_link.household_id = p_source_household_id
+    and parent_link.person_id = p_destination_parent_person_id
+    and parent_link.kind in ('parent', 'guardian')
+    and parent_link.starts_at <= v_effective_at
+    and (parent_link.ends_at is null or parent_link.ends_at > v_effective_at)
+  for update;
+  if not found then
+    raise exception using errcode = '42501', message = 'DESTINATION_PARENT_NOT_IN_SOURCE_HOUSEHOLD';
+  end if;
+  select case
+      when bool_or(parent_link.kind = 'parent') then 'parent'
+      else 'guardian'
+    end
+  into v_destination_parent_kind
+  from app.household_person_links as parent_link
+  where parent_link.tenant_id = p_tenant_id
+    and parent_link.household_id = p_source_household_id
+    and parent_link.person_id = p_destination_parent_person_id
+    and parent_link.kind in ('parent', 'guardian')
+    and parent_link.starts_at <= v_effective_at
+    and (parent_link.ends_at is null or parent_link.ends_at > v_effective_at);
+
+  select account_link.auth_user_id into v_destination_parent_auth_user_id
+  from app.account_person_links as account_link
+  join app.tenant_memberships as membership
+    on membership.tenant_id = account_link.tenant_id
+   and membership.auth_user_id = account_link.auth_user_id
+   and membership.status = 'active'
+   and membership.starts_at <= v_effective_at
+   and (membership.ends_at is null or membership.ends_at > v_effective_at)
+  where account_link.tenant_id = p_tenant_id
+    and account_link.person_id = p_destination_parent_person_id
+    and account_link.revoked_at is null;
+  if v_destination_parent_auth_user_id is null then
+    raise exception using errcode = '42501', message = 'DESTINATION_PARENT_ACCOUNT_REQUIRED';
+  end if;
+  if exists (
+    select 1
+    from app.households as household
+    where household.tenant_id = p_tenant_id
+      and household.intake_code_hash = decode(p_destination_intake_code_hash_hex, 'hex')
+  ) then
+    raise exception using errcode = '23505', message = 'INTAKE_CODE_ALREADY_USED';
+  end if;
+
+  insert into app.households (
+    id, tenant_id, label, intake_code_hash, separated_parents, status
+  ) values (
+    v_destination_household_id, p_tenant_id, btrim(p_destination_label),
+    decode(p_destination_intake_code_hash_hex, 'hex'), true, 'active'
+  );
+
+  update app.households as household
+  set separated_parents = true,
+      updated_at = v_effective_at,
+      version = household.version + 1
+  where household.tenant_id = p_tenant_id
+    and household.id = p_source_household_id
+    and household.version = p_expected_source_version;
+  if not found then
+    raise exception using errcode = '40001', message = 'STALE_VERSION';
+  end if;
+
+  update app.household_person_links as parent_link
+  set ends_at = v_effective_at
+  where parent_link.tenant_id = p_tenant_id
+    and parent_link.household_id = p_source_household_id
+    and parent_link.person_id = p_destination_parent_person_id
+    and parent_link.kind in ('parent', 'guardian')
+    and parent_link.ends_at is null;
+
+  insert into app.household_person_links (
+    tenant_id, household_id, person_id, kind, starts_at,
+    verified_by_auth_user_id
+  ) values
+  (
+    p_tenant_id, v_destination_household_id,
+    p_destination_parent_person_id, v_destination_parent_kind,
+    v_effective_at, v_actor
+  ),
+  (
+    p_tenant_id, v_destination_household_id,
+    p_shared_child_person_id, 'member', v_effective_at, v_actor
+  );
+
+  update app.household_access_grants as household_grant
+  set revoked_at = v_effective_at,
+      updated_at = v_effective_at,
+      version = household_grant.version + 1
+  where household_grant.tenant_id = p_tenant_id
+    and household_grant.household_id = p_source_household_id
+    and household_grant.auth_user_id = v_destination_parent_auth_user_id
+    and household_grant.revoked_at is null
+    and (household_grant.ends_at is null or household_grant.ends_at > v_effective_at);
+
+  insert into app.household_access_grants (
+    tenant_id, household_id, auth_user_id, can_view_progress,
+    can_manage_contacts, can_invite_executor, can_book_for,
+    starts_at, granted_by_auth_user_id
+  ) values (
+    p_tenant_id, v_destination_household_id,
+    v_destination_parent_auth_user_id, true, true, true, false,
+    v_effective_at, v_actor
+  );
+
+  insert into app.intake_profiles (
+    tenant_id, person_id, household_context_id, status
+  ) values (
+    p_tenant_id, p_destination_parent_person_id,
+    v_destination_household_id, 'draft'
+  );
+
+  insert into app.household_change_cases (
+    id, tenant_id, kind, source_household_id, destination_household_id,
+    shared_child_person_id, destination_parent_person_id, obligation_id,
+    obligation_link_kind, source_household_version, decision_reason,
+    decided_by_auth_user_id, idempotency_key, decided_at
+  ) values (
+    v_case_id, p_tenant_id, 'split', p_source_household_id,
+    v_destination_household_id, p_shared_child_person_id,
+    p_destination_parent_person_id, p_obligation_id,
+    p_obligation_link_kind, p_expected_source_version,
+    btrim(p_decision_reason), v_actor, p_idempotency_key, v_effective_at
+  );
+
+  insert into app.household_obligation_links (
+    tenant_id, household_id, obligation_id, link_kind,
+    starts_at, decision_ref
+  ) values (
+    p_tenant_id, v_destination_household_id, p_obligation_id,
+    p_obligation_link_kind, v_effective_at, v_case_id
+  );
+
+  insert into app.audit_events (
+    tenant_id, actor_auth_user_id, action, resource_type, resource_id,
+    scope_kind, scope_id, reason_code, idempotency_key, payload_minimal
+  ) values (
+    p_tenant_id, v_actor, 'household.split_applied',
+    'household_change_case', v_case_id, 'household',
+    p_source_household_id, 'committee_household_split', p_idempotency_key,
+    jsonb_build_object(
+      'destination_household_id', v_destination_household_id,
+      'shared_child_person_id', p_shared_child_person_id,
+      'obligation_id', p_obligation_id,
+      'obligation_link_kind', p_obligation_link_kind
+    )
+  );
+
+  insert into app.domain_events (
+    id, tenant_id, aggregate_type, aggregate_id, aggregate_version,
+    event_type, payload_minimal
+  ) values (
+    v_event_id, p_tenant_id, 'household_change_case', v_case_id, 1,
+    'household.split_applied',
+    jsonb_build_object(
+      'source_household_id', p_source_household_id,
+      'destination_household_id', v_destination_household_id,
+      'obligation_id', p_obligation_id
+    )
+  );
+
+  v_result := jsonb_build_object(
+    'resource_id', v_case_id,
+    'version', 1,
+    'event_ids', jsonb_build_array(v_event_id),
+    'result', jsonb_build_object(
+      'destination_household_id', v_destination_household_id,
+      'shared_child_person_id', p_shared_child_person_id,
+      'destination_parent_person_id', p_destination_parent_person_id,
+      'obligation_id', p_obligation_id,
+      'obligation_link_kind', p_obligation_link_kind
+    )
+  );
+  perform internal.complete_idempotency(v_claim.record_id, v_result);
+
+  return query select
+    true, v_case_id, 1::bigint, array[v_event_id], v_result -> 'result';
+end;
+$function$;
+
+alter function internal.apply_household_split(
+  uuid, uuid, bigint, uuid, uuid, text, text, uuid, text, text, uuid
+) owner to cluvo_command_owner;
+revoke execute on function internal.apply_household_split(
+  uuid, uuid, bigint, uuid, uuid, text, text, uuid, text, text, uuid
+) from public, anon, service_role;
+grant execute on function internal.apply_household_split(
+  uuid, uuid, bigint, uuid, uuid, text, text, uuid, text, text, uuid
+) to authenticated;
+
+create or replace function api.apply_household_split(
+  p_tenant_id uuid,
+  p_source_household_id uuid,
+  p_expected_source_version bigint,
+  p_shared_child_person_id uuid,
+  p_destination_parent_person_id uuid,
+  p_destination_label text,
+  p_destination_intake_code_hash_hex text,
+  p_obligation_id uuid,
+  p_obligation_link_kind text,
+  p_decision_reason text,
+  p_idempotency_key uuid
+)
+returns table (
+  ok boolean,
+  resource_id uuid,
+  version bigint,
+  event_ids uuid[],
+  result jsonb
+)
+language sql
+security invoker
+set search_path = ''
+as $function$
+  select * from internal.apply_household_split(
+    p_tenant_id, p_source_household_id, p_expected_source_version,
+    p_shared_child_person_id, p_destination_parent_person_id,
+    p_destination_label, p_destination_intake_code_hash_hex,
+    p_obligation_id, p_obligation_link_kind, p_decision_reason,
+    p_idempotency_key
+  );
+$function$;
+
+revoke execute on function api.apply_household_split(
+  uuid, uuid, bigint, uuid, uuid, text, text, uuid, text, text, uuid
+) from public, anon, service_role;
+grant execute on function api.apply_household_split(
+  uuid, uuid, bigint, uuid, uuid, text, text, uuid, text, text, uuid
+) to authenticated;
+
+-- Split decisions contain family links and the committee's motivation.  Keep
+-- the base table private and expose only a source-household-scoped readback to
+-- actors who still hold the review capability used to apply the decision.
+create or replace function internal.read_household_split_decisions(
+  p_tenant_id uuid,
+  p_source_household_id uuid
+)
+returns table (
+  decision_id uuid,
+  destination_household_id uuid,
+  shared_child_person_id uuid,
+  destination_parent_person_id uuid,
+  obligation_id uuid,
+  obligation_link_kind text,
+  status text,
+  decision_reason text,
+  decided_by_auth_user_id uuid,
+  decided_at timestamptz,
+  version bigint
+)
+language plpgsql
+stable
+security definer
+set search_path = ''
+as $function$
+begin
+  if internal.current_actor_uid() is null
+    or p_tenant_id is null
+    or p_source_household_id is null
+    or not internal.is_active_member(p_tenant_id)
+    or not internal.has_permission(
+      p_tenant_id,
+      'household.review',
+      'household',
+      p_source_household_id
+    )
+  then
+    raise exception using errcode = '42501', message = 'FORBIDDEN';
+  end if;
+
+  return query
+  select
+    change_case.id,
+    change_case.destination_household_id,
+    change_case.shared_child_person_id,
+    change_case.destination_parent_person_id,
+    change_case.obligation_id,
+    change_case.obligation_link_kind,
+    change_case.status,
+    change_case.decision_reason,
+    change_case.decided_by_auth_user_id,
+    change_case.decided_at,
+    change_case.version
+  from app.household_change_cases as change_case
+  where change_case.tenant_id = p_tenant_id
+    and change_case.source_household_id = p_source_household_id
+    and change_case.kind = 'split'
+  order by change_case.decided_at, change_case.id;
+end;
+$function$;
+
+alter function internal.read_household_split_decisions(uuid, uuid)
+  owner to cluvo_command_owner;
+revoke execute on function internal.read_household_split_decisions(uuid, uuid)
+  from public, anon, service_role;
+grant execute on function internal.read_household_split_decisions(uuid, uuid)
+  to authenticated;
+
+create or replace function api.read_household_split_decisions(
+  p_tenant_id uuid,
+  p_source_household_id uuid
+)
+returns table (
+  decision_id uuid,
+  destination_household_id uuid,
+  shared_child_person_id uuid,
+  destination_parent_person_id uuid,
+  obligation_id uuid,
+  obligation_link_kind text,
+  status text,
+  decision_reason text,
+  decided_by_auth_user_id uuid,
+  decided_at timestamptz,
+  version bigint
+)
+language sql
+stable
+security invoker
+set search_path = ''
+as $function$
+  select * from internal.read_household_split_decisions(
+    p_tenant_id,
+    p_source_household_id
+  );
+$function$;
+
+revoke execute on function api.read_household_split_decisions(uuid, uuid)
+  from public, anon, service_role;
+grant execute on function api.read_household_split_decisions(uuid, uuid)
+  to authenticated;
 
 -- The Storage service owns these relations. On a normal Supabase project they
 -- are present before application migrations run. The guard keeps the core SQL

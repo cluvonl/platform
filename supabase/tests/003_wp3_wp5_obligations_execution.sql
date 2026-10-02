@@ -159,24 +159,45 @@ insert into app.hour_ledger_entries (
   ('36200000-0000-4000-8000-000000000004', '32000000-0000-4000-8000-000000000001', '36100000-0000-4000-8000-000000000003', '36000000-0000-4000-8000-000000000003', 'award', 240, '2026-10-01 10:00:00+02', '31000000-0000-4000-8000-000000000003', '36300000-0000-4000-8000-000000000004'),
   ('36200000-0000-4000-8000-000000000005', '32000000-0000-4000-8000-000000000001', '36100000-0000-4000-8000-000000000004', '36000000-0000-4000-8000-000000000004', 'award', 240, '2026-10-01 10:00:00+02', '31000000-0000-4000-8000-000000000003', '36300000-0000-4000-8000-000000000005');
 
-insert into app.task_categories (id, tenant_id, committee_id, name) values (
-  '37000000-0000-4000-8000-000000000001',
-  '32000000-0000-4000-8000-000000000001',
-  '35000000-0000-4000-8000-000000000001', 'Bar'
-);
-insert into app.task_types (id, tenant_id, category_id, name) values (
-  '37100000-0000-4000-8000-000000000001',
-  '32000000-0000-4000-8000-000000000001',
-  '37000000-0000-4000-8000-000000000001', 'Bardienst'
-);
+insert into app.task_categories (
+  id, tenant_id, committee_id, name, minimum_positions
+) values
+  (
+    '37000000-0000-4000-8000-000000000001',
+    '32000000-0000-4000-8000-000000000001',
+    '35000000-0000-4000-8000-000000000001', 'Bar', 3
+  ),
+  (
+    '37000000-0000-4000-8000-000000000002',
+    '32000000-0000-4000-8000-000000000001',
+    '35000000-0000-4000-8000-000000000001', 'Keuken', 2
+  );
+insert into app.task_types (id, tenant_id, category_id, name) values
+  (
+    '37100000-0000-4000-8000-000000000001',
+    '32000000-0000-4000-8000-000000000001',
+    '37000000-0000-4000-8000-000000000001', 'Bardienst'
+  ),
+  (
+    '37100000-0000-4000-8000-000000000002',
+    '32000000-0000-4000-8000-000000000001',
+    '37000000-0000-4000-8000-000000000002', 'Keukendienst'
+  );
 insert into app.task_type_versions (
   id, tenant_id, task_type_id, revision, credit_minutes, approved_by_auth_user_id
-) values (
-  '37200000-0000-4000-8000-000000000001',
-  '32000000-0000-4000-8000-000000000001',
-  '37100000-0000-4000-8000-000000000001', 1, 120,
-  '31000000-0000-4000-8000-000000000003'
-);
+) values
+  (
+    '37200000-0000-4000-8000-000000000001',
+    '32000000-0000-4000-8000-000000000001',
+    '37100000-0000-4000-8000-000000000001', 1, 120,
+    '31000000-0000-4000-8000-000000000003'
+  ),
+  (
+    '37200000-0000-4000-8000-000000000002',
+    '32000000-0000-4000-8000-000000000001',
+    '37100000-0000-4000-8000-000000000002', 1, 180,
+    '31000000-0000-4000-8000-000000000003'
+  );
 
 insert into app.shifts (
   id, tenant_id, type_version_id, committee_id, category_id, title,
@@ -264,6 +285,19 @@ select ok(
     'EXECUTE'
   ),
   'anon cannot recognize a structural volunteer appointment'
+);
+select ok(
+  not has_function_privilege(
+    'anon',
+    'api.manage_planboard_shift(uuid,uuid,text,text,bigint,uuid,uuid,uuid,text,timestamptz,timestamptz,integer,uuid)',
+    'EXECUTE'
+  ),
+  'A16: anon cannot execute the plan-board command'
+);
+select ok(
+  not has_table_privilege('authenticated', 'app.shifts', 'INSERT')
+  and not has_table_privilege('authenticated', 'app.shift_positions', 'UPDATE'),
+  'A16: authenticated clients cannot bypass the guarded planning command'
 );
 
 set local role authenticated;
@@ -795,6 +829,297 @@ select ok(
   (select was_late from app.booking_cancellations
    where booking_id = current_setting('cluvo.test.old_deadline_booking')::uuid),
   'A15: the historical deadline comparison remains auditable'
+);
+
+reset role;
+
+-- A16 D-evidence: form and drag use one guarded command and therefore produce
+-- the same canonical shift/position model. Bar and kitchen minima are policy.
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '31000000-0000-4000-8000-000000000003', true);
+select set_config(
+  'request.jwt.claims',
+  '{"sub":"31000000-0000-4000-8000-000000000003","role":"authenticated"}',
+  true
+);
+select set_config(
+  'cluvo.test.a16_bar_shift',
+  (select resource_id::text from api.manage_planboard_shift(
+    '32000000-0000-4000-8000-000000000001', null,
+    'create', 'form', 0,
+    '37200000-0000-4000-8000-000000000001',
+    '35000000-0000-4000-8000-000000000001',
+    '37000000-0000-4000-8000-000000000001',
+    'A16 bardienst',
+    '2027-05-01 10:00:00+02', '2027-05-01 12:00:00+02', 3,
+    '38400000-0000-4000-8000-000000000001'
+  )),
+  true
+);
+select is(
+  (select count(*)::integer from app.shift_positions
+   where shift_id = current_setting('cluvo.test.a16_bar_shift')::uuid
+     and state = 'open'),
+  3,
+  'A16: form creation persists the configured bar minimum of three positions'
+);
+select ok(
+  (select bool_and(
+     starts_at = '2027-05-01 10:00:00+02'::timestamptz
+     and ends_at = '2027-05-01 12:00:00+02'::timestamptz
+   ) from app.shift_positions
+   where shift_id = current_setting('cluvo.test.a16_bar_shift')::uuid),
+  'A16: every created position has exactly the canonical shift interval'
+);
+select set_config(
+  'cluvo.test.a16_bar_positions',
+  (select jsonb_agg(id order by ordinal)::text
+   from app.shift_positions
+   where shift_id = current_setting('cluvo.test.a16_bar_shift')::uuid),
+  true
+);
+select is(
+  (select resource_id from api.manage_planboard_shift(
+    '32000000-0000-4000-8000-000000000001', null,
+    'create', 'form', 0,
+    '37200000-0000-4000-8000-000000000001',
+    '35000000-0000-4000-8000-000000000001',
+    '37000000-0000-4000-8000-000000000001',
+    'A16 bardienst',
+    '2027-05-01 10:00:00+02', '2027-05-01 12:00:00+02', 3,
+    '38400000-0000-4000-8000-000000000001'
+  )),
+  current_setting('cluvo.test.a16_bar_shift')::uuid,
+  'A16: an exact command retry returns the same canonical shift'
+);
+select is(
+  (select count(*)::integer from app.shifts where title = 'A16 bardienst'),
+  1,
+  'A16: idempotent create never duplicates the planned shift'
+);
+select throws_ok(
+  $$select * from api.manage_planboard_shift(
+    '32000000-0000-4000-8000-000000000001', null,
+    'create', 'form', 0,
+    '37200000-0000-4000-8000-000000000001',
+    '35000000-0000-4000-8000-000000000001',
+    '37000000-0000-4000-8000-000000000001',
+    'Te kleine bardienst',
+    '2027-05-01 14:00:00+02', '2027-05-01 16:00:00+02', 2,
+    '38400000-0000-4000-8000-000000000002'
+  )$$,
+  '23514', 'MINIMUM_STAFFING',
+  'A16: a bar shift below three positions is rejected server-side'
+);
+select set_config(
+  'cluvo.test.a16_kitchen_shift',
+  (select resource_id::text from api.manage_planboard_shift(
+    '32000000-0000-4000-8000-000000000001', null,
+    'create', 'form', 0,
+    '37200000-0000-4000-8000-000000000002',
+    '35000000-0000-4000-8000-000000000001',
+    '37000000-0000-4000-8000-000000000002',
+    'A16 keukendienst',
+    '2027-05-01 10:00:00+02', '2027-05-01 13:00:00+02', 2,
+    '38400000-0000-4000-8000-000000000003'
+  )),
+  true
+);
+select is(
+  (select count(*)::integer from app.shift_positions
+   where shift_id = current_setting('cluvo.test.a16_kitchen_shift')::uuid
+     and state = 'open'),
+  2,
+  'A16: kitchen planning persists its configured minimum of two positions'
+);
+
+select lives_ok(
+  format(
+    'select * from api.manage_planboard_shift(%L,%L,%L,%L,1,%L,%L,%L,%L,%L,%L,3,%L)',
+    '32000000-0000-4000-8000-000000000001',
+    current_setting('cluvo.test.a16_bar_shift'),
+    'move', 'drag',
+    '37200000-0000-4000-8000-000000000001',
+    '35000000-0000-4000-8000-000000000001',
+    '37000000-0000-4000-8000-000000000001',
+    'A16 bardienst',
+    '2027-05-02 10:00:00+02', '2027-05-02 12:00:00+02',
+    '38400000-0000-4000-8000-000000000004'
+  ),
+  'A16: drag move uses the same guarded command as the form route'
+);
+select is(
+  (select version from app.shifts
+   where id = current_setting('cluvo.test.a16_bar_shift')::uuid),
+  2::bigint,
+  'A16: drag move advances the optimistic shift version'
+);
+select is(
+  (select jsonb_agg(id order by ordinal)::text
+   from app.shift_positions
+   where shift_id = current_setting('cluvo.test.a16_bar_shift')::uuid),
+  current_setting('cluvo.test.a16_bar_positions'),
+  'A16: moving preserves all canonical position identities'
+);
+select lives_ok(
+  format(
+    'select * from api.manage_planboard_shift(%L,%L,%L,%L,2,%L,%L,%L,%L,%L,%L,3,%L)',
+    '32000000-0000-4000-8000-000000000001',
+    current_setting('cluvo.test.a16_bar_shift'),
+    'resize', 'form',
+    '37200000-0000-4000-8000-000000000001',
+    '35000000-0000-4000-8000-000000000001',
+    '37000000-0000-4000-8000-000000000001',
+    'A16 bardienst',
+    '2027-05-02 10:00:00+02', '2027-05-02 13:00:00+02',
+    '38400000-0000-4000-8000-000000000005'
+  ),
+  'A16: form resize changes the canonical interval through the same command'
+);
+select ok(
+  (select bool_and(
+     starts_at = '2027-05-02 10:00:00+02'::timestamptz
+     and ends_at = '2027-05-02 13:00:00+02'::timestamptz
+   ) from app.shift_positions
+   where shift_id = current_setting('cluvo.test.a16_bar_shift')::uuid
+     and state <> 'cancelled'),
+  'A16: resize keeps shift and all active position intervals consistent'
+);
+select is(
+  (select jsonb_agg(id order by ordinal)::text
+   from app.shift_positions
+   where shift_id = current_setting('cluvo.test.a16_bar_shift')::uuid),
+  current_setting('cluvo.test.a16_bar_positions'),
+  'A16: time resize also preserves position identities'
+);
+select throws_ok(
+  format(
+    'select * from api.manage_planboard_shift(%L,%L,%L,%L,2,%L,%L,%L,%L,%L,%L,3,%L)',
+    '32000000-0000-4000-8000-000000000001',
+    current_setting('cluvo.test.a16_bar_shift'),
+    'move', 'drag',
+    '37200000-0000-4000-8000-000000000001',
+    '35000000-0000-4000-8000-000000000001',
+    '37000000-0000-4000-8000-000000000001',
+    'A16 bardienst',
+    '2027-05-03 10:00:00+02', '2027-05-03 13:00:00+02',
+    '38400000-0000-4000-8000-000000000006'
+  ),
+  '40001', 'STALE_VERSION',
+  'A16: a stale drag payload cannot overwrite the resized shift'
+);
+select throws_ok(
+  format(
+    'select * from api.manage_planboard_shift(%L,%L,%L,%L,3,%L,%L,%L,%L,%L,%L,2,%L)',
+    '32000000-0000-4000-8000-000000000001',
+    current_setting('cluvo.test.a16_bar_shift'),
+    'resize', 'form',
+    '37200000-0000-4000-8000-000000000001',
+    '35000000-0000-4000-8000-000000000001',
+    '37000000-0000-4000-8000-000000000001',
+    'A16 bardienst',
+    '2027-05-02 10:00:00+02', '2027-05-02 13:00:00+02',
+    '38400000-0000-4000-8000-000000000007'
+  ),
+  '23514', 'MINIMUM_STAFFING',
+  'A16: resize cannot reduce bar capacity below the policy minimum'
+);
+
+-- Once published, the draft plan-board command must defer every material
+-- mutation to A17's preview/hash/apply path, including an occupied shift.
+reset role;
+update app.shifts
+set state = 'published', published_at = statement_timestamp(),
+    updated_at = statement_timestamp(), version = version + 1
+where id = current_setting('cluvo.test.a16_bar_shift')::uuid;
+
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '31000000-0000-4000-8000-000000000001', true);
+select set_config(
+  'request.jwt.claims',
+  '{"sub":"31000000-0000-4000-8000-000000000001","role":"authenticated"}',
+  true
+);
+select set_config(
+  'cluvo.test.a16_booking',
+  (select resource_id::text from api.book_shift(
+    '32000000-0000-4000-8000-000000000001',
+    current_setting('cluvo.test.a16_bar_shift')::uuid,
+    (select id from app.shift_positions
+     where shift_id = current_setting('cluvo.test.a16_bar_shift')::uuid
+     order by ordinal limit 1),
+    '33000000-0000-4000-8000-000000000001',
+    '36100000-0000-4000-8000-000000000007', 4,
+    '38400000-0000-4000-8000-000000000008'
+  )),
+  true
+);
+
+select set_config('request.jwt.claim.sub', '31000000-0000-4000-8000-000000000003', true);
+select set_config(
+  'request.jwt.claims',
+  '{"sub":"31000000-0000-4000-8000-000000000003","role":"authenticated"}',
+  true
+);
+select throws_ok(
+  format(
+    'select * from api.manage_planboard_shift(%L,%L,%L,%L,4,%L,%L,%L,%L,%L,%L,3,%L)',
+    '32000000-0000-4000-8000-000000000001',
+    current_setting('cluvo.test.a16_bar_shift'),
+    'move', 'drag',
+    '37200000-0000-4000-8000-000000000001',
+    '35000000-0000-4000-8000-000000000001',
+    '37000000-0000-4000-8000-000000000001',
+    'A16 bardienst',
+    '2027-03-01 09:30:00+01', '2027-03-01 12:30:00+01',
+    '38400000-0000-4000-8000-000000000009'
+  ),
+  'P0001', 'PUBLISHED_SHIFT_REQUIRES_CHANGE_PROPOSAL',
+  'A16/A17: a published drag move must use the change-proposal path'
+);
+select throws_ok(
+  format(
+    'select * from api.manage_planboard_shift(%L,%L,%L,%L,4,%L,%L,%L,%L,%L,%L,3,%L)',
+    '32000000-0000-4000-8000-000000000001',
+    current_setting('cluvo.test.a16_bar_shift'),
+    'resize', 'form',
+    '37200000-0000-4000-8000-000000000001',
+    '35000000-0000-4000-8000-000000000001',
+    '37000000-0000-4000-8000-000000000001',
+    'A16 bardienst',
+    '2027-05-02 10:00:00+02', '2027-05-02 14:00:00+02',
+    '38400000-0000-4000-8000-00000000000a'
+  ),
+  'P0001', 'PUBLISHED_SHIFT_REQUIRES_CHANGE_PROPOSAL',
+  'A16/A17: a published form resize must use the change-proposal path'
+);
+select ok(
+  (select starts_at = '2027-05-02 10:00:00+02'::timestamptz
+          and ends_at = '2027-05-02 13:00:00+02'::timestamptz
+          and version = 4
+   from app.shifts
+   where id = current_setting('cluvo.test.a16_bar_shift')::uuid),
+  'A16/A17: rejected published mutations leave the shift unchanged'
+);
+select is(
+  (select state from app.bookings
+   where id = current_setting('cluvo.test.a16_booking')::uuid),
+  'booked',
+  'A16/A17: the draft command cannot create booking impact on a published shift'
+);
+select ok(
+  (select starts_at_snapshot = '2027-05-02 10:00:00+02'::timestamptz
+          and ends_at_snapshot = '2027-05-02 13:00:00+02'::timestamptz
+   from app.bookings
+   where id = current_setting('cluvo.test.a16_booking')::uuid),
+  'A16/A17: rejected direct planning never overwrites booking snapshots'
+);
+select is(
+  (select count(*)::integer from app.booking_events
+   where booking_id = current_setting('cluvo.test.a16_booking')::uuid
+     and event_type = 'booking.reconfirmation_required'),
+  0,
+  'A16/A17: only the confirmed change-proposal path may emit impact events'
 );
 
 reset role;
