@@ -10,10 +10,10 @@ Datum: 2 oktober 2026 (`Europe/Amsterdam`). Dit verslag betreft de geverifieerde
 | Applicatiecheck | `npm run check` geslaagd: lint, TypeScript, 22 Node-tests, productiebuild en standalone HTTP-rooktest |
 | Dependency-audit | `npm audit --omit=dev --audit-level=high`: 0 kwetsbaarheden |
 | Routes | Build bevat OTP/confirm, workspaces, tenantoverzicht, intake, diensten, presentie en invitation-accept routes; beveiligde routes zijn dynamisch |
-| Lege database-opbouw | Zes migraties in timestampvolgorde toegepast op een geïsoleerde Supabase Postgres 17.6.1.171-container |
-| pgTAP | Zeven bestanden, 287 assertions, alle geslaagd |
-| Schema-readback | 135 `app`-tabellen; alle 135 met RLS enabled en forced; 44 API-functies en 15 API-views |
-| Functiegrenzen | 0 `SECURITY DEFINER`-functies in `api`; alle 86 verhoogde `internal`-functies hebben een expliciet leeg `search_path` |
+| Lege database-opbouw | Zeven migraties in timestampvolgorde toegepast op een geïsoleerde Supabase Postgres 17.6.1.171-container |
+| pgTAP | Acht bestanden, 435 assertions, alle geslaagd |
+| Schema-readback | 140 `app`-tabellen; alle 140 met RLS enabled en forced; 52 API-functies en 16 API-views |
+| Functiegrenzen | 0 `SECURITY DEFINER`-functies in `api`; alle 96 verhoogde `internal`-functies hebben een expliciet leeg `search_path` |
 | Grants | 0 API-executierechten voor `public` of `anon`; 0 directe INSERT/UPDATE/DELETE-tabellen voor `authenticated` in `app` |
 | Private Storage | Niet-publieke `cluvo-private`-bucket, 10 MiB-limiet, MIME-allowlist en vier RLS-policies geïnstalleerd tegen een lokale Storage-schemafixture |
 | Database-lint | `supabase db lint` voor `app,api,internal` op warningniveau: geen resultaten |
@@ -29,10 +29,22 @@ Datum: 2 oktober 2026 (`Europe/Amsterdam`). Dit verslag betreft de geverifieerde
 - Er is geen echte OTP-/mailaflevering, push, Sportlink/CSV-providerjob, financiële provider, webhook of scheduler uitgevoerd.
 - Er is geen volledige browseracceptatie met de vereiste profielen, schermreadback, mobiel bewijs en alle negatieve directe URL-/search-/exportpaden uitgevoerd.
 - Backup/restore, remote migratie, rollback en herdeploy van exact hetzelfde image-digest zijn niet bewezen.
+- Een upgrade vanaf een eerder uitgerolde migratiestand is niet uitgevoerd; de
+  databasecapture bewijst uitsluitend opbouw vanaf leeg.
+- Buddy/minimum-ervaren bezetting en het bijbehorende A17/A27-impactpad zijn nog
+  niet relationeel geïmplementeerd.
 - Er is geen productieomgeving aangemaakt, gemigreerd of gepubliceerd.
 
 ## Open acceptatiestatus
 
-Alle A01–A30 staan in `release/acceptance-register.json` op `OPEN`. De lokale pgTAP- en concurrencyresultaten zijn D/R-deelbewijs en voor A13 beperkt lokaal I-bewijs. Zij vervangen geen ontbrekend provider-, browser- of stagingbewijs. De precieze dekking en gaten staan in `docs/release/implementation-board.md` en `docs/release/v1-evidence.md`.
+Alle A01–A30 staan in `release/acceptance-register.json` op `OPEN`. De lokale
+pgTAP- en concurrencyresultaten zijn D/R-deelbewijs; A13 heeft beperkt lokaal
+concurrency-I-bewijs en A17 uitsluitend database→intent→outbox-I-deelbewijs.
+A10, A16, A17 en A29 hebben nu gerichte lokale command-/invarianttests, maar
+geen van deze resultaten vervangt ontbrekend provider-, browser- of
+stagingbewijs. De exacte capture staat in
+[20261002-84f234f-verification.md](release/evidence/local/20261002-84f234f-verification.md);
+de precieze dekking en gaten staan in `docs/release/implementation-board.md` en
+`docs/release/v1-evidence.md`.
 
 Wijzig een acceptatiestatus uitsluitend na bewijs op de exacte broncommit en migratieversie, met fixture/rollen, waargenomen database- én schermresultaat, artefact en stagingomgeving. Productie kan pas na alle A01–A30, herstelbewijs en expliciet akkoord in een afzonderlijke wijziging worden geactiveerd.

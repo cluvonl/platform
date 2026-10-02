@@ -1,33 +1,39 @@
 # Cluvo V1 — lokaal bewijsregister
 
-Bewijscapture: 2 oktober 2026, 20:27 CEST (`Europe/Amsterdam`)
+Bewijscapture: 2 oktober 2026, 21:33 CEST (`Europe/Amsterdam`)
 
 ## Huidig oordeel
 
-De overdracht, Club Signal-baseline, eerste echte appketen en brede lokale domeinbasis zijn reproduceerbaar gecontroleerd op implementatiecommit `947b2a5535c0e388cda020667bbab58a4b389a1f`.
+De overdracht, Club Signal-baseline, echte appketen en uitgebreide lokale domeinbasis zijn reproduceerbaar gecontroleerd op implementatiecommit `84f234fdc64e4b3d98fa88edaad952d5cbbe8297`.
 
 Lokaal geslaagd:
 
 - Next.js lint, typecheck, 22 Node-tests, productiebuild en standalone HTTP-readback;
-- zes migraties vanaf een lege database en 287/287 pgTAP-asserties;
+- zeven migraties vanaf een lege database en 435/435 pgTAP-asserties;
 - schema-/grant-/RLS-readback en database-lint;
 - een echte tweesessie-race voor de laatste dienstplaats;
 - een echte tweesessie-lockproef voor season close versus ledgerwriters;
 - negatieve runtime- en releasegates voor productie.
 
-Dit is **geen V1- of stagingacceptatie**. Er is geen remote stagingomgeving, echte Auth/Storage/Realtime-service, providerproef of volledige browser-E2E uitgevoerd. `release/acceptance-register.json` blijft leidend: `v1_ready=false`, `production_enabled=false` en A01–A30 staan alle dertig `OPEN`.
+Dit is **geen V1- of stagingacceptatie**. Er is geen remote stagingomgeving,
+echte Auth/Storage/Realtime-service, providerproef of volledige browser-E2E
+uitgevoerd. `release/acceptance-register.json` houdt A01–A30 alle dertig
+`OPEN`; `release/readiness.json` houdt `v1_ready=false` en
+`production_enabled=false`.
 
 ## E01 — bron, pakket en provenance
 
 | Veld | Waarde |
 |---|---|
 | Werkmap | `/home/codex/repos/cluvo/nextjs-starter` |
-| Gecontroleerde implementatiecommit | `947b2a5535c0e388cda020667bbab58a4b389a1f` |
-| Commitonderwerp | `feat: implement secure Cluvo local vertical slice` |
+| Gecontroleerde implementatiecommit | `84f234fdc64e4b3d98fa88edaad952d5cbbe8297` |
+| Commitonderwerp | `feat: close local acceptance command gaps` |
 | Geïmporteerde baselinecommit | `a9f62f3fe9e4ef5801b33a4247c74104017a9ba5` |
 | Oorspronkelijke prototypecommit | `5d96234ade7dba5f79bdd0f4ddbc21e26fc13801` |
 | Canon | `Duindorp_SV_V1_Releasecanon_v1.0.docx` |
 | Productierelease toegestaan | `false` |
+| Lokale verificatiecapture | [20261002-84f234f-verification.md](evidence/local/20261002-84f234f-verification.md) |
+| SHA-256 verificatiecapture | `dd06814736a90519315194b89123d4e9aff56841d4aa1c1314319eecc1280b9d` |
 
 | Controle | Resultaat |
 |---|---|
@@ -63,17 +69,22 @@ Migraties zijn op een leeggemaakte app/api/internal-basis in timestampvolgorde t
 4. `20261002170949_wp1_onboarding_storage.sql`
 5. `20261002171135_wp9_wp11_finance_people_seasons.sql`
 6. `20261002183000_vertical_read_models.sql`
+7. `20261002184500_assisted_member_actions.sql`
+
+Dit bewijst een opbouw vanaf leeg. Een afzonderlijk upgradepad vanaf een eerder
+uitgerolde migratiestand is niet uitgevoerd en blijft `OPEN`.
 
 | pgTAP-bestand | Assertions | Resultaat |
 |---|---:|---|
 | `001_wp1_wp2_core.sql` | 32 | PASS |
-| `002_wp1_onboarding.sql` | 25 | PASS |
-| `003_wp3_wp5_obligations_execution.sql` | 52 | PASS |
-| `004_wp6_wp8_domain_invariants.sql` | 56 | PASS |
+| `002_wp1_onboarding.sql` | 56 | PASS |
+| `003_wp3_wp5_obligations_execution.sql` | 74 | PASS |
+| `004_wp6_wp8_domain_invariants.sql` | 113 | PASS |
 | `005_wp6_wp8_rls.sql` | 30 | PASS |
 | `006_vertical_read_models.sql` | 11 | PASS |
 | `007_wp9_wp11_finance_people_seasons.sql` | 81 | PASS |
-| **Totaal** | **287** | **PASS** |
+| `008_a29_assisted_member_actions.sql` | 38 | PASS |
+| **Totaal** | **435** | **PASS** |
 
 Gerichte hardening die in deze run is bewezen:
 
@@ -85,18 +96,30 @@ Gerichte hardening die in deze run is bewezen:
 - een gesloten seizoen accepteert geen nieuwe ledgerpost;
 - verleden diensten zonder expliciete booking-close kunnen niet achteraf worden geboekt;
 - invitation-acceptatie met bookingrecht maakt exact één executor-obligation-grant.
+- A10-huishoudsplitsing maakt geen tweede verplichting, ledger, vrijstelling of
+  bookingrecht en bewaart een afzonderlijk dossier met gecontroleerde readback;
+- A16 gebruikt één servercommand voor formulier/drag-semantiek, stabiele
+  positions en optimistic concurrency; gepubliceerde wijzigingen kunnen deze
+  route niet omzeilen;
+- A17 publiceert batches atomair, bewaart de exacte publicatiesnapshot en
+  verwerkt materiële wijzigingen via preview/hash/apply, met transfer-,
+  overlap-, serverklok-, grant-, leeftijd-, kwalificatie- en
+  onbeschikbaarheidscontroles plus gerichte lokale outboxunits;
+- A29 boekt telefonisch in één transactie via de normale bookinginvarianten en
+  bewaart actor, subject, reden, effect en append-only correctiehistorie met
+  gescheiden geschilbevoegdheid.
 
 ## E04 — schema-, RLS- en grant-readback
 
 | Controle | Waargenomen resultaat |
 |---|---:|
-| `app`-tabellen | 135 |
-| RLS enabled | 135/135 |
-| RLS forced | 135/135 |
-| API-functies | 44 |
-| API-views | 15 |
+| `app`-tabellen | 140 |
+| RLS enabled | 140/140 |
+| RLS forced | 140/140 |
+| API-functies | 52 |
+| API-views | 16 |
 | `SECURITY DEFINER` in `api` | 0 |
-| Verhoogde `internal`-functies | 86; alle met expliciet leeg `search_path` |
+| Verhoogde `internal`-functies | 96; alle met expliciet leeg `search_path` |
 | API EXECUTE voor `public` | 0 |
 | API EXECUTE voor `anon` | 0 |
 | Directe app-table writes voor `authenticated` | 0 |
@@ -118,10 +141,10 @@ Dit is lokaal concurrency-I-deelbewijs voor A13. De browserconflict-/wachtlijstr
 
 ### Season close versus ledgerwriter
 
-`DATABASE_URL=… npm run db:test:locks` laat twee afzonderlijke transacties dezelfde transaction-scoped season/ledger-lock claimen. De tweede transactie wachtte in deze capture 2997 ms op de eerste en ging daarna door.
+`DATABASE_URL=… npm run db:test:locks` laat twee afzonderlijke transacties dezelfde transaction-scoped season/ledger-lock claimen. De tweede transactie wachtte in deze capture 3002 ms op de eerste en ging daarna door.
 
 ```json
-{"scenario":"SEASON_CLOSE_LEDGER_SERIALIZATION","contenders":2,"waited_milliseconds":2997,"result":"PASS"}
+{"scenario":"SEASON_CLOSE_LEDGER_SERIALIZATION","contenders":2,"waited_milliseconds":3002,"result":"PASS"}
 ```
 
 De workflow herhaalt beide concurrencyproeven na de lokale pgTAP-run.
@@ -137,9 +160,13 @@ Deze afbeeldingen bewijzen uitsluitend de visuele startbaseline, niet de mobiele
 
 ## Lokale dekking versus resterend bewijs
 
-- D-deelbewijs bestaat voor A01–A07, A12–A15, A20–A28 en A30.
-- Acceptatiespecifieke D ontbreekt nog voor A10, A16, A17 en A29.
-- R-deelbewijs is sterk voor delen van A05, A07–A09, A11–A12, A14, A18, A22, A24–A26 en A28, maar vervangt geen echte sessie-/browserproef.
+- Lokaal D-deelbewijs bestaat nu ook voor A10, A16, A17 en A29. A10 en A29
+  hebben gericht lokaal R-deelbewijs. Buddy/minimum-ervaren bezetting en het
+  bijbehorende A17/A27-impactpad zijn nog niet relationeel geïmplementeerd.
+- A17 heeft uitsluitend lokaal database→intent→outbox-I-deelbewijs; een lokale
+  queued outboxunit is niet hetzelfde als worker- of provideraflevering.
+- R-deelbewijs is sterk voor delen van A05, A07–A12, A14, A18, A22,
+  A24–A26, A28 en A29, maar vervangt geen echte sessie-/browserproef.
 - A13 heeft lokale D plus een echte tweesessie-race. De overige vereiste integratie-/jobproeven zijn niet volledig.
 - E/browserbewijs en remote stagingbewijs ontbreken voor alle A01–A30.
 
