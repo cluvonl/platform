@@ -1,0 +1,11 @@
+{
+  "source_site": "https://cluvo-club-signal.famgoldenbelt.chatgpt.site",
+  "source_commit": "5d96234ade7dba5f79bdd0f4ddbc21e26fc13801",
+  "source_version": 1,
+  "canon": "Duindorp_SV_V1_Releasecanon_v1.0.docx",
+  "created": "2026-10-02",
+  "reference_source": "reference/prototype-source",
+  "implementation_start": "nextjs-starter",
+  "prototype_state": "local browser demo",
+  "production_release_allowed": false
+}

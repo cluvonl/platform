@@ -1,0 +1,9 @@
+// WP1: pas activeren na echte authroutes en scope-autorisatie.
+import {type NextRequest} from 'next/server';
+import {updateSupabaseSession} from '@/lib/supabase/proxy';
+export async function proxy(request:NextRequest) {
+  const {response}=await updateSupabaseSession(request);
+  // Identiteit alleen is geen toestemming. Bescherm elke serveractie en query afzonderlijk.
+  return response;
+}
+export const config={matcher:['/((?!_next/static|_next/image|api/health|api/runtime-config|favicon.svg|.*\\.(?:png|jpg|jpeg|svg|webp)$).*)']};

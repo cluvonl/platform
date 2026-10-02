@@ -1,0 +1,11 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {obligationSummary as calc,contributionCents} from '../lib/domain/obligation.mjs';
+const base={targetMinutes:720,winterTargetMinutes:360,confirmedMinutes:240,beforeWinterMinutes:240};
+test('4 uur voor winter: inhaal2 binnen resterend8',()=>{const x=calc(base);assert.equal(x.remainingMinutes,480);assert.equal(x.winterShortfallMinutes,120)});
+test('8 voor winter plus4 na winter voldoet',()=>{const x=calc({...base,confirmedMinutes:720,beforeWinterMinutes:480});assert.equal(x.remainingMinutes,0);assert.equal(x.winterShortfallMinutes,0)});
+test('12 uur voor winter voldoet voor heel seizoen',()=>{assert.equal(calc({...base,confirmedMinutes:720,beforeWinterMinutes:720}).remainingMinutes,0)});
+test('gepland of onbevestigd zijn geen uitvoering',()=>{const x=calc({...base,pendingMinutes:120,plannedMinutes:180});assert.equal(x.remainingMinutes,480);assert.equal(x.needsReview,true)});
+test('huishoudvrijstelling verandert feitelijke inzet niet',()=>{const x=calc({...base,exempt:true});assert.equal(x.remainingMinutes,0);assert.equal(x.confirmedMinutes,240)});
+test('expliciet nultarget blijft nul',()=>{assert.equal(calc({...base,targetMinutes:0,winterTargetMinutes:0}).remainingMinutes,0)});
+test('3 uur tekort kost3750cent en geeneenheidsfout',()=>{assert.equal(contributionCents(180),3750);assert.equal(contributionCents(720),15000)});
+test('negatieve en onmogelijke waarden worden afgewezen',()=>{assert.throws(()=>calc({...base,confirmedMinutes:-1}));assert.throws(()=>calc({...base,beforeWinterMinutes:300}));assert.throws(()=>contributionCents(10,15000,0))});

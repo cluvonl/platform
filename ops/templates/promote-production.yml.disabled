@@ -1,0 +1,32 @@
+# Bewust NIET in .github/workflows. Ook na hernoemen blijft dit een harde stop.
+name: Production promotion — BLOCKED until V1
+on:
+  workflow_dispatch:
+    inputs:
+      staging_run_id:
+        description: Successful protected staging deployment run
+        required: true
+        type: string
+      expected_source_sha:
+        description: Exact approved staging source SHA
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: cluvo-production
+  cancel-in-progress: false
+jobs:
+  release_gate:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Production remains disabled
+        run: |
+          echo 'Cluvo V1 is niet vrijgegeven. Geen productiondeploy of migratie toegestaan.'
+          exit 1
+# Codex activeert dit later alleen na expliciet V1-akkoord.
+# Vereist dan: beschermde environment production + goedkeuring; readiness.json;
+# succesvolle stagingdeployment-run uit DEZE repository en vaste workflow;
+# exacte SHA/digest/migratiechecksums uit geverifieerd manifest; GEEN rebuild;
+# aparte productioncredentials/broker/Supabaseproject; backup/migratie/health/rollback.
+# Door gebruiker ingevoerde willekeurige image/SHA zonder herkomstcontrole is verboden.

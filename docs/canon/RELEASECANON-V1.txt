@@ -1,0 +1,324 @@
+Duindorp SV V1 releasecanon
+Verenigingstaken en vrijwilligersplatform
+Versie 1.0 | Vastgezette productbasis | 2 oktober 2026
+Deze canon legt vast wat de eerste volledige release van het maatwerkplatform moet kunnen. Hij is de leidende basis voor ontwerp, bouw, inrichting en acceptatie. Alle oorspronkelijke wensen, latere aanvullingen en de 28 overgenomen voorstellen behoren tot V1. Een bouwfase mag onderdelen in volgorde opleveren; V1 is pas volledig wanneer de gehele canon is gerealiseerd en gecontroleerd.
+De laatste gebruikersbesluiten gaan vóór eerdere voorstellen en de oorspronkelijke beleidsconcepten. Deze canon legt de productafspraken vast; publicatie van het verenigingsbeleid en de bijbehorende besluitvorming blijven afzonderlijk geregistreerde handelingen.
+Vastgezette kernbesluiten
+De standaardverplichting is twaalf uur per huishouden voor het gehele seizoen. Minimaal 50 procent moet vóór de winterstop zijn uitgevoerd. Extra uren vóór de winterstop tellen volledig mee voor het jaartotaal.
+De vrijwilligerscommissie plant een tekort op de wintergrens op passende taken direct na de winterstop. Deze inhaaluren blijven binnen de oorspronkelijke jaarverplichting.
+Welke vaste rollen voldoende inzet vormen, is configureerbaar. Een erkende actieve rol geeft vrijstelling voor het gehele gekoppelde huishouden.
+Teamtaken leveren nul uren op. Alleen de vrijwilligerscommissie kan ze goedkeuren voor de takenmarkt, met een vooraf vastgelegde urenwaarde.
+De reguliere afmeldtermijn is configureerbaar. Ziekte en nood blijven altijd meldbaar.
+Elk huishouden krijgt een eigen dossier en unieke intakecode. Vader, moeder, een lid van zestien jaar of ouder en toegestane extra uitvoerders kunnen eigen intakegegevens hebben.
+De vrijwilligerscommissie kan gescheiden ouders markeren en onafhankelijke intakes mogelijk maken. Intake en inzage volgen expliciete dossierrechten.
+Inloggen gebeurt met een persoonlijk e-mailadres en een eenmalige OTP. Een intakecode geeft zelfstandig geen toegang.
+Wedstrijden synchroniseren tweemaal per dag. Alle 28 aanvullende voorstellen zijn verplichte V1-functionaliteit.
+Gebruik van deze canon
+Hoofdstukken 2 tot en met 14 beschrijven het vereiste gedrag. Hoofdstukken 15 en 16 bevatten releaseproeven. Hoofdstukken 17 en 18 maken alle 28 voorstellen traceerbaar. Wijzigingen na vastzetting worden met reden, datum, eigenaar en een nieuw versienummer vastgelegd; de bestaande versie wordt bewaard.
+
+02  Organisatie en toegangsrechten
+De organisatie bestaat uit bestuur, commissies en teams. Een gebruiker kan meerdere functies hebben en wisselt herkenbaar van rol of werkruimte. Functionele aanstellingen, vrijstellende vrijwilligersrollen en systeemrechten worden afzonderlijk vastgelegd: een vrijstellende functie geeft niet vanzelf bestuurlijke toegang.
+Rol | Bereik en bevoegdheden
+Lid ouder of uitvoerder | Eigen toegestane huishoudgegevens, persoonlijke intake, taken, diensten, wedstrijden, agenda, afspraken en berichten.
+Vaste vrijwilliger | Eigen functie, inzet, opleidingen en instructies; verdere rechten uitsluitend volgens de aanstelling.
+Commissiebeheerder of coördinator | Eigen commissie, categorieën, coördinatoren, roosters, documenten, instructies, kanban en uitvoering bevestigen.
+Vrijwilligerscoördinator | Toegewezen portefeuille met commissies, teamouders en huishoudens; begeleiding, werving, herinneringen en passende plaatsing.
+Vrijwilligerscommissie | Centrale urencontrole, huishoudkoppelingen, taakwaarden, teamtaakgoedkeuring, winterplanning en uitzonderingen.
+Teamouder | Eigen teams, beperkte huishoudvoortgang, teamtaken, communicatie en hulpverzoeken.
+Bestuur | Organisatie, rolcatalogus, beleid, geaggregeerde voortgang en bevoegde besluiten en bezwaren.
+Financieel beheer | Goedgekeurde afrekeningen, facturen of export, betaalstatus en vrijwilligerspot.
+
+Afbakening van gegevens
+Een commissiecoördinator organiseert bijvoorbeeld de kantine. Een vrijwilligerscoördinator begeleidt vanuit de centrale vrijwilligerscommissie een portefeuille. De twee rollen blijven herkenbaar verschillend.
+Teamouders zien benodigde, bevestigde, geplande en resterende uren of de status Geen actie nodig. Vrijstellingsredenen, financiële achterstanden en persoonlijke intakeantwoorden vallen buiten dit overzicht.
+Financieel beheer ontvangt het besluit en de berekeningsgegevens die nodig zijn voor afrekening. Medische of persoonlijke achtergronden horen daar niet bij.
+Rollen en vervangingen hebben begin- en einddatums. Toegang wordt na beëindiging ingetrokken en jaarlijks herbevestigd. Iedere wijziging blijft herleidbaar.
+Bestanden, opmerkingen, zoekresultaten, exports, directe links en meldingen respecteren dezelfde rechten als de bron. Alleen verbergen van een knop is onvoldoende.
+
+03  Huishouddossiers en persoonlijke intake
+Een huishouddossier bevat de gekoppelde leden, ouders of verzorgers, toegestane uitvoerders, seizoensverplichting, besluiten en contactafspraken. Ieder dossier heeft een eigen stabiele identificatie en unieke intakecode. De code is een verwijzing voor het intakeproces en blijft gescheiden van authenticatie.
+Toevoegen en invullen
+Een bevoegde contactpersoon of de vrijwilligerscommissie kan een extra persoon uitnodigen. Een uitnodiging moet worden aanvaard en de e-mail geverifieerd voordat persoonlijke toegang ontstaat. Het systeem ondersteunt ook begeleid invullen namens iemand, met registratie van de handelende persoon.
+Vader, moeder en een lid van zestien jaar of ouder hebben ieder een persoonlijk intakeprofiel. Het profiel bevat voorkeuren, ervaring, vaardigheden, beschikbaarheid, verhinderingen, opleidingsbehoefte en interesse in vaste functies.
+Praktische beperkingen worden functioneel beschreven. Het systeem vraagt geen diagnose of medische bewijsstukken. Een profiel kan later worden aangepast en wordt jaarlijks kort herbevestigd.
+Bij een inschrijving wordt de daadwerkelijke uitvoerder gekozen. Die persoon moet gekoppeld, beschikbaar en geschikt zijn. Het uur wordt eenmaal geboekt op de gekoppelde verplichting.
+Gescheiden ouders
+De vrijwilligerscommissie kan de situatie Gescheiden ouders vastleggen en twee onafhankelijke intakeroutes openen. Iedere ouder vult met een eigen account zijn of haar gedeelte in. Persoonlijke antwoorden en contactgegevens worden niet automatisch gedeeld met de andere ouder. Noodzakelijke gezamenlijke voortgang wordt volgens de ingestelde rechten getoond.
+De markering maakt niet automatisch een extra huishouden of extra verplichting. Wanneer werkelijk twee huishoudens worden geregistreerd, heeft ieder een eigen dossier en intakecode. De vrijwilligerscommissie legt de koppeling rond gedeelde kinderen en de bestaande seizoensverplichting expliciet vast. Een nieuw account, tweede intake of tweede dossier verdubbelt een bestaande verplichting niet automatisch. Een huishoudvrijstelling breidt zich evenmin automatisch uit naar een ander dossier.
+Identiteit en werving
+Een gedeeld e-mailadres vormt één inlogidentiteit en kan geen twee onafhankelijk afgeschermde ouderaccounts opleveren. Voor onafhankelijke toegang zijn afzonderlijke geverifieerde e-mailaccounts nodig.
+Gelijke adressen, achternamen of e-mailadressen zijn aanwijzingen voor controle, geen automatische toestemming om dossiers samen te voegen. Koppelen, splitsen en herstellen zijn gelogde beheeracties.
+Bevoegde vrijwilligerscoördinatoren kunnen segmenten maken op talent, voorkeur, beschikbaarheid en interesse. Werving leidt tot contact of een kennismaking; niet automatisch tot benoeming of taaktoewijzing.
+
+04  Jaaruren wintercontrole en vaste rollen
+De normale seizoensverplichting is 720 minuten, oftewel twaalf uur. De wintergrens is standaard 360 minuten. Het systeem rekent met minuten en toont begrijpelijke uren. Alleen bevestigde toekenningen tellen als uitgevoerd; geplande en nog te bevestigen diensten worden apart getoond.
+Uitgevoerd vóór winterstop | Gevolg
+4 uur | 2 uur inhaalplaatsing. Voor het hele seizoen resteert 8 uur; de 2 inhaaluren zitten daarin.
+6 uur | Wintergrens gehaald. Nog 6 uur voor het jaartotaal.
+8 uur | Wintergrens gehaald. Nog 4 uur; geen apart minimum van 6 uur na de winterstop.
+12 uur | Jaarverplichting voldaan. Verdere inzet is vrijwillig.
+4 uur en 2 uur te bevestigen | Eerst de registratie beoordelen, daarna het wintertekort vaststellen.
+
+Winterwerklijst
+Op de ingestelde winterstopdatum maakt het systeem een controlelijst. De vrijwilligerscommissie beoordeelt openstaande bevestigingen en geldige uitzonderingen, bepaalt het tekort op de tussengrens en plant dat direct na de winterstop op passende diensten. Al geboekte passende diensten in die periode kunnen aan het tekort worden gekoppeld. Hetzelfde tekort wordt niet tweemaal ingepland. De uitvoerder krijgt de plaatsing en de route voor concrete verhindering te zien.
+Configureerbare rollen met huishoudvrijstelling
+De rolcatalogus bepaalt welke functies voldoende structurele inzet vormen. Per toekenning worden rolhouder, commissie of team, geldigheidsperiode en bevestigende functionaris vastgelegd. Een geldige erkende rol vervult de verplichting van het gehele gekoppelde huishouden. De stand toont Voldaan via structurele inzet; feitelijk gewerkte uren blijven afzonderlijk zichtbaar.
+Een tussentijdse start, beëindiging of onvoldoende actieve uitvoering wordt aan de vrijwilligerscommissie voorgelegd. Zij legt een gemotiveerde resterende verplichting en periode vast, rekening houdend met eerdere inzet. Een rolwijziging veroorzaakt geen stille terugwerkende uren- of financiële claim.
+Uitzonderingen en afsluiting
+Bij een aangepaste verplichting bevat het besluit zowel het effectieve jaardoel als de toepasselijke wintergrens. Een vermindering wordt dus niet ongemerkt naar een tweede, tegenstrijdige teller vertaald.
+Uren behoren bij één seizoen en één verplichting. Extra uren blijven zichtbaar als inzet en leveren niet automatisch korting, betaling of overdracht naar een volgend seizoen op.
+Correcties hebben een reden, tijdstip en verantwoordelijke. Een eenmaal geboekte dienst blijft controleerbaar, ook na een huishoudwijziging.
+
+05  Taakcatalogus takenmarkt en vaste functies
+Iedere commissie beheert eigen categorieën en taken, zoals bar, keuken, onderhoud, ontvangst en man of vrouw van dienst. De centrale takenmarkt toont het gepubliceerde aanbod en laat leden ruim vooruit inschrijven.
+Gegevens van een taak
+Een taak bevat een eigenaar, commissie en categorie, doel en werkzaamheden, locatie, datum, begin- en eindtijd, urenwaarde, benodigde bezetting, contactpersoon, inschrijfvenster, afmeldtermijn, leeftijds- en kwalificatievoorwaarden, begeleiding en instructies. Afwijkingen tussen dienstduur en toegekende urenwaarde moeten vooraf zichtbaar en goedgekeurd zijn.
+Instructies ondersteunen tekst, afbeeldingen, documenten, korte videoverwijzingen en checklists. Een deelnemer kan bij de dienst de actuele instructie en verantwoordelijke coördinator terugvinden.
+Goedgekeurde taaktypen mogen binnen het gegeven mandaat door commissies worden gepubliceerd. Een nieuw taaktype of afwijkende urenwaarde gaat eerst naar de vrijwilligerscommissie.
+Taken kunnen aan wedstrijden, activiteiten, projecten of een kanbankaart worden gekoppeld. De bron en gekoppelde registraties blijven herkenbaar.
+Zoeken en aanmelden
+Filters omvatten commissie, categorie, datum, tijd, duur, locatie, beschikbare plaatsen en geschiktheid. De lidomgeving biedt daarnaast passende taken met een begrijpelijke toelichting.
+Beschikbaarheid, leeftijd, instructie en kwalificaties worden gecontroleerd bij inschrijving én bij latere overdracht. Voorkeuren helpen rangschikken; verplichte voorwaarden zijn harde controles.
+Twee gelijktijdige aanmeldingen kunnen niet dezelfde laatste plek boeken. Meerdere huishoudleden mogen verschillende plaatsen bezetten en ieder hun eigen inzet bijdragen.
+Volle diensten ondersteunen een wachtlijst met een tijdelijk aanbod aan de eerstvolgende geschikte kandidaat. Een aparte reservepool bevat mensen die op korte termijn willen invallen.
+De knop Ik vind geen passende taak maakt een hulpverzoek aan. De vrijwilligerscommissie kan het aanbod, de belemmering en aangeboden alternatieven beoordelen.
+Vaste vrijwilligersfuncties
+Naast losse diensten bestaat een vacaturemarkt voor structurele functies. Een vacature beschrijft werkzaamheden, verwachte inzet, begeleiding, contactpersoon en eventuele huishoudvrijstelling na erkenning. Belangstelling, kennismaking, aanstelling en jaarlijkse bevestiging zijn afzonderlijke stappen. Een belangstelling verandert nog geen rechten of verplichtingen.
+
+06  Planbord en commissieplanning
+Het planbord heeft dag-, week- en maandweergaven. De dagweergave toont de uren horizontaal en de bezettingsplekken verticaal, gegroepeerd op commissie en categorie. Onder Bar kunnen drie plaatsen staan en onder Keuken twee. Eén plaats kan achtereenvolgens door verschillende personen worden ingevuld.
+Plannen en publiceren
+Diensten zijn duidelijke tijdblokken met naam of Open plek, tijden, status en urenwaarde. Slepen verplaatst een blok; uitrekken past de duur aan. Er is ook een bedienbare formulierroute zonder slepen.
+De weekweergave toont diensten en tekorten per dag en categorie. De maandweergave maakt drukte, evenementen, conceptroosters en open plaatsen zichtbaar en opent het betreffende dagrooster.
+Sjablonen ondersteunen een normale zaterdag, drukke thuisdag, toernooi en andere terugkerende situaties. Roosters kunnen herhalen, worden gekopieerd en in een batch worden gepubliceerd.
+Conceptroosters blijven intern tot publicatie. Pas publicatie opent inschrijving en start toepasselijke aanbodmeldingen. Een kleine wijziging is geen nieuwe taakpublicatie.
+Vaste vrijwilligers kunnen terugkerende diensten hebben. Een tijdelijke vervanger krijgt een expliciete periode en neemt niet vanzelf de structurele vrijstellende rol over.
+Controles en veranderingen
+De planning controleert dubbele persoonlijke diensten, verhinderingen, benodigde leeftijd, geldige kwalificaties en afgesproken begeleiding. Eigen of gezinswedstrijden kunnen een zichtbaar conflict opleveren.
+De commissie kan per taaktype een minimale ervaren of bevoegde bezetting instellen. Een eerste dienst met een maatje moet aan een beschikbare begeleider worden gekoppeld.
+Een wijziging aan een bezette dienst laat eerst zien wie geraakt wordt. Belangrijke tijd-, locatie- of taakwijzigingen vragen bewuste bevestiging en zo nodig herbevestiging door de deelnemer.
+Wedstrijden als planningsbron
+Op basis van thuiswedstrijden en instelbare sjablonen kan het systeem voorstellen voor bar, keuken en ontvangst maken. Een commissie controleert het voorstel vóór publicatie. Bij een wedstrijdwijziging of afgelasting verschijnt welke diensten geraakt worden. Die diensten worden niet stilzwijgend verplaatst of verwijderd; de coördinator verwerkt de gevolgen en informeert betrokkenen.
+Op een telefoon blijft een compacte dienstenlijst beschikbaar met dezelfde informatie en acties als het uitgebreide planbord.
+
+07  Uitvoering ruilen en afmelden
+Status of handeling | Vereist gedrag
+Ingepland | Uitvoerder en huishoudverplichting zijn gekoppeld. Uren staan als gepland.
+Overname gevraagd | De oorspronkelijke inschrijving blijft actief tot een geschikte vervanger definitief accepteert.
+Wederzijds ruilen | Beide diensten, uitvoerders en voorwaarden worden samen gecontroleerd en bevestigd.
+Tijdig afgemeld | De plaats komt vrij en kan opnieuw worden aangeboden; benodigde uren blijven open.
+Laat afgemeld | Ontbrekende bezetting wordt direct zichtbaar; de coördinator beoordeelt de melding.
+Ziek of nood | Altijd meldbaar, ook vlak voor aanvang; verantwoordelijke krijgt bericht en vervanging kan starten.
+Aanwezig of gedeeltelijk uitgevoerd | De coördinator bevestigt uitvoering en eventuele gemotiveerde afwijking.
+Niet verschenen | Geen uitvoeringsuren; contact en eventuele vervangende inzet volgen via de commissie.
+Door club geannuleerd | Afzonderlijke beoordeling van uren en vervanging volgens het vooraf ingestelde beleid.
+In beoordeling | Registratie of correctie staat open en moet worden afgehandeld vóór definitieve afrekening.
+
+Termijnen en afspraken
+De club stelt een reguliere afmeldtermijn in, met een expliciete afwijking per taaktype indien nodig. De geldende termijn en uiterste afmelddatum worden bij inschrijving getoond en vastgelegd. Een latere wijziging van de algemene instelling verandert bestaande afspraken niet stilzwijgend. Een ziekmelding mag nooit door deze termijn worden geblokkeerd.
+Als V1-startinstelling bevestigt de taakeigenaar de uitvoering binnen zeven dagen en kan een deelnemer onjuiste of ontbrekende uren binnen veertien dagen melden. De termijnen zijn instelbaar. Overschrijding leidt tot een opvolgactie; een aantoonbare administratieve fout blijft herstelbaar.
+Controleerbare uren
+De registratie bewaart geplande duur, afgesproken urenwaarde, bevestigde toekenning, bevestiger en correcties. No-show of kaartafronding geeft geen automatische boete of sportieve sanctie. Bij een op het laatste moment afgebroken dienst of eerder naar huis sturen door de club kunnen de afgesproken uren volgens het vastgelegde taakbeleid worden toegekend. Vroegtijdige clubannulering en uitzonderingen hebben een afzonderlijke besluitroute.
+Bevoegde ondersteuning kan een telefonische melding, inschrijving of correctieverzoek registreren namens iemand. De handelende functionaris blijft zichtbaar.
+
+08  Commissiewerk teamouders en kanban
+Werkruimte per commissie
+Elke commissie heeft een eigen werkruimte met leden en coördinatoren, documenten, instructies, taken, rooster, gesprekken en kanbanbord. Documenten hebben een eigenaar, zichtbaarheid en versie. Belangrijke instructiewijzigingen kunnen gericht aan betrokken uitvoerders worden aangeboden.
+Het kanbanbord heeft aanpasbare kolommen. De startindeling is Ideeën, Te doen, Bezig, Wacht op en Afgerond. Kaarten ondersteunen titel, omschrijving, prioriteit, labels, startdatum, deadline, bijlagen, reacties, checklist, subtaken en wijzigingsgeschiedenis. Eén kaart kan aan meerdere personen worden toegewezen en optioneel één aanspreekpunt hebben. Subtaken kunnen eigen uitvoerders krijgen.
+Kaarten kunnen aan activiteiten, wedstrijden, documenten en diensten worden gekoppeld. Afronden van een kaart boekt geen uren. Alleen bevestigde uitvoering van een gekoppelde verenigingstaak of een goedgekeurde urenregistratie doet dat.
+Teamouders
+Een teamouder ziet uitsluitend de eigen teams en de voor ondersteuning nodige huishoudvoortgang. Bij meerdere kinderen in verschillende teams wordt dezelfde onderliggende stand getoond; verenigingsrapportages tellen het huishouden eenmaal.
+Teamouders kunnen teamberichten plaatsen, ouders ondersteunen, praktische taken organiseren en de vaste vrijwilligerscoördinator benaderen. Zij leggen geen vrijstellingen, financiële bijdragen of individuele urenverplichtingen op.
+Bidons, fruit en andere teamtaken hebben standaard urenwaarde nul. Alleen de vrijwilligerscommissie kan ze goedkeuren voor de takenmarkt, inclusief urenwaarde en voorwaarden. Pas na goedkeuring, publicatie en bevestigde uitvoering zijn uren boekbaar.
+Bij een ontbrekende scheidsrechter kan de teamouder een hulpverzoek indienen. Wedstrijdzaken beoordeelt noodzaak en bevoegdheid; de vrijwilligerscommissie geeft de vereiste goedkeuring voor de urenroute en marktpublicatie.
+Een goedgekeurde markttaak verwijst naar de oorspronkelijke teamtaak. Het betreft één uitvoering en één mogelijke urenboeking, geen twee los meetellende taken.
+Mentions en persoonlijke actielijst
+Mentions werken in gesprekken, kaarten, reacties en agenda-items. Een vermelding verleent geen nieuwe toegang tot besloten informatie. De melding bevat alleen informatie die de ontvanger mag zien. Toewijzing en vermelding in dezelfde gebeurtenis worden ontdubbeld.
+Mijn acties bundelt toegewezen kaarten, mentions, deadlines, hulpverzoeken en relevante opvolging uit alle toegestane commissies en teams. Filters laten eigenaar, status en deadline zien.
+
+09  Sportlink wedstrijden en jaaragenda
+Wedstrijdkoppeling
+Sportlink is de bron voor beschikbare wedstrijdgegevens. V1 importeert de stabiele bronidentificatie, team, tegenstander, datum, tijd, thuis of uit, locatie en status voor zover de bron die levert. Veld- en kleedkamergegevens worden alleen getoond wanneer aanwezig. Ontbrekende velden worden niet verzonnen.
+De wedstrijdsynchronisatie draait tweemaal per lokale kalenderdag. De startinstelling is 06.00 en 18.00 uur in Europe/Amsterdam; deze momenten zijn configureerbaar. Bevoegde beheerders kunnen daarnaast handmatig verversen. Het systeem toont de laatste geslaagde synchronisatie en meldt fouten aan beheer.
+Een bestaand bronrecord wordt bijgewerkt in plaats van opnieuw aangemaakt. Herhaalde verwerking maakt geen dubbele wedstrijden, dienstvoorstellen of meldingen.
+Nieuwe wedstrijden, gewijzigde tijden, locaties en afgelastingen worden verwerkt. Een onvolledige of mislukte import geldt niet als bewijs dat wedstrijden zijn geannuleerd; de laatst bekende gegevens blijven herkenbaar beschikbaar.
+Leden en ouders zien wanneer en waar zijzelf of hun kinderen spelen. De gezinsweergave combineert de toegestane teamkoppelingen zonder één wedstrijd onnodig dubbel te tonen.
+Commissies kunnen het programma naast hun rooster gebruiken. Gewijzigde wedstrijden leiden tot een controle op gekoppelde diensten, niet tot stille wijzigingen van toezeggingen.
+Ledengegevens en identiteit
+Volledige ledengegevens worden via een aantoonbaar beschikbare en geautoriseerde koppeling verwerkt. Waar die ontbreekt, biedt V1 een gecontroleerde ledenimport met veldkoppeling, voorbeeldcontrole en foutmelding. Een stabiel lidnummer voorkomt dubbelen. Sportlink blijft bron voor geïmporteerde ledenvelden; huishoudkoppelingen, intake, besluiten, uren en samenwerkingsgegevens blijven eigendom van het eigen platform.
+De exacte beschikbare velden worden bij inrichting gecontroleerd. Het publieke verjaardagenoverzicht alleen is geen volledige bron voor geboortedata, e-mailadressen en lidmaatschapsjubilea. Een integratie mag niet als actief worden gepresenteerd wanneer de verbinding of benodigde toegang ontbreekt.
+Gedeelde jaaragenda
+De agenda combineert activiteiten, vergaderingen, opleidingen, waarderingsmomenten en deadlines. Wedstrijden en diensten zijn inschakelbare lagen. Filters ondersteunen Mijn agenda, huishouden, team, commissie en vereniging.
+Een item ondersteunt datum en tijd, locatie, organisator, deelnemers, aan- of afmelden, herhaling, herinneringen, documenten, opmerkingen en mentions. Zichtbaarheid is verenigingsbreed, commissiegebonden, teamgebonden of besloten. Gekoppelde kaarten en diensten gebruiken dezelfde bronafspraak; een wijziging wordt via die koppeling verwerkt. Overlap van deelnemers of locaties wordt gesignaleerd.
+
+10  Notificaties en e mailtemplates
+V1 bevat één communicatieomgeving voor e-mail, push en de inbox van de PWA. Berichten zijn gekoppeld aan een gebeurtenis, doelgroep, templateversie en verzendregel. De inbox bewaart de informatie die een ontvanger mag terugvinden, ook wanneer een push niet is ontvangen.
+Aanleiding | V1 verzendregel
+Nieuw passend aanbod | Maximaal één verzamelmail per persoon per lokale kalenderdag; alleen nog bruikbaar aanbod opnemen.
+Nieuwe passende gepubliceerde taak | Eén pushgebeurtenis per persoon en taak, zonder dagmaximum, als push is ingeschakeld.
+Inschrijving en definitieve ruil | Directe bevestiging aan de betrokken personen.
+Dienst nadert | Startinstelling zeven dagen en 24 uur vooraf; instelbaar per type melding.
+Wijziging afgelasting of ziekte | Gericht bericht aan deelnemers of verantwoordelijke coördinatoren volgens de gebeurtenis.
+Urgente open dienst | Gerichte oproep aan geschikte mensen of de reservepool.
+Uren beleid of aanvraag vraagt actie | Persoonlijke herinnering met concrete vervolgstap en contactmogelijkheid.
+Verjaardag jubileum of waardering | Volgens ingestelde regel: concept, automatische felicitatie of toegewezen actie.
+
+Templatebeheer
+Templates ondersteunen huisstijl, afzender, antwoordadres, onderwerp, preheader, tekst, afbeeldingen, knoppen en variabelen, zoals voornaam, huishouden, dienst, commissie, urenstand en beleidsversie.
+Een template heeft concept, voorbeeldweergave, testverzending, goedkeuring en versiegeschiedenis. Voorbeelden controleren verschillende personen en ontbrekende velden. Variabelen worden veilig verwerkt en hebben waar passend een terugvaltekst.
+Commissies kunnen binnen hun rechten berichten maken vanuit beheerde templates. Alleen bevoegde rollen wijzigen automatische verzendregels of publiceren centrale templates.
+Betrouwbare en passende meldingen
+De limiet van één dagelijkse mail geldt voor nieuwe-takenmails. Bevestigingen en belangrijke dienstinformatie volgen afzonderlijke regels. Een tekstwijziging, opnieuw ophalen van data of meerdere rollen veroorzaken geen dubbele aanbodmelding. Een ontvanger kan kanaalvoorkeuren beheren binnen de vastgelegde berichtcategorieën.
+Het verzendlog toont gepland, verwerkt door de verzenddienst, afgeleverd indien bevestigd, mislukt en opnieuw proberen. Het systeem verwart een geaccepteerd verzendverzoek niet met bewezen aflevering. Mislukte pogingen worden gecontroleerd herhaald. Geheimen zoals OTP-codes verschijnen niet in het algemene log.
+
+11  Beleid overeenkomsten en acceptatie
+Ieder lid krijgt het algemene verenigingsbeleid aangeboden en moet dit kunnen lezen en actief accepteren. Een urenvrijstelling of vaste vrijwilligersrol geeft op zichzelf geen uitzondering op deze acceptatie. Acceptatie is een registratie per lid en documentversie. Een gezamenlijke huishoudverplichting betekent niet automatisch dat één akkoord voor alle leden geldt.
+Van document naar bevestiging
+Een bevoegde beheerder maakt een beleidsdocument als concept. Na goedkeuring wordt een exacte versie gepubliceerd met doelgroep, ingangsdatum en eventuele reactietermijn.
+De gebruiker ontvangt een uitnodiging en vindt de volledige tekst en downloadmogelijkheid in Mijn afspraken. Openen en accepteren zijn afzonderlijke gebeurtenissen; scrollen is geen bewijs van begrip of akkoord.
+Acceptatie vereist een actieve handeling vanuit een geverifieerd account. Een akkoordvak is niet vooraf aangevinkt. De registratie bevat het lid, de handelende persoon, diens hoedanigheid, tijdstip en de exacte aangeboden tekstversie.
+Een ouder of verzorger kan voor gekoppelde jeugdleden handelen volgens de ingestelde bevoegdheid. Bij meerdere kinderen wordt expliciet getoond voor wie het akkoord geldt en ontstaat per kind een registratie. Een eigen intake vanaf zestien jaar verleent niet automatisch elke vertegenwoordigingsbevoegdheid.
+De bevestiging en documenthistorie blijven voor de bevoegde gebruiker terugvindbaar. Een nieuwe beleidsversie verandert geen eerder geaccepteerde tekst.
+Opvolging en rechten
+Het beheeroverzicht bevat Niet aangeboden, Uitgenodigd, Geopend, Geaccepteerd en Vraag in behandeling. Filters ondersteunen seizoen, versie, team en huishouden. Herinneringen stoppen zodra aan de betreffende vraag is voldaan of de aanvraag bewust in behandeling is genomen.
+Een gebruiker kan een vraag of bezwaar indienen. De bevoegde functionaris krijgt een opvolgactie. Het systeem legt op basis van ontbrekend akkoord geen automatische sportieve sanctie op. Bestaande diensten, essentiële berichten en ziekmelden blijven bereikbaar tijdens de afhandeling.
+Bij een nieuwe versie bepaalt de bevoegde beheerder of opnieuw accepteren nodig is. Dit besluit, de doelgroep en de ingangsdatum worden vastgelegd. Persoonlijke vertegenwoordiging en inzage bij gescheiden ouders volgen de dossierrechten en worden niet afgeleid uit alleen een gedeelde intakecode.
+Controleerbaar resultaat
+Het systeem kan per lid laten zien welke versie gold, wanneer deze is aangeboden en door wie deze is geaccepteerd. Een bevoegde export behoudt die samenhang. Beleidsacceptatie, communicatievoorkeuren en de intake zijn afzonderlijke registraties en mogen elkaar niet ongemerkt vervangen.
+
+12  Uitzonderingen afrekening en vrijwilligerspot
+Aanvragen en besluiten
+V1 ondersteunt aangepaste inzet, uitstel binnen het seizoen, vermindering, tijdelijke of volledige vrijstelling en volledige financiële afkoop. De aanvraag beschrijft praktische mogelijkheden en duur. Twee bevoegde beoordelaars leggen de uitkomst, motivering, looptijd, resterende verplichting en afspraken vast. Een verschil van oordeel gaat naar het bevoegde bestuurslid; bezwaar, belangenconflict en afwijking buiten beleid gaan naar het bestuur.
+Ereleden, leden van verdienste, medische omstandigheden en andere vastgestelde uitzonderingen kunnen worden geregistreerd. Bij een persoonlijke uitzondering wordt de reikwijdte expliciet vastgelegd. Erkende vrijstellende vrijwilligersrollen gelden conform het kernbesluit altijd voor het gehele gekoppelde huishouden.
+Twee financiële routes
+Volledige afkoop van €150 is alleen mogelijk na overleg met de vrijwilligerscommissie en wanneer er werkelijk geen passende taken zijn. Goedkeuring activeert de financiële afspraak. Ontbrekend aanbod wordt beoordeeld en vastgelegd; het veroorzaakt niet zelfstandig een rekening zonder besluit.
+De andere route is de seizoensafrekening over het goedgekeurde tekort. Voor de standaardverplichting geldt €150 gedeeld door twaalf uur, dus €12,50 per ontbrekend uur. Eerst worden geldige verminderingen, vrijstellingen, structurele inzet en afkoop verwerkt. De berekening gebruikt minuten en rondt het totale bedrag eenmaal af op eurocenten.
+Situatie | Uitkomst
+12 uur verplicht en 9 uur bevestigd | 3 ontbrekende uren: voorstel €37,50.
+8 uur na goedgekeurde vermindering en 6 uur bevestigd | 2 ontbrekende uren: voorstel €25,00 bij het standaarduurtarief.
+Geldige volledige huishoudvrijstelling | Geen tekortafrekening.
+Volledige afkoop van €150 goedgekeurd | Eén financiële afspraak; geen tweede tekortrekening.
+Uren of uitzondering nog in beoordeling | Voorstel blijft geblokkeerd voor definitieve financiële verwerking.
+
+Controle en besteding
+De vrijwilligerscommissie controleert openstaande bevestigingen, betwiste uren, beschikbaar passend aanbod en besluiten. Financieel beheer verwerkt pas daarna een goedgekeurde afrekening via factuur of export en registreert betaalstatus. Correcties na afsluiting krijgen een herziening of correctiepost; de eerdere stand wordt niet gewist.
+De vrijwilligerspot toont ontvangen bijdragen, gereserveerde bedragen, beschikbaar budget en uitgaven aan waardering, activiteiten, begeleiding en opleidingen. Iedere uitgave heeft doel, verantwoordelijke en de vereiste goedkeuring. Budget en betaalstatus zijn alleen zichtbaar voor bevoegde rollen.
+
+13  Vrijwilligerswaardering en dashboards
+Ondersteuning en ontwikkeling
+De eerste dienst met een maatje is een expliciete optie. De planner koppelt begeleiding aan de dienst en bewaakt de benodigde bezetting.
+Inwerken, gevolgde opleidingen, relevante certificaten en hernieuwde instructies worden bijgehouden. Wanneer een vereiste vervalt, is dat zichtbaar bij nieuwe planning en bestaande toekomstige diensten.
+Vaste vrijwilligers kunnen gewenste inzet en beschikbaarheid aangeven. Herhaald extra invallen of structurele overschrijding geeft een signaal aan de coördinator, zodat ondersteuning kan worden geregeld.
+Coördinatoren kunnen ook mensen helpen die niet zelf digitaal handelen. Namens iemand boeken of een telefonisch verzoek vastleggen blijft controleerbaar.
+Waarderingsmomenten
+Verjaardagen, lidmaatschaps- en vrijwilligersjubilea, opleidingen, afscheid en andere goedgekeurde momenten kunnen een herinnering, conceptbericht, automatische felicitatie of actiekaart starten. Berekeningen gebruiken gecontroleerde brongegevens en instelbare regels. Een onvolledige geboortedatum of onbekende startdatum leidt niet tot een verzonnen jubileum.
+Een waarderingsactie kan een eigenaar, meerdere uitvoerders, deadline, budget en afhandelstatus krijgen. Eenzelfde gelegenheid wordt ontdubbeld over commissies heen. Lief en leed wordt terughoudend en beperkt zichtbaar vastgelegd. Openbare felicitaties worden afzonderlijk ingesteld.
+Persoonlijke PWA
+De mobiele omgeving biedt Mijn overzicht, Taken, Mijn diensten, Wedstrijden, Agenda, Berichten, Mijn acties, Profiel en Mijn afspraken. De startpagina toont de eerstvolgende relevante actie en een begrijpelijke huishoudstand. Voor vaste vrijwilligers toont zij de erkende functie en hun inzet zonder kunstmatige urentoekenning.
+De PWA is installeerbaar op ondersteunde apparaten. Push wordt na een bewuste gebruikerskeuze geactiveerd. Inschrijven en wijzigingen worden pas als definitief getoond na bevestiging door het systeem; bij verbindingsverlies blijft duidelijk of een handeling gelukt is.
+Commissie en bestuur
+Commissiedashboards tonen bezetting, open plaatsen, meldingen, te bevestigen uitvoering, acties en relevante wedstrijden. De vrijwilligerscommissie ziet winterachterstanden, uitzonderingen, vacatures en huishoudens die ondersteuning vragen.
+Bestuursrapportages tonen bezetting, deelname, openstaande uren, passend taakaanbod, uitval, vacatures, opleiding, overbelasting en besteding van de vrijwilligerspot. Geaggregeerde cijfers tellen huishoudens eenmaal. Het aanbodoverzicht vergelijkt benodigde uren met werkelijk beschikbare passende plaatsen en tijden; alleen een bruto totaal aan diensten is onvoldoende.
+
+14  Inrichting gegevens en releasebeheer
+Instelling | V1 afspraak
+Seizoen en winterstop | Startdatum, einddatum en winterstopdatum vóór activering verplicht instellen.
+Standaarduren | 12 uur per volledig seizoen; tussengrens 50 procent. Een uitzondering heeft eigen vastgelegde doelen.
+Vrijstellende rollen | Configureerbare catalogus met bevoegde benoeming en geldigheidsperiode; effect op gehele huishouden.
+Afmeldtermijn | Configureerbare clubwaarde met eventuele taaktypeafwijking; snapshot bij inschrijving.
+Wedstrijdsync | Twee momenten per dag; start 06.00 en 18.00 Europe/Amsterdam. Handmatige verversing voor bevoegd beheer.
+Registratietermijnen | Start: uitvoering bevestigen binnen 7 dagen; onjuiste uren melden binnen 14 dagen. Instelbaar.
+Dienstherinneringen | Start: 7 dagen en 24 uur vooraf. Instelbaar per meldtype.
+Uitzonderingen | Twee beoordelaars; vastgelegde escalatie en bezwaarroute.
+OTP | Eenmalige, tijdelijk geldige code; begrensde pogingen en herverzending; geen dossierinzage door code alleen.
+
+Samenhang van de administratie
+De kern bestaat uit personen en accounts, huishouddossiers en intakeprofielen, seizoensverplichtingen en besluiten, rollen en aanstellingen, commissies en teams, taken en dienstplaatsen, inschrijvingen en urenboekingen. Wedstrijden, agenda-items, kaarten, documenten, templates, meldingen, acceptaties en financiële afspraken verwijzen naar die kern met stabiele identificaties.
+Een persoon of dienst kan aan meerdere contexten zichtbaar zijn, maar heeft geen dubbele bronregistratie. Dossierkoppelingen, saldoaanpassingen, publicaties, rechten en financiële besluiten hebben een wijzigingshistorie. Beschermde gegevens blijven ook via exports en directe verzoeken afgeschermd.
+Seizoensovergang en bijzondere situaties
+Een nieuw seizoen kan sjablonen overnemen en vraagt herbevestiging van actieve rollen, intakegegevens en toepasselijke afspraken. Het vorige seizoen wordt na controle afgesloten. Instroom, vertrek, huishoudsplitsing of een tussentijds eindigende rol starten een beoordeling van de resterende verplichting; de bevoegde commissie legt het besluit vast voordat een gewijzigde afrekening actief wordt.
+De eerste ingangsdatum, eventuele overgangsverplichting en lokale taakvoorwaarden zijn inrichtingsgegevens, geen reden om V1-functies weg te laten. Tot verplichte instellingen en benodigde koppelingen gereed zijn, blijft de betreffende uitvoering herkenbaar in voorbereiding.
+Wijzigingen aan de canon
+V1.0 is de vaste scopebasis. Een toekomstige wijziging krijgt een wijzigingsrecord met aanleiding, betrokken regels, effect op bestaande afspraken en acceptatieproeven. Alle 28 overgenomen voorstellen blijven V1-verplichtingen. Een demonstratie met voorbeeldgegevens geldt niet als bewijs van werkende koppelingen of productieprocessen.
+
+15  Acceptatieproeven voor de kern
+Iedere proef moet aantoonbaar slagen met gecontroleerde testgegevens. Naast de onderstaande scenario’s wordt de normale route van uitnodiging tot seizoensafsluiting volledig doorlopen. Een openstaand functioneel tekort op deze canon verhindert de kwalificatie Volledige V1.
+A01 Een huishouden werkt 8 uur vóór en 4 uur na de winterstop. Het jaardoel is voldaan; er verschijnt geen tekort van 2 uur voor de tweede helft.
+A02 Een huishouden werkt 12 uur vóór de winterstop. Er volgt geen verplichte inzet daarna.
+A03 Bij 4 bevestigde uren vóór de winterstop ontstaat 2 uur inhaalplaatsing en 8 uur totaal resterend. Bestaande passende boekingen worden niet dubbel ingepland.
+A04 Bij 4 bevestigde en 2 nog te bevestigen uren beoordeelt de commissie eerst de uitvoering en stelt daarna pas het wintertekort vast.
+A05 Een beheerder voegt een vrijstellende rol toe en kent die geldig toe. Het hele gekoppelde huishouden wordt vrijgesteld; de feitelijk gewerkte uren veranderen niet.
+A06 Een rol eindigt tussentijds. Er ontstaat een beoordelingsactie, geen automatische terugwerkende factuur of ongemotiveerde nieuwe urenplicht.
+A07 Vader, moeder en een lid van 16 jaar of ouder vullen eigen intakegegevens in. Een extra persoon kan bevoegd worden uitgenodigd en na bevestiging een dienst uitvoeren.
+A08 Een buitenstaander kent alleen de intakecode. Zonder geverifieerd account en dossierautorisatie krijgt deze geen dossiergegevens of mogelijkheid om namens iemand te handelen.
+A09 Gescheiden ouders vullen onafhankelijk in. De een kan geen persoonlijke antwoorden van de ander ophalen via scherm, zoekfunctie, export of directe link.
+A10 Een tweede ouderaccount of intake verandert de bestaande seizoensverplichting niet. Een werkelijk tweede huishouden krijgt een eigen dossier en code. De commissie bevestigt de verplichtingskoppeling; uren en vrijstellingen worden niet automatisch gedeeld of dubbel geteld.
+A11 Een OTP is eenmalig en verloopt. Hergebruik en te veel onjuiste pogingen worden geweigerd. Inloggen verleent alleen de geregistreerde rechten.
+A12 Een gewone teamtaak levert nul uren. Na expliciete goedkeuring door de vrijwilligerscommissie, marktpublicatie en bevestigde uitvoering ontstaat één urenboeking.
+A13 Twee mensen boeken gelijktijdig de laatste dienstplaats. Precies één definitieve inschrijving slaagt; de andere krijgt een begrijpelijke uitkomst.
+A14 Een dienst wordt overgenomen of geruild. Geschiktheid en overlap worden opnieuw gecontroleerd; de oorspronkelijke inschrijving vervalt pas bij definitieve overname.
+A15 De afmeldtermijn wordt gewijzigd. Nieuwe inschrijvingen gebruiken de nieuwe afspraak, bestaande afspraken wijzigen niet stilzwijgend en ziekmelden blijft altijd mogelijk.
+
+16  Acceptatieproeven voor samenwerking en afsluiting
+A16 Dag-, week- en maandplanning werken met bar- en keukenplaatsen. Slepen, tijd aanpassen en de formulierroute leveren dezelfde gecontroleerde dienst op.
+A17 Een rooster blijft concept zonder aanbodmeldingen. Publicatie opent inschrijving. Een belangrijke wijziging aan een bezette dienst toont de gevolgen en informeert betrokkenen.
+A18 Een wedstrijd wordt geïmporteerd, gewijzigd en afgelast. Herhaalde import geeft geen duplicaten en verplaatst bezette diensten niet automatisch. Gezin en commissie zien hun toegestane programma.
+A19 De wedstrijdsync draait op twee ingestelde lokale momenten, ook rond zomer- en wintertijd. Een mislukte import meldt een fout zonder laatst bekende wedstrijden als afgelast te behandelen.
+A20 Een persoon krijgt dezelfde nieuwe taak via twee rollen aangeboden. Er ontstaat één pushgebeurtenis en hoogstens één dagelijkse nieuwe-takenmail; meerdere nieuwe taken behouden ieder hun pushmogelijkheid.
+A21 Templates tonen juiste variabelen en een bruikbare terugval bij ontbrekende gegevens. Voorbeeld, test, goedkeuring, versie en verzendlog zijn beschikbaar; opnieuw proberen dupliceert geen geslaagde verzending.
+A22 Een beleidsversie wordt aan meerdere leden aangeboden. Een ouder accepteert expliciet voor twee kinderen: twee registraties met dezelfde handelende persoon en de exacte tekstversie.
+A23 Een nieuwe beleidsversie laat oude acceptaties intact. Alleen openen geeft geen akkoord. Een vraag krijgt opvolging en ziekmelden blijft bereikbaar.
+A24 Een kanbankaart heeft meerdere uitvoerders, een aanspreekpunt en subtaken. Zij verschijnt in Mijn acties. Een mention verleent geen nieuwe rechten en afronding boekt geen uren.
+A25 Een gedeelde activiteit wordt aan kaarten en diensten gekoppeld. Wijzigingen blijven samenhangend; besloten agenda-items, documenten en persoonsgegevens lekken niet naar andere rollen.
+A26 Bij 12 uur verplicht en 9 uur bevestigd ontstaat €37,50 als voorstel. Een open bezwaar blokkeert definitieve verwerking; afkoop veroorzaakt geen tweede tekortrekening. Een uitzonderingsbesluit met slechts één beoordelaar kan niet definitief worden verwerkt.
+A27 Wachtlijst, reservepool, maatjesdienst en functiebelangstelling kunnen worden doorlopen. Aanbodtekort, verlopen kwalificatie en structureel overbelaste vrijwilliger worden zichtbaar.
+A28 Een waarderingsmoment maakt volgens de regel één actie of bericht. Eigenaar, deadline, budget en afhandeling zijn terugvindbaar; besloten lief en leed blijft afgeschermd.
+A29 Een bevoegd persoon registreert telefonisch ontvangen informatie namens een lid. Actor, reden en effect zijn zichtbaar; een fout kan via een herleidbare correctie worden hersteld.
+A30 Seizoensovergang bewaart het oude saldo en besluiten, neemt gekozen sjablonen over en vraagt herbevestiging. Rapportages tellen hetzelfde huishouden niet dubbel via meerdere teams.
+Releasebewijs omvat daarnaast de werkende schermen per rol, ingerichte verplichte waarden, gecontroleerde externe verbindingen, mobiele bediening en de dekkingsmatrix op de volgende pagina’s. Werkvolgorde mag verschillen; de functionele dekking niet.
+
+17  Dekking van de 28 voorstellen deel een
+De nummers hieronder volgen exact de 28 voorstellen uit het samengevoegde plan. Met de opdracht van 2 oktober 2026 zijn ze allemaal opgenomen in V1. De verwijzingen geven aan waar het vereiste gedrag en de belangrijkste acceptatieproef staan.
+Nr | Verplicht voorstel | Hoofdstuk | Proef
+01 | Eerlijke urenstatussen en structurele inzet zonder fictieve uren | 4 en 7 | A01–A06
+02 | Gecontroleerde huishoudkoppeling en geen dubbele telling | 3 en 4 | A07–A10 A30
+03 | Eén account met meerdere rollen en geldigheidsperioden | 2 en 14 | A11 A25
+04 | Roostersjablonen concepten en batchpublicatie | 6 | A16 A17
+05 | Dienstvoorstellen op basis van wedstrijden | 6 en 9 | A18
+06 | Bewuste verwerking van wedstrijdwijzigingen | 6 en 9 | A18 A19
+07 | Sync om 06.00 en 18.00 plus actualiteit en handmatig verversen | 9 en 14 | A19
+08 | Beschikbaarheid overlap leeftijd en kwalificaties | 5 en 6 | A13–A15 A27
+09 | Uitlegbare taaksuggesties en keuzevrijheid | 3 en 5 | A27
+10 | Wachtlijst en reservepool | 5 | A13 A27
+11 | Eerste dienst met een maatje | 6 en 13 | A27
+12 | Markt voor structurele vrijwilligersfuncties | 5 | A27
+13 | Controle op voldoende passend aanbod | 5 en 13 | A27
+14 | Gewenste inzet en signaleren van overbelasting | 13 | A27
+
+Voorrang van de laatste besluiten
+De eerdere gedachte van twee zelfstandige blokken van zes uur is vervangen door twaalf uur over het gehele seizoen met een wintercontrolemoment op 50 procent. Een vaste afmeldtermijn is vervangen door een configureerbare termijn. De vrijstellende rolcatalogus is configureerbaar en de vrijstelling geldt voor het gehele huishouden. Deze wijzigingen zijn verwerkt in zowel de beschrijving als de acceptatieproeven.
+
+18  Dekking van de 28 voorstellen deel twee
+Nr | Verplicht voorstel | Hoofdstuk | Proef
+15 | Persoonlijke actielijst over commissies heen | 8 en 13 | A24
+16 | Koppeling van kaarten agenda en diensten zonder automatische uren | 8 en 9 | A24 A25
+17 | Meerdere uitvoerders en optioneel één aanspreekpunt | 8 | A24
+18 | Mentions met rechten en ontdubbelde meldingen | 8 en 10 | A20 A24
+19 | Waarderingsacties met eigenaar budget en beperkte inzage | 13 | A28
+20 | Opleidingen inwerken en kwalificaties | 5 6 en 13 | A27
+21 | Bevoegd namens iemand handelen | 3 en 7 | A29
+22 | Urenbevestiging foutmelding en correctiehistorie | 4 7 en 14 | A04 A29
+23 | Controle vóór afrekening en geen dubbele bijdrage | 12 | A26
+24 | Twee beoordelaars voor uitzonderingen | 12 en 14 | A26
+25 | Acceptatie per lid en versie met historie | 11 | A22 A23
+26 | Templatecontrole tests versiebeheer en verzendlog | 10 | A20 A21
+27 | Controleerbare seizoensovergang | 14 | A30
+28 | Bestuursrapportages die helpen bijsturen | 13 | A27 A30
+
+Herkomst en status
+Deze productcanon volgt de volledige opdracht en aanvullingen in dit gesprek, met als laatste vastzetting de besluiten van Danny Goldenbelt op 2 oktober 2026. De oorspronkelijke vrijwilligersbeleidsstukken dienen als context. Bij verschillen gelden de in deze canon opgenomen latere productbesluiten.
+De controle van externe Sportlink-mogelijkheden is gebaseerd op de officiële productinformatie en artikelenlijst. Beschikbare contracten en gegevensvelden moeten bij aansluiting worden geverifieerd. De canon belooft geen toegang tot velden die een gekozen koppeling niet aanbiedt.
+Sportlink Club Dataservice: https://www.sportlink.nl/ons-aanbod/club-dataservice/
+Sportlink artikelenlijst: https://sportlinkservices.freshdesk.com/nl/support/solutions/articles/9000062942-lijst-met-artikelen-van-club-dataservice
+Versieregistratie
+V1.0 — 2 oktober 2026 — Eerste vaste releasecanon. Alle gevraagde modules, de zeven laatste expliciete besluiten en de 28 aanvullende voorstellen opgenomen. Dit document is de inhoudelijke basis voor ontwerp, implementatie en acceptatie van de volledige V1.

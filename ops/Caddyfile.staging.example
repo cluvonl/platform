@@ -1,0 +1,8 @@
+# Vervang domein en BCrypt-hash; laat staging afgeschermd zolang demo-rollen bestaan.
+STAGING_DOMAIN_REPLACE_ME {
+  basic_auth {
+    reviewer REPLACE_WITH_CADDY_BCRYPT_HASH
+  }
+  reverse_proxy 127.0.0.1:3100
+  header X-Robots-Tag "noindex, nofollow"
+}

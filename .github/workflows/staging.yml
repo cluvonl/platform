@@ -1,0 +1,74 @@
+name: Staging
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: cluvo-staging
+  cancel-in-progress: false
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image: ${{ steps.image.outputs.image }}
+      sha: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run typecheck && npm test
+      - name: Build and publish immutable image
+        id: image
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_ACTOR: ${{ github.actor }}
+          SOURCE_REPO: ${{ github.repository }}
+          SOURCE_SHA: ${{ github.sha }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          repository="ghcr.io/${SOURCE_REPO,,}"
+          printf '%s' "$GH_TOKEN" | docker login ghcr.io -u "$GH_ACTOR" --password-stdin
+          trap 'docker logout ghcr.io >/dev/null 2>&1 || true' EXIT
+          docker build --pull --label "org.opencontainers.image.revision=$SOURCE_SHA" --tag "$repository:$SOURCE_SHA" .
+          docker push "$repository:$SOURCE_SHA"
+          image="$(docker image inspect "$repository:$SOURCE_SHA" --format '{{index .RepoDigests 0}}')"
+          [[ "$image" =~ ^ghcr\.io/[a-z0-9._/-]+@sha256:[0-9a-f]{64}$ ]]
+          echo "image=$image" >> "$GITHUB_OUTPUT"
+          export CLUVO_IMAGE="$image"
+          node scripts/release-manifest.mjs > release-manifest.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: cluvo-build-${{ github.sha }}
+          path: release-manifest.json
+          retention-days: 90
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main' && vars.STAGING_DEPLOY_ENABLED == 'true'
+    runs-on: [self-hosted, linux, x64, cluvo-staging-deploy]
+    environment: staging
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      # Geen checkout, npm, git pull, migraties of repo-scripts op deze runner.
+      - name: Fixed staging broker
+        env:
+          CLUVO_IMAGE: ${{ needs.build.outputs.image }}
+          CLUVO_SOURCE_SHA: ${{ needs.build.outputs.sha }}
+          CLUVO_RUN_ID: ${{ github.run_id }}
+        run: /usr/local/bin/cluvo-deploy-staging "$CLUVO_IMAGE" "$CLUVO_SOURCE_SHA" "$CLUVO_RUN_ID"
+# Deze bootstrap deployt uitsluitend de prototype-UI. Voeg vóór APP_MODE=app
+# backup/migratie/readiness/RLS/E2E-gates toe volgens docs. Production bestaat niet hier.

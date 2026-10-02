@@ -1,0 +1,10 @@
+{
+  "v1_ready": false,
+  "production_enabled": false,
+  "approved_by": null,
+  "approved_at": null,
+  "acceptance_report": null,
+  "staging_commit": null,
+  "staging_image_digest": null,
+  "remaining_gate": "Alle canon A01-A30 plus tenant/RLS/concurrency/backup/releaseproeven"
+}
