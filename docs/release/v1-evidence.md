@@ -1,0 +1,158 @@
+# Cluvo V1 — lokaal bewijsregister
+
+Bewijscapture: 2 oktober 2026, 20:27 CEST (`Europe/Amsterdam`)
+
+## Huidig oordeel
+
+De overdracht, Club Signal-baseline, eerste echte appketen en brede lokale domeinbasis zijn reproduceerbaar gecontroleerd op implementatiecommit `947b2a5535c0e388cda020667bbab58a4b389a1f`.
+
+Lokaal geslaagd:
+
+- Next.js lint, typecheck, 22 Node-tests, productiebuild en standalone HTTP-readback;
+- zes migraties vanaf een lege database en 287/287 pgTAP-asserties;
+- schema-/grant-/RLS-readback en database-lint;
+- een echte tweesessie-race voor de laatste dienstplaats;
+- een echte tweesessie-lockproef voor season close versus ledgerwriters;
+- negatieve runtime- en releasegates voor productie.
+
+Dit is **geen V1- of stagingacceptatie**. Er is geen remote stagingomgeving, echte Auth/Storage/Realtime-service, providerproef of volledige browser-E2E uitgevoerd. `release/acceptance-register.json` blijft leidend: `v1_ready=false`, `production_enabled=false` en A01–A30 staan alle dertig `OPEN`.
+
+## E01 — bron, pakket en provenance
+
+| Veld | Waarde |
+|---|---|
+| Werkmap | `/home/codex/repos/cluvo/nextjs-starter` |
+| Gecontroleerde implementatiecommit | `947b2a5535c0e388cda020667bbab58a4b389a1f` |
+| Commitonderwerp | `feat: implement secure Cluvo local vertical slice` |
+| Geïmporteerde baselinecommit | `a9f62f3fe9e4ef5801b33a4247c74104017a9ba5` |
+| Oorspronkelijke prototypecommit | `5d96234ade7dba5f79bdd0f4ddbc21e26fc13801` |
+| Canon | `Duindorp_SV_V1_Releasecanon_v1.0.docx` |
+| Productierelease toegestaan | `false` |
+
+| Controle | Resultaat |
+|---|---|
+| SHA-256 overdrachts-ZIP | `c35447c17864191f4af837f3c2de10f9e64a32f5af49db9997fd405733eb6dd5` |
+| ZIP-integriteit | `unzip -t` geslaagd |
+| Pakketmanifest | 293/293 regels `OK`; geen `FAILED` |
+| Losse/package/repository-startprompt | Alle drie `741d01125c486b9dd27de2ffae73567ac9ec6baf9d3f89f241a923384dd7432f` |
+| Package/repository-provenance | Beide `950c6c5f065009ab609403ca3b13909041deb52e305badae549f5ff16cd9ffcc` |
+
+## E02 — applicatie en toolchain
+
+| Onderdeel | Uitvoering | Waargenomen resultaat |
+|---|---|---|
+| Node/npm | `.nvmrc`, `packageManager` | Node 24.19.0 doelversie; npm 11.16.0 |
+| Supabase CLI | exact devDependency | 2.119.0 |
+| Volledige lokale appgate | `npm run check` | Geslaagd: ESLint, TypeScript, 22/22 Node-tests, Next.js-build en WP0-rooktest |
+| Productiebouw | `next build --webpack` | Next.js 16.3.8; alle publieke en beveiligde routes gebouwd; standalone-output geslaagd |
+| HTTP-readback | `scripts/wp0-smoke.mjs` | Root, liveness, readinessblokkade en runtimeconfiguratie gecontroleerd op een ephemeral poort |
+| Dependency-audit | `npm audit --omit=dev --audit-level=high` | 0 kwetsbaarheden |
+| Productiegate | `npm run check:release` | Verwachte exitcode 1: production geblokkeerd |
+
+De appmodus bevat serverroutes voor persoonlijke OTP, claims, workspaces, intake, huishouduitnodiging, boeking en presentiebevestiging. Build zonder runtimegeheimen blijft mogelijk; appmodus zelf vereist expliciete serverconfiguratie en een afzonderlijk uitnodigingsgeheim.
+
+## E03 — databaseopbouw en pgTAP
+
+Testbasis: geïsoleerde wegwerpcontainer `cluvo-db-test-20261002`, Supabase Postgres `17.6.1.171`, database `postgres`. Voor Storage waren de relationele schema-objecten aanwezig; de Storage API/service zelf draaide niet.
+
+Migraties zijn op een leeggemaakte app/api/internal-basis in timestampvolgorde toegepast:
+
+1. `20261002163042_cluvo_wp1_wp2_core.sql`
+2. `20261002165306_wp3_wp5_obligations_execution.sql`
+3. `20261002165327_wp6_wp8_collaboration_communication_policy.sql`
+4. `20261002170949_wp1_onboarding_storage.sql`
+5. `20261002171135_wp9_wp11_finance_people_seasons.sql`
+6. `20261002183000_vertical_read_models.sql`
+
+| pgTAP-bestand | Assertions | Resultaat |
+|---|---:|---|
+| `001_wp1_wp2_core.sql` | 32 | PASS |
+| `002_wp1_onboarding.sql` | 25 | PASS |
+| `003_wp3_wp5_obligations_execution.sql` | 52 | PASS |
+| `004_wp6_wp8_domain_invariants.sql` | 56 | PASS |
+| `005_wp6_wp8_rls.sql` | 30 | PASS |
+| `006_vertical_read_models.sql` | 11 | PASS |
+| `007_wp9_wp11_finance_people_seasons.sql` | 81 | PASS |
+| **Totaal** | **287** | **PASS** |
+
+Gerichte hardening die in deze run is bewezen:
+
+- suspended/archived tenants verliezen ook via directe Data API/RPC de centrale autorisatie;
+- policy-managers en follow-uprollen mogen lezen/toezien maar niet namens een lid openen of vragen;
+- progress-only huishoudtoegang geeft geen financiële details en geen bezwaarrecht;
+- verlopen, onbevestigde diensten blokkeren finance en season close;
+- ledgerwijziging na finalisatie vereist eerst expliciete reassessment/correctie;
+- een gesloten seizoen accepteert geen nieuwe ledgerpost;
+- verleden diensten zonder expliciete booking-close kunnen niet achteraf worden geboekt;
+- invitation-acceptatie met bookingrecht maakt exact één executor-obligation-grant.
+
+## E04 — schema-, RLS- en grant-readback
+
+| Controle | Waargenomen resultaat |
+|---|---:|
+| `app`-tabellen | 135 |
+| RLS enabled | 135/135 |
+| RLS forced | 135/135 |
+| API-functies | 44 |
+| API-views | 15 |
+| `SECURITY DEFINER` in `api` | 0 |
+| Verhoogde `internal`-functies | 86; alle met expliciet leeg `search_path` |
+| API EXECUTE voor `public` | 0 |
+| API EXECUTE voor `anon` | 0 |
+| Directe app-table writes voor `authenticated` | 0 |
+| Storage-policies | 4 |
+| `cluvo-private` | `public=false`, 10 MiB, PDF/JPEG/PNG/text-allowlist |
+| `supabase db lint --schema app,api,internal --level warning --fail-on warning` | Geen schemafouten of waarschuwingen |
+
+## E05 — echte lokale concurrency
+
+### A13 laatste plek
+
+`DATABASE_URL=… npm run db:test:race` start twee afzonderlijke psql-processen met verschillende geverifieerde actoren tegen dezelfde open position.
+
+```json
+{"scenario":"A13_LAST_POSITION_RACE","contenders":2,"persisted_bookings":1,"conflict":"CAPACITY_FULL","result":"PASS"}
+```
+
+Dit is lokaal concurrency-I-deelbewijs voor A13. De browserconflict-/wachtlijstroute en stagingherhaling ontbreken nog.
+
+### Season close versus ledgerwriter
+
+`DATABASE_URL=… npm run db:test:locks` laat twee afzonderlijke transacties dezelfde transaction-scoped season/ledger-lock claimen. De tweede transactie wachtte in deze capture 2997 ms op de eerste en ging daarna door.
+
+```json
+{"scenario":"SEASON_CLOSE_LEDGER_SERIALIZATION","contenders":2,"waited_milliseconds":2997,"result":"PASS"}
+```
+
+De workflow herhaalt beide concurrencyproeven na de lokale pgTAP-run.
+
+## E06 — visuele Club Signal-baseline
+
+| Weergave | Bewijsbestand | SHA-256 |
+|---|---|---|
+| Desktop, 1440 × 1024 | [club-signal-1440x1024.png](evidence/wp0/screenshots/club-signal-1440x1024.png) | `45ecf306045880d49c1f9c940cf5901db5f9046fa8e7e11fbb3b327d299fd7e9` |
+| Mobiel, 390 × 844 | [club-signal-390x844.png](evidence/wp0/screenshots/club-signal-390x844.png) | `439aafca839e460c0d01f4dd24cfaa8c26d1f35bdcfc1cf6f6754f2a01719e92` |
+
+Deze afbeeldingen bewijzen uitsluitend de visuele startbaseline, niet de mobiele gelijkwaardigheid of browserwerking van de beveiligde appketen.
+
+## Lokale dekking versus resterend bewijs
+
+- D-deelbewijs bestaat voor A01–A07, A12–A15, A20–A28 en A30.
+- Acceptatiespecifieke D ontbreekt nog voor A10, A16, A17 en A29.
+- R-deelbewijs is sterk voor delen van A05, A07–A09, A11–A12, A14, A18, A22, A24–A26 en A28, maar vervangt geen echte sessie-/browserproef.
+- A13 heeft lokale D plus een echte tweesessie-race. De overige vereiste integratie-/jobproeven zijn niet volledig.
+- E/browserbewijs en remote stagingbewijs ontbreken voor alle A01–A30.
+
+Daarom blijft ieder acceptatie-ID `OPEN`; zie [implementation-board.md](implementation-board.md) voor de volledige matrix.
+
+## Externe blokkades
+
+1. Private GitHub-remote, Actions en vertrouwde stagingdeployidentiteit ontbreken.
+2. Staginghost/VPS, domein/TLS, broker, runner en remote rollbackpad ontbreken.
+3. Afzonderlijk Supabase-stagingproject en veilige secretinrichting ontbreken.
+4. OTP/mailopvang en toegestane testontvangers ontbreken; echte A11/A20–A23-aflevering is niet bewezen.
+5. Sportlink/ledenbron, push en financiële providers zijn niet geautoriseerd of ingericht.
+6. Werkelijke testaccounts, beheerdersmandaten, seizoensdata en beleidsdocumenten ontbreken voor volledige clubacceptatie.
+7. Backup/restore en promotie van exact dezelfde bewezen image-digest zijn niet uitgevoerd.
+
+Vraag credentials niet in chat en leg ze niet vast in fixtures, logs of Git. Production blijft technisch geblokkeerd tot volledige A01–A30, herstelbewijs en expliciete vrijgave.
