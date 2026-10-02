@@ -25,10 +25,19 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: '24'
+          node-version-file: '.nvmrc'
           cache: npm
       - run: npm ci --no-audit --no-fund
-      - run: npm run typecheck && npm test
+      - run: npm run check
+      - name: Verify staging database artifact
+        run: |
+          set -euo pipefail
+          npx supabase start --exclude studio,imgproxy,edge-runtime,logflare,vector,supavisor,realtime
+          trap 'npx supabase stop --no-backup' EXIT
+          npx supabase test db --local
+          DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:55322/postgres npm run db:test:race
+          DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:55322/postgres npm run db:test:locks
+          npx supabase db lint --local --schema app,api,internal --level warning --fail-on warning
       - name: Build and publish immutable image
         id: image
         env:
@@ -70,5 +79,6 @@ jobs:
           CLUVO_SOURCE_SHA: ${{ needs.build.outputs.sha }}
           CLUVO_RUN_ID: ${{ github.run_id }}
         run: /usr/local/bin/cluvo-deploy-staging "$CLUVO_IMAGE" "$CLUVO_SOURCE_SHA" "$CLUVO_RUN_ID"
-# Deze bootstrap deployt uitsluitend de prototype-UI. Voeg vóór APP_MODE=app
-# backup/migratie/readiness/RLS/E2E-gates toe volgens docs. Production bestaat niet hier.
+# De broker mag APP_MODE=app pas activeren nadat de externe stagingdatabase,
+# backup/migratie/readiness- en browsergates aantoonbaar zijn ingericht.
+# Production bestaat niet in deze workflow.

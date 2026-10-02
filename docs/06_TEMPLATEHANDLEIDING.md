@@ -52,6 +52,7 @@ De workflows veronderstellen dat `package.json` in de repositoryroot staat. Plaa
 | `RELEASE_SHA` | Ingesteld door de broker | Ja |
 | `SUPABASE_URL` / `SUPABASE_PUBLISHABLE_KEY` | Serveromgeving; publieke configuratie via allowlist | Vanaf WP1 |
 | `SUPABASE_SECRET_KEY` | Alleen privé op server of worker | Alleen bij afgebakende beheeroperaties |
+| `INVITATION_TOKEN_SECRET` | Alleen privé in de webserver; minimaal 32 willekeurige bytes | In appmodus, voor retrybare eenmalige dossiertokens |
 | `MIGRATION_DATABASE_URL` | Secret voor de migrator | Vanaf WP1; geen toegang vanuit de webcontainer |
 | `BACKUP_DATABASE_URL` | Secret voor het back-upproces | Vanaf WP1, met minimale rechten |
 | `MAIL_DRIVER` / `MAIL_ALLOWLIST` | Worker/runtime | Logdriver en allowlist totdat de verzendtest is vrijgegeven |
@@ -64,7 +65,7 @@ Plak geen `.env`-bestand, OTP, databasewachtwoord of API-key in de handmatige Co
 
 ## Voor de eerste echte gegevens
 
-WP1 vervangt `localStorage` en demorechten en activeert sessieproxy, OTP, echte RLS- en tenanttests en servermutaties. Geef pas daarna bewust `APP_MODE=app` vrij in de runtime en de broker. Voeg ook databaseback-ups, een migratielock, migratiechecksums, advisors, schemacompatibiliteit, readiness en workerchecks aan het deploypad toe. Alleen afvinken is onvoldoende: toon aan dat concurrency op de laatste dienstplaats en negatieve ouder- en tenanttests slagen.
+De lokale WP1-keten gebruikt inmiddels sessieclaims, OTP, RLS, tenanttests en servermutaties; het prototype blijft daarvan fysiek gescheiden. Geef `APP_MODE=app` op de broker pas vrij nadat het echte stagingproject, Auth-template, private bucket en secretinrichting zijn gecontroleerd. Voeg databaseback-ups, een migratielock, migratiechecksums, advisors, schemacompatibiliteit, readiness en workerchecks aan het remote deploypad toe. Alleen lokaal afvinken is onvoldoende: herhaal concurrency en negatieve ouder-/tenanttests op de exacte staging-SHA.
 
 ## Latere productiepromotie
 

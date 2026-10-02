@@ -1,39 +1,38 @@
-# Uitgevoerde controles bij deze overdracht
+# Uitgevoerde lokale controles
 
-Datum: 2 oktober 2026. Dit verslag betreft het overdrachtspakket en de Next.js-startbasis. Het is geen V1-productieacceptatie.
+Datum: 2 oktober 2026 (`Europe/Amsterdam`). Dit verslag betreft de geverifieerde overdracht, de Next.js-app en de lokale database-implementatietranche. Het is geen staging- of productieacceptatie.
 
 | Controle | Resultaat |
 |---|---|
-| Actuele canon | Volledige actuele Library-versie gelezen; 18 pagina's; bronbestand van 58.894 bytes |
-| Herkomst prototype | Schone lokale Git-bron, commit `5d96234ade7dba5f79bdd0f4ddbc21e26fc13801`; gepubliceerde versie 1 |
-| Referentie-export | Git-archief van de exacte commit; bestandshashes gecontroleerd bij pakketvalidatie |
-| Overzetting naar Next.js | Gewone Next.js 16.3.8, zonder Vinext-, Cloudflare- of Sites-runtime; oorspronkelijke schermcode en CSS behouden |
-| Afhankelijkheden | Installatie geslaagd; vastgepinde directe versies en een nieuwe `package-lock.json` |
-| TypeScript | `tsc --noEmit` geslaagd |
-| Unit- en gateproeven | 11 tests geslaagd: 8 voor uren, bedragen en invarianten en 3 voor runtimeblokkades |
-| Next.js-build | `next build --webpack` succesvol op Node 24.19.0; routes en standalone-output gegenereerd |
-| SSR-rooktest | Gebouwde standalone-app: HTTP 200 voor de root met Cluvo-UI, het logo en het manifest |
-| Liveness | `/api/health/live` geeft 200 met staging/prototype en de verwachte bron-SHA |
-| Backend readiness | `/api/health/ready` geeft zoals bedoeld 503: de echte backend ontbreekt |
-| Niet-ingestelde Supabase-configuratie | `/api/runtime-config` geeft zoals bedoeld 503; voor de demo zijn geen credentials nodig |
-| Productiereleasegate | `check-release.mjs` weigert met exitcode 1 |
-| Opstartgate | De Node-preload weigert vóór de serverstart productie, onbekende omgevingen en de nog niet gebouwde appmodus |
-| Deploytemplates | YAML-structuur, main/staging-event, opt-in-gate, het ontbreken van een actieve productieworkflow, Bash-syntax en ongeldige invoer getest |
-| Onafhankelijke review | Canon/gapanalyse, datamodel/rechten en deploytemplates afzonderlijk gereviewd |
+| Pakket en provenance | ZIP-inhoud 293/293 SHA-256-regels correct; baselinecommit `a9f62f3fe9e4ef5801b33a4247c74104017a9ba5`; prototypebron `5d96234ade7dba5f79bdd0f4ddbc21e26fc13801` |
+| Overzetting naar Next.js | Next.js 16.3.8 zonder Vinext-, Cloudflare- of Sites-runtime; Club Signal-bron, CSS en merkassets behouden |
+| Toolchain | `.nvmrc` Node 24.19.0; npm 11.16.0; Supabase CLI 2.119.0; directe dependencies exact vastgezet in lockfile |
+| Applicatiecheck | `npm run check` geslaagd: lint, TypeScript, 22 Node-tests, productiebuild en standalone HTTP-rooktest |
+| Dependency-audit | `npm audit --omit=dev --audit-level=high`: 0 kwetsbaarheden |
+| Routes | Build bevat OTP/confirm, workspaces, tenantoverzicht, intake, diensten, presentie en invitation-accept routes; beveiligde routes zijn dynamisch |
+| Lege database-opbouw | Zes migraties in timestampvolgorde toegepast op een geïsoleerde Supabase Postgres 17.6.1.171-container |
+| pgTAP | Zeven bestanden, 287 assertions, alle geslaagd |
+| Schema-readback | 135 `app`-tabellen; alle 135 met RLS enabled en forced; 44 API-functies en 15 API-views |
+| Functiegrenzen | 0 `SECURITY DEFINER`-functies in `api`; alle 86 verhoogde `internal`-functies hebben een expliciet leeg `search_path` |
+| Grants | 0 API-executierechten voor `public` of `anon`; 0 directe INSERT/UPDATE/DELETE-tabellen voor `authenticated` in `app` |
+| Private Storage | Niet-publieke `cluvo-private`-bucket, 10 MiB-limiet, MIME-allowlist en vier RLS-policies geïnstalleerd tegen een lokale Storage-schemafixture |
+| Database-lint | `supabase db lint` voor `app,api,internal` op warningniveau: geen resultaten |
+| A13 concurrency | Twee echte psql-processen op één laatste plek: één boeking, één `CAPACITY_FULL`, exact één persistente booking |
+| Season/ledger concurrency | Tweede transactie wacht aantoonbaar op de transaction-scoped lock; herhaalbaar via `npm run db:test:locks` |
+| Runtimegate | Ontbrekende `APP_ENV` in appmodus en iedere productionomgeving stoppen vóór serverstart; prototype blijft lokaal zonder secrets bouwbaar |
+| Productiereleasegate | `check-release.mjs` weigert; geen actieve productieworkflow; `v1_ready=false` en `production_enabled=false` |
 
 ## Niet uitgevoerd en niet als werkend geclaimd
 
-- In deze uitvoeromgeving is geen Docker Engine beschikbaar. Het bouwen van het image, Compose, Caddy en de VPS-broker zijn niet op een echte host getest. De gewone Next.js standalone-build en de HTTP-rooktest zijn wel uitgevoerd.
-- Er is geen GitHub-repository of Actions-run aangemaakt. De workflowtemplates zijn niet daadwerkelijk op een self-hosted runner uitgevoerd.
-- Er is geen Supabase-project verbonden en geen SQL-migratie toegepast. Er zijn geen database-, RLS-, advisor- of concurrencytests uitgevoerd. Het meegeleverde schema is een ontwerp; de serverhelpers zijn alleen op typen gecontroleerd.
-- Er is geen provider voor OTP, e-mail, push, Sportlink of betalingen aangeroepen. Integratiedata blijft voorbeelddata.
-- Er is geen productieomgeving aangemaakt of gepubliceerd. Het oorspronkelijke Sites-prototype is niet gewijzigd.
-- De bestaande prototype-UI was in de voorafgaande bouwronde gecontroleerd op desktop, mobiel en kernflows. De overzetting behoudt die bron. Een volledige browserregressie onder echte Next.js/Supabase is een gate voor het werkpakket; die is hier niet als bewijs van een werkende backend opgevoerd.
+- Er is geen Git-remote, Actions-run, private GHCR-publicatie, staginghost, TLS-domein of bevoegde deployrunner gekoppeld.
+- Er is geen afzonderlijk Supabase-stagingproject verbonden. De Auth-, Storage- en Realtime-diensten zijn niet end-to-end tegen een remote project getest.
+- Er is geen echte OTP-/mailaflevering, push, Sportlink/CSV-providerjob, financiële provider, webhook of scheduler uitgevoerd.
+- Er is geen volledige browseracceptatie met de vereiste profielen, schermreadback, mobiel bewijs en alle negatieve directe URL-/search-/exportpaden uitgevoerd.
+- Backup/restore, remote migratie, rollback en herdeploy van exact hetzelfde image-digest zijn niet bewezen.
+- Er is geen productieomgeving aangemaakt, gemigreerd of gepubliceerd.
 
 ## Open acceptatiestatus
 
-Alle A01–A30 staan in `release/acceptance-register.json` op OPEN. De elf startertests bewijzen een beperkte set losse reken- en opstartregels. Ze vervangen geen transactionele, RLS- of E2E-proeven van Cluvo V1. Wijzig een acceptatiestatus pas na werkelijk uitgevoerd bewijs op de juiste broncommit en stagingomgeving.
+Alle A01–A30 staan in `release/acceptance-register.json` op `OPEN`. De lokale pgTAP- en concurrencyresultaten zijn D/R-deelbewijs en voor A13 beperkt lokaal I-bewijs. Zij vervangen geen ontbrekend provider-, browser- of stagingbewijs. De precieze dekking en gaten staan in `docs/release/implementation-board.md` en `docs/release/v1-evidence.md`.
 
-## Bij een volgende wijziging
-
-Test de relevante risico's opnieuw en voer de verplichte releasegates uit. Behoud de bronhash, runtimeversies en bewijsverwijzingen. Een latere geslaagde build mag eerdere, onbewezen databaseaannames niet stilzwijgend op GOEDGEKEURD zetten.
+Wijzig een acceptatiestatus uitsluitend na bewijs op de exacte broncommit en migratieversie, met fixture/rollen, waargenomen database- én schermresultaat, artefact en stagingomgeving. Productie kan pas na alle A01–A30, herstelbewijs en expliciet akkoord in een afzonderlijke wijziging worden geactiveerd.

@@ -1,24 +1,26 @@
-# Cluvo Next.js starter
+# Cluvo V1 — lokale implementatietranche
 
-Dit is de bestaande visuele demobasis, overgezet naar gewone Next.js, met Supabase SSR-bouwstenen en stagingtemplates. De volledige backend moet nog worden geïmplementeerd volgens de documenten in `docs/`. Dit is nog geen productieklare V1.
+Deze werkmap bevat het Club Signal-prototype én de eerste echte Next.js/Supabase-productketen: persoonlijke e-mail-OTP, tenantwerkruimtes, huishouduitnodiging en intake, veilige dienstboeking, presentiebevestiging en een append-only urenledger. De SQL-migraties modelleren daarnaast de domeinen van WP3–WP11 en hebben lokale pgTAP-dekking. Dit is nog geen geaccepteerde of productieklare V1: alle A01–A30 blijven open totdat de vereiste staging-, browser- en providerproeven zijn uitgevoerd.
 
 ## Lokaal
 
-Gebruik Node 24 (hiermee getest), of Node 22 vanaf 22.13. Voer `npm ci` en daarna `npm run dev` uit. Open [http://localhost:3000](http://localhost:3000). De lokale demo werkt zonder Supabase-credentials. Met `npm run typecheck`, `npm test` en `npm run build` voer je de meegeleverde controles uit. Houd de lockfile in Git.
+Gebruik de Node-versie uit `.nvmrc`. Voer `npm ci` en daarna `npm run dev` uit. Open [http://localhost:3000](http://localhost:3000). `APP_MODE=prototype` toont de geïsoleerde visuele referentie zonder backend. `APP_MODE=app` vereist een expliciete `APP_ENV`, Supabase-URL, publishable key, server-only secret key, `APP_URL` en een afzonderlijk `INVITATION_TOKEN_SECRET` van minimaal 32 bytes; zie `.env.example`.
+
+Met `npm run check` voer je lint, typecheck, Node-contracttests, de productiebuild en de lokale HTTP-rooktest uit. De databasecontroles staan apart omdat zij een lokale Supabase/Postgres-omgeving vereisen: `npm run db:start`, `npm run db:test` en, met `DATABASE_URL`, `npm run db:test:race` plus `npm run db:test:locks`.
 
 ## Status
 
-- UI, CSS, logo en demo-interacties zijn behouden.
+- UI, CSS, logo en de fysiek gescheiden prototypeweergave zijn behouden.
 - Vinext, Cloudflare, Sites-auth en de connectorruntime zijn niet vereist.
-- De Supabase-clients zijn bouwstenen; de demo gebruikt nog `localStorage` en een rolwisselaar.
-- `/api/health/live` controleert alleen het app-proces. `/api/health/ready` geeft bewust 503: de V1-backend is niet gereed.
-- De runtimeconfiguratie geeft alleen de publishable key en URL terug. Zonder configuratie geeft het endpoint 503.
-- `APP_MODE=app` en `APP_ENV=production` zijn opzettelijk geblokkeerd totdat de bijbehorende werkpakketten en gates zijn voltooid.
+- Echte app-routes vertrouwen uitsluitend op serverclaims, API-readmodels, RLS en transactionele commands; prototype-`localStorage` is daar geen autoriteit.
+- `/api/health/live` controleert het proces. `/api/health/ready` controleert in appmodus de databaseafhankelijkheid, maar rapporteert ook dan `release_ready=false` zolang de releasegate dichtstaat.
+- De browser krijgt alleen de Supabase-URL en publishable key. De secret key en uitnodigings-HMAC blijven server-only.
+- `APP_MODE=app` mag lokaal, in test en op staging draaien. `APP_ENV=production` is technisch geblokkeerd totdat volledige acceptatie en expliciete vrijgave zijn vastgelegd.
 - De bestaande demo-serviceworker wordt buiten de oorspronkelijke Sites-host niet geregistreerd. Bouw het offlinegedrag opnieuw en cache geen privédossiers of private API-responses.
 
 ## Hosting
 
-Lees `docs/05_DEPLOYMENT_EN_OPERATIE.md` en `docs/06_TEMPLATEHANDLEIDING.md`. De workflows staan op de juiste plek, maar de stagingdeploy moet eerst met repositoryvariabele `STAGING_DEPLOY_ENABLED` worden geactiveerd. De beschreven runner en hostconfiguratie zijn vereist. Production bestaat uitsluitend als `.disabled`-template met een harde stop. Dit pakket heeft niets op een VPS of in Supabase aangemaakt.
+Lees `docs/05_DEPLOYMENT_EN_OPERATIE.md`, `docs/06_TEMPLATEHANDLEIDING.md` en `docs/release/v1-evidence.md`. CI verifieert app en migraties; staging moet eerst met de bedoelde repositoryvariabelen, secrets, runner en host worden ingericht. Production bestaat uitsluitend als uitgeschakelde template met een harde stop. Deze lokale run heeft niets op een VPS, provider of remote Supabase-project aangemaakt.
 
 ## Starten met Codex
 

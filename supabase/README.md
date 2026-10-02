@@ -1,11 +1,11 @@
-# Supabase: bewust nog geen uitgevoerde migraties
+# Supabase: lokale migraties en bewijsgrenzen
 
 Zie ../docs/03_SUPABASE_DATAMODEL_EN_RECHTEN.md en ../docs/04_DOMEINTRANSACTIES_EN_INTEGRATIES.md.
 
-Er bestaat nog geen gekoppeld Supabase-project in deze starter. Maak eerst een lokaal project via een exact gepinde Supabase CLI, daarna uitsluitend het stagingproject. Start met standaard Postgres, niet een onnodige databasebeta. Ontwikkel en test schema/RLS lokaal. Genereer migraties met de CLI; zet geen handgeschreven alles-in-een ongeteste productieschema-migratie live.
+De migraties onder `migrations/` vormen lokaal de WP1–WP11-domeinbasis. Zij zijn vanaf een lege, geïsoleerde Postgres/Supabase-basis in timestampvolgorde getest met de pgTAP-bestanden onder `tests/`. Dit lokale bewijs vervangt geen remote stagingmigratie, echte Auth/Storage/Realtime-proef of browseracceptatie.
 
-Volgorde: tenants/identities/permissions → dossiers/intake → obligations/ledger → taskcatalog/shifts/slots/bookings → attendance/swap/waitlist → exceptions/finance → policies → collaboration → integrations/outbox → season snapshots.
+De geïmplementeerde volgorde is: tenants/identities/permissions en kerncommands → obligations/execution → collaboration/communication/policy → onboarding/private Storage → finance/people/seasons → privacy-reduced readmodels.
 
-Voor elke tranche: positieve én negatieve RLS-proeven (incl. tweede tenant), database/advisors, migratie op lege en bestaande DB, transactionele concurrencyproeven en gerichte API/E2E-test. Public-schema tabellen moeten expliciete grants én RLS krijgen; persoonlijke gegevens zijn standaard niet publiek.
+Voor wijziging van een migratie: bouw een lege lokale database op, voer alle tests uit, draai `supabase db lint` en herhaal de A13-tweesessierace. De `api`-schemafuncties zijn security-invoker wrappers; verhoogde implementaties blijven in `internal`, met een vast `search_path`. Applicatietabellen hebben geforceerde RLS en directe writes voor `authenticated` blijven ingetrokken.
 
-Database-migraties zijn NOG NIET aan de meegeleverde stagingworkflow gekoppeld. WP1 maakt daar een expliciete backup/migrate/verify stap van voordat APP_MODE=app wordt vrijgegeven. Geen db reset --linked; geen service_role in browser; geen automatische destructive downmigraties.
+De stagingworkflow bevat een backup/migrate/test/lint-volgorde, maar is nog niet aantoonbaar uitgevoerd: remote, runner, database-URL en secrets ontbreken. Gebruik nooit `db reset --linked`; plaats geen server- of legacy service-role-secret in de browser en voer geen automatische destructieve downmigraties uit. Productie blijft geblokkeerd.
