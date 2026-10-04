@@ -14,8 +14,8 @@ Dit hoofdstuk beschrijft de daadwerkelijk geleverde bestanden. Hoofdstuk 05 besc
 | `/api/health/live` | Toont of de app draait, plus omgevingsnaam, modus en bron-SHA |
 | `/api/health/ready` | Geeft bewust 503 totdat de V1-backend gereed is |
 | `Dockerfile` | Bouwt en test de standalone-app; de runtime draait niet als root |
-| `.github/workflows/ci.yml` | PR-controles op een hosted runner, zonder deploysecrets |
-| `.github/workflows/staging.yml` | Bouwt `main`, maakt een GHCR-image per SHA en een manifest; stagingdeploy is opt-in |
+| `.github/workflows/ci.yml` | PR- en `main`-pushcontroles op een hosted runner, zonder deploysecrets |
+| `.github/workflows/staging.yml` | Bouwt uitsluitend een exact uit `main` gepromoveerde `staging`-SHA, maakt een GHCR-image en een manifest; deployment is opt-in |
 | `ops/cluvo-deploy-staging` | Valideert target, image, SHA en run; gebruikt een hostlock, voert een Compose-update uit, leest liveness terug en rolt de app bij een fout terug |
 | `ops/templates/promote-production.yml.disabled` | Geen actieve workflow; bevat ook na activering een harde `exit 1` |
 | `release/readiness.json` / `check:release` | V1 staat op false; de productiecheck faalt expliciet |
@@ -35,11 +35,11 @@ De workflows veronderstellen dat `package.json` in de repositoryroot staat. Plaa
 1. Kies een nog aan te leveren host en domein. Geen van de voorbeeldwaarden in de templates verwijst naar echte infrastructuur.
 2. Installeer Docker Engine met de Compose-plugin, Python 3, util-linux/flock en een TLS-reverse-proxy. Pin de gekozen containerbasis op een digest vóór operationele ingebruikname. Het huidige Node 24-majorlabel is een onderhoudbaar startpunt, geen volledig vastgezet image.
 3. Richt een aparte stagingidentiteit en private GHCR-pulltoegang in. Geef de deployrunner geen adminscope op GitHub en geen productiegeheimen. Dockerrechten zijn vergaand: gebruik een vaste broker of een dedicated host en bescherm scripts en configuratie tegen wijzigingen door de runner.
-4. Plaats `ops/cluvo-deploy-staging` als `/usr/local/bin/cluvo-deploy-staging`. Maak het script en `/etc/cluvo/` root-beheerd. De runner moet de broker kunnen uitvoeren, maar mag die niet overschrijven. Stem eventuele sudo- of servicebroker-inrichting af op de bestaande server; gebruik geen brede `NOPASSWD:ALL`.
+4. Plaats `ops/cluvo-deploy-staging` als `/usr/local/sbin/cluvo-deploy-staging`. Maak het script en `/etc/cluvo/` root-beheerd. De runner moet de broker kunnen uitvoeren, maar mag die niet overschrijven. Stem eventuele sudo- of servicebroker-inrichting af op de bestaande server; gebruik geen brede `NOPASSWD:ALL`.
 5. Plaats `ops/compose.staging.yml` in `/etc/cluvo/compose.staging.yml`. Vul `ops/staging-target.example.json` in en sla het op als `/etc/cluvo/staging-target.json`. Gebruik de exacte registry in kleine letters, bijvoorbeeld de echte GHCR-namespace en repositorynaam. Vul de eigen stagingorigin in. Laat `supabase_url` leeg tot WP1 of gebruik uitdrukkelijk het stagingproject.
 6. Maak `/etc/cluvo/staging.env` vanuit `.env.staging.example`, met de daadwerkelijke `APP_URL`. Houd `APP_ENV=staging` en `APP_MODE=prototype`. Configuratie en environmentvariabelen moeten overeenkomen. Bewaar het secretsbestand buiten Git en beperk de leesrechten.
 7. Maak `/var/lib/cluvo-staging/` lees- en schrijfbaar voor uitsluitend de bevoegde brokeridentiteit. Hier komen de deploylock, `current.json`, `previous.json` en het deploymentlog. Bewaar logging niet publiek.
-8. Installeer een GitHub-deployrunner die uitsluitend voor Cluvo bedoeld is, met labels `self-hosted,linux,x64,cluvo-staging-deploy`. Laat daar geen PR-jobs op draaien. De deployjob checkt geen broncode uit en voert geen `npm install` uit.
+8. Installeer een GitHub-deployrunner die uitsluitend voor Cluvo bedoeld is, met labels `self-hosted, Linux, X64, cluvo-staging-deploy`. Laat daar geen PR-jobs op draaien. De deployjob checkt geen broncode uit en voert geen `npm install` uit.
 9. Configureer de TLS-reverse-proxy naar `127.0.0.1:3100`. Zolang de authenticatie van het prototype bestaat, moet het stagingdomein achter een toegangsbeperking blijven. Vervang eerst de voorbeeldplaceholder voor Caddy Basic Auth.
 10. Zet de repositoryvariabele `STAGING_DEPLOY_ENABLED=true` pas nadat het bovenstaande pad is getest. Gebruik GitHub Environment `staging` met de beschikbare branch- en goedkeuringsregels. Bouw geen geheime stagingwaarden in het image.
 11. Push geteste code naar `main`, wacht op groene CI en promoveer die exacte SHA zonder mergecommit naar `staging`. Controleer daarna Actions, het vaste image-digest en `/var/lib/cluvo-staging/current.json`. Controleer zelf ook het stagingdomein. Registreer het bewijs; ga niet alleen af op de kleur van de job.

@@ -87,7 +87,7 @@ Een publishable key mag in de browser voorkomen; een Supabase secret key/service
 
 ## 6. Stagingdeploy in vaste volgorde
 
-1. Controleer dat de run uit de vertrouwde repository, de bedoelde workflow en `refs/heads/main` komt. Lees de bron-SHA uit de run en checkout nooit stilzwijgend de nieuwste branchkop.
+1. Controleer dat de run uit de vertrouwde repository, de bedoelde workflow en `refs/heads/staging` komt. Controleer dat de branchkop exact gelijk is aan de run-SHA en dat die SHA al in `main` voorkomt. Lees de bron-SHA uit de run en checkout nooit stilzwijgend de nieuwste branchkop.
 2. Haal het release-manifest en de bijbehorende image-digest op. Controleer formaat, herkomst, hashes en de ondersteunde configuratieversie.
 3. Verkrijg een deploylock per omgeving. Gebruik GitHub-concurrency met `cancel-in-progress: false` voor de deployjob, plus een hostlock zodat een handmatige deployment niet tegelijk kan lopen.
 4. Voer preflight uit: juiste omgeving/project, voldoende schijfruimte, bereikbare database, leesbaar image, migratiestatus en werkende backupbestemming.
