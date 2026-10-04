@@ -34,12 +34,17 @@ jobs:
       - name: Verify exact promotion from main
         env:
           RELEASE_SHA: ${{ github.sha }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
 
-          git fetch --no-tags origin \
-            +refs/heads/main:refs/remotes/origin/main \
-            +refs/heads/staging:refs/remotes/origin/staging
+          auth_header="$(
+            printf 'x-access-token:%s' "$GH_TOKEN"               | base64 -w0
+          )"
+
+          git             -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $auth_header"             fetch --no-tags origin               +refs/heads/main:refs/remotes/origin/main               +refs/heads/staging:refs/remotes/origin/staging
+
+          unset auth_header
 
           staging_sha="$(git rev-parse refs/remotes/origin/staging)"
           main_sha="$(git rev-parse refs/remotes/origin/main)"
@@ -50,17 +55,18 @@ jobs:
 
           if [[ "$staging_sha" != "$RELEASE_SHA" ]]; then
             echo "::error::This run no longer targets the current staging tip."
+            echo "::error::release=$RELEASE_SHA staging=$staging_sha"
             exit 1
           fi
 
-          if ! git merge-base --is-ancestor \
-            "$RELEASE_SHA" \
-            refs/remotes/origin/main
+          if ! git merge-base --is-ancestor             "$RELEASE_SHA"             refs/remotes/origin/main
           then
             echo "::error::Staging must point to an exact commit already contained in main."
             echo "::error::Do not merge a pull request from main into staging."
             exit 1
           fi
+
+          echo "Exact-SHA staging promotion verified."
 
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
