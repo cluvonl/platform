@@ -1,68 +1,330 @@
 #!/usr/bin/env bash
-# Installeer als root-beheerd vast script. Geen vrij te kiezen shellcommando's.
+
 set -euo pipefail
 umask 077
-[[ $# == 3 ]] || { echo 'Usage: cluvo-deploy-staging IMAGE@DIGEST SOURCE_SHA RUN_ID' >&2; exit 64; }
-image="$1"; sha="$2"; run_id="$3"
-[[ "$image" =~ ^ghcr\.io/[a-z0-9._/-]+@sha256:[0-9a-f]{64}$ ]] || exit 64
-[[ "$sha" =~ ^[0-9a-f]{40}$ && "$run_id" =~ ^[0-9]+$ ]] || exit 64
-readonly config=/etc/cluvo/staging-target.json
-readonly compose=/etc/cluvo/compose.staging.yml
-readonly runtime=/etc/cluvo/staging.env
-readonly state=/var/lib/cluvo-staging
-[[ -f "$config" && -f "$compose" && -f "$runtime" && -d "$state" ]] || { echo 'Stagingbootstrap ontbreekt' >&2; exit 78; }
+
+[[ "$#" -eq 3 ]] || {
+  echo 'Usage: cluvo-deploy-staging IMAGE@DIGEST SOURCE_SHA RUN_ID' >&2
+  exit 64
+}
+
+image="$1"
+sha="$2"
+run_id="$3"
+
+[[ "$image" =~ ^ghcr\.io/[a-z0-9._/-]+@sha256:[0-9a-f]{64}$ ]] || {
+  echo 'Ongeldige immutable image-reference.' >&2
+  exit 64
+}
+
+[[ "$sha" =~ ^[0-9a-f]{40}$ ]] || {
+  echo 'Ongeldige broncommit.' >&2
+  exit 64
+}
+
+[[ "$run_id" =~ ^[1-9][0-9]*$ ]] || {
+  echo 'Ongeldig GitHub workflow-run-ID.' >&2
+  exit 64
+}
+
+readonly runtime_user='cluvo-staging'
+readonly config='/etc/cluvo/staging-target.json'
+readonly compose='/etc/cluvo/compose.staging.yml'
+readonly runtime='/etc/cluvo/staging.env'
+readonly state='/var/lib/cluvo-staging'
+
+for path in "$config" "$compose" "$runtime"; do
+  [[ -f "$path" && ! -L "$path" ]] || {
+    echo "Vereiste vaste stagingconfiguratie ontbreekt: $path" >&2
+    exit 78
+  }
+done
+
+[[ -d "$state" && ! -L "$state" ]] || {
+  echo 'Staging state-directory ontbreekt.' >&2
+  exit 78
+}
+
+id "$runtime_user" >/dev/null 2>&1 || {
+  echo 'Runtimegebruiker cluvo-staging ontbreekt.' >&2
+  exit 78
+}
+
+runtime_uid="$(id -u "$runtime_user")"
+runtime_home="$(getent passwd "$runtime_user" | cut -d: -f6)"
+runtime_dir="/run/user/$runtime_uid"
+docker_socket="$runtime_dir/docker.sock"
+
+[[ -n "$runtime_home" && -d "$runtime_home" ]] || {
+  echo 'Runtimehome ontbreekt.' >&2
+  exit 78
+}
+
+[[ -S "$docker_socket" ]] || {
+  echo 'Cluvo rootless Docker-socket ontbreekt.' >&2
+  exit 78
+}
+
+socket_contract="$(stat -c '%F:%U:%G:%a' "$docker_socket")"
+
+case "$socket_contract" in
+  "socket:$runtime_user:$runtime_user:600" | \
+  "socket:$runtime_user:$runtime_user:660")
+    ;;
+  *)
+    echo 'Cluvo Docker-socket heeft onverwachte eigenaar of rechten.' >&2
+    exit 78
+    ;;
+esac
+
+for command in \
+  /usr/bin/docker \
+  /usr/bin/python3 \
+  /usr/bin/flock \
+  /usr/bin/stat \
+  /usr/sbin/runuser
+do
+  [[ -x "$command" ]] || {
+    echo "Vereiste brokerdependency ontbreekt: $command" >&2
+    exit 78
+  }
+done
+
+docker_runtime() {
+  /usr/sbin/runuser \
+    -u "$runtime_user" \
+    -- \
+    /usr/bin/env -i \
+      HOME="$runtime_home" \
+      USER="$runtime_user" \
+      LOGNAME="$runtime_user" \
+      XDG_RUNTIME_DIR="$runtime_dir" \
+      DOCKER_HOST="unix://$docker_socket" \
+      PATH=/usr/local/bin:/usr/bin:/bin \
+      /usr/bin/docker "$@"
+}
+
+compose_runtime() {
+  local selected_image="$1"
+  local selected_sha="$2"
+  shift 2
+
+  /usr/sbin/runuser \
+    -u "$runtime_user" \
+    -- \
+    /usr/bin/env -i \
+      HOME="$runtime_home" \
+      USER="$runtime_user" \
+      LOGNAME="$runtime_user" \
+      XDG_RUNTIME_DIR="$runtime_dir" \
+      DOCKER_HOST="unix://$docker_socket" \
+      PATH=/usr/local/bin:/usr/bin:/bin \
+      CLUVO_IMAGE="$selected_image" \
+      CLUVO_RELEASE_SHA="$selected_sha" \
+      /usr/bin/docker compose \
+        -p cluvo-staging \
+        -f "$compose" \
+        "$@"
+}
+
 exec 9>"$state/deploy.lock"
 flock -w 600 9
-# Controleer doelconfig zonder secrets te printen of .env als shellcode te sourcen.
-python3 - "$config" "$runtime" "$image" "$run_id" "$state/current.json" <<'PREFLIGHT'
-import json,sys,pathlib
-config,envfile,image,run,current=sys.argv[1:]
-c=json.load(open(config));e={}
-for line in open(envfile):
- line=line.strip()
- if line and not line.startswith('#'):
-  k,_,v=line.partition('=');e[k]=v.strip().strip('"').strip("'")
-assert 'REPLACE' not in c['image_repository'], 'Vul staging-target.json in'
-assert image.split('@')[0]==c['image_repository'], 'Onverwacht imageregister'
-assert e.get('APP_ENV')=='staging' and e.get('APP_MODE')=='prototype', 'Deze broker is uitsluitend voor het stagingprototype'
-assert e.get('APP_URL')==c['app_url'] and c['app_url'].startswith('https://') and 'REPLACE' not in c['app_url'], 'Onverwachte apporigin'
-assert e.get('SUPABASE_URL','')==c.get('supabase_url',''), 'Onverwacht Supabaseproject'
-if pathlib.Path(current).exists():
- old=json.load(open(current));assert int(run)>=int(old['workflow_run_id']), 'Oudere run mag nieuwere staging niet overschrijven'
-PREFLIGHT
-export CLUVO_IMAGE="$image" CLUVO_RELEASE_SHA="$sha"
-docker pull "$image"
-revision="$(docker image inspect "$image" --format '{{index .Config.Labels "org.opencontainers.image.revision"}}')"
-[[ "$revision" == "$sha" ]] || { echo 'Image en broncommit verschillen' >&2; exit 65; }
-previous_image=''; previous_sha=''
-if [[ -f "$state/current.json" ]]; then
- previous_image="$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["image"])' "$state/current.json")"
- previous_sha="$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["source_sha"])' "$state/current.json")"
-fi
-recover() {
- echo 'Nieuwe release faalde; vorige apprelease herstellen indien beschikbaar' >&2
- if [[ -n "$previous_image" ]]; then
-  CLUVO_IMAGE="$previous_image" CLUVO_RELEASE_SHA="$previous_sha" docker compose -p cluvo-staging -f "$compose" up -d --no-build --wait --wait-timeout 120 web || echo 'Herstel is ook mislukt: operatoractie nodig' >&2
- else
-  docker compose -p cluvo-staging -f "$compose" stop web || true
- fi
- exit 1
+
+python3 \
+  - "$config" "$runtime" "$image" "$run_id" "$state/current.json" \
+  <<'PY'
+import json
+import pathlib
+import sys
+
+config_path, env_path, image, run_id, current_path = sys.argv[1:]
+
+with open(config_path, encoding="utf-8") as handle:
+    config = json.load(handle)
+
+environment: dict[str, str] = {}
+
+with open(env_path, encoding="utf-8") as handle:
+    for raw_line in handle:
+        line = raw_line.strip()
+
+        if not line or line.startswith("#"):
+            continue
+
+        key, separator, value = line.partition("=")
+
+        if not separator:
+            raise SystemExit("Ongeldige regel in staging.env")
+
+        environment[key] = value.strip().strip('"').strip("'")
+
+repository = image.split("@", 1)[0]
+expected_repository = config.get("image_repository", "")
+
+if (
+    not expected_repository
+    or "REPLACE" in expected_repository
+    or repository != expected_repository
+):
+    raise SystemExit("Onverwacht imageregister")
+
+if environment.get("APP_ENV") != "staging":
+    raise SystemExit("APP_ENV moet staging zijn")
+
+if environment.get("APP_MODE") != "prototype":
+    raise SystemExit("Deze broker is uitsluitend voor het stagingprototype")
+
+app_url = config.get("app_url", "")
+
+if (
+    not app_url.startswith("https://")
+    or "REPLACE" in app_url
+    or environment.get("APP_URL") != app_url
+):
+    raise SystemExit("Onverwachte stagingorigin")
+
+if environment.get("SUPABASE_URL", "") != config.get("supabase_url", ""):
+    raise SystemExit("Onverwacht Supabaseproject")
+
+current = pathlib.Path(current_path)
+
+if current.exists():
+    with current.open(encoding="utf-8") as handle:
+        previous = json.load(handle)
+
+    if int(run_id) <= int(previous["workflow_run_id"]):
+        raise SystemExit(
+            "Deze run is niet nieuwer dan de actieve stagingdeployment"
+        )
+PY
+
+docker_runtime pull "$image"
+
+revision="$(
+  docker_runtime image inspect \
+    "$image" \
+    --format '{{index .Config.Labels "org.opencontainers.image.revision"}}'
+)"
+
+[[ "$revision" == "$sha" ]] || {
+  echo 'Image en broncommit verschillen.' >&2
+  exit 65
 }
-# Prototypebootstrap: GEEN datamigraties; korte herstartonderbreking mogelijk.
+
+previous_image=''
+previous_sha=''
+
+if [[ -f "$state/current.json" ]]; then
+  previous_image="$(
+    python3 \
+      -c 'import json,sys; print(json.load(open(sys.argv[1]))["image"])' \
+      "$state/current.json"
+  )"
+
+  previous_sha="$(
+    python3 \
+      -c 'import json,sys; print(json.load(open(sys.argv[1]))["source_sha"])' \
+      "$state/current.json"
+  )"
+fi
+
+recover() {
+  trap - ERR
+
+  echo 'Nieuwe release faalde; vorige apprelease herstellen.' >&2
+
+  if [[ -n "$previous_image" && -n "$previous_sha" ]]; then
+    docker_runtime pull "$previous_image" || true
+
+    compose_runtime \
+      "$previous_image" \
+      "$previous_sha" \
+      up -d --no-build --wait --wait-timeout 120 web \
+      || echo 'Herstel is mislukt; operatoractie vereist.' >&2
+  else
+    compose_runtime \
+      "$image" \
+      "$sha" \
+      stop web \
+      || true
+  fi
+
+  exit 1
+}
+
 trap recover ERR
-docker compose -p cluvo-staging -f "$compose" up -d --no-build --wait --wait-timeout 120 web
-python3 - "$sha" <<'HEALTH'
-import json,urllib.request,sys
-r=json.load(urllib.request.urlopen('http://127.0.0.1:3100/api/health/live',timeout=10))
-assert r['status']=='ok' and r['environment']=='staging' and r['mode']=='prototype' and r['release']==sys.argv[1]
-HEALTH
-python3 - "$state" "$image" "$sha" "$run_id" <<'RECORD'
-import json,sys,datetime,pathlib,os
-state,image,sha,run=sys.argv[1:];p=pathlib.Path(state)
-data={'image':image,'source_sha':sha,'workflow_run_id':run,'staging_verified_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'mode':'prototype','database_migrated':False,'v1_ready':False}
-if (p/'current.json').exists():(p/'previous.json').write_text((p/'current.json').read_text())
-(p/'candidate.json').write_text(json.dumps(data,indent=2));os.replace(p/'candidate.json',p/'current.json')
-with (p/'deployments.jsonl').open('a') as f:f.write(json.dumps(data)+'\n')
-RECORD
+
+compose_runtime \
+  "$image" \
+  "$sha" \
+  up -d --no-build --wait --wait-timeout 120 web
+
+python3 - "$sha" <<'PY'
+import json
+import sys
+import urllib.request
+
+with urllib.request.urlopen(
+    "http://127.0.0.1:3100/api/health/live",
+    timeout=10,
+) as response:
+    result = json.load(response)
+
+if result.get("status") != "ok":
+    raise SystemExit("Livenessstatus is niet ok")
+
+if result.get("environment") != "staging":
+    raise SystemExit("Onverwachte runtimeomgeving")
+
+if result.get("mode") != "prototype":
+    raise SystemExit("Onverwachte runtimemodus")
+
+if result.get("release") != sys.argv[1]:
+    raise SystemExit("Healthrelease komt niet overeen met de broncommit")
+PY
+
+python3 - "$state" "$image" "$sha" "$run_id" <<'PY'
+import datetime
+import json
+import os
+import pathlib
+import sys
+
+state, image, source_sha, run_id = sys.argv[1:]
+root = pathlib.Path(state)
+
+record = {
+    "image": image,
+    "source_sha": source_sha,
+    "workflow_run_id": run_id,
+    "staging_verified_at": datetime.datetime.now(
+        datetime.timezone.utc
+    ).isoformat(),
+    "mode": "prototype",
+    "database_migrated": False,
+    "v1_ready": False,
+}
+
+current = root / "current.json"
+previous = root / "previous.json"
+candidate = root / "candidate.json"
+
+if current.exists():
+    previous.write_text(current.read_text(encoding="utf-8"), encoding="utf-8")
+    os.chmod(previous, 0o600)
+
+candidate.write_text(
+    json.dumps(record, indent=2) + "\n",
+    encoding="utf-8",
+)
+os.chmod(candidate, 0o600)
+os.replace(candidate, current)
+
+with (root / "deployments.jsonl").open("a", encoding="utf-8") as handle:
+    handle.write(json.dumps(record) + "\n")
+PY
+
 trap - ERR
-echo 'Stagingprototype gepubliceerd en release gecontroleerd. Production blijft geblokkeerd.'
+
+echo 'Cluvo stagingprototype gepubliceerd en exact-SHA health gecontroleerd.'
+echo 'Production blijft technisch geblokkeerd.'

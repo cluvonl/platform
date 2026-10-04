@@ -42,7 +42,7 @@ De workflows veronderstellen dat `package.json` in de repositoryroot staat. Plaa
 8. Installeer een GitHub-deployrunner die uitsluitend voor Cluvo bedoeld is, met labels `self-hosted,linux,x64,cluvo-staging-deploy`. Laat daar geen PR-jobs op draaien. De deployjob checkt geen broncode uit en voert geen `npm install` uit.
 9. Configureer de TLS-reverse-proxy naar `127.0.0.1:3100`. Zolang de authenticatie van het prototype bestaat, moet het stagingdomein achter een toegangsbeperking blijven. Vervang eerst de voorbeeldplaceholder voor Caddy Basic Auth.
 10. Zet de repositoryvariabele `STAGING_DEPLOY_ENABLED=true` pas nadat het bovenstaande pad is getest. Gebruik GitHub Environment `staging` met de beschikbare branch- en goedkeuringsregels. Bouw geen geheime stagingwaarden in het image.
-11. Push of merge geteste code naar `main`. Controleer Actions, het vaste image-digest en `/var/lib/cluvo-staging/current.json`. Controleer zelf ook het stagingdomein. Registreer het bewijs; ga niet alleen af op de kleur van de job.
+11. Push geteste code naar `main`, wacht op groene CI en promoveer die exacte SHA zonder mergecommit naar `staging`. Controleer daarna Actions, het vaste image-digest en `/var/lib/cluvo-staging/current.json`. Controleer zelf ook het stagingdomein. Registreer het bewijs; ga niet alleen af op de kleur van de job.
 
 ## Configuratieoverzicht
 

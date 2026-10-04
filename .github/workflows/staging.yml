@@ -1,43 +1,98 @@
 name: Staging
+
 on:
   push:
-    branches: [main]
+    branches: [staging]
   workflow_dispatch:
+
 permissions:
   contents: read
+
 concurrency:
   group: cluvo-staging
   cancel-in-progress: false
+
 jobs:
   build:
-    if: github.ref == 'refs/heads/main'
+    if: github.repository == 'cluvonl/platform' && github.ref == 'refs/heads/staging'
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 35
     permissions:
       contents: read
       packages: write
+
     outputs:
       image: ${{ steps.image.outputs.image }}
       sha: ${{ github.sha }}
+
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
+          fetch-depth: 0
           persist-credentials: false
+
+      - name: Verify exact promotion from main
+        env:
+          RELEASE_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+
+          git fetch --no-tags origin \
+            +refs/heads/main:refs/remotes/origin/main \
+            +refs/heads/staging:refs/remotes/origin/staging
+
+          staging_sha="$(git rev-parse refs/remotes/origin/staging)"
+          main_sha="$(git rev-parse refs/remotes/origin/main)"
+
+          echo "Release SHA : $RELEASE_SHA"
+          echo "Staging SHA : $staging_sha"
+          echo "Main SHA    : $main_sha"
+
+          if [[ "$staging_sha" != "$RELEASE_SHA" ]]; then
+            echo "::error::This run no longer targets the current staging tip."
+            exit 1
+          fi
+
+          if ! git merge-base --is-ancestor \
+            "$RELEASE_SHA" \
+            refs/remotes/origin/main
+          then
+            echo "::error::Staging must point to an exact commit already contained in main."
+            echo "::error::Do not merge a pull request from main into staging."
+            exit 1
+          fi
+
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version-file: '.nvmrc'
           cache: npm
+
       - run: npm ci --no-audit --no-fund
       - run: npm run check
+
       - name: Verify staging database artifact
         run: |
           set -euo pipefail
-          npx supabase start --exclude studio,imgproxy,edge-runtime,logflare,vector,supavisor,realtime
+
+          npx supabase start \
+            --exclude studio,imgproxy,edge-runtime,logflare,vector,supavisor,realtime
+
           trap 'npx supabase stop --no-backup' EXIT
+
           npx supabase test db --local
-          DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:55322/postgres npm run db:test:race
-          DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:55322/postgres npm run db:test:locks
-          npx supabase db lint --local --schema app,api,internal --level warning --fail-on warning
+
+          DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:55322/postgres \
+            npm run db:test:race
+
+          DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:55322/postgres \
+            npm run db:test:locks
+
+          npx supabase db lint \
+            --local \
+            --schema app,api,internal \
+            --level warning \
+            --fail-on warning
+
       - name: Build and publish immutable image
         id: image
         env:
@@ -48,37 +103,67 @@ jobs:
           RUN_ID: ${{ github.run_id }}
         run: |
           set -euo pipefail
+
           repository="ghcr.io/${SOURCE_REPO,,}"
-          printf '%s' "$GH_TOKEN" | docker login ghcr.io -u "$GH_ACTOR" --password-stdin
+
+          printf '%s' "$GH_TOKEN" \
+            | docker login ghcr.io -u "$GH_ACTOR" --password-stdin
+
           trap 'docker logout ghcr.io >/dev/null 2>&1 || true' EXIT
-          docker build --pull --label "org.opencontainers.image.revision=$SOURCE_SHA" --tag "$repository:$SOURCE_SHA" .
+
+          docker build \
+            --pull \
+            --label "org.opencontainers.image.revision=$SOURCE_SHA" \
+            --tag "$repository:$SOURCE_SHA" \
+            .
+
           docker push "$repository:$SOURCE_SHA"
-          image="$(docker image inspect "$repository:$SOURCE_SHA" --format '{{index .RepoDigests 0}}')"
+
+          image="$(
+            docker image inspect \
+              "$repository:$SOURCE_SHA" \
+              --format '{{index .RepoDigests 0}}'
+          )"
+
           [[ "$image" =~ ^ghcr\.io/[a-z0-9._/-]+@sha256:[0-9a-f]{64}$ ]]
+
           echo "image=$image" >> "$GITHUB_OUTPUT"
+
           export CLUVO_IMAGE="$image"
           node scripts/release-manifest.mjs > release-manifest.json
+
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: cluvo-build-${{ github.sha }}
           path: release-manifest.json
           retention-days: 90
+
   deploy:
     needs: build
-    if: github.ref == 'refs/heads/main' && vars.STAGING_DEPLOY_ENABLED == 'true'
-    runs-on: [self-hosted, linux, x64, cluvo-staging-deploy]
+    if: >-
+      github.repository == 'cluvonl/platform' &&
+      github.ref == 'refs/heads/staging' &&
+      vars.STAGING_DEPLOY_ENABLED == 'true'
+
+    runs-on: [self-hosted, Linux, X64, cluvo-staging-deploy]
     environment: staging
     timeout-minutes: 15
+
     permissions:
       contents: read
+
     steps:
-      # Geen checkout, npm, git pull, migraties of repo-scripts op deze runner.
-      - name: Fixed staging broker
+      # Geen checkout, npm, git, build of Supabase-credential op deze runner.
+      - name: Deploy through fixed root broker
         env:
           CLUVO_IMAGE: ${{ needs.build.outputs.image }}
           CLUVO_SOURCE_SHA: ${{ needs.build.outputs.sha }}
           CLUVO_RUN_ID: ${{ github.run_id }}
-        run: /usr/local/bin/cluvo-deploy-staging "$CLUVO_IMAGE" "$CLUVO_SOURCE_SHA" "$CLUVO_RUN_ID"
-# De broker mag APP_MODE=app pas activeren nadat de externe stagingdatabase,
-# backup/migratie/readiness- en browsergates aantoonbaar zijn ingericht.
-# Production bestaat niet in deze workflow.
+        run: |
+          set -euo pipefail
+
+          sudo --non-interactive \
+            /usr/local/sbin/cluvo-deploy-staging \
+            "$CLUVO_IMAGE" \
+            "$CLUVO_SOURCE_SHA" \
+            "$CLUVO_RUN_ID"
