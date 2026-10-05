@@ -65,17 +65,95 @@ docker_socket="$runtime_dir/docker.sock"
   exit 78
 }
 
-socket_contract="$(stat -c '%F:%U:%G:%a' "$docker_socket")"
+runtime_gid="$(id -g "$runtime_user")"
 
-case "$socket_contract" in
-  "socket:$runtime_user:$runtime_user:600" | \
-  "socket:$runtime_user:$runtime_user:660")
-    ;;
-  *)
-    echo 'Cluvo Docker-socket heeft onverwachte eigenaar of rechten.' >&2
+[[ ! -L "$runtime_dir" ]] || {
+  echo 'Rootless runtime-directory mag geen symlink zijn.' >&2
+  exit 78
+}
+
+runtime_dir_contract="$(
+  stat -Lc '%F:%u:%g:%a' "$runtime_dir"
+)"
+
+expected_runtime_contract="directory:$runtime_uid:$runtime_gid:700"
+
+[[ "$runtime_dir_contract" == "$expected_runtime_contract" ]] || {
+  echo 'Rootless runtime-directory heeft onverwachte eigenaar of rechten.' >&2
+  echo "Verwacht: $expected_runtime_contract" >&2
+  echo "Werkelijk: $runtime_dir_contract" >&2
+  exit 78
+}
+
+read -r \
+  socket_type \
+  socket_uid \
+  socket_gid \
+  socket_mode \
+  < <(
+    stat -Lc '%F %u %g %a' "$docker_socket"
+  )
+
+[[ "$socket_type" == "socket" ]] || {
+  echo 'Dockerpad is geen Unix-socket.' >&2
+  exit 78
+}
+
+[[ "$socket_uid" == "$runtime_uid" ]] || {
+  echo 'Docker-socket is niet van de vaste runtimegebruiker.' >&2
+  exit 78
+}
+
+socket_mode_value=$((8#$socket_mode))
+socket_group_bits=$((socket_mode_value & 0070))
+socket_other_bits=$((socket_mode_value & 0007))
+socket_special_bits=$((socket_mode_value & 07000))
+
+(( (socket_mode_value & 0600) == 0600 )) || {
+  echo 'Docker-socket mist lees-/schrijfrechten voor de eigenaar.' >&2
+  exit 78
+}
+
+(( socket_group_bits == 0 || socket_group_bits == 0060 )) || {
+  echo 'Docker-socket heeft onverwachte groepsrechten.' >&2
+  exit 78
+}
+
+(( socket_other_bits == 0 )) || {
+  echo 'Docker-socket is toegankelijk voor andere gebruikers.' >&2
+  exit 78
+}
+
+(( socket_special_bits == 0 || socket_special_bits == 01000 )) || {
+  echo 'Docker-socket heeft onverwachte speciale permissiebits.' >&2
+  exit 78
+}
+
+if [[ "$socket_gid" != "$runtime_gid" ]]; then
+  if ! awk \
+    -F: \
+    -v user="$runtime_user" \
+    -v gid="$socket_gid" \
+    '
+      $1 == user {
+        start = $2 + 0
+        count = $3 + 0
+
+        if (gid >= start && gid < start + count) {
+          found = 1
+        }
+      }
+
+      END {
+        exit(found ? 0 : 1)
+      }
+    ' \
+    /etc/subgid
+  then
+    echo 'Docker-socketgroep behoort niet tot de runtimegebruiker of diens subordinate GID-range.' >&2
     exit 78
-    ;;
-esac
+  fi
+fi
 
 for command in \
   /usr/bin/docker \
