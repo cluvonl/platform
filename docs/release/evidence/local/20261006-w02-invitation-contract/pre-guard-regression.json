@@ -1,0 +1,16 @@
+{
+  "observed_at": "2026-10-06T21:20:01.998171+00:00",
+  "environment": "local",
+  "installed_state": "unpublished initial contract draft before creation lock guard",
+  "scenario": "creation_after_authority_revocation",
+  "expected": "FORBIDDEN and one original invitation",
+  "observed": "second command unexpectedly succeeded after waiting",
+  "readback": {
+    "invitation_count": 2,
+    "household_version": 3,
+    "author_can_invite": false,
+    "api_definition_digest": "ded5234445c535f51ac1e8e2de93f7a1"
+  },
+  "regression_reproduced": true,
+  "staging_verified": false
+}

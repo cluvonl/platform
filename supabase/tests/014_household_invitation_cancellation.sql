@@ -268,7 +268,7 @@ select ok(exists(select 1 from jsonb_array_elements(pg_temp.dossier()->'history'
 select pg_temp.actor('55555555-5555-4555-8555-555555555555','cancel-recipient@example.test');
 select is(api.household_invitation_context((select token from cancel_fixture where case_key='sent')),null::jsonb,'revoked personal link has no consent context');
 select throws_ok($$select * from api.accept_household_invitation_v2((select token from cancel_fixture where case_key='sent'),3,gen_random_uuid())$$,'42501','INVALID_INVITATION','current-version acceptance cannot consume a cancelled invitation');
-select throws_ok($$select * from api.accept_household_invitation((select token from cancel_fixture where case_key='sent'))$$,'42501','INVALID_INVITATION','legacy acceptance also rejects cancelled token');
+select throws_ok($$select * from api.accept_household_invitation((select token from cancel_fixture where case_key='sent'))$$,'42501','permission denied for function accept_household_invitation','retired legacy endpoint rejects even a known cancelled token');
 reset role;
 select is((select count(*) from app.household_access_grants where auth_user_id='55555555-5555-4555-8555-555555555555'),0::bigint,'cancelled recipient gained no dossier grant');
 select is((select count(*) from app.account_person_links where auth_user_id='55555555-5555-4555-8555-555555555555'),0::bigint,'cancelled recipient gained no person link');

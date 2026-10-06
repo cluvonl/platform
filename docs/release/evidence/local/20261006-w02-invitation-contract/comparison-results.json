@@ -1,0 +1,8 @@
+{
+  "environment": "local",
+  "comparison_pairs": 12,
+  "images_loaded": true,
+  "overlay_and_opacity": true,
+  "result": "PASS",
+  "staging_verified": false
+}

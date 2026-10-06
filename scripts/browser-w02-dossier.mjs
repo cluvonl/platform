@@ -3,7 +3,7 @@ import {mkdir,writeFile} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
 const {chromium}=await import(process.env.PLAYWRIGHT_MODULE??'playwright');
 const base='http://127.0.0.1:3200',mail='http://127.0.0.1:55324';
-const output=process.env.EVIDENCE_OUTPUT??'docs/release/evidence/local/20261006-w02-invitation-cancellation';
+const output=process.env.EVIDENCE_OUTPUT??'docs/release/evidence/local/20261006-w02-invitation-contract';
 const options={viewport:{width:1440,height:1024},locale:'nl-NL',timezoneId:'Europe/Amsterdam',reducedMotion:'reduce'};
 const browser=await chromium.launch({headless:true}),contexts=[],hydration=[],checks=[];
 const sql=(query)=>execFileSync('docker',['exec','-i','supabase_db_cluvo-local','psql','-U','postgres','-d','postgres','-qtA','-v','ON_ERROR_STOP=1'],{input:query,encoding:'utf8'}).trim();
@@ -33,6 +33,19 @@ async function recipientLink(email,previous){for(let attempt=0;attempt<60;attemp
 async function fillInvite(page,email){await page.getByLabel('Voornaam',{exact:true}).fill('Extra');await page.getByLabel('Achternaam',{exact:true}).fill('Dossierproef');await page.getByLabel('Persoonlijk e-mailadres',{exact:true}).fill(email);await page.getByLabel('Mag de gezamenlijke huishoudvoortgang zien').check();}
 try{
  const {page:a}=await login('ouder-a@example.test');
+ if(process.env.EXPECT_INVITATION_CONTRACT==='1'){
+  const config=await fetch(base+'/api/runtime-config').then(r=>r.json());assert.ok(new URL(config.url).hostname==='127.0.0.1'&&new URL(config.url).port==='55321','contract REST test stays on the local Supabase stack');let session;
+  try{const cookies=(await a.context().cookies()).filter(c=>/^sb-.*-auth-token(?:\.\d+)?$/.test(c.name)).sort((x,y)=>x.name.localeCompare(y.name,undefined,{numeric:true})),value=cookies.map(c=>c.value).join('');session=JSON.parse(value.startsWith('base64-')?Buffer.from(value.slice(7),'base64url').toString('utf8'):value);}catch{throw new Error('Unable to inspect local test session; token diagnostics withheld.');}assert.ok(typeof session.access_token==='string'&&session.user?.id==='11111111-1111-4111-8111-111111111111'&&session.user?.role==='authenticated','REST checks use the actual synthetic authenticated session');
+  const headers={apikey:config.publishableKey,Authorization:'Bearer '+session.access_token,'Content-Type':'application/json','Content-Profile':'api','Accept-Profile':'api'},rpc=async(name,params)=>fetch(config.url+'/rest/v1/rpc/'+name,{method:'POST',headers,body:JSON.stringify(params)});
+  const current=await rpc('get_household_dossier_v2',{p_tenant_id:'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',p_household_id:'a3000000-0000-4000-8000-000000000001'});assert.equal(current.status,200);assert.equal((await current.json()).household.label,'Huishouden A');
+  for(const [name,params] of [
+   ['create_household_invitation',{p_tenant_id:'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',p_household_id:'a3000000-0000-4000-8000-000000000001',p_given_name:'Retired',p_family_name:'Probe',p_email:'retired-probe@example.test',p_token_hash_hex:'a'.repeat(64),p_can_view_progress:false,p_can_book_for:false,p_idempotency_key:'af110000-0000-4000-8000-000000000001'}],
+   ['mark_household_invitation_delivery',{p_tenant_id:'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',p_invitation_id:null,p_delivered:true}],
+   ['accept_household_invitation',{p_token:null}],
+   ['household_invitation_delivery',{p_tenant_id:'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',p_invitation_id:null}],
+  ]){const r=await rpc(name,params),error=await r.json();assert.ok(r.status>=400&&(error.code==='PGRST202'||(error.code==='42501'&&error.message==='permission denied for function '+name)),'legacy RPC must be denied at the execution boundary');}
+  assert.equal(sql("select count(*) from app.household_invitations where tenant_id='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';"),'0');checks.push('VERIFIED_AUTHENTICATED_REST_BOOTSTRAP_ENDPOINTS_RETIRED');
+ }
  const {context:accountB,page:b}=await login('ouder-b@example.test');
  await a.getByRole('button',{name:'Huishouddossier',exact:true}).click();const dialog=a.getByRole('dialog');await dialog.getByRole('tab',{name:'Overzicht',exact:true}).waitFor();await capture(a,'app-dossier-overzicht');
  for(const label of ['Overzicht','Personen','Afspraken','Historie']){await dialog.getByRole('tab',{name:label,exact:true}).click();await dialog.getByRole('tabpanel',{name:label,exact:true}).waitFor();if(label==='Personen'){assert.ok(!(await dialog.textContent()).includes('Ouder B'));assert.ok(!(await dialog.textContent()).includes('LOCAL_ASSISTED_B'));}await capture(a,'app-dossier-'+label.toLowerCase());}checks.push('FOUR_AUTHORIZED_DOSSIER_TABS_THREE_VIEWPORTS');checks.push('PARENT_PERSON_LIST_EXCLUDES_OTHER_PERSON_AND_INTAKE');

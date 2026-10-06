@@ -212,6 +212,12 @@ insert into app.hour_ledger_entries (
   '56500000-0000-4000-8000-000000000001'
 );
 
+-- Current confirmed synthetic identities; invitation material is generated only at runtime.
+update auth.users set email_confirmed_at=statement_timestamp() where id::text like '51000000-%';
+create temporary table onboarding_invitation_input(token text not null);
+insert into onboarding_invitation_input values(gen_random_uuid()::text||gen_random_uuid()::text);
+grant select on onboarding_invitation_input to authenticated;
+
 select ok(
   not has_function_privilege(
     'anon',
@@ -268,12 +274,12 @@ select set_config(
 
 select lives_ok(
   format(
-    'select * from api.create_household_invitation(%L,%L,%L,%L,%L,%L,%L,%L,%L)',
+    'select * from api.create_household_invitation_v2(%L,%L,%L,%L,%L,%L,%L,%L,%L,%L)',
     '52000000-0000-4000-8000-000000000001',
     '54000000-0000-4000-8000-000000000001',
     'Extra', 'Uitvoerder', 'uitvoerder@example.test',
-    encode(extensions.digest(convert_to('correct-horse-battery-staple-invite-token', 'UTF8'), 'sha256'), 'hex'),
-    true, true,
+    encode(extensions.digest(convert_to((select token from onboarding_invitation_input), 'UTF8'), 'sha256'), 'hex'),
+    true, true, 1,
     '55000000-0000-4000-8000-000000000001'
   ),
   'authorized household parent creates a hashed invitation'
@@ -328,17 +334,19 @@ select set_config(
 );
 select lives_ok(
   format(
-    'select api.mark_household_invitation_delivery(%L,%L,true)',
+    'select * from api.mark_household_invitation_delivery_v2(%L,%L,1,true,%L)',
     '52000000-0000-4000-8000-000000000001',
-    current_setting('cluvo.test.invitation_id')
+    current_setting('cluvo.test.invitation_id'),
+    '55000000-0000-4000-8000-000000000003'
   ),
   'the creating actor marks successful Auth delivery'
 );
 select lives_ok(
   format(
-    'select api.mark_household_invitation_delivery(%L,%L,true)',
+    'select * from api.mark_household_invitation_delivery_v2(%L,%L,1,true,%L)',
     '52000000-0000-4000-8000-000000000001',
-    current_setting('cluvo.test.invitation_id')
+    current_setting('cluvo.test.invitation_id'),
+    '55000000-0000-4000-8000-000000000003'
   ),
   'a successful delivery callback can be retried idempotently'
 );
@@ -352,7 +360,7 @@ select set_config(
 );
 
 select lives_ok(
-  $$select * from api.accept_household_invitation('correct-horse-battery-staple-invite-token')$$,
+  $$select * from api.accept_household_invitation_v2((select token from onboarding_invitation_input),2,'55000000-0000-4000-8000-000000000004')$$,
   'matching verified Auth identity accepts the one-time invitation'
 );
 reset role;
@@ -408,7 +416,7 @@ select set_config(
   true
 );
 select lives_ok(
-  $$select * from api.accept_household_invitation('correct-horse-battery-staple-invite-token')$$,
+  $$select * from api.accept_household_invitation_v2((select token from onboarding_invitation_input),2,'55000000-0000-4000-8000-000000000004')$$,
   'same accepted actor may safely repeat the accept command'
 );
 reset role;
@@ -477,17 +485,17 @@ select set_config(
   true
 );
 select throws_ok(
-  $$select * from api.accept_household_invitation('correct-horse-battery-staple-invite-token')$$,
+  $$select * from api.accept_household_invitation_v2((select token from onboarding_invitation_input),2,'55000000-0000-4000-8000-000000000004')$$,
   '42501', 'INVALID_INVITATION',
   'a different verified email cannot reuse the accepted token'
 );
 select throws_ok(
-  $$select * from api.create_household_invitation(
+  $$select * from api.create_household_invitation_v2(
     '52000000-0000-4000-8000-000000000001',
     '54000000-0000-4000-8000-000000000001',
     'Niet', 'Bevoegd', 'niemand@example.test',
     'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-    false, false, '55000000-0000-4000-8000-000000000002'
+    false, false, 3, '55000000-0000-4000-8000-000000000002'
   )$$,
   '42501', 'FORBIDDEN',
   'verified outsider cannot invite into a known household'
@@ -535,7 +543,7 @@ select throws_ok($$
   select * from api.apply_household_split(
     '52000000-0000-4000-8000-000000000001',
     '54000000-0000-4000-8000-000000000001',
-    1,
+    3,
     '53000000-0000-4000-8000-000000000003',
     '53000000-0000-4000-8000-000000000004',
     'Tweede huishouden',
@@ -583,7 +591,7 @@ select lives_ok($$
   select * from api.apply_household_split(
     '52000000-0000-4000-8000-000000000001',
     '54000000-0000-4000-8000-000000000001',
-    1,
+    3,
     '53000000-0000-4000-8000-000000000003',
     '53000000-0000-4000-8000-000000000004',
     'Tweede huishouden',
@@ -598,7 +606,7 @@ select lives_ok($$
   select * from api.apply_household_split(
     '52000000-0000-4000-8000-000000000001',
     '54000000-0000-4000-8000-000000000001',
-    1,
+    3,
     '53000000-0000-4000-8000-000000000003',
     '53000000-0000-4000-8000-000000000004',
     'Tweede huishouden',

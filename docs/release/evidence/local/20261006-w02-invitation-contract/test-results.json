@@ -1,0 +1,170 @@
+{
+  "observed_at": "2026-10-06T21:29:37.058452+00:00",
+  "source_parent_commit": "a4cf17b43f6a1fa94b92e452b9429819db29295c",
+  "source_was_worktree": true,
+  "environment": "local",
+  "staging_verified": false,
+  "node_check": {
+    "lint": "PASS",
+    "node_tests": 28,
+    "wp0_contract_tests": 5,
+    "standalone_http": "PASS",
+    "typecheck_and_production_build": {
+      "result": "REUSED_PASS",
+      "source_commit": "a4cf17b43f6a1fa94b92e452b9429819db29295c",
+      "reason": "all app/components/lib sources and lockfile byte-equal to tested a4cf17b release",
+      "ci_run": 37530956037
+    }
+  },
+  "database": {
+    "migrations": 13,
+    "empty_database_assertions": 713,
+    "files": 15,
+    "contract_assertions": 42,
+    "lint": "PASS",
+    "warnings": 0,
+    "upgrade_from": 12,
+    "populated_upgrade_data_tables": 142,
+    "upgrade_data_equal": true,
+    "restore_data_tables": 142,
+    "retired_signatures": 9
+  },
+  "browser": {
+    "invitation_contract_commands_and_cancellation": 29,
+    "comparison_pairs": 12,
+    "captures": 36,
+    "prior_separate_regressions": {
+      "source_commit": "a4cf17b43f6a1fa94b92e452b9429819db29295c",
+      "evidence": "../20261006-w02-invitation-cancellation/verification.md",
+      "w01": 14,
+      "intake": 22,
+      "reexecuted_for_this_change": false
+    }
+  },
+  "concurrency": {
+    "HOUSEHOLD_INVITATION_VERSION_SERIALIZATION": {
+      "scenario": "HOUSEHOLD_INVITATION_VERSION_SERIALIZATION",
+      "contenders": 2,
+      "waited_milliseconds": 3012,
+      "conflict": "STALE_VERSION",
+      "readback": {
+        "invitations": 1,
+        "household_version": 2,
+        "completed_commands": 1,
+        "creation_audits": 1
+      },
+      "result": "PASS"
+    },
+    "INVITATION_LIFECYCLE_SERIALIZATION": {
+      "scenario": "INVITATION_LIFECYCLE_SERIALIZATION",
+      "scenarios": [
+        {
+          "winner": "cancellation",
+          "contenders": 2,
+          "waited_milliseconds": 3007,
+          "conflict": "INVALID_INVITATION",
+          "readback": {
+            "invitations": 1,
+            "status": "cancelled",
+            "invitation_version": 2,
+            "household_version": 3,
+            "recipient_grants": 0,
+            "recipient_profiles": 0,
+            "cancellation_audits": 1,
+            "acceptance_audits": 0,
+            "processing_commands": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "acceptance",
+          "contenders": 2,
+          "waited_milliseconds": 3010,
+          "conflict": "STALE_VERSION",
+          "readback": {
+            "invitations": 1,
+            "status": "accepted",
+            "invitation_version": 2,
+            "household_version": 3,
+            "recipient_grants": 1,
+            "recipient_profiles": 1,
+            "cancellation_audits": 0,
+            "acceptance_audits": 1,
+            "processing_commands": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "authority_revocation",
+          "contenders": 2,
+          "waited_milliseconds": 3008,
+          "conflict": "FORBIDDEN",
+          "readback": {
+            "invitations": 1,
+            "status": "pending",
+            "invitation_version": 1,
+            "household_version": 2,
+            "recipient_grants": 0,
+            "recipient_profiles": 0,
+            "cancellation_audits": 0,
+            "acceptance_audits": 0,
+            "processing_commands": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "creation_authority_revocation",
+          "contenders": 2,
+          "waited_milliseconds": 3008,
+          "conflict": "FORBIDDEN",
+          "readback": {
+            "invitations": 1,
+            "status": "pending",
+            "invitation_version": 1,
+            "household_version": 2,
+            "recipient_grants": 0,
+            "recipient_profiles": 0,
+            "cancellation_audits": 0,
+            "acceptance_audits": 0,
+            "processing_commands": 0
+          },
+          "result": "PASS"
+        }
+      ],
+      "result": "PASS"
+    },
+    "A13_LAST_POSITION_RACE": {
+      "scenario": "A13_LAST_POSITION_RACE",
+      "contenders": 2,
+      "persisted_bookings": 1,
+      "conflict": "CAPACITY_FULL",
+      "result": "PASS"
+    },
+    "SEASON_CLOSE_LEDGER_SERIALIZATION": {
+      "scenario": "SEASON_CLOSE_LEDGER_SERIALIZATION",
+      "contenders": 2,
+      "waited_milliseconds": 2993,
+      "result": "PASS"
+    },
+    "INTAKE_UNAVAILABILITY_BOOKING_SERIALIZATION": {
+      "scenario": "INTAKE_UNAVAILABILITY_BOOKING_SERIALIZATION",
+      "contenders": 2,
+      "waited_milliseconds": 2930,
+      "conflict": "NOT_ELIGIBLE",
+      "persisted_bookings": 0,
+      "result": "PASS"
+    }
+  },
+  "limitations": [
+    "isolated local database, synthetic identities and captured local mail only",
+    "a4cf17b staging is prototype; connected Auth/database/workers and remote thirteen-migration contract not verified",
+    "grant administration, provider concurrency, actual delivery, delivery_unknown, outbox/leases and full household management remain open",
+    "restore uses same local PostgreSQL cluster; independent host, Storage binaries and staging recovery remain open"
+  ],
+  "production_gate": {
+    "exit_code": 1,
+    "result": "EXPECTED_BLOCK",
+    "v1_ready": false,
+    "production_enabled": false
+  }
+}

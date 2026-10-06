@@ -194,6 +194,7 @@ insert into app.hour_ledger_entries (
 );
 
 
+update auth.users set email_confirmed_at=statement_timestamp() where email in ('ouder-a@example.test','ouder-b@example.test','coordinator@example.test','tenant-b@example.test');
 create function pg_temp.dossier() returns jsonb language sql security invoker as $fn$
  select api.get_household_dossier('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa','a3000000-0000-4000-8000-000000000001');
 $fn$;
@@ -249,23 +250,26 @@ select set_config('request.jwt.claim.sub','11111111-1111-4111-8111-111111111111'
 select is(jsonb_array_length(pg_temp.dossier()->'history'),1,'only own relevant dossier history');
 select ok(pg_temp.dossier()::text !~ 'PRIVATE_HH_HISTORY|private_note|intake.revision_saved','history excludes payload and independent intake events');
 select is(pg_temp.dossier()->'history'->0->>'event_id','ac103000-0000-4000-8000-000000000001','global unrelated audit excluded');
--- Create a synthetic invitation and inspect its delivery status as creator.
-select lives_ok($$select * from api.create_household_invitation('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa','a3000000-0000-4000-8000-000000000001','Extra','Test','extra-dossier@example.test',repeat('a',64),true,false,'ac105000-0000-4000-8000-000000000001')$$,'authorized invitation creation');
+-- Create a synthetic invitation through the current confirmed, versioned API.
+select set_config('request.jwt.claim.email','ouder-a@example.test',true);
+select lives_ok($$select * from api.create_household_invitation_v2('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa','a3000000-0000-4000-8000-000000000001','Extra','Test','extra-dossier@example.test',repeat('a',64),true,false,1,'ac105000-0000-4000-8000-000000000001')$$,'authorized invitation creation');
 reset role;
 create temp table test_invitation as select id from app.household_invitations where tenant_id='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
 grant select on test_invitation to authenticated;
 set local role authenticated;
-select is(api.household_invitation_delivery('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',(select id from test_invitation)),'pending','creator can inspect pending status');
+select is((api.household_invitation_delivery_v2('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',(select id from test_invitation))->>'delivery_status'),'pending','creator can inspect pending status');
 select is(jsonb_array_length(pg_temp.dossier()->'invitations'),1,'own invitation names shown without tokens');
-select lives_ok($$select api.mark_household_invitation_delivery('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',(select id from test_invitation),true)$$,'record successful delivery');
-select is(api.household_invitation_delivery('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',(select id from test_invitation)),'sent','sent status supports retry without provider resend');
+select lives_ok($$select * from api.mark_household_invitation_delivery_v2('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',(select id from test_invitation),1,true,'ac105000-0000-4000-8000-000000000002')$$,'record successful delivery');
+select is((api.household_invitation_delivery_v2('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',(select id from test_invitation))->>'delivery_status'),'sent','sent status supports retry without provider resend');
 select set_config('request.jwt.claim.sub','33333333-3333-4333-8333-333333333333',true);
-select is(api.household_invitation_delivery('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',(select id from test_invitation)),null::text,'different actor cannot read creator delivery status');
+select set_config('request.jwt.claim.email','coordinator@example.test',true);
+select is((api.household_invitation_delivery_v2('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',(select id from test_invitation))->>'delivery_status'),null::text,'different actor cannot read creator delivery status');
 select is(jsonb_array_length(pg_temp.dossier()->'invitations'),1,'explicit operator invitation mandate can read minimal status');
 reset role;
 update app.household_access_grants set can_invite_executor=false where id='a3200000-0000-4000-8000-000000000001';
 set local role authenticated;
 select set_config('request.jwt.claim.sub','11111111-1111-4111-8111-111111111111',true);
-select is(api.household_invitation_delivery('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',(select id from test_invitation)),null::text,'revoked inviter cannot inspect delivery for replay');
+select set_config('request.jwt.claim.email','ouder-a@example.test',true);
+select is((api.household_invitation_delivery_v2('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',(select id from test_invitation))->>'delivery_status'),null::text,'revoked inviter cannot inspect delivery for replay');
 select finish();
 rollback;
