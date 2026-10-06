@@ -2,6 +2,7 @@
 
 Norm: Club Signal, prototype `e9c1d8bca2089b0944577eed73d1bedf7e70a3b6`.
 [Capturemanifest met hashes](capture-manifest.json).
+[Vergelijkingsviewer: naast elkaar of met overlay](compare.html).
 
 De referentie bevat 69 full-pagebeelden: alle 23 default-pagina's als bestuur,
 op 1440×1024, 390×844 en 768×1024. Voor de drie aangesloten apppagina's zijn
