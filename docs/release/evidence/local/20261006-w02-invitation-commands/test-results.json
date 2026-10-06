@@ -1,0 +1,71 @@
+{
+  "observed_at": "2026-10-06T20:24:58.229422+00:00",
+  "environment": "local",
+  "staging_verified": false,
+  "node_check": {
+    "lint": "PASS",
+    "typecheck": "PASS",
+    "node_tests": 28,
+    "production_build": "PASS",
+    "wp0_contract_tests": 5,
+    "standalone_http": "PASS"
+  },
+  "database": {
+    "migrations": 11,
+    "upgrade_from": 10,
+    "upgrade_assertions": 627,
+    "empty_database_assertions": 627,
+    "files": 13,
+    "invitation_assertions": 52,
+    "lint": "PASS",
+    "warnings": 0,
+    "upgrade_data_tables": 142,
+    "restore_data_tables": 142
+  },
+  "browser": {
+    "invitation_commands": 19,
+    "w01_regression": 14,
+    "intake_regression": 22,
+    "comparison_pairs": 12,
+    "captures": 55
+  },
+  "concurrency": {
+    "last_place": {
+      "contenders": 2,
+      "persisted_bookings": 1,
+      "conflict": "CAPACITY_FULL"
+    },
+    "season_close_ledger": {
+      "waited_milliseconds": 2999,
+      "result": "PASS"
+    },
+    "intake_booking": {
+      "waited_milliseconds": 2916,
+      "persisted_bookings": 0,
+      "conflict": "NOT_ELIGIBLE"
+    },
+    "invitation_creation": {
+      "waited_milliseconds": 3007,
+      "contenders": 2,
+      "invitations": 1,
+      "household_version": 2,
+      "completed_commands": 1,
+      "creation_audits": 1,
+      "conflict": "STALE_VERSION",
+      "result": "PASS"
+    }
+  },
+  "limitations": [
+    "Isolated local database, synthetic identities and captured local mail only",
+    "Local Auth process restarted between browser suites; provider rate-limit acceptance not claimed",
+    "Old bootstrap signatures retained for expand transition; contract migration required before V1 acceptance",
+    "Provider concurrency, actual delivery, delivery_unknown, outbox and leases remain open",
+    "Remote Supabase/VPS connection, migrations and app staging validation remain open"
+  ],
+  "production_gate": {
+    "exit_code": 1,
+    "result": "EXPECTED_BLOCK",
+    "v1_ready": false,
+    "production_enabled": false
+  }
+}

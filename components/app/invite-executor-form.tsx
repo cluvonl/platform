@@ -6,8 +6,9 @@ import {Button} from '@/components/cluvo/ui';
 
 const initialState: InviteExecutorState = {status: 'idle'};
 
-export function InviteExecutorForm({club, householdId, idempotencyKey}: {club: string; householdId: string; idempotencyKey: string}) {
+export function InviteExecutorForm({club, householdId, householdVersion, idempotencyKey}: {club: string; householdId: string; householdVersion: number; idempotencyKey: string}) {
   const [retryKey] = useState(idempotencyKey);
+  const [expectedHouseholdVersion] = useState(householdVersion);
   const [givenName, setGivenName] = useState(''), [familyName, setFamilyName] = useState(''), [email, setEmail] = useState('');
   const [canViewProgress, setCanViewProgress] = useState(false), [canBookFor, setCanBookFor] = useState(false);
   const [state, action, pending] = useActionState(async (previous: InviteExecutorState, form: FormData): Promise<InviteExecutorState> => {
@@ -19,6 +20,7 @@ export function InviteExecutorForm({club, householdId, idempotencyKey}: {club: s
       <input type="hidden" name="club" value={club} />
       <input type="hidden" name="householdId" value={householdId} />
       <input type="hidden" name="idempotencyKey" value={retryKey} />
+      <input type="hidden" name="expectedHouseholdVersion" value={expectedHouseholdVersion} />
       <fieldset disabled={pending || state.status === 'sent'} className="intake-fields">
       <div className="secure-form-row">
         <label>Voornaam<input name="givenName" required maxLength={100} autoComplete="given-name" value={givenName} onChange={(event) => setGivenName(event.target.value)} /></label>

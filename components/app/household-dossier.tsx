@@ -39,7 +39,7 @@ export function HouseholdDossierTabs({club, dossier, invitationKey}: {club: stri
         </section>)}
         <Hint>Een dossierverwijzing geeft geen toegang. Iedere uitvoerder gebruikt een eigen geverifieerd account en expliciete rechten.</Hint>
         {household.can_invite_executor ? <div><Btn variant="secondary" onClick={() => setInviteOpen(!inviteOpen)}>{inviteOpen ? 'Uitnodiging sluiten' : 'Persoon uitnodigen'}</Btn></div> : null}
-        {inviteOpen && household.can_invite_executor ? <InviteExecutorForm club={club} householdId={household.household_id} idempotencyKey={invitationKey} /> : null}
+        {inviteOpen && household.can_invite_executor ? <InviteExecutorForm club={club} householdId={household.household_id} householdVersion={household.version} idempotencyKey={invitationKey} /> : null}
       </> : tab === 1 ? <>
         <AccountHelpBanner topicId="household.people" />
         {dossier.people.length ? dossier.people.map((person) => <div className="row between wrap" key={`${person.person_id}-${person.kind}`}><div className="row"><Avatar name={person.display_name} /><div><b>{person.display_name}</b><p className="small-text">{person.is_self ? 'Jouw persoonlijke profiel' : 'Expliciet toegestane dossierkoppeling'} · {person.verified ? 'Identiteit gekoppeld' : 'Nog geen geverifieerde koppeling'}</p></div></div>{person.profile_id ? <Link className="btn secondary" href={`/c/${encodeURIComponent(club)}/intake?profile=${person.profile_id}`}>{person.intake_status === 'draft' ? 'Intake invullen' : 'Intake bekijken'}</Link> : <Badge>Persoonlijke intake afgeschermd</Badge>}</div>) : <Empty title="Geen zichtbare persoonskoppelingen" text="Persoonlijke gegevens vragen een expliciet recht." />}

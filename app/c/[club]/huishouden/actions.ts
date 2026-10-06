@@ -1,6 +1,6 @@
 'use server';
 
-import {createHash, createHmac} from 'node:crypto';
+import {createHash, createHmac, randomUUID} from 'node:crypto';
 import {z} from 'zod';
 import {requireWorkspace} from '@/lib/auth/workspace';
 import {createSupabaseAdminClient} from '@/lib/supabase/admin';
@@ -19,6 +19,7 @@ const schema = z.object({
   canViewProgress: z.string().optional().transform((value) => value === 'on'),
   canBookFor: z.string().optional().transform((value) => value === 'on'),
   idempotencyKey: z.string().uuid(),
+  expectedHouseholdVersion: z.coerce.number().int().min(1).max(Number.MAX_SAFE_INTEGER),
 });
 
 export async function inviteExecutorAction(
@@ -46,7 +47,7 @@ export async function inviteExecutorAction(
     .update(parsed.data.idempotencyKey, 'utf8')
     .digest('base64url');
   const tokenHashHex = createHash('sha256').update(token, 'utf8').digest('hex');
-  const {data, error} = await client.schema('api').rpc('create_household_invitation', {
+  const {data, error} = await client.schema('api').rpc('create_household_invitation_v2', {
     p_tenant_id: workspace.tenant_id,
     p_household_id: parsed.data.householdId,
     p_given_name: parsed.data.givenName,
@@ -56,20 +57,23 @@ export async function inviteExecutorAction(
     p_can_view_progress: parsed.data.canViewProgress,
     p_can_book_for: parsed.data.canBookFor,
     p_idempotency_key: parsed.data.idempotencyKey,
+    p_expected_household_version: parsed.data.expectedHouseholdVersion,
   });
   const invitationId = (data as Array<{resource_id?: unknown}> | null)?.[0]?.resource_id;
   if (error || typeof invitationId !== 'string') {
+    if (error?.message?.includes('STALE_VERSION')) return {status: 'error', message: 'Dit dossier is intussen gewijzigd. Je invoer blijft staan; vernieuw het dossier voordat je opnieuw uitnodigt.'};
     return {status: 'error', message: 'De uitnodiging kon niet veilig worden klaargezet.'};
   }
 
-  const {data: delivery, error: deliveryError} = await client.schema('api').rpc('household_invitation_delivery', {
+  const {data: delivery, error: deliveryError} = await client.schema('api').rpc('household_invitation_delivery_v2', {
     p_tenant_id: workspace.tenant_id, p_invitation_id: invitationId,
   });
-  if (deliveryError || !['pending', 'delivery_failed', 'sent', 'accepted'].includes(delivery as string)) {
+  const deliveryState = z.object({delivery_status: z.enum(['pending', 'delivery_failed', 'sent', 'accepted', 'cancelled']), version: z.number().int().positive().max(Number.MAX_SAFE_INTEGER), expired: z.boolean()}).safeParse(delivery);
+  if (deliveryError || !deliveryState.success || deliveryState.data.expired || deliveryState.data.delivery_status === 'cancelled') {
     return {status: 'error', message: 'Deze uitnodiging kan niet worden verzonden. Vernieuw de pagina om de actuele status te bekijken.'};
   }
-  if (delivery === 'sent' || delivery === 'accepted') {
-    return {status: 'sent', message: delivery === 'accepted' ? 'Deze uitnodiging is al geaccepteerd.' : 'Deze persoonlijke uitnodiging is al verzonden. Er is geen tweede e-mail gestuurd.'};
+  if (deliveryState.data.delivery_status === 'sent' || deliveryState.data.delivery_status === 'accepted') {
+    return {status: 'sent', message: deliveryState.data.delivery_status === 'accepted' ? 'Deze uitnodiging is al geaccepteerd.' : 'Deze persoonlijke uitnodiging is al verzonden. Er is geen tweede e-mail gestuurd.'};
   }
 
   let delivered = false;
@@ -96,10 +100,12 @@ export async function inviteExecutorAction(
     delivered = false;
   }
 
-  const {error: statusError} = await client.schema('api').rpc('mark_household_invitation_delivery', {
+  const {error: statusError} = await client.schema('api').rpc('mark_household_invitation_delivery_v2', {
     p_tenant_id: workspace.tenant_id,
     p_invitation_id: invitationId,
     p_delivered: delivered,
+    p_expected_version: deliveryState.data.version,
+    p_idempotency_key: randomUUID(),
   });
   revalidatePath(`/c/${parsed.data.club}/intake`);
   revalidatePath(`/c/${parsed.data.club}/huishouden`);

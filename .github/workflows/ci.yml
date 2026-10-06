@@ -70,6 +70,9 @@ jobs:
           DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:55322/postgres \
             npm run db:test:intake-lock
 
+          DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:55322/postgres \
+            npm run db:test:invitations
+
           npx supabase db lint --local --schema app,api,internal \
             --level warning \
             --fail-on warning

@@ -1,0 +1,722 @@
+{
+  "observed_at": "2026-10-06T20:18:27.527799+00:00",
+  "environment": "local",
+  "upgrade_from": 10,
+  "upgrade_to": 11,
+  "fixture": "confirmed synthetic core-v1 accounts and seeded domain records",
+  "application_tables_compared": 142,
+  "data_equal": true,
+  "staging_verified": false,
+  "tables": [
+    {
+      "name": "access_grants",
+      "rows": 4,
+      "digest": "052ba57f5b19bef28b08aaa355990968"
+    },
+    {
+      "name": "account_person_links",
+      "rows": 4,
+      "digest": "1854ef1a6ec948212a7659ca8c84cd62"
+    },
+    {
+      "name": "account_profiles",
+      "rows": 4,
+      "digest": "dc7bcca1a5495bd564d9b68590d457ef"
+    },
+    {
+      "name": "acting_delegations",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "appointment_annual_confirmations",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "appointment_cases",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "appointment_review_cases",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "appreciation_action_assignees",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "appreciation_actions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "appreciation_occasions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "appreciation_private_details",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "appreciation_rules",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "assessment_revisions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "assisted_member_actions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "attendance_decisions",
+      "rows": 1,
+      "digest": "00297e939517abaaa483ce2efc91bb85"
+    },
+    {
+      "name": "audit_events",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "booking_cancellations",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "booking_events",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "bookings",
+      "rows": 2,
+      "digest": "038624c52480f74a5809a5f2d47d7f0b"
+    },
+    {
+      "name": "card_checklist_items",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "committee_document_acl",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "committee_document_versions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "committee_documents",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "committees",
+      "rows": 2,
+      "digest": "2cf44b9aba924207a4be8e492529ee6f"
+    },
+    {
+      "name": "course_enrollments",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "course_sessions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "courses",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "daily_digest_items",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "daily_task_digests",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "delivery_attempts",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "domain_events",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "event_attendees",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "event_occurrences",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "event_resource_links",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "events",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "exception_case_revisions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "exception_cases",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "exception_decisions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "exception_reviews",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "executor_obligation_grants",
+      "rows": 3,
+      "digest": "44a122d4974afeb778cd69c1c202c0c3"
+    },
+    {
+      "name": "financial_assessments",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "financial_corrections",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "financial_objections",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "financial_processing_records",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "guardian_authorizations",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "help_topics",
+      "rows": 149,
+      "digest": "e301d12da98878d8dbf2fa9033571e55"
+    },
+    {
+      "name": "hour_disputes",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "hour_ledger_entries",
+      "rows": 1,
+      "digest": "d4b20b45b8c7a5d827ea77eb1e878cdf"
+    },
+    {
+      "name": "household_access_grants",
+      "rows": 3,
+      "digest": "2ada1b5c9798b20e490bc6880edb79c9"
+    },
+    {
+      "name": "household_change_cases",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "household_invitations",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "household_obligation_links",
+      "rows": 2,
+      "digest": "980a781a37023333663b63db82beef31"
+    },
+    {
+      "name": "household_person_links",
+      "rows": 3,
+      "digest": "7e4af49a6d6da8b9a2cfef5332ed306c"
+    },
+    {
+      "name": "households",
+      "rows": 2,
+      "digest": "ece41f59ae4899f035275d83d3834684"
+    },
+    {
+      "name": "idempotency_records",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "inbox_items",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "intake_answers_versions",
+      "rows": 3,
+      "digest": "346a93545b4171dc50e11f4f35de7f3f"
+    },
+    {
+      "name": "intake_profiles",
+      "rows": 3,
+      "digest": "3000f918e7e99f636a3ce1670e45826c"
+    },
+    {
+      "name": "integration_connections",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "integration_runs",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "kanban_boards",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "kanban_card_assignees",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "kanban_card_history",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "kanban_card_subtasks",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "kanban_cards",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "kanban_columns",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "kanban_subtask_assignees",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "locations",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "match_change_impacts",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "match_revisions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "match_shift_links",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "matches",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "mentions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "message_template_versions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "message_templates",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "notification_categories",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "notification_intents",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "notification_outbox",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "notification_preferences",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "obligation_coverage_decisions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "obligations",
+      "rows": 2,
+      "digest": "6f0017dfee69bcb7236bb9679fa72c6b"
+    },
+    {
+      "name": "payment_events",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "permission_roles",
+      "rows": 16,
+      "digest": "3d9786b4f4b8ea9cad04a66a25c2a164"
+    },
+    {
+      "name": "permissions",
+      "rows": 44,
+      "digest": "bd3033b50ae143b7165489c2fc4f0a15"
+    },
+    {
+      "name": "person_contacts",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "person_qualifications",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "personal_action_items",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "persons",
+      "rows": 4,
+      "digest": "b8ea80f0772a6264fbc10a8ae6bf1b35"
+    },
+    {
+      "name": "policy_acceptances",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "policy_assignment_events",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "policy_assignments",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "policy_audiences",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "policy_documents",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "policy_questions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "policy_versions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "provider_delivery_events",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "qualification_booking_impacts",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "qualification_events",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "qualification_types",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "role_permissions",
+      "rows": 178,
+      "digest": "09c585c364dcc9a19f286beccab480f8"
+    },
+    {
+      "name": "rollover_runs",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "rollover_template_selections",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "scheduled_occurrences",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "season_close_runs",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "season_reconfirmation_items",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "season_snapshots",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "seasons",
+      "rows": 2,
+      "digest": "d4f1ff8096149badf684ff18809a2496"
+    },
+    {
+      "name": "shift_change_proposals",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "shift_positions",
+      "rows": 4,
+      "digest": "35f608528ac783660d4af8cdb7592980"
+    },
+    {
+      "name": "shift_publication_batch_items",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "shift_publication_batches",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "shift_requirements",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "shifts",
+      "rows": 3,
+      "digest": "a4eb059af1da5217697cd23c612bbf91"
+    },
+    {
+      "name": "supply_assessments",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "task_categories",
+      "rows": 1,
+      "digest": "00de5445776ab1a7a5b44831ceedad62"
+    },
+    {
+      "name": "task_offer_candidates",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "task_type_versions",
+      "rows": 1,
+      "digest": "0b762cf72863e31a1944d0dc608b32e5"
+    },
+    {
+      "name": "task_types",
+      "rows": 1,
+      "digest": "70d8dfb347584ab593513046a3a96d60"
+    },
+    {
+      "name": "team_person_memberships",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "team_task_market_requests",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "team_task_market_reviews",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "team_tasks",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "teams",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "template_test_runs",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "tenant_memberships",
+      "rows": 4,
+      "digest": "c36295baa46d18a19c3b223067177f6c"
+    },
+    {
+      "name": "tenant_settings_versions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "tenants",
+      "rows": 2,
+      "digest": "def5b26c96835e4b6c286767692199b6"
+    },
+    {
+      "name": "transfer_requests",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "unavailability_periods",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "user_help_seen",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "vacancies",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "vacancy_interests",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "volunteer_appointments",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "volunteer_fund_entries",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "volunteer_role_catalog",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "volunteer_role_versions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "waitlist_entries",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "waitlist_offers",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "winter_allocations",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "winter_reviews",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "workload_alerts",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "name": "workload_preferences",
+      "rows": 0,
+      "digest": "empty"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "base_sha": "47386491859b47fbebf85c3b209724dcc20407fc",
-  "source_head": "b00024a43f8f98b8e960ba1e422c7dcc03969b06",
+  "source_head": "e0d35d756ae706473f8601b7042e9501f2db4db1",
   "worktree_dirty": true,
   "prototype_sha": "e9c1d8bca2089b0944577eed73d1bedf7e70a3b6",
   "acceptance_ready": false,
@@ -16,9 +16,9 @@
       "api_views": 16
     },
     "current": {
-      "migrations": 10,
+      "migrations": 11,
       "app_tables": 142,
-      "api_function_definitions": 56,
+      "api_function_definitions": 61,
       "api_views": 20
     }
   },
@@ -1170,6 +1170,42 @@
           "kind": "function",
           "name": "api.household_invitation_delivery",
           "line": 156
+        }
+      ]
+    },
+    {
+      "file": "20261006223000_versioned_household_invitation_commands.sql",
+      "sha256": "99b456fda630c15eca25f197d971edcf8134a5181deb114c398dde852b6b62fe",
+      "objects": [
+        {
+          "kind": "view",
+          "name": "api.my_households",
+          "line": 49
+        },
+        {
+          "kind": "function",
+          "name": "api.create_household_invitation_v2",
+          "line": 230
+        },
+        {
+          "kind": "function",
+          "name": "api.household_invitation_delivery_v2",
+          "line": 277
+        },
+        {
+          "kind": "function",
+          "name": "api.mark_household_invitation_delivery_v2",
+          "line": 347
+        },
+        {
+          "kind": "function",
+          "name": "api.household_invitation_context",
+          "line": 387
+        },
+        {
+          "kind": "function",
+          "name": "api.accept_household_invitation_v2",
+          "line": 464
         }
       ]
     }
@@ -4267,12 +4303,13 @@
       "route": "/c/[club]/huishouden",
       "route_present": true,
       "read_models": [
-        "api.household_invitation_delivery"
+        "api.household_invitation_delivery_v2",
+        "api.household_invitation_context"
       ],
       "commands": [
-        "api.create_household_invitation",
-        "api.mark_household_invitation_delivery",
-        "api.accept_household_invitation",
+        "api.create_household_invitation_v2",
+        "api.mark_household_invitation_delivery_v2",
+        "api.accept_household_invitation_v2",
         "Supabase Auth.admin.inviteUserByEmail"
       ],
       "components": [
@@ -4319,9 +4356,9 @@
         "O10",
         "V09"
       ],
-      "limitation": "Lokale allowlist, echte mail/accountacceptatie en retry na geregistreerde verzending bewezen. Versioned lifecycle, gelijktijdige provideraflevering, annulering en stagingketen nog open.",
+      "limitation": "Versioned commands, actuele bevestigde identiteit, minimale toestemmingscontext, lokale mail/accountacceptatie en verloren-response retries bewezen. Bootstrap-API contract, providerconcurrency, annulering en stagingketen blijven open.",
       "status": "IMPLEMENTED_PARTIAL_NOT_ACCEPTED",
-      "functional_evidence": "docs/release/evidence/local/20261006-w02-dossier/verification.md",
+      "functional_evidence": "docs/release/evidence/local/20261006-w02-invitation-commands/verification.md",
       "visual_evidence": "docs/release/evidence/local/20261006-w02-dossier/compare.html",
       "staging_evidence": null
     },

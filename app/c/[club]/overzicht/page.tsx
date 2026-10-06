@@ -6,7 +6,7 @@ import {requireWorkspace} from '@/lib/auth/workspace';
 import {AccountHelpBanner} from '@/components/app/help-provider';
 import {Avatar, Badge, Btn, PageTitle, Panel, Progress} from '@/components/cluvo/ui';
 
-type HouseholdRow = {household_id: string; label: string; can_view_progress: boolean; can_invite_executor: boolean};
+type HouseholdRow = {household_id: string; label: string; can_view_progress: boolean; can_invite_executor: boolean; version: number};
 type ProgressRow = {
   effective_target_minutes: number; effective_winter_minutes: number;
   confirmed_minutes: number; pending_minutes: number; planned_minutes: number;
@@ -22,7 +22,7 @@ export default async function OverviewPage({params, searchParams}: {
   const {client, workspace} = await requireWorkspace(club);
   const base = `/c/${encodeURIComponent(club)}`;
   const [householdResult, seasonResult, tenantResult] = await Promise.all([
-    client.schema('api').from('my_households').select('household_id,label,can_view_progress,can_invite_executor').eq('tenant_id', workspace.tenant_id).order('label'),
+    client.schema('api').from('my_households').select('household_id,label,can_view_progress,can_invite_executor,version').eq('tenant_id', workspace.tenant_id).order('label'),
     client.schema('api').from('my_active_seasons').select('season_id,name').eq('tenant_id', workspace.tenant_id).order('name'),
     client.schema('api').from('public_tenants').select('timezone').eq('tenant_id', workspace.tenant_id).single(),
   ]);
@@ -66,7 +66,7 @@ export default async function OverviewPage({params, searchParams}: {
             {balance ? <div className="orbit-stat"><div className="ring" style={{'--value': percent} as React.CSSProperties}><div><strong>{hours(balance.confirmed_minutes)}<small>uur</small></strong><span>van {hours(balance.effective_target_minutes)} uur</span></div></div><span className="ring-note">Jouw huishouden</span></div> : null}
           </div>
         </section>
-        {household?.can_invite_executor ? <Panel title="Extra uitvoerder uitnodigen" subtitle="De ontvanger bevestigt eerst de persoonlijke uitnodiging."><div className="account-panel-content"><p>Een extra account verandert het seizoensdoel van je huishouden niet.</p><InviteExecutorForm club={club} householdId={household.household_id} idempotencyKey={randomUUID()} /></div></Panel> : null}
+        {household?.can_invite_executor ? <Panel title="Extra uitvoerder uitnodigen" subtitle="De ontvanger bevestigt eerst de persoonlijke uitnodiging."><div className="account-panel-content"><p>Een extra account verandert het seizoensdoel van je huishouden niet.</p><InviteExecutorForm club={club} householdId={household.household_id} householdVersion={household.version} idempotencyKey={randomUUID()} /></div></Panel> : null}
       </div>
       <div className="dashboard-right">
         <Panel title="Jouw huishouden"><div className="household-compact">
