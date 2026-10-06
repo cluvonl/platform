@@ -1,0 +1,55 @@
+{
+  "observed_at": "2026-10-06T19:32:02.041685+00:00",
+  "environment": "local",
+  "staging_verified": false,
+  "node_check": {
+    "lint": "PASS",
+    "typecheck": "PASS",
+    "node_tests": 28,
+    "production_build": "PASS",
+    "wp0_contract_tests": 5,
+    "standalone_http": "PASS"
+  },
+  "database": {
+    "migrations": 10,
+    "upgrade_from": 9,
+    "upgrade_assertions": 575,
+    "empty_database_assertions": 575,
+    "files": 12,
+    "dossier_assertions": 35,
+    "lint": "PASS",
+    "warnings": 0
+  },
+  "concurrency": {
+    "last_place": {
+      "contenders": 2,
+      "persisted_bookings": 1,
+      "conflict": "CAPACITY_FULL"
+    },
+    "season_close_ledger": {
+      "waited_milliseconds": 2999,
+      "result": "PASS"
+    },
+    "intake_booking": {
+      "waited_milliseconds": 2932,
+      "persisted_bookings": 0,
+      "conflict": "NOT_ELIGIBLE"
+    }
+  },
+  "callback_failure_paths": {
+    "missing_token_configured_origin_preserved": true,
+    "invalid_token_configured_origin_preserved": true,
+    "http_status": 307
+  },
+  "limitations": [
+    "Only isolated local database, synthetic identities and captured local mail",
+    "Local Auth process restarted between browser suites; provider rate-limit acceptance not claimed",
+    "Full remote Supabase/VPS connection and app staging validation remain open"
+  ],
+  "production_gate": {
+    "exit_code": 1,
+    "result": "EXPECTED_BLOCK",
+    "v1_ready": false,
+    "production_enabled": false
+  }
+}

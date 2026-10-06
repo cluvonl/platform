@@ -40,7 +40,7 @@ export async function requestOtpAction(
     maxAge: 10 * 60,
     path: '/auth/verify',
     sameSite: 'strict',
-    secure: process.env.NODE_ENV === 'production',
+    secure: new URL(appOrigin()).protocol === 'https:',
   });
   redirect('/auth/verify?sent=1');
 }

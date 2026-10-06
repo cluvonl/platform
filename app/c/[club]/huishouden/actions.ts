@@ -5,6 +5,8 @@ import {z} from 'zod';
 import {requireWorkspace} from '@/lib/auth/workspace';
 import {createSupabaseAdminClient} from '@/lib/supabase/admin';
 import {appOrigin, invitationTokenSecret} from '@/lib/supabase/config';
+import {isAllowedMailRecipient} from '@/lib/domain/mail-recipient.mjs';
+import {revalidatePath} from 'next/cache';
 
 export type InviteExecutorState = {status: 'idle' | 'error' | 'sent'; message?: string};
 
@@ -27,6 +29,9 @@ export async function inviteExecutorAction(
   if (!parsed.success) return {status: 'error', message: 'Controleer de naam, het e-mailadres en de gekozen rechten.'};
 
   const {client, workspace} = await requireWorkspace(parsed.data.club);
+  if (!isAllowedMailRecipient(parsed.data.email, {environment: process.env.APP_ENV ?? 'local', allowlist: process.env.MAIL_ALLOWLIST})) {
+    return {status: 'error', message: 'Dit e-mailadres is niet beschikbaar voor uitnodigingen in deze testomgeving.'};
+  }
   // Een retry van exact dezelfde command moet exact hetzelfde dossiertoken
   // opleveren. Het token blijft onvoorspelbaar door de afzonderlijke,
   // server-only HMAC-sleutel en wordt in PostgreSQL uitsluitend gehasht bewaard.
@@ -55,6 +60,16 @@ export async function inviteExecutorAction(
   const invitationId = (data as Array<{resource_id?: unknown}> | null)?.[0]?.resource_id;
   if (error || typeof invitationId !== 'string') {
     return {status: 'error', message: 'De uitnodiging kon niet veilig worden klaargezet.'};
+  }
+
+  const {data: delivery, error: deliveryError} = await client.schema('api').rpc('household_invitation_delivery', {
+    p_tenant_id: workspace.tenant_id, p_invitation_id: invitationId,
+  });
+  if (deliveryError || !['pending', 'delivery_failed', 'sent', 'accepted'].includes(delivery as string)) {
+    return {status: 'error', message: 'Deze uitnodiging kan niet worden verzonden. Vernieuw de pagina om de actuele status te bekijken.'};
+  }
+  if (delivery === 'sent' || delivery === 'accepted') {
+    return {status: 'sent', message: delivery === 'accepted' ? 'Deze uitnodiging is al geaccepteerd.' : 'Deze persoonlijke uitnodiging is al verzonden. Er is geen tweede e-mail gestuurd.'};
   }
 
   let delivered = false;
@@ -86,8 +101,10 @@ export async function inviteExecutorAction(
     p_invitation_id: invitationId,
     p_delivered: delivered,
   });
-  if (!delivered || statusError) {
-    return {status: 'error', message: 'De uitnodiging is niet verzonden en er is geen toegang verleend. Vernieuw de pagina voordat je het opnieuw probeert.'};
-  }
+  revalidatePath(`/c/${parsed.data.club}/intake`);
+  revalidatePath(`/c/${parsed.data.club}/huishouden`);
+  revalidatePath(`/c/${parsed.data.club}/overzicht`);
+  if (statusError) return {status: 'error', message: 'De verzendstatus kon niet worden bevestigd. Je invoer blijft staan; controleer de uitnodiging voordat je opnieuw verzendt.'};
+  if (!delivered) return {status: 'error', message: 'De verzending kon niet worden bevestigd. Je invoer blijft staan; probeer dezelfde uitnodiging opnieuw.'};
   return {status: 'sent', message: 'De persoonlijke uitnodiging is verzonden en verloopt na één uur.'};
 }

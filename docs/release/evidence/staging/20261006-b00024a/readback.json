@@ -1,0 +1,81 @@
+{
+  "observed_at": "2026-10-06T18:27:51.278Z",
+  "source_sha": "b00024a43f8f98b8e960ba1e422c7dcc03969b06",
+  "url": "https://staging.cluvo.nl",
+  "ci": {
+    "url": "https://github.com/cluvonl/platform/actions/runs/37509948709",
+    "conclusion": "success"
+  },
+  "deployment": {
+    "url": "https://github.com/cluvonl/platform/actions/runs/37510584242",
+    "conclusion": "success",
+    "image": "ghcr.io/cluvonl/platform@sha256:70a33b6d9eea8ac4cf280481afa66932457568dc13a71461e98ec29de3c621f4",
+    "image_digest": "sha256:70a33b6d9eea8ac4cf280481afa66932457568dc13a71461e98ec29de3c621f4"
+  },
+  "mode": "prototype",
+  "endpoints": [
+    {
+      "path": "/api/health/live",
+      "status": 200,
+      "body": {
+        "status": "ok",
+        "service": "cluvo",
+        "mode": "prototype",
+        "environment": "staging",
+        "release": "b00024a43f8f98b8e960ba1e422c7dcc03969b06"
+      }
+    },
+    {
+      "path": "/api/health/ready",
+      "status": 503,
+      "body": {
+        "ready": false,
+        "release_ready": false,
+        "reason": "APP_MODE_PROTOTYPE",
+        "checks": {
+          "database": "not_connected",
+          "workers": "not_started",
+          "authorization": "demo_only"
+        }
+      }
+    },
+    {
+      "path": "/api/runtime-config",
+      "status": 503,
+      "body": {
+        "error": "SUPABASE_NOT_CONFIGURED"
+      }
+    }
+  ],
+  "captures": [
+    {
+      "file": "prototype-overzicht-1440x1024.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1024
+      },
+      "sha256": "21d49ee7d48c6776cc9c3dd232b3b3d70dce180a94c34a7a88b090d3340265ac"
+    },
+    {
+      "file": "prototype-overzicht-390x844.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "9ba1ac7590a96e453099c8d491bb377c58e3d0df431daff1aa26a9d485a40cad"
+    }
+  ],
+  "migrations": {
+    "artifact_hashes_verified": true,
+    "count": 9,
+    "remote_applied_status": "UNVERIFIED: safe Supabase/VPS management route unavailable"
+  },
+  "acceptance": {
+    "intermediate_release": true,
+    "v1_ready": false,
+    "functional_app_on_staging": false,
+    "workers_connected": false,
+    "staging_rls_privacy_tests": "NOT_EXECUTED",
+    "staging_backup_restore": "NOT_EXECUTED"
+  }
+}

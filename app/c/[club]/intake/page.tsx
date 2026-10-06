@@ -3,6 +3,7 @@ import {IntakeForm, type IntakeRecord, type IntakeHousehold} from '@/components/
 import {requireWorkspace} from '@/lib/auth/workspace';
 import {AccountHelpBanner} from '@/components/app/help-provider';
 import {Empty, PageTitle} from '@/components/cluvo/ui';
+import {loadHouseholdDossier} from '@/lib/data/household';
 
 type IntakeContext = {profile_id: string; person_id: string; household_context_id: string; display_name: string; is_self: boolean};
 
@@ -24,6 +25,7 @@ export default async function IntakePage({params, searchParams}: {
   const households = (householdResult.data ?? []) as IntakeHousehold[];
   const household = intake ? households.find(({household_id}) => household_id === intake.household_context_id) ?? null : null;
   const subject = contexts.find(({profile_id}) => profile_id === intake?.profile_id);
+  const dossierResult = household ? await loadHouseholdDossier(client, workspace.tenant_id, household.household_id) : {data: null, error: null};
   const error = intakeResult.error ?? categoryResult.error ?? householdResult.error ?? contextResult.error;
   return <div className="page-enter">
     <PageTitle eyebrow="MIJN PROFIEL & HUISHOUDEN" title="Jouw talent. Jouw bijdrage." description="Samen vinden we een plek die past bij jouw leven." />
@@ -34,6 +36,6 @@ export default async function IntakePage({params, searchParams}: {
       <button type="submit" className="btn secondary">Open intake</button>
     </form> : null}
     {!error && !intake ? <Empty title={selection.profile ? 'Intake niet beschikbaar' : 'Nog geen intakeprofiel'} text={selection.profile ? 'Open een eigen dossiercontext waartoe je toegang hebt.' : 'Een bevoegde contactpersoon moet eerst een persoonlijk profiel in jouw huishoudcontext aanmaken.'} /> : null}
-    {!error && intake && subject ? <IntakeForm key={intake.profile_id} club={club} name={subject.display_name} assisted={!subject.is_self} record={intake} categories={[...new Set((categoryResult.data ?? []).map(({name}) => name as string))]} household={household} idempotencyKey={randomUUID()} /> : null}
+    {!error && intake && subject ? <IntakeForm key={intake.profile_id} club={club} name={subject.display_name} assisted={!subject.is_self} record={intake} categories={[...new Set((categoryResult.data ?? []).map(({name}) => name as string))]} household={household} dossier={dossierResult.data} dossierLoadFailed={Boolean(dossierResult.error)} invitationKey={randomUUID()} idempotencyKey={randomUUID()} /> : null}
   </div>;
 }

@@ -3,7 +3,7 @@ import {mkdir, writeFile} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
 const {chromium} = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright');
 const base = 'http://127.0.0.1:3200', mail = 'http://127.0.0.1:55324';
-const output = 'docs/release/evidence/local/20261006-w02';
+const output = process.env.EVIDENCE_OUTPUT ?? 'docs/release/evidence/local/20261006-w02';
 const options = {viewport: {width: 1440, height: 1024}, locale: 'nl-NL', timezoneId: 'Europe/Amsterdam', reducedMotion: 'reduce'};
 await mkdir(`${output}/screenshots`, {recursive: true});
 const browser = await chromium.launch({headless: true}), contexts = [], checks = [], hydration = [];

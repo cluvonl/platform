@@ -7,7 +7,7 @@ import {execFileSync} from 'node:child_process';
 const {chromium} = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright');
 const base = 'http://127.0.0.1:3200';
 const mail = 'http://127.0.0.1:55324';
-const output = 'docs/release/evidence/local/20261006-w01';
+const output = process.env.EVIDENCE_OUTPUT ?? 'docs/release/evidence/local/20261006-w01';
 await mkdir(`${output}/screenshots`, {recursive: true});
 const browser = await chromium.launch({headless: true});
 const checks = [];

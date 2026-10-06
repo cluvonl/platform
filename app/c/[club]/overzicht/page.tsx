@@ -77,6 +77,7 @@ export default async function OverviewPage({params, searchParams}: {
             <div className="winter-note"><CalendarDays size={17} /><span><b>Winterdoel: {hours(balance.effective_winter_minutes)} uur</b><small>{hours(balance.winter_deficit_minutes)} uur tot het winterdoel</small></span></div>
             {(balance.open_dispute_count ?? 0) > 0 ? <p className="secure-notice">Je stand wordt beoordeeld. Definitieve afrekening wacht op deze beoordeling.</p> : null}</> : null}
           <Btn asChild variant="secondary" className="full"><Link href={`${base}/intake`}>Mijn intake bekijken</Link></Btn>
+          {household ? <Btn asChild variant="secondary" className="full"><Link href={`${base}/huishouden?household=${household.household_id}`}>Huishouddossier openen</Link></Btn> : null}
         </div></Panel>
         <Panel title="Samen aan de slag"><div className="community-note"><span className="community-spark">✳</span><h3>Jouw talent is welkom.</h3><p>Organiseren, koken of klussen? Vertel ons waar jij blij van wordt.</p><Btn asChild variant="secondary"><Link href={`${base}/intake`}>Mijn voorkeuren invullen</Link></Btn></div></Panel>
       </div>

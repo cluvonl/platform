@@ -5,7 +5,8 @@ import Link from 'next/link';
 import {Check} from 'lucide-react';
 import {saveIntakeAction, type IntakeActionState} from '@/app/c/[club]/intake/actions';
 import {Avatar, Badge, Btn, Button, CheckList, Field, Hint, Input, Modal, Panel, Textarea, Toggle} from '@/components/cluvo/ui';
-import {AccountHelpBanner} from '@/components/app/help-provider';
+import {HouseholdDossierTabs} from '@/components/app/household-dossier';
+import type {HouseholdDossier} from '@/lib/data/household';
 import {intakeAnswerList, intakeHoursFromMinutes, intakeMinutesFromHours, intakeUnavailabilityDates} from '@/lib/domain/intake.mjs';
 import {intakeSkills, intakeRoleInterests, intakeAvailability, intakeTraining} from '@/lib/domain/intake-options';
 
@@ -19,8 +20,9 @@ function ChoiceField({label, children}: {label: string; children: ReactNode}) {
   return <div className="field" role="group" aria-label={label}><span>{label}</span>{children}</div>;
 }
 
-export function IntakeForm({club, name, assisted, record, categories, household, idempotencyKey}: {
-  club: string; name: string; assisted: boolean; record: IntakeRecord; categories: string[]; household: IntakeHousehold | null; idempotencyKey: string;
+export function IntakeForm({club, name, assisted, record, categories, household, dossier, dossierLoadFailed, invitationKey, idempotencyKey}: {
+  club: string; name: string; assisted: boolean; record: IntakeRecord; categories: string[]; household: IntakeHousehold | null;
+  dossier: HouseholdDossier | null; dossierLoadFailed: boolean; invitationKey: string; idempotencyKey: string;
 }) {
   const answers = record.answers ?? {};
   // A focus/refresh may update server props while this draft is still being
@@ -115,10 +117,9 @@ export function IntakeForm({club, name, assisted, record, categories, household,
         </form>
       </Panel>
     </div>
-    {houseOpen && household ? <Modal open onClose={() => setHouseOpen(false)} title={household.label} description="Jouw persoonlijke dossiercontext">
-      <AccountHelpBanner topicId="household.overview" />
-      <p className="body-copy">De gezamenlijke seizoensstand en jouw dossierrechten staan in het overzicht. Een intake verandert het huishoudelijke urendoel niet.</p>
-      <div className="modal-actions"><Btn variant="secondary" onClick={() => setHouseOpen(false)}>Sluiten</Btn><Link className="btn primary" href={`/c/${encodeURIComponent(club)}/overzicht?household=${household.household_id}`}>Bekijk huishoudvoortgang</Link></div>
+    {houseOpen && household ? <Modal open wide onClose={() => setHouseOpen(false)} title={household.label} description="Jouw persoonlijke dossiercontext">
+      {dossier ? <HouseholdDossierTabs club={club} dossier={dossier} invitationKey={invitationKey} /> : <p className="auth-error" role="alert">{dossierLoadFailed ? 'Het dossier kan nu niet worden geladen. Open de pagina opnieuw.' : 'Dit dossier is niet meer beschikbaar binnen jouw rechten.'}</p>}
+      <div className="modal-actions"><Btn variant="secondary" onClick={() => setHouseOpen(false)}>Sluiten</Btn><Link className="btn secondary" href={`/c/${encodeURIComponent(club)}/huishouden?household=${household.household_id}`}>Dossier als pagina openen</Link></div>
     </Modal> : null}
   </>;
 }

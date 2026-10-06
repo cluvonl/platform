@@ -1,0 +1,37 @@
+{
+  "environment": "local",
+  "app_build": "production standalone",
+  "fixture": "synthetic core-v1 plus invited extra-dossier@example.test",
+  "checks": [
+    "FOUR_AUTHORIZED_DOSSIER_TABS_THREE_VIEWPORTS",
+    "PARENT_PERSON_LIST_EXCLUDES_OTHER_PERSON_AND_INTAKE",
+    "DOSSIER_KEYBOARD_TAB_SWITCH",
+    "CANONICAL_DOSSIER_PAGE_SERVER_READ",
+    "FOREIGN_DOSSIER_DIRECT_URL_DENIED",
+    "PROGRESS_RIGHT_DOES_NOT_GRANT_INVITATION",
+    "RECIPIENT_REJECTED_BEFORE_DATABASE_OR_PROVIDER",
+    "LOST_ACTION_RESPONSE_RETRY_ONE_INVITATION_ONE_EMAIL",
+    "DATABASE_INVITATION_AND_AUTH_IDENTITY_READBACK",
+    "REAL_INVITE_LINK_VERIFIED_TOKEN_REMOVED_FROM_URL",
+    "OTHER_VERIFIED_EMAIL_CANNOT_ACCEPT_VALID_INVITE",
+    "MATCHING_IDENTITY_ACCEPTS_MINIMAL_GRANTS_COOKIE_CLEARED",
+    "INVITED_EXECUTOR_PERSONAL_INTAKE_SERVER_SAVE",
+    "EXPLICIT_GRANTS_NO_SECOND_OBLIGATION_OR_LEDGER",
+    "EXTRA_EXECUTOR_DOSSIER_STILL_PRIVATE",
+    "NO_HYDRATION_MISMATCHES"
+  ],
+  "passed": true,
+  "readback": {
+    "invitation_accepted": true,
+    "identity_matched": true,
+    "person_matched": true,
+    "progress_grant": true,
+    "book_for_grant": false,
+    "invite_grant": false,
+    "manage_contacts_grant": false,
+    "personal_profiles": 1,
+    "obligations": 1,
+    "confirmed_minutes": 60
+  },
+  "staging_verified": false
+}

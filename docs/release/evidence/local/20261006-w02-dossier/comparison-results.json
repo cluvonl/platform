@@ -1,0 +1,7 @@
+{
+  "environment": "local",
+  "pairs": 12,
+  "all_images_loaded": true,
+  "overlay_and_opacity": true,
+  "acceptance": "PARTIAL_V09_V23_OPEN"
+}
