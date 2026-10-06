@@ -48,8 +48,11 @@ const wiring = {
   'P01.F01': {read_models: ['api.my_households', 'api.my_active_seasons', 'api.my_household_season_progress'], components: ['app/c/[club]/overzicht/page.tsx'], limitation: 'Eigen dossier/seizoen en canonieke coverage/winterstand aangesloten; volledige bestuursaggregaten en teamprojecties nog open.'},
   'P02.F01': {read_models: ['api.list_shift_market'], components: ['app/c/[club]/diensten/page.tsx'], limitation: 'Teamreserveringen nog niet aangesloten.'},
   'P02.F06': {commands: ['api.book_shift'], components: ['app/c/[club]/diensten/actions.ts'], limitation: 'Buddy/instructie-erkenning en volledige uitvoerderkeuze nog open.'},
-  'P23.F01': {read_models: ['api.my_intake'], components: ['app/c/[club]/intake/page.tsx']},
-  'P23.F05': {commands: ['api.save_intake_revision'], components: ['app/c/[club]/intake/actions.ts'], limitation: 'Bestaand formulier; vier prototype-intakestappen nog aan te sluiten.'},
+  'P23.F01': {read_models: ['api.my_intake', 'api.list_intake_contexts'], components: ['app/c/[club]/intake/page.tsx'], limitation: 'Eigen en expliciet gemachtigde contexten aangesloten; aanmaken/intrekken van de machtiging via beheerflow nog open.', functional_evidence: 'docs/release/evidence/local/20261006-w02/verification.md', visual_evidence: 'docs/release/evidence/local/20261006-w02/compare.html'},
+  'P23.F02': {commands: ['api.save_intake_revision'], components: ['components/app/intake-form.tsx'], limitation: 'Ervaring en maatjesvraag versioned opgeslagen; aanbod en buddykeuze volgen in W03/W06.', functional_evidence: 'docs/release/evidence/local/20261006-w02/verification.md', visual_evidence: 'docs/release/evidence/local/20261006-w02/compare.html'},
+  'P23.F03': {read_models: ['api.intake_task_categories'], commands: ['api.save_intake_revision'], components: ['components/app/intake-form.tsx'], limitation: 'Talenten, taak- en functievoorkeuren opgeslagen; adviezen en wervingsworkflow nog open.', functional_evidence: 'docs/release/evidence/local/20261006-w02/verification.md', visual_evidence: 'docs/release/evidence/local/20261006-w02/compare.html'},
+  'P23.F04': {commands: ['api.save_intake_revision'], components: ['components/app/intake-form.tsx', 'lib/domain/intake.mjs'], limitation: 'Weekvoorkeur, maandminuten, grenzen, verhinderdatums, leerwens en reserve opgeslagen; datums blokkeren nieuwe bookings. Advies, workload en reserve-opvolging nog open.', functional_evidence: 'docs/release/evidence/local/20261006-w02/verification.md', visual_evidence: 'docs/release/evidence/local/20261006-w02/compare.html'},
+  'P23.F05': {commands: ['api.save_intake_revision'], components: ['app/c/[club]/intake/actions.ts', 'components/app/intake-form.tsx'], limitation: 'Vier stappen en expliciete opslag met actor/subject/reason/version/idempotency/audit aangesloten; staging-acceptatie ontbreekt.', functional_evidence: 'docs/release/evidence/local/20261006-w02/verification.md', visual_evidence: 'docs/release/evidence/local/20261006-w02/compare.html'},
 };
 
 const functionIds = new Set(catalogue.pages.flatMap(({functions}) => functions.map(({id}) => id)));
@@ -68,8 +71,8 @@ const rows = catalogue.pages.flatMap((page) => page.functions.map((feature) => {
     page_acceptance_ids: feature.page_acceptance_ids,
     limitation: connected.limitation ?? (Object.keys(connected).length ? 'Staging- en volledige functieacceptatie ontbreken.' : 'Geen actuele UI→command/read-model-keten vastgesteld.'),
     status: Object.keys(connected).length ? 'IMPLEMENTED_PARTIAL_NOT_ACCEPTED' : 'TO_BUILD_OR_VERIFY',
-    functional_evidence: Object.keys(connected).length ? 'docs/release/evidence/local/20261006-w01/verification.md (deelbewijs; geen functieacceptatie)' : null,
-    visual_evidence: Object.keys(connected).length ? 'docs/release/evidence/local/20261006-w01/visual-comparison.md (deelbewijs)' : null, staging_evidence: null,
+    functional_evidence: connected.functional_evidence ?? (Object.keys(connected).length ? 'docs/release/evidence/local/20261006-w01/verification.md (deelbewijs; geen functieacceptatie)' : null),
+    visual_evidence: connected.visual_evidence ?? (Object.keys(connected).length ? 'docs/release/evidence/local/20261006-w01/visual-comparison.md (deelbewijs)' : null), staging_evidence: null,
   };
 }));
 const head = execFileSync('git', ['rev-parse', 'HEAD'], {encoding: 'utf8'}).trim();

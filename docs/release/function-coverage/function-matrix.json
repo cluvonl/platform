@@ -1,6 +1,6 @@
 {
   "base_sha": "47386491859b47fbebf85c3b209724dcc20407fc",
-  "source_head": "b0877aae62c4cb4e486b46e78ccab8c97704c2ad",
+  "source_head": "72f4a76d9d7361eac5d8fd8d78350fe9d0efff75",
   "worktree_dirty": true,
   "prototype_sha": "e9c1d8bca2089b0944577eed73d1bedf7e70a3b6",
   "acceptance_ready": false,
@@ -16,10 +16,10 @@
       "api_views": 16
     },
     "current": {
-      "migrations": 8,
+      "migrations": 9,
       "app_tables": 142,
-      "api_function_definitions": 53,
-      "api_views": 19
+      "api_function_definitions": 54,
+      "api_views": 20
     }
   },
   "migrations": [
@@ -1138,6 +1138,22 @@
           "kind": "view",
           "name": "api.my_household_season_progress",
           "line": 238
+        }
+      ]
+    },
+    {
+      "file": "20261006193000_complete_personal_intake.sql",
+      "sha256": "488d4722f830a0a2a2d35ff89a483bcd6f5e40ed3aa255d367d4346aaad22ad9",
+      "objects": [
+        {
+          "kind": "view",
+          "name": "api.intake_task_categories",
+          "line": 115
+        },
+        {
+          "kind": "function",
+          "name": "api.list_intake_contexts",
+          "line": 141
         }
       ]
     }
@@ -9260,7 +9276,8 @@
       "route": "/c/[club]/intake",
       "route_present": true,
       "read_models": [
-        "api.my_intake"
+        "api.my_intake",
+        "api.list_intake_contexts"
       ],
       "commands": [],
       "components": [
@@ -9289,10 +9306,10 @@
         "O07",
         "V23"
       ],
-      "limitation": "Staging- en volledige functieacceptatie ontbreken.",
+      "limitation": "Eigen en expliciet gemachtigde contexten aangesloten; aanmaken/intrekken van de machtiging via beheerflow nog open.",
       "status": "IMPLEMENTED_PARTIAL_NOT_ACCEPTED",
-      "functional_evidence": "docs/release/evidence/local/20261006-w01/verification.md (deelbewijs; geen functieacceptatie)",
-      "visual_evidence": "docs/release/evidence/local/20261006-w01/visual-comparison.md (deelbewijs)",
+      "functional_evidence": "docs/release/evidence/local/20261006-w02/verification.md",
+      "visual_evidence": "docs/release/evidence/local/20261006-w02/compare.html",
       "staging_evidence": null
     },
     {
@@ -9302,8 +9319,12 @@
       "route": "/c/[club]/intake",
       "route_present": true,
       "read_models": [],
-      "commands": [],
-      "components": [],
+      "commands": [
+        "api.save_intake_revision"
+      ],
+      "components": [
+        "components/app/intake-form.tsx"
+      ],
       "mandate": "Eigen intake; vertegenwoordiging uitsluitend met concrete machtiging; gescheiden ouders houden onafhankelijke privacy.",
       "relationships": [],
       "related_pages": [
@@ -9324,10 +9345,10 @@
         "O07",
         "V23"
       ],
-      "limitation": "Geen actuele UI→command/read-model-keten vastgesteld.",
-      "status": "TO_BUILD_OR_VERIFY",
-      "functional_evidence": null,
-      "visual_evidence": null,
+      "limitation": "Ervaring en maatjesvraag versioned opgeslagen; aanbod en buddykeuze volgen in W03/W06.",
+      "status": "IMPLEMENTED_PARTIAL_NOT_ACCEPTED",
+      "functional_evidence": "docs/release/evidence/local/20261006-w02/verification.md",
+      "visual_evidence": "docs/release/evidence/local/20261006-w02/compare.html",
       "staging_evidence": null
     },
     {
@@ -9336,9 +9357,15 @@
       "title": "Talenten en voorkeuren",
       "route": "/c/[club]/intake",
       "route_present": true,
-      "read_models": [],
-      "commands": [],
-      "components": [],
+      "read_models": [
+        "api.intake_task_categories"
+      ],
+      "commands": [
+        "api.save_intake_revision"
+      ],
+      "components": [
+        "components/app/intake-form.tsx"
+      ],
       "mandate": "Eigen intake; vertegenwoordiging uitsluitend met concrete machtiging; gescheiden ouders houden onafhankelijke privacy.",
       "relationships": [
         "R10"
@@ -9362,10 +9389,10 @@
         "O07",
         "V23"
       ],
-      "limitation": "Geen actuele UI→command/read-model-keten vastgesteld.",
-      "status": "TO_BUILD_OR_VERIFY",
-      "functional_evidence": null,
-      "visual_evidence": null,
+      "limitation": "Talenten, taak- en functievoorkeuren opgeslagen; adviezen en wervingsworkflow nog open.",
+      "status": "IMPLEMENTED_PARTIAL_NOT_ACCEPTED",
+      "functional_evidence": "docs/release/evidence/local/20261006-w02/verification.md",
+      "visual_evidence": "docs/release/evidence/local/20261006-w02/compare.html",
       "staging_evidence": null
     },
     {
@@ -9375,8 +9402,13 @@
       "route": "/c/[club]/intake",
       "route_present": true,
       "read_models": [],
-      "commands": [],
-      "components": [],
+      "commands": [
+        "api.save_intake_revision"
+      ],
+      "components": [
+        "components/app/intake-form.tsx",
+        "lib/domain/intake.mjs"
+      ],
       "mandate": "Eigen intake; vertegenwoordiging uitsluitend met concrete machtiging; gescheiden ouders houden onafhankelijke privacy.",
       "relationships": [
         "R04"
@@ -9400,10 +9432,10 @@
         "O07",
         "V23"
       ],
-      "limitation": "Geen actuele UI→command/read-model-keten vastgesteld.",
-      "status": "TO_BUILD_OR_VERIFY",
-      "functional_evidence": null,
-      "visual_evidence": null,
+      "limitation": "Weekvoorkeur, maandminuten, grenzen, verhinderdatums, leerwens en reserve opgeslagen; datums blokkeren nieuwe bookings. Advies, workload en reserve-opvolging nog open.",
+      "status": "IMPLEMENTED_PARTIAL_NOT_ACCEPTED",
+      "functional_evidence": "docs/release/evidence/local/20261006-w02/verification.md",
+      "visual_evidence": "docs/release/evidence/local/20261006-w02/compare.html",
       "staging_evidence": null
     },
     {
@@ -9417,7 +9449,8 @@
         "api.save_intake_revision"
       ],
       "components": [
-        "app/c/[club]/intake/actions.ts"
+        "app/c/[club]/intake/actions.ts",
+        "components/app/intake-form.tsx"
       ],
       "mandate": "Eigen intake; vertegenwoordiging uitsluitend met concrete machtiging; gescheiden ouders houden onafhankelijke privacy.",
       "relationships": [
@@ -9441,10 +9474,10 @@
         "O07",
         "V23"
       ],
-      "limitation": "Bestaand formulier; vier prototype-intakestappen nog aan te sluiten.",
+      "limitation": "Vier stappen en expliciete opslag met actor/subject/reason/version/idempotency/audit aangesloten; staging-acceptatie ontbreekt.",
       "status": "IMPLEMENTED_PARTIAL_NOT_ACCEPTED",
-      "functional_evidence": "docs/release/evidence/local/20261006-w01/verification.md (deelbewijs; geen functieacceptatie)",
-      "visual_evidence": "docs/release/evidence/local/20261006-w01/visual-comparison.md (deelbewijs)",
+      "functional_evidence": "docs/release/evidence/local/20261006-w02/verification.md",
+      "visual_evidence": "docs/release/evidence/local/20261006-w02/compare.html",
       "staging_evidence": null
     },
     {

@@ -38,8 +38,12 @@ test('intakecommand vertrouwt geen client-actor en gebruikt optimistic concurren
   assert.match(action, /p_tenant_id:\s*workspace\.tenant_id/);
   assert.match(action, /p_expected_version/);
   assert.match(action, /p_idempotency_key/);
-  assert.match(action, /p_represented_person_id:\s*null/);
-  assert.match(action, /p_assistance_reason:\s*null/);
+  assert.match(action, /schema\('api'\)\.from\('my_intake'\)/);
+  assert.match(action, /profile\.person_id === workspace\.person_id \? null : profile\.person_id/);
+  assert.match(action, /p_represented_person_id:\s*representedPersonId/);
+  assert.doesNotMatch(action, /parsed\.data\.(?:actor|representedPersonId|personId)/);
+  assert.match(action, /p_assistance_reason:\s*representedPersonId \? parsed\.data\.assistanceReason : null/);
+  assert.match(action, /if \(representedPersonId && !parsed\.data\.assistanceReason\)/);
   assert.match(action, /schema\('api'\)\.rpc\('save_intake_revision'/);
   assert.doesNotMatch(action, /actor_auth_id|service_role|SUPABASE_SECRET/i);
 });
