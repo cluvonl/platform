@@ -80,8 +80,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          npx supabase start \
-            --exclude studio,imgproxy,edge-runtime,logflare,vector,supavisor,realtime
+          node scripts/start-local-database.mjs
 
           trap 'npx supabase stop --no-backup' EXIT
 

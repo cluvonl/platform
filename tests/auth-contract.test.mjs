@@ -5,7 +5,9 @@ import {readFile} from 'node:fs/promises';
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8');
 
 test('OTP-login maakt geen ongecontroleerde Auth-gebruiker aan', async () => {
-  const actions = await read('app/auth/actions.ts');
+  const [actions, config] = await Promise.all([read('app/auth/actions.ts'), read('supabase/config.toml')]);
+  assert.match(config.split('[auth]')[1].split('[auth.rate_limit]')[0], /enable_signup\s*=\s*false/);
+  assert.match(config.split('[auth.email]')[1].split('[auth.email.template')[0], /enable_signup\s*=\s*true/);
   assert.match(actions, /signInWithOtp/);
   assert.match(actions, /shouldCreateUser:\s*false/);
   assert.match(actions, /verifyOtp/);
@@ -106,12 +108,14 @@ test('boeking en presentie gebruiken uitsluitend tenantgebonden databasecommands
   assert.doesNotMatch(`${marketPage}\n${attendancePage}`, /schema\('app'\)/);
 });
 
-test('mobiele werkruimte houdt een zichtbare server-side uitlogactie', async () => {
-  const [shell, styles] = await Promise.all([
+test('mobiele Club Signal-werkruimte houdt een zichtbare server-side uitlogactie', async () => {
+  const [shell, navigation] = await Promise.all([
     read('components/app/secure-shell.tsx'),
-    read('app/globals.css'),
+    read('components/app/workspace-navigation.tsx'),
   ]);
   assert.match(shell, /<form action=\{signOutAction\}>/);
-  assert.doesNotMatch(styles, /\.secure-profile form\{display:none\}/);
-  assert.match(styles, /@media\(max-width:850px\)[\s\S]*\.secure-profile button\{margin-top:0;white-space:nowrap\}/);
+  assert.match(shell, /SidebarFooter/);
+  assert.match(shell, /className="cluvo-sidebar"/);
+  assert.match(navigation, /SidebarTrigger/);
+  assert.match(navigation, /setOpenMobile\(false\)/);
 });

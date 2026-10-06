@@ -1,6 +1,8 @@
 import {randomUUID} from 'node:crypto';
 import {BookShiftForm, type ObligationOption} from '@/components/app/book-shift-form';
 import {requireWorkspace} from '@/lib/auth/workspace';
+import {AccountHelpBanner} from '@/components/app/help-provider';
+import {Badge, PageTitle} from '@/components/cluvo/ui';
 
 type ShiftRow = {
   shift_id: string;
@@ -46,27 +48,27 @@ export default async function ShiftsPage({params}: {params: Promise<{club: strin
   const timezone = tenantResult.data?.[0]?.timezone ?? 'UTC';
 
   return (
-    <div className="secure-page page-enter">
-      <p className="secure-eyebrow">VERENIGINGSTAKEN</p>
-      <h1>Beschikbare diensten</h1>
-      <p className="secure-lead">De server controleert bij iedere boeking opnieuw de laatste plek, overlap, bevoegdheid, leeftijd, kwalificatie en beschikbaarheid.</p>
+    <div className="page-enter">
+      <PageTitle eyebrow="SAMEN MAKEN WE DE CLUB" title="Vind jouw verenigingstaak." description="Kies een taak die past bij jou. Bevestigde uitvoering telt mee voor jouw huishouden." />
+      <AccountHelpBanner topicId="page.taken" />
       {loadError ? <p className="auth-error" role="alert">Het actuele dienstenaanbod kan nu niet veilig worden geladen.</p> : null}
       {!loadError && shifts.length === 0 ? <section className="secure-empty"><h2>Geen gepubliceerd aanbod</h2><p>Er zijn nu geen toekomstige diensten om te tonen.</p></section> : null}
-      <div className="shift-market">
+      <div className="cards-grid">
         {shifts.map((shift) => {
           const obligations: ObligationOption[] = bookableObligations
             .filter((row) => (
               new Date(row.valid_from).getTime() <= new Date(shift.starts_at).getTime()
               && (!row.valid_until || new Date(row.valid_until).getTime() >= new Date(shift.ends_at).getTime())
             ))
-            .map((row) => ({id: row.obligation_id, label: `${row.label} · urenverplichting`}));
+            .map((row) => ({id: row.obligation_id, label: row.label}));
           return (
-          <article className="shift-market-card" key={shift.position_id}>
+          <article className="task-card account-task-card" key={shift.position_id}>
             <div>
-              <p className="secure-eyebrow">PLEK {shift.position_ordinal}</p>
-              <h2>{shift.title}</h2>
-              <p>{formatDate(shift.starts_at, timezone)} – {formatDate(shift.ends_at, timezone)}</p>
-              <small>{shift.location_name ?? 'Locatie volgt'} · {shift.credit_minutes} minuten na bevestigde uitvoering</small>
+              <Badge tone={shift.available ? 'green' : 'neutral'}>{shift.available ? 'Beschikbaar' : 'Bezet of gesloten'} · plaats {shift.position_ordinal}</Badge>
+              <h3>{shift.title}</h3>
+              <p className="mini-details">{formatDate(shift.starts_at, timezone)} – {formatDate(shift.ends_at, timezone)}</p>
+              <p>{shift.location_name ?? 'Locatie volgt'}</p>
+              <p className="card-footnote">{shift.credit_minutes} minuten na bevestigde uitvoering</p>
             </div>
             {shift.available ? (
               <BookShiftForm

@@ -45,6 +45,7 @@ export async function bookShiftAction(
   }
 
   revalidatePath(`/c/${encodeURIComponent(parsed.data.club)}/diensten`);
+  revalidatePath(`/c/${encodeURIComponent(parsed.data.club)}/taken`);
   revalidatePath(`/c/${encodeURIComponent(parsed.data.club)}/overzicht`);
   return {status: 'booked', message: 'De dienst is opgeslagen. Uren tellen pas mee na bevestigde uitvoering.'};
 }

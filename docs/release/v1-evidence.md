@@ -1,5 +1,7 @@
 # Cluvo V1 — lokaal bewijsregister
 
+Actuele aanvulling van 6 oktober 2026: [W00/W01 lokaal deelbewijs](evidence/local/20261006-w01/verification.md) en [volledige 219-functiematrix](function-coverage/function-matrix.json). Het onderstaande register bewaart de historische capture van 2 oktober. De volledige V1-acceptatie blijft OPEN.
+
 Bewijscapture: 2 oktober 2026, 21:33 CEST (`Europe/Amsterdam`)
 
 ## Huidig oordeel

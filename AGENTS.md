@@ -15,3 +15,13 @@
 - De technische scripts in dit pakket vormen een bootstrap voor het prototype. De productiebackend, migraties en operationele gates moeten nog worden gebouwd.
 - Bewijs is verplicht: uitgevoerde gerichte tests, negatieve RLS- en privacytests, concurrency op de laatste plaats, UI-controle en readback op staging.
 - Werk door totdat het geautoriseerde werk is afgerond. Vraag alleen ontbrekende toegang of informatie bij een concrete blokkade.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

@@ -2,6 +2,7 @@
 
 import {useActionState} from 'react';
 import {inviteExecutorAction, type InviteExecutorState} from '@/app/c/[club]/huishouden/actions';
+import {Button} from '@/components/cluvo/ui';
 
 const initialState: InviteExecutorState = {status: 'idle'};
 
@@ -20,7 +21,7 @@ export function InviteExecutorForm({club, householdId, idempotencyKey}: {club: s
       <label className="secure-check"><input name="canViewProgress" type="checkbox" /> Mag de gezamenlijke huishoudvoortgang zien</label>
       <label className="secure-check"><input name="canBookFor" type="checkbox" /> Mag na acceptatie voor dit huishouden boeken</label>
       {state.message ? <p className={state.status === 'sent' ? 'secure-success' : 'auth-error'} role={state.status === 'error' ? 'alert' : 'status'}>{state.message}</p> : null}
-      <button className="auth-primary" disabled={pending || state.status === 'sent'} type="submit">{pending ? 'Veilig verzenden…' : state.status === 'sent' ? 'Uitnodiging verzonden' : 'Nodig extra uitvoerder uit'}</button>
+      <Button className="btn primary" disabled={pending || state.status === 'sent'} type="submit">{pending ? 'Verzenden…' : state.status === 'sent' ? 'Uitnodiging verzonden' : 'Nodig extra uitvoerder uit'}</Button>
     </form>
   );
 }

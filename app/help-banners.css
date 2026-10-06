@@ -1,0 +1,35 @@
+.cluvo-help-banner {
+  display:grid;
+  grid-template-columns:24px minmax(0,1fr) 36px;
+  gap:8px 12px;
+  background:#fff9df;
+  border:1px solid #e9ddb1;
+  border-radius:13px;
+  padding:16px 16px 10px;
+  margin:0 0 22px;
+  color:#675b39;
+  width:100%;
+  text-align:left;
+}
+.cluvo-help-icon {color:#a18b45;margin-top:2px;flex-shrink:0}
+.cluvo-help-copy {min-width:0}
+.cluvo-help-banner .cluvo-help-copy h3 {font-size:14px;font-weight:650;line-height:1.5;margin:0 0 3px;color:#66552c;letter-spacing:0}
+.cluvo-help-banner .cluvo-help-copy p {font-size:14px;line-height:1.65;margin:0;color:#756642}
+.cluvo-help-banner .cluvo-help-close {display:flex;align-items:center;justify-content:center;width:36px;height:36px;margin:-5px -5px 0 0;border:0;border-radius:8px;background:transparent;color:#8c7c51;cursor:pointer}
+.cluvo-help-footer {grid-column:2 / 4;display:flex;justify-content:flex-end}
+.cluvo-help-banner .cluvo-help-seen {font-size:13px;font-weight:600;line-height:1.4;min-height:36px;padding:7px 12px;border:1px solid transparent;border-radius:8px;background:transparent;color:#7d6939;cursor:pointer}
+.cluvo-help-close:hover,.cluvo-help-seen:hover {background:#f7edc5}
+.cluvo-help-close:focus-visible,.cluvo-help-seen:focus-visible {outline:2px solid #a38a38;outline-offset:2px}
+.panel > .cluvo-help-banner {width:calc(100% - 44px);margin:18px 22px 4px}
+.panel.pad > .cluvo-help-banner {width:100%;margin:0 0 18px}
+.cluvo-modal > .cluvo-help-banner {margin:0 0 4px}
+.cw-advisor > .cluvo-help-banner {margin:0 0 16px}
+.cw-member-meters > .cluvo-help-banner {grid-column:1 / -1;margin:0}
+@media (max-width:640px) {
+  .cluvo-help-banner {grid-template-columns:21px minmax(0,1fr) 32px;gap:6px 9px;padding:13px 12px 8px;border-radius:11px;margin-bottom:18px}
+  .cluvo-help-banner .cluvo-help-close {width:32px;height:36px;margin:-5px -4px 0 0}
+  .cluvo-help-banner .cluvo-help-copy h3,.cluvo-help-banner .cluvo-help-copy p {font-size:13px}
+  .cluvo-help-footer {grid-column:1 / 4}
+  .panel > .cluvo-help-banner {width:calc(100% - 28px);margin:14px 14px 3px}
+  .panel.pad > .cluvo-help-banner {width:100%;margin:0 0 16px}
+}

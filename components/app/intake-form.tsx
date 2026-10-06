@@ -2,6 +2,7 @@
 
 import {useActionState} from 'react';
 import {saveIntakeAction, type IntakeActionState} from '@/app/c/[club]/intake/actions';
+import {Button} from '@/components/cluvo/ui';
 
 type IntakeRecord = {profile_id: string; version: number; desired_minutes: number | null; answers: Record<string, unknown> | null};
 const initialState: IntakeActionState = {status: 'idle'};
@@ -18,7 +19,7 @@ export function IntakeForm({club, record, idempotencyKey}: {club: string; record
       <label>Voorkeuren en ervaring<textarea name="preferences" rows={4} defaultValue={answer(record, 'preferences')} placeholder="Taken die bij je passen of ervaring die je wilt inzetten" /></label>
       <label>Praktische beperkingen<textarea name="practicalLimitations" rows={4} defaultValue={answer(record, 'practical_limitations')} placeholder="Beschrijf alleen wat praktisch nodig is; geen diagnose of medisch bewijs" /></label>
       {state.message ? <p className={state.status === 'saved' ? 'secure-success' : 'auth-error'} role={state.status === 'error' ? 'alert' : 'status'}>{state.message}</p> : null}
-      <button className="auth-primary" disabled={pending} type="submit">{pending ? 'Opslaan…' : 'Intake veilig opslaan'}</button>
+      <Button className="btn primary" disabled={pending} type="submit">{pending ? 'Opslaan…' : 'Intake opslaan'}</Button>
     </form>
   );
 }

@@ -21,6 +21,7 @@
     "db:test": "supabase test db",
     "db:test:race": "node scripts/db-concurrency-a13.mjs",
     "db:test:locks": "node scripts/db-concurrency-season-lock.mjs",
+    "check:coverage": "node scripts/coverage-matrix.mjs",
     "check:release": "node scripts/check-release.mjs"
   },
   "dependencies": {
