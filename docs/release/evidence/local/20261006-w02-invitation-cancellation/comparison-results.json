@@ -1,0 +1,73 @@
+{
+  "environment": "local",
+  "pairs": [
+    {
+      "tab": "overzicht",
+      "viewport": "1440x1024",
+      "loaded": true
+    },
+    {
+      "tab": "overzicht",
+      "viewport": "390x844",
+      "loaded": true
+    },
+    {
+      "tab": "overzicht",
+      "viewport": "768x1024",
+      "loaded": true
+    },
+    {
+      "tab": "personen",
+      "viewport": "1440x1024",
+      "loaded": true
+    },
+    {
+      "tab": "personen",
+      "viewport": "390x844",
+      "loaded": true
+    },
+    {
+      "tab": "personen",
+      "viewport": "768x1024",
+      "loaded": true
+    },
+    {
+      "tab": "afspraken",
+      "viewport": "1440x1024",
+      "loaded": true
+    },
+    {
+      "tab": "afspraken",
+      "viewport": "390x844",
+      "loaded": true
+    },
+    {
+      "tab": "afspraken",
+      "viewport": "768x1024",
+      "loaded": true
+    },
+    {
+      "tab": "historie",
+      "viewport": "1440x1024",
+      "loaded": true
+    },
+    {
+      "tab": "historie",
+      "viewport": "390x844",
+      "loaded": true
+    },
+    {
+      "tab": "historie",
+      "viewport": "768x1024",
+      "loaded": true
+    }
+  ],
+  "overlay": {
+    "active": true,
+    "opacity": "0.35",
+    "percentage": "35%"
+  },
+  "errors": [],
+  "passed": true,
+  "staging_verified": false
+}

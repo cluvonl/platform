@@ -1,6 +1,6 @@
 {
   "base_sha": "47386491859b47fbebf85c3b209724dcc20407fc",
-  "source_head": "e0d35d756ae706473f8601b7042e9501f2db4db1",
+  "source_head": "9d9c365261b28ef99ef1a8345c21ae9e818ed6a1",
   "worktree_dirty": true,
   "prototype_sha": "e9c1d8bca2089b0944577eed73d1bedf7e70a3b6",
   "acceptance_ready": false,
@@ -16,9 +16,9 @@
       "api_views": 16
     },
     "current": {
-      "migrations": 11,
+      "migrations": 12,
       "app_tables": 142,
-      "api_function_definitions": 61,
+      "api_function_definitions": 63,
       "api_views": 20
     }
   },
@@ -1206,6 +1206,22 @@
           "kind": "function",
           "name": "api.accept_household_invitation_v2",
           "line": 464
+        }
+      ]
+    },
+    {
+      "file": "20261006230000_household_invitation_cancellation.sql",
+      "sha256": "6d3738db24d2a02576fa6fa4a9273390d04872565edd66d662024df230425a1c",
+      "objects": [
+        {
+          "kind": "function",
+          "name": "api.cancel_household_invitation",
+          "line": 85
+        },
+        {
+          "kind": "function",
+          "name": "api.get_household_dossier_v2",
+          "line": 135
         }
       ]
     }
@@ -4187,7 +4203,7 @@
       "route": "/c/[club]/huishouden",
       "route_present": true,
       "read_models": [
-        "api.get_household_dossier"
+        "api.get_household_dossier_v2"
       ],
       "commands": [],
       "components": [
@@ -4248,7 +4264,7 @@
       "route": "/c/[club]/huishouden",
       "route_present": true,
       "read_models": [
-        "api.get_household_dossier"
+        "api.get_household_dossier_v2"
       ],
       "commands": [],
       "components": [
@@ -4310,11 +4326,13 @@
         "api.create_household_invitation_v2",
         "api.mark_household_invitation_delivery_v2",
         "api.accept_household_invitation_v2",
+        "api.cancel_household_invitation",
         "Supabase Auth.admin.inviteUserByEmail"
       ],
       "components": [
         "app/c/[club]/huishouden/actions.ts",
         "components/app/invite-executor-form.tsx",
+        "components/app/cancel-invitation-form.tsx",
         "app/invite/accept/actions.ts"
       ],
       "mandate": "Vrijwilligerscommissie/bestuur; vrijwilligerscoördinator uitsluitend portefeuille, financiële details apart afgeschermd.",
@@ -4356,9 +4374,9 @@
         "O10",
         "V09"
       ],
-      "limitation": "Versioned commands, actuele bevestigde identiteit, minimale toestemmingscontext, lokale mail/accountacceptatie en verloren-response retries bewezen. Bootstrap-API contract, providerconcurrency, annulering en stagingketen blijven open.",
+      "limitation": "Versioned aanmaak, acceptatie en intrekking, huidige identiteit, minimale context, verloren-response retries en races met acceptatie/intrekking/bevoegdheidsverlies lokaal bewezen. Bootstrap-API contract, grantbeheer, providerconcurrency en stagingketen blijven open.",
       "status": "IMPLEMENTED_PARTIAL_NOT_ACCEPTED",
-      "functional_evidence": "docs/release/evidence/local/20261006-w02-invitation-commands/verification.md",
+      "functional_evidence": "docs/release/evidence/local/20261006-w02-invitation-cancellation/verification.md",
       "visual_evidence": "docs/release/evidence/local/20261006-w02-dossier/compare.html",
       "staging_evidence": null
     },
@@ -4693,7 +4711,7 @@
       "route": "/c/[club]/huishouden",
       "route_present": true,
       "read_models": [
-        "api.get_household_dossier"
+        "api.get_household_dossier_v2"
       ],
       "commands": [],
       "components": [

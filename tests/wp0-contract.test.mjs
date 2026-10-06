@@ -65,7 +65,7 @@ test('CI en staging herhalen database-, race-, lock- en lintpoorten', async () =
   }
   assert.equal(packageJson.scripts['db:test:race'], 'node scripts/db-concurrency-a13.mjs');
   assert.equal(packageJson.scripts['db:test:locks'], 'node scripts/db-concurrency-season-lock.mjs');
-  assert.equal(packageJson.scripts['db:test:invitations'], 'node scripts/db-concurrency-invitations.mjs');
+  assert.equal(packageJson.scripts['db:test:invitations'], 'node scripts/db-concurrency-invitations.mjs && node scripts/db-concurrency-invitation-lifecycle.mjs');
 });
 
 test('runtime en instrumentation blokkeren production en bewaken geconfigureerde appmodus', async () => {

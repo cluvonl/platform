@@ -1,6 +1,7 @@
 'use client';
 
 import {useActionState, useState} from 'react';
+import {unstable_rethrow} from 'next/navigation';
 import {inviteExecutorAction, type InviteExecutorState} from '@/app/c/[club]/huishouden/actions';
 import {Button} from '@/components/cluvo/ui';
 
@@ -13,7 +14,7 @@ export function InviteExecutorForm({club, householdId, householdVersion, idempot
   const [canViewProgress, setCanViewProgress] = useState(false), [canBookFor, setCanBookFor] = useState(false);
   const [state, action, pending] = useActionState(async (previous: InviteExecutorState, form: FormData): Promise<InviteExecutorState> => {
     try {return await inviteExecutorAction(previous, form);}
-    catch {return {status: 'error', message: 'Er is geen bevestiging van de uitnodiging ontvangen. Je invoer blijft staan; probeer dezelfde uitnodiging opnieuw.'};}
+    catch (error) {unstable_rethrow(error); return {status: 'error', message: 'Er is geen bevestiging van de uitnodiging ontvangen. Je invoer blijft staan; probeer dezelfde uitnodiging opnieuw.'};}
   }, initialState);
   return (
     <form action={action} className="secure-form" onReset={(event) => event.preventDefault()}>

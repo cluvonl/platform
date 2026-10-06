@@ -24,7 +24,7 @@
     "db:test:intake-lock": "node scripts/db-concurrency-intake-booking.mjs",
     "check:coverage": "node scripts/coverage-matrix.mjs",
     "check:release": "node scripts/check-release.mjs",
-    "db:test:invitations": "node scripts/db-concurrency-invitations.mjs"
+    "db:test:invitations": "node scripts/db-concurrency-invitations.mjs && node scripts/db-concurrency-invitation-lifecycle.mjs"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",

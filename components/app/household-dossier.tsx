@@ -6,12 +6,14 @@ import type {HouseholdDossier} from '@/lib/data/household';
 import {Avatar, Badge, Btn, Empty, Hint, Progress} from '@/components/cluvo/ui';
 import {AccountHelpBanner} from './help-provider';
 import {InviteExecutorForm} from './invite-executor-form';
+import {CancelInvitationForm} from './cancel-invitation-form';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
 
 const tabs = ['Overzicht', 'Personen', 'Afspraken', 'Historie'];
 const historyLabels: Record<string, string> = {
   'household.invitation_created': 'Persoonlijke uitnodiging klaargezet',
   'household.invitation_accepted': 'Uitnodiging geaccepteerd',
+  'household.invitation_cancelled': 'Persoonlijke uitnodiging ingetrokken',
   'household.split_applied': 'Beoordeelde dossierwijziging verwerkt',
   'booking.created': 'Taak geboekt', 'attendance.confirmed': 'Uitvoering beoordeeld',
   'booking.cancelled': 'Taak afgemeld', 'booking.transferred': 'Taak overgenomen',
@@ -43,7 +45,7 @@ export function HouseholdDossierTabs({club, dossier, invitationKey}: {club: stri
       </> : tab === 1 ? <>
         <AccountHelpBanner topicId="household.people" />
         {dossier.people.length ? dossier.people.map((person) => <div className="row between wrap" key={`${person.person_id}-${person.kind}`}><div className="row"><Avatar name={person.display_name} /><div><b>{person.display_name}</b><p className="small-text">{person.is_self ? 'Jouw persoonlijke profiel' : 'Expliciet toegestane dossierkoppeling'} · {person.verified ? 'Identiteit gekoppeld' : 'Nog geen geverifieerde koppeling'}</p></div></div>{person.profile_id ? <Link className="btn secondary" href={`/c/${encodeURIComponent(club)}/intake?profile=${person.profile_id}`}>{person.intake_status === 'draft' ? 'Intake invullen' : 'Intake bekijken'}</Link> : <Badge>Persoonlijke intake afgeschermd</Badge>}</div>) : <Empty title="Geen zichtbare persoonskoppelingen" text="Persoonlijke gegevens vragen een expliciet recht." />}
-        {dossier.invitations.map((invitation) => <div className="row between wrap" key={invitation.invitation_id}><div><b>{invitation.display_name}</b><p className="small-text">Persoonlijke uitnodiging</p></div><Badge tone={invitation.delivery_status === 'accepted' ? 'green' : invitation.delivery_status === 'delivery_failed' ? 'amber' : 'neutral'}>{deliveryLabels[invitation.delivery_status] ?? 'Onbekende verzendstatus'}</Badge></div>)}
+        {dossier.invitations.map((invitation) => <div className="stack" key={invitation.invitation_id}><div className="row between wrap"><div><b>{invitation.display_name}</b><p className="small-text">Persoonlijke uitnodiging</p></div><Badge tone={invitation.delivery_status === 'accepted' ? 'green' : invitation.delivery_status === 'delivery_failed' || invitation.expired ? 'amber' : 'neutral'}>{invitation.expired && !['accepted', 'cancelled'].includes(invitation.delivery_status) ? 'Verlopen' : deliveryLabels[invitation.delivery_status] ?? 'Onbekende verzendstatus'}</Badge></div><CancelInvitationForm club={club} invitationId={invitation.invitation_id} version={invitation.version} canCancel={invitation.can_cancel} /></div>)}
         <Hint>Alleen personen binnen jouw rechten worden getoond. Een gedeeld dossier opent geen persoonlijke antwoorden van een andere ouder.</Hint>
       </> : tab === 2 ? <>
         <AccountHelpBanner topicId="household.agreements" />

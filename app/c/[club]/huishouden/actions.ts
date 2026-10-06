@@ -9,6 +9,31 @@ import {isAllowedMailRecipient} from '@/lib/domain/mail-recipient.mjs';
 import {revalidatePath} from 'next/cache';
 
 export type InviteExecutorState = {status: 'idle' | 'error' | 'sent'; message?: string};
+export type CancelInvitationState = {status: 'idle' | 'error' | 'cancelled'; message?: string};
+
+const cancellationSchema = z.object({
+  club: z.string().min(1).max(80), invitationId: z.string().uuid(),
+  expectedVersion: z.coerce.number().int().min(1).max(Number.MAX_SAFE_INTEGER), idempotencyKey: z.string().uuid(),
+});
+
+export async function cancelInvitationAction(_previous: CancelInvitationState, formData: FormData): Promise<CancelInvitationState> {
+  void _previous;
+  const parsed = cancellationSchema.safeParse(Object.fromEntries(formData));
+  if (!parsed.success) return {status: 'error', message: 'Open het dossier opnieuw om de actuele uitnodiging te controleren.'};
+  const {client, workspace} = await requireWorkspace(parsed.data.club);
+  const {data, error} = await client.schema('api').rpc('cancel_household_invitation', {
+    p_tenant_id: workspace.tenant_id, p_invitation_id: parsed.data.invitationId,
+    p_expected_version: parsed.data.expectedVersion, p_idempotency_key: parsed.data.idempotencyKey,
+  });
+  if (error?.message?.includes('STALE_VERSION')) return {status: 'error', message: 'Deze uitnodiging is intussen gewijzigd. Vernieuw het dossier voordat je opnieuw kiest.'};
+  if (error?.message?.includes('INVITATION_ALREADY_ACCEPTED')) return {status: 'error', message: 'Deze uitnodiging is al geaccepteerd. Bestaande dossierrechten vragen een afzonderlijke beheeractie.'};
+  const result = z.array(z.object({ok: z.literal(true), result: z.object({delivery_status: z.literal('cancelled')})})).min(1).safeParse(data);
+  if (error || !result.success) return {status: 'error', message: 'De uitnodiging kon niet veilig worden ingetrokken. Controleer de actuele status en jouw rechten.'};
+  revalidatePath(`/c/${parsed.data.club}/intake`);
+  revalidatePath(`/c/${parsed.data.club}/huishouden`);
+  revalidatePath(`/c/${parsed.data.club}/overzicht`);
+  return {status: 'cancelled', message: 'Uitnodiging ingetrokken. De persoonlijke link geeft geen toegang.'};
+}
 
 const schema = z.object({
   club: z.string().min(1).max(80),
