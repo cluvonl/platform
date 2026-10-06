@@ -1,0 +1,25 @@
+{
+  "prototype_checks": {
+    "status": "PASS",
+    "tests": 29,
+    "commands": [
+      "node --test scripts/team-workflow.test.cjs scripts/coordination-workflow.test.cjs scripts/help-banners.test.cjs",
+      "npm run typecheck",
+      "npm run build",
+      "node scripts/check-static-output.mjs"
+    ],
+    "source_sha": "e9c1d8bca2089b0944577eed73d1bedf7e70a3b6",
+    "scope": "Lokale prototype-domain/render/sourcechecks, geen echte staging of browseracceptatie",
+    "checked_on": "2026-10-06"
+  },
+  "source_review": "23 actieve pagina’s plus shell; domain, callbacks, fields en workflowcontrole",
+  "browser_walkthrough": "NIET_UITGEVOERD_IN_DEZE_OVERDRACHT",
+  "actual_staging_checks": "NOG_OPEN",
+  "secrets_values": "NIET_GELEZEN",
+  "backend_counts": {
+    "migrations": 7,
+    "tables": 140,
+    "api_rpc_definitions": 52,
+    "api_views": 16
+  }
+}

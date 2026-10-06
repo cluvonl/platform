@@ -1,0 +1,1465 @@
+{
+  "version": "1.0",
+  "v1_ready": false,
+  "production_enabled": false,
+  "acceptance": [
+    {
+      "id": "A01",
+      "scenario": "Huishouden doel720; bevestig480min vóór en240min na winter",
+      "expected": "Totaal720, resterend0; geen tweede-halftekort120.",
+      "test_layers": "D,E",
+      "work_packages": "3,5",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A02",
+      "scenario": "Bevestig720min vóór winter",
+      "expected": "Jaarvoldaan; geen verplichte plaatsing daarna; extra inzet vrijwillig.",
+      "test_layers": "D,E",
+      "work_packages": "3",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A03",
+      "scenario": "Bevestig240min vóór winter; winterdoel360; passende bestaande of nieuwe boeking na winter",
+      "expected": "Winterallocatie120; jaartotaal resterend480; bestaande boeking niet dubbel; herhaling maakt geen tweede allocatie.",
+      "test_layers": "D,E",
+      "work_packages": "3,5",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A04",
+      "scenario": "240min bevestigd en120min pending vóór winter; start wintercontrole",
+      "expected": "Eerst pending beoordelen; vóór oplossing geen definitieve tekortplaatsing; na bevestiging winterdoelgehaald.",
+      "test_layers": "D,E",
+      "work_packages": "3,5",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A05",
+      "scenario": "Voeg vrijstellende rol toe; ken geldig toe aan persoon in huishouden",
+      "expected": "Hele gekoppelde huishouden voldaan via structurele inzet; feitelijke minuten ongewijzigd; geen nieuwe systeemrechten.",
+      "test_layers": "D,R,E",
+      "work_packages": "3",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A06",
+      "scenario": "Beëindig erkende rol halverwege seizoen",
+      "expected": "Beoordelingsactie; geen automatische terugwerkende rekening of ongemotiveerd nieuw doel. Definitief doel volgt gemotiveerd besluit en eerdere inzet blijft tellen.",
+      "test_layers": "D,E",
+      "work_packages": "3,9",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A07",
+      "scenario": "Vader/moeder/lid16+ vullen eigen intake; bevoegde persoon nodigt extra uitvoerder uit",
+      "expected": "Eigen profielen; uitnodiging aanvaard + e-mail geverifieerd vóór toegang; uitvoerder kan toegestane dienst boeken.",
+      "test_layers": "D,R,E",
+      "work_packages": "2,4",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A08",
+      "scenario": "Buitenstaander bezit alleen intakecode en vraagt dossier/API/export op",
+      "expected": "Geen gegevens, toegang of handelingsbevoegdheid; geverifieerd maar ongeautoriseerd account evenmin.",
+      "test_layers": "R,E",
+      "work_packages": "1,2",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A09",
+      "scenario": "Gescheiden ouder A vraagt persoonlijke intake/contactgegevens van ouder B via UI/search/export/directe URL/API",
+      "expected": "Overal geweigerd; noodzakelijke gezamenlijke voortgang alleen volgens expliciet recht.",
+      "test_layers": "R,E",
+      "work_packages": "2",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A10",
+      "scenario": "Extra account/intake; daarna echte huishoudsplitsing rond gedeeld kind",
+      "expected": "Account/intake creëert geen tweede verplichting; tweede dossier heeft eigen code; commissie beslist koppeling; geen automatisch delen of dubbelen van uren/vrijstelling.",
+      "test_layers": "D,R,E",
+      "work_packages": "2,11",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A11",
+      "scenario": "OTP geldig/verlopen/hergebruik/teveel foute pogingen/te snelle herverzending; meerdere scopes",
+      "expected": "Alleen geldige eenmalige code geeft sessie; throttling werkt; rechten komen uit registratie. Uitgetreden rol geeft geen toegang.",
+      "test_layers": "I,R,E",
+      "work_packages": "1",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A12",
+      "scenario": "Voer teamtaak uit; keur andere taak goed voor markt en bevestig uitvoering",
+      "expected": "Eerste nul uren; tweede één boeking na vereiste goedkeuring/publicatie/uitvoering. Herhaalde goedkeuring geen duplicate. Scheidsrechter volgt beide mandaten.",
+      "test_layers": "D,R,E",
+      "work_packages": "6",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A13",
+      "scenario": "Twee afzonderlijke sessies boeken tegelijk laatste plaats",
+      "expected": "Precies één definitieve inschrijving; ander ontvangt conflict/wachtlijstoptie; geen overboeking, dubbele uren of ongeautoriseerd huishouden.",
+      "test_layers": "D,I,E",
+      "work_packages": "4",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A14",
+      "scenario": "Overname en wederzijdse ruil; verander tussentijds beschikbaarheid/kwalificatie",
+      "expected": "Hercontrole direct bij commit; voorwaarden van beide diensten gelden; oorspronkelijke inschrijving(en) pas na definitieve geschikte overdracht vervallen.",
+      "test_layers": "D,I,E",
+      "work_packages": "5",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A15",
+      "scenario": "Boek met oude afmeldafspraak, wijzig clubtermijn, boek opnieuw; meld ziek vlak voor start",
+      "expected": "Oude snapshot behouden; nieuwe afspraak gebruikt nieuwe waarde; gewone tijdgrens correct; ziekte/nood altijd meldbaar.",
+      "test_layers": "D,E",
+      "work_packages": "5",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A16",
+      "scenario": "Plan bar3/keuken2 via dag/week/maand; sleep, resize en formulierroute",
+      "expected": "Zelfde gecontroleerde dienstplaats, tijden en impact; minimale bezetting/overlap bewaakt; mobiel bruikbare equivalente lijst/formulier.",
+      "test_layers": "D,E",
+      "work_packages": "4",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A17",
+      "scenario": "Maak conceptrooster, publiceer batch, wijzig tekst, daarna bezette tijd/locatie wezenlijk",
+      "expected": "Concept geen aanbodmeldingen; publicatie opent booking; kleine wijziging geen nieuw aanbod; grote wijziging toont impact en gerichte herbevestiging/informatie.",
+      "test_layers": "D,I,E",
+      "work_packages": "4,8",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A18",
+      "scenario": "Importeer wedstrijd, herhaal, wijzig tijd/locatie, annuleer",
+      "expected": "Eén bronwedstrijd, geen dubbele voorstellen/meldingen; gekoppelde bezette diensten blijven tot bewuste afhandeling; juiste gezins- en commissieprogrammarechten.",
+      "test_layers": "I,R,E",
+      "work_packages": "7",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A19",
+      "scenario": "Draai twee lokale synctijden rond zomer-/wintertijd; simuleer mislukte/onvolledige import",
+      "expected": "Twee bedoelde lokale runs, idempotente retry, laatste succes/fout zichtbaar; laatst bekende wedstrijden niet als afgelast gemarkeerd door ontbrekende import.",
+      "test_layers": "I,E",
+      "work_packages": "7",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A20",
+      "scenario": "Eén persoon matcht nieuwe taak via twee rollen; meerdere taken dezelfde dag; herpublicatie/retry",
+      "expected": "Eén taakpush per persoon/taak; iedere nieuwe taak heeft eigen pushkans; hoogstens één aanbodmail per lokale dag; transactieberichten volgen eigen regels.",
+      "test_layers": "D,I,E",
+      "work_packages": "8",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A21",
+      "scenario": "Preview/test/publiceer template; ontbrekende/onjuiste variabele; providerretry/webhook",
+      "expected": "Veilige juiste invulling/terugval; volledige versie blijft bewaard; ongeldige template niet ongecontroleerd verstuurd; succesvolle verzending niet opnieuw aangemaakt; log eerlijk over aflevering.",
+      "test_layers": "D,I,E",
+      "work_packages": "8",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A22",
+      "scenario": "Publiceer exacte beleidsversie aan leden; bevoegde ouder accepteert expliciet voor twee kinderen",
+      "expected": "Twee acceptatieregistraties, ieder met lid/actor/hoedanigheid/tijd/exacte versie; onbevoegde vertegenwoordiging geweigerd.",
+      "test_layers": "D,R,E",
+      "work_packages": "8",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A23",
+      "scenario": "Open zonder akkoord; dien vraag in; publiceer nieuwe versie",
+      "expected": "Openen geen akkoord; opvolging/reminderstop voor vraag; oude tekst/acceptatie intact; ziekmelden, bestaande diensten en essentiële berichten bereikbaar.",
+      "test_layers": "D,E",
+      "work_packages": "8",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A24",
+      "scenario": "Kaart met meerdere uitvoerders/aanspreekpunt/subtaken; mention; afronden",
+      "expected": "Verschijnt in relevante Mijn acties; mention respecteert bronrechten en ontdubbelt; afronden geen urenpost.",
+      "test_layers": "D,R,E",
+      "work_packages": "6,8",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A25",
+      "scenario": "Verbind activiteit aan kaart/dienst/document; wijzig; probeer besloten items via andere rol",
+      "expected": "Samenhang behouden, impact gecontroleerd; geen data via agenda/export/search/directe link/storage/realtime/notificatie buiten scope.",
+      "test_layers": "D,R,E",
+      "work_packages": "1,6,7",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A26",
+      "scenario": "Doel720/uitgevoerd540; bezwaar; één en twee beoordelaars; afkoop; dubbel verwerken",
+      "expected": "Voorstel€37,50; bezwaar blokkeert definitieve verwerking; één beoordelaar onvoldoende; afkoop geen tweede tekortrekening; besluit-/geldtransactie herhaalbaar.",
+      "test_layers": "D,R,I,E",
+      "work_packages": "3,9",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A27",
+      "scenario": "Doorloop wachtlijstoffer/reserve/maatje/vacature; aanbodtekort, verlopen certificaat en overbelasting",
+      "expected": "Alle routes uitvoerbaar; geen ongeschikte plaatsing; tijdelijk aanbod vervalt correct; juiste signalen en opvolging; belangstelling verandert geen aanstelling.",
+      "test_layers": "D,I,E",
+      "work_packages": "4,5,10,11",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A28",
+      "scenario": "Laat waarderingsregel draaien, herhaal vanuit twee commissies; toon lief-en-leed aan onbevoegde",
+      "expected": "Eén relevante actie/bericht; eigenaar/uitvoerders/deadline/budget/status terugvindbaar; persoonlijke informatie afgeschermd; onbekende datum geeft geen verzonnen moment.",
+      "test_layers": "D,I,R,E",
+      "work_packages": "10",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A29",
+      "scenario": "Bevoegde functionaris registreert telefonische booking/melding/correctie namens lid; herstel fout",
+      "expected": "Actor, subject, reden en effect blijvend zichtbaar; onbevoegde actie geweigerd; correctie behoudt historie en sluit alleen betreffende geschil.",
+      "test_layers": "D,R,E",
+      "work_packages": "2,5",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "A30",
+      "scenario": "Sluit seizoen; bereid nieuw voor; huishouden in meerdere teams; wijzig rol/huishouden na afsluiting",
+      "expected": "Oude stand/besluiten reproduceerbaar; gekozen sjablonen/herbevestigingen operationeel; nieuw seizoen apart; huishouden één keer in clubaggregaat.",
+      "test_layers": "D,I,E",
+      "work_packages": "11",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "T01",
+      "scenario": "Bar heeft drie vrije plaatsen; reserveer die als cluster voor JO13; een vierde andere taak heeft al een booking.",
+      "expected": "Precies gekozen vrije plaatsen gereserveerd; bestaande booking onaangeroerd; openbare capaciteit daalt met gereserveerd aantal.",
+      "pages": [
+        "P08",
+        "P02",
+        "P12"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "T02",
+      "scenario": "Twee sessies proberen dezelfde laatste plaats: openbaar boeken en cluster reserveren; herhaal met winterallocation en waitlisthold.",
+      "expected": "Een winnaar per race; verliezer krijgt concrete conflictoptie. Geen dubbele reservering/booking of negatieve vrije capaciteit.",
+      "pages": [
+        "P02",
+        "P08",
+        "P09",
+        "P12"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "T03",
+      "scenario": "Reserveer één van drie plaatsen; boek één openbare en één teamplaats en verwerk een afmelding.",
+      "expected": "Zelfde drie stabiele position-ID’s; alle vier overzichten tonen dezelfde juiste capaciteit en bezetting na iedere commit.",
+      "pages": [
+        "P02",
+        "P08",
+        "P12",
+        "P19"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "T04",
+      "scenario": "Teamouder wijst een gereserveerde plaats toe aan Noor.",
+      "expected": "Allocation heeft lid; geen booking, teamuitvoering of uren. HH ziet uitvoerderkeuzeactie, team ziet toegewezen maar onbemenst.",
+      "pages": [
+        "P12",
+        "P03",
+        "P04",
+        "P13"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "T05",
+      "scenario": "Huishouden Noor kiest passende ouder als uitvoerder; andere teamouder probeert uitvoerder uit ander HH te boeken.",
+      "expected": "HH-boeking slaagt binnen grant; onbevoegde proxyhandeling wordt servermatig geweigerd. Audit toont actor en executor apart.",
+      "pages": [
+        "P12",
+        "P03",
+        "P04",
+        "P09"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "T06",
+      "scenario": "Teamdoel4; lidoverride0 met reden; nieuw seizoen ander doel; HH heeft twee kinderen in twee teams.",
+      "expected": "Doelen exact per lid/team/seizoen; nul geldig; HH-minutendoel verandert niet; teamouder ziet geen privé-override van andere teams.",
+      "pages": [
+        "P12",
+        "P04",
+        "P22"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "T07",
+      "scenario": "Bevestig één 180min-clusterplaats namens één van twee kinderen in hetzelfde HH.",
+      "expected": "Eén teamtelling voor gekozen lid en één HH-ledgerpost180; tweede kind blijft ongewijzigd; alle dashboards/projecties gelijk.",
+      "pages": [
+        "P12",
+        "P03",
+        "P04",
+        "P09",
+        "P19"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "T08",
+      "scenario": "Bevestig fruitteamtaak met0min; keur andere teamtaak vooraf voor90min besloten markt goed en voer uit.",
+      "expected": "Fruit telt één teamtaak en0HHmin; goedgekeurde90 telt eenmaal90HHmin en optionele ene teamtelling, geen tweede publieke bronbooking.",
+      "pages": [
+        "P12",
+        "P03",
+        "P09",
+        "P19"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "T09",
+      "scenario": "Refereetaak aanvragen; vrijwilligerscommissie probeert zonder matchreview; verkeerde rol probeert matchreview; wijzig requestversie.",
+      "expected": "Beide echte mandaten nodig op actuele versie; stale/wrong-grant review geweigerd; eenmaal goedgekeurde publicatie.",
+      "pages": [
+        "P12",
+        "P07",
+        "P08"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "T10",
+      "scenario": "Account wisselt clientrol/persoon/team-ID en roept direct cluster/assignment/attendance-RPC op.",
+      "expected": "Geen extra recht of datatoegang; tenant/teamscope/grants servermatig getoetst; veilige forbidden.",
+      "pages": [
+        "P00",
+        "P12",
+        "P09"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "T11",
+      "scenario": "Maak12 wekelijkse teamtaken; één valt buiten seizoen; retry valide reeks.",
+      "expected": "Ongeldige reeks maakt niets; geldige reeks exact12, unieke posities, retry geen duplicaat; harde leeftijd/kwalificatie op booking.",
+      "pages": [
+        "P12",
+        "P07",
+        "P22"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "T12",
+      "scenario": "Cluster vrijgeven zonder toewijzing; daarna proberen met assigned of bevestigde plaats.",
+      "expected": "Vrij cluster atomair openbaar; toegewezen/bezet cluster geweigerd; geen verlies toezegging of credits.",
+      "pages": [
+        "P08",
+        "P12",
+        "P02"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "T13",
+      "scenario": "Executor meldt overname; teamouder kiest nieuw lid; vervanger ongeschikt en vervolgens geschikt; retry.",
+      "expected": "Oude afspraak blijft tot geschikte vervanger commit; historie behouden; nieuwe credit/lid-snapshot exact; geen dubbel actieve booking.",
+      "pages": [
+        "P12",
+        "P03",
+        "P04"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "T14",
+      "scenario": "Na booking verhoogt beheer requested/approved minutes of wijzigt afmeldtermijn.",
+      "expected": "Bestaande bookingvoorwaarden blijven snapshot; historische credits niet stil verhoogd; concrete herzieningsroute of blokkade.",
+      "pages": [
+        "P12",
+        "P03",
+        "P22"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "T15",
+      "scenario": "Verenigingsdoel of toepasselijk teamdoel bereikt; ouder verplicht nieuwe taak; HH kiest vrijwillig extra.",
+      "expected": "Verplichte toewijzing geweigerd waar toepasselijk doel voldaan; eigen booking alleen met expliciet vrijwillig akkoord; geen tweede urendoel.",
+      "pages": [
+        "P12",
+        "P09",
+        "P04"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "T16",
+      "scenario": "Volledige winter-/jaarinzet al vóór winter; teamclusters verschijnen daarna in nieuw/seizoenscontext.",
+      "expected": "Geen extra verplichte jaarinzet; bookings/tellingen blijven binnen juiste seizoen; vrijwillige extra teamhulp vraagt passend akkoord.",
+      "pages": [
+        "P09",
+        "P12",
+        "P19"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "T17",
+      "scenario": "Teamouder en teamlid vragen private intake, finance, reason, anderteamplanning via scherm/RPC/zoek/export/storage/realtime.",
+      "expected": "Alle ongeautoriseerde varianten geweigerd; minimaal relevante eigen teamvoortgang blijft toegankelijk.",
+      "pages": [
+        "P12",
+        "P09",
+        "P20",
+        "P23"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "T18",
+      "scenario": "Dubbele presence request, no-show, bezwaar en correctie voor teambooking met180min.",
+      "expected": "Eén geldige attendance/ledger/team-entry per effect; correctie/tegenpost herleidbaar; alleen betreffende casus gesloten en alle meters gelijk.",
+      "pages": [
+        "P03",
+        "P12",
+        "P09",
+        "P20"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "C01",
+      "scenario": "Advies voor cluster met IVA, minderjarige, beschikbaarheid, vrijstelling en meerdere huishoudteams.",
+      "expected": "Ongeschikt huishouden niet aanbevolen; uitleg noemt duur/last/geschiktheid; medische/intakereden blijft privé; advies kiest niets definitief.",
+      "pages": [
+        "P08",
+        "P12",
+        "P23",
+        "P17"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "C02",
+      "scenario": "Teamouder past voorstel aan; tegelijk andere sessie wijzigt één allocation; bevestig oude voorstel.",
+      "expected": "Stale batch maakt geen gedeeltelijke toewijzingen/bookings; herstel toont nieuw voorstel. Geldige batch alleen lidtoewijzingen.",
+      "pages": [
+        "P12",
+        "P13"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "C03",
+      "scenario": "Eén IVA-ouder in HH, twee gelijktijdige barplaatsen; verschillende leden zelfde HH en andere open toewijzing.",
+      "expected": "Virtuele voorstelvalidatie biedt die ouder niet tweemaal; vervangingsvraag telt plaatsbelasting niet dubbel; echte executor nog niet gekozen.",
+      "pages": [
+        "P12",
+        "P08",
+        "P04"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "C04",
+      "scenario": "Twee kinderen/twee teams, eigen tasks/matches; open als beheerder met eigen HH en ander lid.",
+      "expected": "Eén HH-meter, afzonderlijke teamdoelen; timeline zonder andermans privédata; family-matchwarning zacht, eigenpersonoverlap hard.",
+      "pages": [
+        "P04",
+        "P12",
+        "P07"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "C05",
+      "scenario": "Open choose/assign/confirm/feedback/followup/handover/instructions en beleids-/winteracties; handel af.",
+      "expected": "Acties ontdubbeld, correct geprioriteerd, directe contextlink; afgehandelde bron verdwijnt; kaartDone geeft geen uren.",
+      "pages": [
+        "P13",
+        "P12",
+        "P03",
+        "P15"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "C06",
+      "scenario": "Doorloop dag vóór/op/na selfdeadline en assign-deadline; pas ongeldige/gelijke/na-taakdatums toe.",
+      "expected": "Gedocumenteerde inclusieve grens; unassigned zelfboeken sluit; assigned HH kan executor bevestigen; deadlines vóór taak; geen bookingautoannulering.",
+      "pages": [
+        "P12",
+        "P13",
+        "P14"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "C07",
+      "scenario": "Commissiefase; reservebereide persoon in team/anderteam/ongeschikt; twee workers retry dezelfde request/dag.",
+      "expected": "Alleen passende eigen-teamHH ontvangers eenmaal; extra inzet vrijwillig; reserve-invite geen booking of rechten buiten gekozen places.",
+      "pages": [
+        "P12",
+        "P23",
+        "P14"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "C08",
+      "scenario": "Bereid5-checkhandover naar volwassene, save nieuwe versie; verkeerde actor of oude versie accepteert.",
+      "expected": "Draft/private en Ready/toegang juist; oude ouder blijft tot juiste actuele accept; stale/andere actor geweigerd.",
+      "pages": [
+        "P12",
+        "P13",
+        "P14"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "C09",
+      "scenario": "Nieuwe contactpersoon zonder bestaand teamoudermandaat accepteert geldige readyhandover; er is nog tweede teamouder.",
+      "expected": "Specifiek ontvangermandaat volstaat voor accept; atomair oud mandaat beëindigd, nieuw exact-teammandaat actief; tweede ouder, doelen, bookings en uren behouden.",
+      "pages": [
+        "P12",
+        "P22",
+        "P09"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "C10",
+      "scenario": "Executor en volwassen HH-proxy geven feedback na aanwezigheid; proxy probeert voorkeur uitvoerder te wijzigen.",
+      "expected": "Alleen toegestaan subject/actor; andere voorkeurwijziging geweigerd; eigen voorkeur expliciet; feedback geeft0ledger/team-effect.",
+      "pages": [
+        "P16",
+        "P23",
+        "P03"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "C11",
+      "scenario": "Commissie/teamouder verbetert instructie en kiest toekomstige gelijke type-scope.",
+      "expected": "Nieuwe versie op juiste toekomsttaken; vorige aangeboden instructie historisch intact; andere team/commissie onaangeroerd; geen creditswijziging.",
+      "pages": [
+        "P16",
+        "P12",
+        "P10"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "H01",
+      "scenario": "Sluit uitleg met kruis; reload, andere rol en tweede apparaat zelfde account.",
+      "expected": "Hetzelfde stabiele onderwerp blijft verborgen; opgeslagen door echte accountidentiteit, niet clientpersoon/rol.",
+      "pages": [
+        "P00",
+        "P22"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "H02",
+      "scenario": "Sluit met Gezien; probeer via toetsenbord en touch.",
+      "expected": "Exact hetzelfde opslageffect als kruis; geen formulier-submit; juiste focus/labels en bannerlayout.",
+      "pages": [
+        "P00"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "H03",
+      "scenario": "Andere echte gebruiker bezoekt dezelfde functie.",
+      "expected": "Banner is zichtbaar voor die gebruiker; geen globale dismissal of gedeelde persoonsverwisseling.",
+      "pages": [
+        "P00",
+        "P23"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "H04",
+      "scenario": "Twee tabs sluiten twee onderwerpen tegelijk; instabiele verbinding en hernieuwde sessie.",
+      "expected": "Merge/upsert behoudt beide; geen eerder gezien-bannersflits; opslagfout herstelbaar; read/write alleen eigen voorkeuren.",
+      "pages": [
+        "P00"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "H05",
+      "scenario": "Loop iedere pagina/tab/form/modal uit registry langs met unseen voorkeuren.",
+      "expected": "Zachte gele uitleg aanwezig boven relevante functie, eenvoudige actuele tekst, geldige unieke stabiele topics; geen modal zonder hulp.",
+      "pages": [
+        "P00"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "H06",
+      "scenario": "Fixture-reset, seizoenwissel en rolwijziging; direct RPC met andermans auth-user-ID.",
+      "expected": "Seen blijft per eigen account; geen reset of toegang tot andermans dismissal; nieuwe content forceert geen ongevraagde herhaling.",
+      "pages": [
+        "P00",
+        "P22"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "F01",
+      "scenario": "720/540,480/360,20min tekort,0doel,volledige dekking en afkoop met oudere claim.",
+      "expected": "Respectievelijk3750/2500/417/0/0cent; afkoop eenmaal15000 zonder tweede claim, tarief constant en een eindafronding.",
+      "pages": [
+        "P20",
+        "P09",
+        "P19"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "F02",
+      "scenario": "Nieuw urenbezwaar/pending/coveragewijziging tegelijk met finalize; verschillende reviewerlabels zelfde account.",
+      "expected": "Consistente blokkade of expliciete herziening; geen genegeerd bezwaar; twee verschillende bevoegde accounts op actuele proposal nodig.",
+      "pages": [
+        "P20",
+        "P09",
+        "P03"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "F03",
+      "scenario": "Markeer betaalde factuur tweemaal; corrigeer betaalde ontvangst en onbetaalde afspraak.",
+      "expected": "Een echte ontvangstpost; betaalde correctie als traceerbare credit/verrekening, niet wissen; unpaid void met reden en historie.",
+      "pages": [
+        "P20",
+        "P19"
+      ],
+      "test_layers": "DB,RLS,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "O01",
+      "scenario": "Geldige mainpush-CI promotie-SHA, oude/verkeerde SHA en non-fast-forward staging.",
+      "expected": "Exact promotiescriptgedrag; geen mergecommit/force; succesvolle SHA-identiteit en provenance in artifact.",
+      "pages": [
+        "P00"
+      ],
+      "test_layers": "OPS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "O02",
+      "scenario": "Actionsremote stagingmigratie met verkeerde projecttarget/history, lokaal groen schema maar remoteachterstand.",
+      "expected": "Target/historyguard stopt; alleen appendmigrations release-SHA; appdeploy pas na geslaagde compatibele migratie; geen remote reset.",
+      "pages": [
+        "P00"
+      ],
+      "test_layers": "OPS,DB",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "O03",
+      "scenario": "VPS app-mode met juiste/onjuiste origin/Supabaseproject, mode of digest/SHA.",
+      "expected": "Alle bestaande target/rootless/lock/run/SHA-guards intact; app start alleen vast stagingtarget; production blijft geblokkeerd.",
+      "pages": [
+        "P00"
+      ],
+      "test_layers": "OPS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "O04",
+      "scenario": "Worker uit, DB onbereikbaar, schemaachterstand; live-page nog200.",
+      "expected": "Readiness geeft correcte beperkte/falende status incl nodige workers/schema; geen full-ready op alleen frontendliveness.",
+      "pages": [
+        "P00",
+        "P14",
+        "P07"
+      ],
+      "test_layers": "OPS,I",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "O05",
+      "scenario": "Stagingmail/OTP/push/campaign gepland naar buiten allowlist; provider timeout na mogelijk accept.",
+      "expected": "Geen ongeautoriseerde echte ontvangers; correctsandbox, Unknown/reconcile/dedupe in plaats van blind dubbel; logs zonder tokens.",
+      "pages": [
+        "P14",
+        "P21",
+        "P22"
+      ],
+      "test_layers": "I,E2E,OPS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "O06",
+      "scenario": "Workercrash na leaseclaim/commit, tweede worker en retries van sync/digest/reminder.",
+      "expected": "Unieke occurrence, begrensde leases/backoff, geen duplicaat; juiste lokale DST-slot en zichtbaar herstel/deadletter.",
+      "pages": [
+        "P07",
+        "P14",
+        "P12"
+      ],
+      "test_layers": "DB,I,OPS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "O07",
+      "scenario": "Remote login/invite/storage/RPC/export en twee-tenantprivacy via direct requests.",
+      "expected": "Auth redirects veilig, alleen expliciete grants; secret/admin key nooit browser; private objects/downloads bronrecht.",
+      "pages": [
+        "P00",
+        "P09",
+        "P23",
+        "P11"
+      ],
+      "test_layers": "RLS,I,E2E,OPS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "O08",
+      "scenario": "Backup maken, restore op geïsoleerd doel, vorige image na compatibele migration, mislukte release.",
+      "expected": "Controleerbaar restorebewijs en imageherstel; schema/objects/config consistent; geen claim dat image-rollback DB terugdraait.",
+      "pages": [
+        "P22"
+      ],
+      "test_layers": "OPS,DB",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "O09",
+      "scenario": "CSV met quotes/delimiters/zelfde email twee source-IDs en onbekende leeftijd; providerpartial failure.",
+      "expected": "Dryrunconflict, geen automerge of verzonnen bronveld; expliciete confirm; partial import annuleert niets.",
+      "pages": [
+        "P22",
+        "P09",
+        "P07"
+      ],
+      "test_layers": "DB,I,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "O10",
+      "scenario": "Sluit/rollover seizoen met teamdata, workers/herbevestiging; herhaal; oude correctie.",
+      "expected": "Immutable nieuwe en oude stands, precies geselecteerde templates, operationele reconfirmation, geen dubbele obligation/autooveruren, correctiehistorie.",
+      "pages": [
+        "P22",
+        "P09",
+        "P12",
+        "P19"
+      ],
+      "test_layers": "DB,I,E2E",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V00",
+      "scenario": "Vergelijk Algemene werkruimte en toegang (shell) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P00"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V01",
+      "scenario": "Vergelijk Overzicht (overzicht) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P01"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V02",
+      "scenario": "Vergelijk Takenmarkt (taken) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P02"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V03",
+      "scenario": "Vergelijk Mijn taken (diensten) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P03"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V04",
+      "scenario": "Vergelijk Gezinsagenda (gezin) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P04"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V05",
+      "scenario": "Vergelijk Ruilmarkt (ruilmarkt) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P05"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V06",
+      "scenario": "Vergelijk Jaaragenda (agenda) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P06"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V07",
+      "scenario": "Vergelijk Wedstrijden (wedstrijden) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P07"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V08",
+      "scenario": "Vergelijk Planbord (planbord) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P08"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V09",
+      "scenario": "Vergelijk Huishoudens (huishoudens) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P09"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V10",
+      "scenario": "Vergelijk Commissies (commissies) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P10"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V11",
+      "scenario": "Vergelijk Kanbanborden (kanban) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P11"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V12",
+      "scenario": "Vergelijk Teams (teams) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P12"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V13",
+      "scenario": "Vergelijk Mijn acties (acties) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P13"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V14",
+      "scenario": "Vergelijk Berichten (berichten) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P14"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V15",
+      "scenario": "Vergelijk Beleid & afspraken (beleid) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P15"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V16",
+      "scenario": "Vergelijk Waardering (waardering) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P16"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V17",
+      "scenario": "Vergelijk Opleidingen (opleidingen) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P17"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V18",
+      "scenario": "Vergelijk Vrijwilligersfuncties (vacatures) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P18"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V19",
+      "scenario": "Vergelijk Rapportages (rapportages) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P19"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V20",
+      "scenario": "Vergelijk Vrijwilligerspot (financien) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P20"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V21",
+      "scenario": "Vergelijk Communicatie (templates) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P21"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V22",
+      "scenario": "Vergelijk Instellingen (instellingen) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P22"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    },
+    {
+      "id": "V23",
+      "scenario": "Vergelijk Mijn profiel en intake (intake) met alle tabs, velden, actie-/dialoogstates, rollen en gele uitleg op desktop1440×1024, mobiel390×844 en medium768×1024.",
+      "expected": "Club Signal overeenkomst; primaire controles bereikbaar; juiste fout/laad/lege/permissionstates; onbedoelde verschillen opgelost met screenshotbewijs.",
+      "pages": [
+        "P23"
+      ],
+      "test_layers": "E2E,VIS",
+      "status": "OPEN",
+      "source_sha": null,
+      "test_evidence": null,
+      "staging_evidence": null,
+      "accepted_by": null
+    }
+  ]
+}

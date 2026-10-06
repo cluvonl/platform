@@ -1,0 +1,615 @@
+[
+  {
+    "page_id": "P00",
+    "route": "shell",
+    "tabs": [],
+    "audience": "Alle geauthenticeerde gebruikers; zichtbare werkruimtes volgen de echte mandaten.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V00",
+    "status": "OPEN"
+  },
+  {
+    "page_id": "P01",
+    "route": "overzicht",
+    "tabs": [],
+    "audience": "Persoonlijk voor lid/huishouden; beheeroverzicht binnen toegewezen scope.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V01",
+    "status": "OPEN"
+  },
+  {
+    "page_id": "P02",
+    "route": "taken",
+    "tabs": [],
+    "audience": "Lid en gemachtigd huishouden; beheerders alleen namens iemand binnen expliciet mandaat.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V02",
+    "status": "OPEN"
+  },
+  {
+    "page_id": "P03",
+    "route": "diensten",
+    "tabs": [
+      "Komend",
+      "Te bevestigen",
+      "Historie",
+      "Teamtaken: Komend/Historie"
+    ],
+    "audience": "Eigen verplichting/huishouden; uitvoeringscontrole door bevoegde commissie of teambeheerder binnen taakscope.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V03",
+    "status": "OPEN"
+  },
+  {
+    "page_id": "P04",
+    "route": "gezin",
+    "tabs": [
+      "Komend",
+      "Historie"
+    ],
+    "audience": "Alleen het eigen huishouden of expliciet gemachtigde dossiercontext, ook voor een beheerder.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V04",
+    "status": "OPEN"
+  },
+  {
+    "page_id": "P05",
+    "route": "ruilmarkt",
+    "tabs": [],
+    "audience": "Geschikte toegestane uitvoerders; ruilinstemming door de betrokken accounts of expliciet gemachtigde actor.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V05",
+    "status": "OPEN"
+  },
+  {
+    "page_id": "P06",
+    "route": "agenda",
+    "tabs": [
+      "Alles",
+      "Activiteiten",
+      "Wedstrijden",
+      "Verenigingstaken"
+    ],
+    "audience": "Alleen toegestane verenigings-, commissie-, team- en huishouditems.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V06",
+    "status": "OPEN"
+  },
+  {
+    "page_id": "P07",
+    "route": "wedstrijden",
+    "tabs": [
+      "Alle teams",
+      "Mijn gezin",
+      "Specifiek team"
+    ],
+    "audience": "Wedstrijdinzage volgens teamscope; import en gevolgenbeoordeling alleen voor bevoegd beheer.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V07",
+    "status": "OPEN"
+  },
+  {
+    "page_id": "P08",
+    "route": "planbord",
+    "tabs": [
+      "Dag",
+      "Week",
+      "Maand",
+      "Commissiekeuze"
+    ],
+    "audience": "Eigen commissie voor commissiecoördinator; centrale verdeling voor vrijwilligerscommissie/bestuur.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V08",
+    "status": "OPEN"
+  },
+  {
+    "page_id": "P09",
+    "route": "huishoudens",
+    "tabs": [
+      "Alle huishoudens",
+      "Wintercontrole",
+      "Vrijstellingen",
+      "Aanvragen",
+      "Dossier: Overzicht/Personen/Afspraken/Historie"
+    ],
+    "audience": "Vrijwilligerscommissie/bestuur; vrijwilligerscoördinator uitsluitend portefeuille, financiële details apart afgeschermd.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V09",
+    "status": "OPEN"
+  },
+  {
+    "page_id": "P10",
+    "route": "commissies",
+    "tabs": [
+      "Overzicht",
+      "Mensen",
+      "Documenten",
+      "Instructies"
+    ],
+    "audience": "Eigen commissie en expliciete leden/document-ACL; centraal beheer volgens mandaat.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V10",
+    "status": "OPEN"
+  },
+  {
+    "page_id": "P11",
+    "route": "kanban",
+    "tabs": [
+      "Commissiebord",
+      "Persoonlijk via Mijn acties"
+    ],
+    "audience": "Boardleden/commissie binnen bronrechten; persoonlijk alleen eigen toegestane kaarten.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V11",
+    "status": "OPEN"
+  },
+  {
+    "page_id": "P12",
+    "route": "teams",
+    "tabs": [
+      "Takenmarkt",
+      "Planning",
+      "Voortgang per lid",
+      "Huishoudens",
+      "Slim verdelen",
+      "Opvolging",
+      "Overdracht"
+    ],
+    "audience": "Eigen teamhuishouden ziet eigen benodigde voortgang; teamouder beheert eigen team; commissie verdeelt verenigingstaken.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V12",
+    "status": "OPEN"
+  },
+  {
+    "page_id": "P13",
+    "route": "acties",
+    "tabs": [
+      "Volgende stappen",
+      "Persoonlijke kanbankaarten"
+    ],
+    "audience": "Eigen acties en toegestane taak-, team- en commissieverantwoordelijkheden.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V13",
+    "status": "OPEN"
+  },
+  {
+    "page_id": "P14",
+    "route": "berichten",
+    "tabs": [
+      "Gesprekken",
+      "Meldingen",
+      "Voorkeuren"
+    ],
+    "audience": "Gesprekken alleen voor deelnemers met bronrecht; inbox en voorkeuren per persoon/account.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V14",
+    "status": "OPEN"
+  },
+  {
+    "page_id": "P15",
+    "route": "beleid",
+    "tabs": [
+      "Mijn afspraken",
+      "Acceptatieoverzicht (beheer)",
+      "Versiehistorie"
+    ],
+    "audience": "Eigen geselecteerde leden; publiceren/beoordelen volgens expliciet beleidmandaat.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V15",
+    "status": "OPEN"
+  },
+  {
+    "page_id": "P16",
+    "route": "waardering",
+    "tabs": [
+      "Alle momenten",
+      "Lief & leed (beheer)",
+      "Afgerond"
+    ],
+    "audience": "Publieke momenten volgens toestemming; private lief-en-leed en feedback alleen voor bevoegde verantwoordelijke.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V16",
+    "status": "OPEN"
+  },
+  {
+    "page_id": "P17",
+    "route": "opleidingen",
+    "tabs": [
+      "Opleidingen",
+      "Maatjes & reservepool",
+      "Kwalificaties"
+    ],
+    "audience": "Eigen deelname en certificaten; beheer en verificatie met opleidings-/kwalificatiemandaat.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V17",
+    "status": "OPEN"
+  },
+  {
+    "page_id": "P18",
+    "route": "vacatures",
+    "tabs": [],
+    "audience": "Eigen interesse; kandidaten en erkenning alleen binnen wervings-/commissiemandaat.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V18",
+    "status": "OPEN"
+  },
+  {
+    "page_id": "P19",
+    "route": "rapportages",
+    "tabs": [],
+    "audience": "Verenigingsrapporten door commissie/bestuur binnen scope; financiële exports apart recht.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V19",
+    "status": "OPEN"
+  },
+  {
+    "page_id": "P20",
+    "route": "financien",
+    "tabs": [
+      "Vrijwilligerspot",
+      "Seizoensafrekening",
+      "Financiële afspraken"
+    ],
+    "audience": "Financieel beheer met expliciet mandaat; commissie besluit de grondslag, geen vrije wijziging door cliënt.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V20",
+    "status": "OPEN"
+  },
+  {
+    "page_id": "P21",
+    "route": "templates",
+    "tabs": [
+      "Templates: Bewerken/Voorbeeld",
+      "Verzendregels",
+      "Segmenten",
+      "Verzendlog"
+    ],
+    "audience": "Templatebeheer volgens centrale/commissierechten; voorkeuren en ontvangers volgens bron-ACL.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V21",
+    "status": "OPEN"
+  },
+  {
+    "page_id": "P22",
+    "route": "instellingen",
+    "tabs": [
+      "Vereniging",
+      "Uren & termijnen",
+      "Rollen & vrijstelling",
+      "Sportlink & import",
+      "Toegang & PWA",
+      "Seizoensovergang",
+      "Wijzigingslog"
+    ],
+    "audience": "Beheer volgens afzonderlijke configuratie-, rechten- en integratiemandaten; financiële regels met besluit.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V22",
+    "status": "OPEN"
+  },
+  {
+    "page_id": "P23",
+    "route": "intake",
+    "tabs": [
+      "Over jou",
+      "Talenten",
+      "Beschikbaarheid",
+      "Samenvatting"
+    ],
+    "audience": "Eigen intake; vertegenwoordiging uitsluitend met concrete machtiging; gescheiden ouders houden onafhankelijke privacy.",
+    "viewports": [
+      "1440x1024",
+      "390x844",
+      "768x1024"
+    ],
+    "states": [
+      "unseen-help",
+      "seen-help",
+      "loading",
+      "empty",
+      "validation",
+      "permission",
+      "concurrent-conflict"
+    ],
+    "acceptance_id": "V23",
+    "status": "OPEN"
+  }
+]

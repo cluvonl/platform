@@ -1,0 +1,3121 @@
+[
+  {
+    "file": "app.tsx",
+    "function": "CluvoApp",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "app.tsx",
+    "function": "Shell",
+    "titles": [],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Hulp & prototype",
+        "onClick": "{()=>setHelp(true)}"
+      },
+      {
+        "text": "s.notifications.some(n=>!n.read&&notificationVisible(s,n))&&<span/>",
+        "onClick": "{()=>go('berichten')}"
+      },
+      {
+        "text": "l",
+        "onClick": "{()=>{go(k);setSearch(false)}}"
+      },
+      {
+        "text": "t.title",
+        "onClick": "{()=>{go(t.kind==='team'||allocationsFor(s,t.id).length?'teams':'taken');setSearch(false)}}"
+      },
+      {
+        "text": "Demo-instellingen openen",
+        "onClick": "{()=>{go('instellingen');setHelp(false)}}"
+      }
+    ],
+    "fields": [],
+    "modals": [
+      {
+        "title": "\"Cluvo op je telefoon\"",
+        "description": "\"Dezelfde werkruimte, met ruimte voor je duim.\""
+      },
+      {
+        "title": "\"Zoeken in Cluvo\"",
+        "description": "\"Spring direct naar een werkruimte of een taak.\""
+      },
+      {
+        "title": "\"Ontdek Cluvo\"",
+        "description": "\"Een interactieve demonstratie van de volledige V1-werkruimtes.\""
+      }
+    ],
+    "mutations": [
+      {
+        "action": "'Werkruimte gewijzigd'",
+        "body": "d=>{d.role=v as Role}"
+      },
+      {
+        "action": "'Voorbeeldpersoon gewijzigd'",
+        "body": "d=>{d.currentPerson=v}"
+      }
+    ]
+  },
+  {
+    "file": "app.tsx",
+    "function": "View",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "collaboration.tsx",
+    "function": "Committees",
+    "titles": [
+      {
+        "component": "PageTitle",
+        "title": "\"Samen komt het voor elkaar.\""
+      },
+      {
+        "component": "Panel"
+      },
+      {
+        "component": "Panel",
+        "title": "{'Dit speelt bij '+selected}"
+      },
+      {
+        "component": "Panel",
+        "title": "\"Samenstelling\""
+      },
+      {
+        "component": "Panel",
+        "title": "{tab==='Instructies'?'Zo doen we het samen':'Documentenbibliotheek'}"
+      }
+    ],
+    "tabs": [
+      {
+        "value": "{tab}",
+        "options": "{['Overzicht','Mensen','Documenten','Instructies']}"
+      }
+    ],
+    "buttons": [
+      {
+        "text": "Open x.title.toLowerCase()",
+        "onClick": "{()=>go(x.route)}"
+      },
+      {
+        "text": "Openen",
+        "onClick": "{()=>go('kanban')}"
+      },
+      {
+        "text": "Persoon toevoegen",
+        "onClick": "{()=>setForm('member')}"
+      },
+      {
+        "text": "Maak coördinator",
+        "onClick": "{()=>change('Commissiecoördinator gewijzigd',d=>{d.committees.find(x=>x.name===selected).coordinator=id})}"
+      },
+      {
+        "text": "Toevoegen",
+        "onClick": "{()=>setForm('document')}"
+      },
+      {
+        "text": "Openen",
+        "onClick": "{()=>setDoc(d)}"
+      },
+      {
+        "text": "Downloaden",
+        "onClick": "{()=>download(doc.title+'.txt',doc.text)}"
+      },
+      {
+        "text": "Als nieuwe versie opslaan",
+        "onClick": "{()=>{change('Nieuwe documentversie opgeslagen',d=>{const old=d.documents.find(x=>x.id===doc.id);old.history=[...(old.history||[]),{version:old.version,text:old.text}];old.text=doc.text;old.version++});setDoc(null)}}"
+      }
+    ],
+    "fields": [],
+    "modals": [
+      {
+        "title": "\"Commissielid toevoegen\"",
+        "fields": "{[{key:'person',label:'Persoon',type:'select',value:s.people[0].id,options:s.people.map(p=>({value:p.id,label:p.name}))}]}",
+        "onSave": "{v=>{change('Commissielid toegevoegd',d=>{const c=d.committees.find(c=>c.name===selected);if(!c.members.includes(v.person))c.members.push(v.person)});setForm(null)}}"
+      },
+      {
+        "title": "\"Kennis toevoegen\"",
+        "fields": "{[{key:'title',label:'Titel',required:true},{key:'type',label:'Type',type:'select',value:tab==='Instructies'?'Instructie':'Document',options:['Document','Instructie']},{key:'text',label:'Inhoud, checklist of videoverwijzing',type:'textarea',required:true},{key:'scope',label:'Zichtbaarheid',type:'select',value:'Commissie',options:['Commissie','Vereniging','Coördinatoren']}]}",
+        "onSave": "{v=>{change('Document opgeslagen',d=>{d.documents.push({id:uid('d'),...v,version:1,owner:d.currentPerson,committee:selected})});setForm(null)}}"
+      },
+      {
+        "title": "{doc.title}",
+        "description": "{'Versie '+doc.version+' · '+doc.committee}"
+      }
+    ],
+    "mutations": [
+      {
+        "action": "'Commissiecoördinator gewijzigd'",
+        "body": "d=>{d.committees.find(x=>x.name===selected).coordinator=id}"
+      },
+      {
+        "action": "'Commissielid toegevoegd'",
+        "body": "d=>{const c=d.committees.find(c=>c.name===selected);if(!c.members.includes(v.person))c.members.push(v.person)}"
+      },
+      {
+        "action": "'Document opgeslagen'",
+        "body": "d=>{d.documents.push({id:uid('d'),...v,version:1,owner:d.currentPerson,committee:selected})}"
+      },
+      {
+        "action": "'Nieuwe documentversie opgeslagen'",
+        "body": "d=>{const old=d.documents.find(x=>x.id===doc.id);old.history=[...(old.history||[]),{version:old.version,text:old.text}];old.text=doc.text;old.version++}"
+      }
+    ]
+  },
+  {
+    "file": "collaboration.tsx",
+    "function": "Kanban",
+    "titles": [
+      {
+        "component": "PageTitle",
+        "title": "{personal?'Jouw acties, samen in beeld.':'Van idee naar samen gedaan.'}"
+      }
+    ],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Kolom toevoegen",
+        "onClick": "{()=>setColForm(true)}"
+      },
+      {
+        "text": "Nieuwe kaart",
+        "onClick": "{()=>setNewCard(true)}"
+      },
+      {
+        "text": "Kaart toevoegen",
+        "onClick": "{()=>setNewCard(true)}"
+      }
+    ],
+    "fields": [],
+    "modals": [
+      {
+        "title": "\"Nieuwe kanbankaart\"",
+        "fields": "{[{key:'title',label:'Titel',required:true},{key:'description',label:'Omschrijving',type:'textarea'},{key:'committee',label:'Commissie',type:'select',value:committee,options:committees},{key:'deadline',label:'Deadline',type:'date',value:'2026-10-10'},{key:'priority',label:'Prioriteit',type:'select',value:'Normaal',options:['Laag','Normaal','Hoog']}]}",
+        "onSave": "{v=>{const id=uid('k');change('Kaart toegevoegd',d=>{d.cards.push({id,...v,column:d.columns[0],assignees:[person.id],owner:person.id,labels:[],checks:[],comments:[]})});setNewCard(false);setSelected(id)}}"
+      },
+      {
+        "title": "\"Kolom toevoegen\"",
+        "fields": "{[{key:'name',label:'Kolomnaam',required:true}]}",
+        "onSave": "{v=>{if(s.columns.includes(v.name)){toast.error('Deze kolom bestaat al.');return}change('Kolom toegevoegd',d=>{d.columns.push(v.name)});setColForm(false)}}"
+      }
+    ],
+    "mutations": [
+      {
+        "action": "'Kaart verplaatst naar '+column",
+        "body": "d=>{d.cards.find(c=>c.id===id)!.column=column}"
+      },
+      {
+        "action": "'Kaart toegevoegd'",
+        "body": "d=>{d.cards.push({id,...v,column:d.columns[0],assignees:[person.id],owner:person.id,labels:[],checks:[],comments:[]})}"
+      },
+      {
+        "action": "'Kolom toegevoegd'",
+        "body": "d=>{d.columns.push(v.name)}"
+      }
+    ]
+  },
+  {
+    "file": "collaboration.tsx",
+    "function": "CardDetail",
+    "titles": [],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Reactie plaatsen",
+        "onClick": "{()=>{change('Reactie geplaatst',d=>{d.cards.find(x=>x.id===id)!.comments.push({name:person.name,text:comment,at:new Date().toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'})});if(comment.includes('@'))d.notifications.unshift({id:uid('n'),title:'Nieuwe mention op '+c.title,text:comment,route:'kanban',read:false,kind:'Mention'})});setComment('')}}"
+      }
+    ],
+    "fields": [
+      {
+        "label": "\"Status\""
+      },
+      {
+        "label": "\"Deadline\""
+      },
+      {
+        "label": "\"Uitvoerders (meerdere mogelijk)\""
+      },
+      {
+        "label": "\"Aanspreekpunt (optioneel)\""
+      },
+      {
+        "label": "\"Gekoppelde activiteit\""
+      },
+      {
+        "label": "\"Gekoppelde verenigingstaak\""
+      },
+      {
+        "label": "\"Bijlage toevoegen\""
+      }
+    ],
+    "modals": [
+      {
+        "title": "{c.title}",
+        "description": "{c.committee+' · '+c.priority+' prioriteit'}"
+      }
+    ],
+    "mutations": [
+      {
+        "action": "'Kaartomschrijving bijgewerkt'",
+        "body": "d=>{d.cards.find(x=>x.id===id)!.description=e.target.value}"
+      },
+      {
+        "action": "'Checklist bijgewerkt'",
+        "body": "d=>{d.cards.find(x=>x.id===id)!.checks[i].done=v}"
+      },
+      {
+        "action": "'Subtaak toegewezen'",
+        "body": "d=>{d.cards.find(x=>x.id===id)!.checks[i].owner=v}"
+      },
+      {
+        "action": "'Subtaak toegevoegd'",
+        "body": "d=>{d.cards.find(x=>x.id===id)!.checks.push({text:sub,done:false})}"
+      },
+      {
+        "action": "'Reactie geplaatst'",
+        "body": "d=>{d.cards.find(x=>x.id===id)!.comments.push({name:person.name,text:comment,at:new Date().toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'})});if(comment.includes('@'))d.notifications.unshift({id:uid('n'),title:'Nieuwe mention op '+c.title,text:comment,route:'kanban',read:false,kind:'Mention'})}"
+      },
+      {
+        "action": "'Kaartstatus bijgewerkt'",
+        "body": "d=>{d.cards.find(x=>x.id===id)!.column=v}"
+      },
+      {
+        "action": "'Deadline bijgewerkt'",
+        "body": "d=>{d.cards.find(x=>x.id===id)!.deadline=e.target.value}"
+      },
+      {
+        "action": "'Kaarttoewijzing bijgewerkt'",
+        "body": "d=>{const card=d.cards.find(x=>x.id===id)!;card.assignees=v?[...card.assignees,p.id]:card.assignees.filter(x=>x!==p.id)}"
+      },
+      {
+        "action": "'Aanspreekpunt bijgewerkt'",
+        "body": "d=>{d.cards.find(x=>x.id===id)!.owner=v}"
+      },
+      {
+        "action": "'Activiteit gekoppeld'",
+        "body": "d=>{d.cards.find(x=>x.id===id)!.event=v}"
+      },
+      {
+        "action": "'Verenigingstaak gekoppeld'",
+        "body": "d=>{d.cards.find(x=>x.id===id)!.shift=v}"
+      },
+      {
+        "action": "'Bijlage lokaal opgeslagen'",
+        "body": "d=>{const card:any=d.cards.find(x=>x.id===id);card.attachments=[...(card.attachments||[]),{name:f.name,url:reader.result}]}"
+      }
+    ]
+  },
+  {
+    "file": "collaboration.tsx",
+    "function": "Teams",
+    "titles": [
+      {
+        "component": "PageTitle",
+        "title": "\"Samen rondom het team.\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Praktische teamtaken\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Ondersteuning\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Voortgang van de teamhuishoudens\""
+      }
+    ],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Teamtaak toevoegen",
+        "onClick": "{()=>setCreate(true)}"
+      },
+      {
+        "text": "Ik help",
+        "onClick": "{()=>change('Teamtaak opgepakt · 0 uur',d=>{d.teamTasks.find(x=>x.id===t.id).person=person.id})}"
+      },
+      {
+        "text": "Marktverzoek",
+        "onClick": "{()=>change('Verzoek ingediend bij vrijwilligerscommissie',d=>{d.teamTasks.find(x=>x.id===t.id).status='Wacht op vrijwilligerscommissie'})}"
+      },
+      {
+        "text": "Wedstrijdzaken akkoord",
+        "onClick": "{()=>change('Wedstrijdzaken heeft de noodzaak bevestigd',d=>{d.teamTasks.find(x=>x.id===t.id).status='Wacht op vrijwilligerscommissie'})}"
+      },
+      {
+        "text": "Goedkeuren · 2 uur",
+        "onClick": "{()=>{change('Teamtaak goedgekeurd en gepubliceerd',d=>{const x=d.teamTasks.find(x=>x.id===t.id);x.status='Gepubliceerd';x.minutes=120;d.shifts.push({id:uid('s'),teamTask:t.id,title:t.title,committee:'Wedstrijdzaken',category:'Scheidsrechter',date:t.date,start:'09:00',end:'11:00',minutes:120,capacity:1,status:'Gepubliceerd',location:'Sportpark Duindorp',minAge:16,qualification:'',buddy:false,cancelDays:d.settings.cancelDays,instructions:'Meld je bij wedstrijdzaken. Controleer de wedstrijdgegevens.',slot:0,experienced:0})})}}"
+      },
+      {
+        "text": "Hulpverzoek indienen",
+        "onClick": "{()=>change('Scheidsrechterverzoek ingediend',d=>{d.teamTasks.push({id:uid('tt'),title:'Scheidsrechter '+team+' gezocht',team,date:'2026-10-10',person:'',status:'Wacht op wedstrijdzaken',minutes:0})})}"
+      }
+    ],
+    "fields": [],
+    "modals": [
+      {
+        "title": "\"Praktische teamtaak\"",
+        "description": "\"Deze taak telt niet mee voor de verenigingsuren.\"",
+        "fields": "{[{key:'title',label:'Taak',required:true},{key:'date',label:'Datum',type:'date',value:'2026-10-03'}]}",
+        "onSave": "{v=>{change('Teamtaak toegevoegd',d=>{d.teamTasks.push({id:uid('tt'),...v,team,person:'',status:'Teamtaak',minutes:0})});setCreate(false)}}"
+      }
+    ],
+    "mutations": [
+      {
+        "action": "'Teamtaak opgepakt · 0 uur'",
+        "body": "d=>{d.teamTasks.find(x=>x.id===t.id).person=person.id}"
+      },
+      {
+        "action": "'Verzoek ingediend bij vrijwilligerscommissie'",
+        "body": "d=>{d.teamTasks.find(x=>x.id===t.id).status='Wacht op vrijwilligerscommissie'}"
+      },
+      {
+        "action": "'Wedstrijdzaken heeft de noodzaak bevestigd'",
+        "body": "d=>{d.teamTasks.find(x=>x.id===t.id).status='Wacht op vrijwilligerscommissie'}"
+      },
+      {
+        "action": "'Teamtaak goedgekeurd en gepubliceerd'",
+        "body": "d=>{const x=d.teamTasks.find(x=>x.id===t.id);x.status='Gepubliceerd';x.minutes=120;d.shifts.push({id:uid('s'),teamTask:t.id,title:t.title,committee:'Wedstrijdzaken',category:'Scheidsrechter',date:t.date,start:'09:00',end:'11:00',minutes:120,capacity:1,status:'Gepubliceerd',location:'Sportpark Duindorp',minAge:16,qualification:'',buddy:false,cancelDays:d.settings.cancelDays,instructions:'Meld je bij wedstrijdzaken. Controleer de wedstrijdgegevens.',slot:0,experienced:0})}"
+      },
+      {
+        "action": "'Scheidsrechterverzoek ingediend'",
+        "body": "d=>{d.teamTasks.push({id:uid('tt'),title:'Scheidsrechter '+team+' gezocht',team,date:'2026-10-10',person:'',status:'Wacht op wedstrijdzaken',minutes:0})}"
+      },
+      {
+        "action": "'Teamtaak toegevoegd'",
+        "body": "d=>{d.teamTasks.push({id:uid('tt'),...v,team,person:'',status:'Teamtaak',minutes:0})}"
+      }
+    ]
+  },
+  {
+    "file": "collaboration.tsx",
+    "function": "Matches",
+    "titles": [
+      {
+        "component": "PageTitle",
+        "title": "\"Van het veld naar de planning.\""
+      },
+      {
+        "component": "Panel"
+      }
+    ],
+    "tabs": [
+      {
+        "value": "{filter}",
+        "options": "{['Alle teams','Mijn gezin','JO13-1','JO17-1']}"
+      }
+    ],
+    "buttons": [
+      {
+        "text": "Nu synchroniseren",
+        "onClick": "{()=>change('Voorbeeldprogramma gesynchroniseerd · demo',d=>{d.sync.last=new Date().toLocaleString('nl-NL');d.sync.status='Demo-sync geslaagd'})}"
+      },
+      {
+        "text": "Gevolgen beoordelen",
+        "onClick": "{()=>setImpact(m)}"
+      },
+      {
+        "text": "Dienstvoorstellen",
+        "onClick": "{()=>{const has=s.shifts.some(t=>t.match===m.id);if(has){toast.info('Er zijn al verenigingstaken of voorstellen gekoppeld aan deze wedstrijd.');return}change('Dienstvoorstellen als concept aangemaakt',d=>{['Bar','Keuken','Ontvangst'].forEach((category,i)=>d.shifts.push({id:uid('s'),match:m.id,title:category+' · '+m.team,committee:i===2?'Wedstrijdzaken':'Kantine',category,date:m.date,start:'12:00',end:'15:00',minutes:180,capacity:2,status:'Concept',location:m.location,minAge:i===0?18:16,qualification:i===0?'IVA':'',buddy:true,cancelDays:d.settings.cancelDays,instructions:'Verenigingstaak rondom de thuiswedstrijd. Controleer het programma.',slot:0,experienced:1}))})}}"
+      },
+      {
+        "text": "Tijden behouden & betrokkenen informeren",
+        "onClick": "{()=>{change('Wedstrijdwijziging beoordeeld, deelnemers geïnformeerd in demo',d=>{d.matches.find(m=>m.id===impact.id)!.status='Gepland';d.matches.find(m=>m.id===impact.id)!.change=undefined;d.notifications.unshift({id:uid('n'),title:'Wedstrijdwijziging beoordeeld',text:impact.team+' · verenigingstaken blijven volgens afspraak',route:'wedstrijden',read:false,kind:'Wijziging'})});setImpact(null)}}"
+      }
+    ],
+    "fields": [],
+    "modals": [
+      {
+        "title": "\"Wedstrijdwijziging beoordelen\""
+      }
+    ],
+    "mutations": [
+      {
+        "action": "'Voorbeeldprogramma gesynchroniseerd · demo'",
+        "body": "d=>{d.sync.last=new Date().toLocaleString('nl-NL');d.sync.status='Demo-sync geslaagd'}"
+      },
+      {
+        "action": "'Dienstvoorstellen als concept aangemaakt'",
+        "body": "d=>{['Bar','Keuken','Ontvangst'].forEach((category,i)=>d.shifts.push({id:uid('s'),match:m.id,title:category+' · '+m.team,committee:i===2?'Wedstrijdzaken':'Kantine',category,date:m.date,start:'12:00',end:'15:00',minutes:180,capacity:2,status:'Concept',location:m.location,minAge:i===0?18:16,qualification:i===0?'IVA':'',buddy:true,cancelDays:d.settings.cancelDays,instructions:'Verenigingstaak rondom de thuiswedstrijd. Controleer het programma.',slot:0,experienced:1}))}"
+      },
+      {
+        "action": "'Wedstrijdwijziging beoordeeld, deelnemers geïnformeerd in demo'",
+        "body": "d=>{d.matches.find(m=>m.id===impact.id)!.status='Gepland';d.matches.find(m=>m.id===impact.id)!.change=undefined;d.notifications.unshift({id:uid('n'),title:'Wedstrijdwijziging beoordeeld',text:impact.team+' · verenigingstaken blijven volgens afspraak',route:'wedstrijden',read:false,kind:'Wijziging'})}"
+      }
+    ]
+  },
+  {
+    "file": "collaboration.tsx",
+    "function": "Calendar",
+    "titles": [
+      {
+        "component": "PageTitle",
+        "title": "\"Alles wat ons samenbrengt.\""
+      },
+      {
+        "component": "Panel"
+      }
+    ],
+    "tabs": [
+      {
+        "value": "{layer}",
+        "options": "{['Alles','Activiteiten','Wedstrijden','Verenigingstaken']}"
+      }
+    ],
+    "buttons": [
+      {
+        "text": "Activiteit toevoegen",
+        "onClick": "{()=>setCreate(true)}"
+      },
+      {
+        "text": "d.getDate()",
+        "onClick": "{()=>setCreate(true)}"
+      },
+      {
+        "text": "e.time e.title",
+        "onClick": "{()=>setSelected(e)}"
+      },
+      {
+        "text": "s.events.find(e=>e.id===selected.id)?.attendees.includes(person.id)?'Afmelden voor activiteit':'Ik ben erbij'",
+        "onClick": "{()=>change('Aanwezigheid bijgewerkt',d=>{const e=d.events.find(e=>e.id===selected.id)!;e.attendees=e.attendees.includes(person.id)?e.attendees.filter(x=>x!==person.id):[...e.attendees,person.id]})}"
+      }
+    ],
+    "fields": [],
+    "modals": [
+      {
+        "title": "{selected.title}",
+        "description": "{selected.kind+' · '+fullDate(selected.date)}"
+      },
+      {
+        "title": "\"Activiteit in de jaaragenda\"",
+        "fields": "{[{key:'title',label:'Titel',required:true},{key:'date',label:'Datum',type:'date',value:month+'-10'},{key:'time',label:'Begintijd',type:'time',value:'19:00'},{key:'end',label:'Eindtijd',type:'time',value:'21:00'},{key:'location',label:'Locatie',value:'Clubhuis'},{key:'kind',label:'Categorie',type:'select',value:'Activiteit',options:['Activiteit','Vergadering','Opleiding','Waardering','Deadline']},{key:'scope',label:'Zichtbaarheid',type:'select',value:'Vereniging',options:['Vereniging',...committees,'JO13-1','Besloten']},{key:'repeat',label:'Herhaling',type:'select',value:'Geen',options:['Geen','Wekelijks','Maandelijks','Jaarlijks']},{key:'description',label:'Omschrijving',type:'textarea'}]}",
+        "onSave": "{v=>{if(v.end<=v.time){toast.error('Eindtijd moet na de begintijd liggen.');return}if(s.events.some(e=>e.date===v.date&&e.location===v.location&&e.time<v.end&&e.end>v.time)){toast.error('Deze locatie heeft al een overlappende afspraak. Kies een ander moment of locatie.');return}change('Activiteit toegevoegd aan de agenda',d=>{d.events.push({id:uid('e'),...v,owner:person.id,attendees:[person.id]})});setCreate(false)}}"
+      }
+    ],
+    "mutations": [
+      {
+        "action": "'Aanwezigheid bijgewerkt'",
+        "body": "d=>{const e=d.events.find(e=>e.id===selected.id)!;e.attendees=e.attendees.includes(person.id)?e.attendees.filter(x=>x!==person.id):[...e.attendees,person.id]}"
+      },
+      {
+        "action": "'Activiteit toegevoegd aan de agenda'",
+        "body": "d=>{d.events.push({id:uid('e'),...v,owner:person.id,attendees:[person.id]})}"
+      }
+    ]
+  },
+  {
+    "file": "collaboration.tsx",
+    "function": "Messages",
+    "titles": [
+      {
+        "component": "PageTitle",
+        "title": "\"Korte lijnen, meer verbinding.\""
+      },
+      {
+        "component": "Panel"
+      },
+      {
+        "component": "Panel"
+      },
+      {
+        "component": "Panel",
+        "title": "\"Jouw meldingsvoorkeuren\""
+      }
+    ],
+    "tabs": [
+      {
+        "value": "{tab}",
+        "options": "{['Gesprekken','Meldingen','Voorkeuren']}"
+      }
+    ],
+    "buttons": [
+      {
+        "text": "Alles gelezen",
+        "onClick": "{()=>change('Alle meldingen gelezen',d=>{d.notifications.filter(n=>notificationVisible(d,n)).forEach(n=>n.read=true)})}"
+      },
+      {
+        "text": "# c",
+        "onClick": "{()=>setChannel(c)}"
+      },
+      {
+        "text": "Openen",
+        "onClick": "{()=>{change('Melding geopend',d=>{d.notifications.find(x=>x.id===n.id).read=true;if(n.teamId||n.targetTeam)coordData(d).focus={teamId:n.teamId||n.targetTeam,tab:n.kind==='Overdracht'?'Overdracht':n.kind==='Reservehulp'?'Takenmarkt':'Opvolging'}},true);go(n.route)}}"
+      },
+      {
+        "text": "n.read?'Gelezen':'Markeer gelezen'",
+        "onClick": "{()=>change('Melding gelezen',d=>{d.notifications.find(x=>x.id===n.id).read=true})}"
+      }
+    ],
+    "fields": [],
+    "modals": [],
+    "mutations": [
+      {
+        "action": "'Alle meldingen gelezen'",
+        "body": "d=>{d.notifications.filter(n=>notificationVisible(d,n)).forEach(n=>n.read=true)}"
+      },
+      {
+        "action": "'Bericht geplaatst in de demo'",
+        "body": "d=>{d.messages.push({id:uid('msg'),channel,name:person.name,text,at:new Date().toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'})});if(text.includes('@'))d.notifications.unshift({id:uid('n'),title:'Je bent genoemd in '+channel,text,route:'berichten',read:false,kind:'Mention'})}"
+      },
+      {
+        "action": "'Melding geopend'",
+        "body": "d=>{d.notifications.find(x=>x.id===n.id).read=true;if(n.teamId||n.targetTeam)coordData(d).focus={teamId:n.teamId||n.targetTeam,tab:n.kind==='Overdracht'?'Overdracht':n.kind==='Reservehulp'?'Takenmarkt':'Opvolging'}}"
+      },
+      {
+        "action": "'Melding gelezen'",
+        "body": "d=>{d.notifications.find(x=>x.id===n.id).read=true}"
+      },
+      {
+        "action": "'E-mailvoorkeur opgeslagen'",
+        "body": "d=>{d.settings.email=v}"
+      },
+      {
+        "action": "'Pushvoorkeur opgeslagen · demo'",
+        "body": "d=>{d.settings.push=v}"
+      }
+    ]
+  },
+  {
+    "file": "coordination-panels.tsx",
+    "function": "useCoordAction",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": [
+      {
+        "action": "label",
+        "body": "d=>Object.assign(d,draft)"
+      }
+    ]
+  },
+  {
+    "file": "coordination-panels.tsx",
+    "function": "SmartTeamProposal",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "coordination-panels.tsx",
+    "function": "SmartDistribution",
+    "titles": [
+      {
+        "component": "Panel",
+        "title": "\"Samen eerlijk verdelen\""
+      }
+    ],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Nieuw voorstel",
+        "onClick": "{()=>setRows(distributionProposal(s,team.id))}"
+      },
+      {
+        "text": "Verdeelvoorstel bevestigen",
+        "onClick": "{()=>run('Verdeelvoorstel bevestigd',d=>applyDistribution(d,team.id,rows))}"
+      }
+    ],
+    "fields": [
+      {
+        "label": "\"Huishouden namens dit lid\""
+      }
+    ],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "coordination-panels.tsx",
+    "function": "FollowUpBoard",
+    "titles": [
+      {
+        "component": "Panel",
+        "title": "\"Op tijd samen oplossen\""
+      }
+    ],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Opvolging controleren",
+        "onClick": "{()=>run('Opvolging gecontroleerd',d=>{checkFollowUps(d,date)})}"
+      },
+      {
+        "text": "Verdeling bekijken",
+        "onClick": "{()=>divide(row.teamId)}"
+      },
+      {
+        "text": "asked?'Reservehulp gevraagd':'Reservepool benaderen ('+reserve.length+')'",
+        "onClick": "{()=>run('Reservehulp gevraagd in de demo',d=>requestReserveHelp(d,row.id))}"
+      },
+      {
+        "text": "Deadlines aanpassen",
+        "onClick": "{()=>setEdit(row)}"
+      }
+    ],
+    "fields": [
+      {
+        "label": "\"Controledatum in de demo\""
+      }
+    ],
+    "modals": [
+      {
+        "title": "\"Opvolgafspraken\"",
+        "description": "{edit.title+' · deadlines vóór '+fullDate(edit.date)}",
+        "fields": "{[{key:'selfUntil',label:'Zelf inschrijven tot en met',type:'date',value:edit.policy.selfUntil,required:true},\n        {key:'assignUntil',label:'Teamouder verdeelt uiterlijk op',type:'date',value:edit.policy.assignUntil,required:true}]}",
+        "onSave": "{v=>{if(run('Opvolgafspraken opgeslagen',d=>setFollowUpPolicy(d,edit.id,v)))setEdit(null)}}"
+      }
+    ],
+    "mutations": [
+      {
+        "action": "'Teamverdeling geopend'",
+        "body": "d=>{coordData(d).focus={teamId:id,tab:'Slim verdelen'}}"
+      }
+    ]
+  },
+  {
+    "file": "coordination-panels.tsx",
+    "function": "HandoverPanel",
+    "titles": [
+      {
+        "component": "Panel",
+        "title": "\"Overdracht van de teamouder\""
+      }
+    ],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Nieuwe overdracht voorbereiden",
+        "onClick": "{()=>{setTo(candidates[0]?.id||'');setNotes(existing.notes);setChecks([]);setNewCycle(true)}}"
+      },
+      {
+        "text": "Overdracht aannemen",
+        "onClick": "{()=>run('Teamoverdracht aangenomen',d=>acceptHandover(d,team.id,existing.version))}"
+      },
+      {
+        "text": "Concept bewaren",
+        "onClick": "{()=>{if(run('Overdrachtsconcept opgeslagen',d=>saveHandover(d,team.id,{to,notes,checks})))setNewCycle(false)}}"
+      },
+      {
+        "text": "Overdracht klaarzetten",
+        "onClick": "{()=>{if(run('Teamoverdracht klaargezet',d=>saveHandover(d,team.id,{to,notes,checks},true)))setNewCycle(false)}}"
+      }
+    ],
+    "fields": [
+      {
+        "label": "\"Volgende teamouder\""
+      },
+      {
+        "label": "\"Praktische overdrachtsnotitie\""
+      }
+    ],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "coordination-panels.tsx",
+    "function": "FeedbackDialog",
+    "titles": [],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Vrijwilligersfuncties bekijken",
+        "onClick": "{()=>{onClose();go('vacatures')}}"
+      },
+      {
+        "text": "Afronden",
+        "onClick": "{onClose}"
+      },
+      {
+        "text": "Later",
+        "onClick": "{onClose}"
+      },
+      {
+        "text": "Ervaring delen"
+      }
+    ],
+    "fields": [
+      {
+        "label": "{'Zou '+(booking.personId===person.id?'je':nameOf(s,booking.personId))+' deze taak nog eens willen doen?'}"
+      },
+      {
+        "label": "\"Was de uitleg duidelijk?\""
+      },
+      {
+        "label": "\"Wat kunnen we praktisch verbeteren?\"",
+        "hint": "\"Je toelichting gaat naar de verantwoordelijke teamouder of commissie.\""
+      }
+    ],
+    "modals": [
+      {
+        "title": "{done?'Bedankt voor je terugblik!':'Hoe ging deze taak?'}",
+        "description": "{t.title+' · '+dateLabel(t.date)+' · uitgevoerd door '+nameOf(s,booking.personId)}"
+      }
+    ],
+    "mutations": []
+  },
+  {
+    "file": "coordination-panels.tsx",
+    "function": "InstructionDialog",
+    "titles": [],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Annuleren",
+        "onClick": "{onClose}"
+      },
+      {
+        "text": "Instructie opslaan",
+        "onClick": "{()=>{\n      if(run('Taakinstructie verbeterd',d=>updateInstructions(d,shiftId,text,future)))onClose();\n    }}"
+      }
+    ],
+    "fields": [
+      {
+        "label": "\"Instructie voor de uitvoerder\""
+      }
+    ],
+    "modals": [
+      {
+        "title": "\"Een duidelijkere taakinstructie\"",
+        "description": "{t.title+' · '+t.category}"
+      }
+    ],
+    "mutations": []
+  },
+  {
+    "file": "coordination-panels.tsx",
+    "function": "FeedbackInbox",
+    "titles": [
+      {
+        "component": "Panel",
+        "title": "\"Leren van taakervaringen\""
+      }
+    ],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Instructie verbeteren",
+        "onClick": "{()=>setEdit(t.id)}"
+      }
+    ],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "coordination-panels.tsx",
+    "function": "PersonalFeedback",
+    "titles": [
+      {
+        "component": "Panel",
+        "title": "\"Een korte terugblik op jouw inzet\""
+      }
+    ],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "given?'Terugblik bekijken':'Ervaring delen'",
+        "onClick": "{()=>setSelected(b)}"
+      }
+    ],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "coordination-workspace.tsx",
+    "function": "NextActions",
+    "titles": [
+      {
+        "component": "Panel",
+        "title": "\"Dit vraagt je aandacht\""
+      }
+    ],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Alle acties",
+        "onClick": "{()=>go('acties')}"
+      },
+      {
+        "text": "a.label",
+        "onClick": "{()=>open(a)}"
+      },
+      {
+        "text": "Niet verschenen",
+        "onClick": "{()=>{\n      if(run('Niet verschenen vastgelegd',d=>confirmExecution(d,confirm.id,false)))setConfirm(null);\n    }}"
+      },
+      {
+        "text": "Uitvoering bevestigen",
+        "onClick": "{()=>{\n      if(run('Uitvoering bevestigd',d=>confirmExecution(d,confirm.id)))setConfirm(null);\n    }}"
+      }
+    ],
+    "fields": [],
+    "modals": [
+      {
+        "title": "\"Uitvoering controleren\"",
+        "description": "{s.shifts.find(t=>t.id===confirm.shiftId)?.title}"
+      }
+    ],
+    "mutations": [
+      {
+        "action": "'Vervolgstap geopend'",
+        "body": "d=>{coordData(d).focus={teamId:a.teamId!,tab:a.kind==='handover'?'Overdracht':a.kind==='followup'?'Opvolging':'Slim verdelen'}}"
+      }
+    ]
+  },
+  {
+    "file": "coordination-workspace.tsx",
+    "function": "FamilyAgenda",
+    "titles": [
+      {
+        "component": "PageTitle",
+        "title": "\"Onze gezinsagenda\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Verenigingsuren van ons huishouden\""
+      },
+      {
+        "component": "Panel"
+      },
+      {
+        "component": "Panel"
+      }
+    ],
+    "tabs": [
+      {
+        "value": "{view}",
+        "options": "{['Komend','Historie']}"
+      }
+    ],
+    "buttons": [
+      {
+        "text": "Teamtakenmarkt",
+        "onClick": "{()=>go('teams')}"
+      },
+      {
+        "text": "Verenigingstaak zoeken",
+        "onClick": "{()=>go('taken')}"
+      },
+      {
+        "text": "Kies uitvoerder",
+        "onClick": "{()=>setBook(a)}"
+      },
+      {
+        "text": "Afspraak bekijken",
+        "onClick": "{()=>setSelected(e)}"
+      },
+      {
+        "text": "Wedstrijd bekijken",
+        "onClick": "{()=>setSelected(e)}"
+      },
+      {
+        "text": "coordData(s).feedback.some(f=>f.bookingId===b.id)?'Terugblik bekijken':'Ervaring delen'",
+        "onClick": "{()=>setFeedback(b)}"
+      },
+      {
+        "text": "Sluiten",
+        "onClick": "{()=>setSelected(null)}"
+      },
+      {
+        "text": "Overname / verhindering",
+        "onClick": "{()=>{setIssue(teamData(s).allocations.find(a=>a.id===selected.booking!.allocationId)!);setSelected(null)}}"
+      }
+    ],
+    "fields": [],
+    "modals": [
+      {
+        "title": "{selected.title}",
+        "description": "{selected.kind==='match'?'Wedstrijd van jouw gezin':'Afspraak van jouw huishouden'}"
+      }
+    ],
+    "mutations": []
+  },
+  {
+    "file": "dashboard.tsx",
+    "function": "Dashboard",
+    "titles": [
+      {
+        "component": "PageTitle",
+        "title": "{personal?'Fijn dat je er bent, '+person.name.split(' ')[0]+'.':'Goedemiddag, '+person.name.split(' ')[0]+'.'}"
+      },
+      {
+        "component": "Panel",
+        "title": "{personal?'Past bij jouw talenten':'Aandacht voor de komende dagen'}"
+      },
+      {
+        "component": "Panel",
+        "title": "\"Binnenkort op de club\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Jouw huishouden\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Komende wedstrijden\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Samen aan de slag\""
+      }
+    ],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Jaaragenda",
+        "onClick": "{()=>go('agenda')}"
+      },
+      {
+        "text": "personal?'Zoek een taak':'Verenigingstaak inplannen'",
+        "onClick": "{()=>go(personal?'taken':'planbord')}"
+      },
+      {
+        "text": "Ontdek de takenmarkt",
+        "onClick": "{()=>go('taken')}"
+      },
+      {
+        "text": "Alles bekijken",
+        "onClick": "{()=>go(personal?'taken':'acties')}"
+      },
+      {
+        "text": "Bekijk agenda",
+        "onClick": "{()=>go('agenda')}"
+      },
+      {
+        "text": "Mijn huishouden bekijken",
+        "onClick": "{()=>go('intake')}"
+      },
+      {
+        "text": "Alles",
+        "onClick": "{()=>go('wedstrijden')}"
+      },
+      {
+        "text": "Mijn voorkeuren invullen",
+        "onClick": "{()=>go('intake')}"
+      }
+    ],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "governance.tsx",
+    "function": "Policies",
+    "titles": [
+      {
+        "component": "PageTitle",
+        "title": "\"Duidelijke afspraken, samen gedragen.\""
+      },
+      {
+        "component": "Panel",
+        "title": "{policy.title}"
+      },
+      {
+        "component": "Panel",
+        "title": "\"Jouw bevestigingen\""
+      },
+      {
+        "component": "Panel"
+      },
+      {
+        "component": "Panel"
+      }
+    ],
+    "tabs": [
+      {
+        "value": "{tab}",
+        "options": "{isAdmin?['Mijn afspraken','Acceptatieoverzicht','Versiehistorie']:['Mijn afspraken','Versiehistorie']}"
+      }
+    ],
+    "buttons": [
+      {
+        "text": "Nieuwe beleidsversie",
+        "onClick": "{()=>setNewPolicy(true)}"
+      },
+      {
+        "text": "Lezen & accepteren",
+        "onClick": "{()=>{setRead(policy);setMembers([]);setAgree(false);change('Beleidsversie geopend',()=>{},true)}}"
+      },
+      {
+        "text": "Downloaden",
+        "onClick": "{()=>download('Cluvo-voorbeeldbeleid-v'+policy.version+'.txt',policy.text)}"
+      },
+      {
+        "text": "Ik heb een vraag",
+        "onClick": "{()=>setQuestion(true)}"
+      },
+      {
+        "text": "Herinneringen klaarzetten",
+        "onClick": "{()=>change('Herinneringen klaargezet · demo',d=>{d.notifications.unshift({id:uid('n'),title:'Beleid vraagt nog je aandacht',text:'Lees en accepteer versie '+policy.version,route:'beleid',read:false,kind:'Beleid'})})}"
+      },
+      {
+        "text": "Download versie",
+        "onClick": "{()=>download('beleid-'+p.version+'.txt',p.text)}"
+      },
+      {
+        "text": "Akkoord voor members.length members.length===1?'lid':'leden'",
+        "onClick": "{()=>{change('Beleidsacceptatie per lid vastgelegd',d=>{members.forEach(id=>{if(!d.acceptances.some(a=>a.member===id&&a.policy===read.id&&a.version===read.version))d.acceptances.push({member:id,policy:read.id,version:read.version,actor:person.id,at:new Date().toLocaleString('nl-NL'),capacity:id===person.id?'Voor mijzelf':'Ouder/verzorger'})})});setRead(null)}}"
+      },
+      {
+        "text": "Vraag indienen",
+        "onClick": "{()=>{change('Je vraag staat bij de vrijwilligerscommissie',d=>{d.requests.push({id:uid('r'),hh:person.hh,person:person.id,type:'Beleidsvraag',reason:text,status:'In behandeling',reviews:[]})});setQuestion(false)}}"
+      }
+    ],
+    "fields": [
+      {
+        "label": "\"Je vraag of bezwaar\""
+      }
+    ],
+    "modals": [
+      {
+        "title": "{read.title+' · versie '+read.version}",
+        "description": "\"Lees de volledige tekst. Alleen je actieve bevestiging geldt als akkoord.\""
+      },
+      {
+        "title": "\"Vraag over het beleid\""
+      },
+      {
+        "title": "\"Nieuwe beleidsversie publiceren\"",
+        "description": "\"Een nieuwe versie bewaart alle oude teksten en acceptaties. In de demo bevestig je de interne goedkeuring bij publicatie.\"",
+        "fields": "{[{key:'title',label:'Documenttitel',value:policy.title,required:true},{key:'version',label:'Nieuw versienummer',value:'1.'+s.policies.length,required:true},{key:'date',label:'Ingangsdatum',type:'date',value:'2026-10-02'},{key:'text',label:'Volledige beleidsinhoud',type:'textarea',value:policy.text,required:true}]}",
+        "onSave": "{v=>{if(s.policies.some(p=>p.version===v.version)){toast.error('Gebruik een nieuw versienummer.');return}change('Nieuwe beleidsversie gepubliceerd en aangeboden',d=>{d.policies.push({id:uid('pol'),...v,status:'Gepubliceerd'});d.notifications.unshift({id:uid('n'),title:'Nieuwe beleidsversie beschikbaar',text:v.title+' · '+v.version,route:'beleid',read:false,kind:'Beleid'})});setNewPolicy(false)}}"
+      }
+    ],
+    "mutations": [
+      {
+        "action": "'Beleidsversie geopend'",
+        "body": "()=>{}"
+      },
+      {
+        "action": "'Herinneringen klaargezet · demo'",
+        "body": "d=>{d.notifications.unshift({id:uid('n'),title:'Beleid vraagt nog je aandacht',text:'Lees en accepteer versie '+policy.version,route:'beleid',read:false,kind:'Beleid'})}"
+      },
+      {
+        "action": "'Beleidsacceptatie per lid vastgelegd'",
+        "body": "d=>{members.forEach(id=>{if(!d.acceptances.some(a=>a.member===id&&a.policy===read.id&&a.version===read.version))d.acceptances.push({member:id,policy:read.id,version:read.version,actor:person.id,at:new Date().toLocaleString('nl-NL'),capacity:id===person.id?'Voor mijzelf':'Ouder/verzorger'})})}"
+      },
+      {
+        "action": "'Je vraag staat bij de vrijwilligerscommissie'",
+        "body": "d=>{d.requests.push({id:uid('r'),hh:person.hh,person:person.id,type:'Beleidsvraag',reason:text,status:'In behandeling',reviews:[]})}"
+      },
+      {
+        "action": "'Nieuwe beleidsversie gepubliceerd en aangeboden'",
+        "body": "d=>{d.policies.push({id:uid('pol'),...v,status:'Gepubliceerd'});d.notifications.unshift({id:uid('n'),title:'Nieuwe beleidsversie beschikbaar',text:v.title+' · '+v.version,route:'beleid',read:false,kind:'Beleid'})}"
+      }
+    ]
+  },
+  {
+    "file": "governance.tsx",
+    "function": "Appreciation",
+    "titles": [
+      {
+        "component": "PageTitle",
+        "title": "\"Aandacht maakt een vereniging.\""
+      },
+      {
+        "component": "Panel"
+      }
+    ],
+    "tabs": [
+      {
+        "value": "{tab}",
+        "options": "{isAdmin?['Alle momenten','Lief & leed','Afgerond']:['Alle momenten','Afgerond']}"
+      }
+    ],
+    "buttons": [
+      {
+        "text": "Waarderingsmoment",
+        "onClick": "{()=>setCreate(true)}"
+      },
+      {
+        "text": "Afgerond",
+        "onClick": "{()=>change('Waarderingsmoment afgerond',d=>{d.appreciations.find(x=>x.id===a.id).status='Afgerond'})}"
+      },
+      {
+        "text": "Conceptbericht",
+        "onClick": "{()=>change('Conceptfelicitatie klaargezet',d=>{if(!d.messages.some(m=>m.appreciation===a.id))d.messages.push({id:uid('msg'),appreciation:a.id,channel:'Waardering',name:nameOf(d,d.currentPerson),text:'Concept: Van harte gefeliciteerd! Bedankt voor jouw bijdrage aan onze vereniging.',at:'Concept'});d.appreciations.find(x=>x.id===a.id).status='Conceptbericht'})}"
+      }
+    ],
+    "fields": [],
+    "modals": [
+      {
+        "title": "\"Een moment van aandacht\"",
+        "fields": "{[{key:'title',label:'Titel',required:true},{key:'kind',label:'Aanleiding',type:'select',value:'Waardering',options:['Verjaardag','Jubileum','Waardering','Afscheid','Opleiding','Lief & leed']},{key:'date',label:'Datum',type:'date',value:'2026-10-10'},{key:'person',label:'Voor wie',type:'select',value:s.people[0].id,options:s.people.map(p=>({value:p.id,label:p.name}))},{key:'owner',label:'Verantwoordelijke',type:'select',value:s.currentPerson,options:s.people.map(p=>({value:p.id,label:p.name}))},{key:'budget',label:'Budget (€)',type:'number',value:0}]}",
+        "onSave": "{v=>{if(s.appreciations.some(a=>a.kind===v.kind&&a.date===v.date&&a.person===v.person)){toast.error('Voor deze persoon en gelegenheid bestaat al een waarderingsmoment.');return}change('Waarderingsmoment toegevoegd',d=>{d.appreciations.push({id:uid('a'),...v,budget:Number(v.budget),private:v.kind==='Lief & leed',status:'Te doen'})});setCreate(false)}}"
+      }
+    ],
+    "mutations": [
+      {
+        "action": "'Waarderingsmoment afgerond'",
+        "body": "d=>{d.appreciations.find(x=>x.id===a.id).status='Afgerond'}"
+      },
+      {
+        "action": "'Conceptfelicitatie klaargezet'",
+        "body": "d=>{if(!d.messages.some(m=>m.appreciation===a.id))d.messages.push({id:uid('msg'),appreciation:a.id,channel:'Waardering',name:nameOf(d,d.currentPerson),text:'Concept: Van harte gefeliciteerd! Bedankt voor jouw bijdrage aan onze vereniging.',at:'Concept'});d.appreciations.find(x=>x.id===a.id).status='Conceptbericht'}"
+      },
+      {
+        "action": "'Waarderingsmoment toegevoegd'",
+        "body": "d=>{d.appreciations.push({id:uid('a'),...v,budget:Number(v.budget),private:v.kind==='Lief & leed',status:'Te doen'})}"
+      }
+    ]
+  },
+  {
+    "file": "governance.tsx",
+    "function": "Training",
+    "titles": [
+      {
+        "component": "PageTitle",
+        "title": "\"Een fijne start. Ruimte om te groeien.\""
+      },
+      {
+        "component": "Panel"
+      },
+      {
+        "component": "Panel",
+        "title": "\"Een eerste verenigingstaak met een maatje\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Reservepool\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Kwalificaties en herbevestiging\""
+      }
+    ],
+    "tabs": [
+      {
+        "value": "{tab}",
+        "options": "{['Opleidingen','Maatjes & reservepool','Kwalificaties']}"
+      }
+    ],
+    "buttons": [
+      {
+        "text": "Certificaat registreren",
+        "onClick": "{()=>setCert(true)}"
+      },
+      {
+        "text": "c.enrolled.includes(person.id)?'Afmelden':'Ik doe mee'",
+        "onClick": "{()=>change(c.enrolled.includes(person.id)?'Afmelding opleiding verwerkt':'Ingeschreven voor de opleiding',d=>{const x=d.courses.find(x=>x.id===c.id);x.enrolled=x.enrolled.includes(person.id)?x.enrolled.filter((id:string)=>id!==person.id):[...x.enrolled,person.id]})}"
+      }
+    ],
+    "fields": [],
+    "modals": [
+      {
+        "title": "\"Kwalificatie vastleggen\"",
+        "fields": "{[{key:'person',label:'Persoon',type:'select',value:s.currentPerson,options:s.people.map(p=>({value:p.id,label:p.name}))},{key:'cert',label:'Kwalificatie',type:'select',value:'IVA',options:['IVA','EHBO','Scheidsrechter']},{key:'expires',label:'Geldig tot',type:'date',value:'2027-06-30'}]}",
+        "onSave": "{v=>{change('Kwalificatie geregistreerd',d=>{const p:any=d.people.find(p=>p.id===v.person)!;if(!p.certs.includes(v.cert))p.certs.push(v.cert);p.certExpiry={...(p.certExpiry||{}),[v.cert]:v.expires}});setCert(false)}}"
+      }
+    ],
+    "mutations": [
+      {
+        "action": "c.enrolled.includes(person.id)?'Afmelding opleiding verwerkt':'Ingeschreven voor de opleiding'",
+        "body": "d=>{const x=d.courses.find(x=>x.id===c.id);x.enrolled=x.enrolled.includes(person.id)?x.enrolled.filter((id:string)=>id!==person.id):[...x.enrolled,person.id]}"
+      },
+      {
+        "action": "'Kwalificatie geregistreerd'",
+        "body": "d=>{const p:any=d.people.find(p=>p.id===v.person)!;if(!p.certs.includes(v.cert))p.certs.push(v.cert);p.certExpiry={...(p.certExpiry||{}),[v.cert]:v.expires}}"
+      }
+    ]
+  },
+  {
+    "file": "governance.tsx",
+    "function": "Finance",
+    "titles": [
+      {
+        "component": "PageTitle",
+        "title": "\"Bijdragen die terugkomen bij mensen.\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Waar we samen in investeren\""
+      },
+      {
+        "component": "Panel"
+      },
+      {
+        "component": "Panel"
+      }
+    ],
+    "tabs": [
+      {
+        "value": "{tab}",
+        "options": "{['Vrijwilligerspot','Seizoensafrekening','Financiële afspraken']}"
+      }
+    ],
+    "buttons": [
+      {
+        "text": "Export afrekeningen",
+        "onClick": "{()=>download('cluvo-afrekeningen.csv',csv([['Huishouden','Route','Bedrag','Status'],...s.invoices.map(i=>[s.households.find(h=>h.id===i.hh)?.name,i.type,i.amount,i.status])]),'text/csv')}"
+      },
+      {
+        "text": "Budgetpost",
+        "onClick": "{()=>setExpense(true)}"
+      },
+      {
+        "text": "Controle akkoord",
+        "onClick": "{()=>change('Gecontroleerde afrekening vastgelegd',d=>{d.invoices.push({id:uid('inv'),hh:h.id,amount:money(p.remaining,d.settings.contribution/d.settings.target),type:'Seizoenstekort',status:'Goedgekeurd',minutes:p.remaining})})}"
+      },
+      {
+        "text": "Markeer betaald",
+        "onClick": "{()=>change('Betaling geregistreerd · demo',d=>{d.invoices.find(x=>x.id===i.id).status='Betaald';d.transactions.push({id:uid('tr'),title:i.type+' · '+s.households.find(h=>h.id===i.hh)?.name,amount:i.amount,type:'Inkomst',status:'Ontvangen'})})}"
+      },
+      {
+        "text": "Corrigeren",
+        "onClick": "{()=>setCorrection(i)}"
+      }
+    ],
+    "fields": [],
+    "modals": [
+      {
+        "title": "\"Onbetaalde afspraak corrigeren\"",
+        "description": "\"De oorspronkelijke afspraak blijft in de historie. Een nieuwe financiële route kan daarna worden beoordeeld.\"",
+        "fields": "{[{key:'reason',label:'Reden voor intrekken / vervangen',type:'textarea',required:true}]}",
+        "onSave": "{v=>{change('Financiële afspraak gecorrigeerd',d=>{const i=d.invoices.find(i=>i.id===correction.id);i.status='Vervallen';i.correction=v.reason});setCorrection(null)}}"
+      },
+      {
+        "title": "\"Budgetpost toevoegen\"",
+        "fields": "{[{key:'title',label:'Doel / omschrijving',required:true},{key:'amount',label:'Bedrag (€)',type:'number',required:true},{key:'type',label:'Soort post',type:'select',value:'Reservering',options:['Reservering','Uitgave','Inkomst']}]}",
+        "onSave": "{v=>{if(Number(v.amount)<=0){toast.error('Vul een positief bedrag in.');return}change('Budgetpost opgeslagen',d=>{d.transactions.push({id:uid('tr'),title:v.title,amount:Number(v.amount),type:v.type,status:v.type==='Inkomst'?'Ontvangen':v.type==='Uitgave'?'Betaald':'Goedgekeurd',owner:d.currentPerson})});setExpense(false)}}"
+      }
+    ],
+    "mutations": [
+      {
+        "action": "'Gecontroleerde afrekening vastgelegd'",
+        "body": "d=>{d.invoices.push({id:uid('inv'),hh:h.id,amount:money(p.remaining,d.settings.contribution/d.settings.target),type:'Seizoenstekort',status:'Goedgekeurd',minutes:p.remaining})}"
+      },
+      {
+        "action": "'Betaling geregistreerd · demo'",
+        "body": "d=>{d.invoices.find(x=>x.id===i.id).status='Betaald';d.transactions.push({id:uid('tr'),title:i.type+' · '+s.households.find(h=>h.id===i.hh)?.name,amount:i.amount,type:'Inkomst',status:'Ontvangen'})}"
+      },
+      {
+        "action": "'Financiële afspraak gecorrigeerd'",
+        "body": "d=>{const i=d.invoices.find(i=>i.id===correction.id);i.status='Vervallen';i.correction=v.reason}"
+      },
+      {
+        "action": "'Budgetpost opgeslagen'",
+        "body": "d=>{d.transactions.push({id:uid('tr'),title:v.title,amount:Number(v.amount),type:v.type,status:v.type==='Inkomst'?'Ontvangen':v.type==='Uitgave'?'Betaald':'Goedgekeurd',owner:d.currentPerson})}"
+      }
+    ]
+  },
+  {
+    "file": "governance.tsx",
+    "function": "Reports",
+    "titles": [
+      {
+        "component": "PageTitle",
+        "title": "\"Inzicht om samen bij te sturen.\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Bezetting per commissie\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Winterdoel per huishouden\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Voldoende passend aanbod?\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Aandacht voor onze vrijwilligers\""
+      }
+    ],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Rapport exporteren",
+        "onClick": "{()=>download('cluvo-bestuursrapport.csv',csv([['Onderwerp','Waarde'],['Huishoudens',s.households.length],['Bevestigde uren',hours(total)],['Resterende uren',hours(remaining)],['Open aanbod uren',hours(supply)],['Overbelastingssignalen',overloaded.length]]),'text/csv')}"
+      }
+    ],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "help-banner.tsx",
+    "function": "HelpProvider",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "help-banner.tsx",
+    "function": "ExplanationBanner",
+    "titles": [],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Gezien",
+        "onClick": "{onDismiss}"
+      }
+    ],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "help-banner.tsx",
+    "function": "HelpBanner",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "help-banner.tsx",
+    "function": "PageHelp",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "help-banner.tsx",
+    "function": "ViewHelp",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "management.tsx",
+    "function": "Communication",
+    "titles": [
+      {
+        "component": "PageTitle",
+        "title": "\"Persoonlijk, op het juiste moment.\""
+      },
+      {
+        "component": "Panel",
+        "title": "{template.name}"
+      },
+      {
+        "component": "Panel",
+        "title": "\"Een bericht met een reden\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Vind mensen op hun talent\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Bewaarde segmenten\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Lokale verzenddemonstraties\""
+      }
+    ],
+    "tabs": [
+      {
+        "value": "{tab}",
+        "options": "{['Templates','Verzendregels','Segmenten','Verzendlog']}"
+      },
+      {
+        "value": "{mode}",
+        "options": "{['Bewerken','Voorbeeld']}"
+      }
+    ],
+    "buttons": [
+      {
+        "text": "Nieuw template",
+        "onClick": "{()=>setCreate(true)}"
+      },
+      {
+        "text": "t.name",
+        "onClick": "{()=>setSelected(t.id)}"
+      },
+      {
+        "text": "'{{'+v+'}}'",
+        "onClick": "{()=>set('body',template.body+' {{'+v+'}}')}"
+      },
+      {
+        "text": "template.button",
+        "onClick": "{()=>toast.info('Deze voorbeeldknop verwijst in de uiteindelijke e-mail naar de bijbehorende taak of afspraak.')}"
+      },
+      {
+        "text": "Test simuleren",
+        "onClick": "{()=>change('Demo-mail getest · '+template.name+' · '+previewPerson.name,d=>{d.notifications.unshift({id:uid('n'),title:'Template-test (demo)',text:replace(template.subject),route:'templates',read:false,kind:'Test'})})}"
+      },
+      {
+        "text": "Goedkeuren & publiceren",
+        "onClick": "{()=>{const unresolved=(template.subject+' '+template.body).match(/\\{\\{(.*?)\\}\\}/g)?.filter((x:string)=>!['{{voornaam}}','{{vereniging}}','{{dienst}}','{{commissie}}','{{resterend}}'].includes(x));if(unresolved?.length){toast.error('Onbekende variabele: '+unresolved[0]);return}change('Template goedgekeurd en gepubliceerd',d=>{d.templates.find(t=>t.id===selected).status='Gepubliceerd'})}}"
+      },
+      {
+        "text": "Dupliceren",
+        "onClick": "{()=>change('Template gedupliceerd',d=>{d.templates.push({...structuredClone(template),id:uid('t'),name:template.name+' · kopie',version:1,status:'Concept'})})}"
+      },
+      {
+        "text": "Segment opslaan",
+        "onClick": "{()=>{change('Wervingssegment opgeslagen',d=>{d.segments.push({id:uid('seg'),name:segName,filter:segFilter})});setSegName('')}}"
+      },
+      {
+        "text": "Campagneconcept",
+        "onClick": "{()=>change('Campagneconcept aangemaakt voor '+seg.name,d=>{d.templates.push({...structuredClone(d.templates[0]),id:uid('t'),name:'Werving · '+seg.name,status:'Concept',version:1,segment:seg.id})})}"
+      }
+    ],
+    "fields": [
+      {
+        "label": "\"Onderwerp\""
+      },
+      {
+        "label": "\"Preheader\""
+      },
+      {
+        "label": "\"Afzender\""
+      },
+      {
+        "label": "\"Antwoordadres\""
+      },
+      {
+        "label": "\"Berichtinhoud\""
+      },
+      {
+        "label": "\"Knoptekst\""
+      },
+      {
+        "label": "\"Filter op vaardigheid of voorkeur\""
+      },
+      {
+        "label": "\"Segmentnaam\""
+      }
+    ],
+    "modals": [
+      {
+        "title": "\"Nieuw communicatietemplate\"",
+        "fields": "{[{key:'name',label:'Templatenaam',required:true},{key:'channel',label:'Kanaal',type:'select',value:'E-mail',options:['E-mail','Push','Inbox']},{key:'category',label:'Berichtsoort',type:'select',value:'Verenigingstaak',options:['Verenigingstaak','Aanbod','Waardering','Beleid']}]}",
+        "onSave": "{v=>{const id=uid('t');change('Templateconcept aangemaakt',d=>{d.templates.push({id,...v,subject:'Hoi {{voornaam}}',preheader:'',body:'',version:1,status:'Concept',sender:'Cluvo · '+s.settings.club,reply:'vrijwilligers@example.test',button:''})});setSelected(id);setCreate(false);setTab('Templates')}}"
+      }
+    ],
+    "mutations": [
+      {
+        "action": "'Templateconcept bijgewerkt'",
+        "body": "d=>{const t=d.templates.find(t=>t.id===selected);if(t.status==='Gepubliceerd'){t.history=[...(t.history||[]),{version:t.version,subject:t.subject,body:t.body}];t.version++;t.status='Concept'}t[key]=value}"
+      },
+      {
+        "action": "'Demo-mail getest · '+template.name+' · '+previewPerson.name",
+        "body": "d=>{d.notifications.unshift({id:uid('n'),title:'Template-test (demo)',text:replace(template.subject),route:'templates',read:false,kind:'Test'})}"
+      },
+      {
+        "action": "'Template goedgekeurd en gepubliceerd'",
+        "body": "d=>{d.templates.find(t=>t.id===selected).status='Gepubliceerd'}"
+      },
+      {
+        "action": "'Template gedupliceerd'",
+        "body": "d=>{d.templates.push({...structuredClone(template),id:uid('t'),name:template.name+' · kopie',version:1,status:'Concept'})}"
+      },
+      {
+        "action": "'Verzendregel bijgewerkt'",
+        "body": "d=>{d.settings[r.key]=v}"
+      },
+      {
+        "action": "'Wervingssegment opgeslagen'",
+        "body": "d=>{d.segments.push({id:uid('seg'),name:segName,filter:segFilter})}"
+      },
+      {
+        "action": "'Campagneconcept aangemaakt voor '+seg.name",
+        "body": "d=>{d.templates.push({...structuredClone(d.templates[0]),id:uid('t'),name:'Werving · '+seg.name,status:'Concept',version:1,segment:seg.id})}"
+      },
+      {
+        "action": "'Templateconcept aangemaakt'",
+        "body": "d=>{d.templates.push({id,...v,subject:'Hoi {{voornaam}}',preheader:'',body:'',version:1,status:'Concept',sender:'Cluvo · '+s.settings.club,reply:'vrijwilligers@example.test',button:''})}"
+      }
+    ]
+  },
+  {
+    "file": "management.tsx",
+    "function": "Settings",
+    "titles": [
+      {
+        "component": "PageTitle",
+        "title": "\"Jullie vereniging, jullie afspraken.\""
+      },
+      {
+        "component": "Panel",
+        "title": "{tab}"
+      },
+      {
+        "component": "Panel",
+        "title": "\"Rollen die voldoende inzet vormen\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Actieve aanstellingen\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Wedstrijdsynchronisatie\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Gecontroleerde ledenimport\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"E-mail & eenmalige code\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Cluvo op je beginscherm\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Demo opnieuw beginnen\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Een nieuw seizoen voorbereiden\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Bewaarde seizoensstanden\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Wijzigingshistorie\""
+      }
+    ],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "t",
+        "onClick": "{()=>setTab(t)}"
+      },
+      {
+        "text": "Instellingen opslaan",
+        "onClick": "{save}"
+      },
+      {
+        "text": "Rol",
+        "onClick": "{()=>setNewRole(true)}"
+      },
+      {
+        "text": "Beëindiging beoordelen",
+        "onClick": "{()=>change('Beëindiging voorgelegd aan vrijwilligerscommissie',d=>{d.requests.push({id:uid('r'),hh:a.hh,person:a.person,type:'Rolbeëindiging',assignment:a.id,effectiveEnd:'2026-10-02',target:d.households.find(h=>h.id===a.hh)!.target,winter:d.households.find(h=>h.id===a.hh)!.winter,reason:'Bepaal gemotiveerd de resterende seizoensverplichting; geen terugwerkende claim.',status:'In behandeling',reviews:[]});d.households.find(h=>h.id===a.hh)!.blocked=true;d.assignments.find(x=>x.id===a.id).review=true})}"
+      },
+      {
+        "text": "Syncmomenten opslaan",
+        "onClick": "{save}"
+      },
+      {
+        "text": "Succes simuleren",
+        "onClick": "{()=>change('Demo-sync geslaagd',d=>{d.sync.last=new Date().toLocaleString('nl-NL');d.sync.status='Demo-sync geslaagd'})}"
+      },
+      {
+        "text": "Fout simuleren",
+        "onClick": "{()=>change('Mislukte sync gesimuleerd · bestaande wedstrijden behouden',d=>{d.sync.status='Demo-sync mislukt';d.notifications.unshift({id:uid('n'),title:'Sportlink-synchronisatie vraagt aandacht',text:'Laatste bekende wedstrijden behouden.',route:'instellingen',read:false,kind:'Beheer'})})}"
+      },
+      {
+        "text": "Voorbeeld laden",
+        "onClick": "{()=>parse('Naam;Email;Lidnummer\\nAlex Demo;alex@example.test;DEMO-101\\nKim Voorbeeld;kim@example.test;DEMO-102')}"
+      },
+      {
+        "text": "Gecontroleerde import uitvoeren",
+        "onClick": "{()=>{const rows=importRows.slice(1);if(rows.some(r=>!r[Number(mapping.name)]||!r[Number(mapping.email)]?.includes('@')||!r[Number(mapping.member)])){toast.error('Herstel eerst de ongeldige gegevens.');return}change('Ledenimport verwerkt · demo',d=>{rows.forEach(r=>{const externalId=r[Number(mapping.member)],exists=d.people.find((p:any)=>p.externalId===externalId||p.email===r[Number(mapping.email)]);if(exists){exists.name=r[Number(mapping.name)];exists.email=r[Number(mapping.email)];(exists as any).externalId=externalId;return}const hh=uid('h'),id=uid('p');d.households.push({id:hh,name:'Huishouden '+r[Number(mapping.name)],code:'CLV-'+uid('').slice(-4),target:d.settings.target*60,winter:d.settings.target*60*d.settings.winterPercent/100,base:0,baseBefore:0,separated:false,status:'Nieuw',exempt:false,buyout:false,blocked:false,team:'Nog koppelen',note:'Import vereist huishoudcontrole'});d.people.push({id,name:r[Number(mapping.name)],email:r[Number(mapping.email)],hh,age:18,team:'Nog koppelen',externalId,skills:[],prefs:[],availability:[],limitations:'',interests:[],intake:false,certs:[],verified:false,maxHours:6,reserve:false,buddy:true} as any)})});setImportRows([])}}"
+      },
+      {
+        "text": "Cluvo installeren",
+        "onClick": "{async()=>{if(installPrompt){await installPrompt.prompt();setInstallPrompt(null)}else toast.info('Open het browsermenu en kies Installeren of Zet op beginscherm.')}}"
+      },
+      {
+        "text": "Voorbeeldgegevens herstellen",
+        "onClick": "{()=>setConfirmReset(true)}"
+      },
+      {
+        "text": "Nieuw seizoen voorbereiden",
+        "onClick": "{()=>setSeason(true)}"
+      },
+      {
+        "text": "Download",
+        "onClick": "{()=>download('cluvo-seizoen-'+a.season.replaceAll('/','-')+'.json',JSON.stringify(a,null,2),'application/json')}"
+      },
+      {
+        "text": "Behouden",
+        "onClick": "{()=>setConfirmReset(false)}"
+      },
+      {
+        "text": "Demo herstellen",
+        "onClick": "{()=>{reset();setConfirmReset(false)}}"
+      }
+    ],
+    "fields": [
+      {
+        "label": "{label}"
+      },
+      {
+        "label": "{['Naam','E-mail','Stabiel lidnummer'][i]}"
+      }
+    ],
+    "modals": [
+      {
+        "title": "\"Vrijwilligersrol toevoegen\"",
+        "fields": "{[{key:'name',label:'Rolnaam',required:true},{key:'exempt',label:'Vrijstelling voor het hele huishouden',type:'check',value:true}]}",
+        "onSave": "{v=>{change('Rol toegevoegd aan catalogus',d=>{d.roleCatalog.push({id:uid('role'),...v})});setNewRole(false)}}"
+      },
+      {
+        "title": "\"Voorbeeldgegevens herstellen?\"",
+        "description": "\"Je lokale demoaanpassingen worden vervangen door de oorspronkelijke voorbeeldsituatie.\""
+      },
+      {
+        "title": "\"Seizoensvoorbereiding\"",
+        "fields": "{[{key:'next',label:'Nieuw seizoen',value:'2027 / 2028',required:true},{key:'roles',label:'Rollen opnieuw laten bevestigen',type:'check',value:true},{key:'intake',label:'Intake opnieuw laten bevestigen',type:'check',value:true},{key:'templates',label:'Roostersjablonen meenemen',type:'check',value:true}]}",
+        "onSave": "{v=>{change('Seizoen gearchiveerd en '+v.next+' voorbereid',d=>{d.archives.push({id:uid('arch'),season:d.settings.season,at:new Date().toLocaleString('nl-NL'),teamWork:structuredClone(d.teamWork),households:structuredClone(d.households),bookings:structuredClone(d.bookings),requests:structuredClone(d.requests),assignments:structuredClone(d.assignments),acceptances:structuredClone(d.acceptances),next:v.next,options:v});d.notifications.unshift({id:uid('n'),title:'Nieuw seizoen: herbevestiging gevraagd',text:'Controleer je intake en actieve functie voor '+v.next,route:'intake',read:false,kind:'Seizoen'})});setSeason(false)}}"
+      }
+    ],
+    "mutations": [
+      {
+        "action": "'Verenigingsinstellingen opgeslagen'",
+        "body": "d=>{d.settings={...config}}"
+      },
+      {
+        "action": "'Rolcatalogus bijgewerkt'",
+        "body": "d=>{d.assignments.filter(a=>a.role===r.id).forEach(a=>{a.exemptAtGrant=a.exemptAtGrant??r.exempt});d.roleCatalog.find(x=>x.id===r.id).exempt=v}"
+      },
+      {
+        "action": "'Beëindiging voorgelegd aan vrijwilligerscommissie'",
+        "body": "d=>{d.requests.push({id:uid('r'),hh:a.hh,person:a.person,type:'Rolbeëindiging',assignment:a.id,effectiveEnd:'2026-10-02',target:d.households.find(h=>h.id===a.hh)!.target,winter:d.households.find(h=>h.id===a.hh)!.winter,reason:'Bepaal gemotiveerd de resterende seizoensverplichting; geen terugwerkende claim.',status:'In behandeling',reviews:[]});d.households.find(h=>h.id===a.hh)!.blocked=true;d.assignments.find(x=>x.id===a.id).review=true}"
+      },
+      {
+        "action": "'Demo-sync geslaagd'",
+        "body": "d=>{d.sync.last=new Date().toLocaleString('nl-NL');d.sync.status='Demo-sync geslaagd'}"
+      },
+      {
+        "action": "'Mislukte sync gesimuleerd · bestaande wedstrijden behouden'",
+        "body": "d=>{d.sync.status='Demo-sync mislukt';d.notifications.unshift({id:uid('n'),title:'Sportlink-synchronisatie vraagt aandacht',text:'Laatste bekende wedstrijden behouden.',route:'instellingen',read:false,kind:'Beheer'})}"
+      },
+      {
+        "action": "'Ledenimport verwerkt · demo'",
+        "body": "d=>{rows.forEach(r=>{const externalId=r[Number(mapping.member)],exists=d.people.find((p:any)=>p.externalId===externalId||p.email===r[Number(mapping.email)]);if(exists){exists.name=r[Number(mapping.name)];exists.email=r[Number(mapping.email)];(exists as any).externalId=externalId;return}const hh=uid('h'),id=uid('p');d.households.push({id:hh,name:'Huishouden '+r[Number(mapping.name)],code:'CLV-'+uid('').slice(-4),target:d.settings.target*60,winter:d.settings.target*60*d.settings.winterPercent/100,base:0,baseBefore:0,separated:false,status:'Nieuw',exempt:false,buyout:false,blocked:false,team:'Nog koppelen',note:'Import vereist huishoudcontrole'});d.people.push({id,name:r[Number(mapping.name)],email:r[Number(mapping.email)],hh,age:18,team:'Nog koppelen',externalId,skills:[],prefs:[],availability:[],limitations:'',interests:[],intake:false,certs:[],verified:false,maxHours:6,reserve:false,buddy:true} as any)})}"
+      },
+      {
+        "action": "'Rol toegevoegd aan catalogus'",
+        "body": "d=>{d.roleCatalog.push({id:uid('role'),...v})}"
+      },
+      {
+        "action": "'Seizoen gearchiveerd en '+v.next+' voorbereid'",
+        "body": "d=>{d.archives.push({id:uid('arch'),season:d.settings.season,at:new Date().toLocaleString('nl-NL'),teamWork:structuredClone(d.teamWork),households:structuredClone(d.households),bookings:structuredClone(d.bookings),requests:structuredClone(d.requests),assignments:structuredClone(d.assignments),acceptances:structuredClone(d.acceptances),next:v.next,options:v});d.notifications.unshift({id:uid('n'),title:'Nieuw seizoen: herbevestiging gevraagd',text:'Controleer je intake en actieve functie voor '+v.next,route:'intake',read:false,kind:'Seizoen'})}"
+      }
+    ]
+  },
+  {
+    "file": "management.tsx",
+    "function": "LoginDemo",
+    "titles": [],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Stuur een inlogcode",
+        "onClick": "{()=>{if(!email.includes('@')){toast.error('Vul een geldig e-mailadres in.');return}setSent(true);setSentAt(Date.now());setUsed(false);setTries(0);toast.success('Demo-code aangemaakt')}}"
+      },
+      {
+        "text": "used?'Demo-verificatie geslaagd':'Code bevestigen'",
+        "onClick": "{()=>{if(Date.now()-sentAt>120000){toast.error('Deze code is verlopen. Vraag een nieuwe code aan.');return}if(code!=='246810'){setTries(tries+1);toast.error(tries>=4?'Te veel onjuiste pogingen. Vraag later een nieuwe code aan.':'De code klopt niet.');return}setUsed(true);change('E-mailverificatie gesimuleerd',d=>{const p=d.people.find(p=>p.email.toLowerCase()===email.toLowerCase());if(p){p.verified=true;d.currentPerson=p.id}});toast.success('Demo-verificatie gelukt')}}"
+      },
+      {
+        "text": "Nieuwe code aanvragen",
+        "onClick": "{()=>{if(Date.now()-sentAt<30000){toast.error('Wacht 30 seconden voordat je een nieuwe code aanvraagt.');return}setSentAt(Date.now());setTries(0);setUsed(false);setCode('');toast.success('Nieuwe voorbeeldcode aangemaakt')}}"
+      }
+    ],
+    "fields": [
+      {
+        "label": "\"Je e-mailadres\""
+      }
+    ],
+    "modals": [],
+    "mutations": [
+      {
+        "action": "'E-mailverificatie gesimuleerd'",
+        "body": "d=>{const p=d.people.find(p=>p.email.toLowerCase()===email.toLowerCase());if(p){p.verified=true;d.currentPerson=p.id}}"
+      }
+    ]
+  },
+  {
+    "file": "people.tsx",
+    "function": "Households",
+    "titles": [
+      {
+        "component": "PageTitle",
+        "title": "\"Mensen achter de vereniging.\""
+      },
+      {
+        "component": "Panel"
+      },
+      {
+        "component": "Panel"
+      }
+    ],
+    "tabs": [
+      {
+        "value": "{tab}",
+        "options": "{['Alle huishoudens','Wintercontrole','Vrijstellingen','Aanvragen']}"
+      }
+    ],
+    "buttons": [
+      {
+        "text": "Exporteren",
+        "onClick": "{()=>download('cluvo-huishoudens.csv',csv([['Huishouden','Bevestigd','Gepland','Resterend'],...houses.map(h=>{const p=progress(s,h.id);return[h.name,hours(p.confirmed),hours(p.planned),hours(p.remaining)]})]),'text/csv')}"
+      },
+      {
+        "text": "Huishouden toevoegen",
+        "onClick": "{()=>setForm('household')}"
+      },
+      {
+        "text": "Vraag afhandelen",
+        "onClick": "{()=>{change('Urenvraag beoordeeld',d=>{d.requests.find(x=>x.id===r.id).status='Afgehandeld';d.households.find(h=>h.id===r.hh)!.blocked=false})}}"
+      },
+      {
+        "text": "Akkoord als reviewer",
+        "onClick": "{()=>change('Beoordeling vastgelegd',d=>{d.requests.find(x=>x.id===r.id).reviews.push(reviewer)})}"
+      },
+      {
+        "text": "Besluit verwerken",
+        "onClick": "{()=>{if(r.type==='Afkoop'&&s.invoices.some(i=>i.hh===r.hh&&i.type!=='Afkoop'&&i.status!=='Vervallen')){toast.error('Er bestaat al een tekortafrekening. Laat financieel beheer die eerst gemotiveerd corrigeren.');return}change('Besluit definitief vastgelegd',d=>{d.requests.find(x=>x.id===r.id).status='Goedgekeurd';const h=d.households.find(h=>h.id===r.hh)!;h.blocked=false;if(r.type==='Afkoop'){h.buyout=true;if(!d.invoices.some(i=>i.hh===h.id&&i.status!=='Vervallen'))d.invoices.push({id:uid('inv'),hh:h.id,amount:150,type:'Afkoop',status:'Goedgekeurd'})}else if(r.type==='Vrijstelling')h.exempt=true;else if(r.type==='Vermindering'){h.target=Number(r.target)||360;h.winter=h.target/2}else if(r.type==='Rolbeëindiging'){const a=d.assignments.find(a=>a.id===r.assignment);if(a){a.active=false;a.end=r.effectiveEnd||'2026-10-02'}h.target=Number(r.target);h.winter=Number(r.winter??h.target/2)}else if(r.type==='Uitstel'){h.note='Uitstel binnen het seizoen: '+r.reason}else{d.requests.find(x=>x.id===r.id).status='Beoordeeld · opvolging nodig';h.note=r.reason}})}}"
+      },
+      {
+        "text": "Dossier",
+        "onClick": "{()=>setSelected(h.id)}"
+      },
+      {
+        "text": "Inplannen",
+        "onClick": "{()=>setForm({type:'winter',hh:h.id})}"
+      }
+    ],
+    "fields": [
+      {
+        "label": "\"Vast te stellen jaardoel (minuten)\""
+      }
+    ],
+    "modals": [
+      {
+        "title": "\"Nieuw huishouddossier\"",
+        "fields": "{[{key:'name',label:'Naam huishouden',required:true},{key:'team',label:'Team',type:'select',options:['JO13-1','JO17-1','Geen team'],value:'JO13-1'}]}",
+        "onSave": "{v=>{change('Huishouddossier aangemaakt',d=>{d.households.push({id:uid('h'),name:v.name,code:'CLV-'+uid('').slice(-4).toUpperCase(),target:d.settings.target*60,winter:d.settings.target*60*d.settings.winterPercent/100,base:0,baseBefore:0,separated:false,status:'Nieuw',exempt:false,buyout:false,blocked:false,team:v.team,note:''})});setForm(null)}}"
+      }
+    ],
+    "mutations": [
+      {
+        "action": "'Voorgesteld jaardoel bijgewerkt'",
+        "body": "d=>{const x=d.requests.find(x=>x.id===r.id);x.target=Number(e.target.value);x.winter=x.target/2;x.reviews=[]}"
+      },
+      {
+        "action": "'Urenvraag beoordeeld'",
+        "body": "d=>{d.requests.find(x=>x.id===r.id).status='Afgehandeld';d.households.find(h=>h.id===r.hh)!.blocked=false}"
+      },
+      {
+        "action": "'Beoordeling vastgelegd'",
+        "body": "d=>{d.requests.find(x=>x.id===r.id).reviews.push(reviewer)}"
+      },
+      {
+        "action": "'Besluit definitief vastgelegd'",
+        "body": "d=>{d.requests.find(x=>x.id===r.id).status='Goedgekeurd';const h=d.households.find(h=>h.id===r.hh)!;h.blocked=false;if(r.type==='Afkoop'){h.buyout=true;if(!d.invoices.some(i=>i.hh===h.id&&i.status!=='Vervallen'))d.invoices.push({id:uid('inv'),hh:h.id,amount:150,type:'Afkoop',status:'Goedgekeurd'})}else if(r.type==='Vrijstelling')h.exempt=true;else if(r.type==='Vermindering'){h.target=Number(r.target)||360;h.winter=h.target/2}else if(r.type==='Rolbeëindiging'){const a=d.assignments.find(a=>a.id===r.assignment);if(a){a.active=false;a.end=r.effectiveEnd||'2026-10-02'}h.target=Number(r.target);h.winter=Number(r.winter??h.target/2)}else if(r.type==='Uitstel'){h.note='Uitstel binnen het seizoen: '+r.reason}else{d.requests.find(x=>x.id===r.id).status='Beoordeeld · opvolging nodig';h.note=r.reason}}"
+      },
+      {
+        "action": "'Huishouddossier aangemaakt'",
+        "body": "d=>{d.households.push({id:uid('h'),name:v.name,code:'CLV-'+uid('').slice(-4).toUpperCase(),target:d.settings.target*60,winter:d.settings.target*60*d.settings.winterPercent/100,base:0,baseBefore:0,separated:false,status:'Nieuw',exempt:false,buyout:false,blocked:false,team:v.team,note:''})}"
+      }
+    ]
+  },
+  {
+    "file": "people.tsx",
+    "function": "WinterPlanning",
+    "titles": [],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Plaatsing bevestigen",
+        "onClick": "{()=>{if(!person){toast.error('Kies eerst een uitvoerder.');return}const t=s.shifts.find(t=>t.id===shift)!;if(toPlace===0){toast.info('Het wintertekort is al volledig ingepland.');return}if(p.pending>0){toast.error('Beoordeel eerst de openstaande uren.');return}const existing=s.bookings.find(b=>b.hh===id&&b.shiftId===shift&&b.status==='Ingepland');const exists=!!existing;const error=bookingError(s,t,s.people.find(x=>x.id===person)!,existing?.id,!!existing?.buddyId);if(error){toast.error(error);return}if(t.minutes>p.remaining){toast.error('Kies een verenigingstaak die binnen de resterende jaarverplichting past.');return}if(!exists&&activeBookings(s,shift).length>=t.capacity){toast.error('Deze verenigingstaak is vol.');return}change(exists?'Bestaande boeking gekoppeld aan wintertekort':'Inhaalplaatsing vastgelegd',d=>{if(!exists)d.bookings.push({id:uid('b'),shiftId:shift,personId:person,hh:id,status:'Ingepland',minutes:t.minutes,cancelDays:t.cancelDays,winterMinutes:Math.min(t.minutes,toPlace)} as any);else (d.bookings.find(b=>b.id===existing!.id) as any).winterMinutes=Math.min(t.minutes,toPlace);d.notifications.unshift({id:uid('n'),title:'Inhaalplaatsing na de winterstop',text:t.title,route:'diensten',read:false,kind:'Verenigingstaak'})});onClose()}}"
+      }
+    ],
+    "fields": [
+      {
+        "label": "\"Uitvoerder\""
+      },
+      {
+        "label": "\"Verenigingstaak na de winterstop\""
+      }
+    ],
+    "modals": [
+      {
+        "title": "\"Wintertekort passend inplannen\""
+      }
+    ],
+    "mutations": [
+      {
+        "action": "exists?'Bestaande boeking gekoppeld aan wintertekort':'Inhaalplaatsing vastgelegd'",
+        "body": "d=>{if(!exists)d.bookings.push({id:uid('b'),shiftId:shift,personId:person,hh:id,status:'Ingepland',minutes:t.minutes,cancelDays:t.cancelDays,winterMinutes:Math.min(t.minutes,toPlace)} as any);else (d.bookings.find(b=>b.id===existing!.id) as any).winterMinutes=Math.min(t.minutes,toPlace);d.notifications.unshift({id:uid('n'),title:'Inhaalplaatsing na de winterstop',text:t.title,route:'diensten',read:false,kind:'Verenigingstaak'})}"
+      }
+    ]
+  },
+  {
+    "file": "people.tsx",
+    "function": "HouseholdDetail",
+    "titles": [],
+    "tabs": [
+      {
+        "value": "{tab}",
+        "options": "{['Overzicht','Personen','Afspraken','Historie']}"
+      }
+    ],
+    "buttons": [
+      {
+        "text": "Persoon uitnodigen",
+        "onClick": "{()=>setForm('invite')}"
+      },
+      {
+        "text": "Uitzondering aanvragen",
+        "onClick": "{()=>setForm('request')}"
+      },
+      {
+        "text": "Vaste rol toekennen",
+        "onClick": "{()=>setForm('role')}"
+      },
+      {
+        "text": "Verifieer demo",
+        "onClick": "{()=>change('E-mailverificatie gesimuleerd',d=>{d.people.find(p=>p.id===x.id)!.verified=true})}"
+      },
+      {
+        "text": "Extra persoon uitnodigen",
+        "onClick": "{()=>setForm('invite')}"
+      },
+      {
+        "text": "Koppeling / splitsing beoordelen",
+        "onClick": "{()=>setForm('link')}"
+      }
+    ],
+    "fields": [],
+    "modals": [
+      {
+        "title": "{h.name}",
+        "description": "{'Dossier '+h.id+' · Intakecode '+h.code}"
+      },
+      {
+        "title": "\"Extra persoon uitnodigen\"",
+        "description": "\"Een ouder, lid van 16+ of extra uitvoerder krijgt een eigen profiel en persoonlijke toegang.\"",
+        "fields": "{[{key:'name',label:'Volledige naam',required:true},{key:'email',label:'Persoonlijk e-mailadres',type:'email',required:true},{key:'age',label:'Leeftijd',type:'number',value:18}]}",
+        "onSave": "{v=>{if(s.people.some(p=>p.email===v.email)){toast.error('Dit e-mailadres heeft al een identiteit. Kies geen gedeeld adres voor onafhankelijke intakes.');return}change('Uitnodiging aangemaakt · demo',d=>{d.people.push({id:uid('p'),name:v.name,email:v.email,age:Number(v.age),hh:id,team:h.team,skills:[],prefs:[],availability:[],limitations:'',interests:[],intake:false,certs:[],verified:false,maxHours:6,reserve:false,buddy:true})});setForm('')}}"
+      },
+      {
+        "title": "\"Een passende afspraak aanvragen\"",
+        "fields": "{[{key:'type',label:'Soort aanvraag',type:'select',value:'Vermindering',options:['Vermindering','Vrijstelling','Uitstel','Afkoop']},{key:'reason',label:'Toelichting en praktische mogelijkheden',type:'textarea',required:true},{key:'target',label:'Voorgesteld jaardoel in minuten',type:'number',value:360}]}",
+        "onSave": "{v=>{change('Aanvraag ingediend voor twee beoordelingen',d=>{d.requests.push({id:uid('r'),hh:id,person:persons[0]?.id,type:v.type,reason:v.reason,target:Number(v.target),status:'In behandeling',reviews:[]});d.households.find(x=>x.id===id)!.blocked=true});setForm('')}}"
+      },
+      {
+        "title": "\"Vaste vrijwilligersrol toekennen\"",
+        "description": "\"De erkende rol kan het hele huishouden vrijstellen. Dit verleent geen systeemrechten en boekt geen fictieve uren.\"",
+        "fields": "{[{key:'person',label:'Rolhouder',type:'select',options:persons.map(p=>({value:p.id,label:p.name})),value:persons[0]?.id},{key:'role',label:'Rol',type:'select',options:s.roleCatalog.map(r=>({value:r.id,label:r.name})),value:s.roleCatalog[0].id},{key:'start',label:'Vanaf',type:'date',value:'2026-07-01'},{key:'end',label:'Tot en met',type:'date',value:'2027-06-30'}]}",
+        "onSave": "{v=>{change('Vrijwilligersrol erkend voor het huishouden',d=>{d.assignments.push({id:uid('as'),hh:id,...v,active:true,exemptAtGrant:d.roleCatalog.find(r=>r.id===v.role)?.exempt})});setForm('')}}"
+      },
+      {
+        "title": "\"Huishoudwijziging ter beoordeling\"",
+        "fields": "{[{key:'type',label:'Wijziging',type:'select',options:['Koppelen','Splitsen','Herstellen'],value:'Splitsen'},{key:'reason',label:'Betrokken dossiers en gewenste verplichtingskoppeling',type:'textarea',required:true}]}",
+        "onSave": "{v=>{change('Dossierwijziging geregistreerd voor beoordeling',d=>{d.requests.push({id:uid('r'),hh:id,type:'Huishoudwijziging · '+v.type,reason:v.reason,status:'In behandeling',reviews:[]})});setForm('')}}"
+      }
+    ],
+    "mutations": [
+      {
+        "action": "'E-mailverificatie gesimuleerd'",
+        "body": "d=>{d.people.find(p=>p.id===x.id)!.verified=true}"
+      },
+      {
+        "action": "'Intakeroutes bijgewerkt'",
+        "body": "d=>{d.households.find(x=>x.id===id)!.separated=v}"
+      },
+      {
+        "action": "'Uitnodiging aangemaakt · demo'",
+        "body": "d=>{d.people.push({id:uid('p'),name:v.name,email:v.email,age:Number(v.age),hh:id,team:h.team,skills:[],prefs:[],availability:[],limitations:'',interests:[],intake:false,certs:[],verified:false,maxHours:6,reserve:false,buddy:true})}"
+      },
+      {
+        "action": "'Aanvraag ingediend voor twee beoordelingen'",
+        "body": "d=>{d.requests.push({id:uid('r'),hh:id,person:persons[0]?.id,type:v.type,reason:v.reason,target:Number(v.target),status:'In behandeling',reviews:[]});d.households.find(x=>x.id===id)!.blocked=true}"
+      },
+      {
+        "action": "'Vrijwilligersrol erkend voor het huishouden'",
+        "body": "d=>{d.assignments.push({id:uid('as'),hh:id,...v,active:true,exemptAtGrant:d.roleCatalog.find(r=>r.id===v.role)?.exempt})}"
+      },
+      {
+        "action": "'Dossierwijziging geregistreerd voor beoordeling'",
+        "body": "d=>{d.requests.push({id:uid('r'),hh:id,type:'Huishoudwijziging · '+v.type,reason:v.reason,status:'In behandeling',reviews:[]})}"
+      }
+    ]
+  },
+  {
+    "file": "people.tsx",
+    "function": "Intake",
+    "titles": [
+      {
+        "component": "PageTitle",
+        "title": "\"Jouw talent. Jouw bijdrage.\""
+      },
+      {
+        "component": "Panel"
+      }
+    ],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Huishouddossier",
+        "onClick": "{()=>setHouse(true)}"
+      },
+      {
+        "text": "Vorige",
+        "onClick": "{()=>setStep(step-1)}"
+      },
+      {
+        "text": "Verder",
+        "onClick": "{()=>setStep(step+1)}"
+      },
+      {
+        "text": "Intake opslaan",
+        "onClick": "{()=>change('Je persoonlijke intake is opgeslagen',d=>{d.people=d.people.map(p=>p.id===selected?{...v,intake:true}:p)})}"
+      }
+    ],
+    "fields": [
+      {
+        "label": "\"Praktische ervaring\""
+      },
+      {
+        "label": "\"Voorkeurstaken\""
+      },
+      {
+        "label": "\"Jouw talenten\""
+      },
+      {
+        "label": "\"Interesse in een vaste functie\""
+      },
+      {
+        "label": "\"Beschikbaarheid\""
+      },
+      {
+        "label": "\"Gewenste inzet per maand (uur)\""
+      },
+      {
+        "label": "\"Wat lukt minder goed?\"",
+        "hint": "\"Beschrijf praktische grenzen, geen diagnose of bewijsstukken.\""
+      },
+      {
+        "label": "\"Verhinderde datums\"",
+        "hint": "\"Datums gescheiden door een komma, bijvoorbeeld 2026-10-10, 2026-10-17\""
+      },
+      {
+        "label": "\"Wat zou je willen leren?\""
+      }
+    ],
+    "modals": [],
+    "mutations": [
+      {
+        "action": "'Je persoonlijke intake is opgeslagen'",
+        "body": "d=>{d.people=d.people.map(p=>p.id===selected?{...v,intake:true}:p)}"
+      }
+    ]
+  },
+  {
+    "file": "people.tsx",
+    "function": "Vacancies",
+    "titles": [
+      {
+        "component": "PageTitle",
+        "title": "\"Maak het verschil, op jouw manier.\""
+      },
+      {
+        "component": "Panel"
+      },
+      {
+        "component": "Panel",
+        "title": "\"Jouw belangstelling\""
+      }
+    ],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Ontdek deze functie",
+        "onClick": "{()=>setSelected(v)}"
+      },
+      {
+        "text": "Kennismaking",
+        "onClick": "{()=>change('Kennismaking ingepland',d=>{d.applications.find(x=>x.id===a.id).status='Kennismaking'})}"
+      },
+      {
+        "text": "Ik heb belangstelling",
+        "onClick": "{()=>{change('Je belangstelling is vastgelegd',d=>{d.applications.push({id:uid('ap'),person:person.id,vacancy:selected.id,status:'Belangstelling'})});setSelected(null)}}"
+      }
+    ],
+    "fields": [],
+    "modals": [
+      {
+        "title": "{selected.title}"
+      }
+    ],
+    "mutations": [
+      {
+        "action": "'Kennismaking ingepland'",
+        "body": "d=>{d.applications.find(x=>x.id===a.id).status='Kennismaking'}"
+      },
+      {
+        "action": "'Je belangstelling is vastgelegd'",
+        "body": "d=>{d.applications.push({id:uid('ap'),person:person.id,vacancy:selected.id,status:'Belangstelling'})}"
+      }
+    ]
+  },
+  {
+    "file": "store.tsx",
+    "function": "AppProvider",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": [
+      {
+        "action": "'Melding toegevoegd'",
+        "body": "d=>{d.notifications.unshift({id:uid('n'),title,text,route,read:false,kind:'Actie'})}"
+      },
+      {
+        "action": "'Je inschrijving is bevestigd'",
+        "body": "d=>{d.bookings.push({id:uid('b'),shiftId:t.id,personId:p.id,hh:p.hh,status:'Ingepland',minutes:t.minutes,cancelDays:t.cancelDays,buddyId,positionKey:positionKey(t.id,freePosition)});d.waitlist=d.waitlist.filter(w=>!(w.shiftId===t.id&&w.personId===p.id));d.notifications.unshift({id:uid('n'),title:'Inschrijving bevestigd',text:`${p.name} · ${t.title}`,route:'diensten',read:false,kind:'Verenigingstaak'})}"
+      }
+    ]
+  },
+  {
+    "file": "tasks.tsx",
+    "function": "TaskMarket",
+    "titles": [
+      {
+        "component": "PageTitle",
+        "title": "\"Vind jouw plek in de club.\""
+      }
+    ],
+    "tabs": [
+      {
+        "value": "{filter}",
+        "options": "{['Alle taken','Past bij mij','Open plaatsen']}"
+      }
+    ],
+    "buttons": [
+      {
+        "text": "Nieuwe taak",
+        "onClick": "{()=>setCreate(true)}"
+      },
+      {
+        "text": "Mijn voorkeuren",
+        "onClick": "{()=>go('intake')}"
+      },
+      {
+        "text": "Vaste vrijwilligersfuncties",
+        "onClick": "{()=>go('vacatures')}"
+      },
+      {
+        "text": "full?'Bekijk wachtlijst':'Bekijk & meld aan'",
+        "onClick": "{()=>setSelected(t)}"
+      },
+      {
+        "text": "person.reserve?'Reservepool verlaten':'Ik wil invallen'",
+        "onClick": "{()=>change(person.reserve?'Je bent uit de reservepool':'Je bent toegevoegd aan de reservepool',d=>{d.people.find(p=>p.id===person.id)!.reserve=!person.reserve})}"
+      },
+      {
+        "text": "Vraag hulp",
+        "onClick": "{()=>setHelp(true)}"
+      }
+    ],
+    "fields": [],
+    "modals": [
+      {
+        "title": "\"We denken met je mee\"",
+        "fields": "{[{key:'reason',label:'Wat zou voor jou wel passen?',type:'textarea',required:true}]}",
+        "onSave": "{v=>{change('Je hulpvraag staat bij de vrijwilligerscommissie',d=>{d.requests.push({id:uid('r'),hh:person.hh,person:person.id,type:'Passende taak',reason:v.reason,status:'In behandeling',reviews:[]})});setHelp(false)}}"
+      }
+    ],
+    "mutations": [
+      {
+        "action": "person.reserve?'Je bent uit de reservepool':'Je bent toegevoegd aan de reservepool'",
+        "body": "d=>{d.people.find(p=>p.id===person.id)!.reserve=!person.reserve}"
+      },
+      {
+        "action": "'Je hulpvraag staat bij de vrijwilligerscommissie'",
+        "body": "d=>{d.requests.push({id:uid('r'),hh:person.hh,person:person.id,type:'Passende taak',reason:v.reason,status:'In behandeling',reviews:[]})}"
+      }
+    ]
+  },
+  {
+    "file": "tasks.tsx",
+    "function": "ShiftDetail",
+    "titles": [],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "booked?'Je bent ingeschreven':full?wait?'Je staat op de wachtlijst':'Zet mij op de wachtlijst':'Inschrijving bevestigen'",
+        "onClick": "{()=>{if(full){if(!wait)change('Je staat op de wachtlijst',d=>{d.waitlist.push({shiftId:t.id,personId:executor})});onClose()}else if(book(t,p,buddy)){onClose()}}}"
+      },
+      {
+        "text": "Verenigingstaak bewerken",
+        "onClick": "{()=>setEdit(true)}"
+      }
+    ],
+    "fields": [
+      {
+        "label": "\"Wie pakt deze taak op?\""
+      },
+      {
+        "label": "\"Kies een bevoegd maatje\""
+      }
+    ],
+    "modals": [
+      {
+        "title": "{t.title}",
+        "description": "{t.committee+' · '+t.category}"
+      }
+    ],
+    "mutations": [
+      {
+        "action": "'Je staat op de wachtlijst'",
+        "body": "d=>{d.waitlist.push({shiftId:t.id,personId:executor})}"
+      }
+    ]
+  },
+  {
+    "file": "tasks.tsx",
+    "function": "ShiftEditor",
+    "titles": [],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Annuleren",
+        "onClick": "{onClose}"
+      },
+      {
+        "text": "Opslaan",
+        "onClick": "{()=>{if(!v.title.trim()||!v.date||timeHours(v.end)<=timeHours(v.start)||Number(v.capacity)<1||Number(v.minutes)<=0){toast.error('Vul een titel, geldige tijd, bezetting en urenwaarde in.');return}if(shift&&allocationsFor(s,shift.id).length&&(v.date!==shift.date||v.start!==shift.start||v.end!==shift.end||Number(v.capacity)!==shift.capacity||Number(v.minutes)!==shift.minutes)){toast.error('Deze plaatsen zijn aan een team toegewezen. Stem bestaande afspraken eerst af via het cluster.');return}if(occupied&&Number(v.capacity)<activeBookings(s,shift!.id).length){toast.error('Bezetting kan niet lager zijn dan het aantal inschrijvingen.');return}if(shift){const issue=activeBookings(s,shift.id).map(b=>bookingError(s,{...v,status:'Gepubliceerd'},s.people.find(p=>p.id===b.personId)!,b.id,!!b.buddyId)).find(Boolean);if(issue){toast.error(issue);return}}change(shift?'Verenigingstaak bijgewerkt':'Verenigingstaak aangemaakt',d=>{const value={...v,id:shift?.id||uid('s'),capacity:Number(v.capacity),minutes:Number(v.minutes),minAge:Number(v.minAge),cancelDays:Number(v.cancelDays)};if(shift)d.shifts=d.shifts.map(t=>t.id===shift.id?value:t);else{d.shifts.push(value);if(isAdmin&&distribution==='team')makeCluster(d,{title:value.title,teamId:targetTeam,deadline:value.date,mode:'mixed',notes:'Verdeel deze verenigingstaak binnen het team.',positions:Array.from({length:value.capacity},(_,i)=>({shiftId:value.id,position:i+1})),countsForTeam:true})}if(occupied)d.notifications.unshift({id:uid('n'),title:'Je verenigingstaak is gewijzigd',text:v.title+' · controleer de nieuwe afspraak',route:'diensten',read:false,kind:'Wijziging'});if(v.status==='Gepubliceerd'&&shift?.status!=='Gepubliceerd')d.notifications.unshift({id:uid('n'),title:'Nieuwe taak gepubliceerd',text:v.title,route:'taken',read:false,kind:'Aanbod',task:value.id})});onClose()}}"
+      }
+    ],
+    "fields": [
+      {
+        "label": "{f.label}"
+      },
+      {
+        "label": "\"Commissie\""
+      },
+      {
+        "label": "\"Categorie\""
+      },
+      {
+        "label": "\"Publicatie\""
+      },
+      {
+        "label": "\"Vereiste kwalificatie\""
+      },
+      {
+        "label": "\"Instructie\""
+      },
+      {
+        "label": "\"Verdeling van de verenigingstaak\""
+      },
+      {
+        "label": "\"Verantwoordelijk team\""
+      }
+    ],
+    "modals": [
+      {
+        "title": "{shift?'Verenigingstaak aanpassen':'Nieuwe verenigingstaak'}",
+        "description": "\"Maak een concept en publiceer wanneer de bezetting en instructies kloppen.\""
+      }
+    ],
+    "mutations": [
+      {
+        "action": "shift?'Verenigingstaak bijgewerkt':'Verenigingstaak aangemaakt'",
+        "body": "d=>{const value={...v,id:shift?.id||uid('s'),capacity:Number(v.capacity),minutes:Number(v.minutes),minAge:Number(v.minAge),cancelDays:Number(v.cancelDays)};if(shift)d.shifts=d.shifts.map(t=>t.id===shift.id?value:t);else{d.shifts.push(value);if(isAdmin&&distribution==='team')makeCluster(d,{title:value.title,teamId:targetTeam,deadline:value.date,mode:'mixed',notes:'Verdeel deze verenigingstaak binnen het team.',positions:Array.from({length:value.capacity},(_,i)=>({shiftId:value.id,position:i+1})),countsForTeam:true})}if(occupied)d.notifications.unshift({id:uid('n'),title:'Je verenigingstaak is gewijzigd',text:v.title+' · controleer de nieuwe afspraak',route:'diensten',read:false,kind:'Wijziging'});if(v.status==='Gepubliceerd'&&shift?.status!=='Gepubliceerd')d.notifications.unshift({id:uid('n'),title:'Nieuwe taak gepubliceerd',text:v.title,route:'taken',read:false,kind:'Aanbod',task:value.id})}"
+      }
+    ]
+  },
+  {
+    "file": "tasks.tsx",
+    "function": "MyShifts",
+    "titles": [
+      {
+        "component": "PageTitle",
+        "title": "{canPlan?'Verenigingstaken & uitvoering':'Mijn taken'}"
+      },
+      {
+        "component": "Panel"
+      }
+    ],
+    "tabs": [
+      {
+        "value": "{view}",
+        "options": "{['Komend','Te bevestigen','Historie']}"
+      }
+    ],
+    "buttons": [
+      {
+        "text": "Bevestigen",
+        "onClick": "{()=>openAction(b,'Uitvoering bevestigen')}"
+      },
+      {
+        "text": "No-show",
+        "onClick": "{()=>openAction(b,'Niet verschenen')}"
+      },
+      {
+        "text": "Uitvoering",
+        "onClick": "{()=>openAction(b,'Uitvoering bevestigen')}"
+      },
+      {
+        "text": "Ruilen",
+        "onClick": "{()=>openAction(b,'Overname aanbieden')}"
+      },
+      {
+        "text": "Afmelden",
+        "onClick": "{()=>openAction(b,'Afmelden')}"
+      },
+      {
+        "text": "Ziekmelden",
+        "onClick": "{()=>openAction(b,'Ziekmelding')}"
+      },
+      {
+        "text": "Correctie melden",
+        "onClick": "{()=>openAction(b,'Urencontrole')}"
+      },
+      {
+        "text": "Annuleren",
+        "onClick": "{()=>setAction(null)}"
+      },
+      {
+        "text": "Bevestigen",
+        "onClick": "{()=>{if(action.type==='Uitvoering bevestigen'&&(!Number.isFinite(Number(minutes))||Number(minutes)<0)){toast.error('Vul geldige minuten in.');return}if(['Urencontrole','Niet verschenen'].includes(action.type)&&!reason.trim()){toast.error('Voeg een toelichting toe.');return}change(action.type+' vastgelegd',d=>{const b=d.bookings.find(b=>b.id===action.b.id)!;b.reason=reason;if(action.type==='Overname aanbieden')b.swap=true;else if(action.type==='Uitvoering bevestigen'){b.status='Aanwezig';b.minutes=Number(minutes);d.requests.filter(r=>r.type==='Urencontrole'&&r.hh===b.hh).forEach(r=>r.status='Afgehandeld');d.households.find(h=>h.id===b.hh)!.blocked=false}else if(action.type==='Niet verschenen')b.status='Niet verschenen';else if(action.type==='Ziekmelding')b.status='Ziek gemeld';else if(action.type==='Urencontrole'){b.status='In beoordeling';d.households.find(h=>h.id===b.hh)!.blocked=true;d.requests.push({id:uid('r'),hh:b.hh,person:b.personId,type:'Urencontrole',reason,status:'In behandeling',reviews:[]})}else{const t=d.shifts.find(t=>t.id===b.shiftId)!;const days=(new Date(t.date).getTime()-new Date(TODAY).getTime())/864e5;b.status=days<b.cancelDays?'Laat afgemeld':'Afgemeld'}d.notifications.unshift({id:uid('n'),title:action.type,text:nameOf(d,b.personId),route:'diensten',read:false,kind:'Verenigingstaak'})});setAction(null)}}"
+      }
+    ],
+    "fields": [
+      {
+        "label": "\"Bevestigde minuten\""
+      },
+      {
+        "label": "\"Toelichting\""
+      }
+    ],
+    "modals": [
+      {
+        "title": "{action.type}",
+        "description": "{s.shifts.find(t=>t.id===action.b.shiftId)?.title}"
+      }
+    ],
+    "mutations": [
+      {
+        "action": "action.type+' vastgelegd'",
+        "body": "d=>{const b=d.bookings.find(b=>b.id===action.b.id)!;b.reason=reason;if(action.type==='Overname aanbieden')b.swap=true;else if(action.type==='Uitvoering bevestigen'){b.status='Aanwezig';b.minutes=Number(minutes);d.requests.filter(r=>r.type==='Urencontrole'&&r.hh===b.hh).forEach(r=>r.status='Afgehandeld');d.households.find(h=>h.id===b.hh)!.blocked=false}else if(action.type==='Niet verschenen')b.status='Niet verschenen';else if(action.type==='Ziekmelding')b.status='Ziek gemeld';else if(action.type==='Urencontrole'){b.status='In beoordeling';d.households.find(h=>h.id===b.hh)!.blocked=true;d.requests.push({id:uid('r'),hh:b.hh,person:b.personId,type:'Urencontrole',reason,status:'In behandeling',reviews:[]})}else{const t=d.shifts.find(t=>t.id===b.shiftId)!;const days=(new Date(t.date).getTime()-new Date(TODAY).getTime())/864e5;b.status=days<b.cancelDays?'Laat afgemeld':'Afgemeld'}d.notifications.unshift({id:uid('n'),title:action.type,text:nameOf(d,b.personId),route:'diensten',read:false,kind:'Verenigingstaak'})}"
+      }
+    ]
+  },
+  {
+    "file": "tasks.tsx",
+    "function": "SwapMarket",
+    "titles": [
+      {
+        "component": "PageTitle",
+        "title": "\"Geef je verenigingstaak een nieuwe plek.\""
+      },
+      {
+        "component": "Panel"
+      }
+    ],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Overnemen of ruilen",
+        "onClick": "{()=>{setSelected(b);setExecutor(person.id);setSwapWith('')}}"
+      },
+      {
+        "text": "Definitief bevestigen",
+        "onClick": "{()=>{const t=s.shifts.find(t=>t.id===selected.shiftId)!,p=s.people.find(p=>p.id===executor)!;if(selected.personId===executor){toast.error('Je kunt je eigen verenigingstaak niet overnemen.');return}const err=bookingError(s,t,p,swapWith||undefined);if(err){toast.error(err);return}const other=s.bookings.find(b=>b.id===swapWith);if(other){const err2=bookingError(s,s.shifts.find(t=>t.id===other.shiftId)!,s.people.find(p=>p.id===selected.personId)!,selected.id);if(err2){toast.error('Ruilpartner: '+err2);return}}change(other?'Beide verenigingstaken zijn geruild':'Verenigingstaak definitief overgenomen',d=>{const b=d.bookings.find(b=>b.id===selected.id)!;const oldPerson=b.personId,oldHh=b.hh;b.personId=executor;b.hh=p.hh;b.swap=false;if(other){const ob=d.bookings.find(b=>b.id===other.id)!;ob.personId=oldPerson;ob.hh=oldHh;ob.swap=false}d.notifications.unshift({id:uid('n'),title:'Dienstoverdracht bevestigd',text:t.title,route:'diensten',read:false,kind:'Verenigingstaak'})});setSelected(null)}}"
+      }
+    ],
+    "fields": [
+      {
+        "label": "\"Uitvoerder\""
+      },
+      {
+        "label": "\"Ruil met een eigen verenigingstaak (optioneel)\""
+      }
+    ],
+    "modals": [
+      {
+        "title": "\"Overnemen of wederzijds ruilen\""
+      }
+    ],
+    "mutations": [
+      {
+        "action": "other?'Beide verenigingstaken zijn geruild':'Verenigingstaak definitief overgenomen'",
+        "body": "d=>{const b=d.bookings.find(b=>b.id===selected.id)!;const oldPerson=b.personId,oldHh=b.hh;b.personId=executor;b.hh=p.hh;b.swap=false;if(other){const ob=d.bookings.find(b=>b.id===other.id)!;ob.personId=oldPerson;ob.hh=oldHh;ob.swap=false}d.notifications.unshift({id:uid('n'),title:'Dienstoverdracht bevestigd',text:t.title,route:'diensten',read:false,kind:'Verenigingstaak'})}"
+      }
+    ]
+  },
+  {
+    "file": "tasks.tsx",
+    "function": "Planner",
+    "titles": [
+      {
+        "component": "PageTitle",
+        "title": "\"Een goed rooster begint hier.\""
+      },
+      {
+        "component": "Panel"
+      }
+    ],
+    "tabs": [
+      {
+        "value": "{view}",
+        "options": "{['Dag','Week','Maand']}"
+      }
+    ],
+    "buttons": [
+      {
+        "text": "Sjablonen",
+        "onClick": "{()=>setTemplate(true)}"
+      },
+      {
+        "text": "Verenigingstaak toevoegen",
+        "onClick": "{()=>setEditor('new')}"
+      },
+      {
+        "text": "Concepten publiceren ( relevant.filter(t=>t.status==='Concept').length )",
+        "onClick": "{()=>{const drafts=relevant.filter(t=>t.status==='Concept');if(!drafts.length){toast.info('Er zijn geen conceptdiensten voor deze commissie.');return}change(drafts.length+' verenigingstaken gepubliceerd',d=>{drafts.forEach(t=>{d.shifts.find(x=>x.id===t.id)!.status='Gepubliceerd';if(!d.notifications.some(n=>n.task===t.id))d.notifications.unshift({id:uid('n'),title:'Nieuwe passende taak',text:t.title,route:'taken',read:false,kind:'Aanbod',task:t.id})})})}}"
+      },
+      {
+        "text": "activeBookings(s,t.id).length / t.capacity bezet t.status",
+        "onClick": "{()=>setEditor(t)}"
+      },
+      {
+        "text": "Toevoegen",
+        "onClick": "{()=>{setDate(d);setEditor('new')}}"
+      },
+      {
+        "text": "d.getDate()",
+        "onClick": "{()=>{setDate(v);setView('Dag')}}"
+      },
+      {
+        "text": "t.start t.category · activeBookings(s,t.id).length / t.capacity",
+        "onClick": "{()=>setEditor(t)}"
+      },
+      {
+        "text": "Annuleren",
+        "onClick": "{()=>setImpact(null)}"
+      },
+      {
+        "text": "Wijziging bevestigen",
+        "onClick": "{apply}"
+      }
+    ],
+    "fields": [],
+    "modals": [
+      {
+        "title": "\"Planningwijziging controleren\""
+      },
+      {
+        "title": "\"Roostersjabloon toepassen\"",
+        "fields": "{[{key:'type',label:'Sjabloon',type:'select',value:'Normale zaterdag',options:['Normale zaterdag','Drukke thuisdag','Toernooi']},{key:'date',label:'Startdatum',type:'date',value:date},{key:'repeat',label:'Aantal weken',type:'number',value:1}]}",
+        "onSave": "{v=>{const n=Math.min(12,Math.max(1,Number(v.repeat)||1));change('Roostersjabloon als concept toegevoegd',d=>{for(let i=0;i<n;i++){const day=new Date(v.date);day.setDate(day.getDate()+i*7);for(const cat of cats){d.shifts.push({id:uid('s'),title:v.type+' · '+cat,committee,category:cat,date:day.toISOString().slice(0,10),start:'09:00',end:v.type==='Toernooi'?'15:00':'12:00',minutes:v.type==='Toernooi'?360:180,capacity:v.type==='Drukke thuisdag'?4:2,status:'Concept',location:'Sportpark Duindorp',minAge:cat==='Bar'?18:16,qualification:cat==='Bar'?'IVA':'',buddy:true,cancelDays:d.settings.cancelDays,instructions:'Volg de commissie-instructies en meld je bij de coördinator.',slot:0,experienced:1})}}});setDate(v.date);setTemplate(false)}}"
+      }
+    ],
+    "mutations": [
+      {
+        "action": "'Planning bijgewerkt'",
+        "body": "d=>{let t=d.shifts.find(t=>t.id===original.id)!;if(selectedIndex!==undefined&&t.capacity>1){const source=structuredClone(t);const bs=activeBookings(d,t.id);const children=Array.from({length:source.capacity},(_,i)=>({...structuredClone(source),id:i===0?source.id:uid('s'),capacity:1,slot:(source.slot+i)%rowCount}));d.shifts=d.shifts.filter(x=>x.id!==source.id);d.shifts.push(...children);bs.forEach((b,i)=>{if(children[i]){b.shiftId=children[i].id;b.positionKey=children[i].id+':1'}});t=children[selectedIndex]}Object.assign(t,{start:impact.start,end:impact.end,slot:targetRow,category:impact.category||t.category});if(activeBookings(d,t.id).length)d.notifications.unshift({id:uid('n'),title:'Gewijzigde verenigingstaak controleren',text:t.title,route:'diensten',read:false,kind:'Wijziging'})}"
+      },
+      {
+        "action": "drafts.length+' verenigingstaken gepubliceerd'",
+        "body": "d=>{drafts.forEach(t=>{d.shifts.find(x=>x.id===t.id)!.status='Gepubliceerd';if(!d.notifications.some(n=>n.task===t.id))d.notifications.unshift({id:uid('n'),title:'Nieuwe passende taak',text:t.title,route:'taken',read:false,kind:'Aanbod',task:t.id})})}"
+      },
+      {
+        "action": "'Roostersjabloon als concept toegevoegd'",
+        "body": "d=>{for(let i=0;i<n;i++){const day=new Date(v.date);day.setDate(day.getDate()+i*7);for(const cat of cats){d.shifts.push({id:uid('s'),title:v.type+' · '+cat,committee,category:cat,date:day.toISOString().slice(0,10),start:'09:00',end:v.type==='Toernooi'?'15:00':'12:00',minutes:v.type==='Toernooi'?360:180,capacity:v.type==='Drukke thuisdag'?4:2,status:'Concept',location:'Sportpark Duindorp',minAge:cat==='Bar'?18:16,qualification:cat==='Bar'?'IVA':'',buddy:true,cancelDays:d.settings.cancelDays,instructions:'Volg de commissie-instructies en meld je bij de coördinator.',slot:0,experienced:1})}}}"
+      }
+    ]
+  },
+  {
+    "file": "team-workspace.tsx",
+    "function": "useActions",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": [
+      {
+        "action": "label",
+        "body": "d=>Object.assign(d,next)"
+      }
+    ]
+  },
+  {
+    "file": "team-workspace.tsx",
+    "function": "ClusterPlanning",
+    "titles": [
+      {
+        "component": "Panel",
+        "title": "\"Verenigingstaken verdelen\""
+      }
+    ],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Cluster aan team toewijzen",
+        "onClick": "{()=>setCreate(true)}"
+      },
+      {
+        "text": "Teamverdeling bekijken",
+        "onClick": "{()=>go('teams')}"
+      }
+    ],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "team-workspace.tsx",
+    "function": "ClusterCard",
+    "titles": [],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Terug naar vrije markt",
+        "onClick": "{onRelease}"
+      },
+      {
+        "text": "Bekijk plaatsen",
+        "onClick": "{()=>go('teams')}"
+      }
+    ],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "team-workspace.tsx",
+    "function": "ClusterEditor",
+    "titles": [],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Plaats n",
+        "onClick": "{()=>setSelected(selected.includes(key)?selected.filter(x=>x!==key):[...selected,key])}"
+      },
+      {
+        "text": "Annuleren",
+        "onClick": "{onClose}"
+      },
+      {
+        "text": "Cluster toewijzen"
+      }
+    ],
+    "fields": [
+      {
+        "label": "\"Naam van het cluster\""
+      },
+      {
+        "label": "\"Verantwoordelijk team\""
+      },
+      {
+        "label": "\"Uiterste datum voor verdeling\""
+      },
+      {
+        "label": "\"Verdeling binnen het team\""
+      },
+      {
+        "label": "\"Afspraken voor de teamouder\""
+      }
+    ],
+    "modals": [
+      {
+        "title": "\"Cluster aan een team toewijzen\"",
+        "description": "\"Selecteer vrije bezettingsplekken. Bestaande inschrijvingen blijven behouden.\""
+      }
+    ],
+    "mutations": []
+  },
+  {
+    "file": "team-workspace.tsx",
+    "function": "TeamWorkspace",
+    "titles": [
+      {
+        "component": "PageTitle",
+        "title": "\"Mijn teams\""
+      },
+      {
+        "component": "PageTitle",
+        "title": "{team.name}"
+      },
+      {
+        "component": "Panel",
+        "title": "\"Wie pakt welke plek op?\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Teamtaken per lid\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Verenigingsinzet van de teamhuishoudens\""
+      }
+    ],
+    "tabs": [
+      {
+        "value": "{activeTab}",
+        "options": "{tabs}"
+      },
+      {
+        "value": "{filter}",
+        "options": "{['Alle taken','Verenigingstaken','Teamtaken']}"
+      }
+    ],
+    "buttons": [
+      {
+        "text": "Seizoensdoel",
+        "onClick": "{()=>setGoalModal(true)}"
+      },
+      {
+        "text": "Teamtaak toevoegen",
+        "onClick": "{()=>setCreate(true)}"
+      },
+      {
+        "text": "Teambericht plaatsen",
+        "onClick": "{()=>go('berichten')}"
+      },
+      {
+        "text": "Vrijwilligerscommissie benaderen",
+        "onClick": "{()=>go('berichten')}"
+      },
+      {
+        "text": "Doel aanpassen",
+        "onClick": "{()=>setAdjust(m.id)}"
+      }
+    ],
+    "fields": [],
+    "modals": [
+      {
+        "title": "\"Seizoensdoel voor het team\"",
+        "description": "\"Aantal bevestigde taken per lid. Dit doel verandert de huishoudelijke verenigingsuren niet.\"",
+        "fields": "{[{key:'goal',label:'Taken per lid dit seizoen',type:'number',value:seasonGoal(s,team).goal,required:true}]}",
+        "onSave": "{v=>{if(run('Teamdoel bijgewerkt',d=>setGoal(d,team.id,Number(v.goal))))setGoalModal(false)}}"
+      },
+      {
+        "title": "{'Doel voor '+team.members.find(m=>m.id===adjust)?.name}",
+        "description": "\"Een afwijking geldt alleen voor dit lid, dit team en dit seizoen.\"",
+        "fields": "{[{key:'goal',label:'Aantal taken',type:'number',value:seasonGoal(s,team).overrides[adjust]?.goal??seasonGoal(s,team).goal,required:true},{key:'reason',label:'Reden voor de aanpassing',type:'textarea',value:seasonGoal(s,team).overrides[adjust]?.reason||'',required:true}]}",
+        "onSave": "{v=>{if(run('Individueel teamdoel bijgewerkt',d=>setGoal(d,team.id,Number(v.goal),adjust,v.reason)))setAdjust(null)}}"
+      }
+    ],
+    "mutations": []
+  },
+  {
+    "file": "team-workspace.tsx",
+    "function": "TeamTaskCard",
+    "titles": [],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "own?'Kies uitvoerder':'Inschrijven'",
+        "onClick": "{()=>onBook(candidate)}"
+      },
+      {
+        "text": "Verdelen",
+        "onClick": "{()=>onAssign(candidate)}"
+      },
+      {
+        "text": "Wedstrijdzaken akkoord",
+        "onClick": "{()=>run('Wedstrijdzaken akkoord vastgelegd',d=>approveTeamHours(d,t.id,0,true))}"
+      },
+      {
+        "text": "Urenwaarde beoordelen",
+        "onClick": "{()=>setApprove(true)}"
+      }
+    ],
+    "fields": [],
+    "modals": [
+      {
+        "title": "\"Verenigingsuren goedkeuren\"",
+        "description": "\"De goedgekeurde waarde geldt voor nieuwe inschrijvingen. Bestaande afspraken blijven behouden.\"",
+        "fields": "{[{key:'minutes',label:'Goedgekeurde minuten per plaats',type:'number',value:t.requestedMinutes,required:true}]}",
+        "onSave": "{v=>{if(run('Verenigingsuren goedgekeurd',d=>approveTeamHours(d,t.id,Number(v.minutes))))setApprove(false)}}"
+      }
+    ],
+    "mutations": []
+  },
+  {
+    "file": "team-workspace.tsx",
+    "function": "AllocationRow",
+    "titles": [],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "b?.swap?'Vervanging verdelen':'Toewijzen'",
+        "onClick": "{onAssign}"
+      },
+      {
+        "text": "Kies uitvoerder",
+        "onClick": "{onBook}"
+      },
+      {
+        "text": "Kan niet / overname",
+        "onClick": "{onIssue}"
+      }
+    ],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "team-workspace.tsx",
+    "function": "AssignModal",
+    "titles": [],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Voorstel kiezen",
+        "onClick": "{()=>setMember(suggestions[0].memberId)}"
+      },
+      {
+        "text": "Annuleren",
+        "onClick": "{onClose}"
+      },
+      {
+        "text": "Toewijzing versturen",
+        "onClick": "{()=>{if(run('Taak toegewezen aan huishouden',d=>{if(member)assignMember(d,a.id,member);else clearAssignment(d,a.id)}))onClose()}}"
+      }
+    ],
+    "fields": [
+      {
+        "label": "\"Lid namens wie het huishouden de taak oppakt\""
+      }
+    ],
+    "modals": [
+      {
+        "title": "\"Plaats aan een lid toewijzen\"",
+        "description": "{t.title+' · '+t.start+'–'+t.end}"
+      }
+    ],
+    "mutations": []
+  },
+  {
+    "file": "team-workspace.tsx",
+    "function": "TeamBookModal",
+    "titles": [],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Annuleren",
+        "onClick": "{onClose}"
+      },
+      {
+        "text": "Uitvoerder bevestigen",
+        "onClick": "{()=>{if(run('Uitvoerder bevestigd',d=>{teamBook(d,a.id,member,effective,voluntary)}))onClose()}}"
+      }
+    ],
+    "fields": [
+      {
+        "label": "\"Voor welk lid telt deze taak?\""
+      },
+      {
+        "label": "\"Wie voert de taak daadwerkelijk uit?\""
+      }
+    ],
+    "modals": [
+      {
+        "title": "{t.title}",
+        "description": "{kindLabel(t)+' · '+team.name+' · plaats '+a.position}"
+      }
+    ],
+    "mutations": []
+  },
+  {
+    "file": "team-workspace.tsx",
+    "function": "IssueModal",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [
+      {
+        "title": "\"Verhindering of overname melden\"",
+        "description": "\"De teamouder krijgt een opvolgactie. Een bevestigde uitvoerder blijft staan totdat een vervanger definitief overneemt.\"",
+        "fields": "{[{key:'reason',label:'Wat moet de teamouder weten?',type:'textarea',required:true}]}",
+        "onSave": "{v=>{if(run('Verhindering doorgegeven',d=>reportIssue(d,a.id,v.reason)))onClose()}}"
+      }
+    ],
+    "mutations": []
+  },
+  {
+    "file": "team-workspace.tsx",
+    "function": "TeamTaskEditor",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [
+      {
+        "title": "\"Teamtaak op de teamtakenmarkt\"",
+        "description": "{'Alleen zichtbaar binnen '+team.name+'. Verenigingsuren vragen voorafgaande goedkeuring.'}",
+        "fields": "{[{key:'title',label:'Taaknaam',required:true},{key:'category',label:'Soort teamtaak',type:'select',value:'Fluiten',options:['Fluiten','Grensrechter','Fruit','Vervoer','Bidons','Overige teamtaak']},{key:'date',label:'Datum',type:'date',value:'2026-10-10',required:true},{key:'start',label:'Begintijd',type:'time',value:'13:00',required:true},{key:'end',label:'Eindtijd',type:'time',value:'14:30',required:true},{key:'capacity',label:'Benodigde personen',type:'number',value:1,required:true},{key:'minAge',label:'Minimumleeftijd uitvoerder',type:'number',value:16},{key:'qualification',label:'Vereiste kwalificatie',type:'select',value:'',options:[{value:'',label:'Geen'},'IVA','EHBO']},{key:'repeat',label:'Aantal wekelijkse herhalingen',type:'number',value:1,hint:'Maximaal 12; alle data moeten binnen het seizoen vallen.'},{key:'countsForTeam',label:'Meetellen voor teamdoel',type:'check',value:true,hint:'Elke bevestigde plaats telt als één taak voor het gekozen lid'},{key:'requestedMinutes',label:'Verenigingsuren aanvragen (minuten)',type:'number',value:0,hint:'0 = alleen teamtaak. Fluiten en grensrechter krijgen eerst beoordeling door wedstrijdzaken.'},{key:'instructions',label:'Instructies',type:'textarea',value:'Meld je bij de teamouder en controleer de wedstrijdgegevens.'}]}",
+        "onSave": "{v=>{if(run('Teamtaak gepubliceerd',d=>addTeamTask(d,{...v,teamId:team.id,capacity:Number(v.capacity),minAge:Number(v.minAge),repeat:Number(v.repeat),requestedMinutes:Number(v.requestedMinutes),instructions:v.instructions==='Meld je bij de teamouder en controleer de wedstrijdgegevens.'?preferredInstructions(s,team.id,v.category,v.instructions):v.instructions})))onClose()}}"
+      }
+    ],
+    "mutations": []
+  },
+  {
+    "file": "team-workspace.tsx",
+    "function": "TeamMyTasks",
+    "titles": [
+      {
+        "component": "Panel",
+        "title": "\"Kies wie de toegewezen taak uitvoert\""
+      },
+      {
+        "component": "Panel",
+        "title": "\"Taken via mijn teams\""
+      }
+    ],
+    "tabs": [
+      {
+        "value": "{view}",
+        "options": "{['Komend','Historie']}"
+      }
+    ],
+    "buttons": [
+      {
+        "text": "Uitgevoerde teamtaken bekijken",
+        "onClick": "{()=>setView('Historie')}"
+      },
+      {
+        "text": "Uitvoering bevestigen",
+        "onClick": "{()=>run('Uitvoering bevestigd',d=>{confirmExecution(d,b.id)})}"
+      },
+      {
+        "text": "Niet verschenen",
+        "onClick": "{()=>run('Niet verschenen vastgelegd',d=>{confirmExecution(d,b.id,false)})}"
+      },
+      {
+        "text": "Overname / verhindering",
+        "onClick": "{()=>setIssue(a)}"
+      }
+    ],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "team-workspace.tsx",
+    "function": "TeamActions",
+    "titles": [
+      {
+        "component": "Panel",
+        "title": "\"Teamtaken die aandacht vragen\""
+      }
+    ],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Actie openen",
+        "onClick": "{()=>go(memberOf(s,a)?.householdId===person.hh?'diensten':'teams')}"
+      }
+    ],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "team-workspace.tsx",
+    "function": "TeamDashboard",
+    "titles": [
+      {
+        "component": "Panel",
+        "title": "\"Samen rondom mijn teams\""
+      }
+    ],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Mijn teams openen",
+        "onClick": "{()=>go('teams')}"
+      }
+    ],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "team-workspace.tsx",
+    "function": "DistributionSettings",
+    "titles": [
+      {
+        "component": "Panel",
+        "title": "\"Verdeling van verenigingstaken\""
+      }
+    ],
+    "tabs": [],
+    "buttons": [],
+    "fields": [
+      {
+        "label": "\"Standaard verdelingswijze\""
+      }
+    ],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "ui.tsx",
+    "function": "Avatar",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "ui.tsx",
+    "function": "Badge",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "ui.tsx",
+    "function": "Btn",
+    "titles": [],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "children",
+        "onClick": "{onClick}"
+      }
+    ],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "ui.tsx",
+    "function": "SelectBox",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "ui.tsx",
+    "function": "Segments",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "ui.tsx",
+    "function": "SearchBox",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "ui.tsx",
+    "function": "Empty",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "ui.tsx",
+    "function": "PageTitle",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "ui.tsx",
+    "function": "Panel",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "ui.tsx",
+    "function": "Stat",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "ui.tsx",
+    "function": "Hint",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "ui.tsx",
+    "function": "Field",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "ui.tsx",
+    "function": "Toggle",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "ui.tsx",
+    "function": "CheckList",
+    "titles": [],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "selected.includes(v)&&<Check size={14}/> v",
+        "onClick": "{()=>onChange(selected.includes(v)?selected.filter(x=>x!==v):[...selected,v])}"
+      }
+    ],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "ui.tsx",
+    "function": "MiniDetails",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "ui.tsx",
+    "function": "Modal",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "ui.tsx",
+    "function": "FormModal",
+    "titles": [],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "Annuleren",
+        "onClick": "{onClose}"
+      },
+      {
+        "text": "submit"
+      }
+    ],
+    "fields": [
+      {
+        "label": "{f.label}",
+        "hint": "{f.hint}"
+      }
+    ],
+    "modals": [
+      {
+        "title": "{title}",
+        "description": "{description}"
+      }
+    ],
+    "mutations": []
+  },
+  {
+    "file": "ui.tsx",
+    "function": "DownloadButton",
+    "titles": [],
+    "tabs": [],
+    "buttons": [
+      {
+        "text": "label",
+        "onClick": "{onClick}"
+      }
+    ],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "ui.tsx",
+    "function": "download",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  },
+  {
+    "file": "ui.tsx",
+    "function": "csv",
+    "titles": [],
+    "tabs": [],
+    "buttons": [],
+    "fields": [],
+    "modals": [],
+    "mutations": []
+  }
+]

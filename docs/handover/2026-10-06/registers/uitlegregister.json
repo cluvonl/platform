@@ -1,0 +1,878 @@
+{
+  "HELP_TOPICS": {
+    "page.overzicht": {
+      "id": "page.overzicht",
+      "title": "Jouw startpunt in Cluvo",
+      "text": "Hier zie je wat er speelt in jouw huishouden, team en vereniging. Open een actie om die af te handelen, of kies een onderdeel in het menu."
+    },
+    "page.taken": {
+      "id": "page.taken",
+      "title": "Kies een verenigingstaak",
+      "text": "Op deze takenmarkt kun je zelf een open verenigingstaak kiezen. Filter op wat bij je past, open een taak en kies wie uit jouw huishouden deze uitvoert."
+    },
+    "page.diensten": {
+      "id": "page.diensten",
+      "title": "Jouw taken en afspraken",
+      "text": "Hier staan je verenigingstaken en teamtaken. Bekijk komende taken, kies een uitvoerder voor een toegewezen plek of vraag een overname als je niet kunt."
+    },
+    "page.gezin": {
+      "id": "page.gezin",
+      "title": "Alles voor je gezin bij elkaar",
+      "text": "Deze agenda brengt de taken en wedstrijden van jouw huishouden samen. Open een afspraak voor de details en controleer de waarschuwing wanneer tijden overlappen."
+    },
+    "page.ruilmarkt": {
+      "id": "page.ruilmarkt",
+      "title": "Een taak overnemen of ruilen",
+      "text": "Hier vind je verenigingstaken waarvoor iemand een vervanger zoekt. Kies een taak, selecteer de uitvoerder en bevestig de overname of ruil. Tot dat moment blijft de oorspronkelijke afspraak staan."
+    },
+    "page.planbord": {
+      "id": "page.planbord",
+      "title": "Het rooster van de vereniging",
+      "text": "Kies een commissie en datum om de verenigingstaken te plannen. Voeg taken toe, gebruik een sjabloon of verplaats een tijdblok. Controleer de wijziging voordat je die bevestigt."
+    },
+    "page.huishoudens": {
+      "id": "page.huishoudens",
+      "title": "Samen bijdragen als huishouden",
+      "text": "Hier bekijk je wie bij een huishouden hoort en hoeveel verenigingsuren zijn bevestigd. Zoek een huishouden en open het dossier voor personen, afspraken en aanvragen."
+    },
+    "page.intake": {
+      "id": "page.intake",
+      "title": "Vertel wat bij jou past",
+      "text": "Met je profiel kan de vereniging passende taken voorstellen. Vul per persoon de talenten, voorkeuren en beschikbaarheid in en sla je gegevens op."
+    },
+    "page.commissies": {
+      "id": "page.commissies",
+      "title": "Samenwerken in een commissie",
+      "text": "Kies een commissie om het werk, de mensen en de praktische kennis te bekijken. Gebruik de tabbladen om een lid toe te voegen of documenten en instructies te delen."
+    },
+    "page.kanban": {
+      "id": "page.kanban",
+      "title": "Van actie naar afgerond werk",
+      "text": "Op het kanbanbord staat wie welke actie oppakt. Voeg een kaart toe, open die voor afspraken en verplaats de kaart naar de volgende kolom als het werk verder is."
+    },
+    "page.teams": {
+      "id": "page.teams",
+      "title": "Taken organiseren binnen het team",
+      "text": "Kies je team om verenigingstaken en eigen teamtaken te bekijken. Leden kunnen een open plek kiezen; de teamouder kan taken verdelen en de voortgang per lid volgen."
+    },
+    "page.wedstrijden": {
+      "id": "page.wedstrijden",
+      "title": "Wedstrijden en bijbehorende taken",
+      "text": "Hier zie je wanneer en waar teams spelen. Filter op een team of jouw gezin en controleer een wedstrijdwijziging wanneer die invloed heeft op de planning."
+    },
+    "page.agenda": {
+      "id": "page.agenda",
+      "title": "De jaaragenda van je club",
+      "text": "Deze kalender toont activiteiten, wedstrijden en verenigingstaken samen. Kies een maand of soort afspraak en open een kalenderitem voor de details."
+    },
+    "page.berichten": {
+      "id": "page.berichten",
+      "title": "Berichten en meldingen op één plek",
+      "text": "Open een gesprek om mee te praten of bekijk de meldingen voor jouw taken. Bij Voorkeuren kies je over welke onderwerpen je een melding wilt ontvangen."
+    },
+    "page.acties": {
+      "id": "page.acties",
+      "title": "Weet wat jouw volgende stap is",
+      "text": "Bovenaan staan acties die jouw aandacht vragen. Open een actie om deze af te handelen; gebruik het persoonlijke kanbanbord voor je overige afspraken."
+    },
+    "page.beleid": {
+      "id": "page.beleid",
+      "title": "De afspraken van de vereniging",
+      "text": "Hier staan de geldende afspraken en jouw bevestigingen. Lees een document, stel zo nodig een vraag en bevestig daarna de versie die je hebt gelezen."
+    },
+    "page.waardering": {
+      "id": "page.waardering",
+      "title": "Aandacht voor de mensen in de club",
+      "text": "Hier kun je inzet waarderen en een moment van aandacht vastleggen. Bekijk ook de terugblik na een uitgevoerde taak om te delen wat goed ging en wat beter kan."
+    },
+    "page.opleidingen": {
+      "id": "page.opleidingen",
+      "title": "Leren en hulp krijgen bij een taak",
+      "text": "Bekijk een opleiding, zoek een ervaren maatje of meld je aan voor de reservepool. Bij Kwalificaties zie je welke bevoegdheden zijn vastgelegd."
+    },
+    "page.vacatures": {
+      "id": "page.vacatures",
+      "title": "Een vaste vrijwilligersfunctie vinden",
+      "text": "Hier staan functies waarmee je vaker kunt bijdragen aan de vereniging. Open een functie, lees wat erbij hoort en geef je belangstelling door als die bij je past."
+    },
+    "page.rapportages": {
+      "id": "page.rapportages",
+      "title": "Zien waar de club hulp kan gebruiken",
+      "text": "Deze overzichten tonen de bezetting, huishouduren en het aanbod aan taken. Gebruik de filters en export om met de commissie te bepalen waar actie nodig is."
+    },
+    "page.financien": {
+      "id": "page.financien",
+      "title": "Bijdragen en besteding volgen",
+      "text": "Hier zie je de vrijwilligerspot, de seizoensafrekening en financiële afspraken. Kies een tabblad voor het juiste overzicht en open een regel om die te beoordelen."
+    },
+    "page.templates": {
+      "id": "page.templates",
+      "title": "Gericht communiceren met je club",
+      "text": "Maak een bericht met een bewaard template of kies een passende groep ontvangers. Controleer altijd het voorbeeld en de geselecteerde groep voordat je de verzending in de demo vastlegt."
+    },
+    "page.instellingen": {
+      "id": "page.instellingen",
+      "title": "De clubafspraken instellen",
+      "text": "Kies links het onderdeel dat je wilt aanpassen, zoals uren, rollen of het seizoen. Controleer de waarden en sla ze op; de andere werkruimtes gebruiken deze instellingen."
+    },
+    "panel.next-actions": {
+      "id": "panel.next-actions",
+      "title": "Begin met de open acties",
+      "text": "Dit zijn de stappen die jij nu kunt zetten, zoals een uitvoerder kiezen of een uitvoering bevestigen. Druk op de knop naast de actie om meteen naar de juiste functie te gaan."
+    },
+    "panel.matches": {
+      "id": "panel.matches",
+      "title": "De komende wedstrijden",
+      "text": "Hier zie je de eerstvolgende wedstrijden die bij je gezin horen. Open het wedstrijdoverzicht voor alle teams, locaties en tijden."
+    },
+    "panel.upcoming": {
+      "id": "panel.upcoming",
+      "title": "Wat komt er binnenkort aan?",
+      "text": "Dit overzicht helpt je vooruit te kijken naar taken en activiteiten. Open de agenda of een taak om de datum, locatie en afspraken te bekijken."
+    },
+    "panel.household": {
+      "id": "panel.household",
+      "title": "De inzet van jouw huishouden",
+      "text": "Bevestigde uren tellen mee voor het huishoudelijke doel; geplande uren zijn nog niet uitgevoerd. Open het huishouddossier voor de personen en afspraken die hierbij horen."
+    },
+    "panel.dashboard-advice": {
+      "id": "panel.dashboard-advice",
+      "title": "Taken die aandacht vragen",
+      "text": "Hier staan passende taken of plekken die nog hulp nodig hebben. Open de takenmarkt om te bekijken wat jij kunt doen en een geschikte taak te kiezen."
+    },
+    "panel.work-together": {
+      "id": "panel.work-together",
+      "title": "Lopende acties in de club",
+      "text": "Hier zie je het werk waar mensen samen aan bezig zijn. Open een kaart of het kanbanbord om de verantwoordelijke, deadline en vervolgstap te bekijken."
+    },
+    "panel.my-interest": {
+      "id": "panel.my-interest",
+      "title": "Jouw belangstelling voor een functie",
+      "text": "Dit overzicht bewaart voor welke vaste functies je belangstelling hebt getoond. Bekijk de status om te zien of de commissie je aanvraag nog bespreekt."
+    },
+    "panel.committee-work": {
+      "id": "panel.committee-work",
+      "title": "Het werk van deze commissie",
+      "text": "Hier zie je de actuele acties en afspraken van de gekozen commissie. Open een kaart om de details te lezen of ga naar het bord om het werk te verdelen."
+    },
+    "panel.committee-members": {
+      "id": "panel.committee-members",
+      "title": "Wie doet mee in de commissie?",
+      "text": "Hier vind je de leden en hun rol. Kies Commissielid toevoegen om iemand aan de commissie te koppelen en leg de rol vast."
+    },
+    "panel.instructions": {
+      "id": "panel.instructions",
+      "title": "Praktische kennis bewaren",
+      "text": "Hier vind je uitleg die helpt om het werk goed uit te voeren. Open een instructie om die te lezen of voeg kennis toe voor de volgende vrijwilliger."
+    },
+    "panel.documents": {
+      "id": "panel.documents",
+      "title": "Documenten van de commissie",
+      "text": "Bewaar hier de documenten die de commissie nodig heeft. Open een document om het te lezen of gebruik Kennis toevoegen om iets nieuws vast te leggen."
+    },
+    "panel.notification-preferences": {
+      "id": "panel.notification-preferences",
+      "title": "Kies welke meldingen bij je passen",
+      "text": "Zet per onderwerp aan of uit of je hierover een melding wilt krijgen. Je voorkeuren helpen om berichten relevant te houden."
+    },
+    "panel.template": {
+      "id": "panel.template",
+      "title": "Een berichttemplate gebruiken",
+      "text": "Een template geeft je een vaste basis voor een bericht. Pas de tekst aan bij Bewerken en controleer bij Voorbeeld hoe het bericht wordt weergegeven."
+    },
+    "panel.send-rules": {
+      "id": "panel.send-rules",
+      "title": "Een bericht op het juiste moment",
+      "text": "Hier stel je in bij welke gebeurtenis een bericht klaar moet staan. Kies het onderwerp en de regel; controleer daarna het bijbehorende template."
+    },
+    "panel.segments": {
+      "id": "panel.segments",
+      "title": "De juiste mensen vinden",
+      "text": "Filter op talenten, voorkeuren of andere kenmerken om een passende groep te vinden. Controleer de uitkomst en bewaar de groep als je die vaker wilt gebruiken."
+    },
+    "panel.saved-segments": {
+      "id": "panel.saved-segments",
+      "title": "Een bewaarde groep opnieuw gebruiken",
+      "text": "Deze groepen bewaren je eerdere selectie. Kies een groep om de mensen te bekijken of die groep opnieuw voor een bericht te gebruiken."
+    },
+    "panel.send-log": {
+      "id": "panel.send-log",
+      "title": "Eerdere demo-verzendingen bekijken",
+      "text": "Hier zie je welke berichten in het prototype zijn vastgelegd en voor welke groep. Open een regel om de inhoud en het resultaat terug te lezen."
+    },
+    "panel.club-settings": {
+      "id": "panel.club-settings",
+      "title": "De basisgegevens van de club",
+      "text": "Pas hier de gegevens en afspraken van dit onderdeel aan. Controleer de ingevulde waarden en kies Opslaan om ze in de demo te gebruiken."
+    },
+    "panel.hours-settings": {
+      "id": "panel.hours-settings",
+      "title": "Het urenbeleid van de vereniging",
+      "text": "Stel het urendoel, winterdoel en de termijnen in. Controleer ook de financiële bijdrage en kies Instellingen opslaan. Deze afspraken gelden voor de huishoudelijke verenigingsinzet."
+    },
+    "panel.association-tasks": {
+      "id": "panel.association-tasks",
+      "title": "De afspraken uit de verenigingstakenmarkt",
+      "text": "Kies Komend voor geplande taken, Te bevestigen voor taken die gecontroleerd moeten worden of Historie voor eerdere registraties. Open een taak voor de details of gebruik de actieknoppen naast de afspraak."
+    },
+    "panel.roster": {
+      "id": "panel.roster",
+      "title": "Het rooster lezen en aanpassen",
+      "text": "Groen betekent dat een plaats is gevuld; blauw is open en geel is een concept. Klik op een blok om de taak te bewerken. In de dagweergave kun je een blok slepen of de rechterrand verschuiven en daarna de wijziging bevestigen."
+    },
+    "panel.volunteer-roles": {
+      "id": "panel.volunteer-roles",
+      "title": "Wanneer een vaste rol voldoende inzet is",
+      "text": "Hier bepaal je welke vaste vrijwilligersrollen meetellen als voldoende bijdrage. Voeg een rol toe en geef aan welke afspraak voor die rol geldt."
+    },
+    "panel.appointments": {
+      "id": "panel.appointments",
+      "title": "Vaste rollen toekennen en volgen",
+      "text": "Dit overzicht toont wie een vaste vrijwilligersrol vervult. Controleer de aanstelling en leg wijzigingen vast vanuit het huishouddossier."
+    },
+    "panel.match-sync": {
+      "id": "panel.match-sync",
+      "title": "Wedstrijdwijzigingen controleren",
+      "text": "Hier kun je de wedstrijdgegevens in de demo bijwerken. Start de controle en beoordeel daarna de wijzigingen die gevolgen hebben voor taken of afspraken."
+    },
+    "panel.import": {
+      "id": "panel.import",
+      "title": "Leden eerst controleren, daarna toevoegen",
+      "text": "Met de import voeg je ledengegevens toe na een controle van de kolommen en gevonden verschillen. Gebruik de voorbeeldimport en controleer de uitkomst voordat je die bevestigt."
+    },
+    "panel.sign-in": {
+      "id": "panel.sign-in",
+      "title": "Aanmelden via e-mail en een code",
+      "text": "Deze functie laat zien hoe iemand met een eenmalige code kan aanmelden. Vul een e-mailadres in en doorloop de demonstratie met de getoonde voorbeeldcode."
+    },
+    "panel.install": {
+      "id": "panel.install",
+      "title": "Cluvo snel openen op je telefoon",
+      "text": "Je kunt Cluvo als snelkoppeling op je beginscherm zetten. Gebruik de installatieknop als je browser die aanbiedt; anders volg je de aanwijzingen voor jouw telefoon."
+    },
+    "panel.demo-reset": {
+      "id": "panel.demo-reset",
+      "title": "De voorbeeldgegevens herstellen",
+      "text": "Hier kun je opnieuw beginnen met de oorspronkelijke voorbeeldgegevens. Kies Herstellen en bevestig je keuze. De uitleg die je al hebt gesloten blijft voor jou onthouden."
+    },
+    "panel.new-season": {
+      "id": "panel.new-season",
+      "title": "De afspraken voor een nieuw seizoen",
+      "text": "Bereid het nieuwe seizoen voor met de juiste doelen en datums. Open Seizoensvoorbereiding, controleer de instellingen en bevestig ze wanneer alles klopt."
+    },
+    "panel.season-history": {
+      "id": "panel.season-history",
+      "title": "Vorige seizoenen teruglezen",
+      "text": "Hier staan bewaarde standen van eerdere seizoenen. Gebruik dit overzicht om terug te kijken zonder de huidige seizoensafspraken te veranderen."
+    },
+    "panel.audit": {
+      "id": "panel.audit",
+      "title": "Terugzien wat is gewijzigd",
+      "text": "Deze historie toont welke handelingen in het prototype zijn gedaan en door welke voorbeeldpersoon. Lees de regels om een wijziging of afspraak terug te vinden."
+    },
+    "panel.clusters": {
+      "id": "panel.clusters",
+      "title": "Verenigingstaken aan een team geven",
+      "text": "Bundel vrije plaatsen in een cluster en wijs dat toe aan een team. Kies of leden zelf inschrijven, de teamouder verdeelt of beide. Het huishouden bevestigt daarna de uitvoerder."
+    },
+    "panel.team-planning": {
+      "id": "panel.team-planning",
+      "title": "Van toewijzing naar bevestigde uitvoerder",
+      "text": "Hier zie je per plaats wie aan de beurt is en wie de taak uitvoert. Wijs een open plaats toe aan een lid of kies als huishouden de uitvoerder; alleen een bevestigde uitvoerder maakt de plek bemenst."
+    },
+    "panel.team-progress": {
+      "id": "panel.team-progress",
+      "title": "Het teamdoel per lid volgen",
+      "text": "Vergelijk het seizoensdoel met de uitgevoerde, ingeplande en toegewezen taken. Als teamouder kun je het doel per lid aanpassen. Alleen een bevestigde uitvoering telt als voltooid."
+    },
+    "panel.team-households": {
+      "id": "panel.team-households",
+      "title": "Verenigingsuren per huishouden",
+      "text": "Dit overzicht telt de verenigingsuren voor elk huishouden één keer, ook als kinderen in meerdere teams spelen. Gebruik de resterende uren om samen de inzet te plannen."
+    },
+    "panel.choose-executor": {
+      "id": "panel.choose-executor",
+      "title": "Kies wie de toegewezen taak doet",
+      "text": "Er is een plaats aan jouw huishouden toegewezen, maar de uitvoerder is nog niet bevestigd. Kies Uitvoerder kiezen, selecteer een geschikt gezinslid en bevestig de afspraak."
+    },
+    "panel.my-team-tasks": {
+      "id": "panel.my-team-tasks",
+      "title": "Taken die via het team zijn geregeld",
+      "text": "Hier staan de teamafspraken en de gekozen uitvoerders. Wissel tussen Komend en Historie. Vraag een overname als je niet kunt; de afspraak blijft staan tot een vervanger bevestigt."
+    },
+    "panel.team-actions": {
+      "id": "panel.team-actions",
+      "title": "Open stappen voor het team",
+      "text": "Dit overzicht toont teamtaken die nog een keuze of oplossing nodig hebben. Open de actie om een uitvoerder te kiezen, een plaats te verdelen of een verhindering op te lossen."
+    },
+    "panel.my-teams": {
+      "id": "panel.my-teams",
+      "title": "Naar jouw teamwerkruimte",
+      "text": "Hier zie je de teams en hun seizoensdoel. Kies Mijn teams openen om taken te bekijken, te verdelen of de voortgang per lid te volgen."
+    },
+    "panel.distribution-settings": {
+      "id": "panel.distribution-settings",
+      "title": "Kies hoe de vereniging taken verdeelt",
+      "text": "Met de vrije takenmarkt kiezen mensen zelf een taak. Met teamtoewijzing krijgt een team een cluster. Stel hier de standaard in; per taak of cluster kun je een andere keuze maken."
+    },
+    "panel.smart-distribution": {
+      "id": "panel.smart-distribution",
+      "title": "Een passend verdeelvoorstel",
+      "text": "Cluvo stelt een verdeling voor op basis van beschikbaarheid, geschiktheid en eerdere inzet. Controleer de voorstellen, pas de leden zo nodig aan en bevestig. De huishoudens kiezen daarna zelf de uitvoerder."
+    },
+    "panel.follow-up": {
+      "id": "panel.follow-up",
+      "title": "Open plaatsen op tijd oplossen",
+      "text": "Eerst kunnen leden zelf inschrijven, daarna verdeelt de teamouder en zo nodig helpt de commissie. Bekijk de fase, pas deadlines aan of open de verdeling. In deze demo start je de controle met Opvolging controleren."
+    },
+    "panel.handover": {
+      "id": "panel.handover",
+      "title": "Het team zorgvuldig overdragen",
+      "text": "Bewaar de afspraken, controleer de checklist en kies de volgende teamouder. Zet de overdracht klaar; pas wanneer de opvolger deze aanvaardt, gaat de verantwoordelijkheid over."
+    },
+    "panel.feedback-inbox": {
+      "id": "panel.feedback-inbox",
+      "title": "Leren van de ervaringen van vrijwilligers",
+      "text": "Hier lees je de terugblikken op taken waarvoor jij verantwoordelijk bent. Open een reactie en verbeter waar nodig de instructie voor een volgende uitvoering."
+    },
+    "panel.personal-feedback": {
+      "id": "panel.personal-feedback",
+      "title": "Na een taak kort terugblikken",
+      "text": "Vertel na een uitgevoerde taak of je die nog eens wilt doen en of de uitleg duidelijk was. Kies Terugblikken bij een taak en beantwoord de twee korte vragen."
+    },
+    "panel.family-hours": {
+      "id": "panel.family-hours",
+      "title": "Uren en teamtaken blijven apart",
+      "text": "Bevestigde verenigingsuren tellen één keer voor jullie huishouden. De teamdoelen tellen taken per kind. Bekijk beide standen om te zien wat nog nodig is."
+    },
+    "panel.policy-confirmations": {
+      "id": "panel.policy-confirmations",
+      "title": "Jouw gelezen afspraken",
+      "text": "Hier zie je welke beleidsversies je hebt bevestigd. Open het document wanneer je de afspraak wilt teruglezen of een nieuwe versie wilt bekijken."
+    },
+    "panel.training-buddy": {
+      "id": "panel.training-buddy",
+      "title": "Een eerste taak samen doen",
+      "text": "Een ervaren maatje helpt je bij een taak waarvoor je nog ervaring of een bevoegdheid opbouwt. Bekijk de beschikbare begeleiding en kies een passende eerste verenigingstaak."
+    },
+    "panel.reserve": {
+      "id": "panel.reserve",
+      "title": "Af en toe extra helpen",
+      "text": "De reservepool is voor mensen die vrijwillig willen bijspringen als er een plek open blijft. Zet je beschikbaarheid aan als je hiervoor benaderd wilt worden."
+    },
+    "panel.qualifications": {
+      "id": "panel.qualifications",
+      "title": "Bevoegdheden bijhouden",
+      "text": "Hier zie je de vastgelegde kwalificaties en wanneer ze opnieuw gecontroleerd moeten worden. Voeg als verantwoordelijke een kwalificatie toe en controleer de geldigheid."
+    },
+    "panel.budget": {
+      "id": "panel.budget",
+      "title": "Waar de vrijwilligerspot naartoe gaat",
+      "text": "Dit overzicht laat zien welke bedragen voor welk doel zijn gereserveerd. Bekijk de posten of voeg als verantwoordelijke een nieuwe budgetpost toe."
+    },
+    "panel.committee-capacity": {
+      "id": "panel.committee-capacity",
+      "title": "Bezetting per commissie vergelijken",
+      "text": "Hier zie je hoeveel verenigingstaken zijn bemenst en waar nog plekken open zijn. Gebruik dit overzicht om hulp te richten op de commissies die die nodig hebben."
+    },
+    "panel.winter-target": {
+      "id": "panel.winter-target",
+      "title": "De voortgang richting het winterdoel",
+      "text": "Dit overzicht vergelijkt de bevestigde huishouduren met het afgesproken winterdoel. Bekijk huishoudens die nog inzet nodig hebben en plan samen passende taken."
+    },
+    "panel.supply": {
+      "id": "panel.supply",
+      "title": "Is er genoeg passend aanbod?",
+      "text": "Hier vergelijk je het beschikbare takenaanbod met de inzet die nog nodig is. Gebruik de uitkomst om extra taken te plannen of het bestaande aanbod beter te verdelen."
+    },
+    "panel.volunteer-care": {
+      "id": "panel.volunteer-care",
+      "title": "Aandacht waar dat nodig is",
+      "text": "Hier zie je signalen die helpen om vrijwilligers te ondersteunen en te waarderen. Bekijk wat aandacht vraagt en maak samen een passende vervolgafspraak."
+    },
+    "team.market": {
+      "id": "team.market",
+      "title": "De besloten teamtakenmarkt",
+      "text": "Deze taken zijn alleen voor dit team: eigen teamtaken en verenigingstaken die aan het team zijn gegeven. Open een vrije plek, kies namens welk lid je meedoet en bevestig wie uit het huishouden de taak uitvoert."
+    },
+    "team.advisor": {
+      "id": "team.advisor",
+      "title": "Welk team past bij het cluster?",
+      "text": "Selecteer eerst de vrije plaatsen hierboven. Vergelijk daarna de teams en de redenen bij het voorstel. Kies het gewenste team; de uiteindelijke uitvoerders worden later door de huishoudens bevestigd."
+    },
+    "family.timeline": {
+      "id": "family.timeline",
+      "title": "Jullie afspraken in tijdsvolgorde",
+      "text": "Taken en wedstrijden van het hele huishouden staan hier bij elkaar. Kies Komend of Historie en open een afspraak om de uitvoerder, taakstatus of locatie te bekijken."
+    },
+    "family.member-goals": {
+      "id": "family.member-goals",
+      "title": "Het doel van ieder kind",
+      "text": "Elk kind heeft een eigen teamdoel voor dit seizoen. Kijk naar uitgevoerd, ingepland en nog toegewezen om te zien welke taken al geregeld zijn en welke nog aandacht vragen."
+    },
+    "households.winter": {
+      "id": "households.winter",
+      "title": "Het winterdoel halen",
+      "text": "Hier zie je welke huishoudens nog uren nodig hebben voor het winterdoel. Kies Inplannen bij een huishouden, selecteer geschikte vrije taken en controleer het voorstel."
+    },
+    "households.exemptions": {
+      "id": "households.exemptions",
+      "title": "Vrijstellingen zorgvuldig vastleggen",
+      "text": "Hier staan huishoudens met een afwijkende afspraak. Open het dossier om de geldende afspraak te bekijken of een nieuwe aanvraag te beoordelen."
+    },
+    "households.requests": {
+      "id": "households.requests",
+      "title": "Aanvragen samen beoordelen",
+      "text": "Dit zijn verzoeken om een afwijkende afspraak of wijziging. Lees de toelichting en leg je beoordeling vast; het dossier bewaart de voortgang van het verzoek."
+    },
+    "household.overview": {
+      "id": "household.overview",
+      "title": "Het huishoudelijke dossier",
+      "text": "Hier staan het urendoel, de voortgang en de acties voor dit huishouden. Gebruik de tabbladen om personen, afspraken en eerdere wijzigingen te bekijken."
+    },
+    "household.people": {
+      "id": "household.people",
+      "title": "Wie hoort bij dit huishouden?",
+      "text": "Hier beheer je de personen die namens dit huishouden taken kunnen uitvoeren. Nodig een extra persoon uit en controleer de koppeling voordat je een wijziging bevestigt."
+    },
+    "household.agreements": {
+      "id": "household.agreements",
+      "title": "Afspraken voor dit huishouden",
+      "text": "Hier staan de vaste rollen en eventuele afwijkende afspraken. Vraag een passende afspraak aan of leg als verantwoordelijke een vaste rol vast."
+    },
+    "household.history": {
+      "id": "household.history",
+      "title": "De historie van het huishouden",
+      "text": "Hier lees je eerdere registraties en wijzigingen terug. Gebruik dit overzicht om te begrijpen hoe de huidige afspraken en urenstand zijn ontstaan."
+    },
+    "messages.conversations": {
+      "id": "messages.conversations",
+      "title": "Een gesprek voeren",
+      "text": "Kies links het gesprek dat je wilt openen. Lees de eerdere berichten, schrijf je reactie onderaan en druk op de verzendknop om die in het gesprek te plaatsen."
+    },
+    "messages.notifications": {
+      "id": "messages.notifications",
+      "title": "Jouw meldingen afhandelen",
+      "text": "Hier staan meldingen die voor jouw huishouden, team of rol bedoeld zijn. Gebruik Openen om de bijbehorende actie te bekijken en markeer gelezen meldingen als afgehandeld."
+    },
+    "policy.read": {
+      "id": "policy.read",
+      "title": "Een afspraak lezen en bevestigen",
+      "text": "Lees de inhoud van deze beleidsversie. Als je vragen hebt, stel die eerst. Bevestig daarna met de bevestigingsknop dat je deze versie hebt gelezen."
+    },
+    "policy.acceptance": {
+      "id": "policy.acceptance",
+      "title": "Wie heeft de afspraken gelezen?",
+      "text": "Hier volg je welke huishoudens of personen de geldende beleidsversie hebben bevestigd. Gebruik dit overzicht om ontbrekende bevestigingen gericht op te volgen."
+    },
+    "policy.history": {
+      "id": "policy.history",
+      "title": "Eerdere beleidsversies terugzien",
+      "text": "Hier staan de eerder gepubliceerde afspraken. Open een versie om de inhoud en ingangsdatum terug te lezen."
+    },
+    "finance.settlement": {
+      "id": "finance.settlement",
+      "title": "De seizoensafrekening controleren",
+      "text": "Dit overzicht vergelijkt de huishoudelijke inzet met de financiële afspraak voor het seizoen. Controleer de regels en open een onbetaalde afspraak als een correctie nodig is."
+    },
+    "finance.agreements": {
+      "id": "finance.agreements",
+      "title": "Financiële afspraken teruglezen",
+      "text": "Hier staan de afspraken die gelden voor de bijdrage en afrekening. Bekijk de bedragen en voorwaarden voordat je een regeling toepast of bespreekt."
+    },
+    "dialog.task-book": {
+      "id": "dialog.task-book",
+      "title": "Een verenigingstaak boeken",
+      "text": "Lees de tijd, locatie en instructies. Kies een geschikte uitvoerder uit jouw huishouden en bevestig de inschrijving. Als er geen vrije plek is, kun je de wachtlijst gebruiken."
+    },
+    "dialog.task-edit": {
+      "id": "dialog.task-edit",
+      "title": "Een verenigingstaak maken of aanpassen",
+      "text": "Vul de datum, tijden, bezetting en voorwaarden in en schrijf een praktische instructie. Bewaar de taak als concept of publiceer wanneer de gegevens en afspraken kloppen."
+    },
+    "dialog.team-book": {
+      "id": "dialog.team-book",
+      "title": "Een uitvoerder voor de teamtaak kiezen",
+      "text": "Kies eerst voor welk lid de taak meetelt en daarna wie uit het huishouden deze uitvoert. Controleer de geschiktheid, tijd en instructies en bevestig de afspraak."
+    },
+    "dialog.cluster": {
+      "id": "dialog.cluster",
+      "title": "Een cluster aan een team geven",
+      "text": "Selecteer de vrije plaatsen die bij elkaar horen, kies een team en stel de manier van verdelen en deadline in. Controleer het totaal en druk op Cluster toewijzen."
+    },
+    "dialog.assign": {
+      "id": "dialog.assign",
+      "title": "Een taak aan een lid toewijzen",
+      "text": "Kies het lid namens wie het huishouden deze plaats oppakt. Controleer het voorstel en bevestig de toewijzing. Het huishouden kiest daarna zelf de werkelijke uitvoerder."
+    },
+    "dialog.team-goal": {
+      "id": "dialog.team-goal",
+      "title": "Het teamdoel instellen",
+      "text": "Vul in hoeveel taken ieder lid dit seizoen hoort te doen en sla het doel op. Dit aantal staat los van de verenigingsuren die voor het huishouden gelden."
+    },
+    "dialog.member-goal": {
+      "id": "dialog.member-goal",
+      "title": "Een passend doel voor één lid",
+      "text": "Vul het aantal taken en de reden voor de afwijking in. Na opslaan geldt dit doel alleen voor dit lid, binnen dit team en dit seizoen."
+    },
+    "dialog.team-task": {
+      "id": "dialog.team-task",
+      "title": "Een eigen teamtaak toevoegen",
+      "text": "Kies de soort taak, datum, bezetting en instructies. Geef aan of de taak meetelt voor het teamdoel en publiceer. Verenigingsuren tellen pas mee na de vereiste goedkeuring."
+    },
+    "dialog.hours-approval": {
+      "id": "dialog.hours-approval",
+      "title": "Verenigingsuren voor een teamtaak",
+      "text": "Controleer de taak en het gevraagde aantal minuten voordat je goedkeurt. Fluiten en grensrechter vragen eerst beoordeling door wedstrijdzaken."
+    },
+    "dialog.issue": {
+      "id": "dialog.issue",
+      "title": "Doorgeven dat een taak niet lukt",
+      "text": "Beschrijf kort wat er nodig is en verstuur de melding. Bij een overname blijft de bestaande afspraak staan totdat een geschikte vervanger die heeft bevestigd."
+    },
+    "dialog.follow-up": {
+      "id": "dialog.follow-up",
+      "title": "Wanneer wie aan zet is",
+      "text": "Kies tot wanneer leden zelf mogen inschrijven en wanneer de teamouder klaar moet zijn met verdelen. Houd beide datums vóór de taakdatum en sla de afspraken op."
+    },
+    "dialog.feedback": {
+      "id": "dialog.feedback",
+      "title": "Twee korte vragen na de taak",
+      "text": "Geef aan of je deze taak nog eens wilt doen en of de instructies duidelijk waren. Je kunt een praktische tip toevoegen en daarna je terugblik bewaren."
+    },
+    "dialog.instructions": {
+      "id": "dialog.instructions",
+      "title": "De volgende vrijwilliger op weg helpen",
+      "text": "Pas de instructie aan met een korte, praktische uitleg. Kies of je die ook voor vergelijkbare komende taken wilt gebruiken en sla de tekst op."
+    },
+    "dialog.confirm": {
+      "id": "dialog.confirm",
+      "title": "Vastleggen wat is uitgevoerd",
+      "text": "Controleer de persoon, taak en uren. Kies Uitvoering bevestigen als de taak is gedaan of Niet verschenen als dat niet zo is. Alleen bevestigde uitvoering telt mee."
+    },
+    "dialog.no-show": {
+      "id": "dialog.no-show",
+      "title": "Een gemiste taak registreren",
+      "text": "Vul een korte toelichting in en bevestig wat er is gebeurd. Een taak die niet is uitgevoerd levert geen bevestigde uren op."
+    },
+    "dialog.swap": {
+      "id": "dialog.swap",
+      "title": "Een overname aanbieden",
+      "text": "Voeg zo nodig een toelichting toe en bevestig dat je een vervanger zoekt. Jij blijft ingeschreven tot een geschikte vervanger de taak definitief overneemt."
+    },
+    "dialog.cancel": {
+      "id": "dialog.cancel",
+      "title": "Een afmelding doorgeven",
+      "text": "Controleer de afmeldtermijn en geef je toelichting. Bevestig de afmelding; een late afmelding wordt ter beoordeling doorgegeven."
+    },
+    "dialog.sick": {
+      "id": "dialog.sick",
+      "title": "Een verhindering doorgeven",
+      "text": "Geef kort door dat je niet kunt en wat er geregeld moet worden. Medische details zijn niet nodig. Bevestig de melding zodat de coördinator kan helpen."
+    },
+    "dialog.hours-check": {
+      "id": "dialog.hours-check",
+      "title": "Een urenafspraak laten controleren",
+      "text": "Beschrijf welke registratie volgens jou niet klopt en verstuur de melding. De verantwoordelijke kan de afspraak beoordelen en een correctie vastleggen."
+    },
+    "dialog.swap-confirm": {
+      "id": "dialog.swap-confirm",
+      "title": "Een taak definitief overnemen of ruilen",
+      "text": "Kies wie de taak gaat doen. Voor een ruil kies je ook een eigen taak; bij alleen overnemen laat je dat veld leeg. Bevestig pas als de betrokken uitvoerders akkoord zijn."
+    },
+    "dialog.planning-change": {
+      "id": "dialog.planning-change",
+      "title": "Een roosterwijziging controleren",
+      "text": "Vergelijk de oude en nieuwe tijden en kijk wie door de wijziging geraakt wordt. Bevestig als de afspraak klopt of kies Annuleren om de oorspronkelijke planning te behouden."
+    },
+    "dialog.roster-template": {
+      "id": "dialog.roster-template",
+      "title": "Een rooster als concept klaarzetten",
+      "text": "Kies het sjabloon, de startdatum en het aantal weken. Maak het conceptrooster en controleer daarna de taken in het planbord voordat je ze publiceert."
+    },
+    "dialog.help-request": {
+      "id": "dialog.help-request",
+      "title": "Hulp bij een passende taak",
+      "text": "Vertel kort welke hulp je nodig hebt om een taak te vinden of uit te voeren. Verstuur je vraag zodat de commissie met je kan meedenken."
+    },
+    "dialog.household-new": {
+      "id": "dialog.household-new",
+      "title": "Een huishouddossier toevoegen",
+      "text": "Vul de basisgegevens van het huishouden en de contactpersoon in. Controleer de gegevens en sla op om het dossier in de demo te openen."
+    },
+    "dialog.winter-plan": {
+      "id": "dialog.winter-plan",
+      "title": "Passende taken voor het winterdoel",
+      "text": "Bekijk welke vrije taken geschikt zijn voor dit huishouden en selecteer de gewenste plaatsen. Controleer de gekozen uitvoerders en bevestig het voorstel."
+    },
+    "dialog.household-person": {
+      "id": "dialog.household-person",
+      "title": "Een persoon aan het huishouden koppelen",
+      "text": "Vul de gegevens van de persoon in en controleer de huishoudkoppeling. Bevestig de uitnodiging zodat deze persoon namens het huishouden kan meedoen."
+    },
+    "dialog.household-request": {
+      "id": "dialog.household-request",
+      "title": "Een afwijkende afspraak aanvragen",
+      "text": "Beschrijf welke afspraak nodig is en voeg een korte reden toe. Verstuur de aanvraag; de verantwoordelijken beoordelen die voordat de afspraak geldt."
+    },
+    "dialog.appointment": {
+      "id": "dialog.appointment",
+      "title": "Een vaste vrijwilligersrol vastleggen",
+      "text": "Kies de persoon en de vaste rol en leg de looptijd vast. Na opslaan is de aanstelling terug te zien bij de afspraken van het huishouden."
+    },
+    "dialog.household-change": {
+      "id": "dialog.household-change",
+      "title": "Een huishoudwijziging laten beoordelen",
+      "text": "Geef aan wat er in het huishouden verandert en waarom. Verstuur de wijziging ter beoordeling voordat de nieuwe afspraak wordt toegepast."
+    },
+    "dialog.vacancy": {
+      "id": "dialog.vacancy",
+      "title": "Belangstelling voor deze functie",
+      "text": "Lees wat de functie vraagt en wat erbij hoort. Voeg een korte motivatie toe en geef je belangstelling door; de commissie kan die daarna met je bespreken."
+    },
+    "dialog.committee-member": {
+      "id": "dialog.committee-member",
+      "title": "Iemand aan een commissie toevoegen",
+      "text": "Kies de persoon en de rol binnen de commissie. Sla op om die persoon aan de samenstelling toe te voegen."
+    },
+    "dialog.knowledge-new": {
+      "id": "dialog.knowledge-new",
+      "title": "Praktische kennis delen",
+      "text": "Geef het document of de instructie een duidelijke titel en vul de inhoud in. Sla de kennis op zodat andere commissieleden die kunnen terugvinden."
+    },
+    "dialog.knowledge-read": {
+      "id": "dialog.knowledge-read",
+      "title": "Een document of instructie lezen",
+      "text": "Lees hier de kennis die voor deze commissie is bewaard. Gebruik de praktische afspraken bij je taak en sluit het venster wanneer je klaar bent."
+    },
+    "dialog.card-new": {
+      "id": "dialog.card-new",
+      "title": "Een nieuwe actie op het bord",
+      "text": "Vul de actie, verantwoordelijke en deadline in en kies de juiste kolom. Sla de kaart op zodat iedereen kan zien wat er moet gebeuren."
+    },
+    "dialog.column": {
+      "id": "dialog.column",
+      "title": "Een werkstap aan het bord toevoegen",
+      "text": "Geef de kolom een korte naam die de stap in jullie werk beschrijft. Na opslaan kun je kaarten naar deze kolom verplaatsen."
+    },
+    "dialog.card": {
+      "id": "dialog.card",
+      "title": "Afspraken bij een actie bijhouden",
+      "text": "Bekijk de verantwoordelijke en deadline, werk de checklist bij en plaats zo nodig een reactie. Gebruik de kolom om aan te geven hoe ver de actie is."
+    },
+    "dialog.match-change": {
+      "id": "dialog.match-change",
+      "title": "Gevolgen van een wedstrijdwijziging",
+      "text": "Bekijk wat er aan de wedstrijd verandert en welke taken of personen worden geraakt. Leg je beoordeling vast zodat de planning gericht kan worden aangepast."
+    },
+    "dialog.calendar-item": {
+      "id": "dialog.calendar-item",
+      "title": "Een afspraak in de jaaragenda",
+      "text": "Hier lees je de datum, locatie en verdere details van deze afspraak. Gebruik deze informatie om de afspraak in je eigen planning mee te nemen."
+    },
+    "dialog.calendar-new": {
+      "id": "dialog.calendar-new",
+      "title": "Een clubactiviteit toevoegen",
+      "text": "Vul de titel, datum, tijd en locatie in. Geef een korte omschrijving en sla de activiteit op zodat die in de jaaragenda verschijnt."
+    },
+    "dialog.template-new": {
+      "id": "dialog.template-new",
+      "title": "Een basis voor herhaalde berichten",
+      "text": "Geef het template een herkenbare naam, onderwerp en berichttekst. Sla het op en controleer daarna het voorbeeld voordat je het gebruikt."
+    },
+    "dialog.role-new": {
+      "id": "dialog.role-new",
+      "title": "Een vaste vrijwilligersrol instellen",
+      "text": "Vul de naam en afspraken van de rol in. Geef aan of de rol voldoende inzet vormt en sla op om die bij een aanstelling te kunnen kiezen."
+    },
+    "dialog.reset": {
+      "id": "dialog.reset",
+      "title": "De voorbeeldgegevens opnieuw klaarzetten",
+      "text": "Bevestig als je de huidige demo-afspraken wilt vervangen door de oorspronkelijke voorbeelden. Uitlegbanners die je al hebt gesloten blijven voor jouw gebruiker onthouden."
+    },
+    "dialog.season": {
+      "id": "dialog.season",
+      "title": "Het volgende seizoen voorbereiden",
+      "text": "Vul het seizoen, de doelen en de belangrijke datums in. Controleer de afspraken en bevestig de voorbereiding wanneer alles klopt."
+    },
+    "dialog.policy-new": {
+      "id": "dialog.policy-new",
+      "title": "Een nieuwe versie van een afspraak",
+      "text": "Vul de nieuwe inhoud en ingangsdatum in. Controleer de tekst en publiceer de versie zodat leden deze kunnen lezen en bevestigen."
+    },
+    "dialog.policy-question": {
+      "id": "dialog.policy-question",
+      "title": "Een vraag over de afspraken stellen",
+      "text": "Omschrijf welke afspraak of passage je wilt bespreken en verstuur je vraag. De verantwoordelijke kan daarna een toelichting geven."
+    },
+    "dialog.appreciation": {
+      "id": "dialog.appreciation",
+      "title": "Een moment van aandacht vastleggen",
+      "text": "Kies voor wie het moment is, omschrijf de aanleiding en leg vast wie het oppakt. Sla op zodat de aandacht een concrete vervolgactie krijgt."
+    },
+    "dialog.qualification": {
+      "id": "dialog.qualification",
+      "title": "Een kwalificatie vastleggen",
+      "text": "Kies de persoon en de behaalde kwalificatie en vul de geldigheidsdatum in. Sla op zodat bij het boeken van taken de bevoegdheid gecontroleerd kan worden."
+    },
+    "dialog.finance-correction": {
+      "id": "dialog.finance-correction",
+      "title": "Een financiële afspraak corrigeren",
+      "text": "Controleer de bestaande onbetaalde afspraak en vul het juiste bedrag en de reden in. Bevestig de correctie zodat deze herleidbaar blijft."
+    },
+    "dialog.budget": {
+      "id": "dialog.budget",
+      "title": "Een besteding in de pot opnemen",
+      "text": "Vul het doel, het bedrag en de toelichting van de budgetpost in. Sla op om de geplande besteding in het overzicht op te nemen."
+    },
+    "dialog.family-detail": {
+      "id": "dialog.family-detail",
+      "title": "De afspraak van je gezin bekijken",
+      "text": "Controleer de tijd, locatie en wie de taak uitvoert. Gebruik de beschikbare actie om een uitvoerder te kiezen, een overname te vragen of na afloop terug te blikken."
+    },
+    "dialog.search": {
+      "id": "dialog.search",
+      "title": "Snel naar een werkruimte of taak",
+      "text": "Typ een naam of onderwerp, zoals planbord of bar. Kies een resultaat om direct de bijbehorende werkruimte te openen."
+    },
+    "dialog.phone": {
+      "id": "dialog.phone",
+      "title": "Cluvo in de mobiele weergave",
+      "text": "Hier kun je dezelfde werkruimte op telefoonformaat proberen. Open het menu om te navigeren en gebruik de knoppen zoals je dat op je telefoon zou doen."
+    },
+    "dialog.discover": {
+      "id": "dialog.discover",
+      "title": "Het prototype uitproberen",
+      "text": "Wissel bovenin van voorbeeldpersoon en rol om verschillende werkruimtes te bekijken. Probeer een taak, teamverdeling of actie; jouw demogegevens blijven op dit apparaat bewaard."
+    }
+  },
+  "PANEL_HELP": {
+    "Dit vraagt je aandacht": "panel.next-actions",
+    "Komende wedstrijden": "panel.matches",
+    "Binnenkort op de club": "panel.upcoming",
+    "Jouw huishouden": "panel.household",
+    "Past bij jouw talenten": "panel.dashboard-advice",
+    "Aandacht voor de komende dagen": "panel.dashboard-advice",
+    "Samen aan de slag": "panel.work-together",
+    "Jouw belangstelling": "panel.my-interest",
+    "Samenstelling": "panel.committee-members",
+    "Zo doen we het samen": "panel.instructions",
+    "Documentenbibliotheek": "panel.documents",
+    "Jouw meldingsvoorkeuren": "panel.notification-preferences",
+    "Een bericht met een reden": "panel.send-rules",
+    "Vind mensen op hun talent": "panel.segments",
+    "Bewaarde segmenten": "panel.saved-segments",
+    "Lokale verzenddemonstraties": "panel.send-log",
+    "Rollen die voldoende inzet vormen": "panel.volunteer-roles",
+    "Actieve aanstellingen": "panel.appointments",
+    "Wedstrijdsynchronisatie": "panel.match-sync",
+    "Gecontroleerde ledenimport": "panel.import",
+    "E-mail & eenmalige code": "panel.sign-in",
+    "Cluvo op je beginscherm": "panel.install",
+    "Demo opnieuw beginnen": "panel.demo-reset",
+    "Een nieuw seizoen voorbereiden": "panel.new-season",
+    "Vereniging": "panel.club-settings",
+    "Uren & termijnen": "panel.hours-settings",
+    "Bewaarde seizoensstanden": "panel.season-history",
+    "Wijzigingshistorie": "panel.audit",
+    "Verenigingstaken verdelen": "panel.clusters",
+    "Wie pakt welke plek op?": "panel.team-planning",
+    "Teamtaken per lid": "panel.team-progress",
+    "Verenigingsinzet van de teamhuishoudens": "panel.team-households",
+    "Kies wie de toegewezen taak uitvoert": "panel.choose-executor",
+    "Taken via mijn teams": "panel.my-team-tasks",
+    "Teamtaken die aandacht vragen": "panel.team-actions",
+    "Samen rondom mijn teams": "panel.my-teams",
+    "Verdeling van verenigingstaken": "panel.distribution-settings",
+    "Samen eerlijk verdelen": "panel.smart-distribution",
+    "Op tijd samen oplossen": "panel.follow-up",
+    "Overdracht van de teamouder": "panel.handover",
+    "Leren van taakervaringen": "panel.feedback-inbox",
+    "Een korte terugblik op jouw inzet": "panel.personal-feedback",
+    "Verenigingsuren van ons huishouden": "panel.family-hours",
+    "Jouw bevestigingen": "panel.policy-confirmations",
+    "Een eerste verenigingstaak met een maatje": "panel.training-buddy",
+    "Reservepool": "panel.reserve",
+    "Kwalificaties en herbevestiging": "panel.qualifications",
+    "Waar we samen in investeren": "panel.budget",
+    "Bezetting per commissie": "panel.committee-capacity",
+    "Winterdoel per huishouden": "panel.winter-target",
+    "Voldoende passend aanbod?": "panel.supply",
+    "Aandacht voor onze vrijwilligers": "panel.volunteer-care"
+  },
+  "DIALOG_HELP": {
+    "Nieuwe verenigingstaak": "dialog.task-edit",
+    "Verenigingstaak aanpassen": "dialog.task-edit",
+    "Cluster aan een team toewijzen": "dialog.cluster",
+    "Plaats aan een lid toewijzen": "dialog.assign",
+    "Seizoensdoel voor het team": "dialog.team-goal",
+    "Teamtaak op de teamtakenmarkt": "dialog.team-task",
+    "Praktische teamtaak": "dialog.team-task",
+    "Verenigingsuren goedkeuren": "dialog.hours-approval",
+    "Verhindering of overname melden": "dialog.issue",
+    "Opvolgafspraken": "dialog.follow-up",
+    "Hoe ging deze taak?": "dialog.feedback",
+    "Een duidelijkere taakinstructie": "dialog.instructions",
+    "Uitvoering controleren": "dialog.confirm",
+    "Uitvoering bevestigen": "dialog.confirm",
+    "Niet verschenen": "dialog.no-show",
+    "Overname aanbieden": "dialog.swap",
+    "Afmelden": "dialog.cancel",
+    "Ziekmelding": "dialog.sick",
+    "Urencontrole": "dialog.hours-check",
+    "Overnemen of wederzijds ruilen": "dialog.swap-confirm",
+    "Planningwijziging controleren": "dialog.planning-change",
+    "Roostersjabloon toepassen": "dialog.roster-template",
+    "We denken met je mee": "dialog.help-request",
+    "Nieuw huishouddossier": "dialog.household-new",
+    "Wintertekort passend inplannen": "dialog.winter-plan",
+    "Extra persoon uitnodigen": "dialog.household-person",
+    "Een passende afspraak aanvragen": "dialog.household-request",
+    "Vaste vrijwilligersrol toekennen": "dialog.appointment",
+    "Huishoudwijziging ter beoordeling": "dialog.household-change",
+    "Commissielid toevoegen": "dialog.committee-member",
+    "Kennis toevoegen": "dialog.knowledge-new",
+    "Nieuwe kanbankaart": "dialog.card-new",
+    "Kolom toevoegen": "dialog.column",
+    "Wedstrijdwijziging beoordelen": "dialog.match-change",
+    "Activiteit in de jaaragenda": "dialog.calendar-new",
+    "Nieuw communicatietemplate": "dialog.template-new",
+    "Vrijwilligersrol toevoegen": "dialog.role-new",
+    "Voorbeeldgegevens herstellen?": "dialog.reset",
+    "Seizoensvoorbereiding": "dialog.season",
+    "Nieuwe beleidsversie publiceren": "dialog.policy-new",
+    "Vraag over het beleid": "dialog.policy-question",
+    "Een moment van aandacht": "dialog.appreciation",
+    "Kwalificatie vastleggen": "dialog.qualification",
+    "Onbetaalde afspraak corrigeren": "dialog.finance-correction",
+    "Budgetpost toevoegen": "dialog.budget",
+    "Zoeken in Cluvo": "dialog.search",
+    "Cluvo op je telefoon": "dialog.phone",
+    "Ontdek Cluvo": "dialog.discover"
+  },
+  "VIEW_HELP": {
+    "households": {
+      "Wintercontrole": "households.winter",
+      "Vrijstellingen": "households.exemptions",
+      "Aanvragen": "households.requests"
+    },
+    "household": {
+      "Overzicht": "household.overview",
+      "Personen": "household.people",
+      "Afspraken": "household.agreements",
+      "Historie": "household.history"
+    },
+    "messages": {
+      "Gesprekken": "messages.conversations",
+      "Meldingen": "messages.notifications"
+    },
+    "policy": {
+      "Acceptatieoverzicht": "policy.acceptance",
+      "Versiehistorie": "policy.history"
+    },
+    "finance": {
+      "Seizoensafrekening": "finance.settlement",
+      "Financiële afspraken": "finance.agreements"
+    }
+  }
+}

@@ -1,0 +1,1192 @@
+{
+  "source_commit": "47386491859b47fbebf85c3b209724dcc20407fc",
+  "migrations": [
+    "20261002163042_cluvo_wp1_wp2_core.sql",
+    "20261002165306_wp3_wp5_obligations_execution.sql",
+    "20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+    "20261002170949_wp1_onboarding_storage.sql",
+    "20261002171135_wp9_wp11_finance_people_seasons.sql",
+    "20261002183000_vertical_read_models.sql",
+    "20261002184500_assisted_member_actions.sql"
+  ],
+  "tables": [
+    {
+      "name": "app.tenants",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 46
+    },
+    {
+      "name": "app.tenant_settings_versions",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 62
+    },
+    {
+      "name": "app.account_profiles",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 79
+    },
+    {
+      "name": "app.persons",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 88
+    },
+    {
+      "name": "app.person_contacts",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 107
+    },
+    {
+      "name": "app.account_person_links",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 123
+    },
+    {
+      "name": "app.tenant_memberships",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 145
+    },
+    {
+      "name": "app.permissions",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 169
+    },
+    {
+      "name": "app.permission_roles",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 176
+    },
+    {
+      "name": "app.role_permissions",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 192
+    },
+    {
+      "name": "app.committees",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 204
+    },
+    {
+      "name": "app.teams",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 218
+    },
+    {
+      "name": "app.households",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 230
+    },
+    {
+      "name": "app.household_person_links",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 247
+    },
+    {
+      "name": "app.household_access_grants",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 268
+    },
+    {
+      "name": "app.access_grants",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 299
+    },
+    {
+      "name": "app.acting_delegations",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 337
+    },
+    {
+      "name": "app.guardian_authorizations",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 363
+    },
+    {
+      "name": "app.household_invitations",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 383
+    },
+    {
+      "name": "app.intake_profiles",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 408
+    },
+    {
+      "name": "app.intake_answers_versions",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 427
+    },
+    {
+      "name": "app.seasons",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 445
+    },
+    {
+      "name": "app.obligations",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 466
+    },
+    {
+      "name": "app.household_obligation_links",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 491
+    },
+    {
+      "name": "app.executor_obligation_grants",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 514
+    },
+    {
+      "name": "app.task_categories",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 539
+    },
+    {
+      "name": "app.task_types",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 553
+    },
+    {
+      "name": "app.task_type_versions",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 567
+    },
+    {
+      "name": "app.locations",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 585
+    },
+    {
+      "name": "app.qualification_types",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 597
+    },
+    {
+      "name": "app.person_qualifications",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 610
+    },
+    {
+      "name": "app.unavailability_periods",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 631
+    },
+    {
+      "name": "app.shifts",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 649
+    },
+    {
+      "name": "app.shift_positions",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 682
+    },
+    {
+      "name": "app.shift_requirements",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 699
+    },
+    {
+      "name": "app.bookings",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 714
+    },
+    {
+      "name": "app.booking_events",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 766
+    },
+    {
+      "name": "app.attendance_decisions",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 783
+    },
+    {
+      "name": "app.hour_ledger_entries",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 810
+    },
+    {
+      "name": "app.hour_disputes",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 846
+    },
+    {
+      "name": "app.idempotency_records",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 866
+    },
+    {
+      "name": "app.audit_events",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 884
+    },
+    {
+      "name": "app.domain_events",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 908
+    },
+    {
+      "name": "app.volunteer_role_catalog",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 22
+    },
+    {
+      "name": "app.volunteer_role_versions",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 35
+    },
+    {
+      "name": "app.volunteer_appointments",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 59
+    },
+    {
+      "name": "app.exception_cases",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 103
+    },
+    {
+      "name": "app.exception_case_revisions",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 126
+    },
+    {
+      "name": "app.exception_reviews",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 147
+    },
+    {
+      "name": "app.exception_decisions",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 166
+    },
+    {
+      "name": "app.obligation_coverage_decisions",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 204
+    },
+    {
+      "name": "app.appointment_review_cases",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 256
+    },
+    {
+      "name": "app.winter_reviews",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 284
+    },
+    {
+      "name": "app.winter_allocations",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 312
+    },
+    {
+      "name": "app.booking_cancellations",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 338
+    },
+    {
+      "name": "app.transfer_requests",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 367
+    },
+    {
+      "name": "app.waitlist_entries",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 410
+    },
+    {
+      "name": "app.waitlist_offers",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 437
+    },
+    {
+      "name": "app.team_person_memberships",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 22
+    },
+    {
+      "name": "app.committee_documents",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 46
+    },
+    {
+      "name": "app.committee_document_versions",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 71
+    },
+    {
+      "name": "app.committee_document_acl",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 89
+    },
+    {
+      "name": "app.integration_connections",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 113
+    },
+    {
+      "name": "app.integration_runs",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 132
+    },
+    {
+      "name": "app.matches",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 160
+    },
+    {
+      "name": "app.match_revisions",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 188
+    },
+    {
+      "name": "app.match_shift_links",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 210
+    },
+    {
+      "name": "app.match_change_impacts",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 225
+    },
+    {
+      "name": "app.shift_publication_batches",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 246
+    },
+    {
+      "name": "app.shift_publication_batch_items",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 262
+    },
+    {
+      "name": "app.shift_change_proposals",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 283
+    },
+    {
+      "name": "app.scheduled_occurrences",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 325
+    },
+    {
+      "name": "app.events",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 356
+    },
+    {
+      "name": "app.event_occurrences",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 383
+    },
+    {
+      "name": "app.event_attendees",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 406
+    },
+    {
+      "name": "app.kanban_boards",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 424
+    },
+    {
+      "name": "app.kanban_columns",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 437
+    },
+    {
+      "name": "app.kanban_cards",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 452
+    },
+    {
+      "name": "app.kanban_card_assignees",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 480
+    },
+    {
+      "name": "app.kanban_card_subtasks",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 494
+    },
+    {
+      "name": "app.kanban_subtask_assignees",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 510
+    },
+    {
+      "name": "app.kanban_card_history",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 524
+    },
+    {
+      "name": "app.team_tasks",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 540
+    },
+    {
+      "name": "app.team_task_market_requests",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 562
+    },
+    {
+      "name": "app.team_task_market_reviews",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 599
+    },
+    {
+      "name": "app.event_resource_links",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 626
+    },
+    {
+      "name": "app.mentions",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 655
+    },
+    {
+      "name": "app.card_checklist_items",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 676
+    },
+    {
+      "name": "app.message_templates",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 694
+    },
+    {
+      "name": "app.message_template_versions",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 713
+    },
+    {
+      "name": "app.template_test_runs",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 744
+    },
+    {
+      "name": "app.notification_categories",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 762
+    },
+    {
+      "name": "app.notification_preferences",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 777
+    },
+    {
+      "name": "app.notification_intents",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 793
+    },
+    {
+      "name": "app.task_offer_candidates",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 820
+    },
+    {
+      "name": "app.daily_task_digests",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 837
+    },
+    {
+      "name": "app.daily_digest_items",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 853
+    },
+    {
+      "name": "app.notification_outbox",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 865
+    },
+    {
+      "name": "app.delivery_attempts",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 895
+    },
+    {
+      "name": "app.provider_delivery_events",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 914
+    },
+    {
+      "name": "app.inbox_items",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 930
+    },
+    {
+      "name": "app.policy_documents",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 948
+    },
+    {
+      "name": "app.policy_versions",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 965
+    },
+    {
+      "name": "app.policy_audiences",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 994
+    },
+    {
+      "name": "app.policy_assignments",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 1008
+    },
+    {
+      "name": "app.policy_questions",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 1033
+    },
+    {
+      "name": "app.policy_acceptances",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 1056
+    },
+    {
+      "name": "app.policy_assignment_events",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 1086
+    },
+    {
+      "name": "app.personal_action_items",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 1104
+    },
+    {
+      "name": "app.household_change_cases",
+      "source": "supabase/migrations/20261002170949_wp1_onboarding_storage.sql",
+      "line": 31
+    },
+    {
+      "name": "app.supply_assessments",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 23
+    },
+    {
+      "name": "app.financial_assessments",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 47
+    },
+    {
+      "name": "app.assessment_revisions",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 89
+    },
+    {
+      "name": "app.financial_objections",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 131
+    },
+    {
+      "name": "app.financial_processing_records",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 162
+    },
+    {
+      "name": "app.payment_events",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 189
+    },
+    {
+      "name": "app.financial_corrections",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 206
+    },
+    {
+      "name": "app.volunteer_fund_entries",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 230
+    },
+    {
+      "name": "app.courses",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 288
+    },
+    {
+      "name": "app.course_sessions",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 302
+    },
+    {
+      "name": "app.course_enrollments",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 323
+    },
+    {
+      "name": "app.qualification_events",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 348
+    },
+    {
+      "name": "app.qualification_booking_impacts",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 365
+    },
+    {
+      "name": "app.vacancies",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 384
+    },
+    {
+      "name": "app.vacancy_interests",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 411
+    },
+    {
+      "name": "app.appointment_cases",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 430
+    },
+    {
+      "name": "app.appointment_annual_confirmations",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 462
+    },
+    {
+      "name": "app.workload_preferences",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 478
+    },
+    {
+      "name": "app.workload_alerts",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 498
+    },
+    {
+      "name": "app.appreciation_rules",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 522
+    },
+    {
+      "name": "app.appreciation_occasions",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 541
+    },
+    {
+      "name": "app.appreciation_private_details",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 559
+    },
+    {
+      "name": "app.appreciation_actions",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 573
+    },
+    {
+      "name": "app.appreciation_action_assignees",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 598
+    },
+    {
+      "name": "app.season_close_runs",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 612
+    },
+    {
+      "name": "app.season_snapshots",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 631
+    },
+    {
+      "name": "app.rollover_runs",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 662
+    },
+    {
+      "name": "app.rollover_template_selections",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 683
+    },
+    {
+      "name": "app.season_reconfirmation_items",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 695
+    },
+    {
+      "name": "app.assisted_member_actions",
+      "source": "supabase/migrations/20261002184500_assisted_member_actions.sql",
+      "line": 12
+    }
+  ],
+  "views": [
+    {
+      "name": "api.public_tenants",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 1653
+    },
+    {
+      "name": "api.my_workspaces",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 1666
+    },
+    {
+      "name": "api.my_households",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 1705
+    },
+    {
+      "name": "api.my_intake",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 1724
+    },
+    {
+      "name": "api.household_progress",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 1743
+    },
+    {
+      "name": "api.my_obligation_status",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 1780
+    },
+    {
+      "name": "api.my_actions",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 5219
+    },
+    {
+      "name": "api.my_matches",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 5237
+    },
+    {
+      "name": "api.my_agenda",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 5254
+    },
+    {
+      "name": "api.my_inbox",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 5272
+    },
+    {
+      "name": "api.my_policy_assignments",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 5286
+    },
+    {
+      "name": "api.my_financial_assessments",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 1547
+    },
+    {
+      "name": "api.volunteer_fund_balance",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 1570
+    },
+    {
+      "name": "api.season_household_report",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 1582
+    },
+    {
+      "name": "api.season_summary",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 1629
+    },
+    {
+      "name": "api.assisted_member_action_history",
+      "source": "supabase/migrations/20261002184500_assisted_member_actions.sql",
+      "line": 604
+    }
+  ],
+  "rpc": [
+    {
+      "name": "api.save_intake_revision",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 2038,
+      "parameters": "p_tenant_id uuid, p_profile_id uuid, p_expected_version bigint, p_desired_minutes integer, p_answers jsonb, p_represented_person_id uuid, p_assistance_reason text, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.book_shift",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 2364,
+      "parameters": "p_tenant_id uuid, p_shift_id uuid, p_position_id uuid, p_executor_person_id uuid, p_obligation_id uuid, p_expected_shift_version bigint, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.confirm_attendance",
+      "source": "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql",
+      "line": 2646,
+      "parameters": "p_tenant_id uuid, p_booking_id uuid, p_expected_booking_version bigint, p_result text, p_awarded_minutes integer, p_reason text, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.recognize_volunteer_appointment",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 1241,
+      "parameters": "p_tenant_id uuid, p_role_version_id uuid, p_person_id uuid, p_household_id uuid, p_obligation_id uuid, p_starts_on date, p_ends_on date, p_committee_id uuid, p_team_id uuid, p_expected_obligation_version bigint, p_reason text, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.end_volunteer_appointment",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 1443,
+      "parameters": "p_tenant_id uuid, p_appointment_id uuid, p_expected_appointment_version bigint, p_ends_on date, p_reason text, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.correct_attendance_award",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 1702,
+      "parameters": "p_tenant_id uuid, p_booking_id uuid, p_expected_booking_version bigint, p_result text, p_awarded_minutes integer, p_correction_reason text, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.create_winter_review",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 2098,
+      "parameters": "p_tenant_id uuid, p_obligation_id uuid, p_expected_obligation_version bigint, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.allocate_winter_booking",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 2274,
+      "parameters": "p_tenant_id uuid, p_review_id uuid, p_booking_id uuid, p_allocated_minutes integer, p_expected_review_version bigint, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.cancel_booking",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 2508,
+      "parameters": "p_tenant_id uuid, p_booking_id uuid, p_expected_booking_version bigint, p_reason_kind text, p_description text, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.request_booking_transfer",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 2674,
+      "parameters": "p_tenant_id uuid, p_origin_booking_id uuid, p_expected_booking_version bigint, p_replacement_person_id uuid, p_replacement_obligation_id uuid, p_expires_at timestamptz, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.accept_booking_transfer",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 2918,
+      "parameters": "p_tenant_id uuid, p_transfer_request_id uuid, p_expected_request_version bigint, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.join_shift_waitlist",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 3033,
+      "parameters": "p_tenant_id uuid, p_shift_id uuid, p_person_id uuid, p_obligation_id uuid, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.offer_next_waitlist_candidate",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 3231,
+      "parameters": "p_tenant_id uuid, p_position_id uuid, p_expected_position_version bigint, p_expires_at timestamptz, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.accept_waitlist_offer",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 3403,
+      "parameters": "p_tenant_id uuid, p_offer_id uuid, p_expected_offer_version bigint, p_expected_shift_version bigint, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.open_exception_case",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 3600,
+      "parameters": "p_tenant_id uuid, p_obligation_id uuid, p_case_type text, p_requested_for_person_id uuid, p_proposed_target_minutes integer, p_proposed_winter_minutes integer, p_valid_from date, p_valid_until date, p_practical_reason text, p_expected_obligation_version bigint, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.review_exception_case",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 3779,
+      "parameters": "p_tenant_id uuid, p_case_revision_id uuid, p_expected_case_version bigint, p_outcome text, p_reason text, p_has_conflict boolean, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.finalize_exception_case",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 4016,
+      "parameters": "p_tenant_id uuid, p_case_revision_id uuid, p_expected_case_version bigint, p_outcome text, p_financial_route text, p_reason text, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.manage_planboard_shift",
+      "source": "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql",
+      "line": 4507,
+      "parameters": "p_tenant_id uuid, p_shift_id uuid, p_action text, p_input_mode text, p_expected_shift_version bigint, p_type_version_id uuid, p_committee_id uuid, p_category_id uuid, p_title text, p_starts_at timestamptz, p_ends_at timestamptz, p_position_count integer, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.publish_shift_batch",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 3154,
+      "parameters": "p_tenant_id uuid, p_shift_ids uuid[], p_expected_versions bigint[], p_booking_opens_at timestamptz, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.preview_shift_change",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 3316,
+      "parameters": "p_tenant_id uuid, p_shift_id uuid, p_expected_shift_version bigint, p_proposed_title text, p_proposed_starts_at timestamptz, p_proposed_ends_at timestamptz, p_proposed_location_id uuid, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.apply_shift_change",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 3645,
+      "parameters": "p_tenant_id uuid, p_proposal_id uuid, p_expected_proposal_version bigint, p_confirmed_impact_hash text, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.complete_kanban_card",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 3807,
+      "parameters": "p_tenant_id uuid, p_card_id uuid, p_expected_version bigint, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.review_team_task_market_request",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 3978,
+      "parameters": "p_tenant_id uuid, p_request_id uuid, p_expected_version bigint, p_review_kind text, p_outcome text, p_approved_minutes integer, p_reason text, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.publish_team_task_market_request",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 4146,
+      "parameters": "p_tenant_id uuid, p_request_id uuid, p_expected_version bigint, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.start_match_import",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 4243,
+      "parameters": "p_tenant_id uuid, p_connection_id uuid, p_trigger_kind text, p_cursor_before text, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.upsert_provider_match",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 4471,
+      "parameters": "p_tenant_id uuid, p_run_id uuid, p_source_id text, p_team_id uuid, p_opponent text, p_starts_at timestamptz, p_is_home boolean, p_location_text text, p_field_name text, p_locker_room_text text, p_status text, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.finish_match_import",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 4603,
+      "parameters": "p_tenant_id uuid, p_run_id uuid, p_expected_version bigint, p_status text, p_source_complete boolean, p_cursor_after text, p_error_code text, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.schedule_local_occurrence",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 4718,
+      "parameters": "p_tenant_id uuid, p_job_kind text, p_local_date date, p_slot_key text, p_requested_local_time time, p_timezone text, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.record_policy_open",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 4852,
+      "parameters": "p_tenant_id uuid, p_assignment_id uuid, p_expected_version bigint, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.ask_policy_question",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 4985,
+      "parameters": "p_tenant_id uuid, p_assignment_id uuid, p_expected_version bigint, p_question_text text, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.accept_policy_assignments",
+      "source": "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "line": 5189,
+      "parameters": "p_tenant_id uuid, p_assignment_ids uuid[], p_expected_versions bigint[], p_capacity text, p_explicit_confirmation boolean, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.create_household_invitation",
+      "source": "supabase/migrations/20261002170949_wp1_onboarding_storage.sql",
+      "line": 373,
+      "parameters": "p_tenant_id uuid, p_household_id uuid, p_given_name text, p_family_name text, p_email text, p_token_hash_hex text, p_can_view_progress boolean, p_can_book_for boolean, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.mark_household_invitation_delivery",
+      "source": "supabase/migrations/20261002170949_wp1_onboarding_storage.sql",
+      "line": 467,
+      "parameters": "p_tenant_id uuid, p_invitation_id uuid, p_delivered boolean"
+    },
+    {
+      "name": "api.accept_household_invitation",
+      "source": "supabase/migrations/20261002170949_wp1_onboarding_storage.sql",
+      "line": 703,
+      "parameters": "p_token text"
+    },
+    {
+      "name": "api.apply_household_split",
+      "source": "supabase/migrations/20261002170949_wp1_onboarding_storage.sql",
+      "line": 1053,
+      "parameters": "p_tenant_id uuid, p_source_household_id uuid, p_expected_source_version bigint, p_shared_child_person_id uuid, p_destination_parent_person_id uuid, p_destination_label text, p_destination_intake_code_hash_hex text, p_obligation_id uuid, p_obligation_link_kind text, p_decision_reason text, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.read_household_split_decisions",
+      "source": "supabase/migrations/20261002170949_wp1_onboarding_storage.sql",
+      "line": 1161,
+      "parameters": "p_tenant_id uuid, p_source_household_id uuid"
+    },
+    {
+      "name": "api.prepare_financial_assessment",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 1963,
+      "parameters": "p_tenant_id uuid, p_obligation_id uuid, p_route text, p_exception_decision_id uuid, p_supply_assessment_id uuid, p_expected_obligation_version bigint, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.approve_financial_assessment",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 2083,
+      "parameters": "p_tenant_id uuid, p_assessment_id uuid, p_expected_version bigint, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.finalize_financial_assessment",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 2207,
+      "parameters": "p_tenant_id uuid, p_assessment_id uuid, p_expected_version bigint, p_processing_kind text, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.open_financial_objection",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 2318,
+      "parameters": "p_tenant_id uuid, p_assessment_id uuid, p_expected_version bigint, p_reason text, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.resolve_financial_objection",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 2417,
+      "parameters": "p_tenant_id uuid, p_objection_id uuid, p_expected_version bigint, p_outcome text, p_resolution text, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.record_financial_correction",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 2531,
+      "parameters": "p_tenant_id uuid, p_assessment_id uuid, p_expected_version bigint, p_correction_kind text, p_amount_delta_cents integer, p_reason text, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.post_volunteer_fund_entry",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 2653,
+      "parameters": "p_tenant_id uuid, p_entry_kind text, p_amount_cents integer, p_reservation_key uuid, p_processing_record_id uuid, p_reverses_entry_id uuid, p_purpose text, p_owner_person_id uuid, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.express_vacancy_interest",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 2743,
+      "parameters": "p_tenant_id uuid, p_vacancy_id uuid, p_motivation text, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.create_appreciation_action",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 2830,
+      "parameters": "p_tenant_id uuid, p_occasion_id uuid, p_owner_person_id uuid, p_due_at timestamptz, p_budget_cents integer, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.close_season",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 3030,
+      "parameters": "p_tenant_id uuid, p_season_id uuid, p_expected_version bigint, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.rollover_season",
+      "source": "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "line": 3191,
+      "parameters": "p_tenant_id uuid, p_source_season_id uuid, p_target_season_id uuid, p_selected_template_keys text[], p_expected_target_version bigint, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.list_shift_market",
+      "source": "supabase/migrations/20261002183000_vertical_read_models.sql",
+      "line": 74,
+      "parameters": "p_tenant_id uuid"
+    },
+    {
+      "name": "api.list_bookable_obligations",
+      "source": "supabase/migrations/20261002183000_vertical_read_models.sql",
+      "line": 153,
+      "parameters": "p_tenant_id uuid, p_person_id uuid"
+    },
+    {
+      "name": "api.list_attendance_queue",
+      "source": "supabase/migrations/20261002183000_vertical_read_models.sql",
+      "line": 243,
+      "parameters": "p_tenant_id uuid"
+    },
+    {
+      "name": "api.record_assisted_member_action",
+      "source": "supabase/migrations/20261002184500_assisted_member_actions.sql",
+      "line": 435,
+      "parameters": "p_tenant_id uuid, p_subject_person_id uuid, p_action_kind text, p_resource_kind text, p_resource_id uuid, p_reason text, p_effect jsonb, p_corrects_action_id uuid, p_close_hour_dispute boolean, p_expected_dispute_version bigint, p_idempotency_key uuid"
+    },
+    {
+      "name": "api.assisted_book_shift_by_phone",
+      "source": "supabase/migrations/20261002184500_assisted_member_actions.sql",
+      "line": 576,
+      "parameters": "p_tenant_id uuid, p_shift_id uuid, p_position_id uuid, p_executor_person_id uuid, p_obligation_id uuid, p_expected_shift_version bigint, p_reason text, p_idempotency_key uuid"
+    }
+  ],
+  "server_calls": [
+    {
+      "source": "app/workspaces/page.tsx",
+      "kind": "from",
+      "name": "my_workspaces"
+    },
+    {
+      "source": "app/auth/actions.ts",
+      "kind": "from",
+      "name": "my_workspaces"
+    },
+    {
+      "source": "app/c/[club]/huishouden/actions.ts",
+      "kind": "rpc",
+      "name": "create_household_invitation"
+    },
+    {
+      "source": "app/c/[club]/huishouden/actions.ts",
+      "kind": "rpc",
+      "name": "mark_household_invitation_delivery"
+    },
+    {
+      "source": "app/c/[club]/overzicht/page.tsx",
+      "kind": "from",
+      "name": "my_households"
+    },
+    {
+      "source": "app/c/[club]/overzicht/page.tsx",
+      "kind": "from",
+      "name": "household_progress"
+    },
+    {
+      "source": "app/c/[club]/intake/page.tsx",
+      "kind": "from",
+      "name": "my_intake"
+    },
+    {
+      "source": "app/c/[club]/intake/actions.ts",
+      "kind": "rpc",
+      "name": "save_intake_revision"
+    },
+    {
+      "source": "app/c/[club]/diensten/page.tsx",
+      "kind": "rpc",
+      "name": "list_shift_market"
+    },
+    {
+      "source": "app/c/[club]/diensten/page.tsx",
+      "kind": "rpc",
+      "name": "list_bookable_obligations"
+    },
+    {
+      "source": "app/c/[club]/diensten/page.tsx",
+      "kind": "from",
+      "name": "public_tenants"
+    },
+    {
+      "source": "app/c/[club]/diensten/actions.ts",
+      "kind": "rpc",
+      "name": "book_shift"
+    },
+    {
+      "source": "app/c/[club]/beheer/presentie/page.tsx",
+      "kind": "rpc",
+      "name": "list_attendance_queue"
+    },
+    {
+      "source": "app/c/[club]/beheer/presentie/actions.ts",
+      "kind": "rpc",
+      "name": "confirm_attendance"
+    },
+    {
+      "source": "app/api/health/ready/route.ts",
+      "kind": "from",
+      "name": "public_tenants"
+    },
+    {
+      "source": "app/invite/accept/actions.ts",
+      "kind": "rpc",
+      "name": "accept_household_invitation"
+    }
+  ]
+}

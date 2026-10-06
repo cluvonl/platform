@@ -1,0 +1,42 @@
+Source SHA: e9c1d8bca2089b0944577eed73d1bedf7e70a3b6
+Datum: 6 oktober 2026
+Commando: node --test scripts/team-workflow.test.cjs scripts/coordination-workflow.test.cjs scripts/help-banners.test.cjs
+Dit is lokaal prototypebewijs; geen database-/provider-/browser-/stagingacceptatie.
+
+✔ Het voorstel respecteert geschiktheid, vrijstellingen en bestaande huishoudtoewijzingen (34.6015ms)
+✔ Taakduur weegt mee terwijl het afgesproken aantal teamtaken gelijk blijft (6.12156ms)
+✔ Een aangepast verdeelvoorstel wordt atomair toegewezen en kiest geen echte uitvoerders (16.296156ms)
+✔ Gezinsacties tonen beide kinderen zonder taken van andere huishoudens (2.564023ms)
+✔ Opvolging doorloopt markt, teamouder en commissie met gerichte meldingen (2.373951ms)
+✔ Na de inschrijfdeadline kan een huishouden een toegewezen plaats nog bevestigen (2.222186ms)
+✔ Reservehulp is vrijwillig, passend en beperkt tot teamhuishoudens (1.757146ms)
+✔ Een teamouder kan deadlines alleen voor het eigen team in de juiste volgorde aanpassen (1.378695ms)
+✔ Een overdracht houdt de oude teamouder actief tot de aangewezen opvolger instemt (1.347699ms)
+✔ Uitvoering, feedback en persoonlijke voorkeuren kennen eigen rechten en wijzigen geen uren (3.035702ms)
+✔ Feedback over een teamtaak en instructies blijven binnen de eigen taakverantwoordelijkheid (1.48358ms)
+✔ Uitvoeringsbevestiging is begrensd per team en urenautorisatie (0.725086ms)
+✔ Bestaande lokale demo-afspraken blijven behouden en de upgrade dupliceert niets (1.115415ms)
+✔ Alle zes uitbreidingen renderen met de bestaande Cluvo-componenten (567.252205ms)
+✔ Een gesloten uitleg blijft na herladen weg voor dezelfde persoon, onafhankelijk van de rol (1.072111ms)
+✔ Twee tabbladen of snelle sluitacties bewaren eerdere gebruikers en functies (1.086812ms)
+✔ Beschadigde voorkeuren blokkeren het prototype niet en mislukte opslag houdt de keuze in de sessie (0.352973ms)
+✔ Het kruisje en Gezien zijn toegankelijke knoppen voor dezelfde sluitactie (104.217854ms)
+✔ Alle pagina’s en invulvensters hebben uitleg; verwijzingen gebruiken bestaande, stabiele onderwerpen (136.440407ms)
+✔ Een cluster reserveert alleen vrije plaatsen en bewaart bestaande boekingen (17.415691ms)
+✔ Toewijzing, uitvoerder en bevestiging hebben elk hun eigen telling (2.086545ms)
+✔ Een teamtaak telt voor het gekozen lid en geeft zonder goedkeuring nul uren (0.900816ms)
+✔ Huishoud- en teamrechten worden ook bij de handeling gecontroleerd (0.859024ms)
+✔ Overname houdt de oorspronkelijke afspraak vast tot een geschikte vervanger bevestigt (0.980054ms)
+✔ Geschiktheid en overlappende uitvoerders blijven harde controles (0.782841ms)
+✔ Uren voor fluiten vragen wedstrijdzaken en centrale goedkeuring; afspraken worden niet achteraf herschreven (0.772806ms)
+✔ Teamdoelen zijn onafhankelijk van de huishoudverplichting, ook bij nul en meerdere teams (0.940595ms)
+✔ Herhalingen, vrijgave en migratie bewaren capaciteit en bestaande gegevens (2.31979ms)
+✔ De oorspronkelijke app en nieuwe werkruimtes renderen met de demo zonder fouten (967.975533ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1423.828806

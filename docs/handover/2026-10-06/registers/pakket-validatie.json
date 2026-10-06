@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-10-06",
+  "pages": 23,
+  "functions": 219,
+  "relationship_flows": 22,
+  "acceptance_open": 102,
+  "prototype_reference_files_byte_verified": 67,
+  "pdf_pages": 92,
+  "pdf_outline_entries": 37,
+  "docx_valid": true,
+  "links_and_ids_valid": true,
+  "no_credentials_detected": true,
+  "scope": "Pakketvalidatie en bronintegriteit; geen volledige staging/browseracceptatie"
+}

@@ -1,0 +1,1149 @@
+{
+  "flows": [
+    {
+      "id": "R01",
+      "name": "Openbare taak naar uitvoering",
+      "steps": [
+        "P08.F02",
+        "P08.F07",
+        "P02.F01",
+        "P02.F06",
+        "P03.F01",
+        "P03.F05",
+        "P09.F03",
+        "P19.F01",
+        "P20.F03"
+      ],
+      "source": "Taakversie → concrete positie → booking → attendance/ledger",
+      "effect": "Publicatie opent juiste vrije capaciteit; booking maakt planning; bevestiging voedt alle urenmeters en financiële grondslag."
+    },
+    {
+      "id": "R02",
+      "name": "Cluster via team naar huishouden",
+      "steps": [
+        "P08.F08",
+        "P12.F02",
+        "P12.F05",
+        "P03.F03",
+        "P04.F06",
+        "P12.F07",
+        "P12.F04",
+        "P03.F05",
+        "P12.F15",
+        "P04.F01"
+      ],
+      "source": "Dezelfde shift_position; allocation, target member, executor, obligation",
+      "effect": "Teamreservering haalt capaciteit uit openbare markt; lidtoewijzing maakt keuzeactie; uitvoering telt één lid en eenmaal HH-minuten."
+    },
+    {
+      "id": "R03",
+      "name": "Eigen teamtaak en goedgekeurde minuten",
+      "steps": [
+        "P12.F10",
+        "P12.F11",
+        "P12.F12",
+        "P12.F07",
+        "P03.F05",
+        "P12.F15",
+        "P09.F03"
+      ],
+      "source": "Bronteamtaak credit0 en één verbonden approved shift",
+      "effect": "Publicatie is besloten; uitsluitend vooraf goedgekeurde bookingcredits leveren bij bevestiging verenigingsuren, naast één teamtelling."
+    },
+    {
+      "id": "R04",
+      "name": "Doelen en eerlijk verdelen",
+      "steps": [
+        "P12.F13",
+        "P12.F14",
+        "P23.F04",
+        "P17.F03",
+        "P12.F17",
+        "P12.F18",
+        "P12.F05"
+      ],
+      "source": "Seizoensdoelen, leeftijd/qual, beschikbaarheid, taakduur, load",
+      "effect": "Advies toont redenen en totale HH-last; atomair voorstel geeft alleen lidtoewijzingen, nog geen bookings of verdiende inzet."
+    },
+    {
+      "id": "R05",
+      "name": "Gezinsplanning",
+      "steps": [
+        "P07.F01",
+        "P12.F04",
+        "P03.F01",
+        "P04.F03",
+        "P04.F05",
+        "P02.F06"
+      ],
+      "source": "Match, allocation en booking read-models",
+      "effect": "Eén tijdlijn; gezinsconflict zacht, executoroverlap hard; één HH-meter en afzonderlijke kind/teammeters."
+    },
+    {
+      "id": "R06",
+      "name": "Deadline en reservehulp",
+      "steps": [
+        "P12.F03",
+        "P12.F19",
+        "P13.F01",
+        "P14.F04",
+        "P12.F20",
+        "P12.F08",
+        "P12.F07"
+      ],
+      "source": "Follow-up policy/occurrence en unresolved-allocations",
+      "effect": "Markt sluit; ouder/commissie volgt op; gerichte passende vrijwillige reserve-invite geeft geen stille booking."
+    },
+    {
+      "id": "R07",
+      "name": "Overname en ruil",
+      "steps": [
+        "P03.F09",
+        "P05.F01",
+        "P05.F02",
+        "P05.F04",
+        "P05.F03",
+        "P03.F02",
+        "P04.F03"
+      ],
+      "source": "Transferrequest/consents en replacement bookings",
+      "effect": "Origineel blijft tot geschikte atomaire overname; historie, capacity en snapshots worden samen bijgewerkt."
+    },
+    {
+      "id": "R08",
+      "name": "Urenvraag en financiële hold",
+      "steps": [
+        "P03.F10",
+        "P09.F07",
+        "P03.F05",
+        "P20.F04",
+        "P20.F05",
+        "P19.F01"
+      ],
+      "source": "Concrete dispute, attendance revisions en obligationlock",
+      "effect": "Alleen betrokken casus oplossen; overige blockers blijven; financiële finalisatie leest actuele grondslag."
+    },
+    {
+      "id": "R09",
+      "name": "Winterafspraak binnen jaardoel",
+      "steps": [
+        "P09.F11",
+        "P03.F02",
+        "P02.F06",
+        "P12.F07",
+        "P19.F03",
+        "P20.F03"
+      ],
+      "source": "Winterreview en allocation aan echte booking",
+      "effect": "Pending eerst beoordelen; passend bestaande/new booking niet dubbelen; geen tweede jaarclaim, dezelfde capacitykernel."
+    },
+    {
+      "id": "R10",
+      "name": "Werving naar structurele dekking",
+      "steps": [
+        "P23.F03",
+        "P18.F03",
+        "P18.F04",
+        "P09.F08",
+        "P22.F05",
+        "P22.F06",
+        "P09.F09",
+        "P20.F03"
+      ],
+      "source": "Vacancyinterest → formele appointment/coverage/review",
+      "effect": "Interesse is geen recht/vrijstelling; erkenning dekt expliciete verplichting; einde vraagt besluit en geen automatische retroclaim."
+    },
+    {
+      "id": "R11",
+      "name": "Huishouden en onafhankelijke intake",
+      "steps": [
+        "P09.F02",
+        "P09.F05",
+        "P22.F09",
+        "P23.F01",
+        "P23.F05",
+        "P09.F10",
+        "P04.F01"
+      ],
+      "source": "Auth, persons, grants, household, obligation",
+      "effect": "Extra account creëert geen doel; invite vraagt verificatie/grant; splitsing bewaart private intakes en historische uren."
+    },
+    {
+      "id": "R12",
+      "name": "Kanban en samenwerking",
+      "steps": [
+        "P10.F02",
+        "P11.F02",
+        "P11.F06",
+        "P11.F07",
+        "P11.F08",
+        "P13.F07",
+        "P14.F04",
+        "P11.F04"
+      ],
+      "source": "Board/card/assignees/mentions en ACL",
+      "effect": "Persoonlijke acties en gerichte mentions uit bron; kaartDone kent geen verenigingsuren/teamuitvoering toe."
+    },
+    {
+      "id": "R13",
+      "name": "Wedstrijd naar roosterimpact",
+      "steps": [
+        "P22.F07",
+        "P07.F02",
+        "P07.F03",
+        "P08.F06",
+        "P08.F07",
+        "P07.F04",
+        "P07.F05",
+        "P14.F07"
+      ],
+      "source": "Provider source revision, voorstel en impactcase",
+      "effect": "Idempotente import; partial geen afgelasting; bevestigde afspraken pas na bewuste gevolgenverwerking wijzigen."
+    },
+    {
+      "id": "R14",
+      "name": "Beleidversie en individuele instemming",
+      "steps": [
+        "P15.F06",
+        "P15.F01",
+        "P15.F02",
+        "P15.F03",
+        "P15.F04",
+        "P15.F05",
+        "P15.F07",
+        "P13.F01"
+      ],
+      "source": "Immutable policy, assignments, guardiangrants/acceptances",
+      "effect": "Geopend is geen akkoord; ieder lid exact hash/actor; vraag stopt alleen eigen reminder en houdt ziekmelding open."
+    },
+    {
+      "id": "R15",
+      "name": "Communicatie per gebeurtenis",
+      "steps": [
+        "P08.F07",
+        "P21.F08",
+        "P21.F01",
+        "P21.F06",
+        "P14.F06",
+        "P14.F07",
+        "P21.F11"
+      ],
+      "source": "Domain-event → recipient intent → outbox → attempt/receipt",
+      "effect": "Daily taskdigestcap en per-taskpush apart; essentiële transacties eigen categorie, retries/provider-Unknown eerlijk."
+    },
+    {
+      "id": "R16",
+      "name": "Ervaring naar instructie en voorkeur",
+      "steps": [
+        "P03.F05",
+        "P03.F11",
+        "P16.F05",
+        "P16.F06",
+        "P16.F07",
+        "P16.F08",
+        "P12.F22",
+        "P12.F10",
+        "P18.F01"
+      ],
+      "source": "Aanwezige booking, feedback, instructionversion, personal preference",
+      "effect": "Eigen voorkeur uitsluitend executor; praktische verbetering in eigen scope, geen wijziging credits/besluiten."
+    },
+    {
+      "id": "R17",
+      "name": "Teamouderoverdracht",
+      "steps": [
+        "P12.F21",
+        "P13.F06",
+        "P14.F04",
+        "P22.F14",
+        "P12.F04",
+        "P12.F15"
+      ],
+      "source": "Handover readyversion en scoped accessgrants",
+      "effect": "Opvolger accepteert exact versie; oude grant eindigt, overige ouders/brondata intact; geen privéschermen in overdracht."
+    },
+    {
+      "id": "R18",
+      "name": "Opleiding en geschiktheid",
+      "steps": [
+        "P17.F02",
+        "P17.F03",
+        "P17.F05",
+        "P02.F06",
+        "P12.F07",
+        "P13.F01"
+      ],
+      "source": "Courses/enrollments/verified qualifications/bookingimpacts",
+      "effect": "Seatbooking geen certificaat; geldigheid op taakdatum, verval leidt tot opvolging en geen stille afspraakverwijdering."
+    },
+    {
+      "id": "R19",
+      "name": "Waardering en pot",
+      "steps": [
+        "P16.F02",
+        "P16.F04",
+        "P21.F06",
+        "P16.F03",
+        "P20.F02",
+        "P20.F01"
+      ],
+      "source": "Unieke appreciationoccasion/action en financieel fundevent",
+      "effect": "Eén moment per bron, private lief-en-leed, echte budgetpost en eerlijk verzendstatus."
+    },
+    {
+      "id": "R20",
+      "name": "Afrekening en werkelijk geld",
+      "steps": [
+        "P19.F04",
+        "P09.F07",
+        "P20.F03",
+        "P20.F04",
+        "P20.F05",
+        "P20.F07",
+        "P20.F08",
+        "P20.F01"
+      ],
+      "source": "Assessmentversion/approvals, processing, payment/correction",
+      "effect": "Independent approvals en blockerlock, integercent, geen dubbele afkoop/claim/ontvangst; betaalde correctie houdt historie."
+    },
+    {
+      "id": "R21",
+      "name": "Nieuw seizoen",
+      "steps": [
+        "P22.F12",
+        "P22.F13",
+        "P23.F06",
+        "P12.F13",
+        "P15.F01",
+        "P19.F01"
+      ],
+      "source": "Close/snapshot/rollover/reconfirmation",
+      "effect": "Alle oude standen reproduceerbaar; uitsluitend gekozen templates, nieuwe expliciete verplichtingen, geen autooveruren."
+    },
+    {
+      "id": "R22",
+      "name": "Persoonlijke uitleg",
+      "steps": [
+        "P00.F06",
+        "P00.F07",
+        "P00.F08",
+        "P23.F01",
+        "P22.F11"
+      ],
+      "source": "Auth-user en stabiel topic_id",
+      "effect": "Gezien en kruis dezelfde upsert; mergevriendelijk/cross-device; rol/seizoen/demo-reset herhalen niet."
+    }
+  ],
+  "edges": [
+    {
+      "from_function": "P08.F02",
+      "to_function": "P08.F07",
+      "flow_id": "R01",
+      "effect": "Publicatie opent juiste vrije capaciteit; booking maakt planning; bevestiging voedt alle urenmeters en financiële grondslag."
+    },
+    {
+      "from_function": "P08.F07",
+      "to_function": "P02.F01",
+      "flow_id": "R01",
+      "effect": "Publicatie opent juiste vrije capaciteit; booking maakt planning; bevestiging voedt alle urenmeters en financiële grondslag."
+    },
+    {
+      "from_function": "P02.F01",
+      "to_function": "P02.F06",
+      "flow_id": "R01",
+      "effect": "Publicatie opent juiste vrije capaciteit; booking maakt planning; bevestiging voedt alle urenmeters en financiële grondslag."
+    },
+    {
+      "from_function": "P02.F06",
+      "to_function": "P03.F01",
+      "flow_id": "R01",
+      "effect": "Publicatie opent juiste vrije capaciteit; booking maakt planning; bevestiging voedt alle urenmeters en financiële grondslag."
+    },
+    {
+      "from_function": "P03.F01",
+      "to_function": "P03.F05",
+      "flow_id": "R01",
+      "effect": "Publicatie opent juiste vrije capaciteit; booking maakt planning; bevestiging voedt alle urenmeters en financiële grondslag."
+    },
+    {
+      "from_function": "P03.F05",
+      "to_function": "P09.F03",
+      "flow_id": "R01",
+      "effect": "Publicatie opent juiste vrije capaciteit; booking maakt planning; bevestiging voedt alle urenmeters en financiële grondslag."
+    },
+    {
+      "from_function": "P09.F03",
+      "to_function": "P19.F01",
+      "flow_id": "R01",
+      "effect": "Publicatie opent juiste vrije capaciteit; booking maakt planning; bevestiging voedt alle urenmeters en financiële grondslag."
+    },
+    {
+      "from_function": "P19.F01",
+      "to_function": "P20.F03",
+      "flow_id": "R01",
+      "effect": "Publicatie opent juiste vrije capaciteit; booking maakt planning; bevestiging voedt alle urenmeters en financiële grondslag."
+    },
+    {
+      "from_function": "P08.F08",
+      "to_function": "P12.F02",
+      "flow_id": "R02",
+      "effect": "Teamreservering haalt capaciteit uit openbare markt; lidtoewijzing maakt keuzeactie; uitvoering telt één lid en eenmaal HH-minuten."
+    },
+    {
+      "from_function": "P12.F02",
+      "to_function": "P12.F05",
+      "flow_id": "R02",
+      "effect": "Teamreservering haalt capaciteit uit openbare markt; lidtoewijzing maakt keuzeactie; uitvoering telt één lid en eenmaal HH-minuten."
+    },
+    {
+      "from_function": "P12.F05",
+      "to_function": "P03.F03",
+      "flow_id": "R02",
+      "effect": "Teamreservering haalt capaciteit uit openbare markt; lidtoewijzing maakt keuzeactie; uitvoering telt één lid en eenmaal HH-minuten."
+    },
+    {
+      "from_function": "P03.F03",
+      "to_function": "P04.F06",
+      "flow_id": "R02",
+      "effect": "Teamreservering haalt capaciteit uit openbare markt; lidtoewijzing maakt keuzeactie; uitvoering telt één lid en eenmaal HH-minuten."
+    },
+    {
+      "from_function": "P04.F06",
+      "to_function": "P12.F07",
+      "flow_id": "R02",
+      "effect": "Teamreservering haalt capaciteit uit openbare markt; lidtoewijzing maakt keuzeactie; uitvoering telt één lid en eenmaal HH-minuten."
+    },
+    {
+      "from_function": "P12.F07",
+      "to_function": "P12.F04",
+      "flow_id": "R02",
+      "effect": "Teamreservering haalt capaciteit uit openbare markt; lidtoewijzing maakt keuzeactie; uitvoering telt één lid en eenmaal HH-minuten."
+    },
+    {
+      "from_function": "P12.F04",
+      "to_function": "P03.F05",
+      "flow_id": "R02",
+      "effect": "Teamreservering haalt capaciteit uit openbare markt; lidtoewijzing maakt keuzeactie; uitvoering telt één lid en eenmaal HH-minuten."
+    },
+    {
+      "from_function": "P03.F05",
+      "to_function": "P12.F15",
+      "flow_id": "R02",
+      "effect": "Teamreservering haalt capaciteit uit openbare markt; lidtoewijzing maakt keuzeactie; uitvoering telt één lid en eenmaal HH-minuten."
+    },
+    {
+      "from_function": "P12.F15",
+      "to_function": "P04.F01",
+      "flow_id": "R02",
+      "effect": "Teamreservering haalt capaciteit uit openbare markt; lidtoewijzing maakt keuzeactie; uitvoering telt één lid en eenmaal HH-minuten."
+    },
+    {
+      "from_function": "P12.F10",
+      "to_function": "P12.F11",
+      "flow_id": "R03",
+      "effect": "Publicatie is besloten; uitsluitend vooraf goedgekeurde bookingcredits leveren bij bevestiging verenigingsuren, naast één teamtelling."
+    },
+    {
+      "from_function": "P12.F11",
+      "to_function": "P12.F12",
+      "flow_id": "R03",
+      "effect": "Publicatie is besloten; uitsluitend vooraf goedgekeurde bookingcredits leveren bij bevestiging verenigingsuren, naast één teamtelling."
+    },
+    {
+      "from_function": "P12.F12",
+      "to_function": "P12.F07",
+      "flow_id": "R03",
+      "effect": "Publicatie is besloten; uitsluitend vooraf goedgekeurde bookingcredits leveren bij bevestiging verenigingsuren, naast één teamtelling."
+    },
+    {
+      "from_function": "P12.F07",
+      "to_function": "P03.F05",
+      "flow_id": "R03",
+      "effect": "Publicatie is besloten; uitsluitend vooraf goedgekeurde bookingcredits leveren bij bevestiging verenigingsuren, naast één teamtelling."
+    },
+    {
+      "from_function": "P03.F05",
+      "to_function": "P12.F15",
+      "flow_id": "R03",
+      "effect": "Publicatie is besloten; uitsluitend vooraf goedgekeurde bookingcredits leveren bij bevestiging verenigingsuren, naast één teamtelling."
+    },
+    {
+      "from_function": "P12.F15",
+      "to_function": "P09.F03",
+      "flow_id": "R03",
+      "effect": "Publicatie is besloten; uitsluitend vooraf goedgekeurde bookingcredits leveren bij bevestiging verenigingsuren, naast één teamtelling."
+    },
+    {
+      "from_function": "P12.F13",
+      "to_function": "P12.F14",
+      "flow_id": "R04",
+      "effect": "Advies toont redenen en totale HH-last; atomair voorstel geeft alleen lidtoewijzingen, nog geen bookings of verdiende inzet."
+    },
+    {
+      "from_function": "P12.F14",
+      "to_function": "P23.F04",
+      "flow_id": "R04",
+      "effect": "Advies toont redenen en totale HH-last; atomair voorstel geeft alleen lidtoewijzingen, nog geen bookings of verdiende inzet."
+    },
+    {
+      "from_function": "P23.F04",
+      "to_function": "P17.F03",
+      "flow_id": "R04",
+      "effect": "Advies toont redenen en totale HH-last; atomair voorstel geeft alleen lidtoewijzingen, nog geen bookings of verdiende inzet."
+    },
+    {
+      "from_function": "P17.F03",
+      "to_function": "P12.F17",
+      "flow_id": "R04",
+      "effect": "Advies toont redenen en totale HH-last; atomair voorstel geeft alleen lidtoewijzingen, nog geen bookings of verdiende inzet."
+    },
+    {
+      "from_function": "P12.F17",
+      "to_function": "P12.F18",
+      "flow_id": "R04",
+      "effect": "Advies toont redenen en totale HH-last; atomair voorstel geeft alleen lidtoewijzingen, nog geen bookings of verdiende inzet."
+    },
+    {
+      "from_function": "P12.F18",
+      "to_function": "P12.F05",
+      "flow_id": "R04",
+      "effect": "Advies toont redenen en totale HH-last; atomair voorstel geeft alleen lidtoewijzingen, nog geen bookings of verdiende inzet."
+    },
+    {
+      "from_function": "P07.F01",
+      "to_function": "P12.F04",
+      "flow_id": "R05",
+      "effect": "Eén tijdlijn; gezinsconflict zacht, executoroverlap hard; één HH-meter en afzonderlijke kind/teammeters."
+    },
+    {
+      "from_function": "P12.F04",
+      "to_function": "P03.F01",
+      "flow_id": "R05",
+      "effect": "Eén tijdlijn; gezinsconflict zacht, executoroverlap hard; één HH-meter en afzonderlijke kind/teammeters."
+    },
+    {
+      "from_function": "P03.F01",
+      "to_function": "P04.F03",
+      "flow_id": "R05",
+      "effect": "Eén tijdlijn; gezinsconflict zacht, executoroverlap hard; één HH-meter en afzonderlijke kind/teammeters."
+    },
+    {
+      "from_function": "P04.F03",
+      "to_function": "P04.F05",
+      "flow_id": "R05",
+      "effect": "Eén tijdlijn; gezinsconflict zacht, executoroverlap hard; één HH-meter en afzonderlijke kind/teammeters."
+    },
+    {
+      "from_function": "P04.F05",
+      "to_function": "P02.F06",
+      "flow_id": "R05",
+      "effect": "Eén tijdlijn; gezinsconflict zacht, executoroverlap hard; één HH-meter en afzonderlijke kind/teammeters."
+    },
+    {
+      "from_function": "P12.F03",
+      "to_function": "P12.F19",
+      "flow_id": "R06",
+      "effect": "Markt sluit; ouder/commissie volgt op; gerichte passende vrijwillige reserve-invite geeft geen stille booking."
+    },
+    {
+      "from_function": "P12.F19",
+      "to_function": "P13.F01",
+      "flow_id": "R06",
+      "effect": "Markt sluit; ouder/commissie volgt op; gerichte passende vrijwillige reserve-invite geeft geen stille booking."
+    },
+    {
+      "from_function": "P13.F01",
+      "to_function": "P14.F04",
+      "flow_id": "R06",
+      "effect": "Markt sluit; ouder/commissie volgt op; gerichte passende vrijwillige reserve-invite geeft geen stille booking."
+    },
+    {
+      "from_function": "P14.F04",
+      "to_function": "P12.F20",
+      "flow_id": "R06",
+      "effect": "Markt sluit; ouder/commissie volgt op; gerichte passende vrijwillige reserve-invite geeft geen stille booking."
+    },
+    {
+      "from_function": "P12.F20",
+      "to_function": "P12.F08",
+      "flow_id": "R06",
+      "effect": "Markt sluit; ouder/commissie volgt op; gerichte passende vrijwillige reserve-invite geeft geen stille booking."
+    },
+    {
+      "from_function": "P12.F08",
+      "to_function": "P12.F07",
+      "flow_id": "R06",
+      "effect": "Markt sluit; ouder/commissie volgt op; gerichte passende vrijwillige reserve-invite geeft geen stille booking."
+    },
+    {
+      "from_function": "P03.F09",
+      "to_function": "P05.F01",
+      "flow_id": "R07",
+      "effect": "Origineel blijft tot geschikte atomaire overname; historie, capacity en snapshots worden samen bijgewerkt."
+    },
+    {
+      "from_function": "P05.F01",
+      "to_function": "P05.F02",
+      "flow_id": "R07",
+      "effect": "Origineel blijft tot geschikte atomaire overname; historie, capacity en snapshots worden samen bijgewerkt."
+    },
+    {
+      "from_function": "P05.F02",
+      "to_function": "P05.F04",
+      "flow_id": "R07",
+      "effect": "Origineel blijft tot geschikte atomaire overname; historie, capacity en snapshots worden samen bijgewerkt."
+    },
+    {
+      "from_function": "P05.F04",
+      "to_function": "P05.F03",
+      "flow_id": "R07",
+      "effect": "Origineel blijft tot geschikte atomaire overname; historie, capacity en snapshots worden samen bijgewerkt."
+    },
+    {
+      "from_function": "P05.F03",
+      "to_function": "P03.F02",
+      "flow_id": "R07",
+      "effect": "Origineel blijft tot geschikte atomaire overname; historie, capacity en snapshots worden samen bijgewerkt."
+    },
+    {
+      "from_function": "P03.F02",
+      "to_function": "P04.F03",
+      "flow_id": "R07",
+      "effect": "Origineel blijft tot geschikte atomaire overname; historie, capacity en snapshots worden samen bijgewerkt."
+    },
+    {
+      "from_function": "P03.F10",
+      "to_function": "P09.F07",
+      "flow_id": "R08",
+      "effect": "Alleen betrokken casus oplossen; overige blockers blijven; financiële finalisatie leest actuele grondslag."
+    },
+    {
+      "from_function": "P09.F07",
+      "to_function": "P03.F05",
+      "flow_id": "R08",
+      "effect": "Alleen betrokken casus oplossen; overige blockers blijven; financiële finalisatie leest actuele grondslag."
+    },
+    {
+      "from_function": "P03.F05",
+      "to_function": "P20.F04",
+      "flow_id": "R08",
+      "effect": "Alleen betrokken casus oplossen; overige blockers blijven; financiële finalisatie leest actuele grondslag."
+    },
+    {
+      "from_function": "P20.F04",
+      "to_function": "P20.F05",
+      "flow_id": "R08",
+      "effect": "Alleen betrokken casus oplossen; overige blockers blijven; financiële finalisatie leest actuele grondslag."
+    },
+    {
+      "from_function": "P20.F05",
+      "to_function": "P19.F01",
+      "flow_id": "R08",
+      "effect": "Alleen betrokken casus oplossen; overige blockers blijven; financiële finalisatie leest actuele grondslag."
+    },
+    {
+      "from_function": "P09.F11",
+      "to_function": "P03.F02",
+      "flow_id": "R09",
+      "effect": "Pending eerst beoordelen; passend bestaande/new booking niet dubbelen; geen tweede jaarclaim, dezelfde capacitykernel."
+    },
+    {
+      "from_function": "P03.F02",
+      "to_function": "P02.F06",
+      "flow_id": "R09",
+      "effect": "Pending eerst beoordelen; passend bestaande/new booking niet dubbelen; geen tweede jaarclaim, dezelfde capacitykernel."
+    },
+    {
+      "from_function": "P02.F06",
+      "to_function": "P12.F07",
+      "flow_id": "R09",
+      "effect": "Pending eerst beoordelen; passend bestaande/new booking niet dubbelen; geen tweede jaarclaim, dezelfde capacitykernel."
+    },
+    {
+      "from_function": "P12.F07",
+      "to_function": "P19.F03",
+      "flow_id": "R09",
+      "effect": "Pending eerst beoordelen; passend bestaande/new booking niet dubbelen; geen tweede jaarclaim, dezelfde capacitykernel."
+    },
+    {
+      "from_function": "P19.F03",
+      "to_function": "P20.F03",
+      "flow_id": "R09",
+      "effect": "Pending eerst beoordelen; passend bestaande/new booking niet dubbelen; geen tweede jaarclaim, dezelfde capacitykernel."
+    },
+    {
+      "from_function": "P23.F03",
+      "to_function": "P18.F03",
+      "flow_id": "R10",
+      "effect": "Interesse is geen recht/vrijstelling; erkenning dekt expliciete verplichting; einde vraagt besluit en geen automatische retroclaim."
+    },
+    {
+      "from_function": "P18.F03",
+      "to_function": "P18.F04",
+      "flow_id": "R10",
+      "effect": "Interesse is geen recht/vrijstelling; erkenning dekt expliciete verplichting; einde vraagt besluit en geen automatische retroclaim."
+    },
+    {
+      "from_function": "P18.F04",
+      "to_function": "P09.F08",
+      "flow_id": "R10",
+      "effect": "Interesse is geen recht/vrijstelling; erkenning dekt expliciete verplichting; einde vraagt besluit en geen automatische retroclaim."
+    },
+    {
+      "from_function": "P09.F08",
+      "to_function": "P22.F05",
+      "flow_id": "R10",
+      "effect": "Interesse is geen recht/vrijstelling; erkenning dekt expliciete verplichting; einde vraagt besluit en geen automatische retroclaim."
+    },
+    {
+      "from_function": "P22.F05",
+      "to_function": "P22.F06",
+      "flow_id": "R10",
+      "effect": "Interesse is geen recht/vrijstelling; erkenning dekt expliciete verplichting; einde vraagt besluit en geen automatische retroclaim."
+    },
+    {
+      "from_function": "P22.F06",
+      "to_function": "P09.F09",
+      "flow_id": "R10",
+      "effect": "Interesse is geen recht/vrijstelling; erkenning dekt expliciete verplichting; einde vraagt besluit en geen automatische retroclaim."
+    },
+    {
+      "from_function": "P09.F09",
+      "to_function": "P20.F03",
+      "flow_id": "R10",
+      "effect": "Interesse is geen recht/vrijstelling; erkenning dekt expliciete verplichting; einde vraagt besluit en geen automatische retroclaim."
+    },
+    {
+      "from_function": "P09.F02",
+      "to_function": "P09.F05",
+      "flow_id": "R11",
+      "effect": "Extra account creëert geen doel; invite vraagt verificatie/grant; splitsing bewaart private intakes en historische uren."
+    },
+    {
+      "from_function": "P09.F05",
+      "to_function": "P22.F09",
+      "flow_id": "R11",
+      "effect": "Extra account creëert geen doel; invite vraagt verificatie/grant; splitsing bewaart private intakes en historische uren."
+    },
+    {
+      "from_function": "P22.F09",
+      "to_function": "P23.F01",
+      "flow_id": "R11",
+      "effect": "Extra account creëert geen doel; invite vraagt verificatie/grant; splitsing bewaart private intakes en historische uren."
+    },
+    {
+      "from_function": "P23.F01",
+      "to_function": "P23.F05",
+      "flow_id": "R11",
+      "effect": "Extra account creëert geen doel; invite vraagt verificatie/grant; splitsing bewaart private intakes en historische uren."
+    },
+    {
+      "from_function": "P23.F05",
+      "to_function": "P09.F10",
+      "flow_id": "R11",
+      "effect": "Extra account creëert geen doel; invite vraagt verificatie/grant; splitsing bewaart private intakes en historische uren."
+    },
+    {
+      "from_function": "P09.F10",
+      "to_function": "P04.F01",
+      "flow_id": "R11",
+      "effect": "Extra account creëert geen doel; invite vraagt verificatie/grant; splitsing bewaart private intakes en historische uren."
+    },
+    {
+      "from_function": "P10.F02",
+      "to_function": "P11.F02",
+      "flow_id": "R12",
+      "effect": "Persoonlijke acties en gerichte mentions uit bron; kaartDone kent geen verenigingsuren/teamuitvoering toe."
+    },
+    {
+      "from_function": "P11.F02",
+      "to_function": "P11.F06",
+      "flow_id": "R12",
+      "effect": "Persoonlijke acties en gerichte mentions uit bron; kaartDone kent geen verenigingsuren/teamuitvoering toe."
+    },
+    {
+      "from_function": "P11.F06",
+      "to_function": "P11.F07",
+      "flow_id": "R12",
+      "effect": "Persoonlijke acties en gerichte mentions uit bron; kaartDone kent geen verenigingsuren/teamuitvoering toe."
+    },
+    {
+      "from_function": "P11.F07",
+      "to_function": "P11.F08",
+      "flow_id": "R12",
+      "effect": "Persoonlijke acties en gerichte mentions uit bron; kaartDone kent geen verenigingsuren/teamuitvoering toe."
+    },
+    {
+      "from_function": "P11.F08",
+      "to_function": "P13.F07",
+      "flow_id": "R12",
+      "effect": "Persoonlijke acties en gerichte mentions uit bron; kaartDone kent geen verenigingsuren/teamuitvoering toe."
+    },
+    {
+      "from_function": "P13.F07",
+      "to_function": "P14.F04",
+      "flow_id": "R12",
+      "effect": "Persoonlijke acties en gerichte mentions uit bron; kaartDone kent geen verenigingsuren/teamuitvoering toe."
+    },
+    {
+      "from_function": "P14.F04",
+      "to_function": "P11.F04",
+      "flow_id": "R12",
+      "effect": "Persoonlijke acties en gerichte mentions uit bron; kaartDone kent geen verenigingsuren/teamuitvoering toe."
+    },
+    {
+      "from_function": "P22.F07",
+      "to_function": "P07.F02",
+      "flow_id": "R13",
+      "effect": "Idempotente import; partial geen afgelasting; bevestigde afspraken pas na bewuste gevolgenverwerking wijzigen."
+    },
+    {
+      "from_function": "P07.F02",
+      "to_function": "P07.F03",
+      "flow_id": "R13",
+      "effect": "Idempotente import; partial geen afgelasting; bevestigde afspraken pas na bewuste gevolgenverwerking wijzigen."
+    },
+    {
+      "from_function": "P07.F03",
+      "to_function": "P08.F06",
+      "flow_id": "R13",
+      "effect": "Idempotente import; partial geen afgelasting; bevestigde afspraken pas na bewuste gevolgenverwerking wijzigen."
+    },
+    {
+      "from_function": "P08.F06",
+      "to_function": "P08.F07",
+      "flow_id": "R13",
+      "effect": "Idempotente import; partial geen afgelasting; bevestigde afspraken pas na bewuste gevolgenverwerking wijzigen."
+    },
+    {
+      "from_function": "P08.F07",
+      "to_function": "P07.F04",
+      "flow_id": "R13",
+      "effect": "Idempotente import; partial geen afgelasting; bevestigde afspraken pas na bewuste gevolgenverwerking wijzigen."
+    },
+    {
+      "from_function": "P07.F04",
+      "to_function": "P07.F05",
+      "flow_id": "R13",
+      "effect": "Idempotente import; partial geen afgelasting; bevestigde afspraken pas na bewuste gevolgenverwerking wijzigen."
+    },
+    {
+      "from_function": "P07.F05",
+      "to_function": "P14.F07",
+      "flow_id": "R13",
+      "effect": "Idempotente import; partial geen afgelasting; bevestigde afspraken pas na bewuste gevolgenverwerking wijzigen."
+    },
+    {
+      "from_function": "P15.F06",
+      "to_function": "P15.F01",
+      "flow_id": "R14",
+      "effect": "Geopend is geen akkoord; ieder lid exact hash/actor; vraag stopt alleen eigen reminder en houdt ziekmelding open."
+    },
+    {
+      "from_function": "P15.F01",
+      "to_function": "P15.F02",
+      "flow_id": "R14",
+      "effect": "Geopend is geen akkoord; ieder lid exact hash/actor; vraag stopt alleen eigen reminder en houdt ziekmelding open."
+    },
+    {
+      "from_function": "P15.F02",
+      "to_function": "P15.F03",
+      "flow_id": "R14",
+      "effect": "Geopend is geen akkoord; ieder lid exact hash/actor; vraag stopt alleen eigen reminder en houdt ziekmelding open."
+    },
+    {
+      "from_function": "P15.F03",
+      "to_function": "P15.F04",
+      "flow_id": "R14",
+      "effect": "Geopend is geen akkoord; ieder lid exact hash/actor; vraag stopt alleen eigen reminder en houdt ziekmelding open."
+    },
+    {
+      "from_function": "P15.F04",
+      "to_function": "P15.F05",
+      "flow_id": "R14",
+      "effect": "Geopend is geen akkoord; ieder lid exact hash/actor; vraag stopt alleen eigen reminder en houdt ziekmelding open."
+    },
+    {
+      "from_function": "P15.F05",
+      "to_function": "P15.F07",
+      "flow_id": "R14",
+      "effect": "Geopend is geen akkoord; ieder lid exact hash/actor; vraag stopt alleen eigen reminder en houdt ziekmelding open."
+    },
+    {
+      "from_function": "P15.F07",
+      "to_function": "P13.F01",
+      "flow_id": "R14",
+      "effect": "Geopend is geen akkoord; ieder lid exact hash/actor; vraag stopt alleen eigen reminder en houdt ziekmelding open."
+    },
+    {
+      "from_function": "P08.F07",
+      "to_function": "P21.F08",
+      "flow_id": "R15",
+      "effect": "Daily taskdigestcap en per-taskpush apart; essentiële transacties eigen categorie, retries/provider-Unknown eerlijk."
+    },
+    {
+      "from_function": "P21.F08",
+      "to_function": "P21.F01",
+      "flow_id": "R15",
+      "effect": "Daily taskdigestcap en per-taskpush apart; essentiële transacties eigen categorie, retries/provider-Unknown eerlijk."
+    },
+    {
+      "from_function": "P21.F01",
+      "to_function": "P21.F06",
+      "flow_id": "R15",
+      "effect": "Daily taskdigestcap en per-taskpush apart; essentiële transacties eigen categorie, retries/provider-Unknown eerlijk."
+    },
+    {
+      "from_function": "P21.F06",
+      "to_function": "P14.F06",
+      "flow_id": "R15",
+      "effect": "Daily taskdigestcap en per-taskpush apart; essentiële transacties eigen categorie, retries/provider-Unknown eerlijk."
+    },
+    {
+      "from_function": "P14.F06",
+      "to_function": "P14.F07",
+      "flow_id": "R15",
+      "effect": "Daily taskdigestcap en per-taskpush apart; essentiële transacties eigen categorie, retries/provider-Unknown eerlijk."
+    },
+    {
+      "from_function": "P14.F07",
+      "to_function": "P21.F11",
+      "flow_id": "R15",
+      "effect": "Daily taskdigestcap en per-taskpush apart; essentiële transacties eigen categorie, retries/provider-Unknown eerlijk."
+    },
+    {
+      "from_function": "P03.F05",
+      "to_function": "P03.F11",
+      "flow_id": "R16",
+      "effect": "Eigen voorkeur uitsluitend executor; praktische verbetering in eigen scope, geen wijziging credits/besluiten."
+    },
+    {
+      "from_function": "P03.F11",
+      "to_function": "P16.F05",
+      "flow_id": "R16",
+      "effect": "Eigen voorkeur uitsluitend executor; praktische verbetering in eigen scope, geen wijziging credits/besluiten."
+    },
+    {
+      "from_function": "P16.F05",
+      "to_function": "P16.F06",
+      "flow_id": "R16",
+      "effect": "Eigen voorkeur uitsluitend executor; praktische verbetering in eigen scope, geen wijziging credits/besluiten."
+    },
+    {
+      "from_function": "P16.F06",
+      "to_function": "P16.F07",
+      "flow_id": "R16",
+      "effect": "Eigen voorkeur uitsluitend executor; praktische verbetering in eigen scope, geen wijziging credits/besluiten."
+    },
+    {
+      "from_function": "P16.F07",
+      "to_function": "P16.F08",
+      "flow_id": "R16",
+      "effect": "Eigen voorkeur uitsluitend executor; praktische verbetering in eigen scope, geen wijziging credits/besluiten."
+    },
+    {
+      "from_function": "P16.F08",
+      "to_function": "P12.F22",
+      "flow_id": "R16",
+      "effect": "Eigen voorkeur uitsluitend executor; praktische verbetering in eigen scope, geen wijziging credits/besluiten."
+    },
+    {
+      "from_function": "P12.F22",
+      "to_function": "P12.F10",
+      "flow_id": "R16",
+      "effect": "Eigen voorkeur uitsluitend executor; praktische verbetering in eigen scope, geen wijziging credits/besluiten."
+    },
+    {
+      "from_function": "P12.F10",
+      "to_function": "P18.F01",
+      "flow_id": "R16",
+      "effect": "Eigen voorkeur uitsluitend executor; praktische verbetering in eigen scope, geen wijziging credits/besluiten."
+    },
+    {
+      "from_function": "P12.F21",
+      "to_function": "P13.F06",
+      "flow_id": "R17",
+      "effect": "Opvolger accepteert exact versie; oude grant eindigt, overige ouders/brondata intact; geen privéschermen in overdracht."
+    },
+    {
+      "from_function": "P13.F06",
+      "to_function": "P14.F04",
+      "flow_id": "R17",
+      "effect": "Opvolger accepteert exact versie; oude grant eindigt, overige ouders/brondata intact; geen privéschermen in overdracht."
+    },
+    {
+      "from_function": "P14.F04",
+      "to_function": "P22.F14",
+      "flow_id": "R17",
+      "effect": "Opvolger accepteert exact versie; oude grant eindigt, overige ouders/brondata intact; geen privéschermen in overdracht."
+    },
+    {
+      "from_function": "P22.F14",
+      "to_function": "P12.F04",
+      "flow_id": "R17",
+      "effect": "Opvolger accepteert exact versie; oude grant eindigt, overige ouders/brondata intact; geen privéschermen in overdracht."
+    },
+    {
+      "from_function": "P12.F04",
+      "to_function": "P12.F15",
+      "flow_id": "R17",
+      "effect": "Opvolger accepteert exact versie; oude grant eindigt, overige ouders/brondata intact; geen privéschermen in overdracht."
+    },
+    {
+      "from_function": "P17.F02",
+      "to_function": "P17.F03",
+      "flow_id": "R18",
+      "effect": "Seatbooking geen certificaat; geldigheid op taakdatum, verval leidt tot opvolging en geen stille afspraakverwijdering."
+    },
+    {
+      "from_function": "P17.F03",
+      "to_function": "P17.F05",
+      "flow_id": "R18",
+      "effect": "Seatbooking geen certificaat; geldigheid op taakdatum, verval leidt tot opvolging en geen stille afspraakverwijdering."
+    },
+    {
+      "from_function": "P17.F05",
+      "to_function": "P02.F06",
+      "flow_id": "R18",
+      "effect": "Seatbooking geen certificaat; geldigheid op taakdatum, verval leidt tot opvolging en geen stille afspraakverwijdering."
+    },
+    {
+      "from_function": "P02.F06",
+      "to_function": "P12.F07",
+      "flow_id": "R18",
+      "effect": "Seatbooking geen certificaat; geldigheid op taakdatum, verval leidt tot opvolging en geen stille afspraakverwijdering."
+    },
+    {
+      "from_function": "P12.F07",
+      "to_function": "P13.F01",
+      "flow_id": "R18",
+      "effect": "Seatbooking geen certificaat; geldigheid op taakdatum, verval leidt tot opvolging en geen stille afspraakverwijdering."
+    },
+    {
+      "from_function": "P16.F02",
+      "to_function": "P16.F04",
+      "flow_id": "R19",
+      "effect": "Eén moment per bron, private lief-en-leed, echte budgetpost en eerlijk verzendstatus."
+    },
+    {
+      "from_function": "P16.F04",
+      "to_function": "P21.F06",
+      "flow_id": "R19",
+      "effect": "Eén moment per bron, private lief-en-leed, echte budgetpost en eerlijk verzendstatus."
+    },
+    {
+      "from_function": "P21.F06",
+      "to_function": "P16.F03",
+      "flow_id": "R19",
+      "effect": "Eén moment per bron, private lief-en-leed, echte budgetpost en eerlijk verzendstatus."
+    },
+    {
+      "from_function": "P16.F03",
+      "to_function": "P20.F02",
+      "flow_id": "R19",
+      "effect": "Eén moment per bron, private lief-en-leed, echte budgetpost en eerlijk verzendstatus."
+    },
+    {
+      "from_function": "P20.F02",
+      "to_function": "P20.F01",
+      "flow_id": "R19",
+      "effect": "Eén moment per bron, private lief-en-leed, echte budgetpost en eerlijk verzendstatus."
+    },
+    {
+      "from_function": "P19.F04",
+      "to_function": "P09.F07",
+      "flow_id": "R20",
+      "effect": "Independent approvals en blockerlock, integercent, geen dubbele afkoop/claim/ontvangst; betaalde correctie houdt historie."
+    },
+    {
+      "from_function": "P09.F07",
+      "to_function": "P20.F03",
+      "flow_id": "R20",
+      "effect": "Independent approvals en blockerlock, integercent, geen dubbele afkoop/claim/ontvangst; betaalde correctie houdt historie."
+    },
+    {
+      "from_function": "P20.F03",
+      "to_function": "P20.F04",
+      "flow_id": "R20",
+      "effect": "Independent approvals en blockerlock, integercent, geen dubbele afkoop/claim/ontvangst; betaalde correctie houdt historie."
+    },
+    {
+      "from_function": "P20.F04",
+      "to_function": "P20.F05",
+      "flow_id": "R20",
+      "effect": "Independent approvals en blockerlock, integercent, geen dubbele afkoop/claim/ontvangst; betaalde correctie houdt historie."
+    },
+    {
+      "from_function": "P20.F05",
+      "to_function": "P20.F07",
+      "flow_id": "R20",
+      "effect": "Independent approvals en blockerlock, integercent, geen dubbele afkoop/claim/ontvangst; betaalde correctie houdt historie."
+    },
+    {
+      "from_function": "P20.F07",
+      "to_function": "P20.F08",
+      "flow_id": "R20",
+      "effect": "Independent approvals en blockerlock, integercent, geen dubbele afkoop/claim/ontvangst; betaalde correctie houdt historie."
+    },
+    {
+      "from_function": "P20.F08",
+      "to_function": "P20.F01",
+      "flow_id": "R20",
+      "effect": "Independent approvals en blockerlock, integercent, geen dubbele afkoop/claim/ontvangst; betaalde correctie houdt historie."
+    },
+    {
+      "from_function": "P22.F12",
+      "to_function": "P22.F13",
+      "flow_id": "R21",
+      "effect": "Alle oude standen reproduceerbaar; uitsluitend gekozen templates, nieuwe expliciete verplichtingen, geen autooveruren."
+    },
+    {
+      "from_function": "P22.F13",
+      "to_function": "P23.F06",
+      "flow_id": "R21",
+      "effect": "Alle oude standen reproduceerbaar; uitsluitend gekozen templates, nieuwe expliciete verplichtingen, geen autooveruren."
+    },
+    {
+      "from_function": "P23.F06",
+      "to_function": "P12.F13",
+      "flow_id": "R21",
+      "effect": "Alle oude standen reproduceerbaar; uitsluitend gekozen templates, nieuwe expliciete verplichtingen, geen autooveruren."
+    },
+    {
+      "from_function": "P12.F13",
+      "to_function": "P15.F01",
+      "flow_id": "R21",
+      "effect": "Alle oude standen reproduceerbaar; uitsluitend gekozen templates, nieuwe expliciete verplichtingen, geen autooveruren."
+    },
+    {
+      "from_function": "P15.F01",
+      "to_function": "P19.F01",
+      "flow_id": "R21",
+      "effect": "Alle oude standen reproduceerbaar; uitsluitend gekozen templates, nieuwe expliciete verplichtingen, geen autooveruren."
+    },
+    {
+      "from_function": "P00.F06",
+      "to_function": "P00.F07",
+      "flow_id": "R22",
+      "effect": "Gezien en kruis dezelfde upsert; mergevriendelijk/cross-device; rol/seizoen/demo-reset herhalen niet."
+    },
+    {
+      "from_function": "P00.F07",
+      "to_function": "P00.F08",
+      "flow_id": "R22",
+      "effect": "Gezien en kruis dezelfde upsert; mergevriendelijk/cross-device; rol/seizoen/demo-reset herhalen niet."
+    },
+    {
+      "from_function": "P00.F08",
+      "to_function": "P23.F01",
+      "flow_id": "R22",
+      "effect": "Gezien en kruis dezelfde upsert; mergevriendelijk/cross-device; rol/seizoen/demo-reset herhalen niet."
+    },
+    {
+      "from_function": "P23.F01",
+      "to_function": "P22.F11",
+      "flow_id": "R22",
+      "effect": "Gezien en kruis dezelfde upsert; mergevriendelijk/cross-device; rol/seizoen/demo-reset herhalen niet."
+    }
+  ]
+}

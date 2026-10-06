@@ -1,0 +1,1170 @@
+[
+  {
+    "source": "app.tsx",
+    "component": "Shell",
+    "title": "\"Cluvo op je telefoon\"",
+    "description": "\"Dezelfde werkruimte, met ruimte voor je duim.\"",
+    "fields": [],
+    "inline_fields": [],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "app.tsx",
+    "component": "Shell",
+    "title": "\"Zoeken in Cluvo\"",
+    "description": "\"Spring direct naar een werkruimte of een taak.\"",
+    "fields": [],
+    "inline_fields": [],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "app.tsx",
+    "component": "Shell",
+    "title": "\"Ontdek Cluvo\"",
+    "description": "\"Een interactieve demonstratie van de volledige V1-werkruimtes.\"",
+    "fields": [],
+    "inline_fields": [],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "collaboration.tsx",
+    "component": "Committees",
+    "title": "\"Commissielid toevoegen\"",
+    "fields": [
+      {
+        "key": "person",
+        "label": "Persoon",
+        "type": "select",
+        "value": "s.people[0].id",
+        "options": "s.people.map(p=>({value:p.id,label:p.name}))"
+      }
+    ],
+    "inline_fields": [],
+    "raw_fields_expression": "{[{key:'person',label:'Persoon',type:'select',value:s.people[0].id,options:s.people.map(p=>({value:p.id,label:p.name}))}]}"
+  },
+  {
+    "source": "collaboration.tsx",
+    "component": "Committees",
+    "title": "\"Kennis toevoegen\"",
+    "fields": [
+      {
+        "key": "title",
+        "label": "Titel",
+        "required": true
+      },
+      {
+        "key": "type",
+        "label": "Type",
+        "type": "select",
+        "value": "tab==='Instructies'?'Instructie':'Document'",
+        "options": "['Document','Instructie']"
+      },
+      {
+        "key": "text",
+        "label": "Inhoud, checklist of videoverwijzing",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "scope",
+        "label": "Zichtbaarheid",
+        "type": "select",
+        "value": "Commissie",
+        "options": "['Commissie','Vereniging','Coördinatoren']"
+      }
+    ],
+    "inline_fields": [],
+    "raw_fields_expression": "{[{key:'title',label:'Titel',required:true},{key:'type',label:'Type',type:'select',value:tab==='Instructies'?'Instructie':'Document',options:['Document','Instructie']},{key:'text',label:'Inhoud, checklist of videoverwijzing',type:'textarea',required:true},{key:'scope',label:'Zichtbaarheid',type:'select',value:'Commissie',options:['Commissie','Vereniging','Coördinatoren']}]}"
+  },
+  {
+    "source": "collaboration.tsx",
+    "component": "Committees",
+    "title": "{doc.title}",
+    "description": "{'Versie '+doc.version+' · '+doc.committee}",
+    "fields": [],
+    "inline_fields": [],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "collaboration.tsx",
+    "component": "Kanban",
+    "title": "\"Nieuwe kanbankaart\"",
+    "fields": [
+      {
+        "key": "title",
+        "label": "Titel",
+        "required": true
+      },
+      {
+        "key": "description",
+        "label": "Omschrijving",
+        "type": "textarea"
+      },
+      {
+        "key": "committee",
+        "label": "Commissie",
+        "type": "select",
+        "value": "committee",
+        "options": "committees"
+      },
+      {
+        "key": "deadline",
+        "label": "Deadline",
+        "type": "date",
+        "value": "2026-10-10"
+      },
+      {
+        "key": "priority",
+        "label": "Prioriteit",
+        "type": "select",
+        "value": "Normaal",
+        "options": "['Laag','Normaal','Hoog']"
+      }
+    ],
+    "inline_fields": [],
+    "raw_fields_expression": "{[{key:'title',label:'Titel',required:true},{key:'description',label:'Omschrijving',type:'textarea'},{key:'committee',label:'Commissie',type:'select',value:committee,options:committees},{key:'deadline',label:'Deadline',type:'date',value:'2026-10-10'},{key:'priority',label:'Prioriteit',type:'select',value:'Normaal',options:['Laag','Normaal','Hoog']}]}"
+  },
+  {
+    "source": "collaboration.tsx",
+    "component": "Kanban",
+    "title": "\"Kolom toevoegen\"",
+    "fields": [
+      {
+        "key": "name",
+        "label": "Kolomnaam",
+        "required": true
+      }
+    ],
+    "inline_fields": [],
+    "raw_fields_expression": "{[{key:'name',label:'Kolomnaam',required:true}]}"
+  },
+  {
+    "source": "collaboration.tsx",
+    "component": "CardDetail",
+    "title": "{c.title}",
+    "description": "{c.committee+' · '+c.priority+' prioriteit'}",
+    "fields": [],
+    "inline_fields": [
+      {
+        "label": "\"Status\""
+      },
+      {
+        "label": "\"Deadline\""
+      },
+      {
+        "label": "\"Uitvoerders (meerdere mogelijk)\""
+      },
+      {
+        "label": "\"Aanspreekpunt (optioneel)\""
+      },
+      {
+        "label": "\"Gekoppelde activiteit\""
+      },
+      {
+        "label": "\"Gekoppelde verenigingstaak\""
+      },
+      {
+        "label": "\"Bijlage toevoegen\""
+      }
+    ],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "collaboration.tsx",
+    "component": "Matches",
+    "title": "\"Wedstrijdwijziging beoordelen\"",
+    "fields": [],
+    "inline_fields": [],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "collaboration.tsx",
+    "component": "Calendar",
+    "title": "{selected.title}",
+    "description": "{selected.kind+' · '+fullDate(selected.date)}",
+    "fields": [],
+    "inline_fields": [],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "collaboration.tsx",
+    "component": "Calendar",
+    "title": "\"Activiteit in de jaaragenda\"",
+    "fields": [
+      {
+        "key": "title",
+        "label": "Titel",
+        "required": true
+      },
+      {
+        "key": "date",
+        "label": "Datum",
+        "type": "date",
+        "value": "month+'-10'"
+      },
+      {
+        "key": "time",
+        "label": "Begintijd",
+        "type": "time",
+        "value": "19:00"
+      },
+      {
+        "key": "end",
+        "label": "Eindtijd",
+        "type": "time",
+        "value": "21:00"
+      },
+      {
+        "key": "location",
+        "label": "Locatie",
+        "value": "Clubhuis"
+      },
+      {
+        "key": "kind",
+        "label": "Categorie",
+        "type": "select",
+        "value": "Activiteit",
+        "options": "['Activiteit','Vergadering','Opleiding','Waardering','Deadline']"
+      },
+      {
+        "key": "scope",
+        "label": "Zichtbaarheid",
+        "type": "select",
+        "value": "Vereniging",
+        "options": "['Vereniging',...committees,'JO13-1','Besloten']"
+      },
+      {
+        "key": "repeat",
+        "label": "Herhaling",
+        "type": "select",
+        "value": "Geen",
+        "options": "['Geen','Wekelijks','Maandelijks','Jaarlijks']"
+      },
+      {
+        "key": "description",
+        "label": "Omschrijving",
+        "type": "textarea"
+      }
+    ],
+    "inline_fields": [],
+    "raw_fields_expression": "{[{key:'title',label:'Titel',required:true},{key:'date',label:'Datum',type:'date',value:month+'-10'},{key:'time',label:'Begintijd',type:'time',value:'19:00'},{key:'end',label:'Eindtijd',type:'time',value:'21:00'},{key:'location',label:'Locatie',value:'Clubhuis'},{key:'kind',label:'Categorie',type:'select',value:'Activiteit',options:['Activiteit','Vergadering','Opleiding','Waardering','Deadline']},{key:'scope',label:'Zichtbaarheid',type:'select',value:'Vereniging',options:['Vereniging',...committees,'JO13-1','Besloten']},{key:'repeat',label:'Herhaling',type:'select',value:'Geen',options:['Geen','Wekelijks','Maandelijks','Jaarlijks']},{key:'description',label:'Omschrijving',type:'textarea'}]}"
+  },
+  {
+    "source": "coordination-panels.tsx",
+    "component": "FollowUpBoard",
+    "title": "\"Opvolgafspraken\"",
+    "description": "{edit.title+' · deadlines vóór '+fullDate(edit.date)}",
+    "fields": [
+      {
+        "key": "selfUntil",
+        "label": "Zelf inschrijven tot en met",
+        "type": "date",
+        "value": "edit.policy.selfUntil",
+        "required": true
+      },
+      {
+        "key": "assignUntil",
+        "label": "Teamouder verdeelt uiterlijk op",
+        "type": "date",
+        "value": "edit.policy.assignUntil",
+        "required": true
+      }
+    ],
+    "inline_fields": [
+      {
+        "label": "\"Controledatum in de demo\""
+      }
+    ],
+    "raw_fields_expression": "{[{key:'selfUntil',label:'Zelf inschrijven tot en met',type:'date',value:edit.policy.selfUntil,required:true},\n        {key:'assignUntil',label:'Teamouder verdeelt uiterlijk op',type:'date',value:edit.policy.assignUntil,required:true}]}"
+  },
+  {
+    "source": "coordination-panels.tsx",
+    "component": "FeedbackDialog",
+    "title": "{done?'Bedankt voor je terugblik!':'Hoe ging deze taak?'}",
+    "description": "{t.title+' · '+dateLabel(t.date)+' · uitgevoerd door '+nameOf(s,booking.personId)}",
+    "fields": [],
+    "inline_fields": [
+      {
+        "label": "{'Zou '+(booking.personId===person.id?'je':nameOf(s,booking.personId))+' deze taak nog eens willen doen?'}"
+      },
+      {
+        "label": "\"Was de uitleg duidelijk?\""
+      },
+      {
+        "label": "\"Wat kunnen we praktisch verbeteren?\"",
+        "hint": "\"Je toelichting gaat naar de verantwoordelijke teamouder of commissie.\""
+      }
+    ],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "coordination-panels.tsx",
+    "component": "InstructionDialog",
+    "title": "\"Een duidelijkere taakinstructie\"",
+    "description": "{t.title+' · '+t.category}",
+    "fields": [],
+    "inline_fields": [
+      {
+        "label": "\"Instructie voor de uitvoerder\""
+      }
+    ],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "coordination-workspace.tsx",
+    "component": "NextActions",
+    "title": "\"Uitvoering controleren\"",
+    "description": "{s.shifts.find(t=>t.id===confirm.shiftId)?.title}",
+    "fields": [],
+    "inline_fields": [],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "coordination-workspace.tsx",
+    "component": "FamilyAgenda",
+    "title": "{selected.title}",
+    "description": "{selected.kind==='match'?'Wedstrijd van jouw gezin':'Afspraak van jouw huishouden'}",
+    "fields": [],
+    "inline_fields": [],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "governance.tsx",
+    "component": "Policies",
+    "title": "{read.title+' · versie '+read.version}",
+    "description": "\"Lees de volledige tekst. Alleen je actieve bevestiging geldt als akkoord.\"",
+    "fields": [],
+    "inline_fields": [
+      {
+        "label": "\"Je vraag of bezwaar\""
+      }
+    ],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "governance.tsx",
+    "component": "Policies",
+    "title": "\"Vraag over het beleid\"",
+    "fields": [],
+    "inline_fields": [
+      {
+        "label": "\"Je vraag of bezwaar\""
+      }
+    ],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "governance.tsx",
+    "component": "Policies",
+    "title": "\"Nieuwe beleidsversie publiceren\"",
+    "description": "\"Een nieuwe versie bewaart alle oude teksten en acceptaties. In de demo bevestig je de interne goedkeuring bij publicatie.\"",
+    "fields": [
+      {
+        "key": "title",
+        "label": "Documenttitel",
+        "value": "policy.title",
+        "required": true
+      },
+      {
+        "key": "version",
+        "label": "Nieuw versienummer",
+        "value": "'1.'+s.policies.length",
+        "required": true
+      },
+      {
+        "key": "date",
+        "label": "Ingangsdatum",
+        "type": "date",
+        "value": "2026-10-02"
+      },
+      {
+        "key": "text",
+        "label": "Volledige beleidsinhoud",
+        "type": "textarea",
+        "value": "policy.text",
+        "required": true
+      }
+    ],
+    "inline_fields": [
+      {
+        "label": "\"Je vraag of bezwaar\""
+      }
+    ],
+    "raw_fields_expression": "{[{key:'title',label:'Documenttitel',value:policy.title,required:true},{key:'version',label:'Nieuw versienummer',value:'1.'+s.policies.length,required:true},{key:'date',label:'Ingangsdatum',type:'date',value:'2026-10-02'},{key:'text',label:'Volledige beleidsinhoud',type:'textarea',value:policy.text,required:true}]}"
+  },
+  {
+    "source": "governance.tsx",
+    "component": "Appreciation",
+    "title": "\"Een moment van aandacht\"",
+    "fields": [
+      {
+        "key": "title",
+        "label": "Titel",
+        "required": true
+      },
+      {
+        "key": "kind",
+        "label": "Aanleiding",
+        "type": "select",
+        "value": "Waardering",
+        "options": "['Verjaardag','Jubileum','Waardering','Afscheid','Opleiding','Lief & leed']"
+      },
+      {
+        "key": "date",
+        "label": "Datum",
+        "type": "date",
+        "value": "2026-10-10"
+      },
+      {
+        "key": "person",
+        "label": "Voor wie",
+        "type": "select",
+        "value": "s.people[0].id",
+        "options": "s.people.map(p=>({value:p.id,label:p.name}))"
+      },
+      {
+        "key": "owner",
+        "label": "Verantwoordelijke",
+        "type": "select",
+        "value": "s.currentPerson",
+        "options": "s.people.map(p=>({value:p.id,label:p.name}))"
+      },
+      {
+        "key": "budget",
+        "label": "Budget (€)",
+        "type": "number",
+        "value": "0"
+      }
+    ],
+    "inline_fields": [],
+    "raw_fields_expression": "{[{key:'title',label:'Titel',required:true},{key:'kind',label:'Aanleiding',type:'select',value:'Waardering',options:['Verjaardag','Jubileum','Waardering','Afscheid','Opleiding','Lief & leed']},{key:'date',label:'Datum',type:'date',value:'2026-10-10'},{key:'person',label:'Voor wie',type:'select',value:s.people[0].id,options:s.people.map(p=>({value:p.id,label:p.name}))},{key:'owner',label:'Verantwoordelijke',type:'select',value:s.currentPerson,options:s.people.map(p=>({value:p.id,label:p.name}))},{key:'budget',label:'Budget (€)',type:'number',value:0}]}"
+  },
+  {
+    "source": "governance.tsx",
+    "component": "Training",
+    "title": "\"Kwalificatie vastleggen\"",
+    "fields": [
+      {
+        "key": "person",
+        "label": "Persoon",
+        "type": "select",
+        "value": "s.currentPerson",
+        "options": "s.people.map(p=>({value:p.id,label:p.name}))"
+      },
+      {
+        "key": "cert",
+        "label": "Kwalificatie",
+        "type": "select",
+        "value": "IVA",
+        "options": "['IVA','EHBO','Scheidsrechter']"
+      },
+      {
+        "key": "expires",
+        "label": "Geldig tot",
+        "type": "date",
+        "value": "2027-06-30"
+      }
+    ],
+    "inline_fields": [],
+    "raw_fields_expression": "{[{key:'person',label:'Persoon',type:'select',value:s.currentPerson,options:s.people.map(p=>({value:p.id,label:p.name}))},{key:'cert',label:'Kwalificatie',type:'select',value:'IVA',options:['IVA','EHBO','Scheidsrechter']},{key:'expires',label:'Geldig tot',type:'date',value:'2027-06-30'}]}"
+  },
+  {
+    "source": "governance.tsx",
+    "component": "Finance",
+    "title": "\"Onbetaalde afspraak corrigeren\"",
+    "description": "\"De oorspronkelijke afspraak blijft in de historie. Een nieuwe financiële route kan daarna worden beoordeeld.\"",
+    "fields": [
+      {
+        "key": "reason",
+        "label": "Reden voor intrekken / vervangen",
+        "type": "textarea",
+        "required": true
+      }
+    ],
+    "inline_fields": [],
+    "raw_fields_expression": "{[{key:'reason',label:'Reden voor intrekken / vervangen',type:'textarea',required:true}]}"
+  },
+  {
+    "source": "governance.tsx",
+    "component": "Finance",
+    "title": "\"Budgetpost toevoegen\"",
+    "fields": [
+      {
+        "key": "title",
+        "label": "Doel / omschrijving",
+        "required": true
+      },
+      {
+        "key": "amount",
+        "label": "Bedrag (€)",
+        "type": "number",
+        "required": true
+      },
+      {
+        "key": "type",
+        "label": "Soort post",
+        "type": "select",
+        "value": "Reservering",
+        "options": "['Reservering','Uitgave','Inkomst']"
+      }
+    ],
+    "inline_fields": [],
+    "raw_fields_expression": "{[{key:'title',label:'Doel / omschrijving',required:true},{key:'amount',label:'Bedrag (€)',type:'number',required:true},{key:'type',label:'Soort post',type:'select',value:'Reservering',options:['Reservering','Uitgave','Inkomst']}]}"
+  },
+  {
+    "source": "management.tsx",
+    "component": "Communication",
+    "title": "\"Nieuw communicatietemplate\"",
+    "fields": [
+      {
+        "key": "name",
+        "label": "Templatenaam",
+        "required": true
+      },
+      {
+        "key": "channel",
+        "label": "Kanaal",
+        "type": "select",
+        "value": "E-mail",
+        "options": "['E-mail','Push','Inbox']"
+      },
+      {
+        "key": "category",
+        "label": "Berichtsoort",
+        "type": "select",
+        "value": "Verenigingstaak",
+        "options": "['Verenigingstaak','Aanbod','Waardering','Beleid']"
+      }
+    ],
+    "inline_fields": [
+      {
+        "label": "\"Onderwerp\""
+      },
+      {
+        "label": "\"Preheader\""
+      },
+      {
+        "label": "\"Afzender\""
+      },
+      {
+        "label": "\"Antwoordadres\""
+      },
+      {
+        "label": "\"Berichtinhoud\""
+      },
+      {
+        "label": "\"Knoptekst\""
+      },
+      {
+        "label": "\"Filter op vaardigheid of voorkeur\""
+      },
+      {
+        "label": "\"Segmentnaam\""
+      }
+    ],
+    "raw_fields_expression": "{[{key:'name',label:'Templatenaam',required:true},{key:'channel',label:'Kanaal',type:'select',value:'E-mail',options:['E-mail','Push','Inbox']},{key:'category',label:'Berichtsoort',type:'select',value:'Verenigingstaak',options:['Verenigingstaak','Aanbod','Waardering','Beleid']}]}"
+  },
+  {
+    "source": "management.tsx",
+    "component": "Settings",
+    "title": "\"Vrijwilligersrol toevoegen\"",
+    "fields": [
+      {
+        "key": "name",
+        "label": "Rolnaam",
+        "required": true
+      },
+      {
+        "key": "exempt",
+        "label": "Vrijstelling voor het hele huishouden",
+        "type": "check",
+        "value": true
+      }
+    ],
+    "inline_fields": [
+      {
+        "label": "{label}"
+      },
+      {
+        "label": "{['Naam','E-mail','Stabiel lidnummer'][i]}"
+      }
+    ],
+    "raw_fields_expression": "{[{key:'name',label:'Rolnaam',required:true},{key:'exempt',label:'Vrijstelling voor het hele huishouden',type:'check',value:true}]}"
+  },
+  {
+    "source": "management.tsx",
+    "component": "Settings",
+    "title": "\"Voorbeeldgegevens herstellen?\"",
+    "description": "\"Je lokale demoaanpassingen worden vervangen door de oorspronkelijke voorbeeldsituatie.\"",
+    "fields": [],
+    "inline_fields": [
+      {
+        "label": "{label}"
+      },
+      {
+        "label": "{['Naam','E-mail','Stabiel lidnummer'][i]}"
+      }
+    ],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "management.tsx",
+    "component": "Settings",
+    "title": "\"Seizoensvoorbereiding\"",
+    "fields": [
+      {
+        "key": "next",
+        "label": "Nieuw seizoen",
+        "value": "2027 / 2028",
+        "required": true
+      },
+      {
+        "key": "roles",
+        "label": "Rollen opnieuw laten bevestigen",
+        "type": "check",
+        "value": true
+      },
+      {
+        "key": "intake",
+        "label": "Intake opnieuw laten bevestigen",
+        "type": "check",
+        "value": true
+      },
+      {
+        "key": "templates",
+        "label": "Roostersjablonen meenemen",
+        "type": "check",
+        "value": true
+      }
+    ],
+    "inline_fields": [
+      {
+        "label": "{label}"
+      },
+      {
+        "label": "{['Naam','E-mail','Stabiel lidnummer'][i]}"
+      }
+    ],
+    "raw_fields_expression": "{[{key:'next',label:'Nieuw seizoen',value:'2027 / 2028',required:true},{key:'roles',label:'Rollen opnieuw laten bevestigen',type:'check',value:true},{key:'intake',label:'Intake opnieuw laten bevestigen',type:'check',value:true},{key:'templates',label:'Roostersjablonen meenemen',type:'check',value:true}]}"
+  },
+  {
+    "source": "people.tsx",
+    "component": "Households",
+    "title": "\"Nieuw huishouddossier\"",
+    "fields": [
+      {
+        "key": "name",
+        "label": "Naam huishouden",
+        "required": true
+      },
+      {
+        "key": "team",
+        "label": "Team",
+        "type": "select",
+        "options": "['JO13-1','JO17-1','Geen team']",
+        "value": "JO13-1"
+      }
+    ],
+    "inline_fields": [
+      {
+        "label": "\"Vast te stellen jaardoel (minuten)\""
+      }
+    ],
+    "raw_fields_expression": "{[{key:'name',label:'Naam huishouden',required:true},{key:'team',label:'Team',type:'select',options:['JO13-1','JO17-1','Geen team'],value:'JO13-1'}]}"
+  },
+  {
+    "source": "people.tsx",
+    "component": "WinterPlanning",
+    "title": "\"Wintertekort passend inplannen\"",
+    "fields": [],
+    "inline_fields": [
+      {
+        "label": "\"Uitvoerder\""
+      },
+      {
+        "label": "\"Verenigingstaak na de winterstop\""
+      }
+    ],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "people.tsx",
+    "component": "HouseholdDetail",
+    "title": "{h.name}",
+    "description": "{'Dossier '+h.id+' · Intakecode '+h.code}",
+    "fields": [],
+    "inline_fields": [],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "people.tsx",
+    "component": "HouseholdDetail",
+    "title": "\"Extra persoon uitnodigen\"",
+    "description": "\"Een ouder, lid van 16+ of extra uitvoerder krijgt een eigen profiel en persoonlijke toegang.\"",
+    "fields": [
+      {
+        "key": "name",
+        "label": "Volledige naam",
+        "required": true
+      },
+      {
+        "key": "email",
+        "label": "Persoonlijk e-mailadres",
+        "type": "email",
+        "required": true
+      },
+      {
+        "key": "age",
+        "label": "Leeftijd",
+        "type": "number",
+        "value": "18"
+      }
+    ],
+    "inline_fields": [],
+    "raw_fields_expression": "{[{key:'name',label:'Volledige naam',required:true},{key:'email',label:'Persoonlijk e-mailadres',type:'email',required:true},{key:'age',label:'Leeftijd',type:'number',value:18}]}"
+  },
+  {
+    "source": "people.tsx",
+    "component": "HouseholdDetail",
+    "title": "\"Een passende afspraak aanvragen\"",
+    "fields": [
+      {
+        "key": "type",
+        "label": "Soort aanvraag",
+        "type": "select",
+        "value": "Vermindering",
+        "options": "['Vermindering','Vrijstelling','Uitstel','Afkoop']"
+      },
+      {
+        "key": "reason",
+        "label": "Toelichting en praktische mogelijkheden",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "key": "target",
+        "label": "Voorgesteld jaardoel in minuten",
+        "type": "number",
+        "value": "360"
+      }
+    ],
+    "inline_fields": [],
+    "raw_fields_expression": "{[{key:'type',label:'Soort aanvraag',type:'select',value:'Vermindering',options:['Vermindering','Vrijstelling','Uitstel','Afkoop']},{key:'reason',label:'Toelichting en praktische mogelijkheden',type:'textarea',required:true},{key:'target',label:'Voorgesteld jaardoel in minuten',type:'number',value:360}]}"
+  },
+  {
+    "source": "people.tsx",
+    "component": "HouseholdDetail",
+    "title": "\"Vaste vrijwilligersrol toekennen\"",
+    "description": "\"De erkende rol kan het hele huishouden vrijstellen. Dit verleent geen systeemrechten en boekt geen fictieve uren.\"",
+    "fields": [
+      {
+        "key": "person",
+        "label": "Rolhouder",
+        "type": "select",
+        "options": "persons.map(p=>({value:p.id,label:p.name}))",
+        "value": "persons[0]?.id"
+      },
+      {
+        "key": "role",
+        "label": "Rol",
+        "type": "select",
+        "options": "s.roleCatalog.map(r=>({value:r.id,label:r.name}))",
+        "value": "s.roleCatalog[0].id"
+      },
+      {
+        "key": "start",
+        "label": "Vanaf",
+        "type": "date",
+        "value": "2026-07-01"
+      },
+      {
+        "key": "end",
+        "label": "Tot en met",
+        "type": "date",
+        "value": "2027-06-30"
+      }
+    ],
+    "inline_fields": [],
+    "raw_fields_expression": "{[{key:'person',label:'Rolhouder',type:'select',options:persons.map(p=>({value:p.id,label:p.name})),value:persons[0]?.id},{key:'role',label:'Rol',type:'select',options:s.roleCatalog.map(r=>({value:r.id,label:r.name})),value:s.roleCatalog[0].id},{key:'start',label:'Vanaf',type:'date',value:'2026-07-01'},{key:'end',label:'Tot en met',type:'date',value:'2027-06-30'}]}"
+  },
+  {
+    "source": "people.tsx",
+    "component": "HouseholdDetail",
+    "title": "\"Huishoudwijziging ter beoordeling\"",
+    "fields": [
+      {
+        "key": "type",
+        "label": "Wijziging",
+        "type": "select",
+        "options": "['Koppelen','Splitsen','Herstellen']",
+        "value": "Splitsen"
+      },
+      {
+        "key": "reason",
+        "label": "Betrokken dossiers en gewenste verplichtingskoppeling",
+        "type": "textarea",
+        "required": true
+      }
+    ],
+    "inline_fields": [],
+    "raw_fields_expression": "{[{key:'type',label:'Wijziging',type:'select',options:['Koppelen','Splitsen','Herstellen'],value:'Splitsen'},{key:'reason',label:'Betrokken dossiers en gewenste verplichtingskoppeling',type:'textarea',required:true}]}"
+  },
+  {
+    "source": "people.tsx",
+    "component": "Vacancies",
+    "title": "{selected.title}",
+    "fields": [],
+    "inline_fields": [],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "tasks.tsx",
+    "component": "TaskMarket",
+    "title": "\"We denken met je mee\"",
+    "fields": [
+      {
+        "key": "reason",
+        "label": "Wat zou voor jou wel passen?",
+        "type": "textarea",
+        "required": true
+      }
+    ],
+    "inline_fields": [],
+    "raw_fields_expression": "{[{key:'reason',label:'Wat zou voor jou wel passen?',type:'textarea',required:true}]}"
+  },
+  {
+    "source": "tasks.tsx",
+    "component": "ShiftDetail",
+    "title": "{t.title}",
+    "description": "{t.committee+' · '+t.category}",
+    "fields": [],
+    "inline_fields": [
+      {
+        "label": "\"Wie pakt deze taak op?\""
+      },
+      {
+        "label": "\"Kies een bevoegd maatje\""
+      }
+    ],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "tasks.tsx",
+    "component": "ShiftEditor",
+    "title": "{shift?'Verenigingstaak aanpassen':'Nieuwe verenigingstaak'}",
+    "description": "\"Maak een concept en publiceer wanneer de bezetting en instructies kloppen.\"",
+    "fields": [],
+    "inline_fields": [
+      {
+        "label": "{f.label}"
+      },
+      {
+        "label": "\"Commissie\""
+      },
+      {
+        "label": "\"Categorie\""
+      },
+      {
+        "label": "\"Publicatie\""
+      },
+      {
+        "label": "\"Vereiste kwalificatie\""
+      },
+      {
+        "label": "\"Instructie\""
+      },
+      {
+        "label": "\"Verdeling van de verenigingstaak\""
+      },
+      {
+        "label": "\"Verantwoordelijk team\""
+      }
+    ],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "tasks.tsx",
+    "component": "MyShifts",
+    "title": "{action.type}",
+    "description": "{s.shifts.find(t=>t.id===action.b.shiftId)?.title}",
+    "fields": [],
+    "inline_fields": [
+      {
+        "label": "\"Bevestigde minuten\""
+      },
+      {
+        "label": "\"Toelichting\""
+      }
+    ],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "tasks.tsx",
+    "component": "SwapMarket",
+    "title": "\"Overnemen of wederzijds ruilen\"",
+    "fields": [],
+    "inline_fields": [
+      {
+        "label": "\"Uitvoerder\""
+      },
+      {
+        "label": "\"Ruil met een eigen verenigingstaak (optioneel)\""
+      }
+    ],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "tasks.tsx",
+    "component": "Planner",
+    "title": "\"Planningwijziging controleren\"",
+    "fields": [],
+    "inline_fields": [],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "tasks.tsx",
+    "component": "Planner",
+    "title": "\"Roostersjabloon toepassen\"",
+    "fields": [
+      {
+        "key": "type",
+        "label": "Sjabloon",
+        "type": "select",
+        "value": "Normale zaterdag",
+        "options": "['Normale zaterdag','Drukke thuisdag','Toernooi']"
+      },
+      {
+        "key": "date",
+        "label": "Startdatum",
+        "type": "date",
+        "value": "date"
+      },
+      {
+        "key": "repeat",
+        "label": "Aantal weken",
+        "type": "number",
+        "value": "1"
+      }
+    ],
+    "inline_fields": [],
+    "raw_fields_expression": "{[{key:'type',label:'Sjabloon',type:'select',value:'Normale zaterdag',options:['Normale zaterdag','Drukke thuisdag','Toernooi']},{key:'date',label:'Startdatum',type:'date',value:date},{key:'repeat',label:'Aantal weken',type:'number',value:1}]}"
+  },
+  {
+    "source": "team-workspace.tsx",
+    "component": "ClusterEditor",
+    "title": "\"Cluster aan een team toewijzen\"",
+    "description": "\"Selecteer vrije bezettingsplekken. Bestaande inschrijvingen blijven behouden.\"",
+    "fields": [],
+    "inline_fields": [
+      {
+        "label": "\"Naam van het cluster\""
+      },
+      {
+        "label": "\"Verantwoordelijk team\""
+      },
+      {
+        "label": "\"Uiterste datum voor verdeling\""
+      },
+      {
+        "label": "\"Verdeling binnen het team\""
+      },
+      {
+        "label": "\"Afspraken voor de teamouder\""
+      }
+    ],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "team-workspace.tsx",
+    "component": "TeamWorkspace",
+    "title": "\"Seizoensdoel voor het team\"",
+    "description": "\"Aantal bevestigde taken per lid. Dit doel verandert de huishoudelijke verenigingsuren niet.\"",
+    "fields": [
+      {
+        "key": "goal",
+        "label": "Taken per lid dit seizoen",
+        "type": "number",
+        "value": "seasonGoal(s,team).goal",
+        "required": true
+      }
+    ],
+    "inline_fields": [],
+    "raw_fields_expression": "{[{key:'goal',label:'Taken per lid dit seizoen',type:'number',value:seasonGoal(s,team).goal,required:true}]}"
+  },
+  {
+    "source": "team-workspace.tsx",
+    "component": "TeamWorkspace",
+    "title": "{'Doel voor '+team.members.find(m=>m.id===adjust)?.name}",
+    "description": "\"Een afwijking geldt alleen voor dit lid, dit team en dit seizoen.\"",
+    "fields": [
+      {
+        "key": "goal",
+        "label": "Aantal taken",
+        "type": "number",
+        "value": "seasonGoal(s,team).overrides[adjust]?.goal??seasonGoal(s,team).goal",
+        "required": true
+      },
+      {
+        "key": "reason",
+        "label": "Reden voor de aanpassing",
+        "type": "textarea",
+        "value": "seasonGoal(s,team).overrides[adjust]?.reason||''",
+        "required": true
+      }
+    ],
+    "inline_fields": [],
+    "raw_fields_expression": "{[{key:'goal',label:'Aantal taken',type:'number',value:seasonGoal(s,team).overrides[adjust]?.goal??seasonGoal(s,team).goal,required:true},{key:'reason',label:'Reden voor de aanpassing',type:'textarea',value:seasonGoal(s,team).overrides[adjust]?.reason||'',required:true}]}"
+  },
+  {
+    "source": "team-workspace.tsx",
+    "component": "TeamTaskCard",
+    "title": "\"Verenigingsuren goedkeuren\"",
+    "description": "\"De goedgekeurde waarde geldt voor nieuwe inschrijvingen. Bestaande afspraken blijven behouden.\"",
+    "fields": [
+      {
+        "key": "minutes",
+        "label": "Goedgekeurde minuten per plaats",
+        "type": "number",
+        "value": "t.requestedMinutes",
+        "required": true
+      }
+    ],
+    "inline_fields": [],
+    "raw_fields_expression": "{[{key:'minutes',label:'Goedgekeurde minuten per plaats',type:'number',value:t.requestedMinutes,required:true}]}"
+  },
+  {
+    "source": "team-workspace.tsx",
+    "component": "AssignModal",
+    "title": "\"Plaats aan een lid toewijzen\"",
+    "description": "{t.title+' · '+t.start+'–'+t.end}",
+    "fields": [],
+    "inline_fields": [
+      {
+        "label": "\"Lid namens wie het huishouden de taak oppakt\""
+      }
+    ],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "team-workspace.tsx",
+    "component": "TeamBookModal",
+    "title": "{t.title}",
+    "description": "{kindLabel(t)+' · '+team.name+' · plaats '+a.position}",
+    "fields": [],
+    "inline_fields": [
+      {
+        "label": "\"Voor welk lid telt deze taak?\""
+      },
+      {
+        "label": "\"Wie voert de taak daadwerkelijk uit?\""
+      }
+    ],
+    "raw_fields_expression": null
+  },
+  {
+    "source": "team-workspace.tsx",
+    "component": "IssueModal",
+    "title": "\"Verhindering of overname melden\"",
+    "description": "\"De teamouder krijgt een opvolgactie. Een bevestigde uitvoerder blijft staan totdat een vervanger definitief overneemt.\"",
+    "fields": [
+      {
+        "key": "reason",
+        "label": "Wat moet de teamouder weten?",
+        "type": "textarea",
+        "required": true
+      }
+    ],
+    "inline_fields": [],
+    "raw_fields_expression": "{[{key:'reason',label:'Wat moet de teamouder weten?',type:'textarea',required:true}]}"
+  },
+  {
+    "source": "team-workspace.tsx",
+    "component": "TeamTaskEditor",
+    "title": "\"Teamtaak op de teamtakenmarkt\"",
+    "description": "{'Alleen zichtbaar binnen '+team.name+'. Verenigingsuren vragen voorafgaande goedkeuring.'}",
+    "fields": [
+      {
+        "key": "title",
+        "label": "Taaknaam",
+        "required": true
+      },
+      {
+        "key": "category",
+        "label": "Soort teamtaak",
+        "type": "select",
+        "value": "Fluiten",
+        "options": "['Fluiten','Grensrechter','Fruit','Vervoer','Bidons','Overige teamtaak']"
+      },
+      {
+        "key": "date",
+        "label": "Datum",
+        "type": "date",
+        "value": "2026-10-10",
+        "required": true
+      },
+      {
+        "key": "start",
+        "label": "Begintijd",
+        "type": "time",
+        "value": "13:00",
+        "required": true
+      },
+      {
+        "key": "end",
+        "label": "Eindtijd",
+        "type": "time",
+        "value": "14:30",
+        "required": true
+      },
+      {
+        "key": "capacity",
+        "label": "Benodigde personen",
+        "type": "number",
+        "value": "1",
+        "required": true
+      },
+      {
+        "key": "minAge",
+        "label": "Minimumleeftijd uitvoerder",
+        "type": "number",
+        "value": "16"
+      },
+      {
+        "key": "qualification",
+        "label": "Vereiste kwalificatie",
+        "type": "select",
+        "value": "",
+        "options": "[{value:'',label:'Geen'},'IVA','EHBO']"
+      },
+      {
+        "key": "repeat",
+        "label": "Aantal wekelijkse herhalingen",
+        "type": "number",
+        "value": "1",
+        "hint": "Maximaal 12; alle data moeten binnen het seizoen vallen."
+      },
+      {
+        "key": "countsForTeam",
+        "label": "Meetellen voor teamdoel",
+        "type": "check",
+        "value": true,
+        "hint": "Elke bevestigde plaats telt als één taak voor het gekozen lid"
+      },
+      {
+        "key": "requestedMinutes",
+        "label": "Verenigingsuren aanvragen (minuten)",
+        "type": "number",
+        "value": "0",
+        "hint": "0 = alleen teamtaak. Fluiten en grensrechter krijgen eerst beoordeling door wedstrijdzaken."
+      },
+      {
+        "key": "instructions",
+        "label": "Instructies",
+        "type": "textarea",
+        "value": "Meld je bij de teamouder en controleer de wedstrijdgegevens."
+      }
+    ],
+    "inline_fields": [],
+    "raw_fields_expression": "{[{key:'title',label:'Taaknaam',required:true},{key:'category',label:'Soort teamtaak',type:'select',value:'Fluiten',options:['Fluiten','Grensrechter','Fruit','Vervoer','Bidons','Overige teamtaak']},{key:'date',label:'Datum',type:'date',value:'2026-10-10',required:true},{key:'start',label:'Begintijd',type:'time',value:'13:00',required:true},{key:'end',label:'Eindtijd',type:'time',value:'14:30',required:true},{key:'capacity',label:'Benodigde personen',type:'number',value:1,required:true},{key:'minAge',label:'Minimumleeftijd uitvoerder',type:'number',value:16},{key:'qualification',label:'Vereiste kwalificatie',type:'select',value:'',options:[{value:'',label:'Geen'},'IVA','EHBO']},{key:'repeat',label:'Aantal wekelijkse herhalingen',type:'number',value:1,hint:'Maximaal 12; alle data moeten binnen het seizoen vallen.'},{key:'countsForTeam',label:'Meetellen voor teamdoel',type:'check',value:true,hint:'Elke bevestigde plaats telt als één taak voor het gekozen lid'},{key:'requestedMinutes',label:'Verenigingsuren aanvragen (minuten)',type:'number',value:0,hint:'0 = alleen teamtaak. Fluiten en grensrechter krijgen eerst beoordeling door wedstrijdzaken.'},{key:'instructions',label:'Instructies',type:'textarea',value:'Meld je bij de teamouder en controleer de wedstrijdgegevens.'}]}"
+  }
+]

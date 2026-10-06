@@ -1,0 +1,34 @@
+{
+  "version": "1.0",
+  "created_at": "2026-10-06T14:03:48.202413+00:00",
+  "prototype": {
+    "commit": "e9c1d8bca2089b0944577eed73d1bedf7e70a3b6",
+    "project_id": "appgprj_6ac4423a3f00819194808afc8e9dc22a",
+    "live_url": "https://cluvo-prototype.dgwebserv.chatgpt.site",
+    "exclusion": "Sites-hostingmetadata, buildoutput, Git en dependencies"
+  },
+  "platform": {
+    "repository": "https://github.com/cluvonl/platform.git",
+    "main_sha": "47386491859b47fbebf85c3b209724dcc20407fc",
+    "staging_remote_sha_at_review": "47386491859b47fbebf85c3b209724dcc20407fc"
+  },
+  "scope": {
+    "active_pages": 23,
+    "functional_entries": 219,
+    "relationship_flows": 22,
+    "acceptance_open": 102
+  },
+  "actual_checks": {
+    "status": "PASS",
+    "tests": 29,
+    "commands": [
+      "node --test scripts/team-workflow.test.cjs scripts/coordination-workflow.test.cjs scripts/help-banners.test.cjs",
+      "npm run typecheck",
+      "npm run build",
+      "node scripts/check-static-output.mjs"
+    ],
+    "source_sha": "e9c1d8bca2089b0944577eed73d1bedf7e70a3b6",
+    "scope": "Lokale prototype-domain/render/sourcechecks, geen echte staging of browseracceptatie",
+    "checked_on": "2026-10-06"
+  }
+}
