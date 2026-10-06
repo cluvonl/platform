@@ -50,6 +50,10 @@ begin;
 insert into auth.users (id, aud, role, email, raw_app_meta_data, raw_user_meta_data, created_at, updated_at) values
   (${sqlLiteral(ids.actorA)}, 'authenticated', 'authenticated', ${sqlLiteral(`race-a-${suffix}@example.test`)}, '{}'::jsonb, '{}'::jsonb, statement_timestamp(), statement_timestamp()),
   (${sqlLiteral(ids.actorB)}, 'authenticated', 'authenticated', ${sqlLiteral(`race-b-${suffix}@example.test`)}, '{}'::jsonb, '{}'::jsonb, statement_timestamp(), statement_timestamp());
+update auth.users set email_confirmed_at=statement_timestamp() where id in (${sqlLiteral(ids.actorA)},${sqlLiteral(ids.actorB)});
+insert into auth.sessions(id,user_id,created_at,updated_at) values
+ (${sqlLiteral(ids.actorA)},${sqlLiteral(ids.actorA)},statement_timestamp(),statement_timestamp()),
+ (${sqlLiteral(ids.actorB)},${sqlLiteral(ids.actorB)},statement_timestamp(),statement_timestamp());
 insert into app.tenants (id, slug, name, status) values
   (${sqlLiteral(ids.tenant)}, ${sqlLiteral(`race-${suffix}`)}, 'A13 concurrency fixture', 'active');
 insert into app.account_profiles (auth_user_id, display_name) values
@@ -101,7 +105,7 @@ function bookingSql(actor, person, idempotencyKey) {
 begin;
 set local role authenticated;
 select set_config('request.jwt.claim.sub', ${sqlLiteral(actor)}, true);
-select set_config('request.jwt.claims', ${sqlLiteral(JSON.stringify({sub: actor, role: 'authenticated'}))}, true);
+select set_config('request.jwt.claims', ${sqlLiteral(JSON.stringify({sub: actor, role: 'authenticated', session_id: actor}))}, true);
 select pg_sleep(0.2);
 select resource_id from api.book_shift(
   ${sqlLiteral(ids.tenant)}, ${sqlLiteral(ids.shift)}, ${sqlLiteral(ids.position)},

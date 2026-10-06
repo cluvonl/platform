@@ -1,0 +1,288 @@
+{
+  "observed_at": "2026-10-06T23:18:36.962368+00:00",
+  "source_parent_commit": "8f6190f77605edd8e191425f2790bc194ae28175",
+  "source_was_worktree": true,
+  "environment": "local",
+  "staging_verified": false,
+  "node_check": {
+    "lint": "PASS",
+    "node_tests": 28,
+    "wp0_contract_tests": 5,
+    "standalone_http": "PASS",
+    "typecheck": "REUSED_FROM_8f6190f_BYTE_EQUAL_APP_SOURCE",
+    "production_build": "REUSED_FROM_8f6190f_BYTE_EQUAL_APP_SOURCE",
+    "build_id": "h2Cja3UFbszEOMcWMc6qD"
+  },
+  "database": {
+    "migrations": 15,
+    "empty_database_assertions": 810,
+    "files": 17,
+    "native_session_assertions": 42,
+    "lint": "PASS",
+    "warnings": 0,
+    "restrictive_native_session_policies": 143,
+    "guarded_private_commands": 53,
+    "rejected_api_and_private_commands": 104,
+    "upgrade_from": 14,
+    "populated_upgrade_data_tables": 143,
+    "upgrade_data_equal": true,
+    "existing_function_metadata_preserved": 190,
+    "original_command_bodies_preserved": 53,
+    "restore_data_tables": 143,
+    "restore_data_equal": true,
+    "restore_native_session_positive_and_negative": "PASS"
+  },
+  "browser": {
+    "annual": 18,
+    "dossier": 29,
+    "account_booking": 14,
+    "personal_intake": 22,
+    "intake_session": 7,
+    "native_revocation": 15
+  },
+  "concurrency": {
+    "INTAKE_RECONFIRMATION_SERIALIZATION": {
+      "scenario": "INTAKE_RECONFIRMATION_SERIALIZATION",
+      "scenarios": [
+        {
+          "winner": "exact_confirmation",
+          "contenders": 2,
+          "waited_milliseconds": 3016,
+          "conflict": null,
+          "readback": {
+            "receipts": 1,
+            "profile_version": 2,
+            "answer_revision": 1,
+            "answer_versions": 1,
+            "annually_confirmed": true,
+            "item_state": "confirmed",
+            "item_version": 2,
+            "annual_audits": 1,
+            "annual_commands": 1,
+            "processing_commands": 0,
+            "obligations": 0,
+            "ledger_rows": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "answer_revision",
+          "contenders": 2,
+          "waited_milliseconds": 3011,
+          "conflict": "STALE_VERSION",
+          "readback": {
+            "receipts": 0,
+            "profile_version": 2,
+            "answer_revision": 2,
+            "answer_versions": 2,
+            "annually_confirmed": false,
+            "item_state": "open",
+            "item_version": 1,
+            "annual_audits": 0,
+            "annual_commands": 0,
+            "processing_commands": 0,
+            "obligations": 0,
+            "ledger_rows": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "assistance_revocation",
+          "contenders": 2,
+          "waited_milliseconds": 3012,
+          "conflict": "FORBIDDEN",
+          "readback": {
+            "receipts": 0,
+            "profile_version": 1,
+            "answer_revision": 1,
+            "answer_versions": 1,
+            "annually_confirmed": false,
+            "item_state": "open",
+            "item_version": 1,
+            "annual_audits": 0,
+            "annual_commands": 0,
+            "processing_commands": 0,
+            "obligations": 0,
+            "ledger_rows": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "native_session_revocation",
+          "contenders": 2,
+          "waited_milliseconds": 3008,
+          "conflict": "FORBIDDEN",
+          "readback": {
+            "receipts": 0,
+            "profile_version": 1,
+            "answer_revision": 1,
+            "answer_versions": 1,
+            "annually_confirmed": false,
+            "item_state": "open",
+            "item_version": 1,
+            "annual_audits": 0,
+            "annual_commands": 0,
+            "processing_commands": 0,
+            "obligations": 0,
+            "ledger_rows": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "season_close",
+          "contenders": 2,
+          "waited_milliseconds": 3013,
+          "conflict": "SEASON_NOT_OPEN",
+          "readback": {
+            "receipts": 0,
+            "profile_version": 1,
+            "answer_revision": 1,
+            "answer_versions": 1,
+            "annually_confirmed": false,
+            "item_state": "open",
+            "item_version": 1,
+            "annual_audits": 0,
+            "annual_commands": 0,
+            "processing_commands": 0,
+            "obligations": 0,
+            "ledger_rows": 0
+          },
+          "result": "PASS"
+        }
+      ],
+      "result": "PASS"
+    },
+    "HOUSEHOLD_INVITATION_VERSION_SERIALIZATION": {
+      "scenario": "HOUSEHOLD_INVITATION_VERSION_SERIALIZATION",
+      "contenders": 2,
+      "waited_milliseconds": 3013,
+      "conflict": "STALE_VERSION",
+      "readback": {
+        "invitations": 1,
+        "household_version": 2,
+        "completed_commands": 1,
+        "creation_audits": 1
+      },
+      "result": "PASS"
+    },
+    "INVITATION_LIFECYCLE_SERIALIZATION": {
+      "scenario": "INVITATION_LIFECYCLE_SERIALIZATION",
+      "scenarios": [
+        {
+          "winner": "cancellation",
+          "contenders": 2,
+          "waited_milliseconds": 3009,
+          "conflict": "INVALID_INVITATION",
+          "readback": {
+            "invitations": 1,
+            "status": "cancelled",
+            "invitation_version": 2,
+            "household_version": 3,
+            "recipient_grants": 0,
+            "recipient_profiles": 0,
+            "cancellation_audits": 1,
+            "acceptance_audits": 0,
+            "processing_commands": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "acceptance",
+          "contenders": 2,
+          "waited_milliseconds": 3009,
+          "conflict": "STALE_VERSION",
+          "readback": {
+            "invitations": 1,
+            "status": "accepted",
+            "invitation_version": 2,
+            "household_version": 3,
+            "recipient_grants": 1,
+            "recipient_profiles": 1,
+            "cancellation_audits": 0,
+            "acceptance_audits": 1,
+            "processing_commands": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "authority_revocation",
+          "contenders": 2,
+          "waited_milliseconds": 3009,
+          "conflict": "FORBIDDEN",
+          "readback": {
+            "invitations": 1,
+            "status": "pending",
+            "invitation_version": 1,
+            "household_version": 2,
+            "recipient_grants": 0,
+            "recipient_profiles": 0,
+            "cancellation_audits": 0,
+            "acceptance_audits": 0,
+            "processing_commands": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "creation_authority_revocation",
+          "contenders": 2,
+          "waited_milliseconds": 3008,
+          "conflict": "FORBIDDEN",
+          "readback": {
+            "invitations": 1,
+            "status": "pending",
+            "invitation_version": 1,
+            "household_version": 2,
+            "recipient_grants": 0,
+            "recipient_profiles": 0,
+            "cancellation_audits": 0,
+            "acceptance_audits": 0,
+            "processing_commands": 0
+          },
+          "result": "PASS"
+        }
+      ],
+      "result": "PASS"
+    },
+    "A13_LAST_POSITION_RACE": {
+      "scenario": "A13_LAST_POSITION_RACE",
+      "contenders": 2,
+      "persisted_bookings": 1,
+      "conflict": "CAPACITY_FULL",
+      "result": "PASS"
+    },
+    "SEASON_CLOSE_LEDGER_SERIALIZATION": {
+      "scenario": "SEASON_CLOSE_LEDGER_SERIALIZATION",
+      "contenders": 2,
+      "waited_milliseconds": 3001,
+      "result": "PASS"
+    },
+    "INTAKE_UNAVAILABILITY_BOOKING_SERIALIZATION": {
+      "scenario": "INTAKE_UNAVAILABILITY_BOOKING_SERIALIZATION",
+      "contenders": 2,
+      "waited_milliseconds": 2937,
+      "conflict": "NOT_ELIGIBLE",
+      "persisted_bookings": 0,
+      "result": "PASS"
+    }
+  },
+  "visual": {
+    "comparison_pairs": 24,
+    "images": 94,
+    "app_images": 70,
+    "reference_images": 24
+  },
+  "limitations": [
+    "actual OTP and native sessions use local SMTP capture only; no live provider or remote connected staging acceptance",
+    "pgTAP and concurrency use disposable SQL native-session contexts, distinct from real provider browser proof",
+    "no blanket claim for already-running transactions, Realtime or Storage revocation; only annual reconfirmation after lock wait is proven",
+    "future tables and human commands need the native-session guard; no worker authority is inferred",
+    "grant administration, source verification, admin import/search, split/restore and W03\u2013W11 remain open",
+    "backup/restore uses the same local PostgreSQL cluster; independent host, Storage binaries and remote restore not tested"
+  ],
+  "production_gate": {
+    "exit_code": 1,
+    "result": "EXPECTED_BLOCK",
+    "v1_ready": false,
+    "production_enabled": false
+  }
+}

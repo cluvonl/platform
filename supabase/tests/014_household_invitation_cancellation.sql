@@ -207,7 +207,7 @@ insert into cancel_fixture(case_key,email,token) values
  ('expired','cancel-expired@example.test',gen_random_uuid()::text||gen_random_uuid()::text);
 grant select,update on cancel_fixture to authenticated;
 create function pg_temp.actor(p_uid text,p_email text) returns void language plpgsql security invoker as $f$
-begin perform set_config('request.jwt.claim.sub',p_uid,true);perform set_config('request.jwt.claim.email',p_email,true);end;$f$;
+begin perform set_config('request.jwt.claim.sub',p_uid,true);perform set_config('request.jwt.claim.email',p_email,true);perform set_config('request.jwt.claims',jsonb_build_object('sub',p_uid,'session_id',p_uid,'email',p_email,'role','authenticated')::text,true);end;$f$;
 create function pg_temp.new_invite(p_case text,p_version bigint) returns uuid language sql security invoker as $f$
  select resource_id from api.create_household_invitation_v2('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa','a3000000-0000-4000-8000-000000000001',
  'Extra',p_case,(select email from cancel_fixture where case_key=p_case),
@@ -218,6 +218,18 @@ create function pg_temp.dossier() returns jsonb language sql security invoker as
  select api.get_household_dossier_v2('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa','a3000000-0000-4000-8000-000000000001');$f$;
 select ok(not has_function_privilege('anon','api.cancel_household_invitation(uuid,uuid,bigint,uuid)','EXECUTE'),'anonymous cancellation denied');
 select ok(not has_function_privilege('service_role','api.cancel_household_invitation(uuid,uuid,bigint,uuid)','EXECUTE'),'service role cannot cancel as a member');
+-- SQL unit contexts use explicit disposable native session rows. Browser
+-- integration separately obtains real OTP-issued sessions; this is no provider proof.
+update auth.users set email_confirmed_at=statement_timestamp() where email_confirmed_at is null;
+insert into auth.sessions(id,user_id,created_at,updated_at)
+select id,id,statement_timestamp(),statement_timestamp() from auth.users
+on conflict(id) do nothing;
+create function pg_temp.cluvo_test_claims(p_actor uuid) returns text
+language sql security definer set search_path='' as $claims$
+select jsonb_build_object('sub',p_actor,'role','authenticated','session_id',p_actor,
+ 'email',(select email from auth.users where id=p_actor))::text;
+$claims$;
+
 set local role authenticated;
 select pg_temp.actor('11111111-1111-4111-8111-111111111111','ouder-a@example.test');
 update cancel_fixture set id=pg_temp.new_invite('sent',1) where case_key='sent';
@@ -249,7 +261,7 @@ update auth.users set email_confirmed_at=null where id='11111111-1111-4111-8111-
 set local role authenticated;
 select pg_temp.actor('11111111-1111-4111-8111-111111111111','ouder-a@example.test');
 select throws_ok($$select pg_temp.cancel_invite('sent',2,'ae110000-0000-4000-8000-000000000001')$$,'42501','FORBIDDEN','unconfirmed current Auth identity cannot cancel');
-select ok(not exists(select 1 from jsonb_array_elements(pg_temp.dossier()->'invitations') as i where (i->>'can_cancel')::boolean),'unconfirmed identity has no cancellation control');
+select throws_ok($$select pg_temp.dossier()$$,'42501','FORBIDDEN','unconfirmed identity has no dossier or cancellation control');
 reset role;
 update auth.users set email_confirmed_at=statement_timestamp() where id='11111111-1111-4111-8111-111111111111';
 set local role authenticated;

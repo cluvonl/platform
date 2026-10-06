@@ -31,7 +31,8 @@ requireSuccess(await psql(`begin;
 insert into auth.users (id,aud,role,email,email_confirmed_at) values
   (${literal(ids.actorA)},'authenticated','authenticated',${literal(emails[0])},statement_timestamp()),
   (${literal(ids.actorB)},'authenticated','authenticated',${literal(emails[1])},statement_timestamp());
-insert into app.tenants (id,slug,name,status) values (${literal(ids.tenant)},${literal('invite-race-'+suffix)},'Invitation concurrency fixture','active');
+insert into auth.sessions(id,user_id,created_at,updated_at) values (${literal(ids.actorA)},${literal(ids.actorA)},statement_timestamp(),statement_timestamp()),(${literal(ids.actorB)},${literal(ids.actorB)},statement_timestamp(),statement_timestamp());
+    insert into app.tenants (id,slug,name,status) values (${literal(ids.tenant)},${literal('invite-race-'+suffix)},'Invitation concurrency fixture','active');
 insert into app.tenant_memberships (tenant_id,auth_user_id,status) values
   (${literal(ids.tenant)},${literal(ids.actorA)},'active'),(${literal(ids.tenant)},${literal(ids.actorB)},'active');
 insert into app.households (id,tenant_id,label,intake_code_hash,status) values
@@ -43,7 +44,7 @@ commit;`));
 const command = (actor, email, key, index, hold) => `begin;
 set local role authenticated;
 select set_config('request.jwt.claim.sub',${literal(actor)},true);
-select set_config('request.jwt.claim.email',${literal(email)},true);
+select set_config('request.jwt.claim.email',${literal(email)},true);select set_config('request.jwt.claims',${literal(JSON.stringify({sub:actor,session_id:actor,email,role:'authenticated'}))},true);
 select * from api.create_household_invitation_v2(${literal(ids.tenant)},${literal(ids.household)},'Extra','Race',
   ${literal(`recipient-${index}-${suffix}@example.test`)},${literal(createHash('sha256').update(randomUUID()).digest('hex'))},false,false,1,${literal(key)});
 ${hold ? "select 'INVITATION_LOCK_HELD'; select pg_sleep(3);" : ''}

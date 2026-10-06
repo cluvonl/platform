@@ -202,8 +202,21 @@ select ok(not has_function_privilege('service_role', 'api.save_intake_revision(u
 select ok(not has_table_privilege('authenticated','app.unavailability_periods','DELETE'), 'no direct availability deletion');
 select ok((select reloptions @> array['security_invoker=true'] from pg_class where oid='api.intake_task_categories'::regclass), 'categories use invoker and tenant RLS');
 
+-- SQL unit contexts use explicit disposable native session rows. Browser
+-- integration separately obtains real OTP-issued sessions; this is no provider proof.
+update auth.users set email_confirmed_at=statement_timestamp() where email_confirmed_at is null;
+insert into auth.sessions(id,user_id,created_at,updated_at)
+select id,id,statement_timestamp(),statement_timestamp() from auth.users
+on conflict(id) do nothing;
+create function pg_temp.cluvo_test_claims(p_actor uuid) returns text
+language sql security definer set search_path='' as $claims$
+select jsonb_build_object('sub',p_actor,'role','authenticated','session_id',p_actor,
+ 'email',(select email from auth.users where id=p_actor))::text;
+$claims$;
+
 set local role authenticated;
 set local request.jwt.claim.sub='11111111-1111-4111-8111-111111111111';
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('11111111-1111-4111-8111-111111111111','')::uuid),true);
 select is((select count(*)::integer from api.intake_task_categories),1,'own category catalog only');
 select is((select count(*)::integer from api.my_intake),1,'other parent and tenant profiles remain hidden');
 select is((select count(*)::integer from api.list_intake_contexts('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa')),1,'only own intake subject is listed');
@@ -240,6 +253,7 @@ select is((select actor_auth_user_id from app.audit_events where action='intake.
 -- Invalid direct RPC payloads bypass the web form but must still fail.
 set local role authenticated;
 set local request.jwt.claim.sub='11111111-1111-4111-8111-111111111111';
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('11111111-1111-4111-8111-111111111111','')::uuid),true);
 select throws_ok($$select * from api.save_intake_revision('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa','a4000000-0000-4000-8000-000000000001',2,240,'{"schema_version":2,"buddy_requested":"true"}',null,null,'ac020000-0000-4000-8000-000000000010')$$,'22023','INVALID_INTAKE_ANSWERS','invalid direct payload 10 is rejected');
 select throws_ok($$select * from api.save_intake_revision('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa','a4000000-0000-4000-8000-000000000001',2,240,'{"schema_version":2,"reserve_willing":null}',null,null,'ac020000-0000-4000-8000-000000000011')$$,'22023','INVALID_INTAKE_ANSWERS','invalid direct payload 11 is rejected');
 select throws_ok($$select * from api.save_intake_revision('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa','a4000000-0000-4000-8000-000000000001',2,240,'{"schema_version":2,"desired_monthly_minutes":1.5}',null,null,'ac020000-0000-4000-8000-000000000012')$$,'22023','INVALID_INTAKE_ANSWERS','invalid direct payload 12 is rejected');
@@ -263,6 +277,7 @@ insert into app.unavailability_periods(tenant_id,person_id,starts_at,ends_at)
 values('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa','a1000000-0000-4000-8000-000000000001','2027-03-03 00:00:00+01','2027-03-04 00:00:00+01');
 set local role authenticated;
 set local request.jwt.claim.sub='22222222-2222-4222-8222-222222222222';
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('22222222-2222-4222-8222-222222222222','')::uuid),true);
 select lives_ok($$select * from api.save_intake_revision('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa','a4000000-0000-4000-8000-000000000002',1,180,'{"schema_version":2,"unavailability":["2027-02-01"]}',null,null,'ac020000-0000-4000-8000-000000000032')$$,'other parent controls only their own availability');
 select throws_ok($$select * from api.book_shift('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa','aa200000-0000-4000-8000-000000000001','aa210000-0000-4000-8000-000000000002','a1000000-0000-4000-8000-000000000002','a6000000-0000-4000-8000-000000000001',1,'ac020000-0000-4000-8000-000000000033')$$,'42501','NOT_ELIGIBLE','new booking is blocked by persisted intake day');
 select lives_ok($$select * from api.save_intake_revision('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa','a4000000-0000-4000-8000-000000000002',2,180,'{"schema_version":2,"unavailability":[]}',null,null,'ac020000-0000-4000-8000-000000000034')$$,'owner can remove own block');
@@ -277,6 +292,7 @@ insert into app.acting_delegations(id,tenant_id,actor_auth_user_id,represented_p
 values('ac020000-0000-4000-8000-000000000040','aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa','11111111-1111-4111-8111-111111111111','a1000000-0000-4000-8000-000000000002','a3000000-0000-4000-8000-000000000001','intake_assistance',statement_timestamp()-interval '1 day','22222222-2222-4222-8222-222222222222');
 set local role authenticated;
 set local request.jwt.claim.sub='11111111-1111-4111-8111-111111111111';
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('11111111-1111-4111-8111-111111111111','')::uuid),true);
 select is((select count(*)::integer from api.list_intake_contexts('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa')),2,'explicit delegation permits a second context');
 select is((select display_name from api.list_intake_contexts('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa') where not is_self),'Ouder B','delegation returns subject label without person registry access');
 select is((select count(*)::integer from app.persons where id='a1000000-0000-4000-8000-000000000002'),0,'delegation does not expose raw person or birthdate');
@@ -286,6 +302,7 @@ select is((select represented_person_id from app.intake_answers_versions where p
 update app.acting_delegations set revoked_at=statement_timestamp() where id='ac020000-0000-4000-8000-000000000040';
 set local role authenticated;
 set local request.jwt.claim.sub='11111111-1111-4111-8111-111111111111';
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('11111111-1111-4111-8111-111111111111','')::uuid),true);
 select throws_ok($$select * from api.save_intake_revision('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa','a4000000-0000-4000-8000-000000000002',3,180,'{"experience":"hulp op verzoek"}','a1000000-0000-4000-8000-000000000002','persoonlijk toestemming gegeven','ac020000-0000-4000-8000-000000000041')$$,'42501','FORBIDDEN','revoked mandate also rejects an identical replay');
 select is((select count(*)::integer from api.my_intake),1,'revoked subject is absent from read/search/export projection');
 select is((select count(*)::integer from api.list_intake_contexts('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa')),1,'revoked subject label is also removed');

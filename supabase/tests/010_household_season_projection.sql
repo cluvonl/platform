@@ -206,8 +206,21 @@ values ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa','a3000000-0000-4000-8000-00000000
 
 select ok((select reloptions @> array['security_invoker=true'] from pg_class where oid='api.my_household_season_progress'::regclass),'household season projection is invoker');
 select ok(not has_table_privilege('anon','api.my_household_season_progress','SELECT'),'anonymous has no progress route');
+-- SQL unit contexts use explicit disposable native session rows. Browser
+-- integration separately obtains real OTP-issued sessions; this is no provider proof.
+update auth.users set email_confirmed_at=statement_timestamp() where email_confirmed_at is null;
+insert into auth.sessions(id,user_id,created_at,updated_at)
+select id,id,statement_timestamp(),statement_timestamp() from auth.users
+on conflict(id) do nothing;
+create function pg_temp.cluvo_test_claims(p_actor uuid) returns text
+language sql security definer set search_path='' as $claims$
+select jsonb_build_object('sub',p_actor,'role','authenticated','session_id',p_actor,
+ 'email',(select email from auth.users where id=p_actor))::text;
+$claims$;
+
 set local role authenticated;
 set local request.jwt.claim.sub='11111111-1111-4111-8111-111111111111';
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('11111111-1111-4111-8111-111111111111','')::uuid),true);
 select is((select count(*)::integer from api.my_active_seasons),1,'only own active season visible');
 select is((select count(*)::integer from api.my_household_season_progress),2,'historical and current obligations remain separate');
 select is((select effective_target_minutes from api.my_household_season_progress where season_id='a5000000-0000-4000-8000-000000000001'),720,'current season keeps its explicit target');
@@ -219,13 +232,16 @@ reset role;
 update app.household_access_grants set can_view_progress=false where auth_user_id='22222222-2222-4222-8222-222222222222';
 set local role authenticated;
 set local request.jwt.claim.sub='22222222-2222-4222-8222-222222222222';
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('22222222-2222-4222-8222-222222222222','')::uuid),true);
 select is((select count(*)::integer from api.my_household_season_progress),0,'contact-only grant cannot read progress');
 reset role;
 update app.household_access_grants set revoked_at=statement_timestamp() where auth_user_id='11111111-1111-4111-8111-111111111111';
 set local role authenticated;
 set local request.jwt.claim.sub='11111111-1111-4111-8111-111111111111';
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('11111111-1111-4111-8111-111111111111','')::uuid),true);
 select is((select count(*)::integer from api.my_household_season_progress),0,'revoked dossier grant removes all season rows');
 set local request.jwt.claim.sub='44444444-4444-4444-8444-444444444444';
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('44444444-4444-4444-8444-444444444444','')::uuid),true);
 select is((select count(*)::integer from api.my_household_season_progress),1,'second tenant retains its own progress');
 select is((select count(*)::integer from api.my_active_seasons where tenant_id='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa'),0,'other tenant season labels remain hidden');
 reset role;

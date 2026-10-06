@@ -21,9 +21,12 @@ function psql(sql, name) {
 }
 function success(result,label) {assert.equal(result.code,0,`${label}: ${result.stderr}`);return result.stdout.trim();}
 const tenant=id('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa'),profile=id('a4000000-0000-4000-8000-000000000002'),actor=id('22222222-2222-4222-8222-222222222222'),executor=id('a1000000-0000-4000-8000-000000000002'),obligation=id('a6000000-0000-4000-8000-000000000001'),shift=id('aa200000-0000-4000-8000-000000000001'),position=id('aa210000-0000-4000-8000-000000000002');
-success(await psql(`begin; ${fixture} commit;`,'cluvo-intake-race-fixture'),'fixture');
+success(await psql(`begin; ${fixture}
+update auth.users set email_confirmed_at=statement_timestamp() where id in (select auth_user_id from app.tenant_memberships where tenant_id=${tenant});
+insert into auth.sessions(id,user_id,created_at,updated_at) select auth_user_id,auth_user_id,statement_timestamp(),statement_timestamp() from app.tenant_memberships where tenant_id=${tenant};
+commit;`,'cluvo-intake-race-fixture'),'fixture');
 const holderName=`cluvo-intake-holder-${randomUUID().slice(0,8)}`;
-const auth=`set local role authenticated; set local request.jwt.claim.sub=${actor};`;
+const auth=`set local role authenticated; set local request.jwt.claim.sub=${actor}; select set_config('request.jwt.claims',jsonb_build_object('sub',${actor}::uuid,'session_id',${actor}::uuid,'role','authenticated')::text,true);`;
 const holder=psql(`begin; ${auth} select * from api.save_intake_revision(${tenant},${profile},1,180,'{"schema_version":2,"unavailability":["2027-02-01"]}',null,null,'${randomUUID()}'); select pg_sleep(3); commit;`,holderName);
 let ready=false;
 for(let attempt=0;attempt<50;attempt++) {

@@ -362,11 +362,24 @@ select ok(
   'telephone assistance alone does not grant hour-dispute adjudication'
 );
 
+-- SQL unit contexts use explicit disposable native session rows. Browser
+-- integration separately obtains real OTP-issued sessions; this is no provider proof.
+update auth.users set email_confirmed_at=statement_timestamp() where email_confirmed_at is null;
+insert into auth.sessions(id,user_id,created_at,updated_at)
+select id,id,statement_timestamp(),statement_timestamp() from auth.users
+on conflict(id) do nothing;
+create function pg_temp.cluvo_test_claims(p_actor uuid) returns text
+language sql security definer set search_path='' as $claims$
+select jsonb_build_object('sub',p_actor,'role','authenticated','session_id',p_actor,
+ 'email',(select email from auth.users where id=p_actor))::text;
+$claims$;
+
 set local role authenticated;
 select set_config(
   'request.jwt.claim.sub',
   'd1000000-0000-4000-8000-000000000003', true
 );
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('d1000000-0000-4000-8000-000000000003','')::uuid),true);
 select throws_ok($$
   select * from api.assisted_book_shift_by_phone(
     'd0000000-0000-4000-8000-000000000001',
@@ -384,6 +397,7 @@ select set_config(
   'request.jwt.claim.sub',
   'd1000000-0000-4000-8000-000000000004', true
 );
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('d1000000-0000-4000-8000-000000000004','')::uuid),true);
 select throws_ok($$
   select * from api.assisted_book_shift_by_phone(
     'd0000000-0000-4000-8000-000000000001',
@@ -401,6 +415,7 @@ select set_config(
   'request.jwt.claim.sub',
   'd1000000-0000-4000-8000-000000000002', true
 );
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('d1000000-0000-4000-8000-000000000002','')::uuid),true);
 select lives_ok($$
   select * from api.assisted_book_shift_by_phone(
     'd0000000-0000-4000-8000-000000000001',
@@ -613,6 +628,7 @@ select set_config(
   'request.jwt.claim.sub',
   'd1000000-0000-4000-8000-000000000002', true
 );
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('d1000000-0000-4000-8000-000000000002','')::uuid),true);
 select lives_ok($$
   select * from api.record_assisted_member_action(
     'd0000000-0000-4000-8000-000000000001',
@@ -709,6 +725,7 @@ select set_config(
   'request.jwt.claim.sub',
   'd1000000-0000-4000-8000-000000000001', true
 );
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('d1000000-0000-4000-8000-000000000001','')::uuid),true);
 select is(
   (select count(*)::integer from api.assisted_member_action_history),
   5,
@@ -718,6 +735,7 @@ select set_config(
   'request.jwt.claim.sub',
   'd1000000-0000-4000-8000-000000000003', true
 );
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('d1000000-0000-4000-8000-000000000003','')::uuid),true);
 select is(
   (select count(*)::integer from api.assisted_member_action_history),
   0,

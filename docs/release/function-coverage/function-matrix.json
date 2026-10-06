@@ -1,6 +1,6 @@
 {
   "base_sha": "47386491859b47fbebf85c3b209724dcc20407fc",
-  "source_head": "71a914490304b4032740c19eb30fa9a69c144426",
+  "source_head": "8f6190f77605edd8e191425f2790bc194ae28175",
   "worktree_dirty": true,
   "prototype_sha": "e9c1d8bca2089b0944577eed73d1bedf7e70a3b6",
   "acceptance_ready": false,
@@ -16,7 +16,7 @@
       "api_views": 16
     },
     "current": {
-      "migrations": 14,
+      "migrations": 15,
       "app_tables": 143,
       "api_function_definitions": 66,
       "api_views": 20
@@ -1256,6 +1256,11 @@
           "line": 200
         }
       ]
+    },
+    {
+      "file": "20261007010000_native_session_authority.sql",
+      "sha256": "9c165f68f413be04aa958358ec088c422dd21fea92b66e9ba84e04378817607a",
+      "objects": []
     }
   ],
   "route_compatibility": {
@@ -1301,9 +1306,9 @@
         "O07",
         "V00"
       ],
-      "limitation": "Staging- en volledige functieacceptatie ontbreken.",
+      "limitation": "Actuele native sessie en geverifieerde identiteit verplicht voor RLS en menselijke commands. Lokale OTP, intrekking, ban en vervaldatum bewezen; aangesloten staging en volledige rollen-/Storageketen blijven open.",
       "status": "IMPLEMENTED_PARTIAL_NOT_ACCEPTED",
-      "functional_evidence": "docs/release/evidence/local/20261006-w01/verification.md (deelbewijs; geen functieacceptatie)",
+      "functional_evidence": "docs/release/evidence/local/20261007-w01-native-session/verification.md",
       "visual_evidence": "docs/release/evidence/local/20261006-w01/visual-comparison.md (deelbewijs)",
       "staging_evidence": null
     },
@@ -1871,9 +1876,9 @@
         "O07",
         "V00"
       ],
-      "limitation": "Staging- en volledige functieacceptatie ontbreken.",
+      "limitation": "Werkelijke lokale/global native sign-out sluit de oude ondertekende token af voor persoonlijke gegevens en commands. Tweede apparaat en ander ouderaccount afzonderlijk bewezen; aangesloten staging en provideracceptatie blijven open.",
       "status": "IMPLEMENTED_PARTIAL_NOT_ACCEPTED",
-      "functional_evidence": "docs/release/evidence/local/20261006-w01/verification.md (deelbewijs; geen functieacceptatie)",
+      "functional_evidence": "docs/release/evidence/local/20261007-w01-native-session/verification.md",
       "visual_evidence": "docs/release/evidence/local/20261006-w01/visual-comparison.md (deelbewijs)",
       "staging_evidence": null
     },

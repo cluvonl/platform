@@ -1,0 +1,14 @@
+{
+  "observed_at": "2026-10-06T22:33:14.717Z",
+  "environment": "local",
+  "source_commit": "8f6190f77605edd8e191425f2790bc194ae28175",
+  "database_migrations": 14,
+  "fixture": "synthetic parent A, actual local OTP and native local-scope sign-out; bearer/cookies remain only in memory",
+  "scenario": "NATIVE_SIGNED_TOKEN_AFTER_SESSION_REMOVAL",
+  "native_logout_status": 204,
+  "native_session_exists_after": false,
+  "personal_intake_rows_after": 1,
+  "result": "REPRODUCED",
+  "application_data_mutations": 0,
+  "staging_verified": false
+}

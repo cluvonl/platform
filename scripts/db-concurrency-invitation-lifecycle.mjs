@@ -34,6 +34,7 @@ for (const winner of ['cancellation', 'acceptance', 'authority_revocation', 'cre
     insert into auth.users (id,aud,role,email,email_confirmed_at) values
       (${literal(ids.author)},'authenticated','authenticated',${literal(authorEmail)},statement_timestamp()),
       (${literal(ids.recipient)},'authenticated','authenticated',${literal(recipientEmail)},statement_timestamp());
+    insert into auth.sessions(id,user_id,created_at,updated_at) values (${literal(ids.author)},${literal(ids.author)},statement_timestamp(),statement_timestamp()),(${literal(ids.recipient)},${literal(ids.recipient)},statement_timestamp(),statement_timestamp());
     insert into app.tenants (id,slug,name,status) values (${literal(ids.tenant)},${literal('lifecycle-'+suffix)},'Local invitation lifecycle race','active');
     insert into app.tenant_memberships (tenant_id,auth_user_id,status) values (${literal(ids.tenant)},${literal(ids.author)},'active');
     insert into app.households (id,tenant_id,label,intake_code_hash,status) values
@@ -43,7 +44,7 @@ for (const winner of ['cancellation', 'acceptance', 'authority_revocation', 'cre
     commit;`));
   const actor = (id, email) => `set local role authenticated;
     select set_config('request.jwt.claim.sub',${literal(id)},true);
-    select set_config('request.jwt.claim.email',${literal(email)},true);`;
+    select set_config('request.jwt.claim.email',${literal(email)},true);select set_config('request.jwt.claims',${literal(JSON.stringify({sub:id,session_id:id,email,role:'authenticated'}))},true);`;
   requireSuccess(await psql(`begin; ${actor(ids.author, authorEmail)}
     select * from api.create_household_invitation_v2(${literal(ids.tenant)},${literal(ids.household)},'Extra','Lifecycle',
       ${literal(recipientEmail)},${literal(createHash('sha256').update(token).digest('hex'))},true,false,1,${literal(randomUUID())}); commit;`));

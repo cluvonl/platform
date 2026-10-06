@@ -101,9 +101,22 @@ insert into app.team_task_market_requests (
   90, '61000000-0000-4000-8000-000000000002'
 );
 
+-- SQL unit contexts use explicit disposable native session rows. Browser
+-- integration separately obtains real OTP-issued sessions; this is no provider proof.
+update auth.users set email_confirmed_at=statement_timestamp() where email_confirmed_at is null;
+insert into auth.sessions(id,user_id,created_at,updated_at)
+select id,id,statement_timestamp(),statement_timestamp() from auth.users
+on conflict(id) do nothing;
+create function pg_temp.cluvo_test_claims(p_actor uuid) returns text
+language sql security definer set search_path='' as $claims$
+select jsonb_build_object('sub',p_actor,'role','authenticated','session_id',p_actor,
+ 'email',(select email from auth.users where id=p_actor))::text;
+$claims$;
+
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000003','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000003"}', true);
 select lives_ok(
   $$select api.review_team_task_market_request(
       '62000000-0000-4000-8000-000000000001', '65000000-0000-4000-8000-000000000005',
@@ -147,7 +160,8 @@ insert into app.integration_connections (
 );
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000001', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000001','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000001","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000001"}', true);
 select set_config(
   'cluvo.test.run1',
   api.start_match_import(
@@ -181,7 +195,8 @@ insert into app.match_shift_links (tenant_id, match_id, shift_id, link_kind) val
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000001', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000001','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000001","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000001"}', true);
 select set_config(
   'cluvo.test.run2',
   api.start_match_import(
@@ -228,7 +243,8 @@ select is((select starts_at from app.shifts where id = current_setting('cluvo.te
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000001', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000001','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000001","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000001"}', true);
 select set_config(
   'cluvo.test.run3',
   api.start_match_import(
@@ -369,7 +385,8 @@ select is(
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000002', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000002","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000002','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000002","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000002"}', true);
 select throws_ok(
   $$select api.publish_shift_batch(
       '62000000-0000-4000-8000-000000000001',
@@ -388,7 +405,8 @@ select is(
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000003','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000003"}', true);
 select throws_ok(
   $$select api.publish_shift_batch(
       '62000000-0000-4000-8000-000000000001',
@@ -524,7 +542,8 @@ insert into app.bookings (
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000003','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000003"}', true);
 select set_config('cluvo.test.a17_small_proposal', preview.result ->> 'resource_id', true),
        set_config('cluvo.test.a17_small_hash', preview.result ->> 'impact_hash', true)
 from (
@@ -599,7 +618,8 @@ select ok(
 -- preview and apply without changing persisted proposal evidence.
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000003','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000003"}', true);
 select throws_ok(
   $$select api.preview_shift_change(
       '62000000-0000-4000-8000-000000000001', '6b000000-0000-4000-8000-000000000003', 3,
@@ -671,7 +691,8 @@ insert into app.transfer_requests (
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000003','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000003"}', true);
 select set_config('cluvo.test.a17_transfer_proposal', preview.result ->> 'resource_id', true),
        set_config('cluvo.test.a17_transfer_hash', preview.result ->> 'impact_hash', true)
 from (
@@ -694,7 +715,8 @@ select ok(
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000003','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000003"}', true);
 select throws_ok(
   format(
     'select api.apply_shift_change(%L,%L,1,%L,%L)',
@@ -761,7 +783,8 @@ insert into app.person_qualifications (
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000003','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000003"}', true);
 select set_config('cluvo.test.a17_eligibility_proposal', preview.result ->> 'resource_id', true),
        set_config('cluvo.test.a17_eligibility_hash', preview.result ->> 'impact_hash', true)
 from (
@@ -784,7 +807,8 @@ select ok(
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000003','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000003"}', true);
 select throws_ok(
   format(
     'select api.apply_shift_change(%L,%L,1,%L,%L)',
@@ -817,7 +841,8 @@ where id = '6b000000-0000-4000-8000-000000000033';
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000003','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000003"}', true);
 select set_config('cluvo.test.a17_grant_proposal', preview.result ->> 'resource_id', true),
        set_config('cluvo.test.a17_grant_hash', preview.result ->> 'impact_hash', true)
 from (
@@ -846,7 +871,8 @@ select ok(
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000003','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000003"}', true);
 select throws_ok(
   format(
     'select api.apply_shift_change(%L,%L,1,%L,%L)',
@@ -869,7 +895,8 @@ where id = '6b000000-0000-4000-8000-000000000038';
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000003','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000003"}', true);
 select set_config('cluvo.test.a17_material_proposal', preview.result ->> 'resource_id', true),
        set_config('cluvo.test.a17_material_hash', preview.result ->> 'impact_hash', true)
 from (
@@ -897,7 +924,8 @@ select is(
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000003','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000003"}', true);
 select throws_ok(
   format(
     'select api.apply_shift_change(%L,%L,1,%L,%L)',
@@ -915,7 +943,8 @@ select is((select version from app.shifts where id = '6b000000-0000-4000-8000-00
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000003','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000003"}', true);
 select set_config('cluvo.test.a17_material_proposal', preview.result ->> 'resource_id', true),
        set_config('cluvo.test.a17_material_hash', preview.result ->> 'impact_hash', true)
 from (
@@ -937,7 +966,8 @@ select is(
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000003','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000003"}', true);
 select lives_ok(
   format(
     'select api.apply_shift_change(%L,%L,1,%L,%L)',
@@ -1071,7 +1101,8 @@ select throws_ok(
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000003','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000003"}', true);
 select throws_ok(
   $$select api.preview_shift_change(
       '62000000-0000-4000-8000-000000000001', '6b000000-0000-4000-8000-000000000003', 3,
@@ -1112,7 +1143,8 @@ insert into app.guardian_authorizations (
 -- or guardian by recording an open or submitting a question.
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000001', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000001','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000001","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000001"}', true);
 select is((select count(*)::integer from app.policy_assignments), 3,
           'policy manager retains oversight read access');
 select throws_ok(
@@ -1129,7 +1161,8 @@ select throws_ok(
 );
 
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000003','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000003"}', true);
 select is((select count(*)::integer from app.policy_assignments), 3,
           'policy follow-up role retains oversight read access');
 select throws_ok(
@@ -1148,7 +1181,8 @@ reset role;
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000002', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000002","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000002','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000002","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000002"}', true);
 select lives_ok($$select api.record_policy_open('62000000-0000-4000-8000-000000000001','68000000-0000-4000-8000-000000000004',1,'68000000-0000-4000-8000-000000000007')$$,
                 'A23: opening child one does not imply acceptance');
 select lives_ok($$select api.record_policy_open('62000000-0000-4000-8000-000000000001','68000000-0000-4000-8000-000000000005',1,'68000000-0000-4000-8000-000000000008')$$,
@@ -1188,7 +1222,8 @@ select throws_ok(
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000004', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000004","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000004','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000004","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000004"}', true);
 select throws_ok(
   $$select api.accept_policy_assignments(
       '62000000-0000-4000-8000-000000000001', array['68000000-0000-4000-8000-000000000006']::uuid[],
@@ -1246,7 +1281,8 @@ select is((select count(*)::integer from app.event_resource_links where occurren
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '61000000-0000-4000-8000-000000000003', true);
-select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('61000000-0000-4000-8000-000000000003','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"61000000-0000-4000-8000-000000000003","role":"authenticated","session_id":"61000000-0000-4000-8000-000000000003"}', true);
 select lives_ok(
   $$select api.complete_kanban_card(
       '62000000-0000-4000-8000-000000000001', '69000000-0000-4000-8000-000000000004',

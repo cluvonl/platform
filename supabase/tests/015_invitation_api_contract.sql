@@ -40,6 +40,18 @@ select ok(bool_and(has_function_privilege('authenticated',signature,'EXECUTE')),
  ('api.household_invitation_context(text)'),
  ('api.get_household_dossier_v2(uuid,uuid,uuid)')) as current_entries(signature);
 
+-- SQL unit contexts use explicit disposable native session rows. Browser
+-- integration separately obtains real OTP-issued sessions; this is no provider proof.
+update auth.users set email_confirmed_at=statement_timestamp() where email_confirmed_at is null;
+insert into auth.sessions(id,user_id,created_at,updated_at)
+select id,id,statement_timestamp(),statement_timestamp() from auth.users
+on conflict(id) do nothing;
+create function pg_temp.cluvo_test_claims(p_actor uuid) returns text
+language sql security definer set search_path='' as $claims$
+select jsonb_build_object('sub',p_actor,'role','authenticated','session_id',p_actor,
+ 'email',(select email from auth.users where id=p_actor))::text;
+$claims$;
+
 set local role authenticated;
 select throws_ok($$select * from internal.create_household_invitation_v2(null::uuid,null::uuid,null::text,null::text,null::text,null::text,false,false,null::bigint,null::uuid)$$,
  '42501','permission denied for function create_household_invitation_v2','direct authenticated pre-lock creation kernel denied');

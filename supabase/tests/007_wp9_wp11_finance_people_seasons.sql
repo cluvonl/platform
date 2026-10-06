@@ -149,8 +149,21 @@ insert into app.volunteer_role_versions (
   '22222222-2222-4222-8222-222222222222'
 );
 
+-- SQL unit contexts use explicit disposable native session rows. Browser
+-- integration separately obtains real OTP-issued sessions; this is no provider proof.
+update auth.users set email_confirmed_at=statement_timestamp() where email_confirmed_at is null;
+insert into auth.sessions(id,user_id,created_at,updated_at)
+select id,id,statement_timestamp(),statement_timestamp() from auth.users
+on conflict(id) do nothing;
+create function pg_temp.cluvo_test_claims(p_actor uuid) returns text
+language sql security definer set search_path='' as $claims$
+select jsonb_build_object('sub',p_actor,'role','authenticated','session_id',p_actor,
+ 'email',(select email from auth.users where id=p_actor))::text;
+$claims$;
+
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '22222222-2222-4222-8222-222222222222', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('22222222-2222-4222-8222-222222222222','')::uuid),true);
 select lives_ok($$
   select * from api.recognize_volunteer_appointment(
     'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 'a6100000-0000-4000-8000-000000000001',
@@ -174,6 +187,7 @@ select is((select count(*)::integer from app.access_grants
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '22222222-2222-4222-8222-222222222222', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('22222222-2222-4222-8222-222222222222','')::uuid),true);
 select lives_ok($$
   select * from api.prepare_financial_assessment(
     'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 'a4000000-0000-4000-8000-000000000005',
@@ -191,6 +205,7 @@ where obligation_id = 'a4000000-0000-4000-8000-000000000005';
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '22222222-2222-4222-8222-222222222222', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('22222222-2222-4222-8222-222222222222','')::uuid),true);
 select lives_ok($$
   select * from api.end_volunteer_appointment(
     'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
@@ -262,6 +277,7 @@ where id = 'a7000000-0000-4000-8000-000000000001';
 -- Exact cent/minute examples: 180=>3750, 120=>2500, 20=>417, extra=>0.
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '22222222-2222-4222-8222-222222222222', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('22222222-2222-4222-8222-222222222222','')::uuid),true);
 select lives_ok($$
   select * from api.prepare_financial_assessment('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
     'a4000000-0000-4000-8000-000000000001', 'shortage', null, null, 1,
@@ -353,6 +369,7 @@ insert into app.supply_assessments (
 );
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '22222222-2222-4222-8222-222222222222', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('22222222-2222-4222-8222-222222222222','')::uuid),true);
 select lives_ok($$select * from api.prepare_financial_assessment(
   'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 'a4000000-0000-4000-8000-000000000004',
   'buyout', 'a7120000-0000-4000-8000-000000000001',
@@ -374,6 +391,7 @@ select is((select proposed_cents from app.assessment_revisions
 -- separate actor/step and is unique.
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '11111111-1111-4111-8111-111111111111', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('11111111-1111-4111-8111-111111111111','')::uuid),true);
 select lives_ok($$
   select * from api.open_financial_objection(
     'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
@@ -383,6 +401,7 @@ $$, 'member can open a scoped financial objection');
 reset role;
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '22222222-2222-4222-8222-222222222222', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('22222222-2222-4222-8222-222222222222','')::uuid),true);
 select throws_ok($$
   select * from api.approve_financial_assessment(
     'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
@@ -405,6 +424,7 @@ $$, 'committee approval succeeds after resolution');
 reset role;
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '44444444-4444-4444-8444-444444444444', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('44444444-4444-4444-8444-444444444444','')::uuid),true);
 select lives_ok($$
   select * from api.finalize_financial_assessment(
     'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
@@ -443,6 +463,7 @@ select set_config(
 );
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '77777777-7777-4777-8777-777777777777', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('77777777-7777-4777-8777-777777777777','')::uuid),true);
 select is((select count(*)::integer from api.household_progress
   where obligation_id = 'a4000000-0000-4000-8000-000000000001'), 1,
   'same-tenant progress-only actor can read the reduced household progress');
@@ -472,6 +493,7 @@ reset role;
 -- once and does not leave a second reservation burden.
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '44444444-4444-4444-8444-444444444444', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('44444444-4444-4444-8444-444444444444','')::uuid),true);
 select lives_ok($$select * from api.post_volunteer_fund_entry(
   'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 'receipt', 10000, null, null, null,
   'Ontvangen bijdrage', null, 'a8400000-0000-4000-8000-000000000001')$$,
@@ -527,6 +549,7 @@ insert into app.vacancies (
 );
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '11111111-1111-4111-8111-111111111111', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('11111111-1111-4111-8111-111111111111','')::uuid),true);
 select lives_ok($$select * from api.express_vacancy_interest(
   'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 'a9200000-0000-4000-8000-000000000001',
   'Graag kennismaken', 'a9300000-0000-4000-8000-000000000001')$$,
@@ -582,6 +605,7 @@ select throws_ok($$insert into app.appreciation_occasions (
   '23514', 'BIRTH_DATE_INCOMPLETE', 'A28 incomplete birth date creates no invented occasion');
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '22222222-2222-4222-8222-222222222222', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('22222222-2222-4222-8222-222222222222','')::uuid),true);
 select lives_ok($$select * from api.create_appreciation_action(
   'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 'aa100000-0000-4000-8000-000000000001',
   'a1000000-0000-4000-8000-000000000002', '2027-04-01', 2500,
@@ -596,6 +620,7 @@ insert into app.appreciation_private_details (
 );
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '11111111-1111-4111-8111-111111111111', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('11111111-1111-4111-8111-111111111111','')::uuid),true);
 select is((select count(*)::integer from app.appreciation_private_details), 0,
   'A28 subject without management right cannot read private welfare detail');
 reset role;
@@ -616,6 +641,7 @@ insert into app.intake_profiles (
 );
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '55555555-5555-4555-8555-555555555555', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('55555555-5555-4555-8555-555555555555','')::uuid),true);
 select is((select team_count from api.season_household_report
   where obligation_id = 'a4000000-0000-4000-8000-000000000001'), 2,
   'A30 one household can be linked to two teams');
@@ -636,6 +662,7 @@ where tenant_id = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa'
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '55555555-5555-4555-8555-555555555555', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('55555555-5555-4555-8555-555555555555','')::uuid),true);
 select lives_ok($$select * from api.close_season(
   'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 'a3000000-0000-4000-8000-000000000001',
   1, 'aa500000-0000-4000-8000-000000000001')$$,
@@ -649,6 +676,7 @@ select throws_ok($$update app.season_snapshots set confirmed_minutes = 0$$,
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '55555555-5555-4555-8555-555555555555', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('55555555-5555-4555-8555-555555555555','')::uuid),true);
 select lives_ok($$select * from api.rollover_season(
   'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 'a3000000-0000-4000-8000-000000000001',
   'a3000000-0000-4000-8000-000000000002', array['normal-saturday'], 1,
@@ -768,6 +796,7 @@ select ok(
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '66666666-6666-4666-8666-666666666666', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('66666666-6666-4666-8666-666666666666','')::uuid),true);
 select lives_ok($$
   select * from api.prepare_financial_assessment(
     'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb',
@@ -794,6 +823,7 @@ select ok(
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '66666666-6666-4666-8666-666666666666', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('66666666-6666-4666-8666-666666666666','')::uuid),true);
 select throws_ok($$
   select * from api.approve_financial_assessment(
     'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb',
@@ -815,6 +845,7 @@ where tenant_id = 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb'
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '66666666-6666-4666-8666-666666666666', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('66666666-6666-4666-8666-666666666666','')::uuid),true);
 select throws_ok($$
   select * from api.close_season(
     'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb',
@@ -916,6 +947,7 @@ where tenant_id = 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb'
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '66666666-6666-4666-8666-666666666666', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('66666666-6666-4666-8666-666666666666','')::uuid),true);
 select lives_ok($$
   select * from api.close_season(
     'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb',
@@ -963,6 +995,7 @@ select throws_ok($$insert into app.supply_assessments (
   '23503', null, 'compound FK rejects a cross-tenant financial source');
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '66666666-6666-4666-8666-666666666666', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('66666666-6666-4666-8666-666666666666','')::uuid),true);
 select is((select count(*)::integer from app.financial_assessments
   where tenant_id = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa'), 0,
   'tenant B cannot read tenant A financial assessments');

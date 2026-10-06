@@ -300,11 +300,24 @@ select ok(
   'A16: authenticated clients cannot bypass the guarded planning command'
 );
 
+-- SQL unit contexts use explicit disposable native session rows. Browser
+-- integration separately obtains real OTP-issued sessions; this is no provider proof.
+update auth.users set email_confirmed_at=statement_timestamp() where email_confirmed_at is null;
+insert into auth.sessions(id,user_id,created_at,updated_at)
+select id,id,statement_timestamp(),statement_timestamp() from auth.users
+on conflict(id) do nothing;
+create function pg_temp.cluvo_test_claims(p_actor uuid) returns text
+language sql security definer set search_path='' as $claims$
+select jsonb_build_object('sub',p_actor,'role','authenticated','session_id',p_actor,
+ 'email',(select email from auth.users where id=p_actor))::text;
+$claims$;
+
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '31000000-0000-4000-8000-000000000001', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('31000000-0000-4000-8000-000000000001','')::uuid),true);
 select set_config(
   'request.jwt.claims',
-  '{"sub":"31000000-0000-4000-8000-000000000001","role":"authenticated"}',
+  '{"sub":"31000000-0000-4000-8000-000000000001","role":"authenticated","session_id":"31000000-0000-4000-8000-000000000001"}',
   true
 );
 
@@ -359,9 +372,10 @@ select is(
 
 -- Winter review and allocations are committee commands, not ledger writes.
 select set_config('request.jwt.claim.sub', '31000000-0000-4000-8000-000000000003', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('31000000-0000-4000-8000-000000000003','')::uuid),true);
 select set_config(
   'request.jwt.claims',
-  '{"sub":"31000000-0000-4000-8000-000000000003","role":"authenticated"}',
+  '{"sub":"31000000-0000-4000-8000-000000000003","role":"authenticated","session_id":"31000000-0000-4000-8000-000000000003"}',
   true
 );
 select set_config(
@@ -582,9 +596,10 @@ select throws_ok(
 -- A13: the command plus unique active-position index serializes the last place.
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '31000000-0000-4000-8000-000000000001', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('31000000-0000-4000-8000-000000000001','')::uuid),true);
 select set_config(
   'request.jwt.claims',
-  '{"sub":"31000000-0000-4000-8000-000000000001","role":"authenticated"}',
+  '{"sub":"31000000-0000-4000-8000-000000000001","role":"authenticated","session_id":"31000000-0000-4000-8000-000000000001"}',
   true
 );
 select ok(
@@ -614,9 +629,10 @@ select lives_ok(
   'A13: the first claimant atomically books the final position'
 );
 select set_config('request.jwt.claim.sub', '31000000-0000-4000-8000-000000000002', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('31000000-0000-4000-8000-000000000002','')::uuid),true);
 select set_config(
   'request.jwt.claims',
-  '{"sub":"31000000-0000-4000-8000-000000000002","role":"authenticated"}',
+  '{"sub":"31000000-0000-4000-8000-000000000002","role":"authenticated","session_id":"31000000-0000-4000-8000-000000000002"}',
   true
 );
 select throws_ok(
@@ -642,9 +658,10 @@ select is(
 
 -- A14: takeover rechecks qualification at the atomic commit point.
 select set_config('request.jwt.claim.sub', '31000000-0000-4000-8000-000000000001', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('31000000-0000-4000-8000-000000000001','')::uuid),true);
 select set_config(
   'request.jwt.claims',
-  '{"sub":"31000000-0000-4000-8000-000000000001","role":"authenticated"}',
+  '{"sub":"31000000-0000-4000-8000-000000000001","role":"authenticated","session_id":"31000000-0000-4000-8000-000000000001"}',
   true
 );
 select set_config(
@@ -691,9 +708,10 @@ where id = '37800000-0000-4000-8000-000000000002';
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '31000000-0000-4000-8000-000000000002', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('31000000-0000-4000-8000-000000000002','')::uuid),true);
 select set_config(
   'request.jwt.claims',
-  '{"sub":"31000000-0000-4000-8000-000000000002","role":"authenticated"}',
+  '{"sub":"31000000-0000-4000-8000-000000000002","role":"authenticated","session_id":"31000000-0000-4000-8000-000000000002"}',
   true
 );
 select throws_ok(
@@ -720,9 +738,10 @@ where id = '37800000-0000-4000-8000-000000000002';
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '31000000-0000-4000-8000-000000000002', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('31000000-0000-4000-8000-000000000002','')::uuid),true);
 select set_config(
   'request.jwt.claims',
-  '{"sub":"31000000-0000-4000-8000-000000000002","role":"authenticated"}',
+  '{"sub":"31000000-0000-4000-8000-000000000002","role":"authenticated","session_id":"31000000-0000-4000-8000-000000000002"}',
   true
 );
 select lives_ok(
@@ -750,9 +769,10 @@ select is(
 -- A15: each booking keeps its own cancellation snapshot; sickness bypasses the
 -- ordinary deadline without erasing the late indicator.
 select set_config('request.jwt.claim.sub', '31000000-0000-4000-8000-000000000001', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('31000000-0000-4000-8000-000000000001','')::uuid),true);
 select set_config(
   'request.jwt.claims',
-  '{"sub":"31000000-0000-4000-8000-000000000001","role":"authenticated"}',
+  '{"sub":"31000000-0000-4000-8000-000000000001","role":"authenticated","session_id":"31000000-0000-4000-8000-000000000001"}',
   true
 );
 select set_config(
@@ -776,9 +796,10 @@ where id = '37300000-0000-4000-8000-000000000006';
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '31000000-0000-4000-8000-000000000002', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('31000000-0000-4000-8000-000000000002','')::uuid),true);
 select set_config(
   'request.jwt.claims',
-  '{"sub":"31000000-0000-4000-8000-000000000002","role":"authenticated"}',
+  '{"sub":"31000000-0000-4000-8000-000000000002","role":"authenticated","session_id":"31000000-0000-4000-8000-000000000002"}',
   true
 );
 select set_config(
@@ -804,9 +825,10 @@ select ok(
 );
 
 select set_config('request.jwt.claim.sub', '31000000-0000-4000-8000-000000000001', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('31000000-0000-4000-8000-000000000001','')::uuid),true);
 select set_config(
   'request.jwt.claims',
-  '{"sub":"31000000-0000-4000-8000-000000000001","role":"authenticated"}',
+  '{"sub":"31000000-0000-4000-8000-000000000001","role":"authenticated","session_id":"31000000-0000-4000-8000-000000000001"}',
   true
 );
 select lives_ok(
@@ -837,9 +859,10 @@ reset role;
 -- the same canonical shift/position model. Bar and kitchen minima are policy.
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '31000000-0000-4000-8000-000000000003', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('31000000-0000-4000-8000-000000000003','')::uuid),true);
 select set_config(
   'request.jwt.claims',
-  '{"sub":"31000000-0000-4000-8000-000000000003","role":"authenticated"}',
+  '{"sub":"31000000-0000-4000-8000-000000000003","role":"authenticated","session_id":"31000000-0000-4000-8000-000000000003"}',
   true
 );
 select set_config(
@@ -1035,9 +1058,10 @@ where id = current_setting('cluvo.test.a16_bar_shift')::uuid;
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '31000000-0000-4000-8000-000000000001', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('31000000-0000-4000-8000-000000000001','')::uuid),true);
 select set_config(
   'request.jwt.claims',
-  '{"sub":"31000000-0000-4000-8000-000000000001","role":"authenticated"}',
+  '{"sub":"31000000-0000-4000-8000-000000000001","role":"authenticated","session_id":"31000000-0000-4000-8000-000000000001"}',
   true
 );
 select set_config(
@@ -1056,9 +1080,10 @@ select set_config(
 );
 
 select set_config('request.jwt.claim.sub', '31000000-0000-4000-8000-000000000003', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('31000000-0000-4000-8000-000000000003','')::uuid),true);
 select set_config(
   'request.jwt.claims',
-  '{"sub":"31000000-0000-4000-8000-000000000003","role":"authenticated"}',
+  '{"sub":"31000000-0000-4000-8000-000000000003","role":"authenticated","session_id":"31000000-0000-4000-8000-000000000003"}',
   true
 );
 select throws_ok(

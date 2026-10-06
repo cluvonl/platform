@@ -35,7 +35,7 @@ const routes = {
   P21: '/c/[club]/communicatie', P22: '/c/[club]/instellingen', P23: '/c/[club]/intake',
 };
 const wiring = {
-  'P00.F01': {read_models: ['api.my_workspaces', 'api.my_active_seasons'], components: ['components/app/secure-shell.tsx']},
+  'P00.F01': {read_models: ['api.my_workspaces', 'api.my_active_seasons'], components: ['components/app/secure-shell.tsx'], limitation: 'Actuele native sessie en geverifieerde identiteit verplicht voor RLS en menselijke commands. Lokale OTP, intrekking, ban en vervaldatum bewezen; aangesloten staging en volledige rollen-/Storageketen blijven open.', functional_evidence: 'docs/release/evidence/local/20261007-w01-native-session/verification.md'},
   'P00.F02': {read_models: ['api.my_workspaces'], components: ['components/app/workspace-navigation.tsx'], limitation: 'Verleende scopes bepalen de werkruimte; overige paginaroutes nog te bouwen.'},
   'P00.F03': {components: ['components/app/workspace-navigation.tsx'], limitation: 'Alleen aangesloten paginaroutes; taakzoekprojectie ontbreekt.'},
   'P00.F05': {read_models: ['api.my_intake'], components: ['app/c/[club]/intake/page.tsx']},
@@ -44,7 +44,7 @@ const wiring = {
   'P00.F08': {read_models: ['api.my_help_seen'], commands: ['api.mark_help_seen'], components: ['app/c/[club]/layout.tsx', 'components/app/help-provider.tsx']},
   'P00.F09': {components: ['components/ui/sidebar.tsx', 'components/app/workspace-navigation.tsx']},
   'P00.F13': {components: ['components/app/workspace-navigation.tsx'], limitation: 'URL-navigatie voor aangesloten routes; overige contextlinks nog open.'},
-  'P00.F14': {commands: ['Supabase Auth.signOut'], components: ['app/auth/actions.ts']},
+  'P00.F14': {commands: ['Supabase Auth.signOut'], components: ['app/auth/actions.ts'], limitation: 'Werkelijke lokale/global native sign-out sluit de oude ondertekende token af voor persoonlijke gegevens en commands. Tweede apparaat en ander ouderaccount afzonderlijk bewezen; aangesloten staging en provideracceptatie blijven open.', functional_evidence: 'docs/release/evidence/local/20261007-w01-native-session/verification.md'},
   'P01.F01': {read_models: ['api.my_households', 'api.my_active_seasons', 'api.my_household_season_progress'], components: ['app/c/[club]/overzicht/page.tsx'], limitation: 'Eigen dossier/seizoen en canonieke coverage/winterstand aangesloten; volledige bestuursaggregaten en teamprojecties nog open.'},
   'P02.F01': {read_models: ['api.list_shift_market'], components: ['app/c/[club]/diensten/page.tsx'], limitation: 'Teamreserveringen nog niet aangesloten.'},
   'P02.F06': {commands: ['api.book_shift'], components: ['app/c/[club]/diensten/actions.ts'], limitation: 'Buddy/instructie-erkenning en volledige uitvoerderkeuze nog open.'},

@@ -213,8 +213,21 @@ select ok(not has_function_privilege('authenticated','internal.actor_has_verifie
 select ok(not has_column_privilege('cluvo_command_owner','auth.users','encrypted_password','SELECT'),'command owner has no password read grant');
 select ok(has_column_privilege('cluvo_command_owner','auth.users','email_confirmed_at','SELECT'),'own-subject predicate has narrowly granted confirmation column');
 select ok(not has_column_privilege('authenticated','auth.users','email','SELECT'),'browser role has no direct Auth email read grant');
+-- SQL unit contexts use explicit disposable native session rows. Browser
+-- integration separately obtains real OTP-issued sessions; this is no provider proof.
+update auth.users set email_confirmed_at=statement_timestamp() where email_confirmed_at is null;
+insert into auth.sessions(id,user_id,created_at,updated_at)
+select id,id,statement_timestamp(),statement_timestamp() from auth.users
+on conflict(id) do nothing;
+create function pg_temp.cluvo_test_claims(p_actor uuid) returns text
+language sql security definer set search_path='' as $claims$
+select jsonb_build_object('sub',p_actor,'role','authenticated','session_id',p_actor,
+ 'email',(select email from auth.users where id=p_actor))::text;
+$claims$;
+
 set local role authenticated;
 select set_config('request.jwt.claim.sub','11111111-1111-4111-8111-111111111111',true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('11111111-1111-4111-8111-111111111111','')::uuid),true);
 select set_config('request.jwt.claim.email','ouder-a@example.test',true);
 reset role;
 set local role cluvo_command_owner;
@@ -257,11 +270,13 @@ set local role authenticated;
 select set_config('request.jwt.claim.email','extra-v2@example.test',true);
 select throws_ok($$select pg_temp.create_v2(1,'ad110000-0000-4000-8000-000000000001')$$,'42501','FORBIDDEN','claim email must match current Auth identity');
 select set_config('request.jwt.claim.sub','22222222-2222-4222-8222-222222222222',true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('22222222-2222-4222-8222-222222222222','')::uuid),true);
 select set_config('request.jwt.claim.email','ouder-b@example.test',true);
 select is(api.household_invitation_context((select token from invitation_test_input)),null::jsonb,'wrong confirmed account sees no consent context');
 select throws_ok($$select * from api.accept_household_invitation_v2((select token from invitation_test_input),2,'ad130000-0000-4000-8000-000000000001')$$,'42501','INVALID_INVITATION','wrong confirmed account cannot accept token');
 select is(api.household_invitation_delivery_v2('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',(select id from invitation_test_id)),null::jsonb,'other household parent cannot read creator delivery context');
 select set_config('request.jwt.claim.sub','55555555-5555-4555-8555-555555555555',true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('55555555-5555-4555-8555-555555555555','')::uuid),true);
 select set_config('request.jwt.claim.email','extra-v2@example.test',true);
 select is(api.household_invitation_context((select token from invitation_test_input))->>'household_label','Huishouden A','only matching verified recipient sees dossier label');
 select ok(api.household_invitation_context((select token from invitation_test_input))::text !~ 'auth_user|person_id|token|email|birth_date','consent context excludes identity contacts and token material');
@@ -270,7 +285,7 @@ reset role;
 update auth.users set email_confirmed_at=null where id='55555555-5555-4555-8555-555555555555';
 set local role authenticated;
 select is(api.household_invitation_context((select token from invitation_test_input)),null::jsonb,'unconfirmed recipient sees no context');
-select throws_ok($$select * from api.accept_household_invitation_v2((select token from invitation_test_input),2,'ad130000-0000-4000-8000-000000000001')$$,'42501','INVALID_INVITATION','unconfirmed recipient cannot accept');
+select throws_ok($$select * from api.accept_household_invitation_v2((select token from invitation_test_input),2,'ad130000-0000-4000-8000-000000000001')$$,'42501','FORBIDDEN','unconfirmed recipient cannot accept');
 reset role;
 update auth.users set email_confirmed_at=statement_timestamp() where id='55555555-5555-4555-8555-555555555555';
 update app.household_access_grants set can_invite_executor=false where tenant_id='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa' and auth_user_id='11111111-1111-4111-8111-111111111111';

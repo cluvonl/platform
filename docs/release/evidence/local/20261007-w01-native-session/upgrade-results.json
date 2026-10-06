@@ -1,0 +1,749 @@
+{
+  "observed_at": "2026-10-06T23:03:40.281828+00:00",
+  "environment": "local",
+  "upgrade_from": 14,
+  "upgrade_to": 15,
+  "method": "restore verified private fourteen-migration dump into isolated database, apply exact final migration SQL directly as normal migration role postgres",
+  "migration_file": "supabase/migrations/20261007010000_native_session_authority.sql",
+  "migration_sha256": "9c165f68f413be04aa958358ec088c422dd21fea92b66e9ba84e04378817607a",
+  "baseline_private_backup_sha256": "8a201e9a6c0afb0dba8ae0fa7f690019a91df56da5f7f9730dd80ebba6d2a20b",
+  "fixture": "synthetic core-v1 with accepted/cancelled invitations and independent invitation race fixtures",
+  "application_tables_compared": 143,
+  "data_equal": true,
+  "application_tables_after": 143,
+  "new_empty_tables": [],
+  "security": {
+    "forced_rls_tables": 143,
+    "api_security_definer_functions": 0,
+    "command_owner_superuser": false,
+    "command_owner_bypass_rls": false
+  },
+  "staging_verified": false,
+  "tables": [
+    {
+      "table": "access_grants",
+      "rows": 12,
+      "digest": "f520b884bc143a6f47229f14c4ccaaa3"
+    },
+    {
+      "table": "account_person_links",
+      "rows": 16,
+      "digest": "fa1533a6f581d124dc290e1c037f1638"
+    },
+    {
+      "table": "account_profiles",
+      "rows": 12,
+      "digest": "eb859db594a015db142b460be0ac26b4"
+    },
+    {
+      "table": "acting_delegations",
+      "rows": 7,
+      "digest": "ff0d36e2e62c473b9dda9de5c74dd156"
+    },
+    {
+      "table": "appointment_annual_confirmations",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "appointment_cases",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "appointment_review_cases",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "appreciation_action_assignees",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "appreciation_actions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "appreciation_occasions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "appreciation_private_details",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "appreciation_rules",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "assessment_revisions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "assisted_member_actions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "attendance_decisions",
+      "rows": 2,
+      "digest": "7edc60d0ca109b006c0aefb5e24d614d"
+    },
+    {
+      "table": "audit_events",
+      "rows": 31,
+      "digest": "8c52688bb58a6d5994f1816e807daa2d"
+    },
+    {
+      "table": "booking_cancellations",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "booking_events",
+      "rows": 3,
+      "digest": "22a4bfc5f50d791d033c548457cdae61"
+    },
+    {
+      "table": "bookings",
+      "rows": 7,
+      "digest": "37c8245033375d5782ea85a26669d67a"
+    },
+    {
+      "table": "card_checklist_items",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "committee_document_acl",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "committee_document_versions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "committee_documents",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "committees",
+      "rows": 5,
+      "digest": "c3068e5f3df94d8cb505433f8300b082"
+    },
+    {
+      "table": "course_enrollments",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "course_sessions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "courses",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "daily_digest_items",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "daily_task_digests",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "delivery_attempts",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "domain_events",
+      "rows": 31,
+      "digest": "53b3a1a2535a15b988ba622a6911ddcf"
+    },
+    {
+      "table": "event_attendees",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "event_occurrences",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "event_resource_links",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "events",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "exception_case_revisions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "exception_cases",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "exception_decisions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "exception_reviews",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "executor_obligation_grants",
+      "rows": 8,
+      "digest": "aa171ba7803b6f075e494c80593a9da2"
+    },
+    {
+      "table": "financial_assessments",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "financial_corrections",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "financial_objections",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "financial_processing_records",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "guardian_authorizations",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "help_topics",
+      "rows": 149,
+      "digest": "e301d12da98878d8dbf2fa9033571e55"
+    },
+    {
+      "table": "hour_disputes",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "hour_ledger_entries",
+      "rows": 2,
+      "digest": "eeda999b4f298c30bcc50d4725d122b8"
+    },
+    {
+      "table": "household_access_grants",
+      "rows": 14,
+      "digest": "b1788637c079d3a1893f1b45b23ead12"
+    },
+    {
+      "table": "household_change_cases",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "household_invitations",
+      "rows": 7,
+      "digest": "0d06f0d610d450ef0cb42a33f032120f"
+    },
+    {
+      "table": "household_obligation_links",
+      "rows": 5,
+      "digest": "4f81d3142355667da88b2be572d16990"
+    },
+    {
+      "table": "household_person_links",
+      "rows": 10,
+      "digest": "e99b8f2b3393adcbd3b9356bbcd18d29"
+    },
+    {
+      "table": "households",
+      "rows": 14,
+      "digest": "1f2d396af2b9c905713cf979d4f288cf"
+    },
+    {
+      "table": "idempotency_records",
+      "rows": 29,
+      "digest": "58963aa73f5eb7300d0af5fc35e65fe3"
+    },
+    {
+      "table": "inbox_items",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "intake_answers_versions",
+      "rows": 20,
+      "digest": "cacc0fbe35b8a5859cc83b5d09a0318d"
+    },
+    {
+      "table": "intake_profiles",
+      "rows": 12,
+      "digest": "45efe1c9b6c8dcfefab06b1201c4e895"
+    },
+    {
+      "table": "intake_reconfirmation_receipts",
+      "rows": 3,
+      "digest": "64f298a860ead3835c60c402eef29435"
+    },
+    {
+      "table": "integration_connections",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "integration_runs",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "kanban_boards",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "kanban_card_assignees",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "kanban_card_history",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "kanban_card_subtasks",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "kanban_cards",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "kanban_columns",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "kanban_subtask_assignees",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "locations",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "match_change_impacts",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "match_revisions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "match_shift_links",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "matches",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "mentions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "message_template_versions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "message_templates",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "notification_categories",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "notification_intents",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "notification_outbox",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "notification_preferences",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "obligation_coverage_decisions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "obligations",
+      "rows": 5,
+      "digest": "336ecfc31e9475e8b58d52b81b4b6c72"
+    },
+    {
+      "table": "payment_events",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "permission_roles",
+      "rows": 112,
+      "digest": "8b6f18a6bbc723151140f58d7433fb92"
+    },
+    {
+      "table": "permissions",
+      "rows": 44,
+      "digest": "8d1e92dea17993b355b425ccc8f8abb8"
+    },
+    {
+      "table": "person_contacts",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "person_qualifications",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "personal_action_items",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "persons",
+      "rows": 21,
+      "digest": "a86704e9259759006f7c6b5b230c134d"
+    },
+    {
+      "table": "policy_acceptances",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "policy_assignment_events",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "policy_assignments",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "policy_audiences",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "policy_documents",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "policy_questions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "policy_versions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "provider_delivery_events",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "qualification_booking_impacts",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "qualification_events",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "qualification_types",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "role_permissions",
+      "rows": 1246,
+      "digest": "d2d2c7ac7718474159ee797e08e4fc52"
+    },
+    {
+      "table": "rollover_runs",
+      "rows": 6,
+      "digest": "d3fe3d6852d0a3608e87e80c55abcd05"
+    },
+    {
+      "table": "rollover_template_selections",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "scheduled_occurrences",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "season_close_runs",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "season_reconfirmation_items",
+      "rows": 7,
+      "digest": "ee6657d68cc1e7da6d5f831583573af4"
+    },
+    {
+      "table": "season_snapshots",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "seasons",
+      "rows": 16,
+      "digest": "08230f601fa69562e0a296513e168320"
+    },
+    {
+      "table": "shift_change_proposals",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "shift_positions",
+      "rows": 9,
+      "digest": "61eaa3291b9973f5f83679f7910df77a"
+    },
+    {
+      "table": "shift_publication_batch_items",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "shift_publication_batches",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "shift_requirements",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "shifts",
+      "rows": 7,
+      "digest": "e1756144005ee73c26d5c2dfa1bdcdaa"
+    },
+    {
+      "table": "supply_assessments",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "task_categories",
+      "rows": 3,
+      "digest": "1e95a8122dc40a456184c6cecdc37cd6"
+    },
+    {
+      "table": "task_offer_candidates",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "task_type_versions",
+      "rows": 3,
+      "digest": "8dabeb592b509a182fb4477800033289"
+    },
+    {
+      "table": "task_types",
+      "rows": 3,
+      "digest": "82e1f7dc936f087809a344a303ffe5fb"
+    },
+    {
+      "table": "team_person_memberships",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "team_task_market_requests",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "team_task_market_reviews",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "team_tasks",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "teams",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "template_test_runs",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "tenant_memberships",
+      "rows": 26,
+      "digest": "2d58d84cc4bd72d0a2b9f37fefc0b1c9"
+    },
+    {
+      "table": "tenant_settings_versions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "tenants",
+      "rows": 14,
+      "digest": "731360beb5f5f0222958380dd8e8bdd1"
+    },
+    {
+      "table": "transfer_requests",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "unavailability_periods",
+      "rows": 4,
+      "digest": "aab21784f55b1792b9b89b6ff88f2c7d"
+    },
+    {
+      "table": "user_help_seen",
+      "rows": 6,
+      "digest": "c9283095884c5459d635da8641784b51"
+    },
+    {
+      "table": "vacancies",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "vacancy_interests",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "volunteer_appointments",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "volunteer_fund_entries",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "volunteer_role_catalog",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "volunteer_role_versions",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "waitlist_entries",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "waitlist_offers",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "winter_allocations",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "winter_reviews",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "workload_alerts",
+      "rows": 0,
+      "digest": "empty"
+    },
+    {
+      "table": "workload_preferences",
+      "rows": 0,
+      "digest": "empty"
+    }
+  ],
+  "authenticated_restored_context_readback": {
+    "active_native_session": true,
+    "own_intake": 1,
+    "other_parent_intake": 0,
+    "annual_requests": 2
+  },
+  "native_context_scope": "SQL authenticated role context using an existing restored native session; no fresh provider login claimed",
+  "restrictive_native_session_policies": 143,
+  "existing_function_metadata_preserved": 190,
+  "guarded_original_command_bodies_preserved": 53
+}

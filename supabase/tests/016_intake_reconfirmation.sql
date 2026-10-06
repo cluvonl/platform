@@ -212,7 +212,7 @@ create function pg_temp.actor(p_uid text,p_email text) returns void language plp
 begin
  perform set_config('request.jwt.claim.sub',p_uid,true);
  perform set_config('request.jwt.claim.email',p_email,true);
- perform set_config('request.jwt.claims',jsonb_build_object('sub',p_uid,'email',p_email,'role','authenticated')::text,true);
+ perform set_config('request.jwt.claims',jsonb_build_object('sub',p_uid,'session_id',p_uid,'email',p_email,'role','authenticated')::text,true);
 end;
 $fn$;
 create function pg_temp.confirm_a(p_item_version bigint,p_profile_version bigint,p_key uuid)
@@ -228,6 +228,18 @@ select ok(not has_table_privilege(role_name,'app.intake_reconfirmation_receipts'
  from (values('anon'),('authenticated'),('service_role')) as roles(role_name);
 select ok(not has_table_privilege('cluvo_command_owner','app.intake_reconfirmation_receipts','UPDATE,DELETE'),'command owner cannot rewrite receipts');
 select ok(not has_function_privilege('anon','api.confirm_intake_reconfirmation(uuid,uuid,bigint,bigint,uuid,text,uuid)','EXECUTE'),'anon cannot confirm');
+
+-- SQL unit contexts use explicit disposable native session rows. Browser
+-- integration separately obtains real OTP-issued sessions; this is no provider proof.
+update auth.users set email_confirmed_at=statement_timestamp() where email_confirmed_at is null;
+insert into auth.sessions(id,user_id,created_at,updated_at)
+select id,id,statement_timestamp(),statement_timestamp() from auth.users
+on conflict(id) do nothing;
+create function pg_temp.cluvo_test_claims(p_actor uuid) returns text
+language sql security definer set search_path='' as $claims$
+select jsonb_build_object('sub',p_actor,'role','authenticated','session_id',p_actor,
+ 'email',(select email from auth.users where id=p_actor))::text;
+$claims$;
 
 set local role authenticated;
 select pg_temp.actor('22222222-2222-4222-8222-222222222222','ouder-b@example.test');

@@ -200,8 +200,21 @@ create function pg_temp.dossier() returns jsonb language sql security invoker as
 $fn$;
 select ok(not has_function_privilege('anon','api.get_household_dossier(uuid,uuid,uuid)','EXECUTE'),'anonymous dossier RPC denied');
 select ok(not has_function_privilege('service_role','api.get_household_dossier(uuid,uuid,uuid)','EXECUTE'),'service role does not bypass dossier mandates');
+-- SQL unit contexts use explicit disposable native session rows. Browser
+-- integration separately obtains real OTP-issued sessions; this is no provider proof.
+update auth.users set email_confirmed_at=statement_timestamp() where email_confirmed_at is null;
+insert into auth.sessions(id,user_id,created_at,updated_at)
+select id,id,statement_timestamp(),statement_timestamp() from auth.users
+on conflict(id) do nothing;
+create function pg_temp.cluvo_test_claims(p_actor uuid) returns text
+language sql security definer set search_path='' as $claims$
+select jsonb_build_object('sub',p_actor,'role','authenticated','session_id',p_actor,
+ 'email',(select email from auth.users where id=p_actor))::text;
+$claims$;
+
 set local role authenticated;
 select set_config('request.jwt.claim.sub','11111111-1111-4111-8111-111111111111',true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('11111111-1111-4111-8111-111111111111','')::uuid),true);
 select is(pg_temp.dossier()->'household'->>'label','Huishouden A','own linked dossier');
 select is((pg_temp.dossier()->'household'->>'separated_parents')::boolean,true,'independent intakes acknowledged');
 select is(jsonb_array_length(pg_temp.dossier()->'balances'),1,'one canonical seasonal obligation');
@@ -215,6 +228,7 @@ select is(api.get_household_dossier('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa','b300
 select throws_ok($$select api.get_household_dossier('bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb','b3000000-0000-4000-8000-000000000001')$$,'42501','FORBIDDEN','cross tenant actor denied');
 select is(api.get_household_dossier('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa','a3000000-0000-4000-8000-000000000001','b5000000-0000-4000-8000-000000000001'),null::jsonb,'foreign season ID denied');
 select set_config('request.jwt.claim.sub','22222222-2222-4222-8222-222222222222',true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('22222222-2222-4222-8222-222222222222','')::uuid),true);
 select is(pg_temp.dossier()->'people'->0->>'display_name','Ouder B','other verified parent gets own projection');
 select is(jsonb_array_length(pg_temp.dossier()->'people'),1,'second parent cannot browse first parent');
 select is((pg_temp.dossier()->'household'->>'can_invite_executor')::boolean,false,'no derived invitation right from shared progress');
@@ -234,6 +248,7 @@ values ('ac102000-0000-4000-8000-000000000001','aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaa
  (select id from app.permission_roles where tenant_id='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa' and role_key='volunteer_committee'),'household','a3000000-0000-4000-8000-000000000001',statement_timestamp()-interval '1 day','33333333-3333-4333-8333-333333333333');
 set local role authenticated;
 select set_config('request.jwt.claim.sub','33333333-3333-4333-8333-333333333333',true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('33333333-3333-4333-8333-333333333333','')::uuid),true);
 select is(jsonb_array_length(pg_temp.dossier()->'people'),2,'scoped operator sees minimal linked people');
 select ok(not exists(select 1 from jsonb_array_elements(pg_temp.dossier()->'people') p where p->>'profile_id' is not null or p->>'intake_status' is not null),'operator dossier permission does not open personal intake status');
 select is(jsonb_array_length(pg_temp.dossier()->'balances'),1,'scoped operator gets authorized canonical stand');
@@ -247,6 +262,7 @@ values
  ('ac103000-0000-4000-8000-000000000003','aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa','22222222-2222-4222-8222-222222222222','intake.revision_saved','intake_profile','a4000000-0000-4000-8000-000000000002','household','a3000000-0000-4000-8000-000000000001','{}');
 set local role authenticated;
 select set_config('request.jwt.claim.sub','11111111-1111-4111-8111-111111111111',true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('11111111-1111-4111-8111-111111111111','')::uuid),true);
 select is(jsonb_array_length(pg_temp.dossier()->'history'),1,'only own relevant dossier history');
 select ok(pg_temp.dossier()::text !~ 'PRIVATE_HH_HISTORY|private_note|intake.revision_saved','history excludes payload and independent intake events');
 select is(pg_temp.dossier()->'history'->0->>'event_id','ac103000-0000-4000-8000-000000000001','global unrelated audit excluded');
@@ -262,6 +278,7 @@ select is(jsonb_array_length(pg_temp.dossier()->'invitations'),1,'own invitation
 select lives_ok($$select * from api.mark_household_invitation_delivery_v2('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',(select id from test_invitation),1,true,'ac105000-0000-4000-8000-000000000002')$$,'record successful delivery');
 select is((api.household_invitation_delivery_v2('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',(select id from test_invitation))->>'delivery_status'),'sent','sent status supports retry without provider resend');
 select set_config('request.jwt.claim.sub','33333333-3333-4333-8333-333333333333',true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('33333333-3333-4333-8333-333333333333','')::uuid),true);
 select set_config('request.jwt.claim.email','coordinator@example.test',true);
 select is((api.household_invitation_delivery_v2('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',(select id from test_invitation))->>'delivery_status'),null::text,'different actor cannot read creator delivery status');
 select is(jsonb_array_length(pg_temp.dossier()->'invitations'),1,'explicit operator invitation mandate can read minimal status');
@@ -269,6 +286,7 @@ reset role;
 update app.household_access_grants set can_invite_executor=false where id='a3200000-0000-4000-8000-000000000001';
 set local role authenticated;
 select set_config('request.jwt.claim.sub','11111111-1111-4111-8111-111111111111',true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('11111111-1111-4111-8111-111111111111','')::uuid),true);
 select set_config('request.jwt.claim.email','ouder-a@example.test',true);
 select is((api.household_invitation_delivery_v2('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',(select id from test_invitation))->>'delivery_status'),null::text,'revoked inviter cannot inspect delivery for replay');
 select finish();

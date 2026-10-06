@@ -156,9 +156,22 @@ select is(
   'WP6-WP8 keeps SECURITY DEFINER functions out of exposed api schema'
 );
 
+-- SQL unit contexts use explicit disposable native session rows. Browser
+-- integration separately obtains real OTP-issued sessions; this is no provider proof.
+update auth.users set email_confirmed_at=statement_timestamp() where email_confirmed_at is null;
+insert into auth.sessions(id,user_id,created_at,updated_at)
+select id,id,statement_timestamp(),statement_timestamp() from auth.users
+on conflict(id) do nothing;
+create function pg_temp.cluvo_test_claims(p_actor uuid) returns text
+language sql security definer set search_path='' as $claims$
+select jsonb_build_object('sub',p_actor,'role','authenticated','session_id',p_actor,
+ 'email',(select email from auth.users where id=p_actor))::text;
+$claims$;
+
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '71000000-0000-4000-8000-000000000001', true);
-select set_config('request.jwt.claims', '{"sub":"71000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('71000000-0000-4000-8000-000000000001','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"71000000-0000-4000-8000-000000000001","role":"authenticated","session_id":"71000000-0000-4000-8000-000000000001"}', true);
 select is((select count(*)::integer from app.kanban_cards), 1, 'A25: assigned member sees the private card');
 select is((select count(*)::integer from app.committee_documents), 1, 'A25: explicit ACL reveals the private document');
 select is((select count(*)::integer from app.events), 1, 'A25: attendee sees the private event');
@@ -179,7 +192,8 @@ select throws_ok(
 );
 
 select set_config('request.jwt.claim.sub', '71000000-0000-4000-8000-000000000002', true);
-select set_config('request.jwt.claims', '{"sub":"71000000-0000-4000-8000-000000000002","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('71000000-0000-4000-8000-000000000002','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"71000000-0000-4000-8000-000000000002","role":"authenticated","session_id":"71000000-0000-4000-8000-000000000002"}', true);
 select is((select count(*)::integer from app.kanban_cards), 0, 'A25: unrelated role cannot read private card');
 select is((select count(*)::integer from app.committee_documents), 0, 'A25: unrelated role cannot read private document');
 select is((select count(*)::integer from app.events), 0, 'A25: unrelated role cannot read private event');
@@ -198,7 +212,8 @@ set status = 'suspended'
 where id = '72000000-0000-4000-8000-000000000001';
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '71000000-0000-4000-8000-000000000001', true);
-select set_config('request.jwt.claims', '{"sub":"71000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('71000000-0000-4000-8000-000000000001','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"71000000-0000-4000-8000-000000000001","role":"authenticated","session_id":"71000000-0000-4000-8000-000000000001"}', true);
 select is((select count(*)::integer from app.policy_assignments), 0,
           'suspended tenant loses direct RLS access despite an active membership');
 select throws_ok(
@@ -214,7 +229,8 @@ set status = 'archived'
 where id = '72000000-0000-4000-8000-000000000001';
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '71000000-0000-4000-8000-000000000001', true);
-select set_config('request.jwt.claims', '{"sub":"71000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('71000000-0000-4000-8000-000000000001','')::uuid),true);
+select set_config('request.jwt.claims', '{"sub":"71000000-0000-4000-8000-000000000001","role":"authenticated","session_id":"71000000-0000-4000-8000-000000000001"}', true);
 select is((select count(*)::integer from app.policy_assignments), 0,
           'archived tenant loses direct RLS access despite an active membership');
 select throws_ok(

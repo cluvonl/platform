@@ -52,8 +52,21 @@ select is(
   'only the internal, explicitly filtered read implementations elevate privileges'
 );
 
+-- SQL unit contexts use explicit disposable native session rows. Browser
+-- integration separately obtains real OTP-issued sessions; this is no provider proof.
+update auth.users set email_confirmed_at=statement_timestamp() where email_confirmed_at is null;
+insert into auth.sessions(id,user_id,created_at,updated_at)
+select id,id,statement_timestamp(),statement_timestamp() from auth.users
+on conflict(id) do nothing;
+create function pg_temp.cluvo_test_claims(p_actor uuid) returns text
+language sql security definer set search_path='' as $claims$
+select jsonb_build_object('sub',p_actor,'role','authenticated','session_id',p_actor,
+ 'email',(select email from auth.users where id=p_actor))::text;
+$claims$;
+
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '', true);
+select set_config('request.jwt.claims',pg_temp.cluvo_test_claims(nullif('','')::uuid),true);
 select throws_ok(
   $$select * from api.list_shift_market('00000000-0000-4000-8000-000000000001')$$,
   '42501',

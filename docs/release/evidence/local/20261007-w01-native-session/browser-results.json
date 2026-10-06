@@ -1,0 +1,79 @@
+{
+  "environment": "local",
+  "app_build": "production standalone",
+  "fixture": "synthetic downstream rollover items; actual local OTP and native server actions; scheduler/rollover/provider acceptance not claimed",
+  "checks": [
+    "EXPLICIT_REVIEW_OF_SAVED_PERSONAL_ANSWERS_REQUIRED",
+    "OTHER_PARENT_DIRECT_REQUEST_AND_ANSWERS_DENIED",
+    "FOREIGN_TENANT_PROFILE_CONTEXT_DENIED",
+    "WRONG_SIGNED_IDENTITY_ACTUAL_SERVER_ACTION_DENIED",
+    "FOCUS_REFRESH_CANNOT_CONFIRM_A_STALE_ANSWER_SNAPSHOT",
+    "COMMITTED_LOST_RESPONSE_PRESERVES_REVIEW_AND_FROZEN_COMMAND",
+    "CHANGED_PAYLOAD_WITH_COMMITTED_KEY_DENIED",
+    "EXACT_RETRY_ONE_RECEIPT_ONE_COMMAND_ONE_AUDIT",
+    "LATER_ANSWER_REVISION_PRESERVES_HISTORICAL_REVIEW_RECEIPT",
+    "CURRENT_ANSWERS_DISTINGUISHED_FROM_PREVIOUS_YEAR_CONFIRMATION",
+    "ASSISTED_CONFIRMATION_REASON_ENFORCED_BY_SERVER",
+    "REVOKED_ASSISTANCE_BLOCKS_ACTUAL_ACTION_AND_PRIVATE_PAGE",
+    "ASSISTED_CONFIRMATION_RECORDS_REAL_ACTOR_AND_SUBJECT_PRIVATELY",
+    "REVOKED_HELPER_CANNOT_REPLAY_PRIOR_SERVER_ACTION_SUCCESS",
+    "RECEIPT_OWNER_READS_OWN_CONFIRMATION_WITH_SEPARATED_PARENT_PRIVACY",
+    "LOST_SESSION_REDIRECTS_WITHOUT_YEAR_CONFIRMATION",
+    "TARGET_LEDGER_BOOKINGS_AND_OBLIGATIONS_UNCHANGED",
+    "NO_HYDRATION_MISMATCHES"
+  ],
+  "passed": true,
+  "readback": {
+    "parent_a": {
+      "profile_version": 7,
+      "answer_revision": 6,
+      "answer_versions": 6,
+      "item_version": 2,
+      "item_state": "confirmed",
+      "receipts": 1,
+      "receipt_revision": 5,
+      "annual_audits": 1,
+      "annual_commands": 1,
+      "confirmed_minutes": 60,
+      "target_minutes": 720,
+      "obligations": 1,
+      "bookings": 4
+    },
+    "parent_b": {
+      "profile_version": 3,
+      "answer_revision": 2,
+      "answer_versions": 2,
+      "item_version": 2,
+      "item_state": "confirmed",
+      "receipts": 1,
+      "receipt_revision": 2,
+      "annual_audits": 1,
+      "annual_commands": 1,
+      "confirmed_minutes": 60,
+      "target_minutes": 720,
+      "obligations": 1,
+      "bookings": 4
+    },
+    "pending_next_year": {
+      "profile_version": 7,
+      "answer_revision": 6,
+      "answer_versions": 6,
+      "item_version": 1,
+      "item_state": "open",
+      "receipts": 0,
+      "receipt_revision": null,
+      "annual_audits": 0,
+      "annual_commands": 0,
+      "confirmed_minutes": 60,
+      "target_minutes": 720,
+      "obligations": 1,
+      "bookings": 4
+    },
+    "assisted_attribution": {
+      "actor_correct": true,
+      "subject_correct": true,
+      "reason_recorded": true
+    }
+  },
+  "staging_verified": false
+}
