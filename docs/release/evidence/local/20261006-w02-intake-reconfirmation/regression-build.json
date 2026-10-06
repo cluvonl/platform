@@ -1,0 +1,16 @@
+{
+  "app_build_id": "h2Cja3UFbszEOMcWMc6qD",
+  "phase": "final app source including named personal subject, separate seasonal wish and current-answer description",
+  "source_parent_commit": "71a914490304b4032740c19eb30fa9a69c144426",
+  "tested_source_sha256": {
+    "app/c/[club]/intake/page.tsx": "2253ccf5a8c02740fafe6c251872aba10ff74df5ff0fabf024798c74e9093fa5",
+    "components/app/intake-form.tsx": "36e65416b0e1c0558baad018afbfc157909b260efb725986879d49c173e2f216",
+    "app/c/[club]/intake/actions.ts": "4d99af2a2eb78d1f81cb0d09b4bdbb722053b62e0609b3d4a7fd2a86018f3ab5",
+    "lib/data/intake-reconfirmation.ts": "1c7bfbd06e3bc44b648b4256750e73a535da2f3dbf08985d8903a990586e8c64",
+    "app/c/[club]/intake/herbevestigen/page.tsx": "da2319bfa46ef0953d4b8d1d9abfece0d804676835db82eb723924f511303b7b",
+    "app/c/[club]/intake/herbevestigen/actions.ts": "39cf9e942c72a2485c5262bf724c519bffae1da4ca3f0094ca1251cfa600fd64",
+    "components/app/reconfirm-intake-form.tsx": "802376dc7925b7c29a65d20118c329fa6a52e4387c2051ffe990bc4353c178e6"
+  },
+  "database_migration_sha256": "e4f95b65789485e86131d21c0c085a83c8fc5b4195f36b4f81e24b9c6c171625",
+  "staging_verified": false
+}

@@ -1,6 +1,6 @@
 {
   "base_sha": "47386491859b47fbebf85c3b209724dcc20407fc",
-  "source_head": "a4cf17b43f6a1fa94b92e452b9429819db29295c",
+  "source_head": "71a914490304b4032740c19eb30fa9a69c144426",
   "worktree_dirty": true,
   "prototype_sha": "e9c1d8bca2089b0944577eed73d1bedf7e70a3b6",
   "acceptance_ready": false,
@@ -16,9 +16,9 @@
       "api_views": 16
     },
     "current": {
-      "migrations": 13,
-      "app_tables": 142,
-      "api_function_definitions": 64,
+      "migrations": 14,
+      "app_tables": 143,
+      "api_function_definitions": 66,
       "api_views": 20
     }
   },
@@ -1233,6 +1233,27 @@
           "kind": "function",
           "name": "api.create_household_invitation_v2",
           "line": 58
+        }
+      ]
+    },
+    {
+      "file": "20261006234500_personal_intake_reconfirmation.sql",
+      "sha256": "e4f95b65789485e86131d21c0c085a83c8fc5b4195f36b4f81e24b9c6c171625",
+      "objects": [
+        {
+          "kind": "table",
+          "name": "app.intake_reconfirmation_receipts",
+          "line": 8
+        },
+        {
+          "kind": "function",
+          "name": "api.get_intake_reconfirmations",
+          "line": 76
+        },
+        {
+          "kind": "function",
+          "name": "api.confirm_intake_reconfirmation",
+          "line": 200
         }
       ]
     }
@@ -9550,13 +9571,19 @@
       "title": "Controleren en opslaan",
       "route": "/c/[club]/intake",
       "route_present": true,
-      "read_models": [],
+      "read_models": [
+        "api.get_intake_reconfirmations"
+      ],
       "commands": [
-        "api.save_intake_revision"
+        "api.save_intake_revision",
+        "api.confirm_intake_reconfirmation"
       ],
       "components": [
         "app/c/[club]/intake/actions.ts",
-        "components/app/intake-form.tsx"
+        "components/app/intake-form.tsx",
+        "app/c/[club]/intake/herbevestigen/page.tsx",
+        "app/c/[club]/intake/herbevestigen/actions.ts",
+        "components/app/reconfirm-intake-form.tsx"
       ],
       "mandate": "Eigen intake; vertegenwoordiging uitsluitend met concrete machtiging; gescheiden ouders houden onafhankelijke privacy.",
       "relationships": [
@@ -9580,10 +9607,10 @@
         "O07",
         "V23"
       ],
-      "limitation": "Vier stappen en expliciete opslag met actor/subject/reason/version/idempotency/audit aangesloten; staging-acceptatie ontbreekt.",
+      "limitation": "Vier stappen, expliciete opslag en jaarlijkse controle met onveranderlijke antwoordreferentie, actor/subject/reason, twee versies, idempotency en audit aangesloten. Grantbeheer, volledige seizoenscyclus en aangesloten stagingacceptatie blijven open.",
       "status": "IMPLEMENTED_PARTIAL_NOT_ACCEPTED",
-      "functional_evidence": "docs/release/evidence/local/20261006-w02/verification.md",
-      "visual_evidence": "docs/release/evidence/local/20261006-w02/compare.html",
+      "functional_evidence": "docs/release/evidence/local/20261006-w02-intake-reconfirmation/verification.md",
+      "visual_evidence": "docs/release/evidence/local/20261006-w02-intake-reconfirmation/compare.html",
       "staging_evidence": null
     },
     {

@@ -1,0 +1,38 @@
+{
+  "environment": "local",
+  "app_build": "production standalone",
+  "fixture": "existing synthetic core-v1; independent actual OTP sessions",
+  "checks": [
+    "LOST_SESSION_INTAKE_ACTION_REDIRECTS_TO_LOGIN",
+    "LOST_SESSION_HAS_NO_INTAKE_AUDIT_OR_LEDGER_MUTATION",
+    "COMMITTED_RESPONSE_LOST_RETAINS_DRAFT_VERSION_AND_COMMAND_KEY",
+    "EXACT_RETRY_ONE_REVISION_ONE_COMMAND_ONE_AUDIT",
+    "CONFIRMED_SAVE_ADVANCES_VERSION_AND_ROTATES_KEY",
+    "SESSION_LOST_AFTER_SAVE_REDIRECTS_WITHOUT_SECOND_REVISION",
+    "NO_HYDRATION_MISMATCHES"
+  ],
+  "passed": true,
+  "readback": {
+    "parent_a_unchanged": true,
+    "parent_b_before": {
+      "version": 3,
+      "revision": 2,
+      "answer_versions": 2,
+      "save_audits": 1,
+      "completed_commands": 1,
+      "confirmed_minutes": 60,
+      "target_minutes": 720
+    },
+    "parent_b_after": {
+      "version": 4,
+      "revision": 3,
+      "answer_versions": 3,
+      "save_audits": 2,
+      "completed_commands": 2,
+      "confirmed_minutes": 60,
+      "target_minutes": 720
+    },
+    "exact_retry_unchanged": true
+  },
+  "staging_verified": false
+}

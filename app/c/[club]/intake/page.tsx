@@ -4,6 +4,8 @@ import {requireWorkspace} from '@/lib/auth/workspace';
 import {AccountHelpBanner} from '@/components/app/help-provider';
 import {Empty, PageTitle} from '@/components/cluvo/ui';
 import {loadHouseholdDossier} from '@/lib/data/household';
+import {loadIntakeReconfirmations} from '@/lib/data/intake-reconfirmation';
+import Link from 'next/link';
 
 type IntakeContext = {profile_id: string; person_id: string; household_context_id: string; display_name: string; is_self: boolean};
 
@@ -27,9 +29,14 @@ export default async function IntakePage({params, searchParams}: {
   const subject = contexts.find(({profile_id}) => profile_id === intake?.profile_id);
   const dossierResult = household ? await loadHouseholdDossier(client, workspace.tenant_id, household.household_id) : {data: null, error: null};
   const error = intakeResult.error ?? categoryResult.error ?? householdResult.error ?? contextResult.error;
+  const reconfirmations = intake ? await loadIntakeReconfirmations(client, workspace.tenant_id, intake.profile_id) : {data: [], error: null};
   return <div className="page-enter">
     <PageTitle eyebrow="MIJN PROFIEL & HUISHOUDEN" title="Jouw talent. Jouw bijdrage." description="Samen vinden we een plek die past bij jouw leven." />
     <AccountHelpBanner topicId="page.intake" />
+    {!error && intake && reconfirmations.error ? <p className="auth-error" role="alert">De seizoensaanvragen kunnen nu niet worden geladen. Open de pagina opnieuw.</p> : null}
+    {!error && intake && reconfirmations.data.some(({state}) => state === 'open') ? <div className="filterbar">
+      {reconfirmations.data.filter(({state}) => state === 'open').map((item) => <Link className="btn secondary" key={item.item_id} href={`/c/${encodeURIComponent(club)}/intake/herbevestigen?profile=${intake.profile_id}&item=${item.item_id}`}>Intake controleren voor {item.season_name}</Link>)}
+    </div> : null}
     {error ? <p className="auth-error" role="alert">De intake kan nu niet worden geladen. Probeer de pagina opnieuw te openen.</p> : null}
     {!error && profiles.length > 1 ? <form method="get" className="workspace-selection">
       <label>Persoon en dossiercontext<select name="profile" defaultValue={intake?.profile_id ?? ''}>{contexts.map((context) => <option key={context.profile_id} value={context.profile_id}>{context.display_name} · {households.find(({household_id}) => household_id === context.household_context_id)?.label ?? 'Gemachtigde intakecontext'}</option>)}</select></label>

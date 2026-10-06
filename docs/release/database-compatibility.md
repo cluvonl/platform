@@ -10,6 +10,7 @@ geblokkeerd tot volledige V1-acceptatie; deze compatibiliteit is geen acceptatie
 | `20261006223000` | `9d9c365` of later | Expand: geverifieerde versioned commands; bootstrap tijdelijk behouden. |
 | `20261006230000` | `a4cf17b` of later voor intrekken | Extra versioned intrekactie en dossierprojectie; eerdere v2-app kan blijven werken. |
 | `20261006233000` | Minimaal `9d9c365` | Contract: bootstrap-RPC's en directe private kernelcalls zijn ingetrokken. Aanmaken controleert bevoegdheid ook na de dossierlock. De publieke v2-signatures blijven werken. |
+| `20261006234500` | `71a9144` blijft werken; nieuwe route gebruikt extra RPC's | Expand: minimale seizoensaanvragen en versioned persoonlijke intakeherbevestiging met append-only bevestigingshistorie. Bestaande intake-/uitnodigingssignatures en gegevens blijven behouden. |
 
 Na de contractmigratie is de rollbackgrens voor aangesloten appmodus
 `9d9c365261b28ef99ef1a8345c21ae9e818ed6a1`. Rol terug naar een geteste release
@@ -19,7 +20,7 @@ De oude kernelfuncties blijven onder de beperkte command-eigenaar beschikbaar
 voor de versie- en identiteit-gecontroleerde wrappers. Browserrollen en de
 service-role krijgen geen recht op de oude endpoints of directe kernels.
 
-Het feitelijk uitgevoerde [stagingreadback van `a4cf17b`](evidence/staging/20261006-a4cf17b/readback.json) bewijst de uitgerolde
+Het feitelijk uitgevoerde [stagingreadback van `71a9144`](evidence/staging/20261006-71a9144/readback.json) bewijst de uitgerolde
 image en bron-/migratiehashes in prototype-modus. Remote database-upgrade en
 aangesloten appcompatibiliteit zijn pas bewezen na veilige beheer-/Supabase-
 toegang en actuele stagingproeven; gebruik de lokale migratie- en browserproeven

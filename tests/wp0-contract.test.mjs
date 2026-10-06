@@ -61,11 +61,13 @@ test('CI en staging herhalen database-, race-, lock- en lintpoorten', async () =
     assert.match(workflow, /npm run db:test:race/);
     assert.match(workflow, /npm run db:test:locks/);
     assert.match(workflow, /npm run db:test:invitations/);
+    assert.match(workflow, /npm run db:test:reconfirmation/);
     assert.match(workflow, /supabase db lint --local --schema app,api,internal/);
   }
   assert.equal(packageJson.scripts['db:test:race'], 'node scripts/db-concurrency-a13.mjs');
   assert.equal(packageJson.scripts['db:test:locks'], 'node scripts/db-concurrency-season-lock.mjs');
   assert.equal(packageJson.scripts['db:test:invitations'], 'node scripts/db-concurrency-invitations.mjs && node scripts/db-concurrency-invitation-lifecycle.mjs');
+  assert.equal(packageJson.scripts['db:test:reconfirmation'], 'node scripts/db-concurrency-intake-reconfirmation.mjs');
 });
 
 test('runtime en instrumentation blokkeren production en bewaken geconfigureerde appmodus', async () => {

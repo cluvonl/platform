@@ -72,6 +72,8 @@ jobs:
 
           DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:55322/postgres \
             npm run db:test:invitations
+          DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:55322/postgres \
+            npm run db:test:reconfirmation
 
           npx supabase db lint --local --schema app,api,internal \
             --level warning \
