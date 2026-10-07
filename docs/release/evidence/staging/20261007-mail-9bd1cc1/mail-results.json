@@ -1,0 +1,23 @@
+{
+  "environment": "staging",
+  "observed_at": "2026-10-07T08:03:18.137Z",
+  "database_mutations": false,
+  "email_sent": true,
+  "email_request_attempted": true,
+  "send_outcome": "ACCEPTED",
+  "actual_delivery_verified": false,
+  "smtp_configuration_verified": false,
+  "native_otp_verified": false,
+  "invitation_delivery_verified": false,
+  "recipient": "configured_staging_test_recipient",
+  "recipient_value_exported": false,
+  "secret_values_exported": false,
+  "v1_ready": false,
+  "production_enabled": false,
+  "source_sha": "9bd1cc19a398086b2177304870eb53c04e1d3db9",
+  "workflow_run_id": "37591201027",
+  "passed": true,
+  "provider_accepted": true,
+  "provider_status": 202,
+  "receipt_confirmation": "PENDING_USER"
+}
