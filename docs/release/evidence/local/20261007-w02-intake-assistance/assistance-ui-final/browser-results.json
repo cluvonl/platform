@@ -1,0 +1,1552 @@
+{
+  "observed_at": "2026-10-07T06:18:58.421Z",
+  "environment": "local",
+  "app_build": "production standalone",
+  "build_id": "17e-qJQv9kTRgLesp3UKZ",
+  "database_migrations": 16,
+  "fixture": "existing synthetic core-v1 history preserved; actual local OTP for parents A/B and coordinator; one temporary household-scoped committee grant, revoked after proof",
+  "checks": [
+    "ACTUAL_PARENT_OTP_WITHOUT_COMMITTEE_MANDATE_HAS_NO_MANAGEMENT_CONTEXT_OR_FORM",
+    "PARENT_CANNOT_SELF_AUTHORIZE_ASSISTANCE_THROUGH_DIRECT_RPC",
+    "OTHER_PARENT_INTAKE_REMAINS_PRIVATE_BEFORE_EXPLICIT_GRANT",
+    "SCOPED_COMMITTEE_PERSONS_LINK_OPENS_MINIMAL_CONTEXT_WITHOUT_ANSWERS_REASONS_OR_AUTH_IDENTIFIERS",
+    "MISSING_EXPLICIT_REVIEW_CHECKBOX_REJECTED_BY_ACTUAL_SERVER_ACTION",
+    "MISSING_ASSISTANCE_REASON_REJECTED_BY_ACTUAL_SERVER_ACTION",
+    "SELF_ASSISTANCE_UI_BLOCKED_WITH_PERSONAL_INTAKE_EXPLANATION",
+    "LOADED_COMMITTEE_FORM_REAUTHORIZES_ACTUAL_ACTOR_AND_DENIES_PARENT_COOKIE_SWAP",
+    "COMMITTED_GRANT_RESPONSE_LOSS_PRESERVES_KEY_HOUSEHOLD_VERSION_AND_ABSOLUTE_END_TIME",
+    "COMMITTED_KEY_WITH_CHANGED_REASON_DENIED_WITHOUT_SECOND_DECISION",
+    "EXACT_GRANT_RETRY_HAS_ONE_DELEGATION_ONE_IMMUTABLE_DECISION_ONE_AUDIT_ONE_COMMAND",
+    "STALE_HOUSEHOLD_VERSION_ACTUAL_GRANT_DENIED_WITHOUT_MUTATION",
+    "GRANT_READBACK_DISTINGUISHES_REAL_REVIEWER_HELPER_AND_REPRESENTED_PERSON",
+    "HELPER_GAINS_ONLY_EXPLICIT_PERSONAL_INTAKE_AND_MUST_RECORD_ASSISTANCE_CONTEXT",
+    "ACTUAL_HELPER_INTAKE_SERVER_ACTION_RECORDS_ACTOR_SUBJECT_AND_REASON_WITH_ONE_REVISION",
+    "REVOCATION_REQUIRES_EXPLICIT_REVIEW_AND_REASON_ON_ACTUAL_SERVER_ACTION",
+    "COMMITTED_REVOCATION_RESPONSE_LOSS_PRESERVES_KEY_AND_BOTH_VERSION_SNAPSHOTS",
+    "EXACT_REVOCATION_RETRY_HAS_ONE_IMMUTABLE_DECISION_ONE_AUDIT_ONE_COMMAND",
+    "STALE_HOUSEHOLD_AND_DELEGATION_SNAPSHOTS_CANNOT_REVOKE_AGAIN",
+    "REVOCATION_ATTRIBUTION_AND_INCREMENTED_DELEGATION_VERSION_READ_BACK",
+    "PREVIOUSLY_LOADED_HELPER_FORM_DENIED_AFTER_REVOCATION_WITHOUT_NEW_ANSWER_OR_AUDIT",
+    "FRESH_HELPER_VIEW_AND_OLD_SIGNED_REST_HAVE_NO_REPRESENTED_ANSWERS_AFTER_REVOCATION",
+    "NATIVE_LOCAL_SIGNOUT_INVALIDATES_OLD_TOKEN_CONTEXT_AND_LOADED_MANAGEMENT_ACTION",
+    "REVIEWER_SIGNOUT_AND_ASSISTANCE_REVOCATION_PRESERVE_BOTH_PARENTS_OWN_NATIVE_ACCESS",
+    "ALL_LEDGER_OBLIGATION_BOOKING_ROWS_AND_PARENT_A_ANSWER_HISTORY_UNCHANGED",
+    "INTEGER_MINUTES_AND_EXISTING_OBLIGATION_STABLE_WITH_NO_PROCESSING_COMMAND_LEFT",
+    "NO_HYDRATION_MISMATCHES_AT_390_768_1440_WIDTHS",
+    "ACTUAL_CLUB_SIGNAL_UI_STYLED_FIELDS_CHECKBOXES_AND_BUTTON_AT_390_768_1440_WIDTHS_WITHOUT_OVERFLOW"
+  ],
+  "passed": true,
+  "readback": {
+    "before": {
+      "household_version": 11,
+      "delegations": 6,
+      "active_delegations": 0,
+      "decisions": 6,
+      "audits": 6,
+      "commands": 6,
+      "processing_commands": 0,
+      "profile_a_version": 7,
+      "profile_a_revision": 6,
+      "profile_b_version": 6,
+      "profile_b_revision": 5,
+      "answer_versions": 12,
+      "intake_audits": 10,
+      "intake_commands": 10,
+      "confirmed_minutes": 60,
+      "target_minutes": 720,
+      "bookings": 4,
+      "obligations": 1
+    },
+    "granted": {
+      "household_version": 12,
+      "delegations": 7,
+      "active_delegations": 1,
+      "decisions": 7,
+      "audits": 7,
+      "commands": 7,
+      "processing_commands": 0,
+      "profile_a_version": 7,
+      "profile_a_revision": 6,
+      "profile_b_version": 6,
+      "profile_b_revision": 5,
+      "answer_versions": 12,
+      "intake_audits": 10,
+      "intake_commands": 10,
+      "confirmed_minutes": 60,
+      "target_minutes": 720,
+      "bookings": 4,
+      "obligations": 1
+    },
+    "saved": {
+      "household_version": 12,
+      "delegations": 7,
+      "active_delegations": 1,
+      "decisions": 7,
+      "audits": 7,
+      "commands": 7,
+      "processing_commands": 0,
+      "profile_a_version": 7,
+      "profile_a_revision": 6,
+      "profile_b_version": 7,
+      "profile_b_revision": 6,
+      "answer_versions": 13,
+      "intake_audits": 11,
+      "intake_commands": 11,
+      "confirmed_minutes": 60,
+      "target_minutes": 720,
+      "bookings": 4,
+      "obligations": 1
+    },
+    "revoked": {
+      "household_version": 13,
+      "delegations": 7,
+      "active_delegations": 0,
+      "decisions": 8,
+      "audits": 8,
+      "commands": 8,
+      "processing_commands": 0,
+      "profile_a_version": 7,
+      "profile_a_revision": 6,
+      "profile_b_version": 7,
+      "profile_b_revision": 6,
+      "answer_versions": 13,
+      "intake_audits": 11,
+      "intake_commands": 11,
+      "confirmed_minutes": 60,
+      "target_minutes": 720,
+      "bookings": 4,
+      "obligations": 1
+    },
+    "grant_attribution": {
+      "actor_correct": true,
+      "helper_correct": true,
+      "represented_correct": true,
+      "reason_recorded": true,
+      "delegation_helper_correct": true,
+      "explicit_scope": true,
+      "grant_actor_correct": true,
+      "version_one": true,
+      "bounded_period": true
+    },
+    "answer_attribution": {
+      "actual_actor_correct": true,
+      "represented_person_correct": true,
+      "reason_recorded": true
+    },
+    "revoke_attribution": {
+      "actor_correct": true,
+      "helper_correct": true,
+      "represented_correct": true,
+      "reason_recorded": true,
+      "delegation_revoked": true,
+      "version_two": true
+    },
+    "unrelated_rows_unchanged": true,
+    "private_answers_absent_from_reviewer_context": true,
+    "temporary_review_grant_revoked": true,
+    "native_session_material_exported": false
+  },
+  "screenshots": [
+    "assistance-parent-denied-390x844.png",
+    "assistance-parent-denied-768x1024.png",
+    "assistance-parent-denied-1440x1024.png",
+    "assistance-grant-reviewed-390x844.png",
+    "assistance-grant-reviewed-768x1024.png",
+    "assistance-grant-reviewed-1440x1024.png",
+    "assistance-grant-lost-response-390x844.png",
+    "assistance-grant-lost-response-768x1024.png",
+    "assistance-grant-lost-response-1440x1024.png",
+    "assistance-granted-390x844.png",
+    "assistance-granted-768x1024.png",
+    "assistance-granted-1440x1024.png",
+    "assistance-helper-intake-390x844.png",
+    "assistance-helper-intake-768x1024.png",
+    "assistance-helper-intake-1440x1024.png",
+    "assistance-revoke-reviewed-390x844.png",
+    "assistance-revoke-reviewed-768x1024.png",
+    "assistance-revoke-reviewed-1440x1024.png",
+    "assistance-revoke-lost-response-390x844.png",
+    "assistance-revoke-lost-response-768x1024.png",
+    "assistance-revoke-lost-response-1440x1024.png",
+    "assistance-revoked-390x844.png",
+    "assistance-revoked-768x1024.png",
+    "assistance-revoked-1440x1024.png",
+    "assistance-native-session-login-390x844.png",
+    "assistance-native-session-login-768x1024.png",
+    "assistance-native-session-login-1440x1024.png"
+  ],
+  "computed_styles": [
+    {
+      "state": "assistance-grant-reviewed",
+      "viewport": 390,
+      "selects": [
+        {
+          "width": 314,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 314,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 314,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        }
+      ],
+      "textareas": [
+        {
+          "width": 314,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        }
+      ],
+      "checkboxes": [
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        }
+      ],
+      "back": {
+        "width": 157.015625,
+        "height": 40,
+        "border": 1,
+        "padding_left": 15,
+        "padding_top": 0,
+        "styled_slot": true
+      }
+    },
+    {
+      "state": "assistance-grant-reviewed",
+      "viewport": 768,
+      "selects": [
+        {
+          "width": 668,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 668,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 668,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        }
+      ],
+      "textareas": [
+        {
+          "width": 668,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        }
+      ],
+      "checkboxes": [
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        }
+      ],
+      "back": {
+        "width": 157.015625,
+        "height": 40,
+        "border": 1,
+        "padding_left": 15,
+        "padding_top": 0,
+        "styled_slot": true
+      }
+    },
+    {
+      "state": "assistance-grant-reviewed",
+      "viewport": 1440,
+      "selects": [
+        {
+          "width": 1076,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 1076,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 1076,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        }
+      ],
+      "textareas": [
+        {
+          "width": 1076,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        }
+      ],
+      "checkboxes": [
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        }
+      ],
+      "back": {
+        "width": 157.015625,
+        "height": 40,
+        "border": 1,
+        "padding_left": 15,
+        "padding_top": 0,
+        "styled_slot": true
+      }
+    },
+    {
+      "state": "assistance-grant-lost-response",
+      "viewport": 390,
+      "selects": [
+        {
+          "width": 314,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 314,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 314,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        }
+      ],
+      "textareas": [
+        {
+          "width": 314,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        }
+      ],
+      "checkboxes": [
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        }
+      ],
+      "back": {
+        "width": 157.015625,
+        "height": 40,
+        "border": 1,
+        "padding_left": 15,
+        "padding_top": 0,
+        "styled_slot": true
+      }
+    },
+    {
+      "state": "assistance-grant-lost-response",
+      "viewport": 768,
+      "selects": [
+        {
+          "width": 668,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 668,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 668,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        }
+      ],
+      "textareas": [
+        {
+          "width": 668,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        }
+      ],
+      "checkboxes": [
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        }
+      ],
+      "back": {
+        "width": 157.015625,
+        "height": 40,
+        "border": 1,
+        "padding_left": 15,
+        "padding_top": 0,
+        "styled_slot": true
+      }
+    },
+    {
+      "state": "assistance-grant-lost-response",
+      "viewport": 1440,
+      "selects": [
+        {
+          "width": 1076,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 1076,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 1076,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        }
+      ],
+      "textareas": [
+        {
+          "width": 1076,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        }
+      ],
+      "checkboxes": [
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        }
+      ],
+      "back": {
+        "width": 157.015625,
+        "height": 40,
+        "border": 1,
+        "padding_left": 15,
+        "padding_top": 0,
+        "styled_slot": true
+      }
+    },
+    {
+      "state": "assistance-granted",
+      "viewport": 390,
+      "selects": [
+        {
+          "width": 314,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 314,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 314,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        }
+      ],
+      "textareas": [
+        {
+          "width": 314,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        }
+      ],
+      "checkboxes": [
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        }
+      ],
+      "back": {
+        "width": 157.015625,
+        "height": 40,
+        "border": 1,
+        "padding_left": 15,
+        "padding_top": 0,
+        "styled_slot": true
+      }
+    },
+    {
+      "state": "assistance-granted",
+      "viewport": 768,
+      "selects": [
+        {
+          "width": 668,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 668,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 668,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        }
+      ],
+      "textareas": [
+        {
+          "width": 668,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        }
+      ],
+      "checkboxes": [
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        }
+      ],
+      "back": {
+        "width": 157.015625,
+        "height": 40,
+        "border": 1,
+        "padding_left": 15,
+        "padding_top": 0,
+        "styled_slot": true
+      }
+    },
+    {
+      "state": "assistance-granted",
+      "viewport": 1440,
+      "selects": [
+        {
+          "width": 1076,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 1076,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 1076,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        }
+      ],
+      "textareas": [
+        {
+          "width": 1076,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        }
+      ],
+      "checkboxes": [
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        }
+      ],
+      "back": {
+        "width": 157.015625,
+        "height": 40,
+        "border": 1,
+        "padding_left": 15,
+        "padding_top": 0,
+        "styled_slot": true
+      }
+    },
+    {
+      "state": "assistance-revoke-reviewed",
+      "viewport": 390,
+      "selects": [
+        {
+          "width": 314,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 314,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 314,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        }
+      ],
+      "textareas": [
+        {
+          "width": 314,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        },
+        {
+          "width": 314,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        }
+      ],
+      "checkboxes": [
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        },
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        }
+      ],
+      "back": {
+        "width": 157.015625,
+        "height": 40,
+        "border": 1,
+        "padding_left": 15,
+        "padding_top": 0,
+        "styled_slot": true
+      }
+    },
+    {
+      "state": "assistance-revoke-reviewed",
+      "viewport": 768,
+      "selects": [
+        {
+          "width": 424,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 424,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 424,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        }
+      ],
+      "textareas": [
+        {
+          "width": 424,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        },
+        {
+          "width": 424,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        }
+      ],
+      "checkboxes": [
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        },
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        }
+      ],
+      "back": {
+        "width": 157.015625,
+        "height": 40,
+        "border": 1,
+        "padding_left": 15,
+        "padding_top": 0,
+        "styled_slot": true
+      }
+    },
+    {
+      "state": "assistance-revoke-reviewed",
+      "viewport": 1440,
+      "selects": [
+        {
+          "width": 1076,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 1076,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 1076,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        }
+      ],
+      "textareas": [
+        {
+          "width": 1076,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        },
+        {
+          "width": 1076,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        }
+      ],
+      "checkboxes": [
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        },
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        }
+      ],
+      "back": {
+        "width": 157.015625,
+        "height": 40,
+        "border": 1,
+        "padding_left": 15,
+        "padding_top": 0,
+        "styled_slot": true
+      }
+    },
+    {
+      "state": "assistance-revoke-lost-response",
+      "viewport": 390,
+      "selects": [
+        {
+          "width": 314,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 314,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 314,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        }
+      ],
+      "textareas": [
+        {
+          "width": 314,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        },
+        {
+          "width": 314,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        }
+      ],
+      "checkboxes": [
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        },
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        }
+      ],
+      "back": {
+        "width": 157.015625,
+        "height": 40,
+        "border": 1,
+        "padding_left": 15,
+        "padding_top": 0,
+        "styled_slot": true
+      }
+    },
+    {
+      "state": "assistance-revoke-lost-response",
+      "viewport": 768,
+      "selects": [
+        {
+          "width": 424,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 424,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 424,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        }
+      ],
+      "textareas": [
+        {
+          "width": 424,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        },
+        {
+          "width": 424,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        }
+      ],
+      "checkboxes": [
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        },
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        }
+      ],
+      "back": {
+        "width": 157.015625,
+        "height": 40,
+        "border": 1,
+        "padding_left": 15,
+        "padding_top": 0,
+        "styled_slot": true
+      }
+    },
+    {
+      "state": "assistance-revoke-lost-response",
+      "viewport": 1440,
+      "selects": [
+        {
+          "width": 1076,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 1076,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 1076,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        }
+      ],
+      "textareas": [
+        {
+          "width": 1076,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        },
+        {
+          "width": 1076,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        }
+      ],
+      "checkboxes": [
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        },
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        }
+      ],
+      "back": {
+        "width": 157.015625,
+        "height": 40,
+        "border": 1,
+        "padding_left": 15,
+        "padding_top": 0,
+        "styled_slot": true
+      }
+    },
+    {
+      "state": "assistance-revoked",
+      "viewport": 390,
+      "selects": [
+        {
+          "width": 314,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 314,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 314,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        }
+      ],
+      "textareas": [
+        {
+          "width": 314,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        }
+      ],
+      "checkboxes": [
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        }
+      ],
+      "back": {
+        "width": 157.015625,
+        "height": 40,
+        "border": 1,
+        "padding_left": 15,
+        "padding_top": 0,
+        "styled_slot": true
+      }
+    },
+    {
+      "state": "assistance-revoked",
+      "viewport": 768,
+      "selects": [
+        {
+          "width": 668,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 668,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 668,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        }
+      ],
+      "textareas": [
+        {
+          "width": 668,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        }
+      ],
+      "checkboxes": [
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        }
+      ],
+      "back": {
+        "width": 157.015625,
+        "height": 40,
+        "border": 1,
+        "padding_left": 15,
+        "padding_top": 0,
+        "styled_slot": true
+      }
+    },
+    {
+      "state": "assistance-revoked",
+      "viewport": 1440,
+      "selects": [
+        {
+          "width": 1076,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 1076,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        },
+        {
+          "width": 1076,
+          "height": 40,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 0,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true
+        }
+      ],
+      "textareas": [
+        {
+          "width": 1076,
+          "height": 94,
+          "border": 1,
+          "padding_left": 12,
+          "padding_top": 8,
+          "field_labelled": true,
+          "label_above": true,
+          "full_width": true,
+          "styled_slot": true
+        }
+      ],
+      "checkboxes": [
+        {
+          "width": 18,
+          "height": 18,
+          "border": 1,
+          "padding_left": 0,
+          "padding_top": 0,
+          "styled_slot": true,
+          "radius": 4,
+          "visible_label": true
+        }
+      ],
+      "back": {
+        "width": 157.015625,
+        "height": 40,
+        "border": 1,
+        "padding_left": 15,
+        "padding_top": 0,
+        "styled_slot": true
+      }
+    }
+  ],
+  "staging_verified": false,
+  "release_ready": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

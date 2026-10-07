@@ -1,0 +1,42 @@
+{
+  "observed_at": "2026-10-07T01:29:13.033Z",
+  "environment": "local",
+  "app_build": "production standalone; exact source and BUILD_ID in the paired capture manifest",
+  "database_migrations": 16,
+  "fixture": "synthetic core-v1; actual local OTP, distinct actual native sessions and native local/global sign-out; session material only in process memory",
+  "checks": [
+    "REAL_OTP_NATIVE_SESSION_AND_OWN_REST_READ",
+    "CURRENT_NATIVE_BAN_BLOCKS_OLD_SIGNED_REST_AND_ACTUAL_ACTION",
+    "UNBANNING_PRESERVES_CURRENT_SESSION_AND_EXISTING_RIGHTS",
+    "NATIVE_SOFT_DELETION_BLOCKS_OLD_SIGNED_PERSONAL_ROWS",
+    "NATIVE_SESSION_LIFETIME_APPLIES_TO_PERSONAL_AND_ACCOUNT_DATA",
+    "SECOND_DEVICE_USES_A_DISTINCT_ACTUAL_NATIVE_SESSION",
+    "OTHER_PARENT_KEEPS_SEPARATE_NATIVE_SESSION_AND_PERSONAL_PRIVACY",
+    "LOCAL_NATIVE_SIGNOUT_CLOSES_STALE_TOKEN_WITHOUT_REVOKING_SECOND_DEVICE",
+    "REVOKED_TOKEN_CANNOT_WRITE_ACCOUNT_PREFERENCE",
+    "REVOKED_TOKEN_CANNOT_WRITE_INTAKE_THROUGH_DIRECT_RPC",
+    "LOADED_FORM_AFTER_NATIVE_SIGNOUT_REDIRECTS_WITHOUT_MUTATION",
+    "GLOBAL_NATIVE_SIGNOUT_CLOSES_ALL_ACTOR_SESSIONS_AND_PRESERVES_OTHER_PARENT",
+    "GLOBAL_NATIVE_REVOKED_FORM_CANNOT_COMMIT",
+    "NEW_OTP_AFTER_GLOBAL_SIGNOUT_REQUIRES_AND_ISSUES_A_NEW_NATIVE_SESSION",
+    "NO_HYDRATION_MISMATCHES"
+  ],
+  "passed": true,
+  "readback": {
+    "parent_a_unchanged": true,
+    "first_session_removed_at_local_probe": true,
+    "all_parent_a_sessions_removed_at_global_probe": true,
+    "new_native_session_after_fresh_otp": true,
+    "other_parent_personal_intake_rows": 1,
+    "profile": {
+      "version": 7,
+      "revision": 6,
+      "answer_versions": 6,
+      "save_audits": 5,
+      "completed_commands": 5,
+      "confirmed_minutes": 60,
+      "target_minutes": 720
+    }
+  },
+  "staging_verified": false
+}

@@ -1,0 +1,77 @@
+{
+  "observed_at": "2026-10-07T06:17:37.364590+00:00",
+  "environment": "local",
+  "source_parent_commit": "3168a4dcc38a784ee21c6b3a17a9c1dbefcec41d",
+  "build_id": "17e-qJQv9kTRgLesp3UKZ",
+  "checks": {
+    "eslint": {
+      "result": "PASS"
+    },
+    "typescript": {
+      "result": "PASS"
+    },
+    "node_tests": {
+      "result": "PASS",
+      "passed": 45,
+      "failed": 0
+    },
+    "next_build": {
+      "result": "PASS",
+      "version": "16.3.8",
+      "mode": "webpack standalone"
+    },
+    "wp0_smoke": {
+      "result": "PASS",
+      "scope": "separate temporary prototype standalone process"
+    },
+    "database_lint": {
+      "result": "PASS",
+      "schemas": [
+        "app",
+        "api",
+        "internal"
+      ],
+      "errors": 0
+    },
+    "production_gate": {
+      "result": "EXPECTED_REJECTION",
+      "exit_code": 1
+    }
+  },
+  "app_readiness": {
+    "ready": true,
+    "release_ready": false,
+    "scope": "authenticated_core",
+    "url": "http://127.0.0.1:3200"
+  },
+  "feature_app_source_hashes": [
+    {
+      "path": "app/c/[club]/huishouden/intakehulp/page.tsx",
+      "sha256": "5edaee5eed594b06a90dbee86a943ae27fd936f5fd3fddd84d39247ffe904348"
+    },
+    {
+      "path": "app/c/[club]/huishouden/intakehulp/actions.ts",
+      "sha256": "0c798a015403fd18e2a23938e66e88f9f9f93cf6f840ccadab0ee4c85b7194e0"
+    },
+    {
+      "path": "components/app/intake-assistance-forms.tsx",
+      "sha256": "cac34a9251787059bd22a00ae797774b25ece94f21916bf66026790480be3815"
+    },
+    {
+      "path": "app/c/[club]/huishouden/page.tsx",
+      "sha256": "001ce5e386604d0a465bf3f7b23810299f3c07df0306c481bb8138b59a1e923b"
+    },
+    {
+      "path": "components/app/household-dossier.tsx",
+      "sha256": "9a4085ae8d560a76b5259ea18f774b38b6268f424fa108dad0fc964ec5e163b7"
+    },
+    {
+      "path": "lib/data/intake-assistance.ts",
+      "sha256": "0372321f9f9777f12762b33413a787d2f088df67fa01c18713cd805ab069b5a5"
+    }
+  ],
+  "database_migrations": 16,
+  "staging_verified": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

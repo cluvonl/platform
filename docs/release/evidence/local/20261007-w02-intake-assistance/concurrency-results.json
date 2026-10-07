@@ -1,0 +1,323 @@
+{
+  "environment": "local",
+  "races": [
+    {
+      "scenario": "A13_LAST_POSITION_RACE",
+      "contenders": 2,
+      "persisted_bookings": 1,
+      "conflict": "CAPACITY_FULL",
+      "result": "PASS"
+    },
+    {
+      "scenario": "SEASON_CLOSE_LEDGER_SERIALIZATION",
+      "contenders": 2,
+      "waited_milliseconds": 3000,
+      "result": "PASS"
+    },
+    {
+      "scenario": "INTAKE_UNAVAILABILITY_BOOKING_SERIALIZATION",
+      "contenders": 2,
+      "waited_milliseconds": 2938,
+      "conflict": "NOT_ELIGIBLE",
+      "persisted_bookings": 0,
+      "result": "PASS"
+    },
+    {
+      "scenario": "HOUSEHOLD_INVITATION_VERSION_SERIALIZATION",
+      "contenders": 2,
+      "waited_milliseconds": 3014,
+      "conflict": "STALE_VERSION",
+      "readback": {
+        "invitations": 1,
+        "household_version": 2,
+        "completed_commands": 1,
+        "creation_audits": 1
+      },
+      "result": "PASS"
+    },
+    {
+      "scenario": "INVITATION_LIFECYCLE_SERIALIZATION",
+      "scenarios": [
+        {
+          "winner": "cancellation",
+          "contenders": 2,
+          "waited_milliseconds": 3009,
+          "conflict": "INVALID_INVITATION",
+          "readback": {
+            "invitations": 1,
+            "status": "cancelled",
+            "invitation_version": 2,
+            "household_version": 3,
+            "recipient_grants": 0,
+            "recipient_profiles": 0,
+            "cancellation_audits": 1,
+            "acceptance_audits": 0,
+            "processing_commands": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "acceptance",
+          "contenders": 2,
+          "waited_milliseconds": 3012,
+          "conflict": "STALE_VERSION",
+          "readback": {
+            "invitations": 1,
+            "status": "accepted",
+            "invitation_version": 2,
+            "household_version": 3,
+            "recipient_grants": 1,
+            "recipient_profiles": 1,
+            "cancellation_audits": 0,
+            "acceptance_audits": 1,
+            "processing_commands": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "authority_revocation",
+          "contenders": 2,
+          "waited_milliseconds": 3009,
+          "conflict": "FORBIDDEN",
+          "readback": {
+            "invitations": 1,
+            "status": "pending",
+            "invitation_version": 1,
+            "household_version": 2,
+            "recipient_grants": 0,
+            "recipient_profiles": 0,
+            "cancellation_audits": 0,
+            "acceptance_audits": 0,
+            "processing_commands": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "creation_authority_revocation",
+          "contenders": 2,
+          "waited_milliseconds": 3007,
+          "conflict": "FORBIDDEN",
+          "readback": {
+            "invitations": 1,
+            "status": "pending",
+            "invitation_version": 1,
+            "household_version": 2,
+            "recipient_grants": 0,
+            "recipient_profiles": 0,
+            "cancellation_audits": 0,
+            "acceptance_audits": 0,
+            "processing_commands": 0
+          },
+          "result": "PASS"
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scenario": "INTAKE_RECONFIRMATION_SERIALIZATION",
+      "scenarios": [
+        {
+          "winner": "exact_confirmation",
+          "contenders": 2,
+          "waited_milliseconds": 3014,
+          "conflict": null,
+          "readback": {
+            "receipts": 1,
+            "profile_version": 2,
+            "answer_revision": 1,
+            "answer_versions": 1,
+            "annually_confirmed": true,
+            "item_state": "confirmed",
+            "item_version": 2,
+            "annual_audits": 1,
+            "annual_commands": 1,
+            "processing_commands": 0,
+            "obligations": 0,
+            "ledger_rows": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "answer_revision",
+          "contenders": 2,
+          "waited_milliseconds": 3014,
+          "conflict": "STALE_VERSION",
+          "readback": {
+            "receipts": 0,
+            "profile_version": 2,
+            "answer_revision": 2,
+            "answer_versions": 2,
+            "annually_confirmed": false,
+            "item_state": "open",
+            "item_version": 1,
+            "annual_audits": 0,
+            "annual_commands": 0,
+            "processing_commands": 0,
+            "obligations": 0,
+            "ledger_rows": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "assistance_revocation",
+          "contenders": 2,
+          "waited_milliseconds": 3010,
+          "conflict": "FORBIDDEN",
+          "readback": {
+            "receipts": 0,
+            "profile_version": 1,
+            "answer_revision": 1,
+            "answer_versions": 1,
+            "annually_confirmed": false,
+            "item_state": "open",
+            "item_version": 1,
+            "annual_audits": 0,
+            "annual_commands": 0,
+            "processing_commands": 0,
+            "obligations": 0,
+            "ledger_rows": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "native_session_revocation",
+          "contenders": 2,
+          "waited_milliseconds": 3007,
+          "conflict": "FORBIDDEN",
+          "readback": {
+            "receipts": 0,
+            "profile_version": 1,
+            "answer_revision": 1,
+            "answer_versions": 1,
+            "annually_confirmed": false,
+            "item_state": "open",
+            "item_version": 1,
+            "annual_audits": 0,
+            "annual_commands": 0,
+            "processing_commands": 0,
+            "obligations": 0,
+            "ledger_rows": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "season_close",
+          "contenders": 2,
+          "waited_milliseconds": 3013,
+          "conflict": "SEASON_NOT_OPEN",
+          "readback": {
+            "receipts": 0,
+            "profile_version": 1,
+            "answer_revision": 1,
+            "answer_versions": 1,
+            "annually_confirmed": false,
+            "item_state": "open",
+            "item_version": 1,
+            "annual_audits": 0,
+            "annual_commands": 0,
+            "processing_commands": 0,
+            "obligations": 0,
+            "ledger_rows": 0
+          },
+          "result": "PASS"
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scenario": "INTAKE_ASSISTANCE_SERIALIZATION",
+      "fixture": "disposable SQL native-session contexts; no provider login claimed",
+      "scenarios": [
+        {
+          "winner": "exact_grant",
+          "contenders": 2,
+          "waited_milliseconds": 3014,
+          "conflict": null,
+          "readback": {
+            "delegations": 1,
+            "decisions": 1,
+            "household_version": 2,
+            "profile_version": 1,
+            "answer_revision": 1,
+            "assistance_audits": 1,
+            "processing_commands": 0,
+            "confirmed_minutes": 60
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "competing_grants",
+          "contenders": 2,
+          "waited_milliseconds": 3013,
+          "conflict": "STALE_VERSION",
+          "readback": {
+            "delegations": 1,
+            "decisions": 1,
+            "household_version": 2,
+            "profile_version": 1,
+            "answer_revision": 1,
+            "assistance_audits": 1,
+            "processing_commands": 0,
+            "confirmed_minutes": 60
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "reviewer_revocation",
+          "contenders": 2,
+          "waited_milliseconds": 3008,
+          "conflict": "FORBIDDEN",
+          "readback": {
+            "delegations": 0,
+            "decisions": 0,
+            "household_version": 1,
+            "profile_version": 1,
+            "answer_revision": 1,
+            "assistance_audits": 0,
+            "processing_commands": 0,
+            "confirmed_minutes": 60
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "native_revocation",
+          "contenders": 2,
+          "waited_milliseconds": 3008,
+          "conflict": "FORBIDDEN",
+          "readback": {
+            "delegations": 0,
+            "decisions": 0,
+            "household_version": 1,
+            "profile_version": 1,
+            "answer_revision": 1,
+            "assistance_audits": 0,
+            "processing_commands": 0,
+            "confirmed_minutes": 60
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "revoke_vs_save",
+          "contenders": 2,
+          "waited_milliseconds": 3010,
+          "conflict": "FORBIDDEN",
+          "readback": {
+            "delegations": 1,
+            "decisions": 2,
+            "household_version": 3,
+            "profile_version": 1,
+            "answer_revision": 1,
+            "assistance_audits": 2,
+            "processing_commands": 0,
+            "confirmed_minutes": 60
+          },
+          "result": "PASS"
+        }
+      ],
+      "result": "PASS"
+    }
+  ],
+  "passed": true,
+  "scenario_count": 18,
+  "staging_verified": false
+}

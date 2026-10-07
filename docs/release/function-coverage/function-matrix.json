@@ -1,6 +1,6 @@
 {
   "base_sha": "47386491859b47fbebf85c3b209724dcc20407fc",
-  "source_head": "8f6190f77605edd8e191425f2790bc194ae28175",
+  "source_head": "3168a4dcc38a784ee21c6b3a17a9c1dbefcec41d",
   "worktree_dirty": true,
   "prototype_sha": "e9c1d8bca2089b0944577eed73d1bedf7e70a3b6",
   "acceptance_ready": false,
@@ -16,9 +16,9 @@
       "api_views": 16
     },
     "current": {
-      "migrations": 15,
-      "app_tables": 143,
-      "api_function_definitions": 66,
+      "migrations": 16,
+      "app_tables": 144,
+      "api_function_definitions": 69,
       "api_views": 20
     }
   },
@@ -1261,6 +1261,32 @@
       "file": "20261007010000_native_session_authority.sql",
       "sha256": "9c165f68f413be04aa958358ec088c422dd21fea92b66e9ba84e04378817607a",
       "objects": []
+    },
+    {
+      "file": "20261007013000_intake_assistance_management.sql",
+      "sha256": "1512b7cbfd1fd63065fa09ad17aba0a2c71aaba1c875326f11e089175a5979c3",
+      "objects": [
+        {
+          "kind": "table",
+          "name": "app.intake_assistance_decisions",
+          "line": 16
+        },
+        {
+          "kind": "function",
+          "name": "api.get_intake_assistance_context",
+          "line": 117
+        },
+        {
+          "kind": "function",
+          "name": "api.grant_intake_assistance",
+          "line": 190
+        },
+        {
+          "kind": "function",
+          "name": "api.revoke_intake_assistance",
+          "line": 260
+        }
+      ]
     }
   ],
   "route_compatibility": {
@@ -4240,12 +4266,19 @@
       "route": "/c/[club]/huishouden",
       "route_present": true,
       "read_models": [
-        "api.get_household_dossier_v2"
+        "api.get_household_dossier_v2",
+        "api.get_intake_assistance_context"
       ],
-      "commands": [],
+      "commands": [
+        "api.grant_intake_assistance",
+        "api.revoke_intake_assistance"
+      ],
       "components": [
         "app/c/[club]/huishouden/page.tsx",
-        "components/app/household-dossier.tsx"
+        "components/app/household-dossier.tsx",
+        "app/c/[club]/huishouden/intakehulp/page.tsx",
+        "app/c/[club]/huishouden/intakehulp/actions.ts",
+        "components/app/intake-assistance-forms.tsx"
       ],
       "mandate": "Vrijwilligerscommissie/bestuur; vrijwilligerscoördinator uitsluitend portefeuille, financiële details apart afgeschermd.",
       "relationships": [
@@ -4288,10 +4321,10 @@
         "O10",
         "V09"
       ],
-      "limitation": "Eigen of expliciet toegestaan dossier met vier tabs en seizoensstand; volledige beheerderszoekroute en beoordelingsflows nog open.",
+      "limitation": "Eigen of expliciet toegestaan dossier met vier tabs; expliciet dossiergebonden intakehulpbeheer met actuele native sessie, versies, reden en idempotency lokaal bewezen. Beheerderszoeken, volledige beoordelingsflows en aangesloten stagingacceptatie blijven open.",
       "status": "IMPLEMENTED_PARTIAL_NOT_ACCEPTED",
-      "functional_evidence": "docs/release/evidence/local/20261006-w02-dossier/verification.md",
-      "visual_evidence": "docs/release/evidence/local/20261006-w02-dossier/compare.html",
+      "functional_evidence": "docs/release/evidence/local/20261007-w02-intake-assistance/verification.md",
+      "visual_evidence": "docs/release/evidence/local/20261007-w02-intake-assistance/assistance-ui-final/manual-ui-review.md",
       "staging_evidence": null
     },
     {
@@ -9409,11 +9442,19 @@
       "route_present": true,
       "read_models": [
         "api.my_intake",
-        "api.list_intake_contexts"
+        "api.list_intake_contexts",
+        "api.get_intake_assistance_context"
       ],
-      "commands": [],
+      "commands": [
+        "api.grant_intake_assistance",
+        "api.revoke_intake_assistance"
+      ],
       "components": [
-        "app/c/[club]/intake/page.tsx"
+        "app/c/[club]/intake/page.tsx",
+        "app/c/[club]/huishouden/intakehulp/page.tsx",
+        "app/c/[club]/huishouden/intakehulp/actions.ts",
+        "components/app/intake-assistance-forms.tsx",
+        "lib/data/intake-assistance.ts"
       ],
       "mandate": "Eigen intake; vertegenwoordiging uitsluitend met concrete machtiging; gescheiden ouders houden onafhankelijke privacy.",
       "relationships": [
@@ -9438,10 +9479,10 @@
         "O07",
         "V23"
       ],
-      "limitation": "Eigen en expliciet gemachtigde contexten aangesloten; aanmaken/intrekken van de machtiging via beheerflow nog open.",
+      "limitation": "Eigen en specifiek gemachtigde contexten plus gescopeerd beheer van concrete intakehulp lokaal bewezen. Intrekken sluit de oude geladen helperactie en REST-projectie af; gedeeld huishouden geeft geen automatische antwoordtoegang. Volledige functie- en aangesloten stagingacceptatie blijven open.",
       "status": "IMPLEMENTED_PARTIAL_NOT_ACCEPTED",
-      "functional_evidence": "docs/release/evidence/local/20261006-w02/verification.md",
-      "visual_evidence": "docs/release/evidence/local/20261006-w02/compare.html",
+      "functional_evidence": "docs/release/evidence/local/20261007-w02-intake-assistance/verification.md",
+      "visual_evidence": "docs/release/evidence/local/20261007-w02-intake-assistance/assistance-ui-final/manual-ui-review.md",
       "staging_evidence": null
     },
     {
@@ -9576,19 +9617,13 @@
       "title": "Controleren en opslaan",
       "route": "/c/[club]/intake",
       "route_present": true,
-      "read_models": [
-        "api.get_intake_reconfirmations"
-      ],
+      "read_models": [],
       "commands": [
-        "api.save_intake_revision",
-        "api.confirm_intake_reconfirmation"
+        "api.save_intake_revision"
       ],
       "components": [
         "app/c/[club]/intake/actions.ts",
-        "components/app/intake-form.tsx",
-        "app/c/[club]/intake/herbevestigen/page.tsx",
-        "app/c/[club]/intake/herbevestigen/actions.ts",
-        "components/app/reconfirm-intake-form.tsx"
+        "components/app/intake-form.tsx"
       ],
       "mandate": "Eigen intake; vertegenwoordiging uitsluitend met concrete machtiging; gescheiden ouders houden onafhankelijke privacy.",
       "relationships": [
@@ -9612,9 +9647,9 @@
         "O07",
         "V23"
       ],
-      "limitation": "Vier stappen, expliciete opslag en jaarlijkse controle met onveranderlijke antwoordreferentie, actor/subject/reason, twee versies, idempotency en audit aangesloten. Grantbeheer, volledige seizoenscyclus en aangesloten stagingacceptatie blijven open.",
+      "limitation": "Vier stappen en expliciete versioned opslag met feitelijke actor, vertegenwoordigde persoon, hulprede, idempotency en audit lokaal aangesloten. De daadwerkelijk verleende en ingetrokken intakehulp bewaakt de geladen helperactie. Volledige functie- en aangesloten stagingacceptatie blijven open.",
       "status": "IMPLEMENTED_PARTIAL_NOT_ACCEPTED",
-      "functional_evidence": "docs/release/evidence/local/20261006-w02-intake-reconfirmation/verification.md",
+      "functional_evidence": "docs/release/evidence/local/20261007-w02-intake-assistance/verification.md",
       "visual_evidence": "docs/release/evidence/local/20261006-w02-intake-reconfirmation/compare.html",
       "staging_evidence": null
     },
@@ -9622,11 +9657,21 @@
       "function_id": "P23.F06",
       "page_id": "P23",
       "title": "Jaarlijks herbevestigen en profiel openen",
-      "route": "/c/[club]/intake",
+      "route": "/c/[club]/intake/herbevestigen",
       "route_present": true,
-      "read_models": [],
-      "commands": [],
-      "components": [],
+      "read_models": [
+        "api.get_intake_reconfirmations",
+        "api.my_intake",
+        "api.list_intake_contexts"
+      ],
+      "commands": [
+        "api.confirm_intake_reconfirmation"
+      ],
+      "components": [
+        "app/c/[club]/intake/herbevestigen/page.tsx",
+        "app/c/[club]/intake/herbevestigen/actions.ts",
+        "components/app/reconfirm-intake-form.tsx"
+      ],
       "mandate": "Eigen intake; vertegenwoordiging uitsluitend met concrete machtiging; gescheiden ouders houden onafhankelijke privacy.",
       "relationships": [
         "R21"
@@ -9649,10 +9694,10 @@
         "O07",
         "V23"
       ],
-      "limitation": "Geen actuele UI→command/read-model-keten vastgesteld.",
-      "status": "TO_BUILD_OR_VERIFY",
-      "functional_evidence": null,
-      "visual_evidence": null,
+      "limitation": "Bestaande antwoorden controleren en jaarlijks herbevestigen met onveranderlijke antwoordreferentie, echte actor/subject, twee versies, idempotency en audit lokaal bewezen. De hulp volgt dezelfde concrete machtiging; intake verandert geen urendoel. Volledige seizoenscyclus, jobs/providerketen en aangesloten stagingacceptatie blijven open.",
+      "status": "IMPLEMENTED_PARTIAL_NOT_ACCEPTED",
+      "functional_evidence": "docs/release/evidence/local/20261007-w02-intake-assistance/verification.md",
+      "visual_evidence": "docs/release/evidence/local/20261006-w02-intake-reconfirmation/compare.html",
       "staging_evidence": null
     }
   ]

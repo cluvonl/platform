@@ -1,0 +1,1000 @@
+{
+  "recorded_at": "2026-10-07T06:23:26.987423+00:00",
+  "status": "LOCAL_PARTIAL_VERIFIED_PENDING_STAGING",
+  "environment": "local",
+  "working_tree_base_commit": "3168a4dcc38a784ee21c6b3a17a9c1dbefcec41d",
+  "feature_published": false,
+  "published_migrations": 15,
+  "published_migrations_byte_identical": true,
+  "database_migrations": 16,
+  "application_tables": 144,
+  "scope": {
+    "catalogue_functions": 219,
+    "catalogue_acceptance_criteria": 102,
+    "additions": 28,
+    "A01_A30": 30,
+    "all_acceptance_open": true
+  },
+  "build_provenance": {
+    "proven_browser_build_id": "yV9pfW6gnUW3qIaEFbYU9",
+    "proven_build_scope": "Pre-style-correction production standalone app",
+    "final_corrected_build_id": "17e-qJQv9kTRgLesp3UKZ",
+    "final_corrected_build_completed": true,
+    "final_corrected_build_verified": true,
+    "final_corrected_build_verified_scope": "New intakehulp forms, actual permission/retry/privacy scenarios and manual visual review",
+    "older_browser_json_without_build_id": "Execution was paired with draft-validation.json; no per-file build ID was recorded."
+  },
+  "empty_database_tests": {
+    "files": 18,
+    "assertions": 856,
+    "passed": true,
+    "execution_log_sha256": "9c41f1851de6c1a3ceac71e5e8d86abdaac17f80f03feef234c210e46d2761b9",
+    "migration_sha256": "1512b7cbfd1fd63065fa09ad17aba0a2c71aaba1c875326f11e089175a5979c3"
+  },
+  "browser_suites": {
+    "dossier": {
+      "checks": 29,
+      "passed": true,
+      "evidence": "dossier-regression/browser-results.json",
+      "sha256": "3e54d5cc3a5d70e79a39a2b7460c6bf01ff2ceebb00e9a0fb64b177fc074f959",
+      "explicit_build_id": null
+    },
+    "w01": {
+      "checks": 14,
+      "passed": true,
+      "evidence": "w01-regression/browser-results.json",
+      "sha256": "b3ea3f600c1034d9936bbae8c83398823a11306d71bee82de9364fa80cc3110d",
+      "explicit_build_id": null
+    },
+    "intake": {
+      "checks": 22,
+      "passed": true,
+      "evidence": "intake-regression/browser-results.json",
+      "sha256": "a3c68062b7e092c182656ff86f0ad1ebd6cc90f30db2a4bef24bfa6b567cdd17",
+      "explicit_build_id": null
+    },
+    "annual": {
+      "checks": 18,
+      "passed": true,
+      "evidence": "browser-results.json",
+      "sha256": "d09e012af62d975f5ac36113ccb752581fdd3896a1f021cb2b0b28e2f783f731",
+      "explicit_build_id": null
+    },
+    "session": {
+      "checks": 7,
+      "passed": true,
+      "evidence": "session-regression/browser-results.json",
+      "sha256": "64fbc88bea7707a4e3b60a2a86352dfaa653a814317022d045f77e0acadbeb33",
+      "explicit_build_id": null
+    },
+    "native": {
+      "checks": 15,
+      "passed": true,
+      "evidence": "native-regression/browser-results.json",
+      "sha256": "c03474035158273cebe16dd34e357966a82005b963836baa5cddd93ce99712f7",
+      "explicit_build_id": null
+    },
+    "assistance": {
+      "checks": 28,
+      "passed": true,
+      "evidence": "assistance-ui-final/browser-results.json",
+      "sha256": "263ee884f526d62786fc7405c4d95764b7ed9c3dd981242394b923af1bd01a20",
+      "explicit_build_id": "17e-qJQv9kTRgLesp3UKZ"
+    }
+  },
+  "browser_checks": 133,
+  "browser_regression_checks": 105,
+  "assistance_browser_checks": 28,
+  "browser_checks_are_final_corrected_build_proof": false,
+  "browser_count_scope": "105 regression checks from the prior build plus 28 assistance checks from the final build; the original 28 assistance checks and unsuccessful attempts are preserved without adding distinct checks.",
+  "failed_attempts_counted_as_passed": false,
+  "historical_assistance_evidence": "assistance-ui/browser-results.json",
+  "corrected_build_toolchain": {
+    "evidence": "build-results.json",
+    "sha256": "ec00ce6a58d0188b6bc7f902bb8a72541fec390bd0ab6a3d09782c26b7bac636",
+    "checks": {
+      "eslint": {
+        "result": "PASS"
+      },
+      "typescript": {
+        "result": "PASS"
+      },
+      "node_tests": {
+        "result": "PASS",
+        "passed": 45,
+        "failed": 0
+      },
+      "next_build": {
+        "result": "PASS",
+        "version": "16.3.8",
+        "mode": "webpack standalone"
+      },
+      "wp0_smoke": {
+        "result": "PASS",
+        "scope": "separate temporary prototype standalone process"
+      },
+      "database_lint": {
+        "result": "PASS",
+        "schemas": [
+          "app",
+          "api",
+          "internal"
+        ],
+        "errors": 0
+      },
+      "production_gate": {
+        "result": "EXPECTED_REJECTION",
+        "exit_code": 1
+      }
+    },
+    "feature_app_source_hashes_match": true,
+    "local_authenticated_core_ready": true,
+    "release_ready": false
+  },
+  "concurrency": {
+    "scenarios": 18,
+    "passed": true,
+    "evidence": "concurrency-results.json"
+  },
+  "upgrade": {
+    "from_migrations": 15,
+    "to_migrations": 16,
+    "passed": true,
+    "previous_tables_equal": 143,
+    "application_tables_after": 144,
+    "existing_functions_preserved": 192,
+    "previous_guarded_commands_preserved": 53,
+    "new_guarded_commands": 2,
+    "evidence": "upgrade-results.json"
+  },
+  "private_backup_restore": {
+    "passed": true,
+    "evidence": "restore-ui-results.json",
+    "application_tables_equal": 144,
+    "restrictive_native_session_policies": 144,
+    "guarded_private_commands": 55,
+    "private_backup_exported": false,
+    "private_backup_permissions": "0600",
+    "scope": "Recorded full local database state after final assistance UI proof; same PostgreSQL cluster.",
+    "historical_restore_evidence_preserved": "restore-results.json",
+    "post_ui_assistance_readback": {
+      "decision_rows": 8,
+      "grant_decisions": 4,
+      "revocation_decisions": 4,
+      "active_helper_grants": 0,
+      "decision_reasons_recorded": true
+    },
+    "post_ui_decision_update_delete_denied": true,
+    "fresh_provider_login_on_restored_database_claimed": false,
+    "storage_binaries_or_independent_host_verified": false
+  },
+  "visual_evidence": {
+    "app_screenshots_total_preserved": 124,
+    "latest_assistance_screenshots": 27,
+    "historical_assistance_screenshots": 27,
+    "widths": [
+      390,
+      768,
+      1440
+    ],
+    "assistance_manual_review": "assistance-ui-final/manual-ui-review.md",
+    "final_field_styling_review_passed": true,
+    "final_computed_style_snapshots": 18,
+    "prototype_reference_modified": false
+  },
+  "historical_draft": {
+    "path": "draft-validation.json",
+    "preserved": true,
+    "recorded_browser_checks": 90,
+    "current_source_hash_mismatches": [
+      "app/c/[club]/huishouden/intakehulp/page.tsx",
+      "components/app/intake-assistance-forms.tsx",
+      "docs/release/staging-credentials.md"
+    ],
+    "unrelated_staging_credentials_doc_excluded_from_feature_source_inventory": true
+  },
+  "coverage_report": {
+    "json_path": "docs/release/function-coverage/function-matrix.json",
+    "json_sha256": "5f2a9175d826c646f1ddb5dde19d08c4f0ad42fd4efeb594dd760e122cbe67ae",
+    "csv_path": "docs/release/function-coverage/function-matrix.csv",
+    "csv_sha256": "48257702914d4511ace7f543a55c890a3ea550bea5dff46436349b20c2a6dc1c",
+    "function_count": 219,
+    "acceptance_criteria": 102,
+    "acceptance_ready": false,
+    "feature_functions_status": "IMPLEMENTED_PARTIAL_NOT_ACCEPTED"
+  },
+  "feature_source_hashes": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "751be7367d43ffe2e21c1e460f7a635130f6cd8f8faa63f2a0a2aed73e645640"
+    },
+    {
+      "path": ".github/workflows/staging.yml",
+      "sha256": "a25f81f675d92c0cdd1613158cf4fc142881197d74d6dc9a9c7c641fe08365c5"
+    },
+    {
+      "path": "app/c/[club]/huishouden/intakehulp/actions.ts",
+      "sha256": "0c798a015403fd18e2a23938e66e88f9f9f93cf6f840ccadab0ee4c85b7194e0"
+    },
+    {
+      "path": "app/c/[club]/huishouden/intakehulp/page.tsx",
+      "sha256": "5edaee5eed594b06a90dbee86a943ae27fd936f5fd3fddd84d39247ffe904348"
+    },
+    {
+      "path": "app/c/[club]/huishouden/page.tsx",
+      "sha256": "001ce5e386604d0a465bf3f7b23810299f3c07df0306c481bb8138b59a1e923b"
+    },
+    {
+      "path": "components/app/household-dossier.tsx",
+      "sha256": "9a4085ae8d560a76b5259ea18f774b38b6268f424fa108dad0fc964ec5e163b7"
+    },
+    {
+      "path": "components/app/intake-assistance-forms.tsx",
+      "sha256": "cac34a9251787059bd22a00ae797774b25ece94f21916bf66026790480be3815"
+    },
+    {
+      "path": "lib/data/intake-assistance.ts",
+      "sha256": "0372321f9f9777f12762b33413a787d2f088df67fa01c18713cd805ab069b5a5"
+    },
+    {
+      "path": "package.json",
+      "sha256": "6240eb54433a0933ae8cf071802626fe88054cec1178fa687cea18ac3e974b62"
+    },
+    {
+      "path": "scripts/browser-auth-revocation.mjs",
+      "sha256": "063043ed7b1fef8dbdfefcda9ea3e17cd6ff72fb461dffaa704dae820af8edef"
+    },
+    {
+      "path": "scripts/browser-intake-assistance.mjs",
+      "sha256": "ae7a8586f283e931c2b610227e700d13ba8f6b8e264788efa2dd40b03da2845c"
+    },
+    {
+      "path": "scripts/coverage-matrix.mjs",
+      "sha256": "f536674e61b2e612f131904e4b518f2b4cf275f0e56517d550cfde6025178a22"
+    },
+    {
+      "path": "scripts/db-concurrency-intake-assistance.mjs",
+      "sha256": "935864fdddd0a4471f0dfec652d7639a2bf38cb01821b9570e2fa35932d102be"
+    },
+    {
+      "path": "supabase/migrations/20261007013000_intake_assistance_management.sql",
+      "sha256": "1512b7cbfd1fd63065fa09ad17aba0a2c71aaba1c875326f11e089175a5979c3"
+    },
+    {
+      "path": "supabase/tests/017_native_session_authority.sql",
+      "sha256": "add8462b431573c2113d4d58396741ae0a554443ac519b48650049ae6b28a7ea"
+    },
+    {
+      "path": "supabase/tests/018_intake_assistance_management.sql",
+      "sha256": "871ce77869350f5cad4969581302b69cd4b3779d5166dfb37b5cf75b630e9602"
+    }
+  ],
+  "source_hash_scope": "Current working-tree feature snapshot; the six compiled app sources separately match build-results.json. Runtime config, ops changes and credential documents excluded. Existing regression results retain their earlier build provenance.",
+  "artifact_inventory": [
+    {
+      "path": "assistance-ui/browser-results.json",
+      "sha256": "abbeee33a3c302c08d9ff6157455cd0f902be3b96a45164ec0e7c5c4963674e0",
+      "bytes": 6943
+    },
+    {
+      "path": "assistance-ui/manual-ui-review.md",
+      "sha256": "452abdaa535ea4c5b9248d16a3f8d1ce7450acbc3e8d8b01fea3e8f12b6ebfd0",
+      "bytes": 1053
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-grant-lost-response-1440x1024.png",
+      "sha256": "a1ddc1b59e10ce40f58aa41cd3103c31066a8c366b0e23cf112da0c76b5cc491",
+      "bytes": 195278
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-grant-lost-response-390x844.png",
+      "sha256": "3d388d95386a2e91abb28535160832090a10a0677fcada92b7abf2f4bbb8482a",
+      "bytes": 131766
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-grant-lost-response-768x1024.png",
+      "sha256": "523b277985e370e77433d00410093f7cddcc154595f398b514e8cd7da519babf",
+      "bytes": 186027
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-grant-reviewed-1440x1024.png",
+      "sha256": "76f995f223d3cb547438251199ff2bc19cefcf7658c2a42022a6de31e7a9e220",
+      "bytes": 176741
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-grant-reviewed-390x844.png",
+      "sha256": "ce854cef4e811f01c088774513cf6889fd73bde436170b0ab2d06f33063738d8",
+      "bytes": 114252
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-grant-reviewed-768x1024.png",
+      "sha256": "9d71d6fc7b8377e0dbdc02f41709aa1926bd688ce3929f19ed680b9da13fef75",
+      "bytes": 171458
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-granted-1440x1024.png",
+      "sha256": "913e22520a5ea700d56fc8b4472a4acf849b6aaeeec29906358de4b06eb4cb24",
+      "bytes": 184562
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-granted-390x844.png",
+      "sha256": "6ff6bc5e7e0d89ddbcbff1ac85c0a507423d3ad91134c0edc38405ce67ed71b2",
+      "bytes": 122107
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-granted-768x1024.png",
+      "sha256": "3a192f11404eda1cf773b4bd6f64e2ee177c79a11bd09336fe455fb3e762cb47",
+      "bytes": 174762
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-helper-intake-1440x1024.png",
+      "sha256": "847a6fe0a363be617ee7beaa145b6f2aa3af9d267bd60f44394ea6468d9a6256",
+      "bytes": 155257
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-helper-intake-390x844.png",
+      "sha256": "01470a6b8f2661a63a057d2d4ddc062192112681d56df22e57527d681630d0f5",
+      "bytes": 95046
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-helper-intake-768x1024.png",
+      "sha256": "a0be0131cced65754b89dab1e3177fc9456d3a02f9640505dda75cef8bfcecc1",
+      "bytes": 147455
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-native-session-login-1440x1024.png",
+      "sha256": "451d4f1f094e68a425ffa96441992fb789560187f4f085123a5ba096aa9bf0cf",
+      "bytes": 61482
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-native-session-login-390x844.png",
+      "sha256": "c906daaf81ea1f66558a3664d45f9b74ba4b7a37f25e21b306302520cebf9217",
+      "bytes": 42717
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-native-session-login-768x1024.png",
+      "sha256": "ad44abbbe8e200da7f2341ec3c3738ab02f101aeed58537d198377c17f8a98b1",
+      "bytes": 48752
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-parent-denied-1440x1024.png",
+      "sha256": "22bd4a2a1338ecda550e30413a29afec3493aead4ed0682e84751e7fcd1c542d",
+      "bytes": 87401
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-parent-denied-390x844.png",
+      "sha256": "57c15f05e1b17be4f6bad6f13380727d6b9020692a42a8d0f9f2df455ef1cfd0",
+      "bytes": 28635
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-parent-denied-768x1024.png",
+      "sha256": "e0ed3ce1b9c37c677327afef9b0231658cfa98fb2bb11c30aab5196aa55eda0d",
+      "bytes": 77754
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-revoke-lost-response-1440x1024.png",
+      "sha256": "4eaa95f7d7605a028d82493cf9b0802b31cff9dc6bdef9a04a0842902a8eb0b6",
+      "bytes": 211354
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-revoke-lost-response-390x844.png",
+      "sha256": "86b5eda03443651c9e30eec95f90ee81dabf7b9c22d31faacac2778ccabb1a3c",
+      "bytes": 146280
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-revoke-lost-response-768x1024.png",
+      "sha256": "4c470198ca019c54863612fc263a5a98262462508683839170bbf733b4cfe5e6",
+      "bytes": 205683
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-revoke-reviewed-1440x1024.png",
+      "sha256": "4ff58a1edf07b70992da061fdab24677cb44468e9ca8bc544df92bbe571a3f8a",
+      "bytes": 203363
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-revoke-reviewed-390x844.png",
+      "sha256": "6b2a090108b791f3a764c322a55176df7a9e41c9cbca406017c278a2ade3d396",
+      "bytes": 90500
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-revoke-reviewed-768x1024.png",
+      "sha256": "8918fb5d03057f355c14146e5cfd67452b3b15defcd006e480237d0b1f4990cf",
+      "bytes": 196500
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-revoked-1440x1024.png",
+      "sha256": "72e446b3d5323f53cc9324ae9f8dfff7d5fc89fe7bee85d7ef5fcfdf6c5ed576",
+      "bytes": 184898
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-revoked-390x844.png",
+      "sha256": "e9f19fc1eaf921d9e23ed99d879d6ac8ad3cbcadf64cc84f03b23bd50a53ec8b",
+      "bytes": 122626
+    },
+    {
+      "path": "assistance-ui/screenshots/assistance-revoked-768x1024.png",
+      "sha256": "0ce737d2518555c3a755b23bbeb1660d2810a9893e83ea134eb56812149b7fd5",
+      "bytes": 175203
+    },
+    {
+      "path": "assistance-ui/verification.md",
+      "sha256": "db38e968f839a767a1aa14ff04726471c841eac14d6662e0f98068c0d160a743",
+      "bytes": 1018
+    },
+    {
+      "path": "assistance-ui-final/browser-results.json",
+      "sha256": "263ee884f526d62786fc7405c4d95764b7ed9c3dd981242394b923af1bd01a20",
+      "bytes": 38613
+    },
+    {
+      "path": "assistance-ui-final/manual-ui-review.md",
+      "sha256": "afa4e2e35c62dae8f6bc4ff8596f2b2cc59fd3e51e8d3ec72cc42f309d5cd22b",
+      "bytes": 1625
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-grant-lost-response-1440x1024.png",
+      "sha256": "aa3c6dd72d18782658f668bf133fa24062e282353612441ab05bb465db0b660c",
+      "bytes": 221720
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-grant-lost-response-390x844.png",
+      "sha256": "69feb3f3e59c2d057022f6e4610b47c934dfc78fdc8c52d76965213a065865e3",
+      "bytes": 155826
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-grant-lost-response-768x1024.png",
+      "sha256": "cf80c29f80fcffc5722f302391a3b219c3cc2cdd37f39c72234c9ef52ae25590",
+      "bytes": 215264
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-grant-reviewed-1440x1024.png",
+      "sha256": "75091b9400df533d2af3c77a826c4e7548ea1c6fd12c4a4cc83063a6d283fdc7",
+      "bytes": 203049
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-grant-reviewed-390x844.png",
+      "sha256": "4234ca7e53a83ab94552dbbf0ef15cc5b90f1cb67cfd9dc393f47d85848e23f2",
+      "bytes": 138580
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-grant-reviewed-768x1024.png",
+      "sha256": "a293bec22cde3e6d12d412b43cf48abb1d46ac22344d245bbb333d0ff10186fe",
+      "bytes": 191951
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-granted-1440x1024.png",
+      "sha256": "98218b2e8fa8cb7d8fad765565e20aeb495e371c3a5743e65cdff7c0f7fe41c9",
+      "bytes": 211886
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-granted-390x844.png",
+      "sha256": "12b8cc54001ea6926a7d1599b53ffe6a3d6bdc1d70b03fcdd058fab163fe2339",
+      "bytes": 145907
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-granted-768x1024.png",
+      "sha256": "fcdea8150e92ade3247e39ad4b4e65096d562898ec2d3cd4e9e03f7591037c3e",
+      "bytes": 204131
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-helper-intake-1440x1024.png",
+      "sha256": "847a6fe0a363be617ee7beaa145b6f2aa3af9d267bd60f44394ea6468d9a6256",
+      "bytes": 155257
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-helper-intake-390x844.png",
+      "sha256": "01470a6b8f2661a63a057d2d4ddc062192112681d56df22e57527d681630d0f5",
+      "bytes": 95046
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-helper-intake-768x1024.png",
+      "sha256": "a0be0131cced65754b89dab1e3177fc9456d3a02f9640505dda75cef8bfcecc1",
+      "bytes": 147455
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-native-session-login-1440x1024.png",
+      "sha256": "451d4f1f094e68a425ffa96441992fb789560187f4f085123a5ba096aa9bf0cf",
+      "bytes": 61482
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-native-session-login-390x844.png",
+      "sha256": "c906daaf81ea1f66558a3664d45f9b74ba4b7a37f25e21b306302520cebf9217",
+      "bytes": 42717
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-native-session-login-768x1024.png",
+      "sha256": "ad44abbbe8e200da7f2341ec3c3738ab02f101aeed58537d198377c17f8a98b1",
+      "bytes": 48752
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-parent-denied-1440x1024.png",
+      "sha256": "22bd4a2a1338ecda550e30413a29afec3493aead4ed0682e84751e7fcd1c542d",
+      "bytes": 87401
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-parent-denied-390x844.png",
+      "sha256": "57c15f05e1b17be4f6bad6f13380727d6b9020692a42a8d0f9f2df455ef1cfd0",
+      "bytes": 28635
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-parent-denied-768x1024.png",
+      "sha256": "e0ed3ce1b9c37c677327afef9b0231658cfa98fb2bb11c30aab5196aa55eda0d",
+      "bytes": 77754
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-revoke-lost-response-1440x1024.png",
+      "sha256": "dda6a7c6709d02892cf2c487dc2846407f7727c0d50b89c4b8e0b1b12508eb49",
+      "bytes": 238561
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-revoke-lost-response-390x844.png",
+      "sha256": "5287a3467c70562c755cafe518d4a35b51c2afff54189ecdcc1efb123ae269e2",
+      "bytes": 170379
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-revoke-lost-response-768x1024.png",
+      "sha256": "cb47314d2182ee00579200e163bbd0d92124bd7e38dd685bc66b86904c089118",
+      "bytes": 232123
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-revoke-reviewed-1440x1024.png",
+      "sha256": "c9b9d906278ba6d3a0f10a865b012d98e1b108ef7ce49ffa588bdd6b55bcecfb",
+      "bytes": 234388
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-revoke-reviewed-390x844.png",
+      "sha256": "dbd9c2485fff1507b9eaedd089fc299bf688cf84bf36840074cf4495589572a3",
+      "bytes": 166376
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-revoke-reviewed-768x1024.png",
+      "sha256": "51b83c6a8a4320410eaf9076304a5e010bfa8c5cc8286db92539b8efd04ba7b2",
+      "bytes": 226465
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-revoked-1440x1024.png",
+      "sha256": "76614f26c6fcca1016c93ebc5ff81f5359fb118aecd97ceaeb6656ef1928c845",
+      "bytes": 211688
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-revoked-390x844.png",
+      "sha256": "d04887f98b1270f39973bd5f7e32458ed6016617c1f435fee7d676edb141b97e",
+      "bytes": 146097
+    },
+    {
+      "path": "assistance-ui-final/screenshots/assistance-revoked-768x1024.png",
+      "sha256": "728056b8c8b80aeca9ecac548a267551b6c19f0f09a62688a4f25b2ff7d1b4f2",
+      "bytes": 205059
+    },
+    {
+      "path": "assistance-ui-final/verification.md",
+      "sha256": "5746b5eacf50a73cf1efedce6ef0d4538e2c6380a1ea634a0014de6e2322509f",
+      "bytes": 1479
+    },
+    {
+      "path": "browser-results.json",
+      "sha256": "d09e012af62d975f5ac36113ccb752581fdd3896a1f021cb2b0b28e2f783f731",
+      "bytes": 2608
+    },
+    {
+      "path": "build-results.json",
+      "sha256": "ec00ce6a58d0188b6bc7f902bb8a72541fec390bd0ab6a3d09782c26b7bac636",
+      "bytes": 2063
+    },
+    {
+      "path": "concurrency-results.json",
+      "sha256": "b87c31b6733afb5290369e281ae222559727ca42137eab6e55a5aca4f852b47b",
+      "bytes": 9273
+    },
+    {
+      "path": "dossier-regression/browser-results.json",
+      "sha256": "3e54d5cc3a5d70e79a39a2b7460c6bf01ff2ceebb00e9a0fb64b177fc074f959",
+      "bytes": 2485
+    },
+    {
+      "path": "dossier-regression/screenshots/app-cancel-invitation-confirmation-1440x1024.png",
+      "sha256": "1a8b81f1d23eddf939cf5592423279e9e45515614c72645d7a68e541bd645ef1",
+      "bytes": 136499
+    },
+    {
+      "path": "dossier-regression/screenshots/app-cancel-invitation-confirmation-390x844.png",
+      "sha256": "fcd179b1bc6fbb40b1501ec6c08da25f0581794ee1e5ce9ab96e2ac2a93eb8b7",
+      "bytes": 77313
+    },
+    {
+      "path": "dossier-regression/screenshots/app-cancel-invitation-confirmation-768x1024.png",
+      "sha256": "125ef11e0e9e112ac8ef8d04f7defda449d857b98fe7eaf548a9b1edd5c19bc0",
+      "bytes": 130790
+    },
+    {
+      "path": "dossier-regression/screenshots/app-cancelled-invitation-context-1440x1024.png",
+      "sha256": "b8d0db71cdfa4d8812d0a72b1522b913311a0b0db1ac61993f754fc624be8dcd",
+      "bytes": 69883
+    },
+    {
+      "path": "dossier-regression/screenshots/app-cancelled-invitation-context-390x844.png",
+      "sha256": "af3c05a6623f5d1295f484fc228c716f792b577801fb015c5a221ca3bc4b93a8",
+      "bytes": 48492
+    },
+    {
+      "path": "dossier-regression/screenshots/app-cancelled-invitation-context-768x1024.png",
+      "sha256": "479677d9ff9433b2103060e5e801babca4a0eb12c8f82221b228b44a4438f46c",
+      "bytes": 56030
+    },
+    {
+      "path": "dossier-regression/screenshots/app-dossier-afspraken-1440x1024.png",
+      "sha256": "451715ce9d05a1c416bea21223878548519699c836ea2e2d40eab87c8c25f169",
+      "bytes": 132123
+    },
+    {
+      "path": "dossier-regression/screenshots/app-dossier-afspraken-390x844.png",
+      "sha256": "715f21f89ade78013773075ec6530adb132c12a778874e26e1d242ffc6795453",
+      "bytes": 85069
+    },
+    {
+      "path": "dossier-regression/screenshots/app-dossier-afspraken-768x1024.png",
+      "sha256": "1d8882af40255be4a205b4bbc286089f4f4f5078c62c48f8bebadba5327cc04c",
+      "bytes": 95359
+    },
+    {
+      "path": "dossier-regression/screenshots/app-dossier-historie-1440x1024.png",
+      "sha256": "d55e629a80070e933ff202e7161716d8a1b140c3ef12aecf8578064305438e6f",
+      "bytes": 122941
+    },
+    {
+      "path": "dossier-regression/screenshots/app-dossier-historie-390x844.png",
+      "sha256": "b4c951ce0590005a8c5b1aa5e741e344dd2adfb7ab53f61bde9431b7fa751bc0",
+      "bytes": 67338
+    },
+    {
+      "path": "dossier-regression/screenshots/app-dossier-historie-768x1024.png",
+      "sha256": "7d95f85d759571fec288800720bb5e315d2a857159b508f42e58c4a061506444",
+      "bytes": 94998
+    },
+    {
+      "path": "dossier-regression/screenshots/app-dossier-overzicht-1440x1024.png",
+      "sha256": "dac5d5cb115bcd256cc9f7cc7f6496a3b32e6f13dcf021486bfb42a637810d1a",
+      "bytes": 128146
+    },
+    {
+      "path": "dossier-regression/screenshots/app-dossier-overzicht-390x844.png",
+      "sha256": "14715c8525de87e69c9a20735697e80c765c1044ea0532d392d846c4c731317a",
+      "bytes": 68550
+    },
+    {
+      "path": "dossier-regression/screenshots/app-dossier-overzicht-768x1024.png",
+      "sha256": "7efe907c5fadad3c7f9e32090995c0f277dbd495d280f3b6e56fc4a8bfe5ebaa",
+      "bytes": 80409
+    },
+    {
+      "path": "dossier-regression/screenshots/app-dossier-personen-1440x1024.png",
+      "sha256": "0ef92210bc50c2f5f2e35b5716eb411cc7544e5bb9249a08994baf269e5e6129",
+      "bytes": 134483
+    },
+    {
+      "path": "dossier-regression/screenshots/app-dossier-personen-390x844.png",
+      "sha256": "8b381571db1867c85813d02ce082fa6571e9c115f3bf37137d62061c61982b86",
+      "bytes": 74678
+    },
+    {
+      "path": "dossier-regression/screenshots/app-dossier-personen-768x1024.png",
+      "sha256": "7b82b516013f12df9f75f2abcfa6df1260be41379ab9b881b017d32b5fe937a6",
+      "bytes": 106682
+    },
+    {
+      "path": "dossier-regression/screenshots/app-invited-executor-people-1440x1024.png",
+      "sha256": "bc2971f2e2fb206102d08695cccf23440c91f7066acd38a1150e14c278542d14",
+      "bytes": 136264
+    },
+    {
+      "path": "dossier-regression/screenshots/app-invited-executor-people-390x844.png",
+      "sha256": "c1707efb2d8b5301d825e53caef4acf8225bc8b8edccfa06f5aa1f02f98639cb",
+      "bytes": 74066
+    },
+    {
+      "path": "dossier-regression/screenshots/app-invited-executor-people-768x1024.png",
+      "sha256": "096b8ab11a58f10edd50a272e063e1849fecdc73c9546cf693f7e8303deafb53",
+      "bytes": 110045
+    },
+    {
+      "path": "dossier-regression/screenshots/app-matching-invitation-consent-1440x1024.png",
+      "sha256": "ab59be9b7d5f2ff400bd7f0a01202248384744ed2b20142257920262f3549ce1",
+      "bytes": 78520
+    },
+    {
+      "path": "dossier-regression/screenshots/app-matching-invitation-consent-390x844.png",
+      "sha256": "7ad9a3f7284d73a45e0241857b959eb3ef9ddb13d990a2e6ca2f30b1b6595098",
+      "bytes": 55718
+    },
+    {
+      "path": "dossier-regression/screenshots/app-matching-invitation-consent-768x1024.png",
+      "sha256": "ab41e4e61e7a9617fc1f9e20130ad9d6c5a34fc4e154b19ccf135ab844fcf646",
+      "bytes": 63435
+    },
+    {
+      "path": "draft-validation.json",
+      "sha256": "afe97a546a46d20de0aca137aac2ecb1cb8689d745395f3b24c6e0a5ec80ad16",
+      "bytes": 4061
+    },
+    {
+      "path": "intake-regression/browser-results.json",
+      "sha256": "a3c68062b7e092c182656ff86f0ad1ebd6cc90f30db2a4bef24bfa6b567cdd17",
+      "bytes": 1335
+    },
+    {
+      "path": "intake-regression/screenshots/app-intake-step0-1440x1024.png",
+      "sha256": "df16ef62d50b4099f0c5a0c72c328df5da7333b16e8773e78de053de34a7b913",
+      "bytes": 125487
+    },
+    {
+      "path": "intake-regression/screenshots/app-intake-step0-390x844.png",
+      "sha256": "493175ce38e0b55af916721ced07bc4ee7cc8f3a7de9a2e952f9ebf7cbb7108c",
+      "bytes": 68203
+    },
+    {
+      "path": "intake-regression/screenshots/app-intake-step0-768x1024.png",
+      "sha256": "f92e473fa769f1ba5b54329fc35149a7b37c4166fa20f799a89fb20b4f5f2e03",
+      "bytes": 117450
+    },
+    {
+      "path": "intake-regression/screenshots/app-intake-step1-1440x1024.png",
+      "sha256": "23b5d70f150730db29614fee9b02ad0126b5c7bc963d380bd329556c5d392e01",
+      "bytes": 125393
+    },
+    {
+      "path": "intake-regression/screenshots/app-intake-step1-390x844.png",
+      "sha256": "2a0e6b9115672ddff08cbd4b2020d21a094cb5807bb91204667bd36d7a634146",
+      "bytes": 68585
+    },
+    {
+      "path": "intake-regression/screenshots/app-intake-step1-768x1024.png",
+      "sha256": "a0d3ec6b48d591f1ee70e85e110f63f6c3708616879c08810638537e377538b2",
+      "bytes": 114200
+    },
+    {
+      "path": "intake-regression/screenshots/app-intake-step2-1440x1024.png",
+      "sha256": "8e747328d0e1d5698df14e83a73ef651442cb50e7b3d74739cfefc5e14dcab5c",
+      "bytes": 169490
+    },
+    {
+      "path": "intake-regression/screenshots/app-intake-step2-390x844.png",
+      "sha256": "662b6a3ff58fe8cfdb9feafff504f22e3aeee0f368d9719c86bd306513742c7f",
+      "bytes": 109820
+    },
+    {
+      "path": "intake-regression/screenshots/app-intake-step2-768x1024.png",
+      "sha256": "d7b833cf667e34d2eeb910df6ac4d3543ef35af7a02dbdf8b8fd1e79ff8fb450",
+      "bytes": 162296
+    },
+    {
+      "path": "intake-regression/screenshots/app-intake-step3-1440x1024.png",
+      "sha256": "9a034e53f012843649b82267f01b1aee7c8a6f4af896ca6c70d13e910654b37e",
+      "bytes": 147837
+    },
+    {
+      "path": "intake-regression/screenshots/app-intake-step3-390x844.png",
+      "sha256": "caecfb456640e8d2bd17bd0786b961502964b34d7b3330d2c304b48c741cd534",
+      "bytes": 89157
+    },
+    {
+      "path": "intake-regression/screenshots/app-intake-step3-768x1024.png",
+      "sha256": "a0f96e594724b223700149b5f124e0d6c3869904d61d7c7619f35f2ce18e906a",
+      "bytes": 140425
+    },
+    {
+      "path": "native-regression/browser-results.json",
+      "sha256": "c03474035158273cebe16dd34e357966a82005b963836baa5cddd93ce99712f7",
+      "bytes": 1818
+    },
+    {
+      "path": "native-regression/screenshots/app-native-session-login-1440x1024.png",
+      "sha256": "451d4f1f094e68a425ffa96441992fb789560187f4f085123a5ba096aa9bf0cf",
+      "bytes": 61482
+    },
+    {
+      "path": "native-regression/screenshots/app-native-session-login-390x844.png",
+      "sha256": "c906daaf81ea1f66558a3664d45f9b74ba4b7a37f25e21b306302520cebf9217",
+      "bytes": 42717
+    },
+    {
+      "path": "native-regression/screenshots/app-native-session-login-768x1024.png",
+      "sha256": "ad44abbbe8e200da7f2341ec3c3738ab02f101aeed58537d198377c17f8a98b1",
+      "bytes": 48752
+    },
+    {
+      "path": "restore-results.json",
+      "sha256": "62bf430b420b82ef59b50d19537be0db9264717d0276262c411dcc47dbc5870c",
+      "bytes": 16425
+    },
+    {
+      "path": "restore-ui-results.json",
+      "sha256": "1cfcfd5cc6eaf0a3d23cfacd3b637d81d6d0a85153735f9b25b39af66f63be3f",
+      "bytes": 17000
+    },
+    {
+      "path": "screenshots/app-annual-assisted-review-1440x1024.png",
+      "sha256": "87f8f733c48f751531f63b028a4178b52116207b30bb00e3ba1973d3795bc64e",
+      "bytes": 145882
+    },
+    {
+      "path": "screenshots/app-annual-assisted-review-390x844.png",
+      "sha256": "6b59c3835907f345ffce9f863621e28f5159b43d6baaefd00ac498890f612ded",
+      "bytes": 88882
+    },
+    {
+      "path": "screenshots/app-annual-assisted-review-768x1024.png",
+      "sha256": "027bdb59702ac80b2c2a3f31e5f7004d272044baa2de596757527fe29e0823ae",
+      "bytes": 135860
+    },
+    {
+      "path": "screenshots/app-annual-confirmed-1440x1024.png",
+      "sha256": "5ce16f284609647bb2b958e38f527db3365185a6f7cc01ba9da82da7bf39d69d",
+      "bytes": 131048
+    },
+    {
+      "path": "screenshots/app-annual-confirmed-390x844.png",
+      "sha256": "b49f7aab2747452da9b86f4563337a9bd6e027a0a19fe400096b5391aaf89b0e",
+      "bytes": 73114
+    },
+    {
+      "path": "screenshots/app-annual-confirmed-768x1024.png",
+      "sha256": "f9f3e69f3cb8ed9c54d6e71e9c981bfc7660c64a6d676d300b579e5cd5839c24",
+      "bytes": 124308
+    },
+    {
+      "path": "screenshots/app-annual-lost-response-1440x1024.png",
+      "sha256": "1797ab933ba55ecaf7b12e17dbb97d49449c2fab59bd50761a6fccb64fb2e30a",
+      "bytes": 144048
+    },
+    {
+      "path": "screenshots/app-annual-lost-response-390x844.png",
+      "sha256": "950e51a87b08fd58a87f25c3fb550a190b6c78c90acce7f95a0466e09e39fdfc",
+      "bytes": 87070
+    },
+    {
+      "path": "screenshots/app-annual-lost-response-768x1024.png",
+      "sha256": "70c36001d9ccaed4aa36d2f62665ca16b1697f053129496165fefcd48c20f990",
+      "bytes": 137913
+    },
+    {
+      "path": "screenshots/app-annual-review-1440x1024.png",
+      "sha256": "daf58529a6710fdc9749b5807169185b0cde97ba5d3deb68e57ee3bb308f2e04",
+      "bytes": 135000
+    },
+    {
+      "path": "screenshots/app-annual-review-390x844.png",
+      "sha256": "889e07b95f4a1f20ce52c1146b4099cebea4999a0bf5d05ebf05085ea00a6b4c",
+      "bytes": 78048
+    },
+    {
+      "path": "screenshots/app-annual-review-768x1024.png",
+      "sha256": "106598bbd4cbe11cdd14c0514de1e52a8aa1a36b2c5bb88f7f00bfa21a13b185",
+      "bytes": 127949
+    },
+    {
+      "path": "session-regression/browser-results.json",
+      "sha256": "64fbc88bea7707a4e3b60a2a86352dfaa653a814317022d045f77e0acadbeb33",
+      "bytes": 1112
+    },
+    {
+      "path": "session-regression/screenshots/app-intake-lost-response-1440x1024.png",
+      "sha256": "08d30ed939e606f1f7e2d30db6b9b6a15f8893b2250e191495063574a2c62db2",
+      "bytes": 143491
+    },
+    {
+      "path": "session-regression/screenshots/app-intake-lost-response-390x844.png",
+      "sha256": "462d02c15dd23ae52c62aa3381b36621cff90a8170d4e9f445baa2d004e40efe",
+      "bytes": 86737
+    },
+    {
+      "path": "session-regression/screenshots/app-intake-lost-response-768x1024.png",
+      "sha256": "4352cef53540b958f921bc527d96a4dd7cfe08a13a6187b97152b3684a83a4e0",
+      "bytes": 137065
+    },
+    {
+      "path": "session-regression/screenshots/app-intake-session-login-1440x1024.png",
+      "sha256": "451d4f1f094e68a425ffa96441992fb789560187f4f085123a5ba096aa9bf0cf",
+      "bytes": 61482
+    },
+    {
+      "path": "session-regression/screenshots/app-intake-session-login-390x844.png",
+      "sha256": "c906daaf81ea1f66558a3664d45f9b74ba4b7a37f25e21b306302520cebf9217",
+      "bytes": 42717
+    },
+    {
+      "path": "session-regression/screenshots/app-intake-session-login-768x1024.png",
+      "sha256": "ad44abbbe8e200da7f2341ec3c3738ab02f101aeed58537d198377c17f8a98b1",
+      "bytes": 48752
+    },
+    {
+      "path": "upgrade-results.json",
+      "sha256": "ace194699957503483d686e0c2736bf8dcf7133e69f511ffc74bce351d6898ad",
+      "bytes": 15766
+    },
+    {
+      "path": "w01-regression/browser-results.json",
+      "sha256": "b3ea3f600c1034d9936bbae8c83398823a11306d71bee82de9364fa80cc3110d",
+      "bytes": 687
+    },
+    {
+      "path": "w01-regression/screenshots/app-intake-unseen-1440x1024.png",
+      "sha256": "0888bcee9072e8b11d38c31ff3df4e9a410f928917232d36edf2037310a566f9",
+      "bytes": 142043
+    },
+    {
+      "path": "w01-regression/screenshots/app-intake-unseen-390x844.png",
+      "sha256": "b2865abe3f766590274b4891a8b7dbf03a3eae22b6cdd7b58c3bb53d046e9c6c",
+      "bytes": 83955
+    },
+    {
+      "path": "w01-regression/screenshots/app-intake-unseen-768x1024.png",
+      "sha256": "cbc148c75e30653fc125734c7e4ed84db938b7e3fb0bb16d8d509822b9e953aa",
+      "bytes": 137403
+    },
+    {
+      "path": "w01-regression/screenshots/app-overzicht-1440x1024.png",
+      "sha256": "5ced4f98d1984c5f6cdc9bd07528f3eb0713b3cab8d454019d810ca10834733f",
+      "bytes": 346037
+    },
+    {
+      "path": "w01-regression/screenshots/app-overzicht-320x844.png",
+      "sha256": "a6aac1ac8af29db95c97f17c69d35c4787781a95a198ffe1b3f55d5ac1ecaf25",
+      "bytes": 234995
+    },
+    {
+      "path": "w01-regression/screenshots/app-overzicht-390x844.png",
+      "sha256": "d14265aa5a5ce54b31c5bd49c142d2927f6f2bffd85607433bd55edd83eba79f",
+      "bytes": 247308
+    },
+    {
+      "path": "w01-regression/screenshots/app-overzicht-768x1024.png",
+      "sha256": "e4db0f824f887bc133a7606e41adfc638dca80135d9fd95d436c828036239c90",
+      "bytes": 298198
+    },
+    {
+      "path": "w01-regression/screenshots/app-overzicht-unseen-1440x1024.png",
+      "sha256": "7dff6f4ae1c5ee8ef64bdbc0ec3479c0f184f244dd1f87da5be876f820f002c5",
+      "bytes": 362110
+    },
+    {
+      "path": "w01-regression/screenshots/app-overzicht-unseen-390x844.png",
+      "sha256": "3aa851078c715333b953dacba0fcd7de3528535bc80f07e0f34f5fe386c2ca0c",
+      "bytes": 251784
+    },
+    {
+      "path": "w01-regression/screenshots/app-overzicht-unseen-768x1024.png",
+      "sha256": "43920a4077da7ba364cc5ad6719fd3d962f8ccfb6c584ed7e989d892716e8c89",
+      "bytes": 304139
+    },
+    {
+      "path": "w01-regression/screenshots/app-taken-unseen-1440x1024.png",
+      "sha256": "428c932373d02b000418eaa0140686c8cfec020d1f7acba841e48beecc2d987f",
+      "bytes": 124394
+    },
+    {
+      "path": "w01-regression/screenshots/app-taken-unseen-390x844.png",
+      "sha256": "9eade51455e56e26175ec275f926fee726e00958d363e9a06f45e5462625f36f",
+      "bytes": 94153
+    },
+    {
+      "path": "w01-regression/screenshots/app-taken-unseen-768x1024.png",
+      "sha256": "83800f5d9aaea27bdb9ac3ca78d4c028798c7d6f10d53cb1f5345d263164af65",
+      "bytes": 147774
+    }
+  ],
+  "artifact_inventory_scope": "Preexisting safe result JSON, review Markdown and screenshots; this manifest and the mutable owned progress/verification documents are excluded.",
+  "credential_scan": {
+    "files": 21,
+    "credential_pattern_findings": 0
+  },
+  "remaining_before_release": [
+    "Exact-commit CI, trusted staging promotion, deployment and HTTP readback",
+    "Connected staging database/native Auth/privacy/provider/worker acceptance remains separate",
+    "Complete V1 scope and all 102 acceptance criteria remain open"
+  ],
+  "local_final_validation_complete": true,
+  "staging_verified": false,
+  "release_ready": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

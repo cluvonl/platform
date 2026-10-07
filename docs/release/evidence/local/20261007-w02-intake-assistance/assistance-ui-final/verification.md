@@ -1,0 +1,7 @@
+# Intakehulp — uitgevoerd lokaal UI-bewijs
+
+28 controles geslaagd met echte lokale OTP-sessies, Native Auth-autorisatie en serveracties op standalonebuild `17e-qJQv9kTRgLesp3UKZ`. De twee verloren succesvolle responses zijn werkelijk na serververwerking afgebroken; exact herhalen leverde telkens één besluit, audit en opdracht op.
+
+De bestaande synthetische fixturehistorie is behouden. Eén huishoudgebonden commissiegrant is tijdelijk toegevoegd en weer ingetrokken; de werkelijk verleende hulp is via de app ingetrokken. Alle ledger-, verplichtings- en boekingsrijen en de antwoordhistorie van ouder A bleven gelijk. Ouder B heeft binnen deze proef één aantoonbaar door ouder A geschreven revisie erbij, met aparte actor, vertegenwoordigde persoon en hulprede. Tokens, OTP's, cookies, sessie-ID's, Auth-identifiers en private request bodies zijn niet geëxporteerd.
+
+27 echte schermafbeeldingen op 390, 768 en 1440 pixels; geen horizontale overflow of hydration mismatch. De gerenderde controls zijn in zes beheertoestanden op alle drie breedtes gemeten: gelabelde velden boven hun control, selectvelden met volledige veldbreedte en 40 pixels hoogte, borders en padding op select/textarea, bestaande Checkbox en een terug-link als Button van minstens 36 pixels hoog. Deze stijlmetingen onderbouwen de bestaande UI-controle en tellen niet als extra semantische scenario's. Dit is lokaal bewijs, geen stagingreadback, volledige V1-acceptatie of bewijs van mailbezorging.

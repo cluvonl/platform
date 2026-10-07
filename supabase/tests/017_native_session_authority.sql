@@ -220,7 +220,7 @@ begin
 end;
 $probe$;
 
-select is((select count(*) from pg_policy p join pg_class c on c.oid=p.polrelid join pg_namespace n on n.oid=c.relnamespace where n.nspname='app' and p.polname='native_session_required' and not p.polpermissive),143::bigint,'every app table has the restrictive live-session guard');
+select is((select count(*) from pg_policy p join pg_class c on c.oid=p.polrelid join pg_namespace n on n.oid=c.relnamespace where n.nspname='app' and p.polname='native_session_required' and not p.polpermissive),(select count(*) from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname='app' and c.relkind='r'),'every app table has the restrictive live-session guard');
 select ok(not has_column_privilege('cluvo_command_owner','auth.sessions','refresh_token_hmac_key','SELECT'),'command owner cannot read session secrets');
 select ok(has_column_privilege('cluvo_command_owner','auth.sessions','not_after','SELECT'),'command owner gets only needed lifetime column');
 select ok(not has_table_privilege('authenticated','auth.sessions','SELECT'),'browser cannot read native sessions directly');
@@ -240,7 +240,7 @@ select lives_ok($$select * from api.mark_help_seen('page.overzicht')$$,'account 
 reset role;
 delete from auth.sessions where id='11111111-1111-4111-8111-111111111111';
 set local role authenticated;
-select is((select count(*) from pg_temp.blocked_native_commands() where observed_code='42501'),104::bigint,'all 51 API and 53 private callable commands reject a removed session before argument processing');
+select is((select count(*) from pg_temp.blocked_native_commands() where observed_code='42501'),(select count(*) from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname in ('api','internal') and p.provolatile='v' and p.prorettype<>'trigger'::regtype and has_function_privilege('authenticated',p.oid,'EXECUTE')),'every currently callable API/private command rejects a removed session before argument processing');
 select ok(not internal.actor_has_active_session(),'removed session is immediately inactive with the same subject claims');
 select is((select count(*) from api.my_intake),0::bigint,'removed native session cannot read intake');
 select is((select count(*) from api.my_workspaces),0::bigint,'removed native session cannot enter workspace');

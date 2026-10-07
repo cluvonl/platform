@@ -1,6 +1,6 @@
 # Cluvo V1 — lokaal bewijsregister
 
-Actuele aanvulling van 6 oktober 2026: [W00/W01 lokaal deelbewijs](evidence/local/20261006-w01/verification.md) en [volledige 219-functiematrix](function-coverage/function-matrix.json). Het onderstaande register bewaart de historische capture van 2 oktober. De volledige V1-acceptatie blijft OPEN.
+Actuele aanvulling van 7 oktober 2026: [intakehulpbeheer en lokaal herstelbewijs](evidence/local/20261007-w02-intake-assistance/verification.md), [feitelijke stagingreadback van `3168a4d`](evidence/staging/20261007-3168a4d/readback.json), [hosted credential- en certificaatcontrole](evidence/staging/20261007-credentials-b08415f/verification.md) en [volledige 219-functiematrix](function-coverage/function-matrix.json). Lokaal zijn zestien migraties, 144 applicatietabellen, 856 database-asserties, achttien concurrencyproeven, 105 eerdere browserregressies en 28 intakehulpcontroles op de definitief gestileerde build bewezen. De private herstelproef na de browsermutaties bewaart alle 144 tabelinhouden, Native guards en onveranderlijke hulpbesluiten. De stagingreadback bewijst uitsluitend prototype-modus; aangesloten RLS/privacy, backup/restore en daadwerkelijke OTP/mailaflevering blijven open. Het onderstaande register bewaart de historische capture van 2 oktober. De volledige V1-acceptatie blijft OPEN.
 
 Bewijscapture: 2 oktober 2026, 21:33 CEST (`Europe/Amsterdam`)
 

@@ -1,0 +1,33 @@
+{
+  "recorded_at": "2026-10-07T06:23:26.987423+00:00",
+  "status": "LOCAL_PARTIAL_VALIDATION_COMPLETE",
+  "environment": "local",
+  "working_tree_base_commit": "3168a4dcc38a784ee21c6b3a17a9c1dbefcec41d",
+  "draft_manifest": "draft-validation.json",
+  "current_manifest": "final-validation.json",
+  "database_migrations": 16,
+  "empty_database_assertions": 856,
+  "empty_database_test_files": 18,
+  "total_browser_regression_checks": 105,
+  "additional_assistance_browser_checks": 28,
+  "total_browser_checks": 133,
+  "proven_browser_build_id": "yV9pfW6gnUW3qIaEFbYU9",
+  "post_style_browser_checks_pending": false,
+  "final_corrected_build_id": "17e-qJQv9kTRgLesp3UKZ",
+  "concurrency_scenarios": 18,
+  "populated_upgrade_passed": true,
+  "private_backup_restore_evidence": "restore-ui-results.json",
+  "private_backup_exported": false,
+  "private_backup_permissions": "0600",
+  "restored_application_tables": 144,
+  "app_screenshots": 124,
+  "remaining_before_release": [
+    "Exact-commit CI, trusted staging promotion, deployment and HTTP readback",
+    "Connected staging database/native Auth/privacy/provider/worker acceptance remains separate",
+    "Complete V1 scope and all 102 acceptance criteria remain open"
+  ],
+  "staging_verified": false,
+  "release_ready": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

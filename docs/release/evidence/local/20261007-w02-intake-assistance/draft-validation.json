@@ -1,0 +1,112 @@
+{
+  "observed_at": "2026-10-06T23:53:00.692012+00:00",
+  "status": "DRAFT_VALIDATION",
+  "environment": "local",
+  "source_parent_commit": "612e7fab6576e346987446b7aa145f97bdfdddae",
+  "build_id": "yV9pfW6gnUW3qIaEFbYU9",
+  "database_migrations": 16,
+  "empty_database_tests": {
+    "files": 18,
+    "assertions": 856,
+    "passed": true
+  },
+  "browser_regressions": {
+    "dossier": {
+      "checks": 29,
+      "evidence": "docs/release/evidence/local/20261007-w02-intake-assistance/dossier-regression/browser-results.json"
+    },
+    "w01": {
+      "checks": 14,
+      "evidence": "docs/release/evidence/local/20261007-w02-intake-assistance/w01-regression/browser-results.json"
+    },
+    "intake": {
+      "checks": 22,
+      "evidence": "docs/release/evidence/local/20261007-w02-intake-assistance/intake-regression/browser-results.json"
+    },
+    "annual": {
+      "checks": 18,
+      "evidence": "docs/release/evidence/local/20261007-w02-intake-assistance/browser-results.json"
+    },
+    "session": {
+      "checks": 7,
+      "evidence": "docs/release/evidence/local/20261007-w02-intake-assistance/session-regression/browser-results.json"
+    }
+  },
+  "browser_checks": 90,
+  "concurrency_scenarios": 18,
+  "populated_upgrade_from": 15,
+  "populated_upgrade_to": 16,
+  "source_hashes": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "751be7367d43ffe2e21c1e460f7a635130f6cd8f8faa63f2a0a2aed73e645640"
+    },
+    {
+      "path": ".github/workflows/staging.yml",
+      "sha256": "a25f81f675d92c0cdd1613158cf4fc142881197d74d6dc9a9c7c641fe08365c5"
+    },
+    {
+      "path": "app/c/[club]/huishouden/intakehulp/actions.ts",
+      "sha256": "0c798a015403fd18e2a23938e66e88f9f9f93cf6f840ccadab0ee4c85b7194e0"
+    },
+    {
+      "path": "app/c/[club]/huishouden/intakehulp/page.tsx",
+      "sha256": "86a44836e873019be08f7fe3fa8b8f2cefc324790e0ddf26e7c1b6aa85c476b7"
+    },
+    {
+      "path": "app/c/[club]/huishouden/page.tsx",
+      "sha256": "001ce5e386604d0a465bf3f7b23810299f3c07df0306c481bb8138b59a1e923b"
+    },
+    {
+      "path": "components/app/household-dossier.tsx",
+      "sha256": "9a4085ae8d560a76b5259ea18f774b38b6268f424fa108dad0fc964ec5e163b7"
+    },
+    {
+      "path": "components/app/intake-assistance-forms.tsx",
+      "sha256": "5b760fbde35538d8ac0c35f92d922f1bcdc36f5120d7c79b5570b33dea88f11c"
+    },
+    {
+      "path": "docs/release/staging-credentials.md",
+      "sha256": "5530587e733b0aa4865ba4c2a46b551183720050ce0ea932df838daf76e13e3e"
+    },
+    {
+      "path": "lib/data/intake-assistance.ts",
+      "sha256": "0372321f9f9777f12762b33413a787d2f088df67fa01c18713cd805ab069b5a5"
+    },
+    {
+      "path": "package.json",
+      "sha256": "6240eb54433a0933ae8cf071802626fe88054cec1178fa687cea18ac3e974b62"
+    },
+    {
+      "path": "scripts/browser-auth-revocation.mjs",
+      "sha256": "063043ed7b1fef8dbdfefcda9ea3e17cd6ff72fb461dffaa704dae820af8edef"
+    },
+    {
+      "path": "scripts/db-concurrency-intake-assistance.mjs",
+      "sha256": "935864fdddd0a4471f0dfec652d7639a2bf38cb01821b9570e2fa35932d102be"
+    },
+    {
+      "path": "supabase/migrations/20261007013000_intake_assistance_management.sql",
+      "sha256": "1512b7cbfd1fd63065fa09ad17aba0a2c71aaba1c875326f11e089175a5979c3"
+    },
+    {
+      "path": "supabase/tests/017_native_session_authority.sql",
+      "sha256": "add8462b431573c2113d4d58396741ae0a554443ac519b48650049ae6b28a7ea"
+    },
+    {
+      "path": "supabase/tests/018_intake_assistance_management.sql",
+      "sha256": "871ce77869350f5cad4969581302b69cd4b3779d5166dfb37b5cf75b630e9602"
+    }
+  ],
+  "remaining_before_release": [
+    "actual browser grant/revoke/lost-response checks for new assistance UI",
+    "native sign-out browser regression against this final build",
+    "visual comparison and manual UI review",
+    "full final database backup/restore proof",
+    "final evidence manifest, compatibility and coverage records",
+    "exact-commit CI, staging deployment and readback"
+  ],
+  "staging_verified": false,
+  "v1_ready": false,
+  "production_enabled": false
+}
