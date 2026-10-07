@@ -1,0 +1,11 @@
+# Uitgevoerde hosted metadata — 6edb68d
+
+De [handmatige hosted preflight](https://github.com/cluvonl/platform/actions/runs/37594036184) is geslaagd op exact `6edb68d667e2a9d43867ad054b3f3660c1e7ef41`, na [groene main-CI](https://github.com/cluvonl/platform/actions/runs/37593339803) en exacte stagingpromotie. [preflight-results.json](preflight-results.json) is een ongewijzigde kopie van het veilige workflowartifact.
+
+Alle vijf checks zijn daadwerkelijk uitgevoerd en geslaagd. De session-poolerclient gebruikt TLS 1.3 met geverifieerd servercertificaat en hostname; PostgreSQL meldt 17.11. De database bevat nul app-tabellen en nul toegepaste Cluvo-migraties, met zestien pending migraties en consistente lege history. De Native provider-policygrant en beide SELECT-grantbevoegdheden zijn aanwezig; er is geen DDL uitgevoerd.
+
+De beperkte inventaris telt elf datasets: de zeven bekende key-afhankelijke datasets in de Vault/pgsodium- en Auth-encryptiefamilies zijn bewezen leeg. De pgsodium-keytabel is catalogisch afwezig. Ook de drie onderzochte private OAuth/hashvelden en Storage-objectmetadata zijn leeg. Dit is geen complete providerinventaris, decryptiebewijs of consistente backupsnapshot; alle afzonderlijke COUNT-queries zijn alleen-lezen. De hosted Auth-healthroute meldt `v2.197.0`, zonder attestatie van een exacte binary of broncommit.
+
+De API-proef geeft HTTP 406 met `PGRST106`; het `api`-schema bestaat nog niet. De geselecteerde rol- en Supautils-booleans ondersteunen de configuratiebevoegdheid als inference uit de providerbron. Er is geen authenticator-schema-override, geen daadwerkelijke configuratiewijziging en geen succesvol blootgesteld app-API-contract bewezen. De bestaande schemalijst, privacy-ACL en gerichte API-exposure moeten bij de migratieroute afzonderlijk worden gecontroleerd.
+
+Beide Supabase-keytypes en de SendGrid-sandboxcontrole zijn geaccepteerd. Deze preflight heeft geen accounts, databasewijzigingen of emails gemaakt. De [afzonderlijke echte testmail](../20261007-mail-9bd1cc1/verification.md) is ander bewijs. Backendmigratie, volledige backup/restore, VPS-runtimeoverdracht, Native staginglogin, OTP/uitnodiging en V1 blijven open; productie blijft geblokkeerd.

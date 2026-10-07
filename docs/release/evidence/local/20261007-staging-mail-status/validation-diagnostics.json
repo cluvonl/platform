@@ -1,0 +1,46 @@
+{
+  "observed_at": "2026-10-07T08:49:27.516981+00:00",
+  "parent_source_sha": "6edb68d667e2a9d43867ad054b3f3660c1e7ef41",
+  "worktree_dirty": true,
+  "scope": "local_read_only_mail_failure_diagnostics",
+  "passed": true,
+  "node_tests": {
+    "passed": 85,
+    "failed": 0,
+    "focused_status_cases": 8
+  },
+  "eslint_passed": true,
+  "independent_synthetic_probes": {
+    "passed": 8,
+    "failed": 0
+  },
+  "hosted_diagnostic_request_executed": false,
+  "email_sent_by_status_check": false,
+  "provider_mutations": false,
+  "actual_delivery_verified": false,
+  "original_send_message_binding_verified": false,
+  "source_files": [
+    {
+      "file": "scripts/staging-mail-status.mjs",
+      "sha256": "6c085ad98c05121aef7e69a671c93bdebd65fa49199c892bc029b7fe2c4788d3",
+      "bytes": 10872
+    },
+    {
+      "file": "tests/staging-mail-status.test.mjs",
+      "sha256": "592f9a08ef412b2ebb566d492410438db7c497f0942557104b1b93e760337995",
+      "bytes": 8539
+    },
+    {
+      "file": ".github/workflows/staging-mail-status.yml",
+      "sha256": "34aa7930a15d3ee4033ef914d78daa73167f3357ccb816d3a7a34c33e5beb045",
+      "bytes": 1494
+    },
+    {
+      "file": "docs/release/evidence/staging/20261007-mail-9bd1cc1/mail-results.json",
+      "sha256": "a22bb55a18bfb4152f5c1e9154a3faae94dc583f056450b0756c57bd180c0c44",
+      "bytes": 731
+    }
+  ],
+  "v1_ready": false,
+  "production_enabled": false
+}

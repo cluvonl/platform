@@ -65,6 +65,46 @@ test('failed or foreign detail cannot leave a positive delivery finding in the r
   }
 });
 
+test('private failure reasons become fixed categories and credits only a boolean without account mutations',async()=>{
+  for (const creditsResponse of [Response.json({remain:0,total:100,private_account:'private'}),new Response('private quota body',{status:403})]) {
+    const requests=[];const candidate={...item,status:'not_delivered'};
+    const report=await stagingMailStatus(environment,{...options,fetcher:async(url,input)=>{
+      requests.push({url:String(url),input});
+      if (requests.length===1) return Response.json({messages:[candidate]});
+      if (requests.length===2) return Response.json({...candidate,events:[
+        {event_name:'dropped',reason:'Maximum credits exceeded '+item.to_email},
+        {event_name:'private-event-name',reason:'unclassified private token'},
+      ]});
+      return creditsResponse;
+    }});
+    assert.equal(requests.length,3);assert.ok(requests.every(({input})=>input.method==='GET'&&!input.body));
+    assert.equal(requests[2].url,'https://api.sendgrid.com/v3/user/credits');
+    assert.deepEqual(report.candidate_reason_categories,['CREDIT_LIMIT_REPORTED','UNCLASSIFIED_PRIVATE_REASON']);
+    assert.equal(report.unclassified_event_count,1);assert.equal(report.private_reason_count,2);
+    assert.equal(report.delivery_status,'UNKNOWN');assert.equal(report.email_sent,false);assert.equal(report.provider_mutations,false);
+    assert.equal(report.credit_check.available,creditsResponse.status===200);
+    if (creditsResponse.status===200) assert.equal(report.credit_check.balance_positive,false);
+    for (const value of ['private token','private-event-name',item.to_email,'private quota body','private_account']) assert.ok(!JSON.stringify(report).includes(value));
+  }
+});
+
+test('recipient mailbox quota and private address substrings cannot become account or sender failures',async()=>{
+  let calls=0;const candidate={...item,status:'not_delivered'};
+  const report=await stagingMailStatus(environment,{...options,fetcher:async()=>{
+    calls++;
+    if (calls===1) return Response.json({messages:[candidate]});
+    if (calls===2) return Response.json({...candidate,events:[
+      {event_name:'bounced',reason:'Recipient mailbox quota exceeded'},
+      {event_name:'bounced',reason:'Unknown recipient dkim_user@example.invalid'},
+    ]});
+    return Response.json({remain:10});
+  }});
+  assert.equal(report.passed,true);assert.equal(report.credit_check.balance_positive,true);
+  assert.ok(!report.candidate_reason_categories.includes('CREDIT_LIMIT_REPORTED'));
+  assert.ok(!report.candidate_reason_categories.includes('SENDER_AUTHENTICATION_REPORTED'));
+  assert.ok(!JSON.stringify(report).includes('dkim_user'));
+});
+
 test('foreign records, private transport errors and oversized payloads fail without exporting details',async()=>{
   for(const fetcher of [async()=>Response.json({messages:[{...item,to_email:'foreign@example.invalid'}]}),async()=>{throw new Error('private '+item.to_email);},async()=>new Response('x'.repeat(70_000))]){
     const report=await stagingMailStatus(environment,{...options,fetcher});assert.equal(report.passed,false);

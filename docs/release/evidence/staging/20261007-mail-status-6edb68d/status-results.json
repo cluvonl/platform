@@ -1,0 +1,30 @@
+{
+  "environment": "staging",
+  "observed_at": "2026-10-07T08:28:43.429Z",
+  "checked_send_run_id": "37591201027",
+  "read_only": true,
+  "email_sent": false,
+  "database_mutations": false,
+  "provider_mutations": false,
+  "actual_delivery_verified": false,
+  "user_receipt_verified": false,
+  "delivery_status": "UNKNOWN",
+  "original_send_message_binding_verified": false,
+  "smtp_configuration_verified": false,
+  "native_otp_verified": false,
+  "invitation_delivery_verified": false,
+  "recipient_value_exported": false,
+  "provider_values_exported": false,
+  "secret_values_exported": false,
+  "v1_ready": false,
+  "production_enabled": false,
+  "source_sha": "6edb68d667e2a9d43867ad054b3f3660c1e7ef41",
+  "activity_accessible": true,
+  "match_count": 1,
+  "candidate_delivery_status": "not_delivered",
+  "candidate_mailbox_delivery_reported": false,
+  "event_counts": {
+    "processed": 1
+  },
+  "passed": true
+}

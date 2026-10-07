@@ -7,7 +7,17 @@ const SEND_SHA = '9bd1cc19a398086b2177304870eb53c04e1d3db9';
 const SUBJECT = 'Cluvo — testmail voor staging';
 const SEND_PROOF = new URL('../docs/release/evidence/staging/20261007-mail-9bd1cc1/mail-results.json', import.meta.url);
 const STATUSES = new Set(['processed', 'processing', 'delivered', 'not_delivered']);
-const EVENTS = new Set(['processed', 'delivered', 'deferred', 'bounced', 'dropped', 'blocked']);
+const EVENTS = new Set(['processed', 'delivered', 'deferred', 'bounced', 'dropped', 'blocked',
+  'opened', 'clicked', 'spam_report', 'unsubscribe', 'group_unsubscribe', 'group_resubscribe']);
+const REASON_PATTERNS = [
+  ['CREDIT_LIMIT_REPORTED', /maximum credits|credits? (?:exceeded|exhausted)|sending quota exceeded/i],
+  ['ACCOUNT_DISABLED_REPORTED', /account (?:is )?(?:disabled|suspended|under review)|sending (?:is )?disabled/i],
+  ['SENDER_AUTHENTICATION_REPORTED', /\bunauthenticated\b|\bsender (?:is )?not verified\b|\b(?:spf|dkim|dmarc)\b.{0,80}\b(?:fail(?:ed)?|reject(?:ed)?|missing|invalid)\b|\b(?:fail(?:ed)?|missing|invalid)\b.{0,80}\b(?:spf|dkim|dmarc)\b/i],
+  ['RECIPIENT_SUPPRESSION_REPORTED', /unsubscribed|suppression|spam report|previously bounced/i],
+  ['RECIPIENT_ADDRESS_REPORTED', /mailbox (?:does not exist|not found)|user unknown|invalid recipient/i],
+  ['MAILBOX_FULL_REPORTED', /mailbox full|over quota/i],
+  ['DELIVERY_DEFERRED_REPORTED', /temporarily|try again later|rate limit/i],
+];
 const email = (value) => typeof value === 'string' && value.length <= 254
   && /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,63}$/i.test(value);
 class StatusError extends Error {constructor(code) {super(code); this.code = code;}}
@@ -100,14 +110,42 @@ export async function stagingMailStatus(environment, {fetcher = fetch, sendProof
       || typeof detail.from_email !== 'string' || detail.from_email.toLowerCase() !== from.toLowerCase()
       || detail.subject !== SUBJECT || !STATUSES.has(detail.status)
       || !Array.isArray(detail.events) || detail.events.length > 100) fail('SENDGRID_ACTIVITY_DETAIL_INVALID');
-    const eventCounts = {};
+    const eventCounts = {}; const categories = new Set();
+    let unclassifiedEvents = 0; let reasons = 0;
     for (const event of detail.events) {
       if (EVENTS.has(event.event_name)) eventCounts[event.event_name] = (eventCounts[event.event_name] ?? 0) + 1;
+      else unclassifiedEvents++;
+      if (typeof event.reason === 'string' && event.reason.length) {
+        reasons++;
+        const reason = event.reason.replace(/[^\s<>()]+@[^\s<>()]+/g, '[private recipient]');
+        const matches = event.reason.length <= 1024 ? REASON_PATTERNS.filter(([, pattern]) => pattern.test(reason)) : [];
+        if (matches.length) for (const [category] of matches) categories.add(category);
+        else categories.add('UNCLASSIFIED_PRIVATE_REASON');
+      }
     }
     report.candidate_delivery_status = detail.status;
     // Mailbox-provider delivery is separate from the user's inbox receipt.
     report.candidate_mailbox_delivery_reported = detail.status === 'delivered';
-    report.event_counts = eventCounts; report.passed = true;
+    report.event_counts = eventCounts; report.unclassified_event_count = unclassifiedEvents;
+    report.private_reason_count = reasons; report.candidate_reason_categories = [...categories].sort();
+    report.reason_classification_basis = 'allowlisted_patterns_in_private_provider_reason';
+    if (detail.status === 'not_delivered') {
+      // Only a boolean is exported; balance alone is not proof of a sending block.
+      report.credit_check = {attempted:true, available:false};
+      try {
+        const response = await fetcher('https://api.sendgrid.com/v3/user/credits', {method:'GET',redirect:'error',
+          signal:AbortSignal.timeout(20_000),headers:{Authorization:'Bearer ' + environment.SENDGRID_API_KEY}});
+        report.credit_check.http_status = response.status;
+        if (response.status === 200) {
+          const credits = await readJson(response);
+          if (Number.isSafeInteger(credits.remain)) {
+            report.credit_check.available = true;
+            report.credit_check.balance_positive = credits.remain > 0;
+          }
+        }
+      } catch {report.credit_check.error = 'CREDIT_METADATA_UNAVAILABLE';}
+    }
+    report.passed = true;
     // Never export recipient, URL/query, message ID, raw event, reason or responsebody.
   } catch (error) {
     report.passed = false; report.delivery_status = 'UNKNOWN'; report.candidate_delivery_status = 'UNKNOWN';
