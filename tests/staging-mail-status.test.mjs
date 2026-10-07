@@ -23,7 +23,8 @@ test('status inspection does GET only, exact scoped query and redacted events wi
   assert.ok(requests.every(({input})=>input.method==='GET'&&input.redirect==='error'&&!input.body));
   const query=new URL(requests[0].url).searchParams.get('query');
   for(const part of ['to_email="test@example.invalid"','from_email="sender@example.invalid"','subject="Cluvo — testmail voor staging"','BETWEEN TIMESTAMP']) assert.ok(query.includes(part));
-  assert.deepEqual(report.event_counts,{delivered:1}); assert.equal(report.mailbox_provider_delivery_reported,true);
+  assert.deepEqual(report.event_counts,{delivered:1}); assert.equal(report.candidate_mailbox_delivery_reported,true);
+  assert.equal(report.delivery_status,'UNKNOWN');assert.equal(report.original_send_message_binding_verified,false);
   assert.equal(report.actual_delivery_verified,false);assert.equal(report.email_sent,false);
   for(const privateValue of [item.to_email,item.from_email,item.msg_id,'private reason']) assert.ok(!JSON.stringify(report).includes(privateValue));
 });
@@ -50,7 +51,17 @@ test('no match and multiple matches cannot prove delivery of the original mail',
   for(const messages of [[],[item,item]]){
     let calls=0;const report=await stagingMailStatus(environment,{...options,fetcher:async()=>{calls++;return Response.json({messages});}});
     assert.equal(report.passed,true);assert.equal(report.actual_delivery_verified,false);assert.equal(calls,1);
-    assert.equal(report.delivery_status,messages.length?'AMBIGUOUS_MATCH':'NO_MATCH_OBSERVED');
+    assert.equal(report.candidate_delivery_status,messages.length?'AMBIGUOUS_MATCH':'NO_MATCH_OBSERVED');
+  }
+});
+
+test('failed or foreign detail cannot leave a positive delivery finding in the report',async()=>{
+  for (const detail of [new Response('private error',{status:403}),Response.json({...item,to_email:'foreign@example.invalid',events:[]})]) {
+    let calls=0;
+    const report=await stagingMailStatus(environment,{...options,fetcher:async()=>++calls===1?Response.json({messages:[item]}):detail});
+    assert.equal(report.passed,false);assert.equal(report.delivery_status,'UNKNOWN');
+    assert.equal(report.candidate_delivery_status,'UNKNOWN');assert.equal(report.candidate_mailbox_delivery_reported,false);
+    assert.equal(report.original_send_message_binding_verified,false);assert.equal(calls,2);
   }
 });
 

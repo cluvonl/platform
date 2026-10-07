@@ -36,6 +36,7 @@ export async function stagingMailStatus(environment, {fetcher = fetch, sendProof
   const report = {environment:'staging', observed_at:now.toISOString(), checked_send_run_id:SEND_RUN,
     read_only:true, email_sent:false, database_mutations:false, provider_mutations:false,
     actual_delivery_verified:false, user_receipt_verified:false,
+    delivery_status:'UNKNOWN', original_send_message_binding_verified:false,
     smtp_configuration_verified:false, native_otp_verified:false, invitation_delivery_verified:false,
     recipient_value_exported:false, provider_values_exported:false, secret_values_exported:false,
     v1_ready:false, production_enabled:false};
@@ -78,7 +79,7 @@ export async function stagingMailStatus(environment, {fetcher = fetch, sendProof
     if (!Array.isArray(result.messages) || result.messages.length > 5) fail('SENDGRID_ACTIVITY_RESPONSE_INVALID');
     if (!result.messages.length) {
       report.passed = true; report.activity_accessible = true; report.match_count = 0;
-      report.delivery_status = 'NO_MATCH_OBSERVED'; return report;
+      report.candidate_delivery_status = 'NO_MATCH_OBSERVED'; return report;
     }
     const matches = result.messages;
     for (const item of matches) {
@@ -89,9 +90,8 @@ export async function stagingMailStatus(environment, {fetcher = fetch, sendProof
         || Date.parse(item.last_event_time) < Date.parse(start) || Date.parse(item.last_event_time) > Date.parse(end)) fail('SENDGRID_ACTIVITY_SCOPE_MISMATCH');
     }
     report.activity_accessible = true; report.match_count = matches.length;
-    if (matches.length !== 1) {report.passed = true; report.delivery_status = 'AMBIGUOUS_MATCH'; return report;}
+    if (matches.length !== 1) {report.passed = true; report.candidate_delivery_status = 'AMBIGUOUS_MATCH'; return report;}
     const item = matches[0];
-    report.delivery_status = item.status;
     if (typeof item.msg_id !== 'string' || !/^[A-Za-z0-9_.-]{1,512}$/.test(item.msg_id)
       || item.msg_id === '.' || item.msg_id === '..') fail('SENDGRID_ACTIVITY_MESSAGE_ID_INVALID');
     const detail = await get('https://api.sendgrid.com/v3/messages/' + encodeURIComponent(item.msg_id));
@@ -104,12 +104,16 @@ export async function stagingMailStatus(environment, {fetcher = fetch, sendProof
     for (const event of detail.events) {
       if (EVENTS.has(event.event_name)) eventCounts[event.event_name] = (eventCounts[event.event_name] ?? 0) + 1;
     }
-    report.delivery_status = detail.status;
+    report.candidate_delivery_status = detail.status;
     // Mailbox-provider delivery is separate from the user's inbox receipt.
-    report.mailbox_provider_delivery_reported = detail.status === 'delivered';
+    report.candidate_mailbox_delivery_reported = detail.status === 'delivered';
     report.event_counts = eventCounts; report.passed = true;
     // Never export recipient, URL/query, message ID, raw event, reason or responsebody.
-  } catch (error) {report.passed = false; report.error = error instanceof StatusError ? error.code : 'STAGING_MAIL_STATUS_UNAVAILABLE';}
+  } catch (error) {
+    report.passed = false; report.delivery_status = 'UNKNOWN'; report.candidate_delivery_status = 'UNKNOWN';
+    report.candidate_mailbox_delivery_reported = false; delete report.event_counts;
+    report.error = error instanceof StatusError ? error.code : 'STAGING_MAIL_STATUS_UNAVAILABLE';
+  }
   return report;
 }
 
