@@ -1,0 +1,53 @@
+{
+  "environment": "staging",
+  "project_ref": "fbozlbgmktkgcdfqdaaz",
+  "observed_at": "2026-10-07T21:11:06.882Z",
+  "measurement_only": true,
+  "email_sent": false,
+  "provider_resources_created": false,
+  "ddl_requested": false,
+  "negative_dml_uses_false_predicate": true,
+  "private_identifiers_exported": false,
+  "backup_created": false,
+  "restore_executed": false,
+  "snapshot_import_verified": false,
+  "catalog_data_compared": false,
+  "migration_ready": false,
+  "remote_ddl_ready": false,
+  "v1_ready": false,
+  "production_enabled": false,
+  "source_sha": "937db4dbb960d891651423229ca07b3f9cb84f4f",
+  "passed": true,
+  "scope": "HOSTED_TRANSPORT_ONLY",
+  "checks": [
+    "verified_client_tls",
+    "sql_backend_identity_and_exclusive_lock",
+    "second_same_key_session_refused",
+    "original_session_survives_competitor",
+    "exported_repeatable_read_snapshot",
+    "single_statement_capture_read",
+    "capture_rollback_retains_session_lock",
+    "fresh_read_same_backend",
+    "single_statement_fresh_read",
+    "fresh_rollback_retains_session_lock",
+    "close_releases_session_lock",
+    "multiple_statements_rejected",
+    "zero_row_write_cte_rejected_read_only",
+    "final_lock_reacquisition"
+  ],
+  "transport": {
+    "client_tls": true,
+    "client_tls_protocol": "TLSv1.3",
+    "postgres_version": 170011,
+    "libpq_version": 180006,
+    "backend_identity_mode": "session_sql_backend_and_lock",
+    "protocol_pid_matches_sql_backend": false
+  },
+  "returned_sessions_closed": true,
+  "target_mode": "session_pooler",
+  "source_pins": {
+    "ca": "6ecd239038a7db063a6619b71742372ecfe06c0b0ec12a9993fee4445bf0d4d6",
+    "session": "b44c01ae1a448eacdf7e41b35f52e8f1599089203db9a96716184bb5742150d5",
+    "probe": "fdc85f6f52f01a7811781d4962f3339f74873e3927ea32af8dfc396135a54d2c"
+  }
+}
