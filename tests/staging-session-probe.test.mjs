@@ -23,12 +23,12 @@ function result() {
 }
 const processResult = value => ({status: 0, stdout: JSON.stringify(value), stderr: ''});
 
-test('24 Python identity and cleanup tests run with no credentials or database', () => {
+test('29 Python identity and cleanup tests run with no credentials or database', () => {
   const run = spawnSync('/usr/bin/python3', ['-B', 'tests/helpers/staging-session-probe-tests.py'], {
     env: {PATH: '/usr/bin:/bin', LANG: 'C.UTF-8'}, encoding: 'utf8', timeout: 10_000, maxBuffer: 64_000,
   });
   assert.equal(run.status, 0, run.stderr);
-  assert.match(run.stderr, /Ran 24 tests/);
+  assert.match(run.stderr, /Ran 29 tests/);
   assert.match(run.stderr, /\bOK\b/);
 });
 

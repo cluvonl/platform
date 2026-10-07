@@ -267,6 +267,68 @@ class BackendIdentity(unittest.TestCase):
         settings=module.Session.connection_settings(env,False)
         self.assertFalse(settings['host'].endswith('.pooler.supabase.com'))
 
+    def test_new_session_lock_accepts_only_absence(self):
+        self.assertIsNone(module.verified_new_session_lock({'already_held':False}))
+
+    def test_reentrant_existing_lock_is_denied(self):
+        with self.assertRaises(module.Failure) as caught:
+            module.verified_new_session_lock({'already_held':True})
+        self.assertEqual(caught.exception.code,'SESSION_LOCK_ALREADY_HELD')
+
+    def test_unknown_or_coerced_existing_lock_evidence_is_denied(self):
+        for value in [None,{},[],{'already_held':0},{'already_held':None},
+                      {'already_held':'false'},{'already_held':False,'backend_pid':123}]:
+            with self.assertRaises(module.Failure):
+                module.verified_new_session_lock(value)
+
+    def constructor_lock_fixture(self, existing):
+        from types import SimpleNamespace
+        queries=[]
+        finishes=[]
+        pq=SimpleNamespace(PQconnectStartParams=lambda *_:1,PQsetNoticeReceiver=lambda *_:None,
+            PQconnectPoll=lambda *_:3,PQstatus=lambda *_:0,PQsetnonblocking=lambda *_:0,
+            PQtransactionStatus=lambda *_:module.TX_IDLE,PQserverVersion=lambda *_:170011,
+            PQsslAttribute=lambda *_:b'TLSv1.3',PQsslInUse=lambda *_:1,PQlibVersion=lambda:160015,
+            PQbackendPID=lambda *_:456,PQfinish=lambda *_:finishes.append(True))
+        env={'PGHOST':'aws-0-eu-central-1.pooler.supabase.com','PGPORT':'5432',
+             'PGUSER':'postgres.'+module.PROJECT,'PGPASSWORD':'synthetic-only',
+             'PGDATABASE':'postgres','PGSSLMODE':'verify-full','PGSSLROOTCERT':'synthetic-ca'}
+        def one_json(_session,sql):
+            queries.append(sql)
+            if 'already_held' in sql:
+                self.assertIn('pid=pg_backend_pid()',sql)
+                self.assertIn('objsubid=2',sql)
+                self.assertNotIn('mode=',sql)
+                return {'already_held':existing}
+            if 'pg_try_advisory_lock' in sql:
+                return {'acquired':True}
+            return self.value()
+        return pq,env,queries,finishes,one_json
+
+    def test_constructor_denies_reentrant_lock_before_acquisition_and_finishes(self):
+        pq,env,queries,finishes,query=self.constructor_lock_fixture(True)
+        with patch.object(module,'bindings_library',return_value=(pq,lambda f:f)),\
+             patch.object(module.Session,'one_json',query),\
+             patch.object(module.Session,'check_lock',side_effect=AssertionError('must not reach guard')):
+            with self.assertRaises(module.Failure) as caught:
+                module.Session(env,123)
+        self.assertEqual(caught.exception.code,'SESSION_LOCK_ALREADY_HELD')
+        self.assertFalse(any('pg_try_advisory_lock' in sql for sql in queries))
+        self.assertEqual(finishes,[True])
+
+    def test_constructor_checks_absence_before_actual_acquisition_request(self):
+        pq,env,queries,finishes,query=self.constructor_lock_fixture(False)
+        with patch.object(module,'bindings_library',return_value=(pq,lambda f:f)),\
+             patch.object(module.Session,'one_json',query),\
+             patch.object(module.Session,'check_lock',return_value={'exclusive_lock':True}):
+            session=module.Session(env,123)
+            self.assertEqual(session.state,'locked')
+            session.close()
+        self.assertEqual(len(queries),3)
+        self.assertIn('already_held',queries[1])
+        self.assertIn('pg_try_advisory_lock',queries[2])
+        self.assertEqual(finishes,[True])
+
 
 if __name__=='__main__':
     unittest.main()

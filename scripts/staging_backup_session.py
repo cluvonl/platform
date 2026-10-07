@@ -51,6 +51,12 @@ def verified_backend_identity(initial, wire_pid, *, session_pooler=False):
     require(parsed.tzinfo is not None and (session_pooler or pid==wire_pid),'BACKEND_IDENTITY_UNVERIFIED')
     return dict(initial)
 
+def verified_new_session_lock(value):
+    # Advisory locks are reentrant. A provider may reuse a physical backend;
+    # successful pg_try_advisory_lock alone cannot prove prior lock release.
+    require(type(value) is dict and set(value) == {'already_held'}
+            and value['already_held'] is False, 'SESSION_LOCK_ALREADY_HELD')
+
 def bindings_library(name=None):
     library = C.CDLL(name or ctypes.util.find_library('pq'))
     pointer, integer, chars = C.c_void_p, C.c_int, C.c_char_p
@@ -135,6 +141,8 @@ class Session:
             self.identity=verified_backend_identity(initial,self.pq.PQbackendPID(self.connection),
                                                     session_pooler=session_pooler)
             self.transport['backend_identity_mode']='session_sql_backend_and_lock' if session_pooler else 'direct_wire_sql_equal'
+            existing = self.one_json(f"select json_build_object('already_held',exists(select 1 from pg_locks where pid=pg_backend_pid() and locktype='advisory' and granted and classid={NAMESPACE}::oid and objid={lock_object & 0xffffffff}::oid and objsubid=2));")
+            verified_new_session_lock(existing)
             # Non-blocking acquisition; no indefinite/adaptive retry.
             lock = self.one_json(f"select json_build_object('acquired',pg_try_advisory_lock({NAMESPACE},{lock_object}));")
             require(lock.get('acquired') is True, 'EXCLUSIVE_SESSION_LOCK_BUSY')
