@@ -1,0 +1,48 @@
+name: Staging Supabase Auth email check
+
+on:
+  workflow_dispatch:
+    inputs:
+      send_auth_email:
+        description: Request one Supabase Auth email for the agreed allowlisted staging test recipient
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cluvo-staging-auth-mail-check
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    if: github.repository == 'cluvonl/platform' && github.ref == 'refs/heads/staging'
+    runs-on: ubuntu-24.04
+    environment: staging
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: '.nvmrc'
+      - name: Request the agreed test email via Supabase Auth
+        env:
+          APP_ENV: staging
+          RELEASE_SHA: ${{ github.sha }}
+          STAGING_SUPABASE_PROJECT_REF: ${{ vars.STAGING_SUPABASE_PROJECT_REF }}
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ vars.SUPABASE_PUBLISHABLE_KEY }}
+          SEND_STAGING_AUTH_EMAIL: ${{ inputs.send_auth_email }}
+          STAGING_TEST_RECIPIENT: ${{ secrets.STAGING_TEST_RECIPIENT }}
+          MAIL_ALLOWLIST: ${{ secrets.MAIL_ALLOWLIST }}
+        run: node scripts/staging-auth-mail-check.mjs
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: cluvo-staging-auth-mail-check-${{ github.sha }}-${{ github.run_id }}
+          path: staging-auth-mail-check.json
+          if-no-files-found: error
+          retention-days: 30

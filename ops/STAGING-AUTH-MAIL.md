@@ -1,0 +1,13 @@
+# Supabase Auth-mailproef op staging
+
+De handmatige workflow `staging-auth-mail-check.yml` vraagt precies één Auth-mail aan bij het vaste stagingproject. De gebruiker heeft SMTP ingesteld en het bestaande testadres aangewezen. De workflow gebruikt alleen de publishable key en twee private recipient-/allowlistsecrets uit GitHub Environment `staging`. Er worden geen secret key, databasecredential, SendGrid-key of SMTP-wachtwoord aan de proef doorgegeven.
+
+Standaard wordt niet verstuurd. Alleen een expliciete `send_auth_email=true` op de stagingbranch van de vaste repository, met gelijke workflow-/release-SHA en run-attempt 1, kan één `POST /auth/v1/otp` uitvoeren. Ongeldige targets, recipients, wildcard-allowlists en reruns falen vóór de providerrequest. Geen automatische retry na afwijzing of onzekere aflevering. De HTTPS-redirectpolicy is `error`.
+
+Deze afzonderlijke, geautoriseerde test heeft `create_user=true` voor uitsluitend het afgesproken testadres: een nog ontbrekende Auth-identiteit kan daardoor ontstaan. Er worden geen approllen, tenantlidmaatschappen, appgegevens of migraties aangemaakt. De reguliere app-login behoudt `shouldCreateUser=false`. Auth-records en mailgerelateerde metadata kunnen wijzigen; de proef noemt zich daarom niet database-mutation-free. Gebruikersaanmaak wordt niet afgeleid uit een HTTP200.
+
+Het rapport registreert de GitHub-actor, vaste scope, bron-SHA en run/attempt als auditreferentie. De Auth-OTP-route ondersteunt geen app-`expected_version` of gegarandeerde provideridempotency; beide beperkingen staan expliciet in het rapport. De eerste attempt en één request voorkomen automatische herhaling binnen deze workflow, maar vormen geen externe exactly-once-garantie.
+
+Een succesvolle request bewijst nog geen aflevering of login. SMTP is door de gebruiker gerapporteerd, niet via een managementtoken uitgelezen. De mail kan een code of een link bevatten: [Supabase gebruikt dezelfde OTP-route voor beide](https://supabase.com/docs/guides/auth/auth-email-passwordless); de ingestelde hosted templates bepalen de inhoud. De lokale Cluvo-template bevat `.Token`, maar installatie op hosted Supabase is hiermee niet bewezen. Een aangevraagde stagingredirect bewijst evenmin dat de provider die heeft toegestaan in zijn URL-configuratie.
+
+Het artifact bevat alleen vaste booleans, tijd, release/run-ID, HTTP-status en toegestane foutcodes. Recipient, responsebody, Auth-ID, codes, tokens en volledige inloglinks worden niet geëxporteerd. Alleen gebruikersbevestiging kan ontvangst aantonen; Native sessievalidatie en de werkruimte-login blijven afzonderlijk bewijs vereisen. De live app blijft voorlopig prototype; volledige V1 en productie blijven gesloten.
