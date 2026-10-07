@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       verify_system_ca:
-        description: Verify the database certificate and hostname using the runner CA bundle
+        description: Verify the database certificate and hostname using runner and pinned Supabase CAs
         type: boolean
         default: true
 
@@ -28,6 +28,13 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version-file: '.nvmrc'
+      - name: Prepare the authoritative Supabase platform CA bundle
+        if: inputs.verify_system_ca
+        run: |
+          sha256sum --check ops/tls/supabase-platform-root-ca.sha256
+          cat /etc/ssl/certs/ca-certificates.crt ops/tls/supabase-platform-root-ca.pem \
+            > "${RUNNER_TEMP}/cluvo-supabase-ca.pem"
+          chmod 600 "${RUNNER_TEMP}/cluvo-supabase-ca.pem"
       - name: Verify credentials and database metadata without deployment
         env:
           APP_ENV: staging
@@ -38,7 +45,7 @@ jobs:
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
           INVITATION_TOKEN_SECRET: ${{ secrets.INVITATION_TOKEN_SECRET }}
           MIGRATION_DATABASE_URL: ${{ secrets.MIGRATION_DATABASE_URL }}
-          MIGRATION_SSL_ROOT_CERT_PATH: ${{ inputs.verify_system_ca && '/etc/ssl/certs/ca-certificates.crt' || '' }}
+          MIGRATION_SSL_ROOT_CERT_PATH: ${{ inputs.verify_system_ca && format('{0}/cluvo-supabase-ca.pem', runner.temp) || '' }}
           SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
           SENDGRID_FROM_EMAIL: ${{ vars.SENDGRID_FROM_EMAIL }}
         run: node scripts/staging-preflight.mjs

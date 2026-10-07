@@ -1,0 +1,39 @@
+{
+  "observed_at": "2026-10-07T06:36:24.721Z",
+  "result": "PASS",
+  "source_cli_version": "2.119.0",
+  "source_cli_commit": "3cb948c5a70d31fbcb0fd1dcc616ee196a125cd0",
+  "source_dashboard_commit": "a4910196b822f1c3bed12f8deed7b4ff99df0f20",
+  "bundle_sha256": "6ecd239038a7db063a6619b71742372ecfe06c0b0ec12a9993fee4445bf0d4d6",
+  "certificates": [
+    {
+      "root": "2021",
+      "der_sha256": "807025ad50d4ed219d2c9c7d299c004f824eb00cf7f65afef607d07b72e6cafa",
+      "subject": "C=US\nST=Delware\nL=New Castle\nO=Supabase Inc\nCN=Supabase Root 2021 CA",
+      "issuer": "C=US\nST=Delware\nL=New Castle\nO=Supabase Inc\nCN=Supabase Root 2021 CA",
+      "valid_from": "Apr 28 10:56:53 2021 GMT",
+      "valid_until": "Apr 26 10:56:53 2031 GMT",
+      "ca": true,
+      "self_signature_verified": true
+    },
+    {
+      "root": "2025",
+      "der_sha256": "5f9b77951a7aa1303f9b58eea9bfa89e358cfdc15f9786ff10d4930a722c9ae2",
+      "subject": "C=US\nST=Delware\nL=New Castle\nO=Supabase Inc\nCN=Supabase Root 2021 CA",
+      "issuer": "C=US\nST=Delware\nL=New Castle\nO=Supabase Inc\nCN=Supabase Root 2021 CA",
+      "valid_from": "Sep  3 08:01:25 2025 GMT",
+      "valid_until": "Sep  1 08:01:25 2035 GMT",
+      "ca": true,
+      "self_signature_verified": true
+    }
+  ],
+  "source_certificate_kind": "public authoritative Supabase platform roots",
+  "peer_trusted_on_first_use": false,
+  "secret_material": false,
+  "target_environment": "staging",
+  "target_project_ref": "fbozlbgmktkgcdfqdaaz",
+  "hosted_server_certificate_verified": false,
+  "database_mutations": false,
+  "v1_ready": false,
+  "production_enabled": false
+}
