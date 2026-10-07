@@ -1,0 +1,21 @@
+{
+  "backup_created": false,
+  "client_verify_full_validated": false,
+  "hosted_connection_executed": false,
+  "hosted_non_superuser_validated": false,
+  "local_readonly_repeatable_read": true,
+  "local_sql_validated": true,
+  "metadata": {
+    "installed_extensions": 6,
+    "server_version": 170011,
+    "unregistered_extension_relations": 0,
+    "user_data_relations": 197
+  },
+  "observed_at": "2026-10-07T09:30:36.337112+00:00",
+  "pinned_image": "public.ecr.aws/supabase/postgres@sha256:0450166354dc9c1d25f0322ac8b580774d4fb0184d2b087f6e4fe9499c66cf53",
+  "shared_backup_snapshot_validated": false,
+  "source_mutations": false,
+  "sql_sha256": "7b44dd336972a3bd6dd5811242011c7656ed1cb0ac9e1f435dc5389589013dac",
+  "validation_scope": "syntax_and_metadata_only",
+  "validator_sha256": "fdd87a8a23dbdd229131cb892eee3b5ae3a68b5221ac575bbb8f3e6e9157d250"
+}

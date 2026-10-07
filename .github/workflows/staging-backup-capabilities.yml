@@ -1,0 +1,47 @@
+name: Staging backup capability measurement
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cluvo-staging-backup-capabilities
+  cancel-in-progress: false
+
+jobs:
+  measure:
+    if: github.repository == 'cluvonl/platform' && github.ref == 'refs/heads/staging'
+    runs-on: ubuntu-24.04
+    environment: staging
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: '.nvmrc'
+      - name: Prepare the pinned authoritative Supabase CA bundle
+        run: |
+          sha256sum --check ops/tls/supabase-platform-root-ca.sha256
+          cat /etc/ssl/certs/ca-certificates.crt ops/tls/supabase-platform-root-ca.pem \
+            > "${RUNNER_TEMP}/cluvo-supabase-ca.pem"
+          chmod 600 "${RUNNER_TEMP}/cluvo-supabase-ca.pem"
+      - name: Measure read-only backup capabilities without making a backup
+        env:
+          APP_ENV: staging
+          RELEASE_SHA: ${{ github.sha }}
+          STAGING_SUPABASE_PROJECT_REF: ${{ vars.STAGING_SUPABASE_PROJECT_REF }}
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          MIGRATION_DATABASE_URL: ${{ secrets.MIGRATION_DATABASE_URL }}
+          MIGRATION_SSL_ROOT_CERT_PATH: ${{ format('{0}/cluvo-supabase-ca.pem', runner.temp) }}
+        run: node scripts/staging-backup-capabilities.mjs
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: cluvo-staging-backup-capabilities-${{ github.sha }}-${{ github.run_id }}
+          path: staging-backup-capabilities.json
+          if-no-files-found: error
+          retention-days: 30

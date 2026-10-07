@@ -1,0 +1,21 @@
+{
+  "basis": "independent_agent_actual_synthetic_executor_run_reported_in_tool_result",
+  "canonical_collector_sha256": "572733663c8f1052f83605304260331aa7e7554e400c92de166e074ba750c506",
+  "database_processes": 0,
+  "exit_status": 0,
+  "full_restore_compatibility_proved": false,
+  "hosted_measurement_executed": false,
+  "independent_probes": 9,
+  "observed_at": "2026-10-07T09:47:06.669464+00:00",
+  "original_evidence_modified": false,
+  "passed_probes": 9,
+  "probe_copy_sha256": "fc033cd77579c63b711149dc5faf505b55110328a4c5b261f0bbb08fdcc27bdf",
+  "raw_stdout_persisted": false,
+  "remote_queries": 0,
+  "response_size_probe": {
+    "collector_accepts_oversize_executor_stdout": false,
+    "max_buffer_option": 2000000,
+    "report_private_values_exported": false
+  },
+  "synthetic_only": true
+}

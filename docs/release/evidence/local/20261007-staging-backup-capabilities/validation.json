@@ -1,0 +1,54 @@
+{
+  "observed_at": "2026-10-07T09:48:17.241646+00:00",
+  "parent_source_sha": "1d56c628969249c2a0b8e0dd7967a42dc9044dae",
+  "worktree_changes_included": true,
+  "scope": "readonly_measurement_no_backup_or_ddl",
+  "source_files": [
+    {
+      "file": "scripts/staging-backup-capabilities.mjs",
+      "sha256": "572733663c8f1052f83605304260331aa7e7554e400c92de166e074ba750c506"
+    },
+    {
+      "file": "scripts/pinned-restore-extension-defaults.mjs",
+      "sha256": "ccf4a972e6271fa7911f73bb7dd9a1cf61863f36c66f1775c1e1ba67840bd509"
+    },
+    {
+      "file": "tests/staging-backup-capabilities.test.mjs",
+      "sha256": "3cd5a73a964ab51545084103ef72347b9b1ced61794486705f211c3902f3575d"
+    },
+    {
+      "file": ".github/workflows/staging-backup-capabilities.yml",
+      "sha256": "fc527f0ded888f8491c89c88314d064cb0c3dc26d7401b495c9f245497cd6995"
+    }
+  ],
+  "checks": {
+    "node_tests": {
+      "executed": true,
+      "passed": 123,
+      "failed": 0,
+      "skipped": 0,
+      "todo": 0,
+      "command": "npm test"
+    },
+    "eslint": {
+      "executed": true,
+      "passed": true,
+      "command": "npm run lint"
+    },
+    "focused_capability_tests": {
+      "passed": 36
+    },
+    "independent_canonical_synthetic_probes": {
+      "passed": 9,
+      "actual_hosted_queries": false
+    }
+  },
+  "capability_sql_sha256": "7b44dd336972a3bd6dd5811242011c7656ed1cb0ac9e1f435dc5389589013dac",
+  "database_mutations": false,
+  "hosted_measurement_executed": false,
+  "backup_created": false,
+  "restore_executed": false,
+  "remote_ddl_ready": false,
+  "v1_ready": false,
+  "production_enabled": false
+}
