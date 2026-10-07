@@ -43,7 +43,10 @@ class ProbeError extends Error {constructor(code) {super(code); this.code = code
 const need = (value, code) => {if (!value) throw new ProbeError(code);};
 
 function fixedEnvironment(environment) {
-  need(environment && [Object.prototype, null].includes(Object.getPrototypeOf(environment)), 'STAGING_CONTEXT_REQUIRED');
+  // Node's authentic process.env has a distinct prototype. Keep descriptor-only
+  // capture for its required fields; arbitrary custom-prototype objects stay denied.
+  need(environment && (environment === process.env
+    || [Object.prototype, null].includes(Object.getPrototypeOf(environment))), 'STAGING_CONTEXT_REQUIRED');
   const descriptors = Object.getOwnPropertyDescriptors(environment), copy = {};
   for (const key of ['APP_ENV', 'GITHUB_REPOSITORY', 'GITHUB_REF', 'GITHUB_EVENT_NAME', 'GITHUB_SHA',
     'RELEASE_SHA', 'STAGING_SUPABASE_PROJECT_REF', 'SUPABASE_URL', 'MIGRATION_DATABASE_URL']) {

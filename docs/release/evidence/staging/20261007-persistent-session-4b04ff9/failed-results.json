@@ -1,0 +1,22 @@
+{
+  "environment": "staging",
+  "project_ref": "fbozlbgmktkgcdfqdaaz",
+  "observed_at": "2026-10-07T20:45:25.642Z",
+  "measurement_only": true,
+  "email_sent": false,
+  "provider_resources_created": false,
+  "ddl_requested": false,
+  "negative_dml_uses_false_predicate": true,
+  "private_identifiers_exported": false,
+  "backup_created": false,
+  "restore_executed": false,
+  "snapshot_import_verified": false,
+  "catalog_data_compared": false,
+  "migration_ready": false,
+  "remote_ddl_ready": false,
+  "v1_ready": false,
+  "production_enabled": false,
+  "passed": false,
+  "error": "STAGING_CONTEXT_REQUIRED",
+  "returned_sessions_closed": false
+}

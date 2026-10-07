@@ -32,6 +32,19 @@ test('29 Python identity and cleanup tests run with no credentials or database',
   assert.match(run.stderr, /\bOK\b/);
 });
 
+test('the authentic Node process.env works with a bounded fake transport and excludes inherited secrets', () => {
+  const bootstrapEnvironment = {...environment(), PATH: '/usr/bin:/bin', LANG: 'C.UTF-8'};
+  // Install the fake inherited setting after Node starts: the OS loader itself
+  // consumes LD_PRELOAD before any application can isolate a child environment.
+  delete bootstrapEnvironment.LD_PRELOAD;
+  const run = spawnSync(process.execPath, ['tests/helpers/staging-session-process-env.mjs'], {
+    env: bootstrapEnvironment, encoding: 'utf8', timeout: 10_000, maxBuffer: 64_000,
+  });
+  assert.equal(run.status, 0, run.stderr);
+  assert.equal(run.stdout.trim(), 'ACTUAL_PROCESS_ENV_TEST_PASS');
+  assert.equal(run.stderr, '');
+});
+
 test('trusted source pins and isolated credential environment precede the owned process', async () => {
   let calls = 0;
   const report = await stagingSessionProbe(environment(), {execute: async (command, argv, options) => {

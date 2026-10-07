@@ -1,0 +1,17 @@
+{
+  "observed_at": "2026-10-07T20:51:00.669299+00:00",
+  "source_sha": "4b04ff9cecca48d4b3ac0d6d19a40e8ed365ed92",
+  "run_id": 37684413136,
+  "workflow_url": "https://github.com/cluvonl/platform/actions/runs/37684413136",
+  "workflow_conclusion": "failure",
+  "failed_results_sha256": "8003fca0e5e85cafa40601c50ee2c6dea09a3dce498d6d1dff4a691d9e8e4be5",
+  "actual_database_connection_attempted": false,
+  "failure_phase": "before_database_target_and_source_validation",
+  "fixed_error": "STAGING_CONTEXT_REQUIRED",
+  "root_cause": "authentic Node process.env has a custom prototype",
+  "new_revision_readback_verified": false,
+  "hosted_transport_verified": false,
+  "migration_ready": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

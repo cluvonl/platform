@@ -1,0 +1,20 @@
+{
+  "observed_at": "2026-10-07T20:41:03.350755+00:00",
+  "source_sha": "22bcad1effdce1e13c234565fac306978121b89b",
+  "workflow_run_id": 37683598609,
+  "workflow_url": "https://github.com/cluvonl/platform/actions/runs/37683598609",
+  "workflow_conclusion": "success",
+  "status_results_sha256": "91b4d0a0c2ea12ecc74a2deb619a3bd7ae3c55368adc1a581b6e0267539becb8",
+  "domain": "cluvo.nl",
+  "provider_valid": true,
+  "basis": "cached_metadata_read_from_SendGrid_API",
+  "independent_dns_query_executed": false,
+  "user_reported_verified": true,
+  "old_send_message_binding_verified": false,
+  "new_test_email_receipt_verified": false,
+  "smtp_configuration_verified": false,
+  "native_otp_verified": false,
+  "invitation_delivery_verified": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

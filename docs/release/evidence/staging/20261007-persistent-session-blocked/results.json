@@ -1,0 +1,90 @@
+{
+  "observed_at": "2026-10-07T15:18:37.610Z",
+  "scope": "LOCAL_IMPLEMENTATION_WITH_DELIVERY_BLOCKED",
+  "local_source_sha": "4b04ff9cecca48d4b3ac0d6d19a40e8ed365ed92",
+  "remote_main_sha": "55196f42b4df51760b3f3b5aa909236c772e705f",
+  "remote_staging_sha": "22bcad1effdce1e13c234565fac306978121b89b",
+  "last_complete_ci": {
+    "sha": "a7501ea96e1daa935d703cba74e7e3ed8cdbee8f",
+    "run_id": 37641149561,
+    "conclusion": "success"
+  },
+  "ci": {
+    "source_sha": "55196f42b4df51760b3f3b5aa909236c772e705f",
+    "run_id": 37642242205,
+    "verify": "success",
+    "database_job_started": false,
+    "overall": "failure",
+    "rerun_all_http_status": 500,
+    "rerun_failed_http_status": 500,
+    "failure_logs_available": false,
+    "failure_cause": "UNKNOWN"
+  },
+  "push_attempts": [
+    {
+      "observed_at": "2026-10-07T15:13:58Z",
+      "http_status": 500,
+      "remote_ref_updated": false
+    },
+    {
+      "observed_at": "2026-10-07T15:16:11Z",
+      "http_status": 500,
+      "remote_ref_updated": false
+    }
+  ],
+  "local_verification": {
+    "node_tests": 285,
+    "python_unit_tests": 29,
+    "targeted_node_tests": 11,
+    "fail": 0,
+    "skipped": 0,
+    "todo": 0,
+    "changed_javascript_lint_zero_warnings": true
+  },
+  "endpoints": [
+    {
+      "path": "/api/health/live",
+      "status": 200,
+      "body": {
+        "status": "ok",
+        "service": "cluvo",
+        "mode": "prototype",
+        "environment": "staging",
+        "release": "22bcad1effdce1e13c234565fac306978121b89b"
+      }
+    },
+    {
+      "path": "/api/health/ready",
+      "status": 503,
+      "body": {
+        "ready": false,
+        "release_ready": false,
+        "reason": "APP_MODE_PROTOTYPE",
+        "checks": {
+          "database": "not_connected",
+          "workers": "not_started",
+          "authorization": "demo_only"
+        }
+      }
+    },
+    {
+      "path": "/api/runtime-config",
+      "status": 503,
+      "body": {
+        "error": "SUPABASE_NOT_CONFIGURED"
+      }
+    }
+  ],
+  "hosted_session_probe_executed": false,
+  "new_revision_deployed": false,
+  "new_revision_ui_readback_executed": false,
+  "database_dump_captured": false,
+  "restore_executed": false,
+  "database_ddl_executed": false,
+  "email_sent": false,
+  "app_mode_changed": false,
+  "functional_app_on_staging": false,
+  "migration_ready": false,
+  "v1_ready": false,
+  "production_enabled": false
+}
