@@ -1,0 +1,34 @@
+{
+  "scope": "LOCAL_COMPONENT_TESTS_ONLY",
+  "observed_at": "2026-10-07T14:56:14.380276+00:00",
+  "node_tests": {
+    "pass": 285,
+    "fail": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "targeted_node_tests": 11,
+  "python_unit_tests": 24,
+  "lint_zero_warnings": true,
+  "typecheck": true,
+  "actual_database_calls": 0,
+  "actual_hosted_calls": 0,
+  "provider_mutations": false,
+  "ddl_executed": false,
+  "backup_created": false,
+  "restore_executed": false,
+  "migration_ready": false,
+  "v1_ready": false,
+  "production_enabled": false,
+  "files": {
+    "scripts/staging-session-probe.mjs": "6269df3c1dd7883b56e788cd3a25de7868114800c1e1e357901326b959ed00ff",
+    "scripts/staging_backup_session.py": "69b8eaacd1daff825abb08395aaea1ca40bda31dccf37a4fbf5cfa55a2d25eb5",
+    "scripts/staging_session_probe.py": "9b05279fec43a00eca5fac6e6b5200523581be57e1b1c134ef334cd082c4f3af",
+    "tests/staging-session-probe.test.mjs": "23d6dc6edde1a8f0c05671772e4344dc57e3539cbbfcd8e592b7186821f1435a",
+    "tests/helpers/staging-session-probe-tests.py": "9f86e8306644931f3eb3bc719930c52fb906a70ae4b79e9e4f8f6a2dff456c11",
+    ".github/workflows/staging-session-probe.yml": "74af756ef716049b35d2268cc9c62855a5eb4e9b3e424e2e03430b21a9ceb18a"
+  },
+  "optimized_next_build": true,
+  "wp0_standalone_smoke": true,
+  "original16_migration_bytes_unchanged": true
+}
