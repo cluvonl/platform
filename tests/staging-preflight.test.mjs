@@ -13,7 +13,8 @@ const environment = {
 };
 const expectedMigrations = ['20261001000001', '20261001000002'];
 const emptyDatabase = {postgres_version_num:170011, ssl_in_use:true, app_tables:0, forced_rls_tables:0,
-  native_session_policies:0, api_definers:0, migration_table_exists:false, command_owner_restricted:false};
+  native_session_policies:0, api_definers:0, migration_table_exists:false, command_owner_restricted:false,
+  native_session_policy_ddl_available:false, native_session_select_grantable:false, native_identity_select_grantable:false};
 
 function fixtures({metadata = emptyDatabase, applied = '', fetchOverride, databaseOverride, connectionInfo = 'SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384)'} = {}) {
   const requests = [], commands = [];

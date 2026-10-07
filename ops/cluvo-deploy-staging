@@ -185,7 +185,8 @@ docker_runtime() {
 compose_runtime() {
   local selected_image="$1"
   local selected_sha="$2"
-  shift 2
+  local selected_runtime_mode="$3"
+  shift 3
 
   /usr/sbin/runuser \
     -u "$runtime_user" \
@@ -199,6 +200,7 @@ compose_runtime() {
       PATH=/usr/local/bin:/usr/bin:/bin \
       CLUVO_IMAGE="$selected_image" \
       CLUVO_RELEASE_SHA="$selected_sha" \
+      CLUVO_APP_MODE="$selected_runtime_mode" \
       /usr/bin/docker compose \
         -p cluvo-staging \
         -f "$compose" \
@@ -208,12 +210,14 @@ compose_runtime() {
 exec 9>"$state/deploy.lock"
 flock -w 600 9
 
-python3 \
+selected_mode="$(python3 \
   - "$config" "$runtime" "$image" "$run_id" "$state/current.json" \
   <<'PY'
 import json
 import pathlib
+import re
 import sys
+import urllib.parse
 
 config_path, env_path, image, run_id, current_path = sys.argv[1:]
 
@@ -249,8 +253,10 @@ if (
 if environment.get("APP_ENV") != "staging":
     raise SystemExit("APP_ENV moet staging zijn")
 
-if environment.get("APP_MODE") != "prototype":
-    raise SystemExit("Deze broker is uitsluitend voor het stagingprototype")
+mode = config.get("app_mode", "prototype")
+
+if mode not in ("prototype", "app") or environment.get("APP_MODE") != mode:
+    raise SystemExit("Runtime en vast stagingtarget hebben verschillende appmodi")
 
 app_url = config.get("app_url", "")
 
@@ -264,6 +270,41 @@ if (
 if environment.get("SUPABASE_URL", "") != config.get("supabase_url", ""):
     raise SystemExit("Onverwacht Supabaseproject")
 
+if mode == "app":
+    project_ref = config.get("supabase_project_ref", "")
+
+    if not re.fullmatch(r"[a-z0-9]{20}", project_ref):
+        raise SystemExit("Appmodus vereist een expliciet vast stagingproject")
+
+    if config.get("supabase_url") != f"https://{project_ref}.supabase.co":
+        raise SystemExit("Appmodus heeft een onverwachte Supabase-project-URL")
+
+    origin = urllib.parse.urlsplit(app_url)
+
+    if origin.username or origin.password or origin.path not in ("", "/") or origin.query or origin.fragment:
+        raise SystemExit("Appmodus vereist uitsluitend de vaste publieke origin")
+
+    for name, prefix in (("SUPABASE_PUBLISHABLE_KEY", "sb_publishable_"), ("SUPABASE_SECRET_KEY", "sb_secret_")):
+        value = environment.get(name, "")
+
+        if not value.startswith(prefix) or re.search(r"[\s\x00]", value):
+            raise SystemExit("Appmodus vereist het juiste Supabase-keytype")
+
+    token_secret = environment.get("INVITATION_TOKEN_SECRET", "")
+
+    if len(token_secret.encode("utf-8")) < 32 or re.search(r"[\r\n\x00]", token_secret):
+        raise SystemExit("Appmodus vereist een apart uitnodigingsgeheim")
+
+    recipients = [item for item in re.split(r"[\s,;]+", environment.get("MAIL_ALLOWLIST", "")) if item]
+
+    if not recipients or any(not re.fullmatch(r"[^\s@]+@[^\s@]+\.[^\s@]+", item) or "*" in item for item in recipients):
+        raise SystemExit("Appmodus vereist expliciete stagingtestontvangers")
+
+    compatible = config.get("compatible_rollback_shas", [])
+
+    if not isinstance(compatible, list) or any(not isinstance(item, str) or not re.fullmatch(r"[0-9a-f]{40}", item) for item in compatible):
+        raise SystemExit("Ongeldige lijst met compatibele appimages")
+
 current = pathlib.Path(current_path)
 
 if current.exists():
@@ -274,7 +315,18 @@ if current.exists():
         raise SystemExit(
             "Deze run is niet nieuwer dan de actieve stagingdeployment"
         )
+
+    previous_mode = previous.get("mode", "prototype")
+
+    if previous_mode not in ("prototype", "app"):
+        raise SystemExit("Vorige release heeft een onbekende appmodus")
+
+    if mode == "app" and previous.get("source_sha") not in compatible:
+        raise SystemExit("Vorige image is niet expliciet goedgekeurd voor het aangesloten stagingschema")
+
+print(mode)
 PY
+)"
 
 docker_runtime pull "$image"
 
@@ -291,6 +343,7 @@ revision="$(
 
 previous_image=''
 previous_sha=''
+previous_mode='prototype'
 
 if [[ -f "$state/current.json" ]]; then
   previous_image="$(
@@ -304,40 +357,16 @@ if [[ -f "$state/current.json" ]]; then
       -c 'import json,sys; print(json.load(open(sys.argv[1]))["source_sha"])' \
       "$state/current.json"
   )"
+
+  previous_mode="$(
+    python3 \
+      -c 'import json,sys; print(json.load(open(sys.argv[1])).get("mode", "prototype"))' \
+      "$state/current.json"
+  )"
 fi
 
-recover() {
-  trap - ERR
-
-  echo 'Nieuwe release faalde; vorige apprelease herstellen.' >&2
-
-  if [[ -n "$previous_image" && -n "$previous_sha" ]]; then
-    docker_runtime pull "$previous_image" || true
-
-    compose_runtime \
-      "$previous_image" \
-      "$previous_sha" \
-      up -d --no-build --wait --wait-timeout 120 web \
-      || echo 'Herstel is mislukt; operatoractie vereist.' >&2
-  else
-    compose_runtime \
-      "$image" \
-      "$sha" \
-      stop web \
-      || true
-  fi
-
-  exit 1
-}
-
-trap recover ERR
-
-compose_runtime \
-  "$image" \
-  "$sha" \
-  up -d --no-build --wait --wait-timeout 120 web
-
-python3 - "$sha" <<'PY'
+verify_health() {
+python3 - "$1" "$2" <<'PY'
 import json
 import sys
 import urllib.request
@@ -354,21 +383,78 @@ if result.get("status") != "ok":
 if result.get("environment") != "staging":
     raise SystemExit("Onverwachte runtimeomgeving")
 
-if result.get("mode") != "prototype":
+if result.get("mode") != sys.argv[2]:
     raise SystemExit("Onverwachte runtimemodus")
 
 if result.get("release") != sys.argv[1]:
     raise SystemExit("Healthrelease komt niet overeen met de broncommit")
-PY
 
-python3 - "$state" "$image" "$sha" "$run_id" <<'PY'
+if sys.argv[2] == "app":
+    with urllib.request.urlopen(
+        "http://127.0.0.1:3100/api/health/ready",
+        timeout=10,
+    ) as response:
+        ready = json.load(response)
+
+    checks = ready.get("checks", {})
+
+    if ready.get("ready") is not True or ready.get("release_ready") is not False or ready.get("scope") != "authenticated_core":
+        raise SystemExit("Aangesloten stagingcore heeft geen geldige beperkte readiness")
+
+    if checks.get("database") != "reachable" or checks.get("authorization") != "rls_api":
+        raise SystemExit("Database- en autorisatie-readiness zijn niet bevestigd")
+PY
+}
+
+recover() {
+  trap - ERR
+
+  echo 'Nieuwe release faalde; vorige image en appmodus herstellen.' >&2
+
+  if [[ -n "$previous_image" && -n "$previous_sha" ]]; then
+    docker_runtime pull "$previous_image" || true
+
+    if compose_runtime \
+      "$previous_image" \
+      "$previous_sha" \
+      "$previous_mode" \
+      up -d --no-build --wait --wait-timeout 120 web \
+      && verify_health "$previous_sha" "$previous_mode"
+    then
+      echo 'Vorige image en modus zijn via health teruggelezen.' >&2
+    else
+      echo 'Herstel is niet bevestigd; operatoractie vereist.' >&2
+    fi
+  else
+    compose_runtime \
+      "$image" \
+      "$sha" \
+      "$selected_mode" \
+      stop web \
+      || true
+  fi
+
+  exit 1
+}
+
+trap recover ERR
+
+compose_runtime \
+  "$image" \
+  "$sha" \
+  "$selected_mode" \
+  up -d --no-build --wait --wait-timeout 120 web
+
+verify_health "$sha" "$selected_mode"
+
+python3 - "$state" "$image" "$sha" "$run_id" "$selected_mode" <<'PY'
 import datetime
 import json
 import os
 import pathlib
 import sys
 
-state, image, source_sha, run_id = sys.argv[1:]
+state, image, source_sha, run_id, mode = sys.argv[1:]
 root = pathlib.Path(state)
 
 record = {
@@ -378,7 +464,8 @@ record = {
     "staging_verified_at": datetime.datetime.now(
         datetime.timezone.utc
     ).isoformat(),
-    "mode": "prototype",
+    "mode": mode,
+    "database_reachable": mode == "app",
     "database_migrated": False,
     "v1_ready": False,
 }
@@ -404,5 +491,5 @@ PY
 
 trap - ERR
 
-echo 'Cluvo stagingprototype gepubliceerd en exact-SHA health gecontroleerd.'
+echo "Cluvo staging gepubliceerd in $selected_mode en exact-SHA health gecontroleerd."
 echo 'Production blijft technisch geblokkeerd.'

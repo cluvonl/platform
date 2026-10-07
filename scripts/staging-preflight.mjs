@@ -70,7 +70,11 @@ const metadataQuery = `select json_build_object(
  'native_session_policies',(select count(*) from pg_policy p join pg_class c on c.oid=p.polrelid join pg_namespace n on n.oid=c.relnamespace where n.nspname='app' and p.polname='native_session_required' and not p.polpermissive),
  'api_definers',(select count(*) from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='api' and p.prosecdef),
  'migration_table_exists',to_regclass('supabase_migrations.schema_migrations') is not null,
- 'command_owner_restricted',coalesce((select not rolsuper and not rolbypassrls from pg_roles where rolname='cluvo_command_owner'),false));`;
+ 'command_owner_restricted',coalesce((select not rolsuper and not rolbypassrls from pg_roles where rolname='cluvo_command_owner'),false),
+ 'native_session_policy_ddl_available',coalesce((select rolsuper from pg_roles where rolname=current_user),false) or coalesce((select pg_has_role(current_user,c.relowner,'USAGE') from pg_class c where c.oid=to_regclass('auth.sessions')),false),
+ 'native_session_select_grantable',has_table_privilege(current_user,'auth.sessions','SELECT WITH GRANT OPTION'),
+ 'native_identity_select_grantable',has_table_privilege(current_user,'auth.users','SELECT WITH GRANT OPTION'));
+`;
 
 async function checkDatabase(environment, project, expected, execute) {
   const target = databaseTarget(environment.MIGRATION_DATABASE_URL, project.ref);
@@ -87,7 +91,7 @@ async function checkDatabase(environment, project, expected, execute) {
     if (!Number.isSafeInteger(data[field]) || data[field] < 0) fail('DATABASE_METADATA_INVALID');
     counts[field] = data[field];
   }
-  for (const field of ['ssl_in_use', 'migration_table_exists', 'command_owner_restricted']) {
+  for (const field of ['ssl_in_use', 'migration_table_exists', 'command_owner_restricted', 'native_session_policy_ddl_available', 'native_session_select_grantable', 'native_identity_select_grantable']) {
     if (typeof data[field] !== 'boolean') fail('DATABASE_METADATA_INVALID');
   }
   const applied = data.migration_table_exists
@@ -100,6 +104,9 @@ async function checkDatabase(environment, project, expected, execute) {
     database_backend_tls:data.ssl_in_use,
     server_certificate_verified:Boolean(environment.MIGRATION_SSL_ROOT_CERT_PATH) || target.sslMode === 'verify-full', ...counts,
     command_owner_restricted:data.command_owner_restricted, applied_migrations:applied.length,
+    native_session_policy_ddl_available:data.native_session_policy_ddl_available,
+    native_session_select_grantable:data.native_session_select_grantable,
+    native_identity_select_grantable:data.native_identity_select_grantable,
     expected_migrations:expected.length, migration_history_consistent:consistent,
     pending_migrations:prefix ? expected.length - applied.length : null,
     schema_ready:consistent && applied.length === expected.length && data.app_tables > 0

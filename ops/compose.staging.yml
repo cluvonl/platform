@@ -9,7 +9,7 @@ services:
       - /etc/cluvo/staging.env
     environment:
       APP_ENV: staging
-      APP_MODE: prototype
+      APP_MODE: ${CLUVO_APP_MODE:?validated staging mode required}
       RELEASE_SHA: ${CLUVO_RELEASE_SHA:?exact commit required}
     cap_drop: [ALL]
     security_opt: [no-new-privileges:true]

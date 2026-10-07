@@ -1,5 +1,8 @@
 {
   "image_repository": "ghcr.io/REPLACE_OWNER/REPLACE_REPOSITORY",
   "app_url": "https://STAGING_DOMAIN_REPLACE_ME",
+  "app_mode": "prototype",
+  "supabase_project_ref": "",
+  "compatible_rollback_shas": [],
   "supabase_url": ""
 }
