@@ -62,7 +62,12 @@ function queryDatabase(query, target, environment, execute) {
   return result.stdout.trim();
 }
 
-const metadataQuery = `select json_build_object(
+const metadataQuery = `with native_policy_capability as (
+ select
+  coalesce((select rolsuper from pg_roles where rolname=current_user),false) or coalesce((select pg_has_role(current_user,c.relowner,'USAGE') from pg_class c where c.oid=to_regclass('auth.sessions')),false) as owner_available,
+  (current_setting('shared_preload_libraries') || ',' || current_setting('session_preload_libraries') || ',' || current_setting('local_preload_libraries')) ~ '(^|,)\\s*supautils\\s*(,|$)'
+   and coalesce((coalesce(nullif(current_setting('supautils.policy_grants',true),''),'{}')::jsonb -> current_user) ? 'auth.sessions',false) as provider_granted
+) select json_build_object(
  'postgres_version_num',current_setting('server_version_num')::integer,
  'ssl_in_use',coalesce((select ssl from pg_stat_ssl where pid=pg_backend_pid()),false),
  'app_tables',(select count(*) from pg_tables where schemaname='app'),
@@ -71,7 +76,9 @@ const metadataQuery = `select json_build_object(
  'api_definers',(select count(*) from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='api' and p.prosecdef),
  'migration_table_exists',to_regclass('supabase_migrations.schema_migrations') is not null,
  'command_owner_restricted',coalesce((select not rolsuper and not rolbypassrls from pg_roles where rolname='cluvo_command_owner'),false),
- 'native_session_policy_ddl_available',coalesce((select rolsuper from pg_roles where rolname=current_user),false) or coalesce((select pg_has_role(current_user,c.relowner,'USAGE') from pg_class c where c.oid=to_regclass('auth.sessions')),false),
+ 'native_session_policy_owner_available',(select owner_available from native_policy_capability),
+ 'native_session_policy_provider_granted',(select provider_granted from native_policy_capability),
+ 'native_session_policy_ddl_available',(select owner_available or provider_granted from native_policy_capability),
  'native_session_select_grantable',has_table_privilege(current_user,'auth.sessions','SELECT WITH GRANT OPTION'),
  'native_identity_select_grantable',has_table_privilege(current_user,'auth.users','SELECT WITH GRANT OPTION'));
 `;
@@ -91,7 +98,7 @@ async function checkDatabase(environment, project, expected, execute) {
     if (!Number.isSafeInteger(data[field]) || data[field] < 0) fail('DATABASE_METADATA_INVALID');
     counts[field] = data[field];
   }
-  for (const field of ['ssl_in_use', 'migration_table_exists', 'command_owner_restricted', 'native_session_policy_ddl_available', 'native_session_select_grantable', 'native_identity_select_grantable']) {
+  for (const field of ['ssl_in_use', 'migration_table_exists', 'command_owner_restricted', 'native_session_policy_owner_available', 'native_session_policy_provider_granted', 'native_session_policy_ddl_available', 'native_session_select_grantable', 'native_identity_select_grantable']) {
     if (typeof data[field] !== 'boolean') fail('DATABASE_METADATA_INVALID');
   }
   const applied = data.migration_table_exists
@@ -104,6 +111,8 @@ async function checkDatabase(environment, project, expected, execute) {
     database_backend_tls:data.ssl_in_use,
     server_certificate_verified:Boolean(environment.MIGRATION_SSL_ROOT_CERT_PATH) || target.sslMode === 'verify-full', ...counts,
     command_owner_restricted:data.command_owner_restricted, applied_migrations:applied.length,
+    native_session_policy_owner_available:data.native_session_policy_owner_available,
+    native_session_policy_provider_granted:data.native_session_policy_provider_granted,
     native_session_policy_ddl_available:data.native_session_policy_ddl_available,
     native_session_select_grantable:data.native_session_select_grantable,
     native_identity_select_grantable:data.native_identity_select_grantable,

@@ -2,6 +2,11 @@ name: Staging credentials check
 
 on:
   workflow_dispatch:
+    inputs:
+      verify_system_ca:
+        description: Verify the database certificate and hostname using the runner CA bundle
+        type: boolean
+        default: true
 
 permissions:
   contents: read
@@ -33,6 +38,7 @@ jobs:
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
           INVITATION_TOKEN_SECRET: ${{ secrets.INVITATION_TOKEN_SECRET }}
           MIGRATION_DATABASE_URL: ${{ secrets.MIGRATION_DATABASE_URL }}
+          MIGRATION_SSL_ROOT_CERT_PATH: ${{ inputs.verify_system_ca && '/etc/ssl/certs/ca-certificates.crt' || '' }}
           SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
           SENDGRID_FROM_EMAIL: ${{ vars.SENDGRID_FROM_EMAIL }}
         run: node scripts/staging-preflight.mjs
