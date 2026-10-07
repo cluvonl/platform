@@ -1,0 +1,22 @@
+{
+  "observed_at": "2026-10-07T20:56:17.346501+00:00",
+  "send_source_sha": "22bcad1effdce1e13c234565fac306978121b89b",
+  "send_workflow_run_id": 37683803064,
+  "test_reference": "37683803064",
+  "subject": "Cluvo \u2014 testmail voor staging",
+  "sender": "info@cluvo.nl",
+  "recipient": "configured_staging_test_recipient",
+  "recipient_value_exported": false,
+  "provider_accepted": true,
+  "user_receipt_verified": true,
+  "receipt_location": "inbox",
+  "receipt_basis": "user explicitly confirmed the subject and test reference in the question",
+  "actual_delivery_verified": true,
+  "provider_message_id_binding_verified": false,
+  "new_email_sent_after_confirmation": false,
+  "smtp_configuration_verified": false,
+  "native_otp_verified": false,
+  "invitation_delivery_verified": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

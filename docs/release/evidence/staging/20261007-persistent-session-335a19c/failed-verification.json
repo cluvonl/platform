@@ -1,0 +1,18 @@
+{
+  "workflow_run_id": 37686405369,
+  "workflow_url": "https://github.com/cluvonl/platform/actions/runs/37686405369",
+  "source_sha": "335a19c22f6bc8e2f75459b03494f0ce66b43767",
+  "workflow_conclusion": "failure",
+  "artifact_sha256": "913192ee440aaf6181e4e1753be35db1a249c7cc95b768758621fdefd1fa2a7e",
+  "artifact_bytes_preserved": true,
+  "observed_error": "BACKEND_IDENTITY_UNVERIFIED",
+  "specific_identity_failure_not_exported_by_this_version": true,
+  "completed_checks": 0,
+  "lock_acquisition_not_reached": true,
+  "snapshot_not_started": true,
+  "ddl_requested": false,
+  "backup_created": false,
+  "migration_ready": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

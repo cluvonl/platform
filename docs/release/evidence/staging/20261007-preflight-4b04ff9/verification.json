@@ -1,0 +1,20 @@
+{
+  "workflow_run_id": 37685590666,
+  "workflow_url": "https://github.com/cluvonl/platform/actions/runs/37685590666",
+  "source_sha": "4b04ff9cecca48d4b3ac0d6d19a40e8ed365ed92",
+  "workflow_conclusion": "success",
+  "producer_observed_at": "2026-10-07T20:54:58.966Z",
+  "artifact_sha256": "3bdadd7297c87b1deeeed8ddfb92c72e197315ce408d198c9bfdea53bcb6d710",
+  "artifact_bytes_preserved": true,
+  "database_mutations": false,
+  "migration_history_entries": 0,
+  "app_tables": 0,
+  "pending_migrations": 16,
+  "client_tls_verified": true,
+  "snapshot_consistent_inventory_proven": false,
+  "app_ready": false,
+  "v1_ready": false,
+  "production_enabled": false,
+  "mail_receipt_proof": "../20261007-mail-after-domain-verification/receipt-confirmation.json",
+  "mail_receipt_is_separate_human_observation": true
+}

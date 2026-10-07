@@ -201,10 +201,10 @@ class BackendIdentity(unittest.TestCase):
         return {'backend_pid':123,'backend_start':'2026-10-07 10:00:00.123456+00',
                 'database':'postgres','primary':True}
 
-    def deny(self,value,wire,**options):
+    def deny(self,value,wire,expected='BACKEND_IDENTITY_UNVERIFIED',**options):
         with self.assertRaises(module.Failure) as caught:
             module.verified_backend_identity(value,wire,**options)
-        self.assertEqual(caught.exception.code,'BACKEND_IDENTITY_UNVERIFIED')
+        self.assertEqual(caught.exception.code,expected)
 
     def test_direct_same_pid(self):
         source=self.value()
@@ -213,7 +213,7 @@ class BackendIdentity(unittest.TestCase):
         self.assertIsNot(result,source)
 
     def test_direct_mismatch_is_still_denied(self):
-        self.deny(self.value(),456)
+        self.deny(self.value(),456,expected='BACKEND_PID_MISMATCH')
 
     def test_session_preserves_sql_backend_instead_of_proxy_cancel_pid(self):
         result=module.verified_backend_identity(self.value(),456,session_pooler=True)
@@ -225,19 +225,29 @@ class BackendIdentity(unittest.TestCase):
 
     def test_invalid_sql_pids(self):
         for pid in [None,False,True,0,-1,1.5,'123',2**31]:
-            self.deny({**self.value(),'backend_pid':pid},456,session_pooler=True)
+            self.deny({**self.value(),'backend_pid':pid},456,
+                      expected='BACKEND_SQL_PID_UNVERIFIED',session_pooler=True)
 
     def test_invalid_wire_pids(self):
-        for pid in [None,False,True,0,-1,1.5,'123',2**31]:
-            self.deny(self.value(),pid,session_pooler=True)
+        for pid in [None,False,True,0,1.5,'123',2**31,-(2**31)-1]:
+            self.deny(self.value(),pid,expected='BACKEND_PROTOCOL_PID_UNVERIFIED',session_pooler=True)
+
+    def test_session_signed_protocol_identifier_keeps_positive_sql_identity(self):
+        for wire in [-1,-(2**31),2**31-1]:
+            result=module.verified_backend_identity(self.value(),wire,session_pooler=True)
+            self.assertEqual(result,self.value())
+            self.deny(self.value(),wire,expected='BACKEND_PROTOCOL_PID_UNVERIFIED'
+                      if wire<0 else 'BACKEND_PID_MISMATCH')
 
     def test_primary_and_database_never_become_optional(self):
         for change in [{'database':'other'},{'primary':False},{'primary':1}]:
-            self.deny({**self.value(),**change},456,session_pooler=True)
+            self.deny({**self.value(),**change},456,expected='BACKEND_DATABASE_UNVERIFIED'
+                      if 'database' in change else 'BACKEND_PRIMARY_UNVERIFIED',session_pooler=True)
 
     def test_backend_start_must_be_valid_and_aware(self):
         for start in ['',None,'not-a-date','2026-10-07 10:00:00','2026-02-30 10:00:00+00','x'*129]:
-            self.deny({**self.value(),'backend_start':start},456,session_pooler=True)
+            self.deny({**self.value(),'backend_start':start},456,
+                      expected='BACKEND_START_UNVERIFIED',session_pooler=True)
 
     def test_foreign_fields_or_missing_identity_are_denied(self):
         self.deny({**self.value(),'actor':'synthetic'},456,session_pooler=True)
@@ -327,6 +337,18 @@ class BackendIdentity(unittest.TestCase):
         self.assertEqual(len(queries),3)
         self.assertIn('already_held',queries[1])
         self.assertIn('pg_try_advisory_lock',queries[2])
+        self.assertEqual(finishes,[True])
+
+    def test_constructor_with_signed_protocol_identifier_still_requires_backend_lock(self):
+        pq,env,queries,finishes,query=self.constructor_lock_fixture(False)
+        pq.PQbackendPID=lambda *_:-(2**31)
+        with patch.object(module,'bindings_library',return_value=(pq,lambda f:f)),\
+             patch.object(module.Session,'one_json',query),\
+             patch.object(module.Session,'check_lock',side_effect=module.Failure('SESSION_OR_EXCLUSIVE_LOCK_CHANGED')):
+            with self.assertRaises(module.Failure) as caught:
+                module.Session(env,123)
+        self.assertEqual(caught.exception.code,'SESSION_OR_EXCLUSIVE_LOCK_CHANGED')
+        self.assertEqual(len(queries),3)
         self.assertEqual(finishes,[True])
 
 

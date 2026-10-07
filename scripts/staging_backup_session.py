@@ -40,15 +40,22 @@ def verified_backend_identity(initial, wire_pid, *, session_pooler=False):
     require(type(initial) is dict and set(initial)=={'backend_pid','backend_start','database','primary'},
             'BACKEND_IDENTITY_UNVERIFIED')
     pid,start=initial['backend_pid'],initial['backend_start']
-    require(type(pid) is int and 0<pid<2**31 and type(wire_pid) is int and 0<wire_pid<2**31
-            and type(session_pooler) is bool and type(start) is str and 1<=len(start)<=128
-            and initial['database']=='postgres' and initial['primary'] is True,
-            'BACKEND_IDENTITY_UNVERIFIED')
+    require(type(session_pooler) is bool, 'BACKEND_IDENTITY_UNVERIFIED')
+    require(type(pid) is int and 0<pid<2**31, 'BACKEND_SQL_PID_UNVERIFIED')
+    # Supavisor emits its own 32-bit cancellation identifier. libpq exposes
+    # that bit pattern as a signed C int; it is not an OS PID on this route.
+    # SQL identity and the physical-backend lock remain mandatory.
+    require(type(wire_pid) is int and -(2**31)<=wire_pid<2**31 and wire_pid!=0
+            and (session_pooler or wire_pid>0), 'BACKEND_PROTOCOL_PID_UNVERIFIED')
+    require(initial['database']=='postgres', 'BACKEND_DATABASE_UNVERIFIED')
+    require(initial['primary'] is True, 'BACKEND_PRIMARY_UNVERIFIED')
+    require(type(start) is str and 1<=len(start)<=128, 'BACKEND_START_UNVERIFIED')
     try:
         parsed=datetime.fromisoformat(start)
     except (ValueError,TypeError):
-        raise Failure('BACKEND_IDENTITY_UNVERIFIED') from None
-    require(parsed.tzinfo is not None and (session_pooler or pid==wire_pid),'BACKEND_IDENTITY_UNVERIFIED')
+        raise Failure('BACKEND_START_UNVERIFIED') from None
+    require(parsed.tzinfo is not None, 'BACKEND_START_UNVERIFIED')
+    require(session_pooler or pid==wire_pid, 'BACKEND_PID_MISMATCH')
     return dict(initial)
 
 def verified_new_session_lock(value):

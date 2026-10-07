@@ -1,0 +1,38 @@
+{
+  "scope": "LOCAL_COMPONENT_TESTS_ONLY",
+  "observed_at": "2026-10-07T21:05:21.697010+00:00",
+  "node_tests": {
+    "pass": 286,
+    "fail": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "targeted_node_tests": 12,
+  "python_unit_tests": 31,
+  "lint_zero_warnings": true,
+  "actual_database_calls": 0,
+  "actual_hosted_calls": 0,
+  "provider_mutations": false,
+  "ddl_executed": false,
+  "backup_created": false,
+  "restore_executed": false,
+  "migration_ready": false,
+  "v1_ready": false,
+  "production_enabled": false,
+  "change": "allow signed nonzero 32-bit protocol cancellation identifiers only on the fixed session pooler route; retain positive SQL backend identity and exclusive lock; distinguish fixed identity error codes without exporting values",
+  "specific_prior_failure_cause": "UNKNOWN",
+  "prior_hosted_failed_run": 37686405369,
+  "prior_hosted_error": "BACKEND_IDENTITY_UNVERIFIED",
+  "historical_proofs_preserved": true,
+  "original16_migration_bytes_unchanged": true,
+  "current_typecheck_and_build": "AWAITING_FULL_CI",
+  "files": {
+    "scripts/staging-session-probe.mjs": "3042642fb534543d547d6ea6032f8e6ec194d33bc972491d0df64b0afe27821d",
+    "scripts/staging_backup_session.py": "b44c01ae1a448eacdf7e41b35f52e8f1599089203db9a96716184bb5742150d5",
+    "scripts/staging_session_probe.py": "fdc85f6f52f01a7811781d4962f3339f74873e3927ea32af8dfc396135a54d2c",
+    "tests/staging-session-probe.test.mjs": "e12963ed800e05157766462cc637f179d57265fe11bbad82b7c9fa6daf9b739c",
+    "tests/helpers/staging-session-probe-tests.py": "e19bfcecb2b03a7ff7490df8c7f391f14ebfe52cbd00160e6db4f3d164fd36bf",
+    ".github/workflows/staging-session-probe.yml": "74af756ef716049b35d2268cc9c62855a5eb4e9b3e424e2e03430b21a9ceb18a",
+    "tests/helpers/staging-session-process-env.mjs": "9e20150afacdf66cba4efa344429f07c03ef525dc4005ff8355779aab34c96c2"
+  }
+}

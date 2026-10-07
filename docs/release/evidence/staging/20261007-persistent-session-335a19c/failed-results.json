@@ -1,0 +1,33 @@
+{
+  "environment": "staging",
+  "project_ref": "fbozlbgmktkgcdfqdaaz",
+  "observed_at": "2026-10-07T21:01:40.094Z",
+  "measurement_only": true,
+  "email_sent": false,
+  "provider_resources_created": false,
+  "ddl_requested": false,
+  "negative_dml_uses_false_predicate": true,
+  "private_identifiers_exported": false,
+  "backup_created": false,
+  "restore_executed": false,
+  "snapshot_import_verified": false,
+  "catalog_data_compared": false,
+  "migration_ready": false,
+  "remote_ddl_ready": false,
+  "v1_ready": false,
+  "production_enabled": false,
+  "source_sha": "335a19c22f6bc8e2f75459b03494f0ce66b43767",
+  "passed": false,
+  "scope": "HOSTED_TRANSPORT_ONLY",
+  "checks": [],
+  "transport": null,
+  "returned_sessions_closed": true,
+  "error": "BACKEND_IDENTITY_UNVERIFIED",
+  "sqlstate": null,
+  "target_mode": "session_pooler",
+  "source_pins": {
+    "ca": "6ecd239038a7db063a6619b71742372ecfe06c0b0ec12a9993fee4445bf0d4d6",
+    "session": "747e6b70660be719162abae7b993d74eab12796f48a4b402f1dd2a5fd1077e0e",
+    "probe": "f9477adf973929fce11b35278ff2ed0b140ce0feae49561b3eaf5c79980670ed"
+  }
+}
