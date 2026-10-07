@@ -26,7 +26,8 @@
     "check:release": "node scripts/check-release.mjs",
     "db:test:invitations": "node scripts/db-concurrency-invitations.mjs && node scripts/db-concurrency-invitation-lifecycle.mjs",
     "db:test:reconfirmation": "node scripts/db-concurrency-intake-reconfirmation.mjs",
-    "db:test:assistance": "node scripts/db-concurrency-intake-assistance.mjs"
+    "db:test:assistance": "node scripts/db-concurrency-intake-assistance.mjs",
+    "db:test:staging-data": "node scripts/test-staging-data-sql.mjs"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",

@@ -1,0 +1,49 @@
+name: Staging email delivery check
+
+on:
+  workflow_dispatch:
+    inputs:
+      send_test_email:
+        description: Send one agreed test email to the configured staging recipient
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cluvo-staging-mail-check
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    if: github.repository == 'cluvonl/platform' && github.ref == 'refs/heads/staging'
+    runs-on: ubuntu-24.04
+    environment: staging
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: '.nvmrc'
+      - name: Check or send the explicitly requested allowlisted test email
+        env:
+          APP_ENV: staging
+          RELEASE_SHA: ${{ github.sha }}
+          STAGING_SUPABASE_PROJECT_REF: ${{ vars.STAGING_SUPABASE_PROJECT_REF }}
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SEND_STAGING_TEST_EMAIL: ${{ inputs.send_test_email }}
+          STAGING_TEST_RECIPIENT: ${{ secrets.STAGING_TEST_RECIPIENT }}
+          MAIL_ALLOWLIST: ${{ secrets.MAIL_ALLOWLIST }}
+          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+          SENDGRID_FROM_EMAIL: ${{ vars.SENDGRID_FROM_EMAIL }}
+        run: node scripts/staging-mail-check.mjs
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: cluvo-staging-mail-check-${{ github.sha }}-${{ github.run_id }}
+          path: staging-mail-check.json
+          if-no-files-found: error
+          retention-days: 30

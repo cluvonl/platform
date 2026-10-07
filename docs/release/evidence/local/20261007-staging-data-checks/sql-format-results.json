@@ -1,0 +1,1953 @@
+{
+  "observed_at": "2026-10-07T07:44:21.592Z",
+  "scope": "local_postgresql17_read_only_synthetic_values",
+  "parent_source_sha": "318d91774cdf022dfaa8e59550b5f33895cfedfc",
+  "passed": true,
+  "postgres_version_num": 170011,
+  "auth_field_count": 5,
+  "sql_case_count": 158,
+  "baseline_query_count": 5,
+  "metadata_query_count": 1,
+  "executed_select_count": 164,
+  "case_assertion_count": 948,
+  "generated_inventory_sql_executed": true,
+  "transaction_read_only": true,
+  "rollback_executed": true,
+  "actual_auth_rows_read": false,
+  "fixture_rows_written": false,
+  "database_mutations": false,
+  "ciphertext_values_exported": false,
+  "provider_values_exported": false,
+  "secret_values_exported": false,
+  "crypto_contract_source_commit": "ce9a8eee0cc042be8c7a42981a7ddae631e41d91",
+  "primary_sources": [
+    "https://github.com/supabase/auth/blob/ce9a8eee0cc042be8c7a42981a7ddae631e41d91/internal/crypto/crypto.go#L55",
+    "https://github.com/supabase/auth/blob/ce9a8eee0cc042be8c7a42981a7ddae631e41d91/internal/crypto/refresh_tokens.go#L16",
+    "https://github.com/supabase/auth/blob/ce9a8eee0cc042be8c7a42981a7ddae631e41d91/internal/models/refresh_token.go#L151"
+  ],
+  "sources": [
+    {
+      "file": "scripts/test-staging-data-sql.mjs",
+      "bytes": 15396,
+      "sha256": "571580c9436662c7509f7aa5840d23a9500834d6444af4b72f41667684f28395"
+    },
+    {
+      "file": "scripts/staging-data-inventory.mjs",
+      "bytes": 15854,
+      "sha256": "932f41b22e512c7bf8a67797e8a4d399ed1692924c8595b4bd65e15965c7747b"
+    },
+    {
+      "file": "scripts/staging-database-process.mjs",
+      "bytes": 1963,
+      "sha256": "837a3a8f42960e14d0d04526c6c90016fb40a42c9ca576510ff5ab99f2f13684"
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "auth_password_envelopes:null_empty",
+      "passed": true,
+      "classification": "empty",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 0,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:string_empty",
+      "passed": true,
+      "classification": "empty",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 0,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:standard_base64_envelope",
+      "passed": true,
+      "classification": "present",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 1,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:standard_base64_unpadded_data",
+      "passed": true,
+      "classification": "present",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 1,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:malformed_json",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:leading_whitespace_envelope",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:base64url_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:base64url_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:short_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:padded_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:missing_algorithm",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:missing_key_id",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:missing_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:missing_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:wrong_algorithm",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:numeric_algorithm",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:numeric_key_id",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:numeric_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:numeric_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:null_key_id",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:null_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:null_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:empty_key_id",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:empty_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:empty_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:short_base64_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:excess_base64_padding",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:nonempty_unknown",
+      "passed": true,
+      "classification": "AUTH_LEGACY_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:field_legacy",
+      "passed": true,
+      "classification": "empty",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 1,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:mixed_empty_cipher_and_legacy",
+      "passed": true,
+      "classification": "present",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 1,
+        "legacy_count": 1,
+        "nonempty_count": 2,
+        "row_count": 4
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:null_empty",
+      "passed": true,
+      "classification": "empty",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 0,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:string_empty",
+      "passed": true,
+      "classification": "empty",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 0,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:standard_base64_envelope",
+      "passed": true,
+      "classification": "present",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 1,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:standard_base64_unpadded_data",
+      "passed": true,
+      "classification": "present",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 1,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:malformed_json",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:leading_whitespace_envelope",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:base64url_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:base64url_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:short_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:padded_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:missing_algorithm",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:missing_key_id",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:missing_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:missing_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:wrong_algorithm",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:numeric_algorithm",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:numeric_key_id",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:numeric_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:numeric_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:null_key_id",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:null_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:null_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:empty_key_id",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:empty_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:empty_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:short_base64_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:excess_base64_padding",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:nonempty_unknown",
+      "passed": true,
+      "classification": "AUTH_LEGACY_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:field_legacy",
+      "passed": true,
+      "classification": "empty",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 1,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:mixed_empty_cipher_and_legacy",
+      "passed": true,
+      "classification": "present",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 1,
+        "legacy_count": 1,
+        "nonempty_count": 2,
+        "row_count": 4
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:null_empty",
+      "passed": true,
+      "classification": "empty",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 0,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:string_empty",
+      "passed": true,
+      "classification": "empty",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 0,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:standard_base64_envelope",
+      "passed": true,
+      "classification": "present",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 1,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:standard_base64_unpadded_data",
+      "passed": true,
+      "classification": "present",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 1,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:malformed_json",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:leading_whitespace_envelope",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:base64url_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:base64url_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:short_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:padded_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:missing_algorithm",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:missing_key_id",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:missing_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:missing_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:wrong_algorithm",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:numeric_algorithm",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:numeric_key_id",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:numeric_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:numeric_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:null_key_id",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:null_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:null_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:empty_key_id",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:empty_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:empty_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:short_base64_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:excess_base64_padding",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:nonempty_unknown",
+      "passed": true,
+      "classification": "AUTH_LEGACY_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:field_legacy",
+      "passed": true,
+      "classification": "empty",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 1,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:mixed_empty_cipher_and_legacy",
+      "passed": true,
+      "classification": "present",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 1,
+        "legacy_count": 1,
+        "nonempty_count": 2,
+        "row_count": 4
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:null_empty",
+      "passed": true,
+      "classification": "empty",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 0,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:string_empty",
+      "passed": true,
+      "classification": "empty",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 0,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:standard_base64_envelope",
+      "passed": true,
+      "classification": "present",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 1,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:standard_base64_unpadded_data",
+      "passed": true,
+      "classification": "present",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 1,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:malformed_json",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:leading_whitespace_envelope",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:base64url_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:base64url_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:short_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:padded_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:missing_algorithm",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:missing_key_id",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:missing_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:missing_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:wrong_algorithm",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:numeric_algorithm",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:numeric_key_id",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:numeric_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:numeric_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:null_key_id",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:null_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:null_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:empty_key_id",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:empty_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:empty_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:short_base64_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:excess_base64_padding",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:nonempty_unknown",
+      "passed": true,
+      "classification": "AUTH_LEGACY_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:field_legacy",
+      "passed": true,
+      "classification": "empty",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 1,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:mixed_empty_cipher_and_legacy",
+      "passed": true,
+      "classification": "present",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 1,
+        "legacy_count": 1,
+        "nonempty_count": 2,
+        "row_count": 4
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:null_empty",
+      "passed": true,
+      "classification": "empty",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 0,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:string_empty",
+      "passed": true,
+      "classification": "empty",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 0,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:standard_base64_envelope",
+      "passed": true,
+      "classification": "present",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 1,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:standard_base64_unpadded_data",
+      "passed": true,
+      "classification": "present",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 1,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:malformed_json",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:leading_whitespace_envelope",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:base64url_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:base64url_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:short_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:padded_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:missing_algorithm",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:missing_key_id",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:missing_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:missing_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:wrong_algorithm",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:numeric_algorithm",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:numeric_key_id",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:numeric_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:numeric_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:null_key_id",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:null_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:null_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:empty_key_id",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:empty_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:empty_nonce",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:short_base64_data",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:excess_base64_padding",
+      "passed": true,
+      "classification": "AUTH_ENVELOPE_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:nonempty_unknown",
+      "passed": true,
+      "classification": "AUTH_LEGACY_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:field_legacy",
+      "passed": true,
+      "classification": "AUTH_LEGACY_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_oauth_provider_envelopes:mixed_empty_cipher_and_legacy",
+      "passed": true,
+      "classification": "AUTH_LEGACY_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 1,
+        "valid_envelope_count": 1,
+        "legacy_count": 0,
+        "nonempty_count": 2,
+        "row_count": 4
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:argon2_legacy",
+      "passed": true,
+      "classification": "empty",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 1,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_password_envelopes:firebase_scrypt_unclassified",
+      "passed": true,
+      "classification": "AUTH_LEGACY_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_factor_envelopes:short_factor_secret",
+      "passed": true,
+      "classification": "AUTH_LEGACY_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_mfa_challenge_envelopes:short_otp",
+      "passed": true,
+      "classification": "AUTH_LEGACY_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:padded_hmac",
+      "passed": true,
+      "classification": "AUTH_LEGACY_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:short_hmac",
+      "passed": true,
+      "classification": "AUTH_LEGACY_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:long_hmac",
+      "passed": true,
+      "classification": "AUTH_LEGACY_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    },
+    {
+      "case_id": "auth_session_hmac_envelopes:noncanonical_hmac_tail",
+      "passed": true,
+      "classification": "AUTH_LEGACY_FORMAT_UNKNOWN",
+      "counts": {
+        "count": 0,
+        "valid_envelope_count": 0,
+        "legacy_count": 0,
+        "nonempty_count": 1,
+        "row_count": 1
+      }
+    }
+  ],
+  "acceptance": {
+    "remote_checks_executed": false,
+    "actual_envelope_decryption_verified": false,
+    "hosted_auth_binary_version_verified": false,
+    "full_database_restore_verified": false,
+    "provider_services_verified": false,
+    "ddl_authorized": false,
+    "v1_ready": false,
+    "production_enabled": false
+  }
+}

@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {databaseEnvironment, databaseTarget, stagingPreflight} from '../scripts/staging-preflight.mjs';
+import {API_CONFIG_FIELDS} from '../scripts/staging-api-config-metadata.mjs';
+import {CATALOG_SQL} from '../scripts/staging-data-inventory.mjs';
 
 const ref = 'abcdefghijklmnopqrst';
 const password = 'not-a-password:@/#';
@@ -24,6 +26,7 @@ function fixtures({metadata = emptyDatabase, applied = '', fetchOverride, databa
     if (fetchOverride) {const response = await fetchOverride(url, options); if (response) return response;}
     assert.equal(options.redirect, 'error', 'no credential-bearing redirect');
     if (url.endsWith('/auth/v1/settings')) return {status:200, json:async () => ({external:{email:true}, autoconfirm:false})};
+    if (url.endsWith('/auth/v1/health')) return {status:200, json:async () => ({version:'v2.197.1'})};
     if (url.includes('/rest/v1/')) return {status:200};
     assert.equal(url, 'https://api.sendgrid.com/v3/mail/send');
     assert.equal(options.method, 'POST');
@@ -32,7 +35,7 @@ function fixtures({metadata = emptyDatabase, applied = '', fetchOverride, databa
   };
   const execute = (command, args, options) => {
     commands.push({command, args, options});
-    if (databaseOverride) return databaseOverride;
+    if (databaseOverride) return typeof databaseOverride === 'function' ? databaseOverride(command, args, options) : databaseOverride;
     if (options.input === '\\conninfo\n') return {status:0, stdout:connectionInfo, stderr:''};
     return {status:0, stdout:options.input.startsWith('select version') ? applied : JSON.stringify(metadata), stderr:''};
   };
@@ -172,4 +175,71 @@ test('disabled email verification or an inaccessible API schema never makes the 
     }});
     assert.equal((await stagingPreflight(environment, runtime)).core_dependencies_ready, false);
   }
+});
+
+const verifiedRef = 'fbozlbgmktkgcdfqdaaz';
+const verifiedEnvironment = {...environment, STAGING_SUPABASE_PROJECT_REF:verifiedRef,
+  SUPABASE_URL:`https://${verifiedRef}.supabase.co`,
+  MIGRATION_DATABASE_URL:`postgresql://postgres:contract@db.${verifiedRef}.supabase.co:5432/postgres`,
+  MIGRATION_SSL_ROOT_CERT_PATH:'/trusted/public-ca.pem'};
+const inventoryCatalog = {namespaces:['auth'], role_security:{superuser:false, bypass_rls:false}, tce_labels:[],
+  relations:[{schema_name:'auth', table_name:'users', kind:'r', count_readable:true, rls_enabled:false,
+    force_rls:false, owner_matches_current:false, row_security_active:false,
+    columns:[{name:'encrypted_password', type:'character varying(255)'}]}]};
+const apiConfiguration = Object.fromEntries(API_CONFIG_FIELDS.map((field) => [field, false]));
+
+function extendedDatabase(_command, _args, options) {
+  assert.equal(options.env.PGSSLMODE, 'verify-full');
+  assert.equal(options.env.PGSSLROOTCERT, '/trusted/public-ca.pem');
+  assert.match(options.env.PGOPTIONS, /default_transaction_read_only=on/);
+  const sql = options.input;
+  const output = sql === '\\conninfo\n' ? 'SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384)'
+    : sql === CATALOG_SQL ? JSON.stringify(inventoryCatalog)
+    : sql.startsWith('-- SELECT-only capability context;') ? JSON.stringify({...apiConfiguration, private:'PRIVATE_CONTRACT_MARKER'})
+    : sql.startsWith("SELECT json_build_object('id',") ? JSON.stringify({id:'auth_password_envelopes', count:0,
+      valid_envelope_count:0, legacy_count:0, nonempty_count:0, row_count:0, private:'PRIVATE_CONTRACT_MARKER'})
+    : JSON.stringify(emptyDatabase);
+  return {status:0, stdout:output, stderr:''};
+}
+
+test('verified preflight integrates bounded async counts, boolean-only capability and allowlisted provider metadata', async () => {
+  const runtime = fixtures({databaseOverride:async (...args) => extendedDatabase(...args),
+    fetchOverride:(url) => {
+      if (url.includes('/rest/v1/')) return {status:406, json:async () => ({code:'PGRST106', message:'PRIVATE_CONTRACT_MARKER'})};
+    }});
+  const report = await stagingPreflight(verifiedEnvironment, runtime);
+  assert.equal(report.passed, true);
+  assert.equal(report.checks.database.server_certificate_verified, true);
+  assert.equal(report.checks.backup_inventory.metadata_complete, true);
+  assert.equal(report.checks.backup_inventory.key_dependent_data, 'proven_empty');
+  assert.equal(report.checks.backup_inventory.full_schema_decryptability_verified, false);
+  assert.equal(report.checks.backup_inventory.count_snapshot_consistent, false);
+  assert.equal(report.checks.api_configuration.ddl_executed, false);
+  assert.equal(report.checks.auth.api_probe_error, 'PGRST106');
+  assert.equal(report.checks.auth.provider_version, 'v2.197.1');
+  assert.equal(report.app_deploy_ready, false);
+  assert.ok(!JSON.stringify(report).includes('PRIVATE_CONTRACT_MARKER'));
+});
+
+test('transport-only preflight explicitly skips extra inventory and capability instead of claiming empty datasets', async () => {
+  const report = await stagingPreflight(environment, fixtures());
+  assert.equal(report.passed, true);
+  for (const name of ['backup_inventory', 'api_configuration']) {
+    assert.equal(report.checks[name].skipped, true);
+    assert.equal(report.checks[name].metadata_complete, false);
+  }
+  assert.equal(report.checks.backup_inventory.key_dependent_data, 'unknown');
+});
+
+test('unknown dataset query leaves independent dependencies observed and suppresses private errors', async () => {
+  const runtime = fixtures({databaseOverride:async (...args) => args[2].input === CATALOG_SQL
+    ? {status:1, stderr:'PRIVATE_CONTRACT_MARKER'} : extendedDatabase(...args)});
+  const report = await stagingPreflight(verifiedEnvironment, runtime);
+  assert.equal(report.passed, false);
+  assert.equal(report.checks.backup_inventory.key_dependent_data, 'unknown');
+  assert.equal(report.checks.auth.passed, true);
+  assert.equal(report.checks.database.passed, true);
+  assert.equal(report.checks.sendgrid.passed, true);
+  assert.equal(report.checks.api_configuration.passed, true);
+  assert.ok(!JSON.stringify(report).includes('PRIVATE_CONTRACT_MARKER'));
 });

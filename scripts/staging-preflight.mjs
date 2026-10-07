@@ -1,6 +1,8 @@
-import {spawnSync} from 'node:child_process';
 import {readdir, writeFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
+import {executeDatabaseProcess} from './staging-database-process.mjs';
+import {hostedDatasetInventory, parseAuthProviderVersion} from './staging-data-inventory.mjs';
+import {apiConfigMetadata, readApiConfigQuery} from './staging-api-config-metadata.mjs';
 
 class CheckError extends Error {
   constructor(code) {super(code); this.code = code;}
@@ -49,8 +51,8 @@ export function databaseEnvironment(target, environment = {}) {
   };
 }
 
-function queryDatabase(query, target, environment, execute) {
-  const result = execute('psql', ['--no-psqlrc', '--no-password', '--quiet', '--tuples-only', '--no-align', '--set', 'ON_ERROR_STOP=1'], {
+async function queryDatabase(query, target, environment, execute) {
+  const result = await execute('psql', ['--no-psqlrc', '--no-password', '--quiet', '--tuples-only', '--no-align', '--set', 'ON_ERROR_STOP=1'], {
     env:databaseEnvironment(target, environment), input:query, encoding:'utf8', timeout:30_000, maxBuffer:1_000_000,
   });
   if (result.status !== 0 || result.error) {
@@ -87,11 +89,11 @@ async function checkDatabase(environment, project, expected, execute) {
   const target = databaseTarget(environment.MIGRATION_DATABASE_URL, project.ref);
   // pg_stat_ssl observes the database backend, which may be behind a TLS-
   // terminating pooler. Measure the libpq client connection independently.
-  const connection = queryDatabase('\\conninfo\n', target, environment, execute);
+  const connection = await queryDatabase('\\conninfo\n', target, environment, execute);
   const protocol = connection.match(/SSL connection \(protocol:\s*(TLSv1\.[23])[,)]/i)?.[1];
   if (!protocol) fail('DATABASE_CLIENT_TLS_UNVERIFIED');
   let data;
-  try {data = JSON.parse(queryDatabase(metadataQuery, target, environment, execute));}
+  try {data = JSON.parse(await queryDatabase(metadataQuery, target, environment, execute));}
   catch (error) {if (error instanceof CheckError) throw error; fail('DATABASE_METADATA_INVALID');}
   const counts = {};
   for (const field of ['postgres_version_num', 'app_tables', 'forced_rls_tables', 'native_session_policies', 'api_definers']) {
@@ -102,7 +104,7 @@ async function checkDatabase(environment, project, expected, execute) {
     if (typeof data[field] !== 'boolean') fail('DATABASE_METADATA_INVALID');
   }
   const applied = data.migration_table_exists
-    ? queryDatabase('select version from supabase_migrations.schema_migrations order by version;', target, environment, execute).split('\n').filter(Boolean)
+    ? (await queryDatabase('select version from supabase_migrations.schema_migrations order by version;', target, environment, execute)).split('\n').filter(Boolean)
     : [];
   const prefix = applied.length <= expected.length && applied.every((version, index) => version === expected[index]);
   const consistent = prefix && (applied.length > 0 || data.app_tables === 0);
@@ -122,6 +124,24 @@ async function checkDatabase(environment, project, expected, execute) {
       && data.forced_rls_tables === data.app_tables && data.native_session_policies === data.app_tables
       && data.api_definers === 0 && data.command_owner_restricted,
   };
+}
+
+const skippedMetadata = () => ({skipped:true, reason:'VERIFIED_CA_BUNDLE_REQUIRED', metadata_complete:false});
+
+async function checkApiConfiguration(environment, project, execute) {
+  if (!environment.MIGRATION_SSL_ROOT_CERT_PATH) return skippedMetadata();
+  const target = databaseTarget(environment.MIGRATION_DATABASE_URL, project.ref);
+  let data;
+  try {data = JSON.parse(await queryDatabase(await readApiConfigQuery(), target, environment, execute));}
+  catch (error) {if (error instanceof CheckError) throw error; fail('API_CONFIG_METADATA_INVALID');}
+  const metadata = apiConfigMetadata(data);
+  if (!metadata) fail('API_CONFIG_METADATA_INVALID');
+  return {metadata_complete:true, ...metadata};
+}
+
+async function checkBackupInventory(environment, project, execute) {
+  if (!environment.MIGRATION_SSL_ROOT_CERT_PATH) return {...skippedMetadata(), key_dependent_data:'unknown'};
+  return hostedDatasetInventory(environment, project, {execute, databaseTarget, databaseEnvironment});
 }
 
 async function request(fetcher, url, options) {
@@ -146,10 +166,23 @@ async function checkAuth(environment, project, fetcher) {
     headers:{apikey:environment.SUPABASE_PUBLISHABLE_KEY, 'Accept-Profile':'api'},
   });
   const autoConfirm = settings.mailer_autoconfirm ?? settings.autoconfirm;
+  let apiError = null;
+  if (exposed.status !== 200) {
+    try {
+      const code = (await exposed.json()).code;
+      if (['PGRST106', 'PGRST205', 'PGRST002', '42501'].includes(code)) apiError = code;
+    } catch { /* Raw provider errors never reach the report. */ }
+  }
+  let providerVersion = parseAuthProviderVersion(null);
+  try {
+    const health = await request(fetcher, project.origin + '/auth/v1/health', {headers:{apikey:environment.SUPABASE_PUBLISHABLE_KEY}});
+    if (health.status === 200) providerVersion = parseAuthProviderVersion(await health.json());
+  } catch { /* An unavailable version is explicit, independent of key validity. */ }
   return {
     publishable_key_accepted:true, server_secret_key_accepted:true, email_provider_enabled:settings.external?.email === true,
     email_confirmation_required:typeof autoConfirm === 'boolean' ? !autoConfirm : null,
-    api_schema_accessible:exposed.status === 200, smtp_configuration_verified:false, actual_mail_delivery_verified:false,
+    api_schema_accessible:exposed.status === 200, api_probe_status:exposed.status, api_probe_error:apiError,
+    ...providerVersion, smtp_configuration_verified:false, actual_mail_delivery_verified:false,
   };
 }
 
@@ -168,7 +201,7 @@ async function checkSendgrid(environment, fetcher) {
   return {mail_send_sandbox_validated:true, configured_from:from, email_sent:false, sender_verification_proven:false, actual_delivery_verified:false};
 }
 
-export async function stagingPreflight(environment, {fetcher = fetch, execute = spawnSync, expectedMigrations = []} = {}) {
+export async function stagingPreflight(environment, {fetcher = fetch, execute = executeDatabaseProcess, expectedMigrations = []} = {}) {
   const report = {environment:'staging', observed_at:new Date().toISOString(), source_sha:environment.RELEASE_SHA,
     database_mutations:false, email_sent:false, secret_values_exported:false, v1_ready:false, production_enabled:false, checks:{}};
   let project;
@@ -183,7 +216,9 @@ export async function stagingPreflight(environment, {fetcher = fetch, execute = 
   report.project_ref = project.ref;
   const checks = [['auth', () => checkAuth(environment, project, fetcher)],
     ['database', () => checkDatabase(environment, project, expectedMigrations, execute)],
-    ['sendgrid', () => checkSendgrid(environment, fetcher)]];
+    ['sendgrid', () => checkSendgrid(environment, fetcher)],
+    ['backup_inventory', () => checkBackupInventory(environment, project, execute)],
+    ['api_configuration', () => checkApiConfiguration(environment, project, execute)]];
   const results = await Promise.allSettled(checks.map(([, check]) => check()));
   results.forEach((result, index) => {report.checks[checks[index][0]] = result.status === 'fulfilled' ? {passed:true, ...result.value} : {passed:false, error:codeOf(result.reason)};});
   report.passed = Object.values(report.checks).every(({passed}) => passed);
@@ -201,7 +236,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
     const report = await stagingPreflight(process.env, {expectedMigrations:files.map((name) => name.slice(0, 14))});
     await writeFile('staging-preflight.json', JSON.stringify(report, null, 2) + '\n', {mode:0o600});
     console.log(JSON.stringify({result:report.passed ? 'PASS' : 'FAIL', core_dependencies_ready:report.core_dependencies_ready ?? false, app_deploy_ready:false,
-      checks:Object.fromEntries(Object.entries(report.checks).map(([name, value]) => [name, value.passed ? 'PASS' : value.error])),
+      checks:Object.fromEntries(Object.entries(report.checks).map(([name, value]) => [name, value.skipped ? 'SKIPPED' : value.passed ? 'PASS' : value.error])),
       ...(report.error ? {error:report.error} : {}), email_sent:false, database_mutations:false}));
     if (!report.passed) process.exitCode = 1;
   } catch {console.error('Stagingpreflight kon niet worden vastgelegd; geheime diagnostiek onderdrukt.'); process.exitCode = 1;}

@@ -8,3 +8,5 @@ coverage/
 playwright-report/
 test-results/
 .supabase/
+/staging-preflight.json
+/staging-mail-check.json
