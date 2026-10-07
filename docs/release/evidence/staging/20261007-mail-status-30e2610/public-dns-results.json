@@ -1,0 +1,42 @@
+{
+  "observed_at": "2026-10-07T09:14:10.415Z",
+  "domain": "cluvo.nl",
+  "read_only": true,
+  "parent_source_sha": "30e26105bba6e65f318349b7af2a94b28cc77ce9",
+  "probe_source_sha256": "7f9fc921113d460e619f244e793e53a9e33f499e37aeb347713703daddad7da4",
+  "all_custom_dkim_selectors_checked": false,
+  "all_return_path_spf_checked": false,
+  "provider_domain_authentication_verified": false,
+  "actual_delivery_verified": false,
+  "findings": [
+    {
+      "scope": "root_txt",
+      "status": "ANSWER",
+      "spf_records": 1,
+      "spf_sendgrid_include_present": false
+    },
+    {
+      "scope": "dmarc",
+      "status": "ANSWER",
+      "dmarc_records": 1,
+      "policy_reject": true,
+      "policy_quarantine": false
+    },
+    {
+      "scope": "dkim_s1",
+      "status": "NO_RECORD"
+    },
+    {
+      "scope": "dkim_s2",
+      "status": "NO_RECORD"
+    },
+    {
+      "scope": "nameservers",
+      "status": "ANSWER",
+      "nameservers": [
+        "ns01.hostnet.nl",
+        "ns02.hostnet.nl"
+      ]
+    }
+  ]
+}

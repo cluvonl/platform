@@ -42,6 +42,39 @@ async function readJson(response) {
   } finally {reader.releaseLock();}
 }
 
+async function senderDomainStatus(environment, fetcher) {
+  const result = {attempted:true, available:false, domain:'cluvo.nl', read_only:true};
+  if (environment.SENDGRID_FROM_EMAIL.toLowerCase() !== 'info@cluvo.nl') return result;
+  try {
+    const response = await fetcher('https://api.sendgrid.com/v3/whitelabel/domains?domain=cluvo.nl&limit=5&offset=0&exclude_subusers=true',
+      {method:'GET',redirect:'error',signal:AbortSignal.timeout(20_000),
+        headers:{Authorization:'Bearer ' + environment.SENDGRID_API_KEY}});
+    result.http_status = response.status;
+    if (response.status !== 200) return result;
+    const domains = await readJson(response);
+    if (!Array.isArray(domains) || domains.length > 5
+      || domains.some((domain) => typeof domain?.domain !== 'string')) return result;
+    const matches = domains.filter((domain) => domain.domain.toLowerCase() === 'cluvo.nl');
+    result.available = true; result.exact_domain_matches = matches.length;
+    result.filtered_page_complete = domains.length < 5;
+    result.provider_valid_metadata_complete = matches.every((domain) => typeof domain.valid === 'boolean');
+    if (result.provider_valid_metadata_complete) result.provider_valid_matches = matches.filter((domain) => domain.valid === true).length;
+    result.validation_is_cached_provider_metadata = true;
+    if (matches.length === 1 && result.filtered_page_complete) {
+      const domain = matches[0];
+      if (typeof domain.valid === 'boolean') result.provider_valid = domain.valid;
+      if (typeof domain.automatic_security === 'boolean') result.automatic_security = domain.automatic_security;
+      result.dns_record_status = {};
+      for (const key of ['mail_cname','dkim1','dkim2','mail_server','subdomain_spf','dkim']) {
+        const record = domain.dns?.[key];
+        if (typeof record?.valid === 'boolean') result.dns_record_status[key] = record.valid;
+      }
+    }
+  } catch {result.error = 'DOMAIN_METADATA_UNAVAILABLE';}
+  // No account IDs, usernames, IPs, generated DNS records or responsebody leave memory.
+  return result;
+}
+
 export async function stagingMailStatus(environment, {fetcher = fetch, sendProof, now = new Date()} = {}) {
   const report = {environment:'staging', observed_at:now.toISOString(), checked_send_run_id:SEND_RUN,
     read_only:true, email_sent:false, database_mutations:false, provider_mutations:false,
@@ -144,6 +177,9 @@ export async function stagingMailStatus(environment, {fetcher = fetch, sendProof
           }
         }
       } catch {report.credit_check.error = 'CREDIT_METADATA_UNAVAILABLE';}
+    }
+    if (categories.has('SENDER_AUTHENTICATION_REPORTED')) {
+      report.sender_domain_check = await senderDomainStatus(environment, fetcher);
     }
     report.passed = true;
     // Never export recipient, URL/query, message ID, raw event, reason or responsebody.

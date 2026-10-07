@@ -1,0 +1,11 @@
+# Uitgevoerde private foutdiagnose — 30e2610
+
+De [handmatige alleen-lezen diagnose](https://github.com/cluvonl/platform/actions/runs/37597155476) is geslaagd op exact `30e26105bba6e65f318349b7af2a94b28cc77ce9`, na [groene CI](https://github.com/cluvonl/platform/actions/runs/37596436049) en stagingpromotie. [status-results.json](status-results.json) is het ongewijzigde veilige artifact.
+
+Eén passend bericht heeft opnieuw status `not_delivered`. Er zijn één bekend processed-event, één onbekend event en één private reden. De begrensde patronen delen die reden in als `SENDER_AUTHENTICATION_REPORTED`; dat is een inference uit providertekst, geen geverifieerd DNS- of sendercontract. De creditroute is daadwerkelijk bereikbaar via HTTP 200 en meldt een positief resterend saldo. Het rapport exporteert geen bedragen, plannen, redenen, ontvanger, message-ID of providerbody.
+
+De kandidaatstatus blijft afzonderlijk van de oorspronkelijke verzending: zonder opgeslagen oorspronkelijke provider-ID is de unieke binding niet bewezen. `delivery_status=UNKNOWN`, `actual_delivery_verified=false` en `user_receipt_verified=false` blijven behouden. De gebruiker meldt nog geen ontvangst. De statusrun verstuurde geen tweede mail en wijzigde geen accounts, abonnement, DNS of database. SMTP, OTP, uitnodigingen, V1 en productie blijven open.
+
+De aanvullende GET naar gefilterde domeinverificatiemetadata is nog niet aanwezig in deze bronversie. Die volgende lokale wijziging wordt afzonderlijk getest en hosted uitgevoerd; providervalidatie is bovendien opgeslagen metadata, geen verse DNS-validatie.
+
+De [afzonderlijke publieke DNS-proef](public-dns-results.json) is uitgevoerd met de [bijbehorende bron](public-dns-probe.mjs), met alleen vaste querynamen en zonder mailcredentials. De publieke nameservers zijn Hostnet. Er is één DMARC-record met reject-policy, één root-SPF zonder de specifiek onderzochte SendGrid-include en geen CNAME voor de standaard selectors s1/s2. Aangepaste DKIM-selectors, alle mogelijke return-path SPF-records en SendGrid-providerconfiguratie zijn hiermee niet onderzocht. Het ontbreken van deze standaardrecords alleen bewijst daarom niet de volledige oorzaak. Er is geen DNS-wijziging uitgevoerd.

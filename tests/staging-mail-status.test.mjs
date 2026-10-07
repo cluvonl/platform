@@ -105,6 +105,43 @@ test('recipient mailbox quota and private address substrings cannot become accou
   assert.ok(!JSON.stringify(report).includes('dkim_user'));
 });
 
+test('sender authentication failure inspects only fixed domain booleans without exposing generated records',async()=>{
+  const requests=[]; const candidate={...item,status:'not_delivered'};
+  const report=await stagingMailStatus({...environment,SENDGRID_FROM_EMAIL:'info@cluvo.nl'},{...options,fetcher:async(url,input)=>{
+    requests.push({url:String(url),input});
+    if(requests.length===1) return Response.json({messages:[{...candidate,from_email:'info@cluvo.nl'}]});
+    if(requests.length===2) return Response.json({...candidate,from_email:'info@cluvo.nl',events:[{event_name:'bounced',reason:'Unauthenticated sender: DKIM failed'}]});
+    if(requests.length===3) return Response.json({remain:10});
+    return Response.json([{domain:'cluvo.nl',valid:false,automatic_security:true,id:987654,username:'private-account',
+      dns:{dkim1:{valid:false,host:'private-selector.cluvo.nl',data:'private-target.sendgrid.net'},dkim2:{valid:true}}}]);
+  }});
+  assert.equal(requests.length,4); assert.ok(requests.every(({input})=>input.method==='GET'&&!input.body));
+  assert.match(requests[3].url,/^https:\/\/api\.sendgrid\.com\/v3\/whitelabel\/domains\?domain=cluvo.nl&/);
+  assert.equal(report.sender_domain_check.provider_valid,false);
+  assert.deepEqual(report.sender_domain_check.dns_record_status,{dkim1:false,dkim2:true});
+  assert.equal(report.sender_domain_check.validation_is_cached_provider_metadata,true);
+  for(const value of ['987654','private-account','private-selector','private-target']) assert.ok(!JSON.stringify(report).includes(value));
+});
+
+test('unavailable domain metadata preserves activity and partial pages never prove a domain absent',async()=>{
+  const candidate={...item,from_email:'info@cluvo.nl',status:'not_delivered'};
+  for(const response of [new Response('private domain body',{status:403}),Response.json(Array.from({length:5},()=>({domain:'other.example.invalid',valid:true})))]){
+    let calls=0;
+    const report=await stagingMailStatus({...environment,SENDGRID_FROM_EMAIL:'info@cluvo.nl'},{...options,fetcher:async()=>{
+      calls++;
+      if(calls===1)return Response.json({messages:[candidate]});
+      if(calls===2)return Response.json({...candidate,events:[{event_name:'bounced',reason:'Unauthenticated sender'}]});
+      if(calls===3)return Response.json({remain:10});
+      return response;
+    }});
+    assert.equal(report.passed,true);assert.equal(report.candidate_delivery_status,'not_delivered');
+    assert.equal(report.delivery_status,'UNKNOWN');assert.equal(report.provider_mutations,false);
+    if(response.status===200){assert.equal(report.sender_domain_check.exact_domain_matches,0);assert.equal(report.sender_domain_check.filtered_page_complete,false);}
+    else assert.equal(report.sender_domain_check.available,false);
+    for(const value of ['private domain body','other.example.invalid'])assert.ok(!JSON.stringify(report).includes(value));
+  }
+});
+
 test('foreign records, private transport errors and oversized payloads fail without exporting details',async()=>{
   for(const fetcher of [async()=>Response.json({messages:[{...item,to_email:'foreign@example.invalid'}]}),async()=>{throw new Error('private '+item.to_email);},async()=>new Response('x'.repeat(70_000))]){
     const report=await stagingMailStatus(environment,{...options,fetcher});assert.equal(report.passed,false);
