@@ -1,0 +1,34 @@
+{
+  "observed_at": "2026-10-07T05:58:25.751Z",
+  "environment": "local",
+  "source_parent": "b08415f6efce281501295a8faa994fbf6a9e7483",
+  "build_source": "exact Git archive plus the four listed fix files; unpublished intake-assistance feature excluded",
+  "migrations": 15,
+  "image_build": true,
+  "node_tests": 45,
+  "python_build_dependency": "python3=3.11.2-1+b1",
+  "runtime_python_installed": false,
+  "prototype_liveness": true,
+  "prototype_readiness_blocked": true,
+  "runtime_supabase_not_configured": true,
+  "files": [
+    {
+      "path": "Dockerfile",
+      "sha256": "aeea74b995ee50f03b5431844cdcd97e57ee69ca0aaa32eb8daa08584f307f78"
+    },
+    {
+      "path": "tests/staging-broker-config.test.mjs",
+      "sha256": "4e1455321c7dc6ef6a40db2006deb4471fd604bbb9f8dded0fbc03d86565f9f8"
+    },
+    {
+      "path": "ops/cluvo-deploy-staging",
+      "sha256": "de048d42f613930d6c2fe3c167d2a1c1d854df809874441427129dc0249a6d32"
+    },
+    {
+      "path": "ops/STAGING-APP.md",
+      "sha256": "4c6978483c019b9ee7125222520cce396eacea0c26de10ed33829fe0cad64d35"
+    }
+  ],
+  "v1_ready": false,
+  "production_enabled": false
+}

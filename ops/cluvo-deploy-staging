@@ -258,6 +258,9 @@ mode = config.get("app_mode", "prototype")
 if mode not in ("prototype", "app") or environment.get("APP_MODE") != mode:
     raise SystemExit("Runtime en vast stagingtarget hebben verschillende appmodi")
 
+if mode == "prototype" and any(environment.get(name, "") for name in ("SUPABASE_PUBLISHABLE_KEY", "SUPABASE_SECRET_KEY")):
+    raise SystemExit("Prototypeconfig bevat Supabase-credentials; gebruik de gecontroleerde appovergang")
+
 app_url = config.get("app_url", "")
 
 if (

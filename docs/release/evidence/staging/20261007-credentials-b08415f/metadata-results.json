@@ -1,0 +1,59 @@
+{
+  "environment": "staging",
+  "observed_at": "2026-10-07T02:09:13.740Z",
+  "source_sha": "b08415f6efce281501295a8faa994fbf6a9e7483",
+  "database_mutations": false,
+  "email_sent": false,
+  "secret_values_exported": false,
+  "v1_ready": false,
+  "production_enabled": false,
+  "checks": {
+    "auth": {
+      "passed": true,
+      "publishable_key_accepted": true,
+      "server_secret_key_accepted": true,
+      "email_provider_enabled": true,
+      "email_confirmation_required": true,
+      "api_schema_accessible": false,
+      "smtp_configuration_verified": false,
+      "actual_mail_delivery_verified": false
+    },
+    "database": {
+      "passed": true,
+      "connected": true,
+      "transport": "session_pooler",
+      "tls_encrypted": true,
+      "client_tls_protocol": "TLSv1.3",
+      "database_backend_tls": false,
+      "server_certificate_verified": false,
+      "postgres_version_num": 170011,
+      "app_tables": 0,
+      "forced_rls_tables": 0,
+      "native_session_policies": 0,
+      "api_definers": 0,
+      "command_owner_restricted": false,
+      "applied_migrations": 0,
+      "native_session_policy_owner_available": false,
+      "native_session_policy_provider_granted": true,
+      "native_session_policy_ddl_available": true,
+      "native_session_select_grantable": true,
+      "native_identity_select_grantable": true,
+      "expected_migrations": 15,
+      "migration_history_consistent": true,
+      "pending_migrations": 15,
+      "schema_ready": false
+    },
+    "sendgrid": {
+      "passed": true,
+      "mail_send_sandbox_validated": true,
+      "configured_from": "info@cluvo.nl",
+      "email_sent": false,
+      "sender_verification_proven": false,
+      "actual_delivery_verified": false
+    }
+  },
+  "project_ref": "fbozlbgmktkgcdfqdaaz",
+  "passed": true,
+  "core_dependencies_ready": false,
+  "app_deploy_ready": false
+}

@@ -6,6 +6,8 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 
 const source = await readFile(new URL('../ops/cluvo-deploy-staging', import.meta.url), 'utf8');
+assert.equal(spawnSync('python3', ['--version'], {encoding:'utf8'}).status, 0,
+  'broker contract tests require Python 3 in the test/build environment');
 const blocks = [...source.matchAll(/<<'PY'\n([\s\S]*?)\nPY/g)].map((match) => match[1]);
 const configuration = blocks.find((body) => body.includes('config_path, env_path, image, run_id, current_path'));
 const health = blocks.find((body) => body.includes('http://127.0.0.1:3100/api/health/live'));
@@ -59,6 +61,16 @@ test('production, foreign project, missing secrets and an unexpected origin fail
   }
   const wrongPin = await validate({...appConfig, supabase_project_ref:'z'.repeat(20)}, appEnvironment);
   assert.notEqual(wrongPin.status, 0);
+});
+
+test('a requested prototype deployment cannot retain credentials from a connected app', async () => {
+  const connectedConfig = {...appConfig, app_mode:'prototype', compatible_rollback_shas:[]};
+  assert.notEqual((await validate(connectedConfig, {...appEnvironment, APP_MODE:'prototype'})).status, 0);
+  for (const name of ['SUPABASE_PUBLISHABLE_KEY', 'SUPABASE_SECRET_KEY']) {
+    assert.notEqual((await validate(baseConfig, {...baseEnvironment, [name]:appEnvironment[name]})).status, 0);
+  }
+  const disconnected = {...baseEnvironment, SUPABASE_URL:appConfig.supabase_url};
+  assert.equal((await validate(connectedConfig, disconnected)).status, 0, 'a pinned URL alone cannot initialize Auth');
 });
 
 test('wildcard/empty mail allowlists and an unapproved rollback image are refused', async () => {

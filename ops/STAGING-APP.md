@@ -20,6 +20,8 @@ Installeer de broker op `/usr/local/sbin/cluvo-deploy-staging` als root-owned ex
 
 De nieuwe broker werkt met de bestaande prototypeconfig: een ontbrekende `app_mode` in het root-owned target betekent nog steeds `prototype`. De nieuwe compose krijgt de gecontroleerde modus via `CLUVO_APP_MODE` van de broker. Vervang nooit het actuele targetbestand door de voorbeeldfile met placeholders. Lees na installatie eerst een prototypepromotie terug voordat appmodus wordt geactiveerd.
 
+Een nieuwe deployment in prototype-modus wordt geweigerd zolang de runtime een Supabase publishable key of serverkey bevat. Alleen de mode wijzigen sluit de afzonderlijke Auth-/app-routes niet af. De broker verwijdert geen credentials; een bewust losgekoppeld prototype vereist afzonderlijk gecontroleerde runtimeconfig. Een URL zonder keys blijft als voorbereid, losgekoppeld prototype toegestaan.
+
 Het transport van secrets uit GitHub naar het vaste VPS-runtimebestand moet via de geautoriseerde beheerroute worden aangesloten. De huidige workflow levert alleen image/SHA/run-ID; het vullen van GitHub-secrets maakt `/etc/cluvo/staging.env` niet automatisch gevuld. Geef geen plaintext Supabase-credentials aan de self-hosted runner en introduceer geen brede SSH-deploysleutel als vervanging van de broker.
 
 ## Vastgezette appconfig
@@ -59,4 +61,4 @@ Appmodus vereist exacte liveness-SHA/mode/environment én readiness van de beper
 
 Als de nieuwe app faalt, herstelt de broker de vorige immutable image en de eerder geregistreerde modus. Ook dat herstel wordt via health gecontroleerd; onbevestigd herstel meldt operatoractie. De mislukte deployment blijft mislukt. Een approllback herstelt geen database, credentials, provider-event of verzonden mail.
 
-Zeven gerichte tests voeren de echte Python-validatiefragmenten en het herstelpad uit met wegwerpbestanden en gesimuleerde healthresponses. Ze bewijzen target/mode/key-/allowlistweigering, run-order, expliciete rollbackcompatibiliteit, beperkte readiness en herstel van de vorige modus. Bash-syntax is gecontroleerd. VPS-installatie, socket-/bestandseigenaarschap, echte database-/Auth-/provider-readback en herstel op staging blijven afzonderlijk bewijs vereisen.
+Acht gerichte tests voeren de echte Python-validatiefragmenten en het herstelpad uit met wegwerpbestanden en gesimuleerde healthresponses. Ze bewijzen target/mode/key-/allowlistweigering, een prototype-aanvraag met aangesloten credentials, run-order, expliciete rollbackcompatibiliteit, beperkte readiness en herstel van de vorige modus. Bash-syntax is gecontroleerd. VPS-installatie, socket-/bestandseigenaarschap, echte database-/Auth-/provider-readback en herstel op staging blijven afzonderlijk bewijs vereisen.
