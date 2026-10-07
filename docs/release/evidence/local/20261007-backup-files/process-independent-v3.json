@@ -1,0 +1,108 @@
+{
+  "scope": "SYNTHETIC_FILESYSTEM_AND_OWN_CHILDREN_ONLY",
+  "source_sha256": "ecc933df1ab5f3db4fa485042658175ef374710b5eacc76845c65dce5711dcc7",
+  "executed_probes": 12,
+  "actual_expected_controls_passed": 11,
+  "actual_confirmed_defects": 1,
+  "results": [
+    {
+      "id": "REAL_MULTICHUNK_2MIB_PRIVATE_OUTPUT",
+      "pass": true,
+      "bytes": 2097152,
+      "byteHashEqual": true,
+      "mode600": true,
+      "nlink1": true
+    },
+    {
+      "id": "STDERR_REJECTED_AND_REAPED",
+      "pass": true,
+      "code": "CAPTURE_UNEXPECTED_STDERR",
+      "outputPathRemoved": true,
+      "ownDirectChildReaped": true
+    },
+    {
+      "id": "NONZERO_REJECTED",
+      "pass": true,
+      "code": "CAPTURE_PROCESS_FAILED",
+      "outputPathRemoved": true
+    },
+    {
+      "id": "EMPTY_REJECTED",
+      "pass": true,
+      "code": "CAPTURE_EMPTY_OR_OVERSIZED",
+      "outputPathRemoved": true
+    },
+    {
+      "id": "SIZE_LIMIT_REJECTED_AND_REAPED",
+      "pass": true,
+      "code": "CAPTURE_SIZE_LIMIT",
+      "outputPathRemoved": true,
+      "ownDirectChildReaped": true
+    },
+    {
+      "id": "TIMEOUT_TERM_IGNORED_KILL_AND_REAP",
+      "pass": true,
+      "code": "CAPTURE_PROCESS_TIMEOUT",
+      "outputPathRemoved": true,
+      "ownDirectChildReaped": true
+    },
+    {
+      "id": "SPAWN_FAILURE_REMOVES_CREATED_PATH",
+      "pass": true,
+      "code": "CAPTURE_PROCESS_UNAVAILABLE",
+      "outputPathRemoved": true
+    },
+    {
+      "id": "WRITE_CLOSE_FAULT",
+      "pass": true,
+      "code": "PRIVATE_CAPTURE_CLEANUP_FAILED",
+      "unlinkAttempted": true,
+      "outputPathRemoved": true,
+      "residualReportedByCleanupFailure": false,
+      "probeOwnHandlesClosedAfterObservation": true,
+      "probeOwnResidualRemovedAfterObservation": true
+    },
+    {
+      "id": "CLOSE_FAULT",
+      "pass": true,
+      "code": "PRIVATE_CAPTURE_CLEANUP_FAILED",
+      "unlinkAttempted": true,
+      "outputPathRemoved": true,
+      "residualReportedByCleanupFailure": false,
+      "probeOwnHandlesClosedAfterObservation": true,
+      "probeOwnResidualRemovedAfterObservation": true
+    },
+    {
+      "id": "SYNC_FAULT",
+      "pass": true,
+      "code": "PRIVATE_CAPTURE_FAILED",
+      "unlinkAttempted": true,
+      "outputPathRemoved": true,
+      "residualReportedByCleanupFailure": false,
+      "probeOwnHandlesClosedAfterObservation": true,
+      "probeOwnResidualRemovedAfterObservation": true
+    },
+    {
+      "id": "UNLINK_FAULT",
+      "pass": true,
+      "code": "PRIVATE_CAPTURE_CLEANUP_FAILED",
+      "unlinkAttempted": true,
+      "outputPathRemoved": false,
+      "residualReportedByCleanupFailure": true,
+      "probeOwnHandlesClosedAfterObservation": true,
+      "probeOwnResidualRemovedAfterObservation": true
+    },
+    {
+      "id": "ARGS_AND_ENV_MUTATE_AFTER_CALL_BEFORE_SPAWN",
+      "confirmedDefect": true,
+      "acceptedChangedCommandArguments": true,
+      "acceptedChangedEnvironment": true
+    }
+  ],
+  "database_calls": 0,
+  "docker_calls": 0,
+  "remote_calls": 0,
+  "canonical_writes": 0,
+  "existing_private_backup_reads": 0,
+  "credential_values_used_or_printed": false
+}

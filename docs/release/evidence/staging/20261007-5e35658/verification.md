@@ -1,0 +1,7 @@
+# Stagingtussenrelease 5e35658
+
+De exacte groene bron `5e35658d13af935c88edb2ff9259e236ed8a6946` is via main naar staging gepromoveerd. [CI](https://github.com/cluvonl/platform/actions/runs/37611898153) en [imagebuild/deployment](https://github.com/cluvonl/platform/actions/runs/37612500302) zijn geslaagd. De wijziging voegt de lokaal geteste backup-encryptielibrary en eerdere veilige bewijsstukken toe. De zestien gepubliceerde migraties blijven byte-identiek.
+
+De [werkelijk uitgevoerde HTTP- en browserreadback](readback.json) bevestigt de juiste stagingrelease en alle zestien migratiehashes uit het [releaseartifact](release-manifest.json). Liveness200, readiness503 met `APP_MODE_PROTOTYPE`, runtimeconfig503 met `SUPABASE_NOT_CONFIGURED`. De gekoppelde databasewaarneming is expliciet de eerdere [read-only c3c24f4-preflight](../20261007-credentials-c3c24f4/verification.md); er is bij deze release geen nieuwe databaseinventaris, dump, restore of DDL uitgevoerd. De toen gemeten database had nul app-tabellen en nul toegepaste migraties.
+
+Desktop1440×1024 en mobiel390×844 zijn opnieuw werkelijk in de browser vastgelegd en [byte-identiek](ui-comparison.json) aan de eerder door root visueel beoordeelde Club Signal-captures. Dit is prototypebewijs. De library is een encryptieonderdeel, geen operationele backup/restore. Aangesloten app/worker, Native login, staging RLS/privacy, operationele migratie/restore en volledige V1 blijven open; productie blijft false.

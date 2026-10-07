@@ -1,0 +1,34 @@
+{
+  "scope": "SYNTHETIC_FILESYSTEM_ONLY",
+  "source_sha256": "6d84e73a7a6b093922e0428da233fc7ebd23f3ce77046f310cc4c0e6c069d394",
+  "executed_probes": 3,
+  "results": [
+    {
+      "id": "FIFO_OPEN_BLOCKS_BEFORE_FSTAT",
+      "confirmed": true,
+      "timeoutMs": 1500,
+      "childKilledAndReaped": true
+    },
+    {
+      "id": "WRITE_AND_CLOSE_FAILURE_LEAVES_PLAINTEXT",
+      "confirmed": true,
+      "phase": "CLOSE_FAULT_RESULT",
+      "code": "BACKUP_ARTIFACT_UNAVAILABLE",
+      "restoreDirectoriesRemaining": 1,
+      "orphanedPlaintext": true,
+      "orphanMode600": true,
+      "synthetic": true
+    },
+    {
+      "id": "PRE_AWAIT_KEY_AND_BINDINGS_SNAPSHOT_AND_PRIVATE_ROUNDTRIP",
+      "pass": true,
+      "files": 3
+    }
+  ],
+  "database_calls": 0,
+  "docker_calls": 0,
+  "remote_calls": 0,
+  "canonical_writes": 0,
+  "existing_backup_reads": 0,
+  "synthetic_worker_key_material_printed": false
+}

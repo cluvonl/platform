@@ -1,0 +1,96 @@
+{
+  "scope": "SYNTHETIC_FILESYSTEM_ONLY",
+  "source_sha256": "b5f4578fcfae631d28aa1d66ace45a3dd707ad9d36e16e148f7529d86d38910b",
+  "executed_probes": 8,
+  "actual_passed_probes": 8,
+  "results": [
+    {
+      "id": "FIFO_REJECTED_WITHOUT_BLOCKING",
+      "pass": true,
+      "code": "PRIVATE_FILE_INVALID",
+      "under1500ms": true,
+      "filesCreated": 0
+    },
+    {
+      "id": "INPUT_CLOSE_FAILURE_REJECTS_AND_ZEROES_PRIVATE_BUFFER",
+      "pass": true,
+      "phase": "INPUT_CLOSE_RESULT",
+      "code": "BACKUP_ARTIFACT_UNAVAILABLE",
+      "privateReadBufferZeroed": true,
+      "artifactDirectories": 0,
+      "synthetic": true,
+      "realHandlesClosedAfterObservation": true
+    },
+    {
+      "id": "FAULT_CLOSE",
+      "pass": true,
+      "phase": "FAULT_RESULT",
+      "code": "BACKUP_ARTIFACT_CLEANUP_FAILED",
+      "restoreDirectoriesRemaining": 0,
+      "filesRemaining": 0,
+      "nonPrivateFile": false,
+      "synthetic": true,
+      "probeOwnedResidualsRemoved": true,
+      "realHandlesClosedAfterObservation": true
+    },
+    {
+      "id": "FAULT_CLOSE_SECOND",
+      "pass": true,
+      "phase": "FAULT_RESULT",
+      "code": "BACKUP_ARTIFACT_CLEANUP_FAILED",
+      "restoreDirectoriesRemaining": 0,
+      "filesRemaining": 0,
+      "nonPrivateFile": false,
+      "synthetic": true,
+      "probeOwnedResidualsRemoved": true,
+      "realHandlesClosedAfterObservation": true
+    },
+    {
+      "id": "FAULT_WRITE",
+      "pass": true,
+      "phase": "FAULT_RESULT",
+      "code": "BACKUP_ARTIFACT_UNAVAILABLE",
+      "restoreDirectoriesRemaining": 0,
+      "filesRemaining": 0,
+      "nonPrivateFile": false,
+      "synthetic": true,
+      "probeOwnedResidualsRemoved": true,
+      "realHandlesClosedAfterObservation": true
+    },
+    {
+      "id": "FAULT_UNLINK",
+      "pass": true,
+      "phase": "FAULT_RESULT",
+      "code": "BACKUP_ARTIFACT_CLEANUP_FAILED",
+      "restoreDirectoriesRemaining": 1,
+      "filesRemaining": 1,
+      "nonPrivateFile": false,
+      "synthetic": true,
+      "probeOwnedResidualsRemoved": true,
+      "realHandlesClosedAfterObservation": true
+    },
+    {
+      "id": "FAULT_RMDIR",
+      "pass": true,
+      "phase": "FAULT_RESULT",
+      "code": "BACKUP_ARTIFACT_CLEANUP_FAILED",
+      "restoreDirectoriesRemaining": 1,
+      "filesRemaining": 0,
+      "nonPrivateFile": false,
+      "synthetic": true,
+      "probeOwnedResidualsRemoved": true,
+      "realHandlesClosedAfterObservation": true
+    },
+    {
+      "id": "PRE_AWAIT_KEY_AND_BINDINGS_SNAPSHOT_AND_PRIVATE_ROUNDTRIP",
+      "pass": true,
+      "files": 3
+    }
+  ],
+  "database_calls": 0,
+  "docker_calls": 0,
+  "remote_calls": 0,
+  "canonical_writes": 0,
+  "existing_backup_reads": 0,
+  "synthetic_worker_key_material_printed": false
+}

@@ -1,0 +1,80 @@
+{
+  "scope": "LOCAL_SYNTHETIC_FILES_AND_OWN_CHILDREN_ONLY",
+  "node_version": "24.18.0",
+  "npm_tests": {
+    "executed": 169,
+    "passed": 169,
+    "failed": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "artifact_targeted_node_tests": 15,
+  "artifact_fault_probes_inside_one_node_test": 8,
+  "process_targeted_node_tests": 14,
+  "process_fault_probes_inside_one_node_test": 21,
+  "original_reviewed_artifact_sha256": "b5f4578fcfae631d28aa1d66ace45a3dd707ad9d36e16e148f7529d86d38910b",
+  "canonical_artifact_change": "relative import only",
+  "original_reviewed_process_sha256": "178d8edb8dd84e78bd033555f0c1a63924ec27fc7e00ae4797eed01316fb9d6a",
+  "canonical_process_byte_identical": true,
+  "source_files": [
+    {
+      "file": "scripts/backup-artifact.mjs",
+      "sha256": "0c46519fb4679a5a13f2c87c7dac129e31085ab4535ecd2e53d987ebe4ddf4c4",
+      "bytes": 9969
+    },
+    {
+      "file": "scripts/private-process-capture.mjs",
+      "sha256": "178d8edb8dd84e78bd033555f0c1a63924ec27fc7e00ae4797eed01316fb9d6a",
+      "bytes": 6633
+    },
+    {
+      "file": "tests/backup-artifact.test.mjs",
+      "sha256": "f27be9886f8a1ec087afb415d87a8936c927394de5f6522a6502e3faade83bf4",
+      "bytes": 11334
+    },
+    {
+      "file": "tests/backup-artifact-faults.test.mjs",
+      "sha256": "4b97ec8244f5194218de7ab63603e2817072fe5f3511fc250d61c5c5964ad904",
+      "bytes": 981
+    },
+    {
+      "file": "tests/private-process-capture.test.mjs",
+      "sha256": "a7f08d7464d46b708167369e9cd8cf353edb6b1484cf26c95b4b9a1773f6419e",
+      "bytes": 7292
+    },
+    {
+      "file": "tests/private-process-capture-faults.test.mjs",
+      "sha256": "d901523fcaef39377e0239503c6a31498bf6a68300fb11a54bbb4299cd861138",
+      "bytes": 1025
+    },
+    {
+      "file": "tests/helpers/backup-artifact-faults.mjs",
+      "sha256": "701883932d6a57941bb1ccef47351f3627ceb19acf6f8e241c8fba971bb8cf82",
+      "bytes": 10861
+    },
+    {
+      "file": "tests/helpers/private-process-capture-faults.mjs",
+      "sha256": "d81eb2bbcb0fe657e34d087f793be4bbee4b833df97f2788a54f7a3cdf309bb7",
+      "bytes": 9868
+    }
+  ],
+  "database_queries": 0,
+  "docker_calls": 0,
+  "hosted_queries": 0,
+  "real_secret_values_used_or_printed": false,
+  "key_provisioned": false,
+  "full_database_dump_executed": false,
+  "restore_executed": false,
+  "all_database_object_classes_claim": false,
+  "v1_accepted": false,
+  "production_enabled": false,
+  "full_eslint": "PASS",
+  "typecheck": "PASS",
+  "production_gate": "EXPECTED_DENY_V1_NOT_ACCEPTED",
+  "immutable_published_migrations": 16,
+  "new_dependencies": 0,
+  "lockfiles_changed": false,
+  "prototype_reference_changed": false,
+  "local_markdown_links_checked": 13,
+  "new_files_privacy_scan": "PASS"
+}

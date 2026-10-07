@@ -1,0 +1,165 @@
+{
+  "scope": "SYNTHETIC_FILESYSTEM_AND_OWN_CHILDREN_ONLY",
+  "source_sha256": "178d8edb8dd84e78bd033555f0c1a63924ec27fc7e00ae4797eed01316fb9d6a",
+  "executed_probes": 21,
+  "actual_expected_controls_passed": 21,
+  "actual_confirmed_defects": 0,
+  "results": [
+    {
+      "id": "REAL_MULTICHUNK_2MIB_PRIVATE_OUTPUT",
+      "pass": true,
+      "bytes": 2097152,
+      "byteHashEqual": true,
+      "mode600": true,
+      "nlink1": true
+    },
+    {
+      "id": "STDERR_REJECTED_AND_REAPED",
+      "pass": true,
+      "code": "CAPTURE_UNEXPECTED_STDERR",
+      "outputPathRemoved": true,
+      "ownDirectChildReaped": true
+    },
+    {
+      "id": "NONZERO_REJECTED",
+      "pass": true,
+      "code": "CAPTURE_PROCESS_FAILED",
+      "outputPathRemoved": true
+    },
+    {
+      "id": "EMPTY_REJECTED",
+      "pass": true,
+      "code": "CAPTURE_EMPTY_OR_OVERSIZED",
+      "outputPathRemoved": true
+    },
+    {
+      "id": "SIZE_LIMIT_REJECTED_AND_REAPED",
+      "pass": true,
+      "code": "CAPTURE_SIZE_LIMIT",
+      "outputPathRemoved": true,
+      "ownDirectChildReaped": true
+    },
+    {
+      "id": "TIMEOUT_TERM_IGNORED_KILL_AND_REAP",
+      "pass": true,
+      "code": "CAPTURE_PROCESS_TIMEOUT",
+      "outputPathRemoved": true,
+      "ownDirectChildReaped": true
+    },
+    {
+      "id": "SPAWN_FAILURE_REMOVES_CREATED_PATH",
+      "pass": true,
+      "code": "CAPTURE_PROCESS_UNAVAILABLE",
+      "outputPathRemoved": true
+    },
+    {
+      "id": "WRITE_CLOSE_FAULT",
+      "pass": true,
+      "code": "PRIVATE_CAPTURE_CLEANUP_FAILED",
+      "unlinkAttempted": true,
+      "outputPathRemoved": true,
+      "residualReportedByCleanupFailure": false,
+      "probeOwnHandlesClosedAfterObservation": true,
+      "probeOwnResidualRemovedAfterObservation": true
+    },
+    {
+      "id": "CLOSE_FAULT",
+      "pass": true,
+      "code": "PRIVATE_CAPTURE_CLEANUP_FAILED",
+      "unlinkAttempted": true,
+      "outputPathRemoved": true,
+      "residualReportedByCleanupFailure": false,
+      "probeOwnHandlesClosedAfterObservation": true,
+      "probeOwnResidualRemovedAfterObservation": true
+    },
+    {
+      "id": "SYNC_FAULT",
+      "pass": true,
+      "code": "PRIVATE_CAPTURE_FAILED",
+      "unlinkAttempted": true,
+      "outputPathRemoved": true,
+      "residualReportedByCleanupFailure": false,
+      "probeOwnHandlesClosedAfterObservation": true,
+      "probeOwnResidualRemovedAfterObservation": true
+    },
+    {
+      "id": "UNLINK_FAULT",
+      "pass": true,
+      "code": "PRIVATE_CAPTURE_CLEANUP_FAILED",
+      "unlinkAttempted": true,
+      "outputPathRemoved": false,
+      "residualReportedByCleanupFailure": true,
+      "probeOwnHandlesClosedAfterObservation": true,
+      "probeOwnResidualRemovedAfterObservation": true
+    },
+    {
+      "id": "ARGS_AND_ENV_SNAPSHOTS_BEFORE_AWAIT",
+      "pass": true,
+      "preservedOriginalCommandArguments": true,
+      "preservedOriginalEnvironment": true
+    },
+    {
+      "id": "ARGS_GETTER_DENIED",
+      "pass": true,
+      "code": "CAPTURE_COMMAND_REQUIRED",
+      "noFileCreated": true,
+      "getterNotInvoked": true
+    },
+    {
+      "id": "ENV_GETTER_DENIED",
+      "pass": true,
+      "code": "CAPTURE_ENVIRONMENT_REQUIRED",
+      "noFileCreated": true,
+      "getterNotInvoked": true
+    },
+    {
+      "id": "ARGS_SYMBOL_DENIED",
+      "pass": true,
+      "code": "CAPTURE_COMMAND_REQUIRED",
+      "noFileCreated": true
+    },
+    {
+      "id": "ENV_SYMBOL_DENIED",
+      "pass": true,
+      "code": "CAPTURE_ENVIRONMENT_REQUIRED",
+      "noFileCreated": true
+    },
+    {
+      "id": "SPARSE_ARGS_DENIED",
+      "pass": true,
+      "code": "CAPTURE_COMMAND_REQUIRED",
+      "noFileCreated": true
+    },
+    {
+      "id": "UNKNOWN_ENV_PROTOTYPE_DENIED",
+      "pass": true,
+      "code": "CAPTURE_ENVIRONMENT_REQUIRED",
+      "noFileCreated": true
+    },
+    {
+      "id": "NUL_ENV_VALUE_DENIED",
+      "pass": true,
+      "code": "CAPTURE_ENVIRONMENT_REQUIRED",
+      "noFileCreated": true
+    },
+    {
+      "id": "OVER128K_ARGUMENTS_DENIED",
+      "pass": true,
+      "code": "CAPTURE_COMMAND_REQUIRED",
+      "noFileCreated": true
+    },
+    {
+      "id": "PROXY_REFLECTION_ERROR_FIXED",
+      "pass": true,
+      "code": "PRIVATE_CAPTURE_FAILED",
+      "rawValidationErrorReturned": false,
+      "noFileCreated": true
+    }
+  ],
+  "database_calls": 0,
+  "docker_calls": 0,
+  "remote_calls": 0,
+  "canonical_writes": 0,
+  "existing_private_backup_reads": 0,
+  "credential_values_used_or_printed": false
+}
