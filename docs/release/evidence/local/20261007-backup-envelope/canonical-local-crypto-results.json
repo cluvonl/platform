@@ -1,0 +1,73 @@
+{
+  "scope": "LOCAL_CRYPTO_ONLY",
+  "status": "passed",
+  "actual_node_version": "v24.18.0",
+  "tests": {
+    "count": 16,
+    "pass": 16,
+    "fail": 0,
+    "cancelled": 0,
+    "skip": 0,
+    "todo": 0
+  },
+  "targeted_eslint": {
+    "passed": true,
+    "files": 3,
+    "warnings": 0
+  },
+  "module_exact_tmp_v2_bytes": true,
+  "test_and_helper_changes_only_relative_imports": true,
+  "actual_8mib_round_trip": true,
+  "actual_exact_64mib_upper_boundary_round_trip": true,
+  "plaintext_limit_bytes": 67108864,
+  "envelope_limit_bytes": 94371840,
+  "limits_unchanged": true,
+  "historical_original_13_test_proof_preserved": true,
+  "historical_root_observed_8mib_failure_preserved": true,
+  "private_bundle_or_environment_read": false,
+  "key_provisioned": false,
+  "key_or_plaintext_exported": false,
+  "db_calls": 0,
+  "network_calls": 0,
+  "workflow_changes": false,
+  "migration_changes": false,
+  "dependency_or_lockfile_changes": false,
+  "operational_capture_proved": false,
+  "artifact_retention_configured": false,
+  "database_or_restore_proved": false,
+  "provider_key_or_extension_decryptability_proved": false,
+  "staging_acceptance": false,
+  "production_approved": false,
+  "artifacts": [
+    {
+      "file": "scripts/backup-envelope.mjs",
+      "sha256": "9f57c5b69a6e60bd36775e8167f37363f292da4baaf3bb217c1c46b2f0a35abe"
+    },
+    {
+      "file": "tests/backup-envelope.test.mjs",
+      "sha256": "ffc1f3c50bdc5ffb366ab2d69073c52e045ff3003022523d460d4447fc236d6f"
+    },
+    {
+      "file": "tests/helpers/backup-envelope-upper-boundary.mjs",
+      "sha256": "d3bf399a5ab9b7630e1a45c6c6d8fa1c10829fc61b9807e3085ee2d81366a275"
+    },
+    {
+      "file": "ops/STAGING-BACKUP-ENVELOPE.md",
+      "sha256": "976dfa382d97cfc9ca096e922d30da10e03db26edfcb894ea724f6905db718c1"
+    }
+  ],
+  "copied_safe_reports": [
+    {
+      "file": "safe-local-crypto-results-v2.json",
+      "sha256": "55af88be7df3f64b232e8b09ff31ca30526ce6830382e3a9d1e7b44bc07b4011"
+    },
+    {
+      "file": "historical-safe-local-crypto-results-v1.json",
+      "sha256": "e45b0bf37559235cea7cb8940260ae544db09a8dc4d153279e6bc9cac521243b"
+    },
+    {
+      "file": "historical-root-synthetic-size-probe-v1.json",
+      "sha256": "79ab5382cb9b3722be0c63f81d1cec9b957326b9834512cd9ab1fd150a45c88f"
+    }
+  ]
+}

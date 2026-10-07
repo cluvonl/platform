@@ -1,0 +1,27 @@
+{
+  "scope": "SYNTHETIC_CRYPTO_SIZE_PROBE",
+  "status": "valid_within_limit_input_failed",
+  "recorded_at": "2026-10-07T10:53:46.155255+00:00",
+  "execution_timestamp_not_retained": true,
+  "evidence_origin": "actual root tool result in this turn",
+  "module_sha256": "6a0e4dc4108fa8566bb7f127e8b107fc69c004f593dac9f02801564b4a8931cb",
+  "probes": [
+    {
+      "bytes": 1048576,
+      "round_trip": true,
+      "envelope_bytes": 1398685
+    },
+    {
+      "bytes": 8388608,
+      "round_trip": false,
+      "fixed_code": "NON_ENVELOPE_EXCEPTION",
+      "exception_type": "RangeError"
+    }
+  ],
+  "key_or_plaintext_exported": false,
+  "existing_private_bundle_read": false,
+  "database_calls": 0,
+  "network_calls": 0,
+  "canonical_changes": false,
+  "original_13_test_proof_preserved": true
+}

@@ -1,0 +1,19 @@
+{
+  "observed_at": "2026-10-07T10:57:28.971174+00:00",
+  "actual_node_version": "v24.18.0",
+  "module_sha256": "9f57c5b69a6e60bd36775e8167f37363f292da4baaf3bb217c1c46b2f0a35abe",
+  "npm_test": {
+    "tests": 139,
+    "passed": 139,
+    "failed": 0,
+    "skipped": 0,
+    "todo": 0,
+    "exit_code": 0
+  },
+  "full_eslint": {
+    "passed": true,
+    "exit_code": 0
+  },
+  "database_or_restore_proof": false,
+  "production_approved": false
+}

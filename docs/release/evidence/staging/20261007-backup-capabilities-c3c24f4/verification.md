@@ -1,0 +1,13 @@
+# Hosted herstel- en migratierechten op c3c24f4
+
+Bron `c3c24f41ee9d6e3a2d4b21b0f843cabb7b9b2d37`: [CI](https://github.com/cluvonl/platform/actions/runs/37603214914) is geslaagd en exact naar staging gepromoveerd. De [handmatige hosted rechtenmeting](https://github.com/cluvonl/platform/actions/runs/37603824238) is werkelijk geslaagd. Het ongewijzigde veilige [rapport](capability-results.json), waargenomen op `2026-10-07T09:54:51.990Z`, heeft SHA256 `9cfa237eee6bea39bde3260b19e29f466e0777421151264fa4d0e3cc25d830b4`.
+
+Werkelijke actor: non-superuser `postgres`, met BYPASSRLS en CREATEROLE. De meting ziet 39 datarelations, twee sequences, nul grote objecten, 30 rollen, 24 memberships, één parameter-ACL en nul app-tabellen. Zij vindt geen ontbrekende tabel-/kolom-SELECT, schema-USAGE, sequence-SELECT of actieve RLS-filtering. Subscriptions, foreign tables, custom tablespaces, ongeregistreerde extensiondatarelations en gefilterde extensiondumpconditions zijn nul. Beide lijsten voor concrete captureblockers en bekende full16-migratievoorvoorwaarden zijn leeg.
+
+Auth-users, Auth-sessions en Storage-objects bestaan en hebben expliciete geladen providerpolicygrants; direct eigenaarschap is false. De beperkte Auth-kolomgrants en vereiste Storage-bucketupsertkolomrechten zijn aanwezig, zonder gemeten bucket-RLS-filtering. Dit is metadata-inferentie, geen uitgevoerd CREATE POLICY of UPSERT.
+
+Alle vijf geïnstalleerde extensions passen bij de bekende zes-extensionversies uit de voltooide lokale herstelproef; nul afwijkend/onbekend. Definitions zijn niet vergeleken en volledige restorecompatibiliteit blijft false. De daadwerkelijk gemeten OID10-bootstrapanker is een andere rol dan de actor en is superuser. Een eerdere hypothetische nonSU-OID10-hostedroute is daarmee geen eigenschap van dit project; er is volgens deze metadata geen extra tijdelijke clonereplayrol nodig.
+
+De client gebruikt TLS 1.3 met gecontroleerd servercertificaat/hostname. `pg_stat_ssl=false` betreft de afzonderlijke backend achter de session pooler. Alle queries waren READ ONLY/REPEATABLE READ; afzonderlijke verbindingen vormen geen gezamenlijke backupsnapshot.
+
+Geen dump, backup, restore, rootkey-/passwordcapture, DDL, providerwijziging, account of mail uitgevoerd. Zero gemeten hiaten vervangt geen werkelijk ongewijzigde full-logical export, private catalogus-/datavergelijking, clone-upgrade onder dezelfde nonSU-actor en gebonden live-migratiedriver. Backup, restore, migratievrijgave, V1 en productie blijven false. De [vijf configuratiechecks](../20261007-credentials-c3c24f4/verification.md) slagen afzonderlijk met zestien pending migraties; het app-schema is nog leeg.

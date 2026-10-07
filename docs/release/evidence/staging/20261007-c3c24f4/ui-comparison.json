@@ -1,0 +1,19 @@
+{
+  "observed_at": "2026-10-07T10:03:12.976710+00:00",
+  "source_sha": "c3c24f41ee9d6e3a2d4b21b0f843cabb7b9b2d37",
+  "actual_new_browser_capture": true,
+  "comparison": "exact_png_bytes",
+  "captures": [
+    {
+      "file": "prototype-overzicht-1440x1024.png",
+      "sha256": "21d49ee7d48c6776cc9c3dd232b3b3d70dce180a94c34a7a88b090d3340265ac",
+      "bytes_equal_root_visually_reviewed_release": "1d56c628969249c2a0b8e0dd7967a42dc9044dae"
+    },
+    {
+      "file": "prototype-overzicht-390x844.png",
+      "sha256": "9ba1ac7590a96e453099c8d491bb377c58e3d0df431daff1aa26a9d485a40cad",
+      "bytes_equal_root_visually_reviewed_release": "1d56c628969249c2a0b8e0dd7967a42dc9044dae"
+    }
+  ],
+  "functional_app_verified": false
+}

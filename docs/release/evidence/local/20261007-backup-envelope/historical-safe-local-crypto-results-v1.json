@@ -1,0 +1,52 @@
+{
+  "scope": "LOCAL_CRYPTO_ONLY",
+  "status": "passed",
+  "tests": 13,
+  "pass": 13,
+  "fail": 0,
+  "skip": 0,
+  "todo": 0,
+  "syntax_check_passed": true,
+  "actual_crypto_round_trip": true,
+  "actual_tag_wrong_key_tamper_tests": true,
+  "actual_authenticated_aad_tamper_tests": true,
+  "actual_post_auth_content_binding_test": true,
+  "random_nonce_samples": 64,
+  "plaintext_released_before_authentication": false,
+  "private_bundle_or_environment_read": false,
+  "key_provisioned": false,
+  "key_or_plaintext_exported": false,
+  "db_calls": 0,
+  "network_calls": 0,
+  "canonical_changes": false,
+  "capabilities": {
+    "scope": "LOCAL_CRYPTO_ONLY",
+    "aes_256_gcm_available": true,
+    "sha256_available": true,
+    "random_nonce_bytes": 12,
+    "authentication_tag_bytes": 16,
+    "limits": {
+      "plaintext_bytes": 67108864,
+      "envelope_bytes": 94371840,
+      "key_bytes": 32,
+      "nonce_bytes": 12,
+      "tag_bytes": 16
+    },
+    "database_or_restore_proved": false,
+    "provider_key_or_extension_decryptability_proved": false
+  },
+  "artifacts": [
+    {
+      "filename": "backup-envelope.mjs",
+      "sha256": "6a0e4dc4108fa8566bb7f127e8b107fc69c004f593dac9f02801564b4a8931cb"
+    },
+    {
+      "filename": "backup-envelope.test.mjs",
+      "sha256": "31a3846f0f722b530c36e7e6ca4961e9985940d3b5be702168b381d65d6d1a17"
+    },
+    {
+      "filename": "README.md",
+      "sha256": "b939d20b1f169117a865ce5d375cc6fc9b0a04b2d427c570d96b240572a4d159"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+# Stagingtussenrelease c3c24f4
+
+De exacte groene bron `c3c24f41ee9d6e3a2d4b21b0f843cabb7b9b2d37` is via main naar staging gepromoveerd. [CI](https://github.com/cluvonl/platform/actions/runs/37603214914) en [imagebuild/deployment](https://github.com/cluvonl/platform/actions/runs/37603794369) zijn geslaagd. De [uitgevoerde HTTP- en browserreadback](readback.json) controleert de uitgerolde SHA en alle zestien immutable migratiehashes uit het [releaseartifact](release-manifest.json).
+
+Liveness geeft 200 met de juiste stagingrelease in prototype-modus. Readiness geeft 503 met `APP_MODE_PROTOTYPE`; runtimeconfig geeft 503 met `SUPABASE_NOT_CONFIGURED`. De [afzonderlijke vijf configuratiecontroles](../20261007-credentials-c3c24f4/verification.md) meten nul app-tabellen en nul toegepaste migraties. De [hosted rechtenmeting](../20261007-backup-capabilities-c3c24f4/verification.md) vindt geen gemeten captureblockers of bekende migratievoorwaardehiaten, maar bewijst geen backup, restore of toegepaste SQL.
+
+Desktop 1440×1024 en mobiel 390×844 zijn opnieuw werkelijk in de browser vastgelegd. Beide PNG-bestanden zijn [byte voor byte gelijk](ui-comparison.json) aan de door root visueel beoordeelde 1d56c62-captures. Club Signal en de bestaande navigatie blijven behouden. Dit is uitsluitend prototypebewijs. Aangesloten app/worker, Native login, staging RLS/privacy, operationele restore en volledige V1 blijven open; productie blijft false.
