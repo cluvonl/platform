@@ -1,0 +1,26 @@
+[
+  {
+    "check": "find_printf",
+    "exit": 1,
+    "stdout": "",
+    "stderr_bytes": 2395,
+    "own_worker_removed": true,
+    "database_calls": 0
+  },
+  {
+    "check": "find_stat",
+    "exit": 0,
+    "stdout": "41ed|/bin\n",
+    "stderr_bytes": 0,
+    "own_worker_removed": true,
+    "database_calls": 0
+  },
+  {
+    "check": "stat_contract",
+    "exit": 0,
+    "stdout": "a1ff|0|12|/bin/cat\n",
+    "stderr_bytes": 0,
+    "own_worker_removed": true,
+    "database_calls": 0
+  }
+]

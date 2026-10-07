@@ -1,0 +1,210 @@
+{
+  "status": "REVIEWABLE_TMP_READ_ADAPTER_TESTED_NOT_INTEGRATED",
+  "scope": "LOCAL_SYNTHETIC_READ_ADAPTER_ONLY",
+  "revision": 3,
+  "preserved_manifests": [
+    {
+      "path": "/tmp/cluvo-w03-next-read-adapter/draft-manifest.json",
+      "sha256": "a49426982f7233edd451985ff69a7c2e2d120665b1646388b32beca878ebec6a",
+      "listed_artifacts_unchanged": true
+    },
+    {
+      "path": "/tmp/cluvo-w03-next-read-adapter-v2/draft-manifest.json",
+      "sha256": "6f6796a90a2bb1c71ed232ab3f6a7370abf50b0515c98d6c44a489faa7146d21",
+      "listed_artifacts_unchanged": true
+    }
+  ],
+  "exact_timestamptz_microsecond_binding": true,
+  "equal_offset_instants_accepted_no_string_normalization": true,
+  "sql18_sha256": "3cf6acfdfd54c210ea88acb89d5be699a6347a13cb6047ca499638908736aeb8",
+  "sql18_separate_actual_local_proof_sha256": "57c0f07053b811fe50d25d8ce0d58158fa2b8b1cd7fa8643975dd8cbaabf6d97",
+  "tests": {
+    "tests": 56,
+    "pass": 56,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "actual_node": "v24.18.0",
+  "typecheck": true,
+  "lint_zero_warnings": true,
+  "fixed_read_rpc_routes": 12,
+  "first_selection_compositions": 4,
+  "direct_saved_commit_recovery_routes": 4,
+  "source_artifacts": [
+    {
+      "file": "booking-read-contracts.ts",
+      "bytes": 19504,
+      "sha256": "d2f1fa2ec24bab404989cbcd986171b90ca96f0bff0d07b48ceed4ef46b2accd"
+    },
+    {
+      "file": "booking-read-core.ts",
+      "bytes": 4142,
+      "sha256": "84918eeff5be1e92f647bf11b9d7f5daa467cf1489432cf2d55110d7a5cc7d51"
+    },
+    {
+      "file": "booking-read-next-actions.ts",
+      "bytes": 2271,
+      "sha256": "995ee64acdfa878de91f9aa2c5e855718b45009b619525eaae9438bb27f1676b"
+    },
+    {
+      "file": "booking-projections.ts",
+      "bytes": 15702,
+      "sha256": "dd397edd819e59d1feb63d6475c8fc7684f6b20969b5bec117ec1d7d608d713f"
+    },
+    {
+      "file": "booking-projections-next.ts",
+      "bytes": 1876,
+      "sha256": "9e47e60a91a3359000742c31e27c29bbb5734fd08fdc284ddf8d15070ec9fd2b"
+    },
+    {
+      "file": "booking-read-adapter.test.mjs",
+      "bytes": 37716,
+      "sha256": "2f44a77db2a2924d94c411147cd2b6f78b73a8a3870712ea2415d6eeba5c3832"
+    },
+    {
+      "file": "validate-read-adapter.mjs",
+      "bytes": 6395,
+      "sha256": "e7604cda39827f554cc11ed42d857309a5fb7b4b9ec8f31799278006afed3339"
+    },
+    {
+      "file": "eslint.config.mjs",
+      "bytes": 370,
+      "sha256": "63de424e22885b0d56ffffd889c83427689a93a86e0508ec0bf49a2b665e45cc"
+    },
+    {
+      "file": "tsconfig.check.json",
+      "bytes": 494,
+      "sha256": "009fb2f7941007258a53454d8d316533946c7eff8c52aa5ec524ff282b4a3ffd"
+    },
+    {
+      "file": "tsconfig.test.json",
+      "bytes": 346,
+      "sha256": "d7bc9eb61f57f4326f1549186b8e3ac97d8081b5897e3999ffa4717550196e80"
+    },
+    {
+      "file": "package.json",
+      "bytes": 76,
+      "sha256": "1623df602f62959a42be02b8fd039b2709403f2b0021536cadfc8e90522cd27a"
+    },
+    {
+      "file": "source-plan.md",
+      "bytes": 6393,
+      "sha256": "0e0caa99170f29e67c35b3d77ee85bd200177eb14928265f7f828fcccac8dc17"
+    },
+    {
+      "file": "README.md",
+      "bytes": 9307,
+      "sha256": "b02e17d1dd54e0527d6e94dc0d18928c9495a020cfacfe62a4e697a213fd9448"
+    },
+    {
+      "file": "development-correction.md",
+      "bytes": 1194,
+      "sha256": "f890adcf73d5f1e4a6dd4c7808c5c07e00f37488c7d021618311e2401b76d2ec"
+    },
+    {
+      "file": "validation-results.json",
+      "bytes": 5961,
+      "sha256": "75a31e778b5b4ea5c9fa24848bbfe16ab5aa38eb643c2f47a1a43d5fa1ef70ba"
+    },
+    {
+      "file": "source-review.md",
+      "bytes": 3300,
+      "sha256": "33f47750b5492b6b758b43d2b5238ecfb8f1994e64f0d063c1f2d78e19c6782d"
+    },
+    {
+      "file": "revision-notes.md",
+      "bytes": 1014,
+      "sha256": "7ee28dbd63989a3e9abd2af07eb76b16c9679a54dbfd5adc09e42c544018ea2a"
+    },
+    {
+      "file": "timestamp-revision.md",
+      "bytes": 1363,
+      "sha256": "94912b9c6e7762845f3c129e0ba0b600d0551d0b3f1078117736a28c4980d8aa"
+    }
+  ],
+  "bound_inputs": [
+    {
+      "path": "/tmp/cluvo-w03-read-contracts/20261007023000_w03_booking_read_contracts.sql",
+      "sha256": "3cf6acfdfd54c210ea88acb89d5be699a6347a13cb6047ca499638908736aeb8",
+      "unchanged": true
+    },
+    {
+      "path": "/tmp/cluvo-w03-read-contracts/021_w03_booking_read_contracts_v2.sql",
+      "sha256": "1fba1dbaced807b428f1c2f17b1d43512c2d3eb531e052d8f5bf60113f99a322",
+      "unchanged": true
+    },
+    {
+      "path": "/tmp/cluvo-w03-read-contracts/run-580a9e5cdff0e162/safe-results.json",
+      "sha256": "57c0f07053b811fe50d25d8ce0d58158fa2b8b1cd7fa8643975dd8cbaabf6d97",
+      "unchanged": true
+    },
+    {
+      "path": "/tmp/cluvo-w03-booking-contract/20261007020000_w03_booking_contracts.sql",
+      "sha256": "27246ea5c22cf11ec1831ac34536807e39b69be2d56da6575f5f9f2d4b7db298",
+      "unchanged": true
+    },
+    {
+      "path": "/tmp/cluvo-w03-next-adapter/booking-contracts.ts",
+      "sha256": "1523feced1d9a843385244bd271e7aa2197294dec655bce65b1bd46dee34a967",
+      "unchanged": true
+    },
+    {
+      "path": "/tmp/cluvo-w03-next-adapter/booking-server-core.ts",
+      "sha256": "3e5e4101e5be1a397e3b5f0cc40a2595e3720a5ab2f5cea86208972f82e13d49",
+      "unchanged": true
+    },
+    {
+      "path": "/tmp/cluvo-w03-next-adapter/booking-next-actions.ts",
+      "sha256": "4c121756443ee8747c48f4bafb59713cd8484c15e8eb3a4368b0cc382867b9f1",
+      "unchanged": true
+    },
+    {
+      "path": "/tmp/cluvo-w03-next-adapter/booking-adapter.test.mjs",
+      "sha256": "57f2dff1bde631cae8b88c23f5fbd316aa26028b533e8a935c190b3f3abf3c0d",
+      "unchanged": true
+    },
+    {
+      "path": "/tmp/cluvo-w03-booking-ui/review-model.ts",
+      "sha256": "e1695fa8f5580416b9402dcc45a3f102c0b21db33a5a0a23f8eaca04ee66867a",
+      "unchanged": true
+    },
+    {
+      "path": "/tmp/cluvo-w03-booking-ui/booking-review.tsx",
+      "sha256": "84e0d54945b453576a1b5de1bbb3a7637ce67f053b209bd1c81e921090f9c10c",
+      "unchanged": true
+    },
+    {
+      "path": "/tmp/cluvo-w03-booking-ui/review-model.test.mjs",
+      "sha256": "782f61c979c2a7a5f4ef6cee9e5f698178405d27536fb17100b70b2656d3daf8",
+      "unchanged": true
+    }
+  ],
+  "limits": {
+    "canonical_integrated": false,
+    "database_calls": false,
+    "docker_calls": false,
+    "network_calls": false,
+    "mail_calls": false,
+    "next_http_runtime": false,
+    "browser_ui": false,
+    "staging_readback": false,
+    "full_reload_precommitkey_recovery": false,
+    "book_only_incomplete_label_mandate": false,
+    "full_v1_accepted": false,
+    "production_approved": false
+  },
+  "known_open": [
+    "actual canonical and NextHTTP integration",
+    "four true UI/browser/Native/serveraction/staging proof chains",
+    "durable precommit key and journal19/fullreload recovery",
+    "book-only incomplete or ambiguous label display mandate",
+    "frozen review human target labels after reload",
+    "documents/media/checklist/buddy/group/reconfirmation/mutual swap/fullV1"
+  ],
+  "excluded": [
+    "node_modules",
+    ".test-build"
+  ]
+}

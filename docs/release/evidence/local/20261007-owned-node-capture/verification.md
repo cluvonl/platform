@@ -1,0 +1,15 @@
+# Echte lokale Node-capture en bronvergelijking
+
+Run `e83f8631343ce44a` slaagt met de werkelijk uitgevoerde Node → Docker exec → Python → libpq → PostgreSQL 17-verbinding. Het [uitgevoerde plan](executed-plan.json) bindt de openbare bronbytes, image, daemonroute, eigen container en de onveranderde zestien migraties. De [resultaten](local-results.json) onderscheiden dit van 60 componentproeven en 170 synthetische collectorproeven.
+
+De eigen tijdelijke SQL-fixture heeft echte providerschema's, rollen, ACL's en geladen extensies; `postgres` is geen superuser. De oorspronkelijke verbinding behoudt een exclusieve sessielock en een geëxporteerde alleen-lezen snapshot. Een tweede sessie wordt geweigerd. Meerdere statements en een schrijvende CTE worden werkelijk geweigerd. De geregistreerde bron is na sluiten niet meer bruikbaar.
+
+Alle 28 catalogusgroepen, 19 aanvullende groepen, fysieke tabelhashes, sequences, large objects en datasetinventaris worden gelezen. De nieuwe transactie op dezelfde backend leest alles opnieuw; alle 78 vergelijkingen slagen. Daarna controleert de lifecycle-eigenaar de oorspronkelijke bron met een nieuwe snapshot: catalogus, tabeldata, globale instellingen, sequences en migratiebytes zijn gelijk. De eigen container is verwijderd; de bronverbinding en bronlocks zijn weg.
+
+Deze fixture is een schema-only kopie waarvan de applicatieschema's zijn verwijderd. Alleen in die eigen fixture is één lokale database-JWT-instelling verwijderd, zodat de ongewijzigde geheimencontrole een positieve proef kan uitvoeren. De 27 overige catalogusgroepen en alle overige instellingen zijn exact vergeleken. De broninstelling blijft behouden. Dit bewijst geen volledige restore van de bron of van de providerservices.
+
+Vijf mislukte voorgangers blijven bewaard. Eerst stonden image-tools op andere paden en bleek `find -printf` niet ondersteund; [de echte featureproef](image-tool-feature-results.json) onderbouwt de vervanging door `find -exec stat`, met dezelfde controle van fysieke types, namespace, alle bytes, modes en eigenaar. Daarna weigerde de collector terecht de lokale JWT-instelling. Ten slotte wees echte PostgreSQL-uitvoering een fout aan in de aanvullende dictionaryquery: de binnenste `pg_depend`-alias overschaduwde de buitenste dictionary-alias (`42703`). De gereviseerde query gebruikt afzonderlijke aliases; de achttien overige aanvullende queries blijven byte-identiek. De PostgreSQL 17-definitie van de dictionaryvelden staat in de [officiële catalogusdocumentatie](https://www.postgresql.org/docs/17/catalog-pg-ts-dict.html).
+
+Alle oude runs bewijzen geslaagde cleanup, maar hun bronvergelijking na afloop was niet uitgevoerd en blijft daarom `false`. De nieuwe geslaagde run verandert die historische resultaten niet. Ruwe catalogi, dumps, sleutelwaarden, Native-identiteiten en providerdiagnostiek zijn niet in deze bewijsmap opgenomen.
+
+De operationele driver is nog een lokale kandidaat. Hosted TLS, een operationele encryptiesleutel met bewaarbeleid, een volledige onafhankelijke restore, migratietoepassing en de echte UI/Native/stagingketen blijven open. Deze proef verleent geen V1- of productieacceptatie.

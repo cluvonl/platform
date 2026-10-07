@@ -1,0 +1,13 @@
+# Boekingsadapter voor de V2-contracten
+
+De Next.js-code bevat nu vaste serverentrypoints voor het voorbereiden en bevestigen van een online inschrijving, telefonische registratie, wachtlijstaanbod en overname. De adapter publiceert ook een instructieversie en leest de daarvoor benodigde gegevens. De bestaande pagina's gebruiken deze entrypoints nog niet: de twee bijbehorende SQL-migraties zijn afzonderlijk lokaal bewezen, maar staan nog niet in de gedeelde migratiemap.
+
+De tenant komt uit de bestaande `requireWorkspace`-controle met de actuele Native-sessie en de publishable SSR-client. Een browser levert geen actor, sessie, tenant, rol of RPC-naam. Elk entrypoint heeft een vaste RPC en een strikt gegevenscontract; de database moet de concrete actie opnieuw autoriseren.
+
+Een onzekere bevestiging behoudt het oorspronkelijke verzoek met dezelfde sleutel, versies, uitvoerder, verplichting, twee expliciete bevestigingen en eventueel de oorspronkelijke telefoonreden. Een herhaling doet geen nieuwe controle van capaciteit of instructieversie vooraf. Een gelezen voltooiing toont de oorspronkelijke boekingsbevestiging apart van de actuele boekingsstatus. Die waarneming bewijst geen oorspronkelijke volledige verzoekinhoud en reconstrueert geen verloren sleutel.
+
+De aangeboden instructie en afmeldafspraak worden rechtstreeks uit het eigen, bevroren aanbod gelezen. Tijdstippen worden als exacte PostgreSQL-microseconden vergeleken, zodat een andere UTC-offset hetzelfde moment kan aanduiden. Een verschil van één microseconde blijft een verschil. De oorspronkelijke tekst en tijdstiprepresentatie blijven behouden.
+
+De code staat in [lib/bookings](../lib/bookings/booking-projections.ts). De [89 gerichte adaptertests](../tests/booking-read-adapter.test.mjs) draaien met synthetische RPC-antwoorden tegen de daadwerkelijke repositorybronnen. De volledige suite heeft 274 geslaagde tests; typecheck, Next-build en lint zonder waarschuwingen zijn uitgevoerd. De [bewijsregistratie](../docs/release/evidence/local/20261007-booking-adapters/local-results.json) onderscheidt deze tests van de afzonderlijke echte PostgreSQL-proef met 1.102 SQL-asserties op een upgrade en een lege database.
+
+Voor aansluiting van de pagina's blijven de echte Native/ServerAction/browserproeven, menselijke labels na herladen en duurzaam herstel van het verzoek vóór bevestiging open. Een beperkte boekbevoegdheid verleent geen extra toegang tot huishoudgegevens. De canononderdelen voor documenten, media, checklist, buddy's, groepen, herbevestiging en wederzijdse ruil blijven onderdeel van V1. Stagingacceptatie en productie blijven gesloten.

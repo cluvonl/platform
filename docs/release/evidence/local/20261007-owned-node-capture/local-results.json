@@ -1,0 +1,164 @@
+{
+  "observed_at": "2026-10-07T14:25:24.527382+00:00",
+  "scope": "LOCAL_OWNED_PROVIDER_SQL_FIXTURE_ONLY",
+  "source_sha": "e14512f72602b6c753417ac66f899f510cd6198d",
+  "actual_default_node_docker_python_libpq": true,
+  "actual_catalog_families": 28,
+  "actual_supplemental_families": 19,
+  "actual_fresh_comparison_rules": 78,
+  "actual_source_fresh_catalog_data_globals_sequences_files_unchanged": true,
+  "actual_cleanup_complete": true,
+  "component_guards": {
+    "node": 41,
+    "python": 19,
+    "all_pass": true
+  },
+  "corrected_collector_fresh_synthetics": {
+    "tests": 170,
+    "pass": 170,
+    "fail": 0,
+    "skip": 0,
+    "todo": 0
+  },
+  "query_correction": {
+    "changed_queries": 1,
+    "unchanged_other_supplemental_queries": 18,
+    "reason": "Outer pg_ts_dict alias was shadowed by inner pg_depend alias; SQLSTATE 42703.",
+    "original_proofs_preserved": true,
+    "new_collector_manifest_sha256": "56a314994b8c27e281f40e656f80b2a4a2d837787bb6779b1e04871c1f9d52a7",
+    "new_fresh_sha256": "4a8799575cd5d29fb37fa8b4ff41419437f0b821f2c975f7911ce203fbd38a40"
+  },
+  "fixture_delta": {
+    "clone_application_schemas_removed": true,
+    "schema_only_restore": true,
+    "owned_clone_one_database_local_jwt_setting_removed": true,
+    "other_27_catalogs_exact": true,
+    "all_other_settings_exact": true,
+    "source_configuration_changed": false,
+    "provider_grants_changed": false,
+    "full_source_restore_claim": false
+  },
+  "executed_plan_sha256": "ee0f4a107f08aa3bbfe27efd6ccd910b07ccd091d47971759aa89db139ffc4ab",
+  "runs": [
+    {
+      "run_id": "7d0e09e5fd5d84a6",
+      "status": "failed",
+      "creator_code": "OWNED_NODE_RUNNER_FAILED",
+      "runner_code": "LOCAL_DOCKER_METADATA_FAILED",
+      "source_unchanged_proved": false,
+      "cleanup_passed": true,
+      "files": [
+        {
+          "file": "7d0e09e5fd5d84a6-safe-results.json",
+          "sha256": "5b38989c56e52883ef12d27e7eecad425e59f6d043fdd5f7966c992be2057de1"
+        },
+        {
+          "file": "7d0e09e5fd5d84a6-runner-results.json",
+          "sha256": "b8aa4fd7fdc608550070c11bc5c7abd8f3949cb3f3ad694de661d411161fbc4a"
+        }
+      ]
+    },
+    {
+      "run_id": "04ff5565c1e0d88f",
+      "status": "failed",
+      "creator_code": "OWNED_NODE_RUNNER_FAILED",
+      "runner_code": "LOCAL_DOCKER_METADATA_FAILED",
+      "source_unchanged_proved": false,
+      "cleanup_passed": true,
+      "files": [
+        {
+          "file": "04ff5565c1e0d88f-safe-results.json",
+          "sha256": "3fd8de58327858c40b8a7d7b21a2ce4b8930a381de826ba505863198660d4319"
+        },
+        {
+          "file": "04ff5565c1e0d88f-runner-results.json",
+          "sha256": "b8aa4fd7fdc608550070c11bc5c7abd8f3949cb3f3ad694de661d411161fbc4a"
+        }
+      ]
+    },
+    {
+      "run_id": "4a066d293ada788a",
+      "status": "failed",
+      "creator_code": "OWNED_NODE_RUNNER_FAILED",
+      "runner_code": "CAPTURE_SECRET_CONFIGURATION_PRESENT",
+      "source_unchanged_proved": false,
+      "cleanup_passed": true,
+      "files": [
+        {
+          "file": "4a066d293ada788a-safe-results.json",
+          "sha256": "d45973975cb16d5da973ddefd1cfb3390248900ec961709223c629e4b6ebebc9"
+        },
+        {
+          "file": "4a066d293ada788a-runner-results.json",
+          "sha256": "b78de1da34072c198979676f16ebabaeaf4cffbb4f01c6110e37a01b533820a5"
+        }
+      ]
+    },
+    {
+      "run_id": "273200fef15cd63f",
+      "status": "failed",
+      "creator_code": "OWNED_NODE_RUNNER_FAILED",
+      "runner_code": "CAPTURE_QUERY_UNAVAILABLE",
+      "source_unchanged_proved": false,
+      "cleanup_passed": true,
+      "files": [
+        {
+          "file": "273200fef15cd63f-safe-results.json",
+          "sha256": "38d36cf3213c95bd7f262635ee45a449a8487fe57caf60d6d483ba5460e166f8"
+        },
+        {
+          "file": "273200fef15cd63f-runner-results.json",
+          "sha256": "dcba39f38117316f0c9faeb491fd67e0fcb5ffc7d089f6fc9470172d8ad265dc"
+        }
+      ]
+    },
+    {
+      "run_id": "f53fbf9014bcc10a",
+      "status": "failed",
+      "creator_code": "OWNED_NODE_RUNNER_FAILED",
+      "runner_code": "CAPTURE_QUERY_UNAVAILABLE",
+      "source_unchanged_proved": false,
+      "cleanup_passed": true,
+      "files": [
+        {
+          "file": "f53fbf9014bcc10a-safe-results.json",
+          "sha256": "7349754931bb05a627c498245bf95e7431cbee04bde51f46e25d0cdb0476df80"
+        },
+        {
+          "file": "f53fbf9014bcc10a-runner-results.json",
+          "sha256": "438623711f16ac4bbbafc30824015065cef8c4344fbd0b033d4a195aa32c93ba"
+        }
+      ]
+    },
+    {
+      "run_id": "e83f8631343ce44a",
+      "status": "passed",
+      "creator_code": null,
+      "runner_code": null,
+      "source_unchanged_proved": true,
+      "cleanup_passed": true,
+      "files": [
+        {
+          "file": "e83f8631343ce44a-safe-results.json",
+          "sha256": "1a3524ccd46880e09e6f5d38127b97976a8d28fe4ec3dc59bdabaa45a5d3f2f3"
+        },
+        {
+          "file": "e83f8631343ce44a-runner-results.json",
+          "sha256": "61a5085dd287b4543337620636c18a0b9aab196c069716d090a3284a2f38c5c6"
+        }
+      ]
+    }
+  ],
+  "limits": {
+    "canonical_operational_driver": false,
+    "hosted_queries": false,
+    "hosted_tls_verified": false,
+    "backup_encryption_key_created": false,
+    "full_provider_restore": false,
+    "strict_libpq_wire_memory_bound": false,
+    "migration_apply": false,
+    "functional_ui": false,
+    "v1_accepted": false,
+    "production_enabled": false
+  }
+}

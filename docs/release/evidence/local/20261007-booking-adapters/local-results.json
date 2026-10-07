@@ -1,0 +1,93 @@
+{
+  "observed_at": "2026-10-07T14:07:17.813468+00:00",
+  "scope": "CANONICAL_NEXT_BOOKING_FOUNDATION_UNROUTED",
+  "source_base_sha": "e14512f72602b6c753417ac66f899f510cd6198d",
+  "actual_verification": {
+    "node_tests": 274,
+    "pass": 274,
+    "fail": 0,
+    "skip": 0,
+    "todo": 0,
+    "new_booking_tests": 89,
+    "typecheck": true,
+    "optimized_next_build": true,
+    "lint_zero_warnings": true,
+    "wp0_standalone_smoke": true
+  },
+  "reviewed_read_adapter_manifest_sha256": "7a0d5088ed5764c314f705f5e99a8335492725be24c7894edb4ea94e99e75ed0",
+  "canonical_adaptations": [
+    "relative imports point to lib/bookings",
+    "BigInt constructor calls preserve exact arithmetic with existing ES2017 TypeScript target",
+    "fixed Next entrypoint comments",
+    "tests compile actual repository core sources in their own disposable directory",
+    "one test conditional made explicit for zero-warning lint"
+  ],
+  "candidate_sql_proof": {
+    "separate_executed_local_run": true,
+    "file": "candidate18-local-sql-results.json",
+    "sha256": "57c0f07053b811fe50d25d8ce0d58158fa2b8b1cd7fa8643975dd8cbaabf6d97",
+    "assertions": 1102,
+    "not_rerun_by_adapter_tests": true
+  },
+  "files": [
+    {
+      "file": "lib/bookings/booking-contracts.ts",
+      "sha256": "1523feced1d9a843385244bd271e7aa2197294dec655bce65b1bd46dee34a967"
+    },
+    {
+      "file": "lib/bookings/booking-next-actions.ts",
+      "sha256": "76a7be8d6475f42a897bdc8565438dacd3ef56b33f0bc99f8e64a91bfb28e539"
+    },
+    {
+      "file": "lib/bookings/booking-projections-next.ts",
+      "sha256": "834e7ce8488ff9338f3220991ff030c8a204ea0b6bafc60dea1a3bfd63929254"
+    },
+    {
+      "file": "lib/bookings/booking-projections.ts",
+      "sha256": "0e98397e97f7bf9240d14c08c33e87c661c79eeb7ba3968ede10724004ac2a85"
+    },
+    {
+      "file": "lib/bookings/booking-read-contracts.ts",
+      "sha256": "b91e1b3fa4aa6dd63f74ef2119141bf17453d9f73c4c10e19b2ae84b472fc20c"
+    },
+    {
+      "file": "lib/bookings/booking-read-core.ts",
+      "sha256": "84918eeff5be1e92f647bf11b9d7f5daa467cf1489432cf2d55110d7a5cc7d51"
+    },
+    {
+      "file": "lib/bookings/booking-read-next-actions.ts",
+      "sha256": "87b2befe9e5dd39069725dfb11d0d3ee8e38dcdd561b6a2848c56e1eb7ac4143"
+    },
+    {
+      "file": "lib/bookings/booking-server-core.ts",
+      "sha256": "3e5e4101e5be1a397e3b5f0cc40a2595e3720a5ab2f5cea86208972f82e13d49"
+    },
+    {
+      "file": "tests/booking-adapter.test.mjs",
+      "sha256": "5024f9fa1c3593e87e48d8a5124e30aa3b209a5aa83a775105aa53ce412d2042"
+    },
+    {
+      "file": "tests/booking-read-adapter.test.mjs",
+      "sha256": "98deef914241df227e9cbd7ff9f1210eca012b48028fe62adc2ff5d08e543447"
+    },
+    {
+      "file": "tests/helpers/booking-modules.mjs",
+      "sha256": "1cd3cb2ace7cf2b7052d9717345abe9552be9d35318778d4579de644504703c8"
+    }
+  ],
+  "limits": {
+    "routed_ui": false,
+    "sql17_18_published": false,
+    "real_native_serveraction_http": false,
+    "staging_functional_app": false,
+    "durable_precommit_key_recovery": false,
+    "book_only_label_mandate": false,
+    "frozen_review_labels_after_reload": false,
+    "full_v1_accepted": false,
+    "production_enabled": false
+  },
+  "dependencies_and_lockfile_changed": false,
+  "original16_migrations_changed": false,
+  "private_literal_scan_matches": 0,
+  "last_verified_at": "2026-10-07T14:21:08.158523+00:00"
+}
