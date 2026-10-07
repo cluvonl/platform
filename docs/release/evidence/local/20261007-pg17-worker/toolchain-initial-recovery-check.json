@@ -1,0 +1,10 @@
+{
+  "cause": "OPTIONAL_HOSTCONFIG_MOUNTS_TEMPLATE_FIELD_MISSING",
+  "database_connections": 0,
+  "not_started": true,
+  "original_failure_unchanged": true,
+  "owned_full_cid_verified": true,
+  "removed_and_absence_verified": false,
+  "scope": "OWNED_PUBLIC_VERSION_PROBE_RECOVERY_ONLY",
+  "source_calls": 0
+}

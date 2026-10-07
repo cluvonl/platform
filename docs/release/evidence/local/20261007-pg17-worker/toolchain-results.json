@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "scope": "OWNED_PUBLIC_PG17_TOOL_VERSIONS_ONLY",
+  "run_id": "53b9c6f17b75468d786607cef07bea6c",
+  "worker_source_sha256": "6e744f3037e2ef88ef895a1d584c5dadaf6de6611b4d5e2eff56c1030017d99b",
+  "image": "public.ecr.aws/supabase/postgres@sha256:0450166354dc9c1d25f0322ac8b580774d4fb0184d2b087f6e4fe9499c66cf53",
+  "tools": [
+    "pg_dump",
+    "pg_dumpall",
+    "pg_restore"
+  ],
+  "database_connections": 0,
+  "source_calls": 0,
+  "network": "none",
+  "host_mounts": false,
+  "credentials_used": false,
+  "observed_at": "2026-10-07T12:43:29.571Z",
+  "status": "passed",
+  "result": {
+    "image": "public.ecr.aws/supabase/postgres@sha256:0450166354dc9c1d25f0322ac8b580774d4fb0184d2b087f6e4fe9499c66cf53",
+    "tools": {
+      "pg_dump": "17.11",
+      "pg_dumpall": "17.11",
+      "pg_restore": "17.11"
+    },
+    "workers_removed": 3,
+    "network": "none",
+    "database_connections": 0,
+    "source_calls": 0
+  },
+  "limits": {
+    "database_dump_executed": false,
+    "hosted_connection": false,
+    "snapshot_binding": false,
+    "provider_restore": false,
+    "migration_ready": false
+  }
+}

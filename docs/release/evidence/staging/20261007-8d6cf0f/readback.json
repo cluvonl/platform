@@ -1,0 +1,88 @@
+{
+  "observed_at": "2026-10-07T12:30:58.213Z",
+  "source_sha": "8d6cf0f19f269836bce0eb20ee47bfee2c352029",
+  "url": "https://staging.cluvo.nl",
+  "ci": {
+    "url": "https://github.com/cluvonl/platform/actions/runs/37619632056",
+    "conclusion": "success"
+  },
+  "deployment": {
+    "url": "https://github.com/cluvonl/platform/actions/runs/37620315594",
+    "conclusion": "success",
+    "image": "ghcr.io/cluvonl/platform@sha256:02c1772c239108f32aaac60aad34c5718c40c529db3f54f4d13bb186e4d786b9",
+    "image_digest": "sha256:02c1772c239108f32aaac60aad34c5718c40c529db3f54f4d13bb186e4d786b9"
+  },
+  "mode": "prototype",
+  "endpoints": [
+    {
+      "path": "/api/health/live",
+      "status": 200,
+      "body": {
+        "status": "ok",
+        "service": "cluvo",
+        "mode": "prototype",
+        "environment": "staging",
+        "release": "8d6cf0f19f269836bce0eb20ee47bfee2c352029"
+      }
+    },
+    {
+      "path": "/api/health/ready",
+      "status": 503,
+      "body": {
+        "ready": false,
+        "release_ready": false,
+        "reason": "APP_MODE_PROTOTYPE",
+        "checks": {
+          "database": "not_connected",
+          "workers": "not_started",
+          "authorization": "demo_only"
+        }
+      }
+    },
+    {
+      "path": "/api/runtime-config",
+      "status": 503,
+      "body": {
+        "error": "SUPABASE_NOT_CONFIGURED"
+      }
+    }
+  ],
+  "captures": [
+    {
+      "file": "prototype-overzicht-1440x1024.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1024
+      },
+      "sha256": "21d49ee7d48c6776cc9c3dd232b3b3d70dce180a94c34a7a88b090d3340265ac"
+    },
+    {
+      "file": "prototype-overzicht-390x844.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "9ba1ac7590a96e453099c8d491bb377c58e3d0df431daff1aa26a9d485a40cad"
+    }
+  ],
+  "migrations": {
+    "artifact_hashes_verified": true,
+    "count": 16,
+    "remote_applied_status": "NOT_APPLIED_AT_CREDENTIAL_PREFLIGHT",
+    "remote_state_observed_from": "docs/release/evidence/staging/20261007-credentials-c3c24f4/strong-preflight-results.json",
+    "remote_app_tables": 0,
+    "remote_migrations": 0,
+    "remote_observation_is_prior_readonly_preflight": true,
+    "remote_observed_at": "2026-10-07T09:54:52.913Z",
+    "remote_preflight_source_sha": "c3c24f41ee9d6e3a2d4b21b0f843cabb7b9b2d37",
+    "remote_preflight_same_release": false
+  },
+  "acceptance": {
+    "intermediate_release": true,
+    "v1_ready": false,
+    "functional_app_on_staging": false,
+    "workers_connected": false,
+    "staging_rls_privacy_tests": "NOT_EXECUTED",
+    "staging_backup_restore": "NOT_EXECUTED"
+  }
+}

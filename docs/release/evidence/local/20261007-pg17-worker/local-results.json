@@ -1,0 +1,33 @@
+{
+  "observed_at": "2026-10-07T13:09:11.204480+00:00",
+  "scope": "LOCAL_COMPONENT_AND_PUBLIC_TOOL_VERSIONS",
+  "repository_node_tests": 185,
+  "repository_node_tests_passed": 185,
+  "targeted_worker_tests": 16,
+  "lint": "PASS",
+  "typecheck": "PASS",
+  "public_pinned_toolchain_versions": {
+    "pg_dump": "17.11",
+    "pg_dumpall": "17.11",
+    "pg_restore": "17.11"
+  },
+  "actual_toolchain_report_sha256": "74cfdb4227ae02f7723b53be2c8d3eec1855d9e3bee3b0e5ea7875f9ef45afb4",
+  "actual_toolchain_source_sha256": "6e744f3037e2ef88ef895a1d584c5dadaf6de6611b4d5e2eff56c1030017d99b",
+  "canonical_source_sha256": "a929b5f677f51b4402da4316bc364b793d3f81d838e927ec703984964085455b",
+  "canonical_test_source_sha256": "ea80681d2774fd9700d103b62f77d3e0794fae94f0324c191c14111198f81781",
+  "canonical_adjustments": [
+    "repository_relative_imports_and_ca_path",
+    "fixed_capture_plan_reflection_failure"
+  ],
+  "published16_unchanged": true,
+  "dependencies_and_lockfile_unchanged": true,
+  "privacy_pattern_matches": 0,
+  "relative_new_document_links_verified": 3,
+  "actual_database_dump": false,
+  "actual_hosted_connections": 0,
+  "keys_created": false,
+  "workflow_activated": false,
+  "migration_ready": false,
+  "v1_accepted": false,
+  "production_enabled": false
+}

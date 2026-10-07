@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "scope": "OWNED_PUBLIC_PG17_TOOL_VERSIONS_ONLY",
+  "run_id": "374e375b96c8ca99fd67f42d538831bd",
+  "worker_source_sha256": "a759b3c4a2cc516dc647ceefef46165fd25435765004c09083ddc7d8be7dc48a",
+  "image": "public.ecr.aws/supabase/postgres@sha256:0450166354dc9c1d25f0322ac8b580774d4fb0184d2b087f6e4fe9499c66cf53",
+  "tools": [
+    "pg_dump",
+    "pg_dumpall",
+    "pg_restore"
+  ],
+  "database_connections": 0,
+  "source_calls": 0,
+  "network": "none",
+  "host_mounts": false,
+  "credentials_used": false,
+  "observed_at": "2026-10-07T12:41:41.024Z",
+  "status": "failed",
+  "code": "PG17_PROBE_ISOLATION_UNKNOWN",
+  "limits": {
+    "database_dump_executed": false,
+    "hosted_connection": false,
+    "migration_ready": false
+  }
+}

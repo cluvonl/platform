@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "scope": "OWNED_PUBLIC_PG17_TOOL_VERSIONS_ONLY",
+  "run_id": "e7b967875af46a8a17750d68f2e802a1",
+  "worker_source_sha256": "173081729f554811538cd72b16f6bc681b9baa1eed14e82fc8d7ee18b771d8a5",
+  "image": "public.ecr.aws/supabase/postgres@sha256:0450166354dc9c1d25f0322ac8b580774d4fb0184d2b087f6e4fe9499c66cf53",
+  "tools": [
+    "pg_dump",
+    "pg_dumpall",
+    "pg_restore"
+  ],
+  "database_connections": 0,
+  "source_calls": 0,
+  "network": "none",
+  "host_mounts": false,
+  "credentials_used": false,
+  "observed_at": "2026-10-07T12:38:07.246Z",
+  "status": "failed",
+  "code": "PG17_CAPTURE_CLEANUP_FAILED",
+  "limits": {
+    "database_dump_executed": false,
+    "hosted_connection": false,
+    "migration_ready": false
+  }
+}

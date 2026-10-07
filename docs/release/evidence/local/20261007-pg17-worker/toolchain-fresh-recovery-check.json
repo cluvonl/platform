@@ -1,0 +1,11 @@
+{
+  "database_connections": 0,
+  "not_started": true,
+  "owned_full_cid_verified": true,
+  "prior_strict_raw_empty_check_false_preserved": true,
+  "public_parser_cause": "OPTIONAL_HOSTCONFIG_MOUNTS_TEMPLATE_FIELD_MISSING",
+  "remove_returned_success": true,
+  "removed_and_absence_verified": true,
+  "scope": "OWNED_PUBLIC_VERSION_PROBE_RECOVERY_ONLY",
+  "source_calls": 0
+}
