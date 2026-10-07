@@ -87,7 +87,8 @@ export function safeSessionResult(value) {
   }
   if (value.passed) need(value.checks.length === SESSION_CHECKS.length && transport !== null
     && value.returned_sessions_closed === true, 'PROBE_REPORT_INVALID');
-  else need(SAFE_ERRORS.has(value.error) && (value.sqlstate === null || /^[0-9A-Z]{5}$/.test(value.sqlstate)), 'PROBE_REPORT_INVALID');
+  else need(SAFE_ERRORS.has(value.error) && (value.sqlstate === null
+    || (typeof value.sqlstate === 'string' && /^[0-9A-Z]{5}$/.test(value.sqlstate))), 'PROBE_REPORT_INVALID');
   return {passed: value.passed, scope: value.scope, checks: [...value.checks], transport,
     returned_sessions_closed: value.returned_sessions_closed, ...LIMITS,
     ...(value.passed ? {} : {error: value.error, sqlstate: value.sqlstate})};

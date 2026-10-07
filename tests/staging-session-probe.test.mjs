@@ -144,6 +144,7 @@ test('partial safe failure retains only completed fixed checks and fixed error',
     error: 'DATABASE_QUERY_FAILED', sqlstate: '42703'};
   assert.deepEqual(safeSessionResult(failed), failed);
   for (const changed of [{...failed, error: 'PRIVATE_ERROR'}, {...failed, sqlstate: 'private'},
+    {...failed, sqlstate: 42703}, {...failed, sqlstate: {toString: () => '42703'}},
     {...failed, checks: [SESSION_CHECKS[2]]}]) assert.throws(() => safeSessionResult(changed), /PROBE_REPORT_INVALID/);
 });
 
