@@ -40,7 +40,7 @@ Het veilige artifact `staging-preflight.json` bevat uitsluitend status, counts e
 
 TLS is minimaal verplicht. Een expliciete `sslmode=verify-full` wordt niet verlaagd; met een gecontroleerd CA-bestand via `MIGRATION_SSL_ROOT_CERT_PATH` gebruikt het script eveneens hostname- en certificaatverificatie. De workflow heeft die CA-config nog niet aangesloten. Het report onderscheidt daarom versleuteld transport van certificaatverificatie. Sluit die verificatie aan voordat een remote migratie wordt uitgevoerd. Zie [Supabase SSL-modi](https://supabase.com/docs/guides/platform/ssl-enforcement), [databaseverbindingen](https://supabase.com/docs/guides/database/connecting-to-postgres) en [SendGrid sandboxmodus](https://www.twilio.com/docs/sendgrid/for-developers/sending-email/sandbox-mode).
 
-De acht gerichte Node-tests controleren onder meer productie/targetweigering vóór netwerkverkeer, onjuiste poolerprojecten, TLS-/libpq-overrides, private fouten, ontbrekende Mail Send-bevoegdheid, onbekende migraties en Native/RLS-schema-afhankelijkheden.
+De negen gerichte Node-tests controleren onder meer productie/targetweigering vóór netwerkverkeer, onjuiste poolerprojecten, TLS-/libpq-overrides, een pooler die TLS beëindigt, private fouten, ontbrekende Mail Send-bevoegdheid, onbekende migraties en Native/RLS-schema-afhankelijkheden. TLS wordt gemeten via de clientverbinding van psql (`\conninfo`). `pg_stat_ssl` beschrijft de database-backend en wordt afzonderlijk gerapporteerd; een niet-versleutelde verbinding achter de pooler wordt niet verward met de externe clientverbinding.
 
 ## Opslaan is nog geen werkende stagingkoppeling
 

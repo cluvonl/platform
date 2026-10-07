@@ -15,7 +15,7 @@ const expectedMigrations = ['20261001000001', '20261001000002'];
 const emptyDatabase = {postgres_version_num:170011, ssl_in_use:true, app_tables:0, forced_rls_tables:0,
   native_session_policies:0, api_definers:0, migration_table_exists:false, command_owner_restricted:false};
 
-function fixtures({metadata = emptyDatabase, applied = '', fetchOverride, databaseOverride} = {}) {
+function fixtures({metadata = emptyDatabase, applied = '', fetchOverride, databaseOverride, connectionInfo = 'SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384)'} = {}) {
   const requests = [], commands = [];
   const fetcher = async (url, options) => {
     requests.push({url, options});
@@ -31,6 +31,7 @@ function fixtures({metadata = emptyDatabase, applied = '', fetchOverride, databa
   const execute = (command, args, options) => {
     commands.push({command, args, options});
     if (databaseOverride) return databaseOverride;
+    if (options.input === '\\conninfo\n') return {status:0, stdout:connectionInfo, stderr:''};
     return {status:0, stdout:options.input.startsWith('select version') ? applied : JSON.stringify(metadata), stderr:''};
   };
   return {fetcher, execute, requests, commands, expectedMigrations};
@@ -100,6 +101,20 @@ test('libpq receives explicit TLS and read-only settings without inherited conne
   assert.equal(child.MIGRATION_DATABASE_URL, undefined);
   assert.equal(databaseEnvironment({...target, sslMode:'verify-full'}).PGSSLMODE, 'verify-full');
   assert.equal(databaseEnvironment(target, {MIGRATION_SSL_ROOT_CERT_PATH:'/trusted/ca.pem'}).PGSSLMODE, 'verify-full');
+});
+
+test('a TLS-terminating pooler is verified at the client; an unverified client connection is rejected', async () => {
+  const poolerUrl = `postgresql://postgres.${ref}:contract@aws-1-eu-west-1.pooler.supabase.com:5432/postgres`;
+  const behindPooler = await stagingPreflight({...environment, MIGRATION_DATABASE_URL:poolerUrl}, fixtures({metadata:{...emptyDatabase, ssl_in_use:false}}));
+  assert.equal(behindPooler.checks.database.passed, true);
+  assert.equal(behindPooler.checks.database.tls_encrypted, true);
+  assert.equal(behindPooler.checks.database.client_tls_protocol, 'TLSv1.3');
+  assert.equal(behindPooler.checks.database.database_backend_tls, false);
+  for (const connectionInfo of ['You are connected without SSL.', 'SSL connection (protocol: TLSv1.1, cipher: OLD)']) {
+    const unverified = await stagingPreflight(environment, fixtures({connectionInfo}));
+    assert.equal(unverified.checks.database.passed, false);
+    assert.equal(unverified.checks.database.error, 'DATABASE_CLIENT_TLS_UNVERIFIED');
+  }
 });
 
 test('private provider or connection errors are reduced to fixed codes and do not hide independent checks', async () => {

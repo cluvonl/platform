@@ -74,6 +74,11 @@ const metadataQuery = `select json_build_object(
 
 async function checkDatabase(environment, project, expected, execute) {
   const target = databaseTarget(environment.MIGRATION_DATABASE_URL, project.ref);
+  // pg_stat_ssl observes the database backend, which may be behind a TLS-
+  // terminating pooler. Measure the libpq client connection independently.
+  const connection = queryDatabase('\\conninfo\n', target, environment, execute);
+  const protocol = connection.match(/SSL connection \(protocol:\s*(TLSv1\.[23])[,)]/i)?.[1];
+  if (!protocol) fail('DATABASE_CLIENT_TLS_UNVERIFIED');
   let data;
   try {data = JSON.parse(queryDatabase(metadataQuery, target, environment, execute));}
   catch (error) {if (error instanceof CheckError) throw error; fail('DATABASE_METADATA_INVALID');}
@@ -85,14 +90,14 @@ async function checkDatabase(environment, project, expected, execute) {
   for (const field of ['ssl_in_use', 'migration_table_exists', 'command_owner_restricted']) {
     if (typeof data[field] !== 'boolean') fail('DATABASE_METADATA_INVALID');
   }
-  if (!data.ssl_in_use) fail('DATABASE_TLS_REQUIRED');
   const applied = data.migration_table_exists
     ? queryDatabase('select version from supabase_migrations.schema_migrations order by version;', target, environment, execute).split('\n').filter(Boolean)
     : [];
   const prefix = applied.length <= expected.length && applied.every((version, index) => version === expected[index]);
   const consistent = prefix && (applied.length > 0 || data.app_tables === 0);
   return {
-    connected:true, transport:target.mode, tls_encrypted:true,
+    connected:true, transport:target.mode, tls_encrypted:true, client_tls_protocol:protocol,
+    database_backend_tls:data.ssl_in_use,
     server_certificate_verified:Boolean(environment.MIGRATION_SSL_ROOT_CERT_PATH) || target.sslMode === 'verify-full', ...counts,
     command_owner_restricted:data.command_owner_restricted, applied_migrations:applied.length,
     expected_migrations:expected.length, migration_history_consistent:consistent,

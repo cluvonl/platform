@@ -1,0 +1,38 @@
+{
+  "environment": "staging",
+  "observed_at": "2026-10-07T01:30:49.064Z",
+  "source_sha": "027c1e386d9eea2d91bf367a2fbb34a09bb44d8d",
+  "database_mutations": false,
+  "email_sent": false,
+  "secret_values_exported": false,
+  "v1_ready": false,
+  "production_enabled": false,
+  "checks": {
+    "auth": {
+      "passed": true,
+      "publishable_key_accepted": true,
+      "server_secret_key_accepted": true,
+      "email_provider_enabled": true,
+      "email_confirmation_required": true,
+      "api_schema_accessible": false,
+      "smtp_configuration_verified": false,
+      "actual_mail_delivery_verified": false
+    },
+    "database": {
+      "passed": false,
+      "error": "DATABASE_TLS_REQUIRED"
+    },
+    "sendgrid": {
+      "passed": true,
+      "mail_send_sandbox_validated": true,
+      "configured_from": "info@cluvo.nl",
+      "email_sent": false,
+      "sender_verification_proven": false,
+      "actual_delivery_verified": false
+    }
+  },
+  "project_ref": "fbozlbgmktkgcdfqdaaz",
+  "passed": false,
+  "core_dependencies_ready": false,
+  "app_deploy_ready": false
+}
