@@ -74,7 +74,7 @@ function runner(original,options={}){
   const query=text.replace(/^SET client_min_messages=warning;\nSET search_path TO '';\n/,'').replace(/;\s*$/,'');
   if(catalogSql.has(query)){
    const family=catalogSql.get(query),value=structuredClone(original.catalog[family]);
-   if(family==='extensions'&&extensionReads++===0){if(options.extensionAbsent)return ok([]);if(options.existingExtensionMismatch&&value.length)value[0].owner='unexpected_private_owner';}
+   if(family==='extensions'){if(extensionReads++===0){if(options.extensionAbsent)return ok([]);if(options.existingExtensionMismatch&&value.length)value[0].owner='unexpected_private_owner';}else if(options.lateExtensionMismatch&&value.length)value[0].owner='unexpected_private_owner';}
    if(options.catalogFailure===family)return {status:3,stdout:'',stderr:'ERROR:  42P01\n'};
    if(options.catalogMismatch&&family==='roles')value.push({name:'unexpected_fixture_role'});
    return ok(value);
@@ -93,7 +93,7 @@ function runner(original,options={}){
   }
   if(query.includes("'native_policies'"))return ok({native_policies:144,forced_rls:144,app_tables:144,history:16});
   if(query.startsWith('ALTER DATABASE postgres OWNER'))return ok('');
-  if(query.startsWith('SET SESSION AUTHORIZATION ')&&query.includes(';CREATE EXTENSION ')){observed.extensionCreates.push(query);return ok('');}
+  if(query.startsWith('SET SESSION AUTHORIZATION ')&&query.includes(';CREATE EXTENSION ')){observed.extensionCreates.push(query);return {...ok(''),stderr:options.extensionWarning??''};}
   assert.fail('unrecognized fixed protocol query');
  };
  return {run,observed};
@@ -236,6 +236,27 @@ test('extensions are precreated with captured owners and versions; existing mism
   await assert.rejects(restoreInitialBackup(input,{run}),error=>error.code==='RESTORE_EXISTING_EXTENSION_CHANGED'&&error.phase==='extension_owners');
   assert.equal(observed.extensionCreates.length,0);assert.equal(observed.upgrades.length,0);assert.equal(observed.removed,true);
  },0,{existingExtensionMismatch:true});
+});
+test('successful extension privilege warnings are counted and still require exact final catalogs',async()=>{
+ const extension={name:'fixture_extension',schema:'auth',owner:'postgres',version:'1.2.3',relocatable:true,config:[]};
+ for(const warning of ['WARNING:  01006\n','WARNING:  01007\n'])await fixture(async(input,{run,observed})=>{
+  input.original.catalog.extensions.push(extension);const result=await restoreInitialBackup(input,{run});
+  assert.equal(result.extension_privilege_warnings,1);assert.equal(result.baseline_catalog_families_verified,28);assert.equal(observed.removed,true);
+ },0,{extensionAbsent:true,extensionWarning:warning});
+ await fixture(async(input,{run,observed})=>{
+  input.original.catalog.extensions.push(extension);
+  await assert.rejects(restoreInitialBackup(input,{run}),error=>error.code==='RESTORE_CATALOG_MISMATCH'&&error.catalogMismatches[0].family==='extensions');
+  assert.equal(observed.upgrades.length,0);assert.equal(observed.removed,true);
+ },0,{extensionAbsent:true,extensionWarning:'WARNING: 01007\n',lateExtensionMismatch:true});
+});
+test('unknown, mixed or failing extension warnings refuse and expose only finite diagnostics',async()=>{
+ for(const warning of ['WARNING:  01000\n','WARNING:  01007\nERROR:  42501\n','WARNING: private@example.test\n'])await fixture(async(input,{run,observed})=>{
+  input.original.catalog.extensions.push({name:'fixture_extension',schema:'auth',owner:'postgres',version:'1.0',config:[]});
+  await assert.rejects(restoreInitialBackup(input,{run}),error=>{
+   assert.equal(error.code,'RESTORE_PROCESS_FAILED');assert.equal(error.phase,'extension_owners');
+   assert.equal(JSON.stringify(error).includes('@'),false);assert.equal(JSON.stringify(error).includes('private'),false);return true;
+  });assert.equal(observed.upgrades.length,0);assert.equal(observed.removed,true);
+ },0,{extensionAbsent:true,extensionWarning:warning});
 });
 test('event trigger owner conflicts have a finite reason without changing source owners',async()=>{
  await fixture(async(input,{run})=>{

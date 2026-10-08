@@ -38,7 +38,7 @@ export class InitialRestoreError extends Error {
   this.catalogMismatches=publicCatalogDiagnostics(catalogMismatches);
  }
 }
-const SQLSTATE_KINDS=Object.freeze({'42501':'PERMISSION','42P01':'MISSING','3F000':'MISSING','42704':'MISSING','42883':'MISSING','3D000':'MISSING','42601':'SYNTAX','42P17':'SYNTAX','42710':'ALREADY_EXISTS','42P06':'ALREADY_EXISTS','42P07':'ALREADY_EXISTS','23505':'CONFLICT','23502':'CONFLICT','23503':'CONFLICT','23514':'CONFLICT','55006':'CONFLICT','57014':'TIMEOUT','55P03':'TIMEOUT','0A000':'UNSUPPORTED','55000':'UNSUPPORTED','22023':'UNSUPPORTED','XX000':'PROCESS_FAILURE','53100':'PROCESS_FAILURE','53200':'PROCESS_FAILURE','53300':'PROCESS_FAILURE','57P01':'PROCESS_FAILURE','08006':'PROCESS_FAILURE'});
+const SQLSTATE_KINDS=Object.freeze({'01000':'WARNING','01006':'WARNING','01007':'WARNING','42501':'PERMISSION','42P01':'MISSING','3F000':'MISSING','42704':'MISSING','42883':'MISSING','3D000':'MISSING','42601':'SYNTAX','42P17':'SYNTAX','42710':'ALREADY_EXISTS','42P06':'ALREADY_EXISTS','42P07':'ALREADY_EXISTS','23505':'CONFLICT','23502':'CONFLICT','23503':'CONFLICT','23514':'CONFLICT','55006':'CONFLICT','57014':'TIMEOUT','55P03':'TIMEOUT','0A000':'UNSUPPORTED','55000':'UNSUPPORTED','22023':'UNSUPPORTED','XX000':'PROCESS_FAILURE','53100':'PROCESS_FAILURE','53200':'PROCESS_FAILURE','53300':'PROCESS_FAILURE','57P01':'PROCESS_FAILURE','08006':'PROCESS_FAILURE'});
 const ERROR_KINDS=Object.freeze([...new Set(Object.values(SQLSTATE_KINDS)),'WARNING','PROCESS_FAILURE']);
 // Only finite classifications leave this module. Raw process text, source SQL,
 // provider identifiers and data remain private even on failure.
@@ -46,7 +46,7 @@ function processDiagnostic(result,privateServerLog=''){
  const diagnostic=typeof result?.stderr==='string'?result.stderr:'';
  // The last server error is parsed in private memory; never project the line,
  // location, statement, detail, context, role, PID or object identifiers.
- const serverError=[...privateServerLog.matchAll(/^(?:[^\n]*?\s)?(?:ERROR|FATAL):\s+([0-9A-Z]{5}):[^\n]*$/gm)].at(-1);
+ const serverError=[...privateServerLog.matchAll(/^(?:[^\n]*?\s)?(?:ERROR|FATAL|WARNING):\s+([0-9A-Z]{5}):[^\n]*$/gm)].at(-1);
  // Fixed upstream source-file names identify only a software component. No
  // arbitrary routine, source path or database object is exported.
  const location=serverError?privateServerLog.slice(serverError.index+serverError[0].length,serverError.index+serverError[0].length+16384)
@@ -81,7 +81,7 @@ function processDiagnostic(result,privateServerLog=''){
  ].find(([, ,pattern])=>pattern.test(classified));
  const tocHeader=[...diagnostic.matchAll(/from TOC entry [0-9]+; [0-9]+ [0-9]+ ([^\n]*)/g)].at(-1)?.[1];
  const tocType=[...INITIAL_RESTORE_TOC_TYPES].sort((a,b)=>b.length-a.length).find(type=>tocHeader===type||tocHeader?.startsWith(type+' '))??null;
- const candidate=serverError?.[1]??diagnostic.match(/(?:ERROR|FATAL|PANIC):\s+([0-9A-Z]{5})(?:\s|:|$)/)?.[1];
+ const candidate=serverError?.[1]??diagnostic.match(/(?:ERROR|FATAL|PANIC|WARNING):\s+([0-9A-Z]{5})(?:\s|:|$)/)?.[1];
  const details={tocType,errorOrigin,errorSourceFile,errorTopics,errorReason:known?.[0]??(serverError&&Object.hasOwn(SQLSTATE_KINDS,candidate)?'SERVER_SQLSTATE_REPORTED':'UNKNOWN_PROCESS_FAILURE'),exitStatus:result?.status,processFailed:Boolean(result?.error)};
  if(Object.hasOwn(SQLSTATE_KINDS,candidate))return {...details,sqlstate:candidate,errorKind:SQLSTATE_KINDS[candidate]};
  const errorKind=[['PERMISSION',/permission denied|must be owner|must be superuser|only superusers/i],
@@ -169,13 +169,21 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
   need(dump.subarray(0,5).toString('ascii')==='PGDMP','RESTORE_ARCHIVE_REQUIRED');
   for(const file of IMMUTABLE16){const bytes=await readFile(new URL('../supabase/migrations/'+file.file,import.meta.url));need(hash(bytes)===file.sha256,'IMMUTABLE16_SOURCE_BYTES_CHANGED');files.push({file,bytes});}
  }catch(error){dump?.fill(0);globals?.fill(0);throw error instanceof InitialRestoreError?error:new InitialRestoreError('RESTORE_INPUT_UNAVAILABLE');}
- let phase='input',restoreSection=null;
+ let phase='input',restoreSection=null,extensionPrivilegeWarnings=0;
  const name='cluvo-initial-restore-'+randomBytes(16).toString('hex'),socket=SOCKETS[executionScope];
  const command=async(args,input,maximum,timeout)=>{
   let result;try{result=await run(['--host',socket,...args],input,maximum,timeout);}catch{throw new InitialRestoreError('RESTORE_PROCESS_UNAVAILABLE',{phase,errorKind:'PROCESS_FAILURE'});}
+  // PostgreSQL's finite privilege warnings can accompany successful extension
+  // creation. Retain their count; they never waive the subsequent exact owner,
+  // ACL and complete catalog comparison. All other stderr still refuses.
+  if(phase==='extension_owners'&&args.includes('psql')&&result?.status===0&&!result.error
+   &&typeof result.stderr==='string'&&Buffer.byteLength(result.stderr)<=4096&&result.stderr.trim()){
+   const warnings=result.stderr.trim().split('\n');
+   if(warnings.length<=32&&warnings.every(line=>/^WARNING:\s+(?:01006|01007)\s*$/.test(line))){extensionPrivilegeWarnings+=warnings.length;return result.stdout;}
+  }
   if(!(result&&result.status===0&&result.stderr===''&&!result.error)){
    let privateServerLog='';
-   if(phase==='restore'&&args.includes('pg_restore')&&id){
+   if(((phase==='restore'&&args.includes('pg_restore'))||(phase==='extension_owners'&&args.includes('psql')))&&id){
     // Inspect the complete fixed ownership/isolation contract before any
     // follow-up exec. Diagnostic failure never replaces the original error.
     try{
@@ -331,7 +339,7 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
   need(equal(upgraded,{history:16,app_tables:144,forced_rls:144,native_policies:144}),'RESTORE_INITIAL_UPGRADE_INCOMPLETE');
   await checkJobs();report={passed:true,scope:'INITIAL_STAGING_LOGICAL_RESTORE_AND_UPGRADE',logical_database_restored:true,
    physical_relations_verified:original.data.length,physical_rows_verified:original.data.reduce((sum,row)=>sum+row.rows,0),sequences_verified:original.sequences.length,
-   baseline_catalog_families_verified:28,native_archive_sections_restored:3,native_restore_passes:4,native_toc_entries_preserved:lists.entries,extensions_precreated_with_source_owner:extensionsPrecreated,post_data_owner_mode:'session_authorization',bootstrap_create_exceptions:1,source_migration_prefix:baseline.appliedPrefix,
+   baseline_catalog_families_verified:28,native_archive_sections_restored:3,native_restore_passes:4,native_toc_entries_preserved:lists.entries,extensions_precreated_with_source_owner:extensionsPrecreated,extension_privilege_warnings:extensionPrivilegeWarnings,post_data_owner_mode:'session_authorization',bootstrap_create_exceptions:1,source_migration_prefix:baseline.appliedPrefix,
    final_migration_prefix:16,non_superuser_upgrade_migrations:16-baseline.appliedPrefix,
    network_isolated:true,background_jobs_disabled:true,source_database_mutated:false,
    role_passwords_restored:false,provider_root_keys_restored:false,provider_services_verified:false,
