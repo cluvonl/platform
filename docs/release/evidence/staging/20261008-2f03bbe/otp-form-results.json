@@ -1,0 +1,53 @@
+{
+  "observed_at": "2026-10-08T07:42:52.266Z",
+  "scope": "STAGING_FORM_PRESENTATION_ONLY",
+  "environment": "staging",
+  "source_sha": "2f03bbe5261533f7bf3c83bf6e0794f307fa092a",
+  "observed_release": "2f03bbe5261533f7bf3c83bf6e0794f307fa092a",
+  "app_mode": "prototype",
+  "captures": [
+    {
+      "file": "otp-form-1440x1024.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1024
+      },
+      "sha256": "4fae31ca1d5548da82b43e4585d53ad52db4ae430c23646f81d4395170406b88",
+      "six_eight_and_ten_digits_intact": true,
+      "leading_zeroes_preserved": true,
+      "short_and_non_numeric_input_invalid": true,
+      "max_length": 10,
+      "min_length": 6,
+      "mobile_overflow_absent": true,
+      "hydration_errors": 0,
+      "post_requests_observed": 0,
+      "synthetic_input_only": true,
+      "otp_value_exported": false
+    },
+    {
+      "file": "otp-form-390x844.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "358d2f417662b32b492043e209c03c41fd9322d065cee599f8486b0c37942590",
+      "six_eight_and_ten_digits_intact": true,
+      "leading_zeroes_preserved": true,
+      "short_and_non_numeric_input_invalid": true,
+      "max_length": 10,
+      "min_length": 6,
+      "mobile_overflow_absent": true,
+      "hydration_errors": 0,
+      "post_requests_observed": 0,
+      "synthetic_input_only": true,
+      "otp_value_exported": false
+    }
+  ],
+  "actual_user_code_used": false,
+  "native_provider_request_executed": false,
+  "native_session_verified": false,
+  "app_login_verified": false,
+  "ddl_requested": false,
+  "v1_ready": false,
+  "production_enabled": false
+}
