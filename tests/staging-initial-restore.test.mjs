@@ -224,11 +224,24 @@ test('upstream error locations and extension failures become finite component la
  ])await fixture(async(input,{run,observed})=>{
   await assert.rejects(restoreInitialBackup(input,{run}),error=>{
    assert.equal(error.sqlstate,'XX000');assert.equal(error.errorOrigin,origin);assert.equal(error.errorReason,reason);
-   const output=JSON.stringify(error);for(const privateValue of ['private_fixture','private@example.test','12345','LOCATION',file])assert.equal(output.includes(privateValue),false);return true;
+   const output=JSON.stringify(error);for(const privateValue of ['private_fixture','private@example.test','12345','LOCATION'])assert.equal(output.includes(privateValue),false);
+   if(file==='private_fixture.c')assert.equal(error.errorSourceFile,null);return true;
   });assert.equal(observed.logReads,1);assert.equal(observed.removed,true);
  },0,{restoreFailure:true,diagnostic:'unmatched private client diagnostic',serverLog:'2026-10-08 [12345] ERROR:  XX000: '+message+'\n2026-10-08 [12345] DETAIL: private@example.test\n2026-10-08 [12345] LOCATION: private_fixture_routine, /private_fixture/path/'+file+':12345\n'});
  const error=new InitialRestoreError('RESTORE_PROCESS_FAILED',{errorOrigin:'private_fixture'});assert.equal(error.errorOrigin,null);
  assert.equal(JSON.stringify(error).includes('private_fixture'),false);
+});
+
+test('public source filenames and semantic topics remain bounded enums rather than private text',async()=>{
+ await fixture(async(input,{run})=>{
+  await assert.rejects(restoreInitialBackup(input,{run}),error=>{
+   assert.equal(error.errorSourceFile,'schemacmds.c');assert.equal(error.errorOrigin,'POSTGRES_CORE');
+   assert.deepEqual(error.errorTopics,['SCHEMA','CREATE']);
+   const output=JSON.stringify(error);for(const value of ['private_fixture','private@example.test','87654','CreateSchemaCommand','/private_fixture'])assert.equal(output.includes(value),false);return true;
+  });
+ },0,{restoreFailure:true,serverLog:'2026-10-08 [87654] ERROR:  XX000: cannot create schema private_fixture private@example.test\n2026-10-08 [87654] LOCATION: CreateSchemaCommand, /private_fixture/schemacmds.c:87654\n'});
+ const unsafe=new InitialRestoreError('RESTORE_PROCESS_FAILED',{errorSourceFile:'private_fixture.c',errorTopics:['private_fixture','SCHEMA','private@example.test']});
+ assert.equal(unsafe.errorSourceFile,null);assert.deepEqual(unsafe.errorTopics,['SCHEMA']);assert.equal(JSON.stringify(unsafe).includes('private_fixture'),false);
 });
 
 test('an unknown SQLSTATE or TOC type is never copied from a private log',async()=>{

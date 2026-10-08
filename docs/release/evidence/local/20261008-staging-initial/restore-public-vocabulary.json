@@ -1,0 +1,20 @@
+{
+  "scope": "LOCAL_PUBLIC_PG17_RESTORE_ERROR_VOCABULARY",
+  "image": "public.ecr.aws/supabase/postgres@sha256:0450166354dc9c1d25f0322ac8b580774d4fb0184d2b087f6e4fe9499c66cf53",
+  "sources": {
+    "scripts/staging-initial-restore.mjs": "01096a1d7bb59e43e71c9c9922e39b70f269d771a86f9d4ce5b235756a92d552",
+    "scripts/pg17-public-source-files.mjs": "d20dbe07d87f2bae2a53ef9dfb1efe9f4a947ec8a3ba0336464688fba07e7a90",
+    "tests/staging-initial-restore.test.mjs": "c8d64479afcb1572880914db316d32022e0222fc2c446a0d1efe082c95976629"
+  },
+  "public_core_source_filenames_from_pinned_server_elf": 558,
+  "targeted_tests_passed": 20,
+  "actual_local_native_restore_collision": true,
+  "private_server_log_reads": 1,
+  "actual_local_component_origin": "POSTGRES_CORE",
+  "client_error_withheld": true,
+  "source_and_restore_clones_removed": true,
+  "raw_text_or_arbitrary_words_exported": false,
+  "hosted_verified": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

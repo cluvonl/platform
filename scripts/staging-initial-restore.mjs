@@ -10,14 +10,17 @@ import {CATALOG_QUERIES} from './staging-capture-catalog.mjs';
 import {aggregate} from './staging-capture-queries.mjs';
 import {IMMUTABLE16} from './staging-migration-files.mjs';
 import {IMAGE} from './pg17-capture-worker.mjs';
+import {PG17_PUBLIC_CORE_SOURCE_FILES} from './pg17-public-source-files.mjs';
 import {createInitialMigrationManifest,initialMigrationSQL,validateInitialHistory,INITIAL_LAYOUT_SQL,INITIAL_HISTORY_SQL,INITIAL_SOURCE_HISTORY_SQL,INITIAL_MIGRATION_POLICY,INITIAL_MIGRATION_LOCK_OBJECT} from './staging-initial-migrations.mjs';
 
 export const INITIAL_RESTORE_PHASES=Object.freeze(['input','image','create','start','ready','globals','restore','database','role_settings','database_acl','schema_acl',...Object.keys(CATALOG_QUERIES).map(family=>'catalog.'+family),'data','sequence','actor','history','upgrade','jobs','cleanup']);
 export const INITIAL_RESTORE_REASONS=Object.freeze(['EXTENSION_VERSION_UNAVAILABLE','EXTENSION_NOT_AVAILABLE','EXTENSION_LIBRARY_MISSING','EXTENSION_MUST_BE_PRELOADED','BACKGROUND_WORKER_REGISTRATION_FAILED','SERVER_KEY_UNAVAILABLE','CATALOG_LOOKUP_FAILED','READ_ONLY_TRANSACTION','ARCHIVE_TRUNCATED','ARCHIVE_VERSION_UNSUPPORTED','ARCHIVE_COMPRESSION_UNSUPPORTED','SERVER_DISCONNECTED','OUT_OF_MEMORY','DISK_FULL','GLOBAL_SETTING_UNSUPPORTED','STATEMENT_TIMEOUT','ROW_CONSTRAINT_VIOLATION','SCHEMA_REQUIRED','SERVER_SQLSTATE_REPORTED','UNKNOWN_PROCESS_FAILURE']);
 export const INITIAL_RESTORE_ERROR_ORIGINS=Object.freeze(['POSTGRES_CORE','PLPGSQL','PG_NET','PGSODIUM','SUPABASE_VAULT','SUPAUTILS','PG_CRON','PG_TLE','PG_STAT_STATEMENTS','PGAUDIT','PLPGSQL_CHECK','PGRX']);
+export const INITIAL_RESTORE_ERROR_TOPICS=Object.freeze(['EXTENSION','LIBRARY','FUNCTION','SCHEMA','TABLE','COLUMN','TYPE','ROLE','DATABASE','PARAMETER','WORKER','KEY','CACHE','TUPLE','NODE','PERMISSION','MEMORY','SNAPSHOT','QUERY','COMMAND','FILE','SOCKET','ENCODING','CONFIGURATION','CONTEXT','INDEX','ARCHIVE','DEPENDENCY','OBJECT','LOCK','OWNER','VERSION','TRANSACTION','PUBLICATION','AUTHORIZATION','ENCRYPTION','COLLATION','RESOURCE','PORTAL','JSON','PARSE','SPI','SESSION','POLICY','EVENT','INVALID','MISSING','UNEXPECTED','UNSUPPORTED','CHECK','NUMERIC','INITIALIZATION','HASH','EXPRESSION','CREATE','LOAD','LOOKUP','OPEN','READ','WRITE','EXECUTE','REGISTER','START','RESTART','DROP','ALTER','CONNECT','FIND','MAP','DECODE','RETURN','ALLOCATE','UNRECOGNIZED','RESTRICTED','RESERVED','FAIL','CALL','PROCESS','BUILD','INSERT','DELETE','UPDATE','RESTORE','DEFINE','GENERATE','ASSIGN']);
+export const INITIAL_RESTORE_ERROR_SOURCE_FILES=Object.freeze([...PG17_PUBLIC_CORE_SOURCE_FILES,'pl_exec.c','pl_comp.c','pl_handler.c','pg_net.c','pgsodium.c','vault.c','supautils.c','pg_cron.c','job_metadata.c','pg_tle.c','pg_stat_statements.c','pgaudit.c','plpgsql_check.c','elog.rs','ffi.rs','panic.rs']);
 export const INITIAL_RESTORE_TOC_TYPES=Object.freeze(['ACL','AGGREGATE','BLOB','BLOB COMMENTS','BLOBS','CAST','CHECK CONSTRAINT','COLLATION','COMMENT','CONSTRAINT','DATABASE','DATABASE PROPERTIES','DEFAULT','DEFAULT ACL','DOMAIN','DOMAIN CONSTRAINT','ENCODING','EVENT TRIGGER','EXTENSION','FK CONSTRAINT','FOREIGN DATA WRAPPER','FOREIGN SERVER','FOREIGN TABLE','FUNCTION','INDEX','INDEX ATTACH','MATERIALIZED VIEW','MATERIALIZED VIEW DATA','OPERATOR','OPERATOR CLASS','OPERATOR FAMILY','POLICY','PROCEDURE','PUBLICATION','PUBLICATION TABLE','PUBLICATION TABLES IN SCHEMA','ROW SECURITY','RULE','SCHEMA','SEARCHPATH','SEQUENCE','SEQUENCE OWNED BY','SEQUENCE SET','SHELL TYPE','STATISTICS','STDSTRINGS','SUBSCRIPTION','TABLE','TABLE ATTACH','TABLE DATA','TABLESPACE','TEXT SEARCH CONFIGURATION','TEXT SEARCH DICTIONARY','TEXT SEARCH PARSER','TEXT SEARCH TEMPLATE','TRANSFORM','TRIGGER','TYPE','USER MAPPING','VIEW']);
 export class InitialRestoreError extends Error {
- constructor(code,{phase='input',sqlstate=null,errorKind=null,errorReason=null,exitStatus=null,processFailed=null,tocType=null,errorOrigin=null}={}){
+ constructor(code,{phase='input',sqlstate=null,errorKind=null,errorReason=null,exitStatus=null,processFailed=null,tocType=null,errorOrigin=null,errorSourceFile=null,errorTopics=[]}={}){
   super(code);this.code=code;this.phase=INITIAL_RESTORE_PHASES.includes(phase)?phase:'input';
   this.sqlstate=Object.hasOwn(SQLSTATE_KINDS,sqlstate)?sqlstate:null;
   this.errorKind=ERROR_KINDS.includes(errorKind)?errorKind:null;
@@ -26,6 +29,8 @@ export class InitialRestoreError extends Error {
   this.processFailed=typeof processFailed==='boolean'?processFailed:null;
   this.tocType=INITIAL_RESTORE_TOC_TYPES.includes(tocType)?tocType:null;
   this.errorOrigin=INITIAL_RESTORE_ERROR_ORIGINS.includes(errorOrigin)?errorOrigin:null;
+  this.errorSourceFile=INITIAL_RESTORE_ERROR_SOURCE_FILES.includes(errorSourceFile)?errorSourceFile:null;
+  this.errorTopics=Object.freeze(INITIAL_RESTORE_ERROR_TOPICS.filter(topic=>Array.isArray(errorTopics)&&errorTopics.includes(topic)).slice(0,16));
  }
 }
 const SQLSTATE_KINDS=Object.freeze({'42501':'PERMISSION','42P01':'MISSING','3F000':'MISSING','42704':'MISSING','42883':'MISSING','3D000':'MISSING','42601':'SYNTAX','42P17':'SYNTAX','42710':'ALREADY_EXISTS','42P06':'ALREADY_EXISTS','42P07':'ALREADY_EXISTS','23505':'CONFLICT','23502':'CONFLICT','23503':'CONFLICT','23514':'CONFLICT','55006':'CONFLICT','57014':'TIMEOUT','55P03':'TIMEOUT','0A000':'UNSUPPORTED','55000':'UNSUPPORTED','22023':'UNSUPPORTED','XX000':'PROCESS_FAILURE','53100':'PROCESS_FAILURE','53200':'PROCESS_FAILURE','53300':'PROCESS_FAILURE','57P01':'PROCESS_FAILURE','08006':'PROCESS_FAILURE'});
@@ -43,7 +48,10 @@ function processDiagnostic(result,privateServerLog=''){
   .match(/^.*LOCATION:\s+[^,\n]+,\s+(?:[^\s,\n]*\/)?([A-Za-z0-9_]+\.(?:c|rs)):[0-9]+\s*$/m)?.[1]:null;
  const originFiles={POSTGRES_CORE:['aclchk.c','objectaddress.c','tablecmds.c','extension.c','namespace.c','guc.c','guc_funcs.c','miscinit.c','postinit.c','postgres.c','postmaster.c','shmem.c','dsm.c','fd.c','syslogger.c','catcache.c','syscache.c','lsyscache.c','copyfrom.c','copyto.c','pg_shdepend.c','pg_depend.c','utility.c','funcapi.c','fmgr.c','dfmgr.c'],
   PLPGSQL:['pl_exec.c','pl_comp.c','pl_handler.c'],PG_NET:['pg_net.c'],PGSODIUM:['pgsodium.c'],SUPABASE_VAULT:['vault.c'],SUPAUTILS:['supautils.c'],PG_CRON:['pg_cron.c','job_metadata.c'],PG_TLE:['pg_tle.c'],PG_STAT_STATEMENTS:['pg_stat_statements.c'],PGAUDIT:['pgaudit.c'],PLPGSQL_CHECK:['plpgsql_check.c'],PGRX:['elog.rs','ffi.rs','panic.rs']};
- const errorOrigin=Object.entries(originFiles).find(([,files])=>files.includes(location))?.[0]??null;
+ const errorOrigin=Object.entries(originFiles).find(([,files])=>files.includes(location))?.[0]
+  ??(PG17_PUBLIC_CORE_SOURCE_FILES.includes(location)&&!['worker.c','core.c','utils.c'].includes(location)?'POSTGRES_CORE':null);
+ const errorSourceFile=INITIAL_RESTORE_ERROR_SOURCE_FILES.includes(location)?location:null;
+ const errorTopics=INITIAL_RESTORE_ERROR_TOPICS.filter(topic=>new RegExp('\\b'+topic+'(?:s|ed|ing)?\\b','i').test(serverError?.[0]??'')).slice(0,16);
  const classified=diagnostic+'\n'+(serverError?.[0]??'');
  const known=[
   ['EXTENSION_VERSION_UNAVAILABLE','UNSUPPORTED',/has no installation script nor update path for version|extension .* version .* (?:not installed|not available)/i],
@@ -68,7 +76,7 @@ function processDiagnostic(result,privateServerLog=''){
  const tocHeader=[...diagnostic.matchAll(/from TOC entry [0-9]+; [0-9]+ [0-9]+ ([^\n]*)/g)].at(-1)?.[1];
  const tocType=[...INITIAL_RESTORE_TOC_TYPES].sort((a,b)=>b.length-a.length).find(type=>tocHeader===type||tocHeader?.startsWith(type+' '))??null;
  const candidate=serverError?.[1]??diagnostic.match(/(?:ERROR|FATAL|PANIC):\s+([0-9A-Z]{5})(?:\s|:|$)/)?.[1];
- const details={tocType,errorOrigin,errorReason:known?.[0]??(serverError&&Object.hasOwn(SQLSTATE_KINDS,candidate)?'SERVER_SQLSTATE_REPORTED':'UNKNOWN_PROCESS_FAILURE'),exitStatus:result?.status,processFailed:Boolean(result?.error)};
+ const details={tocType,errorOrigin,errorSourceFile,errorTopics,errorReason:known?.[0]??(serverError&&Object.hasOwn(SQLSTATE_KINDS,candidate)?'SERVER_SQLSTATE_REPORTED':'UNKNOWN_PROCESS_FAILURE'),exitStatus:result?.status,processFailed:Boolean(result?.error)};
  if(Object.hasOwn(SQLSTATE_KINDS,candidate))return {...details,sqlstate:candidate,errorKind:SQLSTATE_KINDS[candidate]};
  const errorKind=[['PERMISSION',/permission denied|must be owner|must be superuser|only superusers/i],
   ['MISSING',/does not exist|could not find|no such file/i],['SYNTAX',/syntax error/i],
@@ -298,7 +306,7 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
     await command(['rm','--force','--volumes',id],undefined,200000,20000);
     const absence=await run(['--host',socket,'inspect',id,'--format','{{.Id}}'],undefined,200000,20000);
     need(absent(absence,id),'RESTORE_CLONE_REMOVAL_UNPROVED');
-   }catch(error){cleanupFailed=true;if(error instanceof InitialRestoreError)cleanupDiagnostic={sqlstate:error.sqlstate,errorKind:error.errorKind,errorReason:error.errorReason,exitStatus:error.exitStatus,processFailed:error.processFailed,tocType:error.tocType,errorOrigin:error.errorOrigin};}}
+   }catch(error){cleanupFailed=true;if(error instanceof InitialRestoreError)cleanupDiagnostic={sqlstate:error.sqlstate,errorKind:error.errorKind,errorReason:error.errorReason,exitStatus:error.exitStatus,processFailed:error.processFailed,tocType:error.tocType,errorOrigin:error.errorOrigin,errorSourceFile:error.errorSourceFile,errorTopics:error.errorTopics};}}
  }
  if(cleanupFailed)throw new InitialRestoreError('INITIAL_RESTORE_CLEANUP_UNPROVED',{phase:'cleanup',...cleanupDiagnostic});if(primary)throw primary;
  return Object.freeze({...report,owned_clone_removed:true});
