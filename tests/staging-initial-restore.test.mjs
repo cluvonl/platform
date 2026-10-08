@@ -38,7 +38,7 @@ function state(prefix){return {
  sourceRows:manifest.migrations.slice(0,prefix).map((m,index)=>({version:m.version,file:m.file,sha256:m.sha256,source_sha:sourceSha,
   actor:'fixture-source',scope:'staging',expected_version:index,idempotency_key:'cluvo-staging-initial16:2:'+m.version,workflow_run_id:'2'}))};}
 function runner(original,options={}){
- const observed={calls:[],upgrades:[],removed:false,replays:[],networkArgs:null,logReads:0,restoreSections:[]};let name,started=false,restoreFailed=false,prefix=original.source_history.applied_prefix;
+ const observed={calls:[],upgrades:[],removed:false,replays:[],networkArgs:null,logReads:0,restoreSections:[],extensionCreates:[]};let name,started=false,restoreFailed=false,extensionReads=0,prefix=original.source_history.applied_prefix;
  const catalogSql=new Map(Object.entries(CATALOG_QUERIES).map(([family,query])=>[aggregate(query),family]));
  const inspect=()=>({id:cid,name:'/'+name,image:imageId,config_image:IMAGE,user:'postgres',label:options.badOwner||(restoreFailed&&options.badDiagnosticOwner)?'third-party':name,
   network:options.badNetwork?'bridge':'none',ports:null,binds:null,mounts:[],tmpfs:{'/restore':'rw,size=512m,mode=1777'},volumes_from:null,
@@ -56,7 +56,9 @@ function runner(original,options={}){
   if(command==='rm'){assert.equal(args.at(-1),cid);if(options.cleanupFailure)return failure();observed.removed=true;return ok(cid+'\n');}
   assert.equal(command,'exec');
   if(args.includes('pg_isready'))return ok('');
+  if(args.includes('/bin/sh')&&args.at(-1)?.startsWith('umask 077; cat > /restore/'))return ok('');
   if(args.includes('pg_restore')){
+   if(args.includes('--list'))return ok('; Synthetic native TOC\n1; 2615 100 SCHEMA - auth postgres\n2; 1259 101 TABLE auth users postgres\n');
    assert.ok(args.includes('--single-transaction'));assert.ok(args.includes('--exit-on-error'));assert.equal(input.subarray(0,5).toString(),'PGDMP');
    const section=args.find(value=>value.startsWith('--section='))?.slice('--section='.length);observed.restoreSections.push(section);
    assert.ok(['pre-data','data','post-data'].includes(section));assert.equal(args.includes('--use-set-session-authorization'),section==='post-data');
@@ -72,6 +74,7 @@ function runner(original,options={}){
   const query=text.replace(/^SET client_min_messages=warning;\nSET search_path TO '';\n/,'').replace(/;\s*$/,'');
   if(catalogSql.has(query)){
    const family=catalogSql.get(query),value=structuredClone(original.catalog[family]);
+   if(family==='extensions'&&extensionReads++===0){if(options.extensionAbsent)return ok([]);if(options.existingExtensionMismatch&&value.length)value[0].owner='unexpected_private_owner';}
    if(options.catalogFailure===family)return {status:3,stdout:'',stderr:'ERROR:  42P01\n'};
    if(options.catalogMismatch&&family==='roles')value.push({name:'unexpected_fixture_role'});
    return ok(value);
@@ -90,6 +93,7 @@ function runner(original,options={}){
   }
   if(query.includes("'native_policies'"))return ok({native_policies:144,forced_rls:144,app_tables:144,history:16});
   if(query.startsWith('ALTER DATABASE postgres OWNER'))return ok('');
+  if(query.startsWith('SET SESSION AUTHORIZATION ')&&query.includes(';CREATE EXTENSION ')){observed.extensionCreates.push(query);return ok('');}
   assert.fail('unrecognized fixed protocol query');
  };
  return {run,observed};
@@ -205,7 +209,7 @@ test('private provider restore failures expose finite reasons and bounded proces
 test('all native archive sections precede readback and only post-data uses actual owners',async()=>{
  await fixture(async(input,{run,observed})=>{
   const result=await restoreInitialBackup(input,{run});
-  assert.deepEqual(observed.restoreSections,['pre-data','data','post-data']);assert.equal(result.native_archive_sections_restored,3);
+  assert.deepEqual(observed.restoreSections,['pre-data','pre-data','data','post-data']);assert.equal(result.native_archive_sections_restored,3);assert.equal(result.native_restore_passes,4);assert.equal(result.native_toc_entries_preserved,2);
   assert.equal(result.post_data_owner_mode,'session_authorization');assert.equal(result.non_superuser_upgrade_migrations,16);
   const post=observed.calls.findIndex(args=>args.includes('--section=post-data'));
   const schemaRead=observed.calls.findIndex(args=>args.includes('psql')&&observed.calls.indexOf(args)>observed.calls.findIndex(call=>call.includes('--section=data')));
@@ -213,11 +217,26 @@ test('all native archive sections precede readback and only post-data uses actua
  });
  for(const section of ['pre-data','data','post-data'])await fixture(async(input,{run,observed})=>{
   await assert.rejects(restoreInitialBackup(input,{run}),error=>{assert.equal(error.phase,'restore');assert.equal(error.restoreSection,section);return true;});
-  assert.deepEqual(observed.restoreSections,['pre-data','data','post-data'].slice(0,['pre-data','data','post-data'].indexOf(section)+1));
+  assert.deepEqual(observed.restoreSections,['pre-data','pre-data','data','post-data'].slice(0,['pre-data','pre-data','data','post-data'].indexOf(section)+1));
   assert.equal(observed.upgrades.length,0);assert.equal(observed.removed,true);
  },0,{restoreFailureSection:section});
 });
 
+test('extensions are precreated with captured owners and versions; existing mismatches refuse',async()=>{
+ const extension={name:'fixture_extension',schema:'auth',owner:'postgres',version:'1.2.3',relocatable:true,config:[]};
+ await fixture(async(input,{run,observed})=>{
+  input.original.catalog.extensions.push(extension);
+  const report=await restoreInitialBackup(input,{run});assert.equal(report.extensions_precreated_with_source_owner,1);
+  assert.equal(observed.extensionCreates.length,1);
+  assert.equal(observed.extensionCreates[0],'SET SESSION AUTHORIZATION "postgres";CREATE EXTENSION "fixture_extension" WITH SCHEMA "auth" VERSION \'1.2.3\';RESET SESSION AUTHORIZATION');
+  assert.equal(report.non_superuser_upgrade_migrations,16);assert.equal(observed.removed,true);
+ },0,{extensionAbsent:true});
+ await fixture(async(input,{run,observed})=>{
+  input.original.catalog.extensions.push(extension);
+  await assert.rejects(restoreInitialBackup(input,{run}),error=>error.code==='RESTORE_EXISTING_EXTENSION_CHANGED'&&error.phase==='extension_owners');
+  assert.equal(observed.extensionCreates.length,0);assert.equal(observed.upgrades.length,0);assert.equal(observed.removed,true);
+ },0,{existingExtensionMismatch:true});
+});
 test('event trigger owner conflicts have a finite reason without changing source owners',async()=>{
  await fixture(async(input,{run})=>{
   await assert.rejects(restoreInitialBackup(input,{run}),error=>{

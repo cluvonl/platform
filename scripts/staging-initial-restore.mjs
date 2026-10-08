@@ -8,13 +8,14 @@ import {isDeepStrictEqual} from 'node:util';
 import {executeDatabaseProcess} from './staging-database-process.mjs';
 import {CATALOG_QUERIES} from './staging-capture-catalog.mjs';
 import {catalogMismatchDiagnostic,publicCatalogDiagnostics} from './staging-catalog-diagnostic.mjs';
+import {schemaFirstRestoreLists} from './staging-restore-toc.mjs';
 import {aggregate} from './staging-capture-queries.mjs';
 import {IMMUTABLE16} from './staging-migration-files.mjs';
 import {IMAGE} from './pg17-capture-worker.mjs';
 import {PG17_PUBLIC_CORE_SOURCE_FILES} from './pg17-public-source-files.mjs';
 import {createInitialMigrationManifest,initialMigrationSQL,validateInitialHistory,INITIAL_LAYOUT_SQL,INITIAL_HISTORY_SQL,INITIAL_SOURCE_HISTORY_SQL,INITIAL_MIGRATION_POLICY,INITIAL_MIGRATION_LOCK_OBJECT} from './staging-initial-migrations.mjs';
 
-export const INITIAL_RESTORE_PHASES=Object.freeze(['input','image','create','start','ready','globals','restore','database','role_settings','database_acl','schema_acl',...Object.keys(CATALOG_QUERIES).map(family=>'catalog.'+family),'data','sequence','actor','history','upgrade','jobs','cleanup']);
+export const INITIAL_RESTORE_PHASES=Object.freeze(['input','image','create','start','ready','globals','restore','restore_toc','extension_owners','database','role_settings','database_acl','schema_acl',...Object.keys(CATALOG_QUERIES).map(family=>'catalog.'+family),'data','sequence','actor','history','upgrade','jobs','cleanup']);
 export const INITIAL_RESTORE_REASONS=Object.freeze(['EXTENSION_VERSION_UNAVAILABLE','EXTENSION_NOT_AVAILABLE','EXTENSION_LIBRARY_MISSING','EXTENSION_MUST_BE_PRELOADED','BACKGROUND_WORKER_REGISTRATION_FAILED','SERVER_KEY_UNAVAILABLE','CATALOG_LOOKUP_FAILED','EVENT_TRIGGER_OWNER_MISMATCH','READ_ONLY_TRANSACTION','ARCHIVE_TRUNCATED','ARCHIVE_VERSION_UNSUPPORTED','ARCHIVE_COMPRESSION_UNSUPPORTED','SERVER_DISCONNECTED','OUT_OF_MEMORY','DISK_FULL','GLOBAL_SETTING_UNSUPPORTED','STATEMENT_TIMEOUT','ROW_CONSTRAINT_VIOLATION','SCHEMA_REQUIRED','SERVER_SQLSTATE_REPORTED','UNKNOWN_PROCESS_FAILURE']);
 export const INITIAL_RESTORE_SECTIONS=Object.freeze(['pre-data','data','post-data']);
 export const INITIAL_RESTORE_ERROR_ORIGINS=Object.freeze(['POSTGRES_CORE','PLPGSQL','PG_NET','PGSODIUM','SUPABASE_VAULT','SUPAUTILS','PG_CRON','PG_TLE','PG_STAT_STATEMENTS','PGAUDIT','PLPGSQL_CHECK','PGRX']);
@@ -239,18 +240,16 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
   const lines=globals.toString('utf8').split(/(?<=\n)/);
   need(lines.filter(line=>line.trim()===declaration).length===1,'RESTORE_BOOTSTRAP_CREATE_NOT_UNIQUE');
   await command(sqlArgs(bootstrapRole),Buffer.from('SET client_min_messages=warning;\n'+lines.filter(line=>line.trim()!==declaration).join('')),8_000_000,120000);
-  const restore=async section=>{
+  const restore=async(section,list)=>{
    phase='restore';restoreSection=section;
    await command(['exec','-i',id,'pg_restore','--exit-on-error','--single-transaction','--section='+section,
-    ...(section==='post-data'?['--use-set-session-authorization']:[]),'--no-password','-h','/restore','-U',bootstrapRole,'-d','postgres'],dump,8_000_000,180000);
+    ...(list?['--use-list=/restore/'+list+'.toc']:[]),...(section==='post-data'?['--use-set-session-authorization']:[]),'--no-password','-h','/restore','-U',bootstrapRole,'-d','postgres'],dump,8_000_000,180000);
    restoreSection=null;
   };
-  // All native archive sections are restored, without rewriting source SQL or
-  // filtering objects. Definitions/data use the bootstrap administrator;
-  // post-data runs as the actual owners, after their original database/schema
-  // grants are present. This preserves Supautils' event-trigger owner checks
-  // without requiring schema creation privileges for service-account owners.
-  await restore('pre-data');await restore('data');
+  phase='restore_toc';
+  let lists;try{lists=schemaFirstRestoreLists(await command(['exec','-i',id,'pg_restore','--list'],dump,8_000_000,30000));}catch(error){throw error instanceof InitialRestoreError?error:new InitialRestoreError('RESTORE_TOC_UNKNOWN');}
+  for(const key of ['schemas','remaining'])await command(['exec','-i',id,'/bin/sh','-c','umask 077; cat > /restore/'+key+'.toc'],Buffer.from(lists[key]),200000,10000);
+  await restore('pre-data','schemas');
   phase='database';
   const database=original.catalog.database[0];
   need(database?.allow_connections===true&&database.is_template===false&&database.locale_provider==='i'
@@ -266,6 +265,24 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
    replay='';for(const role of new Set([...currentDatabase.acl,...database.acl].map(grant=>grant[1])))replay+='REVOKE ALL ON DATABASE postgres FROM '+(role==='PUBLIC'?'PUBLIC':ident(role))+';';
    for(const [grantor,grantee,privilege,grantable]of database.acl){need(['CREATE','CONNECT','TEMPORARY'].includes(privilege),'RESTORE_DATABASE_GRANT_UNKNOWN');replay+='SET SESSION AUTHORIZATION '+ident(grantor)+';GRANT '+privilege+' ON DATABASE postgres TO '+(grantee==='PUBLIC'?'PUBLIC':ident(grantee))+(grantable?' WITH GRANT OPTION':'')+';RESET SESSION AUTHORIZATION;';}await sql(replay);
   }
+  // Native dumps intentionally use CREATE EXTENSION IF NOT EXISTS and do not
+  // retain extension owners or versions. Preinstall under the captured owner
+  // and exact version, then replay every original archive entry unchanged.
+  phase='schema_acl';const earlySchemas=await jsonSql(aggregate(CATALOG_QUERIES.schemas));replay='';
+  for(const actual of earlySchemas){const expected=original.catalog.schemas.find(schema=>schema.name===actual.name);
+   need(expected&&actual.owner===expected.owner,'RESTORE_SCHEMA_PRIVILEGES_CHANGED');
+   if(equal(actual.acl,expected.acl))continue;
+   for(const role of new Set([...actual.acl,...expected.acl].map(grant=>grant[1])))replay+='REVOKE ALL ON SCHEMA '+ident(expected.name)+' FROM '+(role==='PUBLIC'?'PUBLIC':ident(role))+';';
+   for(const [grantor,grantee,privilege,grantable]of expected.acl){need(['USAGE','CREATE'].includes(privilege),'RESTORE_SCHEMA_GRANT_UNKNOWN');replay+='SET SESSION AUTHORIZATION '+ident(grantor)+';GRANT '+privilege+' ON SCHEMA '+ident(expected.name)+' TO '+(grantee==='PUBLIC'?'PUBLIC':ident(grantee))+(grantable?' WITH GRANT OPTION':'')+';RESET SESSION AUTHORIZATION;';}
+  }
+  if(replay)await sql(replay);
+  phase='extension_owners';const installed=await jsonSql(aggregate(CATALOG_QUERIES.extensions));let extensionsPrecreated=0;
+  need(installed.every(extension=>original.catalog.extensions.some(expected=>equal(extension,expected))),'RESTORE_EXISTING_EXTENSION_CHANGED');
+  for(const extension of original.catalog.extensions){if(installed.some(actual=>actual.name===extension.name))continue;
+   need(original.catalog.roles.some(role=>role.name===extension.owner)&&typeof extension.version==='string','RESTORE_EXTENSION_OWNER_UNKNOWN');
+   await sql('SET SESSION AUTHORIZATION '+ident(extension.owner)+';CREATE EXTENSION '+ident(extension.name)+' WITH SCHEMA '+ident(extension.schema)+' VERSION '+literal(extension.version)+';RESET SESSION AUTHORIZATION;');extensionsPrecreated++;
+  }
+  await restore('pre-data','remaining');await restore('data');
   phase='schema_acl';const schemas=await jsonSql(aggregate(CATALOG_QUERIES.schemas));
   need(schemas.length===original.catalog.schemas.length,'RESTORE_SCHEMA_SET_CHANGED');replay='';
   for(const expected of original.catalog.schemas){const actual=schemas.find(schema=>schema.name===expected.name);need(actual?.owner===expected.owner&&actual.acl.every(grant=>expected.acl.some(source=>equal(source,grant))),'RESTORE_SCHEMA_PRIVILEGES_CHANGED');for(const [grantor,grantee,privilege,grantable]of expected.acl.filter(grant=>!actual.acl.some(present=>equal(grant,present)))){need(['USAGE','CREATE'].includes(privilege),'RESTORE_SCHEMA_GRANT_UNKNOWN');replay+='SET SESSION AUTHORIZATION '+ident(grantor)+';GRANT '+privilege+' ON SCHEMA '+ident(expected.name)+' TO '+(grantee==='PUBLIC'?'PUBLIC':ident(grantee))+(grantable?' WITH GRANT OPTION':'')+';RESET SESSION AUTHORIZATION;';}}
@@ -314,7 +331,7 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
   need(equal(upgraded,{history:16,app_tables:144,forced_rls:144,native_policies:144}),'RESTORE_INITIAL_UPGRADE_INCOMPLETE');
   await checkJobs();report={passed:true,scope:'INITIAL_STAGING_LOGICAL_RESTORE_AND_UPGRADE',logical_database_restored:true,
    physical_relations_verified:original.data.length,physical_rows_verified:original.data.reduce((sum,row)=>sum+row.rows,0),sequences_verified:original.sequences.length,
-   baseline_catalog_families_verified:28,native_archive_sections_restored:3,post_data_owner_mode:'session_authorization',bootstrap_create_exceptions:1,source_migration_prefix:baseline.appliedPrefix,
+   baseline_catalog_families_verified:28,native_archive_sections_restored:3,native_restore_passes:4,native_toc_entries_preserved:lists.entries,extensions_precreated_with_source_owner:extensionsPrecreated,post_data_owner_mode:'session_authorization',bootstrap_create_exceptions:1,source_migration_prefix:baseline.appliedPrefix,
    final_migration_prefix:16,non_superuser_upgrade_migrations:16-baseline.appliedPrefix,
    network_isolated:true,background_jobs_disabled:true,source_database_mutated:false,
    role_passwords_restored:false,provider_root_keys_restored:false,provider_services_verified:false,

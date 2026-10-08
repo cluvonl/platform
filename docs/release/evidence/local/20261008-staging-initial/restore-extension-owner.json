@@ -1,0 +1,35 @@
+{
+  "scope": "LOCAL_NATIVE_EXTENSION_OWNER_RESTORE",
+  "observed_at": "2026-10-08T14:44:59.067103+00:00",
+  "passed": true,
+  "source_sha_before_change": "db6a6f923537d440df505d8555d40a48ffd3238a",
+  "adapter_sha256": "5b8485479fc49f79dd9c436367d13240874082f86af14063f8e0bc9361d14511",
+  "toc_helper_sha256": "8ccbc2c79a52c64666aa7d8eb61fadc5adc6b4f2a7558f320711b680a1c1c7ac",
+  "real_probes": {
+    "minimal_event_trigger": {
+      "catalog_families_verified": 28,
+      "original_non_superuser_upgrade_migrations": 16,
+      "native_restore_passes": 4,
+      "native_toc_entries_preserved": 25,
+      "owned_clone_removed": true
+    },
+    "three_non_superuser_extensions_and_event_trigger": {
+      "catalog_families_verified": 28,
+      "original_non_superuser_upgrade_migrations": 16,
+      "extensions_precreated_with_source_owner": 3,
+      "native_restore_passes": 4,
+      "native_toc_entries_preserved": 39,
+      "physical_relations_verified": 5,
+      "physical_rows_verified": 1,
+      "sequences_verified": 1,
+      "owned_clone_removed": true
+    }
+  },
+  "hosted": false,
+  "private_values_exported": false,
+  "source_database_mutated": false,
+  "provider_services_verified": false,
+  "full_provider_restore_verified": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

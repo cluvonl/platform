@@ -1,0 +1,105 @@
+{
+  "environment": "staging",
+  "project_ref": "fbozlbgmktkgcdfqdaaz",
+  "observed_at": "2026-10-08T14:35:05.610Z",
+  "passed": false,
+  "database_mutations_performed": false,
+  "applied_migrations": 0,
+  "private_values_exported": false,
+  "app_activation_performed": false,
+  "email_sent": false,
+  "authenticated_native_login_verified": false,
+  "provider_services_verified": false,
+  "full_provider_restore_verified": false,
+  "o08_restore_accepted": false,
+  "v1_ready": false,
+  "production_enabled": false,
+  "execution_mode": "RESTORE_ONLY",
+  "source_sha": "db6a6f923537d440df505d8555d40a48ffd3238a",
+  "workflow_run_id": "37793372687",
+  "migration_manifest_sha256": "14e3f718b7e494c9b99097f2097c753eefabec5d600624a254412010d80bca91",
+  "pg17_toolchain": {
+    "image": "public.ecr.aws/supabase/postgres@sha256:0450166354dc9c1d25f0322ac8b580774d4fb0184d2b087f6e4fe9499c66cf53",
+    "tools": {
+      "pg_dump": "17.11",
+      "pg_dumpall": "17.11",
+      "pg_restore": "17.11"
+    },
+    "workers_removed": 3,
+    "network": "none",
+    "database_connections": 0,
+    "source_calls": 0
+  },
+  "initial_applied_prefix": 0,
+  "backup_custody": {
+    "uploaded": true,
+    "remote_readback": true,
+    "artifact_id": "11557372385",
+    "archive_sha256": "cca109116919184d8f0b4c4744076b99edc248e17f211af07b3622b38d9ac5c2",
+    "retention_days": 30,
+    "key_profile": "cluvo-staging-initial16-backup-hkdf-sha256-v1",
+    "plaintext_uploaded": false,
+    "secret_key_uploaded": false
+  },
+  "restore_failure_phase": "catalog.relations",
+  "restore_error_topics": [],
+  "restore_catalog_mismatches": [
+    {
+      "family": "relations",
+      "source_rows": 44,
+      "restored_rows": 44,
+      "missing_rows": 0,
+      "extra_rows": 0,
+      "changed_rows": 2,
+      "changed_fields": [
+        "owner",
+        "acl"
+      ],
+      "acl_missing_entries": 34,
+      "acl_extra_entries": 50
+    },
+    {
+      "family": "functions",
+      "source_rows": 107,
+      "restored_rows": 107,
+      "missing_rows": 0,
+      "extra_rows": 0,
+      "changed_rows": 49,
+      "changed_fields": [
+        "owner",
+        "acl"
+      ],
+      "acl_missing_entries": 146,
+      "acl_extra_entries": 195
+    },
+    {
+      "family": "extensions",
+      "source_rows": 5,
+      "restored_rows": 5,
+      "missing_rows": 0,
+      "extra_rows": 0,
+      "changed_rows": 3,
+      "changed_fields": [
+        "owner"
+      ],
+      "acl_missing_entries": 0,
+      "acl_extra_entries": 0
+    },
+    {
+      "family": "types",
+      "source_rows": 114,
+      "restored_rows": 114,
+      "missing_rows": 0,
+      "extra_rows": 0,
+      "changed_rows": 4,
+      "changed_fields": [
+        "owner",
+        "acl"
+      ],
+      "acl_missing_entries": 8,
+      "acl_extra_entries": 8
+    }
+  ],
+  "returned_session_closed": true,
+  "error": "RESTORE_CATALOG_MISMATCH"
+}
