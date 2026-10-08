@@ -1,0 +1,17 @@
+{
+  "recorded_at": "2026-10-08T07:08:47.335605+00:00",
+  "project_ref": "fbozlbgmktkgcdfqdaaz",
+  "basis": "USER_REPORTED",
+  "user_report": "templates ingesteld",
+  "instructed_templates": [
+    "Confirm signup",
+    "Magic Link"
+  ],
+  "instructed_placeholder": "{{ .Token }}",
+  "exact_hosted_template_content_verified": false,
+  "management_api_used": false,
+  "management_credentials_provisioned": false,
+  "otp_or_tokens_exported": false,
+  "v1_ready": false,
+  "production_enabled": false
+}
