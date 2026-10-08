@@ -1,0 +1,58 @@
+{
+  "observed_at": "2026-10-08T07:30:36.427585+00:00",
+  "scope": "LOCAL_OTP_FORMAT_REGRESSION",
+  "supported_numeric_lengths": [
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "source_sha256": {
+    "app/auth/actions.ts": "54178ceb6de54905973e5f6abb298466dc0a1b2878d3fed91465b3f9c599de6d",
+    "app/auth/verify/page.tsx": "8dfdc43b3c623a842232cbdf4fcac98fc9dedcbdd8c3bc373f9e0daef779b635",
+    "components/auth/otp-forms.tsx": "b0427e66cdcb7fbe8d9126a9da6c8e033037d10c959482cca45a48b1e249d0ce",
+    "tests/auth-otp.test.mjs": "012a437a490c1cb4020f5b54cacd13b02e2bb38db1416c27594309865e095abe"
+  },
+  "local_check": {
+    "command": "npm run check",
+    "exit_code": 0,
+    "lint": "PASS",
+    "typecheck": "PASS",
+    "node_tests": {
+      "passed": 300,
+      "failed": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "production_build": "PASS",
+    "wp0_tests": {
+      "passed": 5,
+      "failed": 0
+    },
+    "standalone_http_smoke": "PASS"
+  },
+  "targeted_otp_and_auth_tests": {
+    "passed": 12,
+    "failed": 0,
+    "new_behavioral_otp_cases": 6,
+    "actual_server_action_executed": true,
+    "provider_replies": "SYNTHETIC_ONLY"
+  },
+  "browser_report": "browser-results.json",
+  "browser_toolchain": "existing separate Playwright 1.63.0",
+  "browser_runner_sha256": "0d2229671380bb4ab4fa358a398dffc6b2b7c501fb0ee117c12fb7a7fd5e44ef",
+  "screenshots": {
+    "otp-form-1440x1024.png": "4fae31ca1d5548da82b43e4585d53ad52db4ae430c23646f81d4395170406b88",
+    "otp-form-390x844.png": "358d2f417662b32b492043e209c03c41fd9322d065cee599f8486b0c37942590"
+  },
+  "desktop_and_mobile_images_visually_inspected": true,
+  "actual_user_code_used": false,
+  "native_provider_requests_executed": false,
+  "native_session_verified": false,
+  "app_login_verified": false,
+  "ddl_requested": false,
+  "supabase_hosted_settings_modified_by_agent": false,
+  "production_enabled": false,
+  "v1_ready": false
+}

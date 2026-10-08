@@ -1,0 +1,47 @@
+{
+  "observed_at": "2026-10-08T07:28:31.066Z",
+  "scope": "LOCAL_FORM_PRESENTATION_ONLY",
+  "environment": "local",
+  "app_mode": "prototype",
+  "captures": [
+    {
+      "file": "otp-form-1440x1024.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1024
+      },
+      "six_eight_and_ten_digits_intact": true,
+      "leading_zeroes_preserved": true,
+      "short_and_non_numeric_input_invalid": true,
+      "max_length": 10,
+      "min_length": 6,
+      "mobile_overflow_absent": true,
+      "hydration_errors": 0,
+      "synthetic_input_only": true,
+      "otp_value_exported": false
+    },
+    {
+      "file": "otp-form-390x844.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "six_eight_and_ten_digits_intact": true,
+      "leading_zeroes_preserved": true,
+      "short_and_non_numeric_input_invalid": true,
+      "max_length": 10,
+      "min_length": 6,
+      "mobile_overflow_absent": true,
+      "hydration_errors": 0,
+      "synthetic_input_only": true,
+      "otp_value_exported": false
+    }
+  ],
+  "native_provider_request_executed": false,
+  "actual_user_code_used": false,
+  "native_session_verified": false,
+  "app_login_verified": false,
+  "ddl_requested": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

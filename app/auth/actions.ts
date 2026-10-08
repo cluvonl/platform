@@ -9,7 +9,7 @@ import {appOrigin} from '@/lib/supabase/config';
 export type AuthActionState = {status: 'idle' | 'error'; message?: string};
 
 const emailSchema = z.string().trim().toLowerCase().email().max(254);
-const otpSchema = z.string().trim().regex(/^\d{6}$/);
+const otpSchema = z.string().trim().regex(/^\d{6,10}$/);
 const otpEmailCookie = 'cluvo_otp_email';
 
 export async function requestOtpAction(
@@ -53,7 +53,7 @@ export async function verifyOtpAction(
   const emailResult = emailSchema.safeParse(cookieStore.get(otpEmailCookie)?.value);
   const tokenResult = otpSchema.safeParse(formData.get('token'));
   if (!emailResult.success || !tokenResult.success) {
-    return {status: 'error', message: 'Vraag een nieuwe code aan en controleer de zescijferige code.'};
+    return {status: 'error', message: 'Vraag een nieuwe code aan en controleer de code uit je e-mail.'};
   }
 
   try {

@@ -26,7 +26,7 @@ export function VerifyOtpForm() {
   return (
     <form action={action} className="auth-form" noValidate>
       <label htmlFor="token">Eenmalige code</label>
-      <input id="token" name="token" type="text" inputMode="numeric" autoComplete="one-time-code" pattern="[0-9]{6}" minLength={6} maxLength={6} required aria-describedby={state.message ? 'verify-message' : undefined} />
+      <input id="token" name="token" type="text" inputMode="numeric" autoComplete="one-time-code" pattern="[0-9]{6,10}" minLength={6} maxLength={10} required aria-describedby={state.message ? 'verify-message' : undefined} />
       {state.message ? <p id="verify-message" className="auth-error" role="alert">{state.message}</p> : null}
       <SubmitButton pending={pending}>Veilig inloggen</SubmitButton>
     </form>
