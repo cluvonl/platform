@@ -1,0 +1,47 @@
+{
+  "scope": "LOCAL_STAGING_INITIAL_ROUTE_CHECKS",
+  "base_source_sha": "dd374ef704d9258e1e63401e842f7937380fd936",
+  "lint": "PASS",
+  "typecheck": "PASS",
+  "next_build": "PASS",
+  "standalone_wp0_http_smoke": "PASS",
+  "node_suite": {
+    "tests": 492,
+    "pass": 478,
+    "fail": 0,
+    "optional_local_skipped": 14,
+    "note": "Before adding the separately executed optional real libpq test."
+  },
+  "native_transport_component": {
+    "scope": "LOCAL_ONLY",
+    "same_backend_capture_and_fresh_read": true,
+    "command_results_read": 334,
+    "bound_private_parameters": 4,
+    "read_only_transaction_rolled_back": true,
+    "database_ddl_or_data_mutation": false,
+    "local_target_reset_or_restarted": false
+  },
+  "source_sha256": {
+    "scripts/staging-api-exposure.mjs": "6555461d29e17a7aa16de6a07df76788b2d39159e4bcd922790693731f821863",
+    "scripts/staging-core-bootstrap.mjs": "0592aa928efd1252a813e3091b44e11e6330c8304cc5a1f8918d1b96b2169458",
+    "scripts/staging-initial-backup-custody.mjs": "6195043f79e9741b6fab57d05045f159152a8aa0d904fcd07c5e26c4805d2c5a",
+    "scripts/staging-initial-migrate.mjs": "26fa992971e4fcce3c674df26427384c281fd5d3c224ce6971bec7cad11f3265",
+    "scripts/staging-initial-migrations.mjs": "7f49cf8dcdb2eda53633dd3596486779ea2dd001d1a2813a07fa45e859784004",
+    "scripts/staging-initial-restore.mjs": "8b6402dd54498667a543c3db65c460c835b525a3e9c9e7746d028467843ca066",
+    "scripts/staging-initial-session.mjs": "b5efd345dee5339410fec7b946727ff896040f0535c05af3fc3de0a1bf5af4da",
+    "scripts/staging-initial-sql.mjs": "a4d82ab0274b8566feb4537d43a1a2f5d0e96f8b4ef8647245b40317d2dd1a17",
+    "scripts/staging_initial_session.py": "95f523f31eb7e029f659ca41f4c65e0ea2a42e9c1a2514f36ec7e25bc38a7ad8",
+    "scripts/pg17-capture-worker.mjs": "bae9b3043c8a1dd186fdfa9f490741fbe1043a62452c92269a3e0b57485be480",
+    "scripts/staging-capture-collector.mjs": "d53aabaa181417f4fcdb5e1ac3b73c62fa8581241238aae0f7da9501d9859762",
+    ".github/workflows/staging-initial-migrate.yml": "b413d6d21a9146fec622a3102a502cd9efb7eea1e7aaee708695cd2662b9bde6",
+    ".github/actions/staging-initial-migrate/action.yml": "8ef24a6b423c3d469f144531b6035c32e2bd9acfed52da001ed01b7e5b1bc29d",
+    ".github/actions/staging-initial-migrate/index.mjs": "eb214fcd666bf30f535c37244e803b72b6671cd094c04e87d6d4e8233dac0b67"
+  },
+  "actual_hosted_backup_or_restore": false,
+  "actual_hosted_database_mutations": false,
+  "app_activation_performed": false,
+  "native_hosted_login_verified": false,
+  "o08_restore_accepted": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

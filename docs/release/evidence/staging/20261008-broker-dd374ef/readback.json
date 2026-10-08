@@ -1,0 +1,50 @@
+{
+  "source_sha": "dd374ef704d9258e1e63401e842f7937380fd936",
+  "deploy_workflow_run_id": "37765495500",
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/api/health/live",
+      "status": 200,
+      "noindex": true,
+      "body": {
+        "status": "ok",
+        "service": "cluvo",
+        "mode": "prototype",
+        "environment": "staging",
+        "release": "dd374ef704d9258e1e63401e842f7937380fd936"
+      }
+    },
+    {
+      "path": "/api/health/ready",
+      "status": 503,
+      "noindex": true,
+      "body": {
+        "ready": false,
+        "release_ready": false,
+        "reason": "APP_MODE_PROTOTYPE",
+        "checks": {
+          "database": "not_connected",
+          "workers": "not_started",
+          "authorization": "demo_only"
+        }
+      }
+    },
+    {
+      "path": "/api/runtime-config",
+      "status": 503,
+      "noindex": true,
+      "body": {
+        "error": "SUPABASE_NOT_CONFIGURED"
+      }
+    }
+  ],
+  "database_mutations": false,
+  "app_activation_performed": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

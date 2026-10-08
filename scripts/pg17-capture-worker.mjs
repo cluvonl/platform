@@ -9,7 +9,9 @@ import {capturePrivateOutput,CaptureError} from './private-process-capture.mjs';
 import {projectTarget,databaseTarget,databaseEnvironment} from './staging-preflight.mjs';
 
 export const IMAGE='public.ecr.aws/supabase/postgres@sha256:0450166354dc9c1d25f0322ac8b580774d4fb0184d2b087f6e4fe9499c66cf53';
-const DOCKER='/usr/bin/docker', SOCKET='unix:///run/user/1001/docker.sock';
+const DOCKER='/usr/bin/docker';
+const SOCKETS=Object.freeze({LOCAL:'unix:///run/user/1001/docker.sock',HOSTED:'unix:///var/run/docker.sock'});
+const socketFor=scope=>{requireValue(Object.hasOwn(SOCKETS,scope),'PG17_EXECUTION_SCOPE_REQUIRED');return SOCKETS[scope];};
 const CA=fileURLToPath(new URL('../ops/tls/supabase-platform-root-ca.pem',import.meta.url));
 const CA_HASH='6ecd239038a7db063a6619b71742372ecfe06c0b0ec12a9993fee4445bf0d4d6';
 const PROJECT='fbozlbgmktkgcdfqdaaz';
@@ -32,7 +34,8 @@ function exact(value,keys,code){
 }
 
 // PRIVATE: the resulting environment contains a password and must not be logged.
-async function createCapturePlan(environment,context,configurationSafety,runId,kind){
+async function createCapturePlan(environment,context,configurationSafety,runId,kind,executionScope){
+ const socket=socketFor(executionScope);
  const settings=exact(environment,['APP_ENV','STAGING_SUPABASE_PROJECT_REF','SUPABASE_URL','MIGRATION_DATABASE_URL'],'PG17_TARGET_REQUIRED');
  const snapshot=exact(context,['backend_pid','backend_start','database','primary','exported_snapshot','visibility_snapshot'],'PG17_SNAPSHOT_REQUIRED');
  const safety=exact(configurationSafety,CONFIG_KEYS,'PG17_CONFIG_GATE_REQUIRED');
@@ -59,21 +62,21 @@ async function createCapturePlan(environment,context,configurationSafety,runId,k
   '--cap-drop=ALL','--security-opt=no-new-privileges','--pids-limit=32','--memory=512m','--cpus=1',
   '--tmpfs','/tmp:rw,noexec,nosuid,mode=1777','--mount','type=bind,source='+CA+',target=/cluvo-ca.pem,readonly',
   ...PG_NAMES.flatMap(name=>['--env',name]),'--entrypoint='+program,IMAGE,...arguments_];
- const plan=Object.freeze({name,kind,program,arguments:Object.freeze(arguments_),create:Object.freeze(create),
+ const plan=Object.freeze({name,kind,program,socket,arguments:Object.freeze(arguments_),create:Object.freeze(create),
   // A stable private orchestration parent and official public CA are required.
   environment:Object.freeze({...ENVIRONMENT,...pg}),file:kind==='database'?'database.dump':'globals.sql'});
  PLANS.add(plan);return plan;
 }
 
-export async function capturePlan(environment,context,configurationSafety,runId,kind){
- try{return await createCapturePlan(environment,context,configurationSafety,runId,kind);}
+export async function capturePlan(environment,context,configurationSafety,runId,kind,executionScope='LOCAL'){
+ try{return await createCapturePlan(environment,context,configurationSafety,runId,kind,executionScope);}
  catch(error){throw fixed(error);}
 }
 
-async function dockerControl(args,env=ENVIRONMENT){
+async function dockerControl(args,env=ENVIRONMENT,socket=SOCKETS.LOCAL){
  let child,closed,timer,killer,failed=false,stdout=[],stderr=[],bytes=0;
  try{
-  child=spawn(DOCKER,['--host',SOCKET,...args],{env,stdio:['ignore','pipe','pipe']});
+  child=spawn(DOCKER,['--host',socket,...args],{env,stdio:['ignore','pipe','pipe']});
   closed=new Promise(resolve=>child.once('close',(status,signal)=>resolve({status,signal})));
   const stop=()=>{failed=true;child.kill('SIGTERM');killer??=setTimeout(()=>{child.kill('SIGKILL');child.stdout.destroy();child.stderr.destroy();},2000);};
   child.once('error',stop);timer=setTimeout(stop,20000);
@@ -104,7 +107,7 @@ function isolation(value,plan){
   &&value.configured_mounts[0].ReadOnly===true,'PG17_WORKER_ISOLATION_UNKNOWN');
 }
 
-export async function captureWithOwnedWorker(plan,privateDirectory,maximumBytes,{control=dockerControl,capture=capturePrivateOutput}={}){
+export async function captureWithOwnedWorker(plan,privateDirectory,maximumBytes,{control=(args,env)=>dockerControl(args,env,plan.socket),capture=capturePrivateOutput}={}){
  // The plan must come from the trusted target/snapshot caller; this component
  // does not authenticate arbitrary objects as staging authorization.
  requireValue(PLANS.has(plan),'PG17_PLAN_REQUIRED');
@@ -117,7 +120,7 @@ export async function captureWithOwnedWorker(plan,privateDirectory,maximumBytes,
   creationAttempted=true;const created=await control(plan.create,plan.environment);
   requireValue(created.status===0&&created.stderr===''&&/^[0-9a-f]{64}$/.test(created.stdout.trim()),'PG17_CREATE_FAILED');id=created.stdout.trim();
   const before=parsed(await inspect(id));ownership(before,plan,imageId,id);isolation(before,plan);requireValue(before.state==='created','PG17_WORKER_STARTED_EARLY');
-  result=await capture(DOCKER,['--host',SOCKET,'start','--attach',id],ENVIRONMENT,privateDirectory,plan.file,{maximumBytes,timeoutMs:180000});fileCreated=true;
+  result=await capture(DOCKER,['--host',plan.socket,'start','--attach',id],ENVIRONMENT,privateDirectory,plan.file,{maximumBytes,timeoutMs:180000});fileCreated=true;
   const after=parsed(await inspect(id));ownership(after,plan,imageId,id);isolation(after,plan);requireValue(after.state==='exited'&&after.exit===0,'PG17_WORKER_EXIT_UNPROVED');
  }catch(e){primary=fixed(e);if(e instanceof CaptureError&&e.code==='PRIVATE_CAPTURE_CLEANUP_FAILED')cleanupFailed=true;}
  finally{
@@ -141,7 +144,8 @@ export async function captureWithOwnedWorker(plan,privateDirectory,maximumBytes,
 
 // Public version output only. These workers receive no PG environment, CA,
 // network, database input, host mount or source-container reference.
-export async function probeOwnedPg17Toolchain({control=dockerControl,runId=randomBytes(16).toString('hex')}={}){
+export async function probeOwnedPg17Toolchain({executionScope='LOCAL',control=(args,env)=>dockerControl(args,env,socketFor(executionScope)),runId=randomBytes(16).toString('hex')}={}){
+ socketFor(executionScope);
  requireValue(typeof runId==='string'&&/^[0-9a-f]{32}$/.test(runId),'PG17_PROBE_RUN_REQUIRED');
  const image=parsed(await control(['image','inspect',IMAGE,'--format','{"id":{{json .Id}},"digests":{{json .RepoDigests}}}']));
  requireValue(/^sha256:[0-9a-f]{64}$/.test(image.id??'')&&Array.isArray(image.digests)&&image.digests.includes(IMAGE),'PG17_IMAGE_PIN_UNPROVED');

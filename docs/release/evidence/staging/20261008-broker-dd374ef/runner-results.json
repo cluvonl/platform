@@ -1,0 +1,58 @@
+{
+  "broker": {
+    "metadata_available": true,
+    "present": true,
+    "regular_file": true,
+    "root_owned": true,
+    "runner_readable": true,
+    "runner_writable": false,
+    "sha256": "e1c66fd7fbb04543b3ae7b262e3bd6a9c57993ac30bffc8098bcc53f4bbaa901"
+  },
+  "broker_directory_runner_writable": false,
+  "compose": {
+    "metadata_available": false,
+    "present": false,
+    "regular_file": false,
+    "root_owned": false,
+    "runner_readable": false,
+    "runner_writable": false
+  },
+  "config_directory_runner_writable": false,
+  "config_import_broker": {
+    "metadata_available": true,
+    "present": true,
+    "regular_file": true,
+    "root_owned": true,
+    "runner_readable": true,
+    "runner_writable": false
+  },
+  "deployment_performed": false,
+  "fixed_broker_query_status": "ALLOWED",
+  "fixed_config_import_query_status": "ALLOWED",
+  "fixed_install_query_status": "NOT_CONFIRMED",
+  "measurement_source_sha": "dd374ef704d9258e1e63401e842f7937380fd936",
+  "other_root_rule_lines_observed": 1,
+  "passwordless_broker_rule_observed": true,
+  "privileged_commands_executed": false,
+  "runtime_config_contents_read": false,
+  "runtime_permissions": {
+    "metadata_available": false,
+    "present": false,
+    "regular_file": false,
+    "root_owned": false,
+    "runner_readable": false,
+    "runner_writable": false
+  },
+  "scope": "STAGING_RUNNER_READ_ONLY",
+  "secrets_imported": false,
+  "sudo_policy_listed": true,
+  "target_permissions": {
+    "metadata_available": false,
+    "present": false,
+    "regular_file": false,
+    "root_owned": false,
+    "runner_readable": false,
+    "runner_writable": false
+  },
+  "unrestricted_passwordless_root_rule_observed": false
+}

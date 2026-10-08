@@ -1,0 +1,19 @@
+{
+  "scope": "STAGING_BROKER_PROVISIONING",
+  "source_sha": "bce2a3fde617863cd0a46d047e7982f331a91296",
+  "bootstrap_publication_sha": "dd374ef704d9258e1e63401e842f7937380fd936",
+  "observation_source": "USER_VPS_CONSOLE_RECEIPT",
+  "installed_source_sha256": {
+    "cluvo-deploy-staging": "e1c66fd7fbb04543b3ae7b262e3bd6a9c57993ac30bffc8098bcc53f4bbaa901",
+    "cluvo-import-staging-config": "c8f473695c82f6271aaa2897dff661759f2289c1d6449e914356cd3a5496d185",
+    "compose.staging.yml": "a45262ba3a499539c4739358f582e15f183e1815948d553bcb30494e6edb96a5"
+  },
+  "configuration_backup_created": true,
+  "runtime_config_preserved": true,
+  "target_config_preserved": true,
+  "app_activation_performed": false,
+  "database_mutations_performed": false,
+  "v1_ready": false,
+  "production_enabled": false,
+  "os_account_and_hostnames_exported": false
+}

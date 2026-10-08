@@ -140,6 +140,7 @@ async function collectBoundSnapshot(bridge,options,binding,bindingReader,origina
 // Operational entry: target/transport authority is read ONLY from the concrete
 // bridge owner's private registry. Caller fields/options never supply binding.
 const BRIDGE_OWNER_MODULE=new URL('./staging-session-bridge.mjs',import.meta.url).href;
+const INITIAL_OWNER_MODULE=new URL('./staging-initial-session.mjs',import.meta.url).href;
 const collectedReceipts=new WeakMap();
 function remember(metadata,bridge,options,binding,reader,kind){
  collectedReceipts.set(metadata,{bridge,options,binding,reader,kind,used:false});return metadata;
@@ -154,7 +155,14 @@ export async function collectSnapshot(bridge,options){
  try{
   const opt=optionsSnapshot(options);
   let reader;try{const owner=await import(BRIDGE_OWNER_MODULE);requireValue(typeof owner.sourceBindingForCollector==='function','CAPTURE_SOURCE_OWNER_UNAVAILABLE');reader=owner.sourceBindingForCollector;}catch{throw new CollectorError('CAPTURE_SOURCE_OWNER_UNAVAILABLE');}
-  let binding;try{binding=sourceBindingSnapshot(reader(bridge));}catch{throw new CollectorError('CAPTURE_SOURCE_BINDING_UNAVAILABLE');}
+  let binding;
+  try{binding=sourceBindingSnapshot(reader(bridge));}
+  catch{
+   // A second concrete owner has its own private WeakMap and pinned child.
+   // Neither callers nor serialized fields can register either authority.
+   try{const owner=await import(INITIAL_OWNER_MODULE);reader=owner.sourceBindingForInitialCollector;binding=sourceBindingSnapshot(reader(bridge));}
+   catch{throw new CollectorError('CAPTURE_SOURCE_BINDING_UNAVAILABLE');}
+  }
   requireValue(['HOSTED_VERIFY_FULL','LOCAL_OWNED_CLONE'].includes(binding.source_scope),'CAPTURE_OPERATIONAL_SOURCE_REQUIRED');
   const boundReader=()=>reader(bridge);
   return remember(await collectBoundSnapshot(bridge,opt,binding,boundReader),bridge,opt,binding,boundReader,'operational');

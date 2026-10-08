@@ -1,0 +1,5 @@
+name: Preserve and migrate fixed Cluvo staging
+description: Run the source-bound initial16 owner with Actions artifact runtime credentials
+runs:
+  using: node24
+  main: index.mjs

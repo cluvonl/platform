@@ -1,0 +1,86 @@
+{
+  "format": "cluvo-staging-initial-local-restore-proof-v1",
+  "date": "2026-10-08",
+  "passed": true,
+  "execution_scope": "LOCAL",
+  "proof_scope": "INITIAL_STAGING_LOGICAL_RESTORE_AND_UPGRADE",
+  "source": {
+    "kind": "new_owned_synthetic_fixture",
+    "existing_private_backups_read": false,
+    "real_member_data_used": false,
+    "exported_snapshot_held_during_capture": true,
+    "canonical_hosted_collector_receipt": false
+  },
+  "postgres_version": "17.11",
+  "image": "public.ecr.aws/supabase/postgres@sha256:0450166354dc9c1d25f0322ac8b580774d4fb0184d2b087f6e4fe9499c66cf53",
+  "capture": {
+    "native_database_dump": true,
+    "database_dump_unfiltered": true,
+    "native_globals_dump": true,
+    "role_passwords_exported": false
+  },
+  "restore": {
+    "passed": true,
+    "fresh_initdb": true,
+    "network": "none",
+    "host_data_binds": false,
+    "background_jobs_disabled": true,
+    "baseline_catalog_families_verified": 28,
+    "physical_relations_verified": 4,
+    "physical_rows_verified": 1,
+    "sequences_verified": 1,
+    "bootstrap_create_exceptions": 1,
+    "source_migration_prefix": 0,
+    "final_migration_prefix": 16,
+    "non_superuser_upgrade": true,
+    "non_superuser_upgrade_migrations": 16,
+    "immutable_source_renderer_used": true,
+    "single_upgrade_psql_session": true,
+    "exclusive_project_lock_used": true,
+    "native_history_and_source_audit_verified": true,
+    "application_tables_verified": 144,
+    "forced_rls_tables_verified": 144,
+    "native_session_policies_verified": 144
+  },
+  "cleanup": {
+    "owned_source_clone_removed": true,
+    "owned_restore_clone_removed": true,
+    "owned_clones_removed": 2,
+    "new_private_fixture_files_removed": true
+  },
+  "validation": {
+    "adapter_tests_passed": 11,
+    "adapter_and_migration_tests_passed": 25,
+    "eslint_passed": true,
+    "actual_local_component_execution_passed": true
+  },
+  "sources": {
+    "adapter": {
+      "path": "scripts/staging-initial-restore.mjs",
+      "sha256": "8b6402dd54498667a543c3db65c460c835b525a3e9c9e7746d028467843ca066"
+    },
+    "adapter_tests": {
+      "path": "tests/staging-initial-restore.test.mjs",
+      "sha256": "480ccfb278c0c734ec766ef1016c9e906ace6c3addbe8df5aa8f08dc62edef86"
+    },
+    "public_fixture_script": {
+      "path": "/tmp/cluvo-initial-local-proof.mjs",
+      "sha256": "bb1f4e4dad5cb988633b45a91cce4862c0c3e235dd427b3d1aee4444023bcad4"
+    }
+  },
+  "proof_limits": {
+    "role_passwords_restored": false,
+    "provider_root_keys_restored": false,
+    "provider_services_verified": false,
+    "auth_service_http_verified": false,
+    "storage_binary_restore_verified": false,
+    "full_provider_restore_verified": false,
+    "all_object_families_verified": false,
+    "O08_accepted": false,
+    "hosted_source_verified": false,
+    "hosted_database_mutated": false,
+    "hosted_migrations_authorized": false,
+    "v1_ready": false,
+    "production_enabled": false
+  }
+}
