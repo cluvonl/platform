@@ -10,7 +10,7 @@ const SESSION = new URL('./staging_backup_session.py', import.meta.url);
 const PROBE = new URL('./staging_session_probe.py', import.meta.url);
 const PINS = Object.freeze({
   ca: '6ecd239038a7db063a6619b71742372ecfe06c0b0ec12a9993fee4445bf0d4d6',
-  session: 'b44c01ae1a448eacdf7e41b35f52e8f1599089203db9a96716184bb5742150d5',
+  session: 'e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1',
   probe: 'fdc85f6f52f01a7811781d4962f3339f74873e3927ea32af8dfc396135a54d2c',
 });
 export const SESSION_CHECKS = Object.freeze([
@@ -36,6 +36,10 @@ const SAFE_ERRORS = new Set([
   'EXCLUSIVE_SESSION_LOCK_BUSY', 'SESSION_OR_EXCLUSIVE_LOCK_CHANGED', 'SNAPSHOT_VISIBILITY_CHANGED',
   'SESSION_LOCK_ALREADY_HELD',
   'DATABASE_QUERY_FAILED', 'DATABASE_UNEXPECTED_WARNING', 'PROBE_TLS_UNVERIFIED',
+  'DATABASE_ROW_MODE_FAILED', 'DATABASE_ROW_MODE_INVALID', 'DATABASE_RESULT_INCOMPLETE',
+  'DATABASE_RESULT_SHAPE_CHANGED', 'DATABASE_RESULT_ENCODING_INVALID', 'DATABASE_COMMAND_INVALID',
+  'DATABASE_COLUMN_BOUND_EXCEEDED', 'DATABASE_ROW_BOUND_EXCEEDED', 'DATABASE_CELL_BOUND_EXCEEDED',
+  'DATABASE_COMMAND_BOUND_EXCEEDED', 'DATABASE_RESULT_BOUND_EXCEEDED',
   'PROBE_COMPETITOR_ACCEPTED', 'PROBE_COMPETITOR_FAILURE_UNKNOWN', 'PROBE_SNAPSHOT_UNVERIFIED',
   'PROBE_READ_UNVERIFIED', 'PROBE_TRANSITION_UNVERIFIED', 'PROBE_BACKEND_CHANGED',
   'PROBE_NEGATIVE_QUERY_ACCEPTED', 'PROBE_NEGATIVE_FAILURE_UNKNOWN',
@@ -45,7 +49,7 @@ const hash = value => createHash('sha256').update(value).digest('hex');
 class ProbeError extends Error {constructor(code) {super(code); this.code = code;}}
 const need = (value, code) => {if (!value) throw new ProbeError(code);};
 
-function fixedEnvironment(environment) {
+export function validatedStagingContext(environment) {
   // Node's authentic process.env has a distinct prototype. Keep descriptor-only
   // capture for its required fields; arbitrary custom-prototype objects stay denied.
   need(environment && (environment === process.env
@@ -115,7 +119,7 @@ export async function stagingSessionProbe(environment, {
     measurement_only: true, email_sent: false, provider_resources_created: false, ddl_requested: false,
     negative_dml_uses_false_predicate: true, private_identifiers_exported: false, ...LIMITS};
   try {
-    const fixed = fixedEnvironment(environment);
+    const fixed = validatedStagingContext(environment);
     const bound = {...base, source_sha: fixed.RELEASE_SHA};
     let target;
     try {

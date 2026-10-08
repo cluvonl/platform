@@ -17,6 +17,10 @@ import time
 
 MAX_INPUT = 2_000_000
 MAX_RESULT = 8_000_000
+MAX_ROWS = 100_000
+MAX_COLUMNS = 256
+MAX_CELLS = 500_000
+MAX_COMMANDS = 128
 TIMEOUT = 30.0
 NAMESPACE = 1129076054
 PROJECT = 'fbozlbgmktkgcdfqdaaz'
@@ -75,6 +79,7 @@ def bindings_library(name=None):
         'PQsocket': (integer, [pointer]), 'PQbackendPID': (integer, [pointer]),
         'PQsetnonblocking': (integer, [pointer, integer]),
         'PQsendQuery': (integer, [pointer, chars]), 'PQflush': (integer, [pointer]),
+        'PQsetSingleRowMode': (integer, [pointer]),
         'PQsendQueryParams': (integer, [pointer, chars, integer, pointer, pointer, pointer, pointer, integer]),
         'PQconsumeInput': (integer, [pointer]), 'PQisBusy': (integer, [pointer]),
         'PQgetResult': (pointer, [pointer]), 'PQresultStatus': (integer, [pointer]),
@@ -214,11 +219,16 @@ class Session:
         require(isinstance(sql, str) and '\0' not in sql and len(sql.encode()) <= MAX_INPUT, 'DATABASE_QUERY_INVALID')
         self.warning = False
         deadline = time.monotonic() + TIMEOUT
-        results, total = [], 0
+        results, total, row_count, cell_count = [], 2, 0, 0
+        pending_rows, pending_columns = [], None
         try:
             sent = self.pq.PQsendQueryParams(self.connection, sql.encode(), 0, None, None, None, None, 0) if single else self.pq.PQsendQuery(self.connection, sql.encode())
             require(sent == 1, 'DATABASE_SEND_FAILED')
+            # Set this before flush/consume/getResult. libpq otherwise buffers
+            # every row before any application-side budget can be checked.
+            require(self.pq.PQsetSingleRowMode(self.connection) == 1, 'DATABASE_ROW_MODE_FAILED')
             while True:
+                require(time.monotonic() < deadline, 'DATABASE_TIMEOUT')
                 flushed = self.pq.PQflush(self.connection)
                 require(flushed >= 0, 'DATABASE_DISCONNECTED')
                 if flushed == 0:
@@ -226,30 +236,63 @@ class Session:
                 self.wait(deadline, read=True, write=True)
                 require(self.pq.PQconsumeInput(self.connection) == 1, 'DATABASE_DISCONNECTED')
             while True:
+                require(time.monotonic() < deadline, 'DATABASE_TIMEOUT')
                 while self.pq.PQisBusy(self.connection):
                     self.wait(deadline)
                     require(self.pq.PQconsumeInput(self.connection) == 1, 'DATABASE_DISCONNECTED')
                 result = self.pq.PQgetResult(self.connection)
                 if not result:
+                    require(pending_columns is None, 'DATABASE_RESULT_INCOMPLETE')
                     break
                 try:
                     status = self.pq.PQresultStatus(result)
-                    if status not in (1, 2):
+                    if status not in (1, 2, 9):
                         sqlstate = bytes_value(self.pq.PQresultErrorField(result, ord('C')))
                         raise Failure('DATABASE_QUERY_FAILED', sqlstate)
-                    rows = []
-                    for row in range(self.pq.PQntuples(result)):
+                    columns, tuples = self.pq.PQnfields(result), self.pq.PQntuples(result)
+                    require(0 <= columns <= MAX_COLUMNS, 'DATABASE_COLUMN_BOUND_EXCEEDED')
+                    require((status == 9 and tuples == 1 and columns > 0)
+                            or (status in (1, 2) and tuples == 0), 'DATABASE_ROW_MODE_INVALID')
+                    if status == 9:
+                        require(pending_columns is None or pending_columns == columns,
+                                'DATABASE_RESULT_SHAPE_CHANGED')
+                        pending_columns = columns
+                        row_count += 1
+                        cell_count += columns
+                        require(row_count <= MAX_ROWS, 'DATABASE_ROW_BOUND_EXCEEDED')
+                        require(cell_count <= MAX_CELLS, 'DATABASE_CELL_BOUND_EXCEEDED')
                         values = []
-                        for column in range(self.pq.PQnfields(result)):
-                            if self.pq.PQgetisnull(result, row, column):
-                                values.append(None)
+                        # Count JSON delimiters, NULLs and escaped strings too.
+                        total += 2 + int(bool(pending_rows)) + max(0, columns - 1)
+                        for column in range(columns):
+                            require(time.monotonic() < deadline, 'DATABASE_TIMEOUT')
+                            if self.pq.PQgetisnull(result, 0, column):
+                                value, encoded_size = None, 4
                             else:
-                                size = self.pq.PQgetlength(result, row, column)
-                                total += size
-                                require(total <= MAX_RESULT, 'DATABASE_RESULT_BOUND_EXCEEDED')
-                                values.append(C.string_at(self.pq.PQgetvalue(result, row, column), size).decode('utf-8', 'strict'))
-                        rows.append(values)
-                    results.append({'command':bytes_value(self.pq.PQcmdStatus(result)), 'rows':rows})
+                                size = self.pq.PQgetlength(result, 0, column)
+                                require(0 <= size <= MAX_RESULT - total, 'DATABASE_RESULT_BOUND_EXCEEDED')
+                                try:
+                                    value = C.string_at(self.pq.PQgetvalue(result, 0, column), size).decode('utf-8', 'strict')
+                                except UnicodeDecodeError:
+                                    raise Failure('DATABASE_RESULT_ENCODING_INVALID') from None
+                                encoded_size = len(json.dumps(value, ensure_ascii=False).encode('utf-8'))
+                            total += encoded_size
+                            require(total <= MAX_RESULT, 'DATABASE_RESULT_BOUND_EXCEEDED')
+                            values.append(value)
+                        pending_rows.append(values)
+                    else:
+                        require((status == 2 and (pending_columns is None or pending_columns == columns))
+                                or (status == 1 and pending_columns is None and columns == 0),
+                                'DATABASE_RESULT_SHAPE_CHANGED')
+                        require(len(results) < MAX_COMMANDS, 'DATABASE_COMMAND_BOUND_EXCEEDED')
+                        command = bytes_value(self.pq.PQcmdStatus(result))
+                        require(isinstance(command, str) and len(command) <= 128, 'DATABASE_COMMAND_INVALID')
+                        total += len(json.dumps({'command':command, 'rows':[]},
+                                               ensure_ascii=False, separators=(',', ':')).encode('utf-8'))
+                        total += int(bool(results))
+                        require(total <= MAX_RESULT, 'DATABASE_RESULT_BOUND_EXCEEDED')
+                        results.append({'command':command, 'rows':pending_rows})
+                        pending_rows, pending_columns = [], None
                 finally:
                     self.pq.PQclear(result)
             require(not self.warning, 'DATABASE_UNEXPECTED_WARNING')

@@ -1,0 +1,63 @@
+{
+  "scope": "LOCAL_SOURCE_PROTOCOL_AND_SYNTHETIC_COLLECTOR_TESTS",
+  "baseline_sha": "449f628784e0cdbf1bed9f72c297ef8706a09d41",
+  "commands": [
+    {
+      "command": "npm run check",
+      "exit_code": 0,
+      "node_tests": 401,
+      "wp0_contract_tests": 5,
+      "production_build": true,
+      "standalone_http_smoke": true,
+      "initial_lint_warnings": 1,
+      "warning_fixed_by_removing_unused_import": true
+    },
+    {
+      "command": "npx eslint scripts/staging-capture-*.mjs scripts/staging-migration-files.mjs scripts/staging-session-bridge.mjs tests/staging-capture-*.test.mjs tests/staging-session-bridge.test.mjs tests/staging-session-results.test.mjs",
+      "exit_code": 0,
+      "warnings": 0
+    }
+  ],
+  "python_result_reader_tests": 14,
+  "python_private_protocol_tests": 12,
+  "existing_python_transport_contract_tests": 31,
+  "unresponsive_owned_child_started_killed_reaped": true,
+  "immutable_migration_files_verified": 16,
+  "dependencies_or_lockfiles_changed": false,
+  "hosted_capture_executed": false,
+  "private_provider_values_exported": false,
+  "backup_created": false,
+  "restore_executed": false,
+  "remote_ddl_executed": false,
+  "staging_runtime_app_mode_enabled": false,
+  "email_sent": false,
+  "v1_ready": false,
+  "production_enabled": false,
+  "limits": {
+    "synthetic_tests_prove_hosted_source": false,
+    "hard_wire_or_rss_limit_proved": false,
+    "streaming_copy_comparison_proved": false
+  },
+  "source_files_sha256": {
+    "scripts/staging_backup_session.py": "e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1",
+    "scripts/staging-session-probe.mjs": "03171fe8882f92a1093490f6c3bbc3363d6417c7b942915233882010a760112a",
+    "scripts/staging_session_bridge.py": "165057532a551de35f947d131b284b6116e2a9192ff47bf8d01c5a900977def2",
+    "scripts/staging-session-bridge.mjs": "283cd947a58b26551db24f53bd71edb699d3aae5388fa8e5c736439c1f98d754",
+    "scripts/staging-capture-collector.mjs": "6f8c4c012f74f18b964076d3f2be20ed233cd366f977479b5b2f12dc2df58949",
+    "scripts/staging-capture-catalog.mjs": "658757f4480669033e996439d1ae0bd5e6ac703db1c9bd72d3051f4e274b30a4",
+    "scripts/staging-capture-queries.mjs": "7a1db460a570a060e27146d3498dd5cac39a70fcbe437ebe9d6158e6416c5d79",
+    "scripts/staging-capture-capability-contract.mjs": "bc18bcf46046082bf7d55fb405e30abad31ff17fe1d28ce6a7c30f82a00500e9",
+    "scripts/staging-capture-binding.mjs": "ee08f037749cac07bd30f441afde83ffa89a3562532535450ff43eefc410e47b",
+    "scripts/staging-capture-source.mjs": "22fd0546ee55c17c5e4dbf910c774b4bfad0ede10303c6b68e67507ceacce18a",
+    "scripts/staging-migration-files.mjs": "83aa2aae6d4cc358965208e39e73dd0d1038ee4a6c0bc9a62675b829e30c94bd",
+    "scripts/staging-capture-check.mjs": "fca2b36b16f53e33bd84f98a4077bab066f3775b05ee92f67153c133b84d4c1d",
+    ".github/workflows/staging-capture-check.yml": "a76783f7e08d06e94a9c976cdb3a0fd7b020705d3d2e3568ad6411e355028ab1",
+    "tests/staging-session-results.test.mjs": "eaaab4af7290ce8ccf4e6f5d49ea6861a33f299579f93180d54afb1bdf81b2bb",
+    "tests/staging-session-bridge.test.mjs": "56da9654dd747e76c421a96e16f62b8f584cafbe74f05a55257bdbecb41dc483",
+    "tests/staging-capture-collector.test.mjs": "c0023ece60f7339a6138eeb722fd0be5c404afa3fc4e957515a839a728a82487",
+    "tests/staging-capture-binding.test.mjs": "2ed949c9ae309e0fed7d6043ff7d90a559d40f9e251edde40b1154f97d567209",
+    "tests/staging-capture-check.test.mjs": "cf9912ca3c3ca732d9544385c1341a2024406989cc254805c46d43694bcb9e4d",
+    "tests/helpers/staging-session-result-tests.py": "dd9be718e920d46f6197584089fa0703b21755b0bbb961f96a2b1a90e96dc753",
+    "tests/helpers/staging-session-bridge-tests.py": "b25e995267abc6f724ae14443bbdd5ce8c0f348ce2547ba42be565b94a7c77d6"
+  }
+}
