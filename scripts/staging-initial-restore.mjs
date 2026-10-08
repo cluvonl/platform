@@ -7,6 +7,7 @@ import {join,isAbsolute} from 'node:path';
 import {isDeepStrictEqual} from 'node:util';
 import {executeDatabaseProcess} from './staging-database-process.mjs';
 import {CATALOG_QUERIES} from './staging-capture-catalog.mjs';
+import {catalogMismatchDiagnostic,publicCatalogDiagnostics} from './staging-catalog-diagnostic.mjs';
 import {aggregate} from './staging-capture-queries.mjs';
 import {IMMUTABLE16} from './staging-migration-files.mjs';
 import {IMAGE} from './pg17-capture-worker.mjs';
@@ -21,7 +22,7 @@ export const INITIAL_RESTORE_ERROR_TOPICS=Object.freeze(['EXTENSION','LIBRARY','
 export const INITIAL_RESTORE_ERROR_SOURCE_FILES=Object.freeze([...PG17_PUBLIC_CORE_SOURCE_FILES,'pl_exec.c','pl_comp.c','pl_handler.c','pg_net.c','pgsodium.c','vault.c','supautils.c','pg_cron.c','job_metadata.c','pg_tle.c','pg_stat_statements.c','pgaudit.c','plpgsql_check.c','elog.rs','ffi.rs','panic.rs']);
 export const INITIAL_RESTORE_TOC_TYPES=Object.freeze(['ACL','AGGREGATE','BLOB','BLOB COMMENTS','BLOBS','CAST','CHECK CONSTRAINT','COLLATION','COMMENT','CONSTRAINT','DATABASE','DATABASE PROPERTIES','DEFAULT','DEFAULT ACL','DOMAIN','DOMAIN CONSTRAINT','ENCODING','EVENT TRIGGER','EXTENSION','FK CONSTRAINT','FOREIGN DATA WRAPPER','FOREIGN SERVER','FOREIGN TABLE','FUNCTION','INDEX','INDEX ATTACH','MATERIALIZED VIEW','MATERIALIZED VIEW DATA','OPERATOR','OPERATOR CLASS','OPERATOR FAMILY','POLICY','PROCEDURE','PUBLICATION','PUBLICATION TABLE','PUBLICATION TABLES IN SCHEMA','ROW SECURITY','RULE','SCHEMA','SEARCHPATH','SEQUENCE','SEQUENCE OWNED BY','SEQUENCE SET','SHELL TYPE','STATISTICS','STDSTRINGS','SUBSCRIPTION','TABLE','TABLE ATTACH','TABLE DATA','TABLESPACE','TEXT SEARCH CONFIGURATION','TEXT SEARCH DICTIONARY','TEXT SEARCH PARSER','TEXT SEARCH TEMPLATE','TRANSFORM','TRIGGER','TYPE','USER MAPPING','VIEW']);
 export class InitialRestoreError extends Error {
- constructor(code,{phase='input',sqlstate=null,errorKind=null,errorReason=null,exitStatus=null,processFailed=null,tocType=null,errorOrigin=null,errorSourceFile=null,errorTopics=[],restoreSection=null}={}){
+ constructor(code,{phase='input',sqlstate=null,errorKind=null,errorReason=null,exitStatus=null,processFailed=null,tocType=null,errorOrigin=null,errorSourceFile=null,errorTopics=[],restoreSection=null,catalogMismatches=[]}={}){
   super(code);this.code=code;this.phase=INITIAL_RESTORE_PHASES.includes(phase)?phase:'input';
   this.sqlstate=Object.hasOwn(SQLSTATE_KINDS,sqlstate)?sqlstate:null;
   this.errorKind=ERROR_KINDS.includes(errorKind)?errorKind:null;
@@ -33,6 +34,7 @@ export class InitialRestoreError extends Error {
   this.errorSourceFile=INITIAL_RESTORE_ERROR_SOURCE_FILES.includes(errorSourceFile)?errorSourceFile:null;
   this.errorTopics=Object.freeze(INITIAL_RESTORE_ERROR_TOPICS.filter(topic=>Array.isArray(errorTopics)&&errorTopics.includes(topic)).slice(0,16));
   this.restoreSection=INITIAL_RESTORE_SECTIONS.includes(restoreSection)?restoreSection:null;
+  this.catalogMismatches=publicCatalogDiagnostics(catalogMismatches);
  }
 }
 const SQLSTATE_KINDS=Object.freeze({'42501':'PERMISSION','42P01':'MISSING','3F000':'MISSING','42704':'MISSING','42883':'MISSING','3D000':'MISSING','42601':'SYNTAX','42P17':'SYNTAX','42710':'ALREADY_EXISTS','42P06':'ALREADY_EXISTS','42P07':'ALREADY_EXISTS','23505':'CONFLICT','23502':'CONFLICT','23503':'CONFLICT','23514':'CONFLICT','55006':'CONFLICT','57014':'TIMEOUT','55P03':'TIMEOUT','0A000':'UNSUPPORTED','55000':'UNSUPPORTED','22023':'UNSUPPORTED','XX000':'PROCESS_FAILURE','53100':'PROCESS_FAILURE','53200':'PROCESS_FAILURE','53300':'PROCESS_FAILURE','57P01':'PROCESS_FAILURE','08006':'PROCESS_FAILURE'});
@@ -269,7 +271,12 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
   for(const expected of original.catalog.schemas){const actual=schemas.find(schema=>schema.name===expected.name);need(actual?.owner===expected.owner&&actual.acl.every(grant=>expected.acl.some(source=>equal(source,grant))),'RESTORE_SCHEMA_PRIVILEGES_CHANGED');for(const [grantor,grantee,privilege,grantable]of expected.acl.filter(grant=>!actual.acl.some(present=>equal(grant,present)))){need(['USAGE','CREATE'].includes(privilege),'RESTORE_SCHEMA_GRANT_UNKNOWN');replay+='SET SESSION AUTHORIZATION '+ident(grantor)+';GRANT '+privilege+' ON SCHEMA '+ident(expected.name)+' TO '+(grantee==='PUBLIC'?'PUBLIC':ident(grantee))+(grantable?' WITH GRANT OPTION':'')+';RESET SESSION AUTHORIZATION;';}}
   if(replay)await sql(replay);
   await restore('post-data');
-  for(const [family,query]of Object.entries(CATALOG_QUERIES)){phase='catalog.'+family;need(equal(await jsonSql(aggregate(query)),original.catalog[family]),'RESTORE_CATALOG_MISMATCH');}
+  const catalogMismatches=[];
+  for(const [family,query]of Object.entries(CATALOG_QUERIES)){
+   phase='catalog.'+family;const actual=await jsonSql(aggregate(query));
+   if(!equal(actual,original.catalog[family]))catalogMismatches.push(catalogMismatchDiagnostic(family,original.catalog[family],actual));
+  }
+  if(catalogMismatches.length){phase='catalog.'+catalogMismatches[0].family;throw new InitialRestoreError('RESTORE_CATALOG_MISMATCH',{phase,catalogMismatches});}
   phase='data';for(const row of original.data){const result=await jsonSql("SELECT jsonb_build_object('rows',count(*),'sha256',encode(sha256(convert_to(coalesce(string_agg(to_jsonb(t)::text,E'\\n' ORDER BY to_jsonb(t)::text),''),'UTF8')),'hex')) FROM "+(row.kind==='r'?'ONLY ':'')+table(row.schema,row.relation)+' t;');need(result.rows===row.rows&&result.sha256===row.sha256,'RESTORE_PHYSICAL_DATA_MISMATCH');}
   phase='sequence';for(const row of original.sequences){const result=await jsonSql("SELECT jsonb_build_object('last_value',last_value::text,'is_called',is_called) FROM "+table(row.schema,row.name));need(result.last_value===row.last_value&&result.is_called===row.is_called,'RESTORE_SEQUENCE_VALUES_MISMATCH');}
   await checkJobs();

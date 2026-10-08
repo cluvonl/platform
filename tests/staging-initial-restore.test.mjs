@@ -146,6 +146,15 @@ test('isolation, restore, catalog/data/sequence, actor and job failures remove o
   await fixture(async(input,{run,observed})=>{await assert.rejects(restoreInitialBackup(input,{run}),code(expected));assert.equal(observed.removed,true);assert.equal(observed.upgrades.length,0);},0,{[option]:true});
  }
 });
+test('catalog mismatch diagnostics retain all strict checks and prevent any upgrade',async()=>{
+ await fixture(async(input,{run,observed})=>{
+  await assert.rejects(restoreInitialBackup(input,{run}),error=>{
+   assert.equal(error.code,'RESTORE_CATALOG_MISMATCH');assert.equal(error.phase,'catalog.roles');
+   assert.deepEqual(error.catalogMismatches,[{family:'roles',source_rows:2,restored_rows:3,missing_rows:0,extra_rows:1,changed_rows:0,changed_fields:[],acl_missing_entries:0,acl_extra_entries:0}]);
+   assert.equal(JSON.stringify(error).includes('fixture'),false);return true;
+  });assert.equal(observed.upgrades.length,0);assert.equal(observed.removed,true);
+ },0,{catalogMismatch:true});
+});
 test('restored history and source audit must prove the exact prefix before any suffix runs',async()=>{
  for(const option of ['historyMismatch','auditMismatch'])await fixture(async(input,{run,observed})=>{await assert.rejects(restoreInitialBackup(input,{run}),code('RESTORE_INITIAL_HISTORY_UNPROVED'));assert.equal(observed.upgrades.length,0);assert.equal(observed.removed,true);},3,{[option]:true});
 });
