@@ -287,8 +287,18 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
   phase='extension_owners';const installed=await jsonSql(aggregate(CATALOG_QUERIES.extensions));let extensionsPrecreated=0;
   need(installed.every(extension=>original.catalog.extensions.some(expected=>equal(extension,expected))),'RESTORE_EXISTING_EXTENSION_CHANGED');
   for(const extension of original.catalog.extensions){if(installed.some(actual=>actual.name===extension.name))continue;
-   need(original.catalog.roles.some(role=>role.name===extension.owner)&&typeof extension.version==='string','RESTORE_EXTENSION_OWNER_UNKNOWN');
-   await sql('SET SESSION AUTHORIZATION '+ident(extension.owner)+';CREATE EXTENSION '+ident(extension.name)+' WITH SCHEMA '+ident(extension.schema)+' VERSION '+literal(extension.version)+';RESET SESSION AUTHORIZATION;');extensionsPrecreated++;
+   const owner=original.catalog.roles.find(role=>role.name===extension.owner);
+   need(owner&&typeof extension.version==='string','RESTORE_EXTENSION_OWNER_UNKNOWN');
+   need(owner.login===true,'RESTORE_EXTENSION_OWNER_LOGIN_REQUIRED');
+   // Supautils may warn and ignore a non-superuser's VERSION clause. Verify
+   // the pinned image's default first, then create without that forbidden
+   // clause. Superuser owners retain explicit VERSION selection.
+   if(!owner.superuser){const available=await jsonSql("SELECT jsonb_build_object('default_version',(SELECT default_version FROM pg_available_extensions WHERE name="+literal(extension.name)+"));",extension.owner);need(available.default_version===extension.version,'RESTORE_EXTENSION_VERSION_UNAVAILABLE');}
+   // A genuine connection as the owner loads its original role/database GUCs.
+   // SET SESSION AUTHORIZATION alone does not load those login settings.
+   await sql('CREATE EXTENSION '+ident(extension.name)+' WITH SCHEMA '+ident(extension.schema)+(owner.superuser?' VERSION '+literal(extension.version):'')+';',extension.owner);extensionsPrecreated++;
+   const observed=await jsonSql(aggregate(CATALOG_QUERIES.extensions));
+   if(!observed.some(actual=>equal(actual,extension)))throw new InitialRestoreError('RESTORE_EXTENSION_METADATA_UNPROVED',{phase,catalogMismatches:[catalogMismatchDiagnostic('extensions',[extension],observed.filter(actual=>actual.name===extension.name))]});
   }
   await restore('pre-data','remaining');await restore('data');
   phase='schema_acl';const schemas=await jsonSql(aggregate(CATALOG_QUERIES.schemas));
