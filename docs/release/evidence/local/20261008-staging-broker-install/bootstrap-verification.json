@@ -1,0 +1,16 @@
+{
+  "scope": "PUBLIC_BOOTSTRAP_SOURCE_CHECK",
+  "pinned_code_source_sha": "bce2a3fde617863cd0a46d047e7982f331a91296",
+  "bootstrap_script_sha256": "e27a16a7d6adc7c6ad5021b47eb93ddba4f48b1cb9d98018af6cbf400138a56f",
+  "manifest_sha256": "e07567168cedde61206ca697c9457464a18db3854241e0eb9b3c56baf5bf3bfc",
+  "anonymous_public_code_downloads_verified": 4,
+  "public_download_bytes_match_pinned_manifest": true,
+  "downloaded_installer_executed_before_source_hash_verification": false,
+  "directory_metadata_synthetic_checks": 5,
+  "shell_syntax": "PASS",
+  "server_installation_executed": false,
+  "runtime_credentials_read": false,
+  "app_activation_proven": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

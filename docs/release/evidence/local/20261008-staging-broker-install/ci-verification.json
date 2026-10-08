@@ -1,0 +1,28 @@
+{
+  "scope": "MAIN_CI_FOR_PINNED_SERVER_OPERATIONS",
+  "source_sha": "bce2a3fde617863cd0a46d047e7982f331a91296",
+  "workflow_run_id": "37762933344",
+  "workflow_url": "https://github.com/cluvonl/platform/actions/runs/37762933344",
+  "conclusion": "success",
+  "jobs": {
+    "verify": "success",
+    "database": "success"
+  },
+  "local_node_tests": 434,
+  "checks": [
+    "lint",
+    "typecheck",
+    "Node tests",
+    "Next build",
+    "WP0 HTTP smoke",
+    "disposable local database migrations and pgTAP",
+    "concurrency, locking and staging-data checks",
+    "database lint"
+  ],
+  "hosted_database_migrations_applied": false,
+  "vps_installation_executed": false,
+  "app_activation_proven": false,
+  "backup_restore_proven": false,
+  "v1_ready": false,
+  "production_enabled": false
+}
