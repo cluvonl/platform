@@ -1,0 +1,104 @@
+{
+  "workflow_run_id": 37705470754,
+  "workflow_url": "https://github.com/cluvonl/platform/actions/runs/37705470754",
+  "workflow_conclusion": "success",
+  "artifact_sha256": "37999b055cd9dd6ac336fd7ec70d352040f4f88d686df7d15f7b3f74efdc8b35",
+  "artifact_bytes_preserved": true,
+  "after_auth_mail_request_run_id": 37705271934,
+  "snapshot_consistent_inventory_proven": false,
+  "source_ids_or_email_values_exported": false,
+  "database_mutations": false,
+  "key_dependent_data": "proven_empty",
+  "full_schema_decryptability_verified": false,
+  "backup_restore_verified": false,
+  "source_sha": "c89020d5827a611f4f4892098e141630caea556f",
+  "observed_at": "2026-10-08T00:01:23.152Z",
+  "passed": true,
+  "app_tables": 0,
+  "applied_migrations": 0,
+  "pending_migrations": 16,
+  "client_tls_protocol": "TLSv1.3",
+  "datasets": [
+    {
+      "id": "vault",
+      "state": "empty",
+      "row_count": 0,
+      "nonempty_count": 0,
+      "legacy_count": null
+    },
+    {
+      "id": "pgsodium_keys",
+      "state": "empty",
+      "row_count": null,
+      "nonempty_count": null,
+      "legacy_count": null
+    },
+    {
+      "id": "auth_password_envelopes",
+      "state": "empty",
+      "row_count": 1,
+      "nonempty_count": 1,
+      "legacy_count": 1
+    },
+    {
+      "id": "auth_mfa_factor_envelopes",
+      "state": "empty",
+      "row_count": 0,
+      "nonempty_count": 0,
+      "legacy_count": 0
+    },
+    {
+      "id": "auth_mfa_challenge_envelopes",
+      "state": "empty",
+      "row_count": 0,
+      "nonempty_count": 0,
+      "legacy_count": 0
+    },
+    {
+      "id": "auth_session_hmac_envelopes",
+      "state": "empty",
+      "row_count": 0,
+      "nonempty_count": 0,
+      "legacy_count": 0
+    },
+    {
+      "id": "auth_oauth_provider_envelopes",
+      "state": "empty",
+      "row_count": 0,
+      "nonempty_count": 0,
+      "legacy_count": 0
+    },
+    {
+      "id": "oauth_client_hashes",
+      "state": "empty",
+      "row_count": 0,
+      "nonempty_count": 0,
+      "legacy_count": null
+    },
+    {
+      "id": "oauth_flow_access_tokens",
+      "state": "empty",
+      "row_count": 0,
+      "nonempty_count": 0,
+      "legacy_count": null
+    },
+    {
+      "id": "oauth_flow_refresh_tokens",
+      "state": "empty",
+      "row_count": 0,
+      "nonempty_count": 0,
+      "legacy_count": null
+    },
+    {
+      "id": "storage_objects",
+      "state": "empty",
+      "row_count": 0,
+      "nonempty_count": 0,
+      "legacy_count": null
+    }
+  ],
+  "actual_mail_delivery_verified": false,
+  "native_session_verified": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

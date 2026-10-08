@@ -1,0 +1,88 @@
+{
+  "observed_at": "2026-10-08T00:04:04.070Z",
+  "source_sha": "c89020d5827a611f4f4892098e141630caea556f",
+  "url": "https://staging.cluvo.nl",
+  "ci": {
+    "url": "https://github.com/cluvonl/platform/actions/runs/37704851390",
+    "conclusion": "success"
+  },
+  "deployment": {
+    "url": "https://github.com/cluvonl/platform/actions/runs/37705268159",
+    "conclusion": "success",
+    "image": "ghcr.io/cluvonl/platform@sha256:747415ab526188cd2ff0b621850d3028228a4120d104f70d1f632a8c18529c6d",
+    "image_digest": "sha256:747415ab526188cd2ff0b621850d3028228a4120d104f70d1f632a8c18529c6d"
+  },
+  "mode": "prototype",
+  "endpoints": [
+    {
+      "path": "/api/health/live",
+      "status": 200,
+      "body": {
+        "status": "ok",
+        "service": "cluvo",
+        "mode": "prototype",
+        "environment": "staging",
+        "release": "c89020d5827a611f4f4892098e141630caea556f"
+      }
+    },
+    {
+      "path": "/api/health/ready",
+      "status": 503,
+      "body": {
+        "ready": false,
+        "release_ready": false,
+        "reason": "APP_MODE_PROTOTYPE",
+        "checks": {
+          "database": "not_connected",
+          "workers": "not_started",
+          "authorization": "demo_only"
+        }
+      }
+    },
+    {
+      "path": "/api/runtime-config",
+      "status": 503,
+      "body": {
+        "error": "SUPABASE_NOT_CONFIGURED"
+      }
+    }
+  ],
+  "captures": [
+    {
+      "file": "prototype-overzicht-1440x1024.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1024
+      },
+      "sha256": "21d49ee7d48c6776cc9c3dd232b3b3d70dce180a94c34a7a88b090d3340265ac"
+    },
+    {
+      "file": "prototype-overzicht-390x844.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "9ba1ac7590a96e453099c8d491bb377c58e3d0df431daff1aa26a9d485a40cad"
+    }
+  ],
+  "migrations": {
+    "artifact_hashes_verified": true,
+    "count": 16,
+    "remote_applied_status": "NOT_APPLIED_AT_CREDENTIAL_PREFLIGHT",
+    "remote_state_observed_from": "docs/release/evidence/staging/20261008-preflight-c89020d/results.json",
+    "remote_app_tables": 0,
+    "remote_migrations": 0,
+    "remote_observation_is_prior_readonly_preflight": true,
+    "remote_observed_at": "2026-10-08T00:01:23.152Z",
+    "remote_preflight_source_sha": "c89020d5827a611f4f4892098e141630caea556f",
+    "remote_preflight_same_release": true
+  },
+  "acceptance": {
+    "intermediate_release": true,
+    "v1_ready": false,
+    "functional_app_on_staging": false,
+    "workers_connected": false,
+    "staging_rls_privacy_tests": "NOT_EXECUTED",
+    "staging_backup_restore": "NOT_EXECUTED"
+  }
+}
