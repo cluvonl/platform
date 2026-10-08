@@ -21,8 +21,8 @@ function fixtureReceipt(prefix=0){
  const catalog=Object.fromEntries(Object.keys(CATALOG_QUERIES).map(key=>[key,[]]));
  catalog.roles=[{name:bootstrapRole,superuser:true,login:true},{name:'postgres',superuser:false,login:true}];
  catalog.database=[{owner:'postgres',connection_limit:-1,allow_connections:true,is_template:false,locale_provider:'i',locale:'en-US',encoding:'UTF8',acl:[]}];
- catalog.relations=[{schema:'auth',name:'users',kind:'r'}];
- if(prefix)catalog.relations.push({schema:'app',name:'fixture',kind:'r'});
+ catalog.relations=[{schema:'auth',name:'users',kind:'r',owner:'postgres'}];
+ if(prefix)catalog.relations.push({schema:'app',name:'fixture',kind:'r',owner:'postgres'});
  return {format:'cluvo-staging-private-snapshot',schema_version:2,environment:'staging',project_ref:'fbozlbgmktkgcdfqdaaz',
   source_sha:sourceSha,source_files:IMMUTABLE16.map(file=>({...file})),source_scope:'HOSTED_VERIFY_FULL',hosted_source_verified:true,
   logical_capture_metadata_complete:true,source_history:{applied_prefix:prefix,original_source_bytes_proven:true},
@@ -38,7 +38,7 @@ function state(prefix){return {
  sourceRows:manifest.migrations.slice(0,prefix).map((m,index)=>({version:m.version,file:m.file,sha256:m.sha256,source_sha:sourceSha,
   actor:'fixture-source',scope:'staging',expected_version:index,idempotency_key:'cluvo-staging-initial16:2:'+m.version,workflow_run_id:'2'}))};}
 function runner(original,options={}){
- const observed={calls:[],upgrades:[],removed:false,replays:[],networkArgs:null,logReads:0,restoreSections:[],extensionCreates:[],extensionRoles:[],aclReplays:[]};let name,started=false,restoreFailed=false,extensionReads=0,prefix=original.source_history.applied_prefix;
+ const observed={calls:[],upgrades:[],removed:false,replays:[],networkArgs:null,logReads:0,restoreSections:[],extensionCreates:[],extensionRoles:[],aclReplays:[],columnAclReplays:[],schemaUsage:[],schemaResets:[]};let name,started=false,restoreFailed=false,extensionReads=0,schemaUsageActive=false,prefix=original.source_history.applied_prefix;
  const catalogSql=new Map(Object.entries(CATALOG_QUERIES).map(([family,query])=>[aggregate(query),family]));
  const inspect=()=>({id:cid,name:'/'+name,image:imageId,config_image:IMAGE,user:'postgres',label:options.badOwner||(restoreFailed&&options.badDiagnosticOwner)?'third-party':name,
   network:options.badNetwork?'bridge':'none',ports:null,binds:null,mounts:[],tmpfs:{'/restore':'rw,size=512m,mode=1777'},volumes_from:null,
@@ -75,10 +75,12 @@ function runner(original,options={}){
   const query=text.replace(/^SET client_min_messages=warning;\nSET search_path TO '';\n/,'').replace(/;\s*$/,'');
   if(catalogSql.has(query)){
    const family=catalogSql.get(query),value=structuredClone(original.catalog[family]);
+   if(family==='schemas'&&schemaUsageActive)for(const schema of value)schema.acl.push(['postgres','fixture_auth_owner','USAGE',false]);
    if(family==='extensions'){if(extensionReads++===0){if(options.extensionAbsent)return ok([]);if(options.existingExtensionMismatch&&value.length)value[0].owner='unexpected_private_owner';}else if(options.lateExtensionMismatch&&value.length)value[0].owner='unexpected_private_owner';}
    if(options.catalogFailure===family)return {status:3,stdout:'',stderr:'ERROR:  42P01\n'};
    if(options.catalogMismatch&&family==='roles')value.push({name:'unexpected_fixture_role'});
    if(options.aclMismatch&&family==='relations'&&!observed.aclReplays.length){value[0].acl.push([bootstrapRole,'anon','SELECT',false]);if(options.aclDefinitionMismatch)value[0].rls=true;}
+   if(options.columnAclMismatch&&family==='columns'&&!observed.columnAclReplays.length){value[0].acl=[];if(options.columnDefinitionMismatch)value[0].not_null=true;}
    return ok(value);
   }
   if(query.includes("'unexpected_workers'"))return ok({listen_disabled:true,unexpected_workers:options.worker?1:0,cron_disabled:true,workers:0,version:170011});
@@ -99,6 +101,10 @@ function runner(original,options={}){
   if(query.startsWith("SELECT jsonb_build_object('superuser',"))return ok({superuser:true,self:true,supautils_omitted:!options.installerSessionMismatch});
   if(query.startsWith('REASSIGN OWNED BY "cluvo_restore_ext_'))return options.installerDropFailure?failure():ok('');
   if(query.startsWith('REVOKE ALL ON TABLE ')){observed.aclReplays.push(query);return ok('');}
+  if(query.startsWith('REVOKE ALL (')){observed.columnAclReplays.push(query);return ok('');}
+  if(query.startsWith('GRANT USAGE ON SCHEMA ')){observed.schemaUsage.push(query);schemaUsageActive=true;return ok('');}
+  if(query.startsWith('GRANT REFERENCES ON TABLE '))return ok('');
+  if(query.startsWith('REVOKE ALL ON SCHEMA ')){observed.schemaResets.push(query);if(options.schemaResetFailure)return failure();if(!options.schemaResetDrift)schemaUsageActive=false;return ok('');}
   if(query.startsWith("SELECT jsonb_build_object('absent',"))return ok({absent:!options.installerStillPresent});
   if(query.startsWith('CREATE EXTENSION ')){observed.extensionCreates.push(query);observed.extensionRoles.push(role);return {...ok(''),stderr:options.extensionWarning??''};}
   assert.fail('unrecognized fixed protocol query');
@@ -114,6 +120,29 @@ async function fixture(fn,prefix=0,options={}){
   await fn({directory,original,bootstrapRole,executionScope:options.hosted?'HOSTED':'LOCAL'},model);
  }finally{await rm(directory,{recursive:true,force:true});}
 }
+
+test('provider-owner namespace access is temporary, limited to USAGE/REFERENCES and removed before attestation',async()=>{
+ await fixture(async(context,{run,observed})=>{
+  const catalog=context.original.catalog;
+  catalog.roles.push({name:'fixture_auth_owner',superuser:false,login:false});
+  catalog.relations[0].owner='fixture_auth_owner';
+  catalog.schemas=[{name:'auth',owner:'postgres',acl:[['postgres','postgres','CREATE',false],['postgres','postgres','USAGE',false]]}];
+  const report=await restoreInitialBackup(context,{run});
+  assert.equal(report.temporary_schema_usage_grants,1);
+  assert.equal(report.temporary_reference_grants,1);
+  assert.equal(report.temporary_restore_privileges_removed,true);
+  assert.equal(observed.schemaUsage.length,1);assert.equal(observed.schemaResets.length,1);
+  assert.ok(observed.schemaUsage[0].includes('GRANT USAGE ON SCHEMA "auth" TO "fixture_auth_owner";'));
+  assert.ok(observed.schemaUsage[0].includes('GRANT REFERENCES ON TABLE "auth"."users" TO "fixture_auth_owner"'));
+  assert.ok(!observed.schemaUsage[0].includes('GRANT CREATE'));
+  assert.ok(observed.schemaResets[0].includes('REVOKE ALL ON SCHEMA "auth" FROM "fixture_auth_owner";'));
+ });
+ for(const options of [{schemaResetFailure:true},{schemaResetDrift:true}])await fixture(async(context,{run,observed})=>{
+  context.original.catalog.schemas=[{name:'auth',owner:'postgres',acl:[]}];
+  await assert.rejects(restoreInitialBackup(context,{run}),code(options.schemaResetFailure?'RESTORE_PROCESS_FAILED':'RESTORE_CATALOG_MISMATCH'));
+  assert.equal(observed.upgrades.length,0);assert.equal(observed.removed,true);
+ },0,options);
+});
 
 test('fixed endpoint, full restore, physical verification and atomic original16 nonSU upgrade',async()=>{
  await fixture(async(input,{run,observed})=>{
@@ -289,6 +318,21 @@ test('effective ACL replay restores captured grantors and cannot hide a definiti
   await assert.rejects(restoreInitialBackup(input,{run}),error=>error.code==='RESTORE_CATALOG_MISMATCH'&&error.phase==='catalog.relations');
   assert.equal(observed.aclReplays.length,0);assert.equal(observed.upgrades.length,0);assert.equal(observed.removed,true);
  },0,{aclMismatch:true,aclDefinitionMismatch:true});
+});
+test('column ACLs cleared by a table revoke are restored with their original grantors/options; changed definitions still fail',async()=>{
+ for(const changed of [false,true])await fixture(async(input,{run,observed})=>{
+  input.original.catalog.columns=[{schema:'auth',relation:'users',name:'id',not_null:false,acl:[['postgres','anon','SELECT',true]]}];
+  if(changed){
+   await assert.rejects(restoreInitialBackup(input,{run}),error=>error.code==='RESTORE_CATALOG_MISMATCH'&&error.phase==='catalog.columns');
+   assert.equal(observed.columnAclReplays.length,0);
+  }else{
+   const report=await restoreInitialBackup(input,{run});assert.equal(report.effective_acl_objects_replayed,1);
+   assert.equal(observed.columnAclReplays.length,1);
+   assert.ok(observed.columnAclReplays[0].includes('REVOKE ALL ("id") ON TABLE "auth"."users" FROM "anon";'));
+   assert.ok(observed.columnAclReplays[0].includes('SET SESSION AUTHORIZATION "postgres";GRANT SELECT ("id") ON TABLE "auth"."users" TO "anon" WITH GRANT OPTION;'));
+  }
+  assert.equal(observed.removed,true);
+ },0,{columnAclMismatch:true,columnDefinitionMismatch:changed});
 });
 test('unknown, mixed or failing extension warnings refuse and expose only finite diagnostics',async()=>{
  for(const warning of ['WARNING:  01000\n','WARNING:  01007\nERROR:  42501\n','WARNING: private@example.test\n'])await fixture(async(input,{run,observed})=>{
