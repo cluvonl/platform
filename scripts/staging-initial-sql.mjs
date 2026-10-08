@@ -70,7 +70,9 @@ export async function fixedOperation(input){
   if(operation==='configure_api'){
     const sql=stagingApiExposureSQL(context);
     if(!sql.startsWith('BEGIN READ WRITE;\n'))throw Error('INITIAL_GENERATOR_SOURCE_CHANGED');
-    return sql.replace('BEGIN READ WRITE;\n',`BEGIN READ WRITE;\nSET LOCAL standard_conforming_strings=on; SET LOCAL search_path=pg_catalog;\n${guardSql}\n`);
+    // The SQL regexes contain $'. A replacement string would expand that as
+    // the matched input's suffix and corrupt the guard; return literal SQL.
+    return sql.replace('BEGIN READ WRITE;\n',()=>`BEGIN READ WRITE;\nSET LOCAL standard_conforming_strings=on; SET LOCAL search_path=pg_catalog;\n${guardSql}\n`);
   }
   const recipe=buildStagingCoreBootstrap({...context,recipient:input.recipient});
   return JSON.stringify({...recipe,guardSql});

@@ -1,10 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {spawnSync} from 'node:child_process';
+import {spawn,spawnSync} from 'node:child_process';
 import {readFileSync} from 'node:fs';
 import {stagingApiExposureSQL} from '../scripts/staging-api-exposure.mjs';
 import {IMMUTABLE16} from '../scripts/staging-migration-files.mjs';
 import {INITIAL_MIGRATION_POLICY,INITIAL_MIGRATION_LOCK_OBJECT} from '../scripts/staging-initial-migrations.mjs';
+import {fixedOperation} from '../scripts/staging-initial-sql.mjs';
 
 // Explicit local gate, fixed known container, and one outer ROLLBACK per
 // process. No hosted URLs, Auth identities, credentials or persistent DDL.
@@ -53,6 +54,41 @@ function refusal(result,code){
   assert.notEqual(result.status,0);
   assert.match(result.stderr,new RegExp(code));
 }
+
+test('actual local fixed API writer executes the full generated physical-session guard without replacement expansion', {skip:!local},async()=>{
+ const child=spawn('docker',['exec','-i','supabase_db_cluvo-local','psql','-U','supabase_admin','-d','postgres',
+  '--no-psqlrc','--quiet','--tuples-only','--no-align','--set','ON_ERROR_STOP=1']);
+ let stdout='',stderr='',sent=false,generation;
+ const ended=new Promise(resolve=>child.once('close',status=>resolve(status)));
+ const timer=setTimeout(()=>child.kill('SIGKILL'),15000);
+ child.stderr.on('data',chunk=>{stderr+=chunk;});
+ child.stdout.on('data',chunk=>{
+  stdout+=chunk;
+  const line=stdout.split('\n').find(value=>value.startsWith('{')&&value.endsWith('}'));
+  if(sent||!line)return;
+  sent=true;
+  generation=(async()=>{
+   const identity=JSON.parse(line);
+   const state={layout:{schemas:['api','app','internal'],app_objects:500,history_present:true,source_history_present:true},
+    historyRows:IMMUTABLE16.map(e=>({version:e.file.slice(0,14),name:e.file.slice(15,-4),statement_count:1,single_statement_sha256:e.sha256})),
+    sourceRows:IMMUTABLE16.map((e,i)=>({version:e.file.slice(0,14),file:e.file,sha256:e.sha256,source_sha:context.sourceSha,
+     actor:context.actor,scope:'staging',expected_version:i,workflow_run_id:context.workflowRunId,idempotency_key:'cluvo-staging-initial16:42:'+e.file.slice(0,14)}))};
+   const generated=await fixedOperation({operation:'configure_api',sourceSha:context.sourceSha,workflowRunId:context.workflowRunId,
+    actor:context.actor,expectedBackendPid:identity.backend_pid,expectedBackendStart:identity.backend_start,state});
+   child.stdin.end(setup+clonedHistory+generated.slice('BEGIN READ WRITE;\n'.length,-'\nCOMMIT;'.length)+
+    "SELECT jsonb_build_object('api_only',EXISTS(SELECT 1 FROM pg_db_role_setting WHERE setrole='authenticator'::regrole AND setdatabase=(SELECT oid FROM pg_database WHERE datname='postgres') AND 'pgrst.db_schemas=api'=ANY(setconfig)),'audited',(SELECT count(*)=1 FROM supabase_migrations.cluvo_staging_operation));ROLLBACK;"+unlock+'\n');
+  })();
+ });
+ child.stdin.write('BEGIN;SET LOCAL ROLE postgres;SET LOCAL standard_conforming_strings=on;'+lock+
+  "SELECT jsonb_build_object('backend_pid',pg_backend_pid(),'backend_start',(SELECT backend_start::text FROM pg_stat_activity WHERE pid=pg_backend_pid()));\n");
+ try{
+  assert.equal(await ended,0,'actual local fixed writer SQL failed; provider diagnostics withheld');
+  await generation;
+  assert.equal(stderr.includes('ERROR:'),false);
+  const rows=stdout.split('\n').filter(line=>line.startsWith('{')).map(line=>JSON.parse(line));
+  assert.deepEqual(rows.slice(1),[{api_only:true,audited:true}]);
+ }finally{clearTimeout(timer);child.kill('SIGKILL');}
+});
 
 test('actual local API SQL exposes only api in the postgres-specific override and audits expected version zero', {skip:!local},()=>{
   const result=success(execute(`BEGIN;${lock}${setup}

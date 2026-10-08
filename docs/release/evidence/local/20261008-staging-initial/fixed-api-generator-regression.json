@@ -1,0 +1,17 @@
+{
+  "scope": "LOCAL_FIXED_API_GENERATOR_REGRESSION",
+  "passed": true,
+  "tests_passed": 23,
+  "tests_skipped": 1,
+  "local_sql_groups_executed": 8,
+  "full_generated_api_sql_executed": true,
+  "actual_physical_backend_guard": true,
+  "all_local_mutations_rolled_back": true,
+  "command": "CLUVO_API_SQL_TESTS=local-fixture node --test tests/staging-api-exposure.test.mjs tests/staging-api-exposure-sql.test.mjs tests/staging-initial-session.test.mjs tests/staging-native-qa-session.test.mjs",
+  "generator_sha256": "c53174892aae16ba576b2ee23584b1438bd2e08a4a5db171c61346e08e88a021",
+  "targeted_eslint_passed": true,
+  "hosted_api_configuration_proven": false,
+  "app_activation_proven": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

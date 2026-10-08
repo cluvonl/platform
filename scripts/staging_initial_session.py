@@ -19,7 +19,7 @@ PROJECT = 'fbozlbgmktkgcdfqdaaz'
 LOCK_OBJECT = int.from_bytes(hashlib.sha256(PROJECT.encode()).digest()[:4], 'big', signed=True)
 PINS = {
     'staging_backup_session.py': 'e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1',
-    'staging-initial-sql.mjs': 'a4d82ab0274b8566feb4537d43a1a2f5d0e96f8b4ef8647245b40317d2dd1a17',
+    'staging-initial-sql.mjs': 'c53174892aae16ba576b2ee23584b1438bd2e08a4a5db171c61346e08e88a021',
     'staging-initial-migrations.mjs': '7f49cf8dcdb2eda53633dd3596486779ea2dd001d1a2813a07fa45e859784004',
     'staging-migration-files.mjs': '83aa2aae6d4cc358965208e39e73dd0d1038ee4a6c0bc9a62675b829e30c94bd',
     'staging-api-exposure.mjs': '6555461d29e17a7aa16de6a07df76788b2d39159e4bcd922790693731f821863',
