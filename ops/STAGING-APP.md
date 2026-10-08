@@ -22,7 +22,11 @@ De nieuwe broker werkt met de bestaande prototypeconfig: een ontbrekende `app_mo
 
 Een nieuwe deployment in prototype-modus wordt geweigerd zolang de runtime een Supabase publishable key of serverkey bevat. Alleen de mode wijzigen sluit de afzonderlijke Auth-/app-routes niet af. De broker verwijdert geen credentials; een bewust losgekoppeld prototype vereist afzonderlijk gecontroleerde runtimeconfig. Een URL zonder keys blijft als voorbereid, losgekoppeld prototype toegestaan.
 
-Het transport van secrets uit GitHub naar het vaste VPS-runtimebestand moet via de geautoriseerde beheerroute worden aangesloten. De huidige workflow levert alleen image/SHA/run-ID; het vullen van GitHub-secrets maakt `/etc/cluvo/staging.env` niet automatisch gevuld. Geef geen plaintext Supabase-credentials aan de self-hosted runner en introduceer geen brede SSH-deploysleutel als vervanging van de broker.
+De bestaande self-hosted runner is de geautoriseerde VPS-deployroute. De huidige workflow levert alleen image/SHA/run-ID; het vullen van GitHub-secrets maakt `/etc/cluvo/staging.env` niet automatisch gevuld. Controleer de daadwerkelijk geïnstalleerde broker en sudo-rechten via `staging-runner-capabilities.yml` voordat aanvullende toegang wordt gevraagd. Deze handmatige meting gebruikt geen checkout of secrets, voert geen geprivilegieerde opdracht uit en rapporteert alleen vaste booleans en hashes van publieke broker-/composebron. Een meting vanaf main is uitsluitend een alleen-lezen stagingcontrole, geen imagepromotie.
+
+Sluit configuratie-import aan als een beperkte serveroperatie via dezelfde runner. Als die operatie nog niet bestaat en de runner uitsluitend de deploybroker mag uitvoeren, is een eenmalige installatie via bestaande root-provisioning nodig. Vraag dan alleen naar die concrete mogelijkheid; introduceer geen brede SSH-deploysleutel of algemene sudo-regel. Runtimecredentials blijven privé op de server.
+
+De gebruiker heeft op 8 oktober expliciet toegestaan het prototype te vervangen. Een nieuw extern backupaccount en de specifieke sleutelnaam `STAGING_BACKUP_ENCRYPTION_KEY` zijn geen voorwaarden voor die appvervanging. De afzonderlijke backupbestemming/retentie uit het deploymentdocument zijn technische voorstellen, geen canonieke vereisten. Behoud bestaande Supabase-providerstate en pas de oorspronkelijke migraties geordend toe; vervangbaarheid van het prototype autoriseert geen hosted databasereset. Herstelbewijs blijft een V1-acceptatiecriterium en mag niet als reeds uitgevoerd worden geregistreerd.
 
 ## Vastgezette appconfig
 

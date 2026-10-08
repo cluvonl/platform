@@ -1,0 +1,133 @@
+name: Staging runner capabilities (read only)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cluvo-staging
+  cancel-in-progress: false
+
+jobs:
+  inspect:
+    # This main exception only measures existing staging permissions. It never
+    # promotes an image, imports secrets or executes a privileged command.
+    if: >-
+      github.repository == 'cluvonl/platform' &&
+      (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging') &&
+      vars.STAGING_DEPLOY_ENABLED == 'true'
+    runs-on: [self-hosted, Linux, X64, cluvo-staging-deploy]
+    environment: staging
+    timeout-minutes: 3
+    steps:
+      # No checkout, build, credential or raw sudo-policy output.
+      - name: Measure fixed broker and configuration permissions
+        env:
+          MEASUREMENT_SOURCE_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          /usr/bin/python3 - <<'PY'
+          import hashlib
+          import json
+          import os
+          import re
+          import stat
+          import subprocess
+
+          def file_status(path, public_source=False):
+              result = {
+                  'metadata_available': False,
+                  'present': False,
+                  'regular_file': False,
+                  'root_owned': False,
+                  'runner_readable': False,
+                  'runner_writable': False,
+              }
+              try:
+                  info = os.lstat(path)
+                  result.update(
+                      metadata_available=True,
+                      present=True,
+                      regular_file=stat.S_ISREG(info.st_mode),
+                      root_owned=info.st_uid == 0,
+                      runner_readable=os.access(path, os.R_OK),
+                      runner_writable=os.access(path, os.W_OK),
+                  )
+                  if public_source and result['regular_file'] and info.st_nlink == 1 and info.st_size <= 100000:
+                      descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+                      try:
+                          opened = os.fstat(descriptor)
+                          stable = lambda value: (value.st_dev, value.st_ino, value.st_size, value.st_mtime_ns, value.st_ctime_ns)
+                          if stat.S_ISREG(opened.st_mode) and opened.st_nlink == 1 and stable(opened) == stable(info):
+                              content = os.read(descriptor, 100001)
+                              if len(content) == info.st_size and stable(os.fstat(descriptor)) == stable(info):
+                                  result['sha256'] = hashlib.sha256(content).hexdigest()
+                      finally:
+                          os.close(descriptor)
+              except OSError:
+                  pass
+              return result
+
+          source_sha = os.environ.get('MEASUREMENT_SOURCE_SHA', '')
+          if not re.fullmatch('[0-9a-f]{40}', source_sha):
+              raise SystemExit('Invalid measurement source SHA')
+
+          listed = False
+          unrestricted = False
+          broker_rule = False
+          broker_query = 'NOT_CONFIRMED'
+          sudo_env = {'PATH': '/usr/sbin:/usr/bin:/sbin:/bin', 'LC_ALL': 'C'}
+          try:
+              policy = subprocess.run(
+                  ['/usr/bin/sudo', '--non-interactive', '--list'],
+                  stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
+                  stderr=subprocess.DEVNULL, timeout=10, check=False, env=sudo_env,
+              )
+              if policy.returncode == 0 and len(policy.stdout) <= 100000:
+                  listed = True
+                  text = policy.stdout.decode('utf-8', errors='strict')
+                  # Conservative observations, not a complete sudo-policy parser.
+                  root_selector = r'\(\s*(?:ALL|root)\s*(?::\s*(?:ALL|root)\s*)?\)'
+                  unrestricted = bool(re.search(
+                      r'^\s*' + root_selector + r'\s+NOPASSWD:\s*ALL\s*$',
+                      text, re.MULTILINE,
+                  ))
+                  broker_rule = bool(re.search(
+                      r'^\s*' + root_selector + r'\s+NOPASSWD:\s*'
+                      r'/usr/local/sbin/cluvo-deploy-staging(?:\s+[^\n]*)?\s*$',
+                      text, re.MULTILINE,
+                  ))
+              selected = subprocess.run(
+                  ['/usr/bin/sudo', '--non-interactive', '--user=root', '--list', '--',
+                   '/usr/local/sbin/cluvo-deploy-staging'],
+                  stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                  stderr=subprocess.DEVNULL, timeout=10, check=False, env=sudo_env,
+              )
+              if selected.returncode == 0:
+                  broker_query = 'ALLOWED'
+          except (OSError, subprocess.TimeoutExpired, UnicodeError):
+              pass
+
+          result = {
+              'scope': 'STAGING_RUNNER_READ_ONLY',
+              'measurement_source_sha': source_sha,
+              'broker': file_status('/usr/local/sbin/cluvo-deploy-staging', True),
+              'compose': file_status('/etc/cluvo/compose.staging.yml', True),
+              # Never open or hash runtime secrets or the private target config.
+              'runtime_permissions': file_status('/etc/cluvo/staging.env'),
+              'target_permissions': file_status('/etc/cluvo/staging-target.json'),
+              'broker_directory_runner_writable': os.access('/usr/local/sbin', os.W_OK),
+              'config_directory_runner_writable': os.access('/etc/cluvo', os.W_OK),
+              'sudo_policy_listed': listed,
+              'passwordless_broker_rule_observed': broker_rule,
+              'unrestricted_passwordless_root_rule_observed': unrestricted,
+              'fixed_broker_query_status': broker_query,
+              'privileged_commands_executed': False,
+              'runtime_config_contents_read': False,
+              'secrets_imported': False,
+              'deployment_performed': False,
+          }
+          print(json.dumps(result, sort_keys=True))
+          PY
