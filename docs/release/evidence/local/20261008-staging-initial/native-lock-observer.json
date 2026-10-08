@@ -1,0 +1,19 @@
+{
+  "scope": "LOCAL_RESTRICTED_LOCK_OBSERVER_REGRESSION",
+  "passed": true,
+  "targeted_tests_passed": 15,
+  "targeted_tests_failed": 0,
+  "atomic_setup_recheck_passed": true,
+  "actual_waiting_connections": 2,
+  "observer_superuser": false,
+  "observer_read_all_stats": false,
+  "other_backend_query_text_hidden": true,
+  "other_backend_state_hidden": true,
+  "temporary_schema_removed": true,
+  "temporary_observer_role_removed": true,
+  "targeted_eslint_passed": true,
+  "booking_component_sha256": "12e27d2d78b9d089bc804ed3b8f92a9eb65b27fadf282bbc76b589f83a588a0b",
+  "hosted_last_position_race_proven": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

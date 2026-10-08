@@ -1,0 +1,15 @@
+{
+  "scope": "HOSTED_STAGING_CORE_SETUP",
+  "source_sha": "33e9a5f40a1b22514919fb758dece2da0b89c123",
+  "workflow_run_id": "37815520812",
+  "passed": true,
+  "original_migrations_read_back": 16,
+  "resume_migration_bodies_executed": 0,
+  "api_transaction_committed": true,
+  "synthetic_core_transaction_committed": true,
+  "database_setup_mutations_performed": true,
+  "legacy_driver_mutation_flag_covers_only_migration_bodies": true,
+  "app_activation_performed": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

@@ -152,10 +152,13 @@ DO $cluvo_qa_holder$ BEGIN ${readyGuard}
 IF NOT EXISTS(SELECT 1 FROM app.audit_events WHERE id='${f.qaBookingAudit}' AND tenant_id='${f.tenantA}' AND action='qa.booking_fixture_created')
 THEN RAISE EXCEPTION 'STAGING_NATIVE_QA_BOOKING_REFUSED'; END IF; END $cluvo_qa_holder$;
 SELECT true AS holder_ready FROM app.shifts WHERE tenant_id='${f.tenantA}' AND id='${f.shiftRace}' AND state='published' AND version=1 FOR UPDATE;`;
+ // Provider roles can hide another backend's query/state. Lock waiters and
+ // chains reaching this session's own shift lock remain directly observable.
  const blockingSql=`WITH RECURSIVE chain(origin,pid,trail) AS (
- SELECT pid,pid,ARRAY[pid] FROM pg_stat_activity WHERE datname=current_database() AND usename='authenticator'
- AND state='active' AND wait_event_type='Lock' AND pid<>pg_backend_pid()
- AND query ~ '"?api"?[[:space:]]*[.][[:space:]]*"?book_shift"?[[:space:]]*[(]'
+ SELECT DISTINCT waiters.pid,waiters.pid,ARRAY[waiters.pid] FROM pg_locks waiters
+ JOIN pg_stat_activity activity ON activity.pid=waiters.pid
+ WHERE activity.datname=current_database() AND activity.usename='authenticator'
+ AND NOT waiters.granted AND waiters.pid<>pg_backend_pid()
  UNION ALL SELECT chain.origin,blocking.pid,chain.trail||blocking.pid FROM chain
  CROSS JOIN LATERAL unnest(pg_blocking_pids(chain.pid)) blocking(pid) WHERE NOT blocking.pid=ANY(chain.trail)
 ) SELECT jsonb_build_object('blocked_contenders',count(DISTINCT origin)) FROM chain WHERE pid=pg_backend_pid();`;

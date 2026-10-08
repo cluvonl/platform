@@ -9,7 +9,7 @@ import {buildStagingNativeQaFixture} from './staging-native-qa-fixture.mjs';
 
 const PROJECT='fbozlbgmktkgcdfqdaaz';
 const CHILD=fileURLToPath(new URL('./staging_native_qa_session.py',import.meta.url));
-export const NATIVE_QA_SESSION_CHILD_SHA256='89d356c4053b264e0da5aec92431b62d584bdd98a77015abaff60d6cd6e0bae9';
+export const NATIVE_QA_SESSION_CHILD_SHA256='7dcc756664b4e1cb5fc3660acd536af0c35812f0ec423f60d16e092282532ccd';
 const registrations=new WeakMap();
 const hash=value=>createHash('sha256').update(value).digest('hex');
 const lock=createHash('sha256').update(PROJECT).digest().readInt32BE(0);

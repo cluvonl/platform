@@ -23,7 +23,7 @@ PINS = {
     'staging-initial-migrations.mjs': '7f49cf8dcdb2eda53633dd3596486779ea2dd001d1a2813a07fa45e859784004',
     'staging-migration-files.mjs': '83aa2aae6d4cc358965208e39e73dd0d1038ee4a6c0bc9a62675b829e30c94bd',
     'staging-native-qa-fixture.mjs': '30c6982d2f37a7a34fd1126df7f3ae6c376732c59f0138caa072c8c3100b9c26',
-    'staging-native-qa-booking.mjs': '74127efeddad143591366fa125b9cf3b4420e0ddd01ddf1014de6d8060671d2e',
+    'staging-native-qa-booking.mjs': '12e27d2d78b9d089bc804ed3b8f92a9eb65b27fadf282bbc76b589f83a588a0b',
     'staging-native-qa-sql.mjs': '2cf073b1e7493850143eba496845a8e8484fcd4e50b7fa3da41dbda6687aacac',
 }
 

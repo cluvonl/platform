@@ -123,6 +123,9 @@ export async function stagingInitialMigration(environment){
    const actionContext={actor:environment.GITHUB_ACTOR,workflowRunId:environment.GITHUB_RUN_ID,sourceSha:fixed.RELEASE_SHA};
    report.api_configuration=await bridge.configureApi(actionContext);
    need(report.api_configuration.atomic_transaction_committed===true,'INITIAL_API_CONFIGURATION_UNPROVED');
+   // Configuration/bootstrap writes also count when the original16 prefix
+   // was already complete and no migration body needed another execution.
+   report.database_mutations_performed=true;
    report.synthetic_core=await bridge.bootstrapCore(actionContext);
    need(report.synthetic_core.atomic_transaction_committed===true,'INITIAL_CORE_BOOTSTRAP_UNPROVED');
   }

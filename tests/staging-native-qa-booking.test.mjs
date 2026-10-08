@@ -59,9 +59,11 @@ test('barrier locks the exact own shift and counts only private blocking chains 
  const recipe=buildStagingNativeQaBooking(input);
  assert.match(recipe.holderSql,/BEGIN READ WRITE/);assert.match(recipe.holderSql,/SELECT true AS holder_ready.*FOR UPDATE/s);
  assert.ok(recipe.holderSql.includes(recipe.fixture.shiftRace)&&recipe.holderSql.includes(recipe.fixture.qaBookingAudit));
- assert.match(recipe.blockingSql,/WITH RECURSIVE chain/);assert.match(recipe.blockingSql,/wait_event_type='Lock'/);
- assert.match(recipe.blockingSql,/usename='authenticator'/);assert.match(recipe.blockingSql,/query ~ .*book_shift/);
+ assert.match(recipe.blockingSql,/WITH RECURSIVE chain/);
+ assert.match(recipe.blockingSql,/usename='authenticator'/);
  assert.match(recipe.blockingSql,/pg_blocking_pids\(chain.pid\)/);assert.match(recipe.blockingSql,/NOT blocking.pid=ANY\(chain.trail\)/);
+ assert.match(recipe.blockingSql,/FROM pg_locks waiters/);assert.match(recipe.blockingSql,/NOT waiters.granted/);
+ assert.doesNotMatch(recipe.blockingSql,/\bquery\b|wait_event_type|state='active'/);
  assert.match(recipe.blockingSql,/count\(DISTINCT origin\).*pid=pg_backend_pid\(\)/s);
  assert.equal(recipe.releaseHolderSql,'COMMIT;');assert.equal(recipe.cancelHolderSql,'ROLLBACK;');
  assert.doesNotMatch(recipe.blockingSql,/jsonb_build_object\('(?:pid|query|backend|token|identity)'/);
