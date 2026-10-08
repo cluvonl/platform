@@ -1,0 +1,22 @@
+{
+  "source_sha": "5969a4ae9f418a8b388fa777d7384446c4216f7e",
+  "main_ci_run_id": "37784091209",
+  "main_ci_conclusion": "success",
+  "restore_only_run_id": "37784865078",
+  "restore_only_conclusion": "failure",
+  "restore_failure_phase": "restore",
+  "sqlstate": "XX000",
+  "finite_error_topics": [
+    "FUNCTION",
+    "EVENT",
+    "EXECUTE"
+  ],
+  "encrypted_backup_remote_readback": true,
+  "restore_verified": false,
+  "applied_migrations": 0,
+  "database_mutations_performed": false,
+  "application_activated": false,
+  "private_values_exported": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

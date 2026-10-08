@@ -12,7 +12,7 @@ import {createInitialMigrationManifest,validateInitialHistory} from './staging-i
 import {capturePlan,captureWithOwnedWorker,probeOwnedPg17Toolchain} from './pg17-capture-worker.mjs';
 import {packFiles,encryptCaptureFiles,decryptRestoreFiles} from './backup-artifact.mjs';
 import {deriveInitialBackupKey,uploadEncryptedInitialBackup,INITIAL_BACKUP_KEY_PROFILE,BackupCustodyError} from './staging-initial-backup-custody.mjs';
-import {restoreInitialBackup,InitialRestoreError,INITIAL_RESTORE_PHASES,INITIAL_RESTORE_REASONS,INITIAL_RESTORE_TOC_TYPES,INITIAL_RESTORE_ERROR_ORIGINS,INITIAL_RESTORE_ERROR_SOURCE_FILES,INITIAL_RESTORE_ERROR_TOPICS} from './staging-initial-restore.mjs';
+import {restoreInitialBackup,InitialRestoreError,INITIAL_RESTORE_PHASES,INITIAL_RESTORE_REASONS,INITIAL_RESTORE_TOC_TYPES,INITIAL_RESTORE_ERROR_ORIGINS,INITIAL_RESTORE_ERROR_SOURCE_FILES,INITIAL_RESTORE_ERROR_TOPICS,INITIAL_RESTORE_SECTIONS} from './staging-initial-restore.mjs';
 // Concrete write owner is separate from the existing read-only bridge.
 import {InitialSession,INITIAL_SESSION_CHILD_SHA256} from './staging-initial-session.mjs';
 
@@ -140,6 +140,7 @@ export async function stagingInitialMigration(environment){
    if(INITIAL_RESTORE_ERROR_ORIGINS.includes(error.errorOrigin))report.restore_error_origin=error.errorOrigin;
    if(INITIAL_RESTORE_ERROR_SOURCE_FILES.includes(error.errorSourceFile))report.restore_error_source_file=error.errorSourceFile;
    if(Array.isArray(error.errorTopics))report.restore_error_topics=INITIAL_RESTORE_ERROR_TOPICS.filter(topic=>error.errorTopics.includes(topic)).slice(0,16);
+   if(INITIAL_RESTORE_SECTIONS.includes(error.restoreSection))report.restore_failure_section=error.restoreSection;
   }
  }finally{
   clearTimeout(timer);for(const signal of ['SIGINT','SIGTERM'])process.removeListener(signal,interrupted);

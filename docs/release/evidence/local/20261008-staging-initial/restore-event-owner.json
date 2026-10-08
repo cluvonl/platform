@@ -1,0 +1,32 @@
+{
+  "scope": "LOCAL_NATIVE_RESTORE_EVENT_OWNER_REGRESSION",
+  "source_sha256": {
+    "scripts/staging-initial-restore.mjs": "d56a1fee14893ccf067581ddb191ff93869125114a1dfea1308e70e539e990ab",
+    "scripts/staging-initial-migrate.mjs": "c55768b390f143f7c558aa37783defb4a8709e06bbd2b17c91998e7cc7814a74",
+    "tests/staging-initial-restore.test.mjs": "9aba60e415cc59123adcf9008e45318a12cc0ba84e1be7160b4c113465f2f454"
+  },
+  "targeted_tests_passed": 22,
+  "original_restore_native_owner_guard_failure_reproduced": true,
+  "original_failure_sqlstate": "XX000",
+  "original_failure_matches_fixed_upstream_owner_error": true,
+  "fixed_restore_native_sections": 3,
+  "post_data_owner_mode": "session_authorization",
+  "source_catalog_families_verified": 28,
+  "synthetic_physical_relations_verified": 4,
+  "synthetic_physical_rows_verified": 1,
+  "synthetic_sequences_verified": 1,
+  "source_non_superuser_owned_event_trigger_preserved": true,
+  "original16_non_superuser_upgrade_passed": true,
+  "provider_image_bootstrap_with_non_superuser_event_trigger_archive_and_catalog_readback_passed": true,
+  "provider_image_bootstrap_full_migration_proof": false,
+  "provider_bootstrap_probe_failure_phase": "upgrade",
+  "supautils_hooks_disabled": false,
+  "temporary_extra_grants_used": false,
+  "source_sql_rewritten_or_objects_omitted": false,
+  "owned_source_and_restore_clones_removed": true,
+  "hosted_database_mutations": false,
+  "hosted_restore_verified": false,
+  "raw_diagnostics_exported": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

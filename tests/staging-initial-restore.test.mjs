@@ -38,7 +38,7 @@ function state(prefix){return {
  sourceRows:manifest.migrations.slice(0,prefix).map((m,index)=>({version:m.version,file:m.file,sha256:m.sha256,source_sha:sourceSha,
   actor:'fixture-source',scope:'staging',expected_version:index,idempotency_key:'cluvo-staging-initial16:2:'+m.version,workflow_run_id:'2'}))};}
 function runner(original,options={}){
- const observed={calls:[],upgrades:[],removed:false,replays:[],networkArgs:null,logReads:0};let name,started=false,restoreFailed=false,prefix=original.source_history.applied_prefix;
+ const observed={calls:[],upgrades:[],removed:false,replays:[],networkArgs:null,logReads:0,restoreSections:[]};let name,started=false,restoreFailed=false,prefix=original.source_history.applied_prefix;
  const catalogSql=new Map(Object.entries(CATALOG_QUERIES).map(([family,query])=>[aggregate(query),family]));
  const inspect=()=>({id:cid,name:'/'+name,image:imageId,config_image:IMAGE,user:'postgres',label:options.badOwner||(restoreFailed&&options.badDiagnosticOwner)?'third-party':name,
   network:options.badNetwork?'bridge':'none',ports:null,binds:null,mounts:[],tmpfs:{'/restore':'rw,size=512m,mode=1777'},volumes_from:null,
@@ -56,7 +56,12 @@ function runner(original,options={}){
   if(command==='rm'){assert.equal(args.at(-1),cid);if(options.cleanupFailure)return failure();observed.removed=true;return ok(cid+'\n');}
   assert.equal(command,'exec');
   if(args.includes('pg_isready'))return ok('');
-  if(args.includes('pg_restore')){assert.ok(args.includes('--single-transaction'));assert.ok(args.includes('--exit-on-error'));assert.equal(input.subarray(0,5).toString(),'PGDMP');if(options.restoreFailure){restoreFailed=true;return {...failure(),stderr:options.diagnostic??'private fixture diagnostics'};}return ok('');}
+  if(args.includes('pg_restore')){
+   assert.ok(args.includes('--single-transaction'));assert.ok(args.includes('--exit-on-error'));assert.equal(input.subarray(0,5).toString(),'PGDMP');
+   const section=args.find(value=>value.startsWith('--section='))?.slice('--section='.length);observed.restoreSections.push(section);
+   assert.ok(['pre-data','data','post-data'].includes(section));assert.equal(args.includes('--use-set-session-authorization'),section==='post-data');
+   if(options.restoreFailure||options.restoreFailureSection===section){restoreFailed=true;return {...failure(),stderr:options.diagnostic??'private fixture diagnostics'};}return ok('');
+  }
   if(args.includes('tail')){
    assert.deepEqual(args.slice(2),['exec',cid,'tail','-c','524288','/restore/postgres.private.log']);observed.logReads++;
    assert.ok(observed.calls.at(-2).includes('inspect'));
@@ -186,6 +191,31 @@ test('private provider restore failures expose finite reasons and bounded proces
   },0,{globalsFailure:true,diagnostic});
  const unsafe=new InitialRestoreError('RESTORE_PROCESS_FAILED',{errorReason:'private_fixture',exitStatus:999,processFailed:'private_fixture'});
  assert.equal(unsafe.errorReason,null);assert.equal(unsafe.exitStatus,null);assert.equal(unsafe.processFailed,null);
+});
+
+test('all native archive sections precede readback and only post-data uses actual owners',async()=>{
+ await fixture(async(input,{run,observed})=>{
+  const result=await restoreInitialBackup(input,{run});
+  assert.deepEqual(observed.restoreSections,['pre-data','data','post-data']);assert.equal(result.native_archive_sections_restored,3);
+  assert.equal(result.post_data_owner_mode,'session_authorization');assert.equal(result.non_superuser_upgrade_migrations,16);
+  const post=observed.calls.findIndex(args=>args.includes('--section=post-data'));
+  const schemaRead=observed.calls.findIndex(args=>args.includes('psql')&&observed.calls.indexOf(args)>observed.calls.findIndex(call=>call.includes('--section=data')));
+  assert.ok(schemaRead>0&&schemaRead<post);assert.equal(observed.removed,true);
+ });
+ for(const section of ['pre-data','data','post-data'])await fixture(async(input,{run,observed})=>{
+  await assert.rejects(restoreInitialBackup(input,{run}),error=>{assert.equal(error.phase,'restore');assert.equal(error.restoreSection,section);return true;});
+  assert.deepEqual(observed.restoreSections,['pre-data','data','post-data'].slice(0,['pre-data','data','post-data'].indexOf(section)+1));
+  assert.equal(observed.upgrades.length,0);assert.equal(observed.removed,true);
+ },0,{restoreFailureSection:section});
+});
+
+test('event trigger owner conflicts have a finite reason without changing source owners',async()=>{
+ await fixture(async(input,{run})=>{
+  await assert.rejects(restoreInitialBackup(input,{run}),error=>{
+   assert.equal(error.sqlstate,'XX000');assert.equal(error.errorReason,'EVENT_TRIGGER_OWNER_MISMATCH');assert.equal(error.restoreSection,'post-data');
+   assert.equal(JSON.stringify(error).includes('private_fixture'),false);return true;
+  });
+ },0,{restoreFailureSection:'post-data',serverLog:'2026-10-08 [12345] ERROR:  XX000: Superuser owned event trigger must execute a superuser owned function\n2026-10-08 [12345] DETAIL: private_fixture private@example.test\n'});
 });
 
 test('a restore failure reads only the owned private log and projects the last known server SQLSTATE',async()=>{

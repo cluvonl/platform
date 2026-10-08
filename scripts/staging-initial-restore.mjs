@@ -14,13 +14,14 @@ import {PG17_PUBLIC_CORE_SOURCE_FILES} from './pg17-public-source-files.mjs';
 import {createInitialMigrationManifest,initialMigrationSQL,validateInitialHistory,INITIAL_LAYOUT_SQL,INITIAL_HISTORY_SQL,INITIAL_SOURCE_HISTORY_SQL,INITIAL_MIGRATION_POLICY,INITIAL_MIGRATION_LOCK_OBJECT} from './staging-initial-migrations.mjs';
 
 export const INITIAL_RESTORE_PHASES=Object.freeze(['input','image','create','start','ready','globals','restore','database','role_settings','database_acl','schema_acl',...Object.keys(CATALOG_QUERIES).map(family=>'catalog.'+family),'data','sequence','actor','history','upgrade','jobs','cleanup']);
-export const INITIAL_RESTORE_REASONS=Object.freeze(['EXTENSION_VERSION_UNAVAILABLE','EXTENSION_NOT_AVAILABLE','EXTENSION_LIBRARY_MISSING','EXTENSION_MUST_BE_PRELOADED','BACKGROUND_WORKER_REGISTRATION_FAILED','SERVER_KEY_UNAVAILABLE','CATALOG_LOOKUP_FAILED','READ_ONLY_TRANSACTION','ARCHIVE_TRUNCATED','ARCHIVE_VERSION_UNSUPPORTED','ARCHIVE_COMPRESSION_UNSUPPORTED','SERVER_DISCONNECTED','OUT_OF_MEMORY','DISK_FULL','GLOBAL_SETTING_UNSUPPORTED','STATEMENT_TIMEOUT','ROW_CONSTRAINT_VIOLATION','SCHEMA_REQUIRED','SERVER_SQLSTATE_REPORTED','UNKNOWN_PROCESS_FAILURE']);
+export const INITIAL_RESTORE_REASONS=Object.freeze(['EXTENSION_VERSION_UNAVAILABLE','EXTENSION_NOT_AVAILABLE','EXTENSION_LIBRARY_MISSING','EXTENSION_MUST_BE_PRELOADED','BACKGROUND_WORKER_REGISTRATION_FAILED','SERVER_KEY_UNAVAILABLE','CATALOG_LOOKUP_FAILED','EVENT_TRIGGER_OWNER_MISMATCH','READ_ONLY_TRANSACTION','ARCHIVE_TRUNCATED','ARCHIVE_VERSION_UNSUPPORTED','ARCHIVE_COMPRESSION_UNSUPPORTED','SERVER_DISCONNECTED','OUT_OF_MEMORY','DISK_FULL','GLOBAL_SETTING_UNSUPPORTED','STATEMENT_TIMEOUT','ROW_CONSTRAINT_VIOLATION','SCHEMA_REQUIRED','SERVER_SQLSTATE_REPORTED','UNKNOWN_PROCESS_FAILURE']);
+export const INITIAL_RESTORE_SECTIONS=Object.freeze(['pre-data','data','post-data']);
 export const INITIAL_RESTORE_ERROR_ORIGINS=Object.freeze(['POSTGRES_CORE','PLPGSQL','PG_NET','PGSODIUM','SUPABASE_VAULT','SUPAUTILS','PG_CRON','PG_TLE','PG_STAT_STATEMENTS','PGAUDIT','PLPGSQL_CHECK','PGRX']);
 export const INITIAL_RESTORE_ERROR_TOPICS=Object.freeze(['EXTENSION','LIBRARY','FUNCTION','SCHEMA','TABLE','COLUMN','TYPE','ROLE','DATABASE','PARAMETER','WORKER','KEY','CACHE','TUPLE','NODE','PERMISSION','MEMORY','SNAPSHOT','QUERY','COMMAND','FILE','SOCKET','ENCODING','CONFIGURATION','CONTEXT','INDEX','ARCHIVE','DEPENDENCY','OBJECT','LOCK','OWNER','VERSION','TRANSACTION','PUBLICATION','AUTHORIZATION','ENCRYPTION','COLLATION','RESOURCE','PORTAL','JSON','PARSE','SPI','SESSION','POLICY','EVENT','INVALID','MISSING','UNEXPECTED','UNSUPPORTED','CHECK','NUMERIC','INITIALIZATION','HASH','EXPRESSION','CREATE','LOAD','LOOKUP','OPEN','READ','WRITE','EXECUTE','REGISTER','START','RESTART','DROP','ALTER','CONNECT','FIND','MAP','DECODE','RETURN','ALLOCATE','UNRECOGNIZED','RESTRICTED','RESERVED','FAIL','CALL','PROCESS','BUILD','INSERT','DELETE','UPDATE','RESTORE','DEFINE','GENERATE','ASSIGN']);
 export const INITIAL_RESTORE_ERROR_SOURCE_FILES=Object.freeze([...PG17_PUBLIC_CORE_SOURCE_FILES,'pl_exec.c','pl_comp.c','pl_handler.c','pg_net.c','pgsodium.c','vault.c','supautils.c','pg_cron.c','job_metadata.c','pg_tle.c','pg_stat_statements.c','pgaudit.c','plpgsql_check.c','elog.rs','ffi.rs','panic.rs']);
 export const INITIAL_RESTORE_TOC_TYPES=Object.freeze(['ACL','AGGREGATE','BLOB','BLOB COMMENTS','BLOBS','CAST','CHECK CONSTRAINT','COLLATION','COMMENT','CONSTRAINT','DATABASE','DATABASE PROPERTIES','DEFAULT','DEFAULT ACL','DOMAIN','DOMAIN CONSTRAINT','ENCODING','EVENT TRIGGER','EXTENSION','FK CONSTRAINT','FOREIGN DATA WRAPPER','FOREIGN SERVER','FOREIGN TABLE','FUNCTION','INDEX','INDEX ATTACH','MATERIALIZED VIEW','MATERIALIZED VIEW DATA','OPERATOR','OPERATOR CLASS','OPERATOR FAMILY','POLICY','PROCEDURE','PUBLICATION','PUBLICATION TABLE','PUBLICATION TABLES IN SCHEMA','ROW SECURITY','RULE','SCHEMA','SEARCHPATH','SEQUENCE','SEQUENCE OWNED BY','SEQUENCE SET','SHELL TYPE','STATISTICS','STDSTRINGS','SUBSCRIPTION','TABLE','TABLE ATTACH','TABLE DATA','TABLESPACE','TEXT SEARCH CONFIGURATION','TEXT SEARCH DICTIONARY','TEXT SEARCH PARSER','TEXT SEARCH TEMPLATE','TRANSFORM','TRIGGER','TYPE','USER MAPPING','VIEW']);
 export class InitialRestoreError extends Error {
- constructor(code,{phase='input',sqlstate=null,errorKind=null,errorReason=null,exitStatus=null,processFailed=null,tocType=null,errorOrigin=null,errorSourceFile=null,errorTopics=[]}={}){
+ constructor(code,{phase='input',sqlstate=null,errorKind=null,errorReason=null,exitStatus=null,processFailed=null,tocType=null,errorOrigin=null,errorSourceFile=null,errorTopics=[],restoreSection=null}={}){
   super(code);this.code=code;this.phase=INITIAL_RESTORE_PHASES.includes(phase)?phase:'input';
   this.sqlstate=Object.hasOwn(SQLSTATE_KINDS,sqlstate)?sqlstate:null;
   this.errorKind=ERROR_KINDS.includes(errorKind)?errorKind:null;
@@ -31,6 +32,7 @@ export class InitialRestoreError extends Error {
   this.errorOrigin=INITIAL_RESTORE_ERROR_ORIGINS.includes(errorOrigin)?errorOrigin:null;
   this.errorSourceFile=INITIAL_RESTORE_ERROR_SOURCE_FILES.includes(errorSourceFile)?errorSourceFile:null;
   this.errorTopics=Object.freeze(INITIAL_RESTORE_ERROR_TOPICS.filter(topic=>Array.isArray(errorTopics)&&errorTopics.includes(topic)).slice(0,16));
+  this.restoreSection=INITIAL_RESTORE_SECTIONS.includes(restoreSection)?restoreSection:null;
  }
 }
 const SQLSTATE_KINDS=Object.freeze({'42501':'PERMISSION','42P01':'MISSING','3F000':'MISSING','42704':'MISSING','42883':'MISSING','3D000':'MISSING','42601':'SYNTAX','42P17':'SYNTAX','42710':'ALREADY_EXISTS','42P06':'ALREADY_EXISTS','42P07':'ALREADY_EXISTS','23505':'CONFLICT','23502':'CONFLICT','23503':'CONFLICT','23514':'CONFLICT','55006':'CONFLICT','57014':'TIMEOUT','55P03':'TIMEOUT','0A000':'UNSUPPORTED','55000':'UNSUPPORTED','22023':'UNSUPPORTED','XX000':'PROCESS_FAILURE','53100':'PROCESS_FAILURE','53200':'PROCESS_FAILURE','53300':'PROCESS_FAILURE','57P01':'PROCESS_FAILURE','08006':'PROCESS_FAILURE'});
@@ -61,6 +63,7 @@ function processDiagnostic(result,privateServerLog=''){
   ['BACKGROUND_WORKER_REGISTRATION_FAILED','UNSUPPORTED',/could not register.*background worker|could not restart.*(?:pg_net|background worker)|failed to restart pg_net worker/i],
   ['SERVER_KEY_UNAVAILABLE','UNSUPPORTED',/invalid secret key|(?:getkey|key acquisition).*(?:failed|not found|does not exist)|could not read.*(?:secret|root) key/i],
   ['CATALOG_LOOKUP_FAILED','PROCESS_FAILURE',/cache lookup failed|could not find tuple/i],
+  ['EVENT_TRIGGER_OWNER_MISMATCH','PERMISSION',/(?:non-superuser|superuser) owned event trigger must execute a (?:non-superuser|superuser) owned function/i],
   ['READ_ONLY_TRANSACTION','PERMISSION',/cannot execute .* in a read-only transaction/i],
   ['ARCHIVE_TRUNCATED','PROCESS_FAILURE',/could not read from input file.*end of file|unexpected end of file|input file is too short|did not find magic string/i],
   ['ARCHIVE_VERSION_UNSUPPORTED','UNSUPPORTED',/unsupported version .* in file header/i],
@@ -163,7 +166,7 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
   need(dump.subarray(0,5).toString('ascii')==='PGDMP','RESTORE_ARCHIVE_REQUIRED');
   for(const file of IMMUTABLE16){const bytes=await readFile(new URL('../supabase/migrations/'+file.file,import.meta.url));need(hash(bytes)===file.sha256,'IMMUTABLE16_SOURCE_BYTES_CHANGED');files.push({file,bytes});}
  }catch(error){dump?.fill(0);globals?.fill(0);throw error instanceof InitialRestoreError?error:new InitialRestoreError('RESTORE_INPUT_UNAVAILABLE');}
- let phase='input';
+ let phase='input',restoreSection=null;
  const name='cluvo-initial-restore-'+randomBytes(16).toString('hex'),socket=SOCKETS[executionScope];
  const command=async(args,input,maximum,timeout)=>{
   let result;try{result=await run(['--host',socket,...args],input,maximum,timeout);}catch{throw new InitialRestoreError('RESTORE_PROCESS_UNAVAILABLE',{phase,errorKind:'PROCESS_FAILURE'});}
@@ -178,7 +181,7 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
      if(log?.status===0&&!log.error&&log.stderr===''&&typeof log.stdout==='string'&&Buffer.byteLength(log.stdout)<=524288)privateServerLog=log.stdout;
     }catch{ /* Only the already-proven clone may provide private diagnostics. */ }
    }
-   throw new InitialRestoreError('RESTORE_PROCESS_FAILED',{phase,...processDiagnostic(result,privateServerLog)});
+   throw new InitialRestoreError('RESTORE_PROCESS_FAILED',{phase,restoreSection,...processDiagnostic(result,privateServerLog)});
   }
   return result.stdout;
  };
@@ -234,7 +237,18 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
   const lines=globals.toString('utf8').split(/(?<=\n)/);
   need(lines.filter(line=>line.trim()===declaration).length===1,'RESTORE_BOOTSTRAP_CREATE_NOT_UNIQUE');
   await command(sqlArgs(bootstrapRole),Buffer.from('SET client_min_messages=warning;\n'+lines.filter(line=>line.trim()!==declaration).join('')),8_000_000,120000);
-  phase='restore';await command(['exec','-i',id,'pg_restore','--exit-on-error','--single-transaction','--no-password','-h','/restore','-U',bootstrapRole,'-d','postgres'],dump,8_000_000,180000);
+  const restore=async section=>{
+   phase='restore';restoreSection=section;
+   await command(['exec','-i',id,'pg_restore','--exit-on-error','--single-transaction','--section='+section,
+    ...(section==='post-data'?['--use-set-session-authorization']:[]),'--no-password','-h','/restore','-U',bootstrapRole,'-d','postgres'],dump,8_000_000,180000);
+   restoreSection=null;
+  };
+  // All native archive sections are restored, without rewriting source SQL or
+  // filtering objects. Definitions/data use the bootstrap administrator;
+  // post-data runs as the actual owners, after their original database/schema
+  // grants are present. This preserves Supautils' event-trigger owner checks
+  // without requiring schema creation privileges for service-account owners.
+  await restore('pre-data');await restore('data');
   phase='database';
   const database=original.catalog.database[0];
   need(database?.allow_connections===true&&database.is_template===false&&database.locale_provider==='i'
@@ -254,6 +268,7 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
   need(schemas.length===original.catalog.schemas.length,'RESTORE_SCHEMA_SET_CHANGED');replay='';
   for(const expected of original.catalog.schemas){const actual=schemas.find(schema=>schema.name===expected.name);need(actual?.owner===expected.owner&&actual.acl.every(grant=>expected.acl.some(source=>equal(source,grant))),'RESTORE_SCHEMA_PRIVILEGES_CHANGED');for(const [grantor,grantee,privilege,grantable]of expected.acl.filter(grant=>!actual.acl.some(present=>equal(grant,present)))){need(['USAGE','CREATE'].includes(privilege),'RESTORE_SCHEMA_GRANT_UNKNOWN');replay+='SET SESSION AUTHORIZATION '+ident(grantor)+';GRANT '+privilege+' ON SCHEMA '+ident(expected.name)+' TO '+(grantee==='PUBLIC'?'PUBLIC':ident(grantee))+(grantable?' WITH GRANT OPTION':'')+';RESET SESSION AUTHORIZATION;';}}
   if(replay)await sql(replay);
+  await restore('post-data');
   for(const [family,query]of Object.entries(CATALOG_QUERIES)){phase='catalog.'+family;need(equal(await jsonSql(aggregate(query)),original.catalog[family]),'RESTORE_CATALOG_MISMATCH');}
   phase='data';for(const row of original.data){const result=await jsonSql("SELECT jsonb_build_object('rows',count(*),'sha256',encode(sha256(convert_to(coalesce(string_agg(to_jsonb(t)::text,E'\\n' ORDER BY to_jsonb(t)::text),''),'UTF8')),'hex')) FROM "+(row.kind==='r'?'ONLY ':'')+table(row.schema,row.relation)+' t;');need(result.rows===row.rows&&result.sha256===row.sha256,'RESTORE_PHYSICAL_DATA_MISMATCH');}
   phase='sequence';for(const row of original.sequences){const result=await jsonSql("SELECT jsonb_build_object('last_value',last_value::text,'is_called',is_called) FROM "+table(row.schema,row.name));need(result.last_value===row.last_value&&result.is_called===row.is_called,'RESTORE_SEQUENCE_VALUES_MISMATCH');}
@@ -292,7 +307,7 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
   need(equal(upgraded,{history:16,app_tables:144,forced_rls:144,native_policies:144}),'RESTORE_INITIAL_UPGRADE_INCOMPLETE');
   await checkJobs();report={passed:true,scope:'INITIAL_STAGING_LOGICAL_RESTORE_AND_UPGRADE',logical_database_restored:true,
    physical_relations_verified:original.data.length,physical_rows_verified:original.data.reduce((sum,row)=>sum+row.rows,0),sequences_verified:original.sequences.length,
-   baseline_catalog_families_verified:28,bootstrap_create_exceptions:1,source_migration_prefix:baseline.appliedPrefix,
+   baseline_catalog_families_verified:28,native_archive_sections_restored:3,post_data_owner_mode:'session_authorization',bootstrap_create_exceptions:1,source_migration_prefix:baseline.appliedPrefix,
    final_migration_prefix:16,non_superuser_upgrade_migrations:16-baseline.appliedPrefix,
    network_isolated:true,background_jobs_disabled:true,source_database_mutated:false,
    role_passwords_restored:false,provider_root_keys_restored:false,provider_services_verified:false,
