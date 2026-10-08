@@ -19,7 +19,7 @@ LOCK = int.from_bytes(hashlib.sha256(PROJECT.encode()).digest()[:4], 'big', sign
 # Completed source bytes are pinned before this owner is promoted.
 PINS = {
     'staging_backup_session.py': 'e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1',
-    'staging_initial_session.py': '46845c81b7f2f7bb428a232fd90d9dd2034ff545dba5815a4ece4042c5a11e45',
+    'staging_initial_session.py': '9d28ad55bdd22dc6f81a7e00a3324a31a3e1842d50c778b8f5daa916614d52d9',
     'staging-initial-migrations.mjs': '7f49cf8dcdb2eda53633dd3596486779ea2dd001d1a2813a07fa45e859784004',
     'staging-migration-files.mjs': '83aa2aae6d4cc358965208e39e73dd0d1038ee4a6c0bc9a62675b829e30c94bd',
     'staging-native-qa-fixture.mjs': '30c6982d2f37a7a34fd1126df7f3ae6c376732c59f0138caa072c8c3100b9c26',
@@ -106,7 +106,7 @@ class NativeSession(InitialSession):
         require(all(type(value[key]) is str and 0 < len(value[key]) < 100000 and '\0' not in value[key]
                     for key in ('contextSql', mutation, readback)), 'STAGING_NATIVE_QA_RECIPE_INVALID')
         self.run("BEGIN READ WRITE; SET LOCAL lock_timeout='15s'; SET LOCAL statement_timeout='30s'; "
-                 "SET LOCAL standard_conforming_strings=on; SET LOCAL search_path=pg_catalog; SET LOCAL row_security=off;")
+                 "SET LOCAL standard_conforming_strings=on; SET LOCAL search_path=pg_catalog; SET LOCAL row_security=on;")
         require(self.pq.PQtransactionStatus(self.connection) == TX_VALID, 'STAGING_NATIVE_QA_PHASE_INVALID')
         if 'guardSql' in value:
             require(type(value['guardSql']) is str and 0 < len(value['guardSql']) < 100000,

@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {randomUUID} from 'node:crypto';
 import {spawnSync} from 'node:child_process';
+import {readFileSync} from 'node:fs';
 import {buildStagingCoreBootstrap,STAGING_CORE_FIXTURE as f} from '../scripts/staging-core-bootstrap.mjs';
 
 const context={recipient:'bootstrap@cluvo.example',sourceSha:'a'.repeat(40),workflowRunId:'20',actor:'contract-test',expectedVersion:0};
@@ -47,8 +48,11 @@ const quote=value=>"'"+String(value).replaceAll("'","''")+"'";
 const bind=value=>"'"+String(value).replaceAll('\\','\\\\').replaceAll("'","\\'")+"'";
 const lock=`SELECT pg_advisory_lock(${f.lockNamespace},${f.lockObject});`;
 const unlock=`SELECT pg_advisory_unlock(${f.lockNamespace},${f.lockObject});`;
+// Exercise the exact deployed writer envelope, including its RLS setting.
+const fixtureTransactionSql=JSON.parse(readFileSync(new URL('../scripts/staging_initial_session.py',import.meta.url),'utf8')
+  .match(/begun = self\.run\(("[^\n]+")\)/)[1]);
 const execute=sql=>spawnSync('docker',['exec','-i',container,'psql','-U','postgres','-d','postgres',
-  '--no-psqlrc','--quiet','--tuples-only','--no-align','--set','ON_ERROR_STOP=1'],{input:sql,encoding:'utf8',timeout:15_000});
+  '--no-psqlrc','--quiet','--tuples-only','--no-align','--set','ON_ERROR_STOP=1'],{input:sql.replace('BEGIN;',()=>fixtureTransactionSql),encoding:'utf8',timeout:15_000});
 function fixture({confirmed=false,banned=false,deleted=false,missing=false,duplicate=false}={}){
   const identity=randomUUID(),recipient=`bootstrap-${randomUUID()}@example.test`;
   const built=buildStagingCoreBootstrap({...context,recipient});
@@ -86,6 +90,14 @@ test('actual local SQL creates a minimal scope for an unconfirmed identity witho
   assert.equal(results[0].current_ledger_entries,0);
   assert.equal(results[0].auth_mutations,false);assert.equal(results[0].native_session_proven,false);
   assert.deepEqual(results[1],{confirmed:false,sessions:0,answers:0,bookings:0,executor_grants:0,minutes:720,winter_minutes:360,intake_revision:0});
+});
+
+test('actual restricted tenant trigger requires RLS enabled in the deployed fixture transaction', {skip:!local},()=>{
+ assert.ok(fixtureTransactionSql.includes('SET LOCAL row_security=on;'));
+ const v=fixture();
+ refusal(execute(`BEGIN;SET LOCAL row_security=off;${lock}${v.setup}${v.bound()}${v.built.mutationSql}ROLLBACK;${unlock}`));
+ const result=success(execute(`BEGIN;${lock}${v.setup}${v.bound()}${v.built.mutationSql}${v.built.readbackSql}ROLLBACK;${unlock}`));
+ assert.equal(result[0].status,'created');
 });
 
 test('actual local SQL replay creates no grants/audits and preserves later personal answers and versions', {skip:!local},()=>{

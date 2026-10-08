@@ -1,0 +1,29 @@
+{
+  "scope": "LOCAL_FIXTURE_OWNER_RLS_ENVELOPE_REGRESSION",
+  "passed": true,
+  "core_session_groups": {
+    "passed": 24,
+    "skipped": 1,
+    "failed": 0,
+    "command": "CLUVO_BOOTSTRAP_SQL_TESTS=local-fixture node --test tests/staging-core-bootstrap.test.mjs tests/staging-initial-session.test.mjs tests/staging-native-qa-session.test.mjs"
+  },
+  "native_fixture_groups": {
+    "passed": 12,
+    "skipped": 0,
+    "failed": 0,
+    "command": "CLUVO_NATIVE_QA_SQL_TESTS=local-fixture node --test tests/staging-native-qa-fixture.test.mjs"
+  },
+  "actual_deployed_transaction_envelopes_executed": true,
+  "restricted_trigger_row_security_off_refused": true,
+  "restricted_trigger_row_security_on_authorized": true,
+  "same_household_and_foreign_tenant_privacy_verified": true,
+  "old_native_token_refused_after_actual_logout": true,
+  "app_transactions_rolled_back": true,
+  "local_provider_cleanup_completed": true,
+  "targeted_eslint_passed": true,
+  "initial_child_sha256": "9d28ad55bdd22dc6f81a7e00a3324a31a3e1842d50c778b8f5daa916614d52d9",
+  "native_child_sha256": "89d356c4053b264e0da5aec92431b62d584bdd98a77015abaff60d6cd6e0bae9",
+  "hosted_core_bootstrap_proven": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

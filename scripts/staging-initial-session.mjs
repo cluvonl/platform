@@ -8,7 +8,7 @@ import {projectTarget,databaseTarget,databaseEnvironment} from './staging-prefli
 const BRIDGE=fileURLToPath(new URL('./staging_initial_session.py',import.meta.url));
 const SESSION=fileURLToPath(new URL('./staging_backup_session.py',import.meta.url));
 const SESSION_PIN='e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1';
-export const INITIAL_SESSION_CHILD_SHA256='46845c81b7f2f7bb428a232fd90d9dd2034ff545dba5815a4ece4042c5a11e45';
+export const INITIAL_SESSION_CHILD_SHA256='9d28ad55bdd22dc6f81a7e00a3324a31a3e1842d50c778b8f5daa916614d52d9';
 const BRIDGE_PIN=INITIAL_SESSION_CHILD_SHA256;
 const sourceBindings=new WeakMap();
 const PROJECT='fbozlbgmktkgcdfqdaaz';

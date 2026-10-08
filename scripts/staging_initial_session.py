@@ -299,7 +299,9 @@ class InitialSession(Session):
                                         argument['source_sha'], argument['workflow_run_id'], argument['actor']],
                 'STAGING_BOOTSTRAP_RECIPE_INVALID')
         self.check_lock()
-        begun = self.run("BEGIN READ WRITE; SET LOCAL lock_timeout='15s'; SET LOCAL statement_timeout='30s'; SET LOCAL standard_conforming_strings=on; SET LOCAL search_path=pg_catalog; SET LOCAL row_security=off;")
+        # Canonical tenant triggers execute as the restricted command owner.
+        # row_security=off rejects even policy-authorized work by that role.
+        begun = self.run("BEGIN READ WRITE; SET LOCAL lock_timeout='15s'; SET LOCAL statement_timeout='30s'; SET LOCAL standard_conforming_strings=on; SET LOCAL search_path=pg_catalog; SET LOCAL row_security=on;")
         require(begun and begun[0]['command'] == 'BEGIN' and
                 self.pq.PQtransactionStatus(self.connection) == bounded.TX_VALID, 'INITIAL_PHASE_INVALID')
         self.run(recipe['guardSql'])

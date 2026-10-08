@@ -86,6 +86,10 @@ test('getters, inherited keys, custom arrays and proxy diagnostics cannot cross 
 // back; provider cleanup runs even after a failed assertion. Nothing is logged
 // from provider responses, credentials, private SQL or stderr.
 const local=process.env.CLUVO_NATIVE_QA_SQL_TESTS==='local-fixture';
+const transactionLiteral=readFileSync(new URL('../scripts/staging_native_qa_session.py',import.meta.url),'utf8')
+  .match(/self\.run\(("BEGIN READ WRITE;[^\n]+"\s+"[^\n]+")\)/)[1];
+const nativeFixtureTransactionSql=[...transactionLiteral.matchAll(/"[^"\n]*"/g)].map(match=>JSON.parse(match[0])).join('');
+assert.ok(nativeFixtureTransactionSql.includes('SET LOCAL row_security=on;'));
 const quote=value=>"'"+value.replaceAll("'","''")+"'";
 const lock=`SELECT pg_advisory_lock(${INITIAL_MIGRATION_POLICY.lockNamespace},${INITIAL_MIGRATION_LOCK_OBJECT});`;
 const unlock=`SELECT pg_advisory_unlock(${INITIAL_MIGRATION_POLICY.lockNamespace},${INITIAL_MIGRATION_LOCK_OBJECT});`;
@@ -113,7 +117,7 @@ const preflightBody=()=>nativeQaPreflightSql().slice('BEGIN READ WRITE;\n'.lengt
 function boundContext(value){return value.contextSql.replace(/\$([1-4])/g,(_,index)=>quote(value.parameters[Number(index)-1]));}
 function execute(sql){return spawnSync('docker',['exec','-i','supabase_db_cluvo-local','psql','-U','supabase_admin','-d','postgres',
   '--no-psqlrc','--quiet','--tuples-only','--no-align','--set','ON_ERROR_STOP=1'],{
-  input:'BEGIN;SET LOCAL ROLE postgres;SET LOCAL standard_conforming_strings=on;'+lock+setup+sql+'ROLLBACK;'+unlock,
+  input:nativeFixtureTransactionSql+'SET LOCAL ROLE postgres;'+lock+setup+sql+'ROLLBACK;'+unlock,
   encoding:'utf8',timeout:20000});}
 function success(result){
   assert.equal(result.status,0,'actual local QA SQL failed; private diagnostics withheld');
