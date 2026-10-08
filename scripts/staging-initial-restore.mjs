@@ -13,27 +13,33 @@ import {IMAGE} from './pg17-capture-worker.mjs';
 import {createInitialMigrationManifest,initialMigrationSQL,validateInitialHistory,INITIAL_LAYOUT_SQL,INITIAL_HISTORY_SQL,INITIAL_SOURCE_HISTORY_SQL,INITIAL_MIGRATION_POLICY,INITIAL_MIGRATION_LOCK_OBJECT} from './staging-initial-migrations.mjs';
 
 export const INITIAL_RESTORE_PHASES=Object.freeze(['input','image','create','start','ready','globals','restore','database','role_settings','database_acl','schema_acl',...Object.keys(CATALOG_QUERIES).map(family=>'catalog.'+family),'data','sequence','actor','history','upgrade','jobs','cleanup']);
-export const INITIAL_RESTORE_REASONS=Object.freeze(['EXTENSION_VERSION_UNAVAILABLE','EXTENSION_NOT_AVAILABLE','EXTENSION_LIBRARY_MISSING','READ_ONLY_TRANSACTION','ARCHIVE_TRUNCATED','ARCHIVE_VERSION_UNSUPPORTED','ARCHIVE_COMPRESSION_UNSUPPORTED','SERVER_DISCONNECTED','OUT_OF_MEMORY','DISK_FULL','GLOBAL_SETTING_UNSUPPORTED','STATEMENT_TIMEOUT','ROW_CONSTRAINT_VIOLATION','SCHEMA_REQUIRED','UNKNOWN_PROCESS_FAILURE']);
+export const INITIAL_RESTORE_REASONS=Object.freeze(['EXTENSION_VERSION_UNAVAILABLE','EXTENSION_NOT_AVAILABLE','EXTENSION_LIBRARY_MISSING','READ_ONLY_TRANSACTION','ARCHIVE_TRUNCATED','ARCHIVE_VERSION_UNSUPPORTED','ARCHIVE_COMPRESSION_UNSUPPORTED','SERVER_DISCONNECTED','OUT_OF_MEMORY','DISK_FULL','GLOBAL_SETTING_UNSUPPORTED','STATEMENT_TIMEOUT','ROW_CONSTRAINT_VIOLATION','SCHEMA_REQUIRED','SERVER_SQLSTATE_REPORTED','UNKNOWN_PROCESS_FAILURE']);
+export const INITIAL_RESTORE_TOC_TYPES=Object.freeze(['ACL','AGGREGATE','BLOB','BLOB COMMENTS','BLOBS','CAST','CHECK CONSTRAINT','COLLATION','COMMENT','CONSTRAINT','DATABASE','DATABASE PROPERTIES','DEFAULT','DEFAULT ACL','DOMAIN','DOMAIN CONSTRAINT','ENCODING','EVENT TRIGGER','EXTENSION','FK CONSTRAINT','FOREIGN DATA WRAPPER','FOREIGN SERVER','FOREIGN TABLE','FUNCTION','INDEX','INDEX ATTACH','MATERIALIZED VIEW','MATERIALIZED VIEW DATA','OPERATOR','OPERATOR CLASS','OPERATOR FAMILY','POLICY','PROCEDURE','PUBLICATION','PUBLICATION TABLE','PUBLICATION TABLES IN SCHEMA','ROW SECURITY','RULE','SCHEMA','SEARCHPATH','SEQUENCE','SEQUENCE OWNED BY','SEQUENCE SET','SHELL TYPE','STATISTICS','STDSTRINGS','SUBSCRIPTION','TABLE','TABLE ATTACH','TABLE DATA','TABLESPACE','TEXT SEARCH CONFIGURATION','TEXT SEARCH DICTIONARY','TEXT SEARCH PARSER','TEXT SEARCH TEMPLATE','TRANSFORM','TRIGGER','TYPE','USER MAPPING','VIEW']);
 export class InitialRestoreError extends Error {
- constructor(code,{phase='input',sqlstate=null,errorKind=null,errorReason=null,exitStatus=null,processFailed=null}={}){
+ constructor(code,{phase='input',sqlstate=null,errorKind=null,errorReason=null,exitStatus=null,processFailed=null,tocType=null}={}){
   super(code);this.code=code;this.phase=INITIAL_RESTORE_PHASES.includes(phase)?phase:'input';
   this.sqlstate=Object.hasOwn(SQLSTATE_KINDS,sqlstate)?sqlstate:null;
   this.errorKind=ERROR_KINDS.includes(errorKind)?errorKind:null;
   this.errorReason=INITIAL_RESTORE_REASONS.includes(errorReason)?errorReason:null;
   this.exitStatus=Number.isInteger(exitStatus)&&exitStatus>=0&&exitStatus<=255?exitStatus:null;
   this.processFailed=typeof processFailed==='boolean'?processFailed:null;
+  this.tocType=INITIAL_RESTORE_TOC_TYPES.includes(tocType)?tocType:null;
  }
 }
-const SQLSTATE_KINDS=Object.freeze({'42501':'PERMISSION','42P01':'MISSING','3F000':'MISSING','42704':'MISSING','42883':'MISSING','3D000':'MISSING','42601':'SYNTAX','42710':'ALREADY_EXISTS','42P06':'ALREADY_EXISTS','42P07':'ALREADY_EXISTS','23505':'CONFLICT','57014':'TIMEOUT','55P03':'TIMEOUT','0A000':'UNSUPPORTED','55000':'UNSUPPORTED'});
+const SQLSTATE_KINDS=Object.freeze({'42501':'PERMISSION','42P01':'MISSING','3F000':'MISSING','42704':'MISSING','42883':'MISSING','3D000':'MISSING','42601':'SYNTAX','42P17':'SYNTAX','42710':'ALREADY_EXISTS','42P06':'ALREADY_EXISTS','42P07':'ALREADY_EXISTS','23505':'CONFLICT','23502':'CONFLICT','23503':'CONFLICT','23514':'CONFLICT','55006':'CONFLICT','57014':'TIMEOUT','55P03':'TIMEOUT','0A000':'UNSUPPORTED','55000':'UNSUPPORTED','22023':'UNSUPPORTED','XX000':'PROCESS_FAILURE','53100':'PROCESS_FAILURE','53200':'PROCESS_FAILURE','53300':'PROCESS_FAILURE','57P01':'PROCESS_FAILURE','08006':'PROCESS_FAILURE'});
 const ERROR_KINDS=Object.freeze([...new Set(Object.values(SQLSTATE_KINDS)),'WARNING','PROCESS_FAILURE']);
 // Only finite classifications leave this module. Raw process text, source SQL,
 // provider identifiers and data remain private even on failure.
-function processDiagnostic(result){
+function processDiagnostic(result,privateServerLog=''){
  const diagnostic=typeof result?.stderr==='string'?result.stderr:'';
+ // The last server error is parsed in private memory; never project the line,
+ // location, statement, detail, context, role, PID or object identifiers.
+ const serverError=[...privateServerLog.matchAll(/^(?:[^\n]*?\s)?(?:ERROR|FATAL):\s+([0-9A-Z]{5}):[^\n]*$/gm)].at(-1);
+ const classified=diagnostic+'\n'+(serverError?.[0]??'');
  const known=[
   ['EXTENSION_VERSION_UNAVAILABLE','UNSUPPORTED',/has no installation script nor update path for version|extension .* version .* (?:not installed|not available)/i],
   ['EXTENSION_NOT_AVAILABLE','MISSING',/extension .* is not available|could not open extension control file/i],
-  ['EXTENSION_LIBRARY_MISSING','MISSING',/could not (?:access|load|open) (?:file|library)|could not find function .* in file/i],
+  ['EXTENSION_LIBRARY_MISSING','MISSING',/could not (?:access|load|open) (?:file|library) ["'][^"'\n]*(?:\$libdir|\.so)|could not find function .* in file/i],
   ['READ_ONLY_TRANSACTION','PERMISSION',/cannot execute .* in a read-only transaction/i],
   ['ARCHIVE_TRUNCATED','PROCESS_FAILURE',/could not read from input file.*end of file|unexpected end of file|input file is too short|did not find magic string/i],
   ['ARCHIVE_VERSION_UNSUPPORTED','UNSUPPORTED',/unsupported version .* in file header/i],
@@ -45,14 +51,16 @@ function processDiagnostic(result){
   ['STATEMENT_TIMEOUT','TIMEOUT',/statement timeout|lock timeout|timed out/i],
   ['ROW_CONSTRAINT_VIOLATION','CONFLICT',/violates .* constraint|duplicate key value/i],
   ['SCHEMA_REQUIRED','MISSING',/no schema has been selected to create in/i],
- ].find(([, ,pattern])=>pattern.test(diagnostic));
- const details={errorReason:known?.[0]??'UNKNOWN_PROCESS_FAILURE',exitStatus:result?.status,processFailed:Boolean(result?.error)};
- const candidate=diagnostic.match(/(?:ERROR|FATAL|PANIC):\s+([0-9A-Z]{5})(?:\s|$)/)?.[1];
+ ].find(([, ,pattern])=>pattern.test(classified));
+ const tocHeader=[...diagnostic.matchAll(/from TOC entry [0-9]+; [0-9]+ [0-9]+ ([^\n]*)/g)].at(-1)?.[1];
+ const tocType=[...INITIAL_RESTORE_TOC_TYPES].sort((a,b)=>b.length-a.length).find(type=>tocHeader===type||tocHeader?.startsWith(type+' '))??null;
+ const candidate=serverError?.[1]??diagnostic.match(/(?:ERROR|FATAL|PANIC):\s+([0-9A-Z]{5})(?:\s|:|$)/)?.[1];
+ const details={tocType,errorReason:known?.[0]??(serverError&&Object.hasOwn(SQLSTATE_KINDS,candidate)?'SERVER_SQLSTATE_REPORTED':'UNKNOWN_PROCESS_FAILURE'),exitStatus:result?.status,processFailed:Boolean(result?.error)};
  if(Object.hasOwn(SQLSTATE_KINDS,candidate))return {...details,sqlstate:candidate,errorKind:SQLSTATE_KINDS[candidate]};
  const errorKind=[['PERMISSION',/permission denied|must be owner|must be superuser|only superusers/i],
   ['MISSING',/does not exist|could not find|no such file/i],['SYNTAX',/syntax error/i],
   ['ALREADY_EXISTS',/already exists/i],['TIMEOUT',/statement timeout|lock timeout|timed out/i],
-  ['WARNING',/(?:WARNING|NOTICE):/]].find(([,pattern])=>pattern.test(diagnostic))?.[0]??'PROCESS_FAILURE';
+  ['WARNING',/(?:WARNING|NOTICE):/]].find(([,pattern])=>pattern.test(classified))?.[0]??'PROCESS_FAILURE';
  return {...details,sqlstate:null,errorKind:known?.[1]??errorKind};
 }
 const need=(condition,code)=>{if(!condition)throw new InitialRestoreError(code);};
@@ -72,7 +80,7 @@ export const INITIAL_RESTORE_STARTUP=String.raw`set -eu
 umask 077
 initdb -D /restore/pgdata -U "$1" --auth-local=trust --auth-host=reject --encoding=UTF8 --locale=en_US.UTF-8 --locale-provider=icu --icu-locale=en-US >/restore/initdb.private.log 2>&1
 printf "include = '/etc/postgresql-custom/supautils.conf'\n" >>/restore/pgdata/postgresql.conf
-exec postgres -D /restore/pgdata -c listen_addresses='' -c unix_socket_directories=/restore -c unix_socket_permissions=0700 -c port=5432 -c max_worker_processes=0 -c max_parallel_workers=0 -c max_parallel_workers_per_gather=0 -c max_logical_replication_workers=0 -c autovacuum=off -c cron.launch_active_jobs=off -c shared_preload_libraries='pg_stat_statements,pgaudit,plpgsql,plpgsql_check,pg_cron,pg_net,pgsodium,auto_explain,pg_tle,plan_filter,supabase_vault' -c session_preload_libraries=supautils -c pgsodium.getkey_script=/usr/lib/postgresql/bin/pgsodium_getkey.sh -c vault.getkey_script=/usr/lib/postgresql/bin/pgsodium_getkey.sh -c logging_collector=off -c log_statement=none -c log_min_duration_statement=-1 -c log_min_error_statement=panic -c log_connections=off -c log_disconnections=off -c pgaudit.log=none -c auto_explain.log_min_duration=-1 -c log_parameter_max_length=0 -c log_parameter_max_length_on_error=0 -c archive_mode=off -c ssl=off >/restore/postgres.private.log 2>&1`;
+exec postgres -D /restore/pgdata -c listen_addresses='' -c unix_socket_directories=/restore -c unix_socket_permissions=0700 -c port=5432 -c max_worker_processes=0 -c max_parallel_workers=0 -c max_parallel_workers_per_gather=0 -c max_logical_replication_workers=0 -c autovacuum=off -c cron.launch_active_jobs=off -c shared_preload_libraries='pg_stat_statements,pgaudit,plpgsql,plpgsql_check,pg_cron,pg_net,pgsodium,auto_explain,pg_tle,plan_filter,supabase_vault' -c session_preload_libraries=supautils -c pgsodium.getkey_script=/usr/lib/postgresql/bin/pgsodium_getkey.sh -c vault.getkey_script=/usr/lib/postgresql/bin/pgsodium_getkey.sh -c logging_collector=off -c log_error_verbosity=verbose -c log_statement=none -c log_min_duration_statement=-1 -c log_min_error_statement=panic -c log_connections=off -c log_disconnections=off -c pgaudit.log=none -c auto_explain.log_min_duration=-1 -c log_parameter_max_length=0 -c log_parameter_max_length_on_error=0 -c archive_mode=off -c ssl=off >/restore/postgres.private.log 2>&1`;
 
 async function privateFile(directory,name,maximum){
  const metadata=await lstat(join(directory,name));
@@ -138,7 +146,19 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
  const name='cluvo-initial-restore-'+randomBytes(16).toString('hex'),socket=SOCKETS[executionScope];
  const command=async(args,input,maximum,timeout)=>{
   let result;try{result=await run(['--host',socket,...args],input,maximum,timeout);}catch{throw new InitialRestoreError('RESTORE_PROCESS_UNAVAILABLE',{phase,errorKind:'PROCESS_FAILURE'});}
-  if(!(result&&result.status===0&&result.stderr===''&&!result.error))throw new InitialRestoreError('RESTORE_PROCESS_FAILED',{phase,...processDiagnostic(result)});
+  if(!(result&&result.status===0&&result.stderr===''&&!result.error)){
+   let privateServerLog='';
+   if(phase==='restore'&&args.includes('pg_restore')&&id){
+    // Inspect the complete fixed ownership/isolation contract before any
+    // follow-up exec. Diagnostic failure never replaces the original error.
+    try{
+     const current=await inspect(id);ownership(current);isolated(current);need(current.state==='running','RESTORE_CLONE_NOT_RUNNING');
+     const log=await run(['--host',socket,'exec',id,'tail','-c','524288','/restore/postgres.private.log'],undefined,600000,5000);
+     if(log?.status===0&&!log.error&&log.stderr===''&&typeof log.stdout==='string'&&Buffer.byteLength(log.stdout)<=524288)privateServerLog=log.stdout;
+    }catch{ /* Only the already-proven clone may provide private diagnostics. */ }
+   }
+   throw new InitialRestoreError('RESTORE_PROCESS_FAILED',{phase,...processDiagnostic(result,privateServerLog)});
+  }
   return result.stdout;
  };
  const jsonCommand=async args=>{try{return JSON.parse(await command(args,undefined,200000,20000));}catch(error){throw error instanceof InitialRestoreError?error:new InitialRestoreError('RESTORE_CONTROL_RESPONSE_UNKNOWN');}};
@@ -265,7 +285,7 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
     await command(['rm','--force','--volumes',id],undefined,200000,20000);
     const absence=await run(['--host',socket,'inspect',id,'--format','{{.Id}}'],undefined,200000,20000);
     need(absent(absence,id),'RESTORE_CLONE_REMOVAL_UNPROVED');
-   }catch(error){cleanupFailed=true;if(error instanceof InitialRestoreError)cleanupDiagnostic={sqlstate:error.sqlstate,errorKind:error.errorKind};}}
+   }catch(error){cleanupFailed=true;if(error instanceof InitialRestoreError)cleanupDiagnostic={sqlstate:error.sqlstate,errorKind:error.errorKind,errorReason:error.errorReason,exitStatus:error.exitStatus,processFailed:error.processFailed,tocType:error.tocType};}}
  }
  if(cleanupFailed)throw new InitialRestoreError('INITIAL_RESTORE_CLEANUP_UNPROVED',{phase:'cleanup',...cleanupDiagnostic});if(primary)throw primary;
  return Object.freeze({...report,owned_clone_removed:true});

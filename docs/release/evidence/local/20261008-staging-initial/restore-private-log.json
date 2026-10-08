@@ -1,0 +1,15 @@
+{
+  "scope": "LOCAL_PRIVATE_RESTORE_ERROR_DIAGNOSTIC",
+  "adapter_sha256": "8c805388e777145398b49aed15ccde13d715ba775c7d4404f1f605ace5d0cec0",
+  "targeted_tests": 18,
+  "targeted_tests_passed": 18,
+  "actual_local_native_restore_failure_private_log_proof": true,
+  "synthetic_error_sqlstate": "42P06",
+  "private_log_reads": 1,
+  "raw_diagnostics_exported": false,
+  "synthetic_source_and_restore_clones_removed": true,
+  "normal_local_restore_and_original16_non_superuser_upgrade_passed": true,
+  "hosted_restore_verified": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

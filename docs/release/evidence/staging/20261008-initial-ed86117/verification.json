@@ -1,0 +1,19 @@
+{
+  "source_sha": "ed86117343ac5d26ee099f62da7350f1792d944a",
+  "main_ci_run_id": "37775005572",
+  "main_ci_conclusion": "success",
+  "restore_only_run_id": "37775619882",
+  "restore_only_conclusion": "failure",
+  "restore_failure_phase": "restore",
+  "restore_error_reason": "UNKNOWN_PROCESS_FAILURE",
+  "restore_process_exit_status": 1,
+  "restore_process_failed": false,
+  "encrypted_backup_remote_readback": true,
+  "restore_verified": false,
+  "applied_migrations": 0,
+  "database_mutations_performed": false,
+  "application_activated": false,
+  "private_values_exported": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

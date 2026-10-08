@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {mkdtemp,writeFile,chmod,rm,symlink,readFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
-import {restoreInitialBackup,INITIAL_RESTORE_STARTUP,INITIAL_RESTORE_PHASES,InitialRestoreError} from '../scripts/staging-initial-restore.mjs';
+import {restoreInitialBackup,INITIAL_RESTORE_STARTUP,INITIAL_RESTORE_PHASES,INITIAL_RESTORE_TOC_TYPES,InitialRestoreError} from '../scripts/staging-initial-restore.mjs';
 import {CATALOG_QUERIES} from '../scripts/staging-capture-catalog.mjs';
 import {aggregate} from '../scripts/staging-capture-queries.mjs';
 import {IMMUTABLE16} from '../scripts/staging-migration-files.mjs';
@@ -38,9 +38,9 @@ function state(prefix){return {
  sourceRows:manifest.migrations.slice(0,prefix).map((m,index)=>({version:m.version,file:m.file,sha256:m.sha256,source_sha:sourceSha,
   actor:'fixture-source',scope:'staging',expected_version:index,idempotency_key:'cluvo-staging-initial16:2:'+m.version,workflow_run_id:'2'}))};}
 function runner(original,options={}){
- const observed={calls:[],upgrades:[],removed:false,replays:[],networkArgs:null};let name,started=false,prefix=original.source_history.applied_prefix;
+ const observed={calls:[],upgrades:[],removed:false,replays:[],networkArgs:null,logReads:0};let name,started=false,restoreFailed=false,prefix=original.source_history.applied_prefix;
  const catalogSql=new Map(Object.entries(CATALOG_QUERIES).map(([family,query])=>[aggregate(query),family]));
- const inspect=()=>({id:cid,name:'/'+name,image:imageId,config_image:IMAGE,user:'postgres',label:options.badOwner?'third-party':name,
+ const inspect=()=>({id:cid,name:'/'+name,image:imageId,config_image:IMAGE,user:'postgres',label:options.badOwner||(restoreFailed&&options.badDiagnosticOwner)?'third-party':name,
   network:options.badNetwork?'bridge':'none',ports:null,binds:null,mounts:[],tmpfs:{'/restore':'rw,size=512m,mode=1777'},volumes_from:null,
   privileged:false,log:'none',restart:'no',entrypoint:['/bin/sh'],arguments:['-c',INITIAL_RESTORE_STARTUP,'cluvo-initial-restore',bootstrapRole],state:started?'running':'created'});
  const run=async(args,input)=>{
@@ -56,7 +56,12 @@ function runner(original,options={}){
   if(command==='rm'){assert.equal(args.at(-1),cid);if(options.cleanupFailure)return failure();observed.removed=true;return ok(cid+'\n');}
   assert.equal(command,'exec');
   if(args.includes('pg_isready'))return ok('');
-  if(args.includes('pg_restore')){assert.ok(args.includes('--single-transaction'));assert.ok(args.includes('--exit-on-error'));assert.equal(input.subarray(0,5).toString(),'PGDMP');if(options.restoreFailure)return failure();return ok('');}
+  if(args.includes('pg_restore')){assert.ok(args.includes('--single-transaction'));assert.ok(args.includes('--exit-on-error'));assert.equal(input.subarray(0,5).toString(),'PGDMP');if(options.restoreFailure){restoreFailed=true;return {...failure(),stderr:options.diagnostic??'private fixture diagnostics'};}return ok('');}
+  if(args.includes('tail')){
+   assert.deepEqual(args.slice(2),['exec',cid,'tail','-c','524288','/restore/postgres.private.log']);observed.logReads++;
+   assert.ok(observed.calls.at(-2).includes('inspect'));
+   if(options.logFailure)return failure();return ok(options.serverLog??'');
+  }
   assert.ok(args.includes('psql'));assert.ok(args.includes('--set=VERBOSITY=sqlstate'));const role=args[args.indexOf('-U')+1],text=input.toString();
   if(text.includes('CREATE ROLE')){observed.replays.push(text);assert.equal(text.includes('CREATE ROLE "'+bootstrapRole+'";'),false);assert.ok(text.includes('ALTER ROLE "'+bootstrapRole+'"'));if(options.globalsFailure)return {status:3,stdout:'',stderr:options.diagnostic??'ERROR:  42501\n'};return ok('');}
   const query=text.replace(/^SET client_min_messages=warning;\nSET search_path TO '';\n/,'').replace(/;\s*$/,'');
@@ -181,4 +186,51 @@ test('private provider restore failures expose finite reasons and bounded proces
   },0,{globalsFailure:true,diagnostic});
  const unsafe=new InitialRestoreError('RESTORE_PROCESS_FAILED',{errorReason:'private_fixture',exitStatus:999,processFailed:'private_fixture'});
  assert.equal(unsafe.errorReason,null);assert.equal(unsafe.exitStatus,null);assert.equal(unsafe.processFailed,null);
+});
+
+test('a restore failure reads only the owned private log and projects the last known server SQLSTATE',async()=>{
+ for(const [state,kind]of [['XX000','PROCESS_FAILURE'],['42P17','SYNTAX'],['55006','CONFLICT'],['22023','UNSUPPORTED'],['42P01','MISSING']]){
+  await fixture(async(input,{run,observed})=>{
+   await assert.rejects(restoreInitialBackup(input,{run}),error=>{
+    assert.equal(error.phase,'restore');assert.equal(error.sqlstate,state);assert.equal(error.errorKind,kind);assert.equal(error.errorReason,'SERVER_SQLSTATE_REPORTED');
+    assert.equal(error.tocType,'TABLE DATA');assert.equal(error.exitStatus,1);assert.equal(error.processFailed,false);
+    const publicError=JSON.stringify(error);for(const text of ['private_fixture','private@example.test','8675309','12345','LOCATION','Command was'])assert.equal(publicError.includes(text),false);return true;
+   });assert.equal(observed.logReads,1);assert.equal(observed.removed,true);assert.equal(observed.upgrades.length,0);
+  },0,{restoreFailure:true,diagnostic:'pg_restore: from TOC entry 8675309; 12345 67890 TABLE DATA private_fixture private@example.test\npg_restore: error: unmatched private process text\n',
+   serverLog:'2026-10-08 [12345] ERROR:  42501: private earlier failure\n2026-10-08 [12345] ERROR:  '+state+': private_fixture private@example.test\n2026-10-08 [12345] LOCATION: private_location\n'});
+ }
+ assert.ok(INITIAL_RESTORE_STARTUP.includes('-c log_error_verbosity=verbose'));assert.ok(INITIAL_RESTORE_STARTUP.includes('-c log_min_error_statement=panic'));
+ assert.ok(INITIAL_RESTORE_STARTUP.includes('-c log_parameter_max_length_on_error=0'));
+});
+
+test('private server reasons supplement unmatched stderr without publishing identifiers',async()=>{
+ await fixture(async(input,{run,observed})=>{
+  await assert.rejects(restoreInitialBackup(input,{run}),error=>{
+   assert.equal(error.sqlstate,'22023');assert.equal(error.errorReason,'EXTENSION_VERSION_UNAVAILABLE');assert.equal(error.tocType,'EXTENSION');
+   assert.equal(JSON.stringify(error).includes('private_fixture'),false);return true;
+  });assert.equal(observed.logReads,1);assert.equal(observed.removed,true);
+ },0,{restoreFailure:true,diagnostic:'pg_restore: from TOC entry 9; 3079 88 EXTENSION private_fixture private_owner\nunmatched private error',
+  serverLog:'2026-10-08 [87654] ERROR:  22023: extension "private_fixture" has no installation script nor update path for version "private_version"\n'});
+});
+
+test('an unknown SQLSTATE or TOC type is never copied from a private log',async()=>{
+ await fixture(async(input,{run,observed})=>{
+  await assert.rejects(restoreInitialBackup(input,{run}),error=>{
+   assert.equal(error.sqlstate,null);assert.equal(error.tocType,null);assert.equal(error.errorReason,'UNKNOWN_PROCESS_FAILURE');
+   for(const value of ['SECRT','PRIVATE_TYPE','private_fixture','999999'])assert.equal(JSON.stringify(error).includes(value),false);return true;
+  });assert.equal(observed.logReads,1);assert.equal(observed.removed,true);
+ },0,{restoreFailure:true,diagnostic:'pg_restore: from TOC entry 999999; 5 6 PRIVATE_TYPE private_fixture\nprivate_fixture',serverLog:'2026-10-08 [999999] FATAL:  SECRT: private_fixture\n'});
+ const unsafe=new InitialRestoreError('RESTORE_PROCESS_FAILED',{tocType:'private_fixture'});assert.equal(unsafe.tocType,null);
+ assert.ok(INITIAL_RESTORE_TOC_TYPES.includes('TABLE DATA'));
+});
+
+test('failed or unowned log read cannot replace the original error or bypass cleanup',async()=>{
+ await fixture(async(input,{run,observed})=>{
+  await assert.rejects(restoreInitialBackup(input,{run}),error=>{assert.equal(error.phase,'restore');assert.equal(error.sqlstate,null);assert.equal(error.exitStatus,1);return true;});
+  assert.equal(observed.logReads,1);assert.equal(observed.removed,true);
+ },0,{restoreFailure:true,logFailure:true});
+ await fixture(async(input,{run,observed})=>{
+  await assert.rejects(restoreInitialBackup(input,{run}),code('INITIAL_RESTORE_CLEANUP_UNPROVED'));
+  assert.equal(observed.logReads,0);assert.equal(observed.removed,false);assert.equal(observed.calls.some(args=>args[2]==='rm'),false);
+ },0,{restoreFailure:true,badDiagnosticOwner:true});
 });
