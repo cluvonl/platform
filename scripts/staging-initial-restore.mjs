@@ -209,8 +209,8 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
   &&equal(value.tmpfs,{'/restore':'rw,size=512m,mode=1777'})
   &&Array.isArray(value.mounts)&&value.mounts.every(mount=>mount.Type==='tmpfs'&&mount.Destination==='/restore'), 'RESTORE_CLONE_ISOLATION_UNKNOWN');
  const inspect=reference=>jsonCommand(['inspect',reference,'--format',INSPECT]);
- const sqlArgs=(role)=>['exec','-i',id,'psql','-X','--quiet','--no-align','--tuples-only','--no-password','--set=ON_ERROR_STOP=1','--set=VERBOSITY=sqlstate','-h','/restore','-U',role,'-d','postgres'];
- const sql=async(query,role=bootstrapRole)=>await command(sqlArgs(role),Buffer.from("SET client_min_messages=warning;\nSET search_path TO '';\n"+query.replace(/;?\s*$/,';\n')),8_000_000,120000);
+ const sqlArgs=(role,extensionInstaller=false)=>['exec',...(extensionInstaller?['--env','PGOPTIONS=-c session_preload_libraries=']:[]),'-i',id,'psql','-X','--quiet','--no-align','--tuples-only','--no-password','--set=ON_ERROR_STOP=1','--set=VERBOSITY=sqlstate','-h','/restore','-U',role,'-d','postgres'];
+ const sql=async(query,role=bootstrapRole,extensionInstaller=false)=>await command(sqlArgs(role,extensionInstaller),Buffer.from("SET client_min_messages=warning;\nSET search_path TO '';\n"+query.replace(/;?\s*$/,';\n')),8_000_000,120000);
  const jsonSql=async(query,role=bootstrapRole)=>{try{return JSON.parse((await sql(query,role)).trim());}catch(error){throw error instanceof InitialRestoreError?error:new InitialRestoreError('RESTORE_SQL_RESPONSE_UNKNOWN');}};
  const checkJobs=async()=>{
   phase='jobs';
@@ -284,28 +284,64 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
    for(const [grantor,grantee,privilege,grantable]of expected.acl){need(['USAGE','CREATE'].includes(privilege),'RESTORE_SCHEMA_GRANT_UNKNOWN');replay+='SET SESSION AUTHORIZATION '+ident(grantor)+';GRANT '+privilege+' ON SCHEMA '+ident(expected.name)+' TO '+(grantee==='PUBLIC'?'PUBLIC':ident(grantee))+(grantable?' WITH GRANT OPTION':'')+';RESET SESSION AUTHORIZATION;';}
   }
   if(replay)await sql(replay);
-  phase='extension_owners';const installed=await jsonSql(aggregate(CATALOG_QUERIES.extensions));let extensionsPrecreated=0;
+  phase='extension_owners';const installed=await jsonSql(aggregate(CATALOG_QUERIES.extensions));let extensionsPrecreated=0,extensionOwnerReassignments=0;
   need(installed.every(extension=>original.catalog.extensions.some(expected=>equal(extension,expected))),'RESTORE_EXISTING_EXTENSION_CHANGED');
   for(const extension of original.catalog.extensions){if(installed.some(actual=>actual.name===extension.name))continue;
    const owner=original.catalog.roles.find(role=>role.name===extension.owner);
    need(owner&&typeof extension.version==='string','RESTORE_EXTENSION_OWNER_UNKNOWN');
-   need(owner.login===true,'RESTORE_EXTENSION_OWNER_LOGIN_REQUIRED');
-   // Supautils may warn and ignore a non-superuser's VERSION clause. Verify
-   // the pinned image's default first, then create without that forbidden
-   // clause. Superuser owners retain explicit VERSION selection.
-   if(!owner.superuser){const available=await jsonSql("SELECT jsonb_build_object('default_version',(SELECT default_version FROM pg_available_extensions WHERE name="+literal(extension.name)+"));",extension.owner);need(available.default_version===extension.version,'RESTORE_EXTENSION_VERSION_UNAVAILABLE');}
-   // A genuine connection as the owner loads its original role/database GUCs.
-   // SET SESSION AUTHORIZATION alone does not load those login settings.
-   await sql('CREATE EXTENSION '+ident(extension.name)+' WITH SCHEMA '+ident(extension.schema)+(owner.superuser?' VERSION '+literal(extension.version):'')+';',extension.owner);extensionsPrecreated++;
+   const available=await jsonSql("SELECT jsonb_build_object('available',EXISTS(SELECT 1 FROM pg_available_extension_versions WHERE name="+literal(extension.name)+" AND version="+literal(extension.version)+"));");
+   need(available.available===true,'RESTORE_EXTENSION_VERSION_UNAVAILABLE');
+   // Only this new isolated extension-install session omits Supautils. A
+   // private temporary superuser owns precisely this extension's new objects;
+   // standard REASSIGN OWNED preserves dependencies and ACL owner identities.
+   // Source roles, all native archive SQL and normal clone sessions retain
+   // their original privileges and Supautils event-trigger enforcement.
+   const installer='cluvo_restore_ext_'+randomBytes(12).toString('hex');
+   need(!original.catalog.roles.some(role=>role.name===installer),'RESTORE_INSTALLER_ROLE_COLLISION');
+   await sql('CREATE ROLE '+ident(installer)+' WITH LOGIN SUPERUSER NOINHERIT NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS;');
+   let installerState;try{installerState=JSON.parse((await sql("SELECT jsonb_build_object('superuser',(SELECT rolsuper FROM pg_roles WHERE rolname=current_user),'self',current_user="+literal(installer)+",'supautils_omitted',current_setting('session_preload_libraries')='');",installer,true)).trim());}catch(error){throw error instanceof InitialRestoreError?error:new InitialRestoreError('RESTORE_INSTALLER_SESSION_UNPROVED');}
+   need(equal(installerState,{superuser:true,self:true,supautils_omitted:true}),'RESTORE_INSTALLER_SESSION_UNPROVED');
+   await sql('CREATE EXTENSION '+ident(extension.name)+' WITH SCHEMA '+ident(extension.schema)+' VERSION '+literal(extension.version)+';',installer,true);extensionsPrecreated++;
+   await sql('REASSIGN OWNED BY '+ident(installer)+' TO '+ident(extension.owner)+';DROP ROLE '+ident(installer)+';');extensionOwnerReassignments++;
+   const removed=await jsonSql("SELECT jsonb_build_object('absent',NOT EXISTS(SELECT 1 FROM pg_roles WHERE rolname="+literal(installer)+"));");
+   need(removed.absent===true,'RESTORE_INSTALLER_REMOVAL_UNPROVED');
    const observed=await jsonSql(aggregate(CATALOG_QUERIES.extensions));
    if(!observed.some(actual=>equal(actual,extension)))throw new InitialRestoreError('RESTORE_EXTENSION_METADATA_UNPROVED',{phase,catalogMismatches:[catalogMismatchDiagnostic('extensions',[extension],observed.filter(actual=>actual.name===extension.name))]});
   }
   await restore('pre-data','remaining');await restore('data');
   phase='schema_acl';const schemas=await jsonSql(aggregate(CATALOG_QUERIES.schemas));
   need(schemas.length===original.catalog.schemas.length,'RESTORE_SCHEMA_SET_CHANGED');replay='';
-  for(const expected of original.catalog.schemas){const actual=schemas.find(schema=>schema.name===expected.name);need(actual?.owner===expected.owner&&actual.acl.every(grant=>expected.acl.some(source=>equal(source,grant))),'RESTORE_SCHEMA_PRIVILEGES_CHANGED');for(const [grantor,grantee,privilege,grantable]of expected.acl.filter(grant=>!actual.acl.some(present=>equal(grant,present)))){need(['USAGE','CREATE'].includes(privilege),'RESTORE_SCHEMA_GRANT_UNKNOWN');replay+='SET SESSION AUTHORIZATION '+ident(grantor)+';GRANT '+privilege+' ON SCHEMA '+ident(expected.name)+' TO '+(grantee==='PUBLIC'?'PUBLIC':ident(grantee))+(grantable?' WITH GRANT OPTION':'')+';RESET SESSION AUTHORIZATION;';}}
+  for(const expected of original.catalog.schemas){const actual=schemas.find(schema=>schema.name===expected.name);need(actual,'RESTORE_SCHEMA_SET_CHANGED');
+   if(actual.owner===expected.owner&&equal(actual.acl,expected.acl))continue;
+   if(actual.owner!==expected.owner)replay+='ALTER SCHEMA '+ident(expected.name)+' OWNER TO '+ident(expected.owner)+';';
+   for(const role of new Set([...actual.acl,...expected.acl].map(grant=>grant[1])))replay+='REVOKE ALL ON SCHEMA '+ident(expected.name)+' FROM '+(role==='PUBLIC'?'PUBLIC':ident(role))+';';
+   for(const [grantor,grantee,privilege,grantable]of expected.acl){need(['USAGE','CREATE'].includes(privilege),'RESTORE_SCHEMA_GRANT_UNKNOWN');replay+='SET SESSION AUTHORIZATION '+ident(grantor)+';GRANT '+privilege+' ON SCHEMA '+ident(expected.name)+' TO '+(grantee==='PUBLIC'?'PUBLIC':ident(grantee))+(grantable?' WITH GRANT OPTION':'')+';RESET SESSION AUTHORIZATION;';}
+  }
   if(replay)await sql(replay);
   await restore('post-data');
+  // Native extension ACL deltas are based on installation privileges. After
+  // ownership reassignment, replay the captured effective ACLs exactly; never
+  // waive the complete catalog comparison that follows.
+  let aclObjectsReplayed=0;
+  for(const family of ['relations','functions','types']){
+   phase='catalog.'+family;const actualRows=await jsonSql(aggregate(CATALOG_QUERIES[family]));replay='';
+   for(const expected of original.catalog[family]){
+    const actual=actualRows.find(row=>row.schema===expected.schema&&row.name===expected.name
+     &&(family!=='functions'||(row.arguments===expected.arguments&&row.kind===expected.kind)));
+    if(!actual||equal(actual.acl,expected.acl))continue;
+    const {acl:expectedAcl,...expectedDefinition}=expected,{acl:actualAcl,...actualDefinition}=actual;
+    if(!equal(expectedDefinition,actualDefinition))continue;
+    const object=family==='relations'?(expected.kind==='S'?'SEQUENCE ':'TABLE ')+table(expected.schema,expected.name)
+     :family==='functions'?'ROUTINE '+table(expected.schema,expected.name)+'('+expected.arguments+')'
+     :'TYPE '+table(expected.schema,expected.name);
+    const allowed=family==='relations'?(expected.kind==='S'?['USAGE','SELECT','UPDATE']:['SELECT','INSERT','UPDATE','DELETE','TRUNCATE','REFERENCES','TRIGGER','MAINTAIN'])
+     :family==='functions'?['EXECUTE']:['USAGE'];
+    for(const role of new Set([...actualAcl,...expectedAcl].map(grant=>grant[1])))replay+='REVOKE ALL ON '+object+' FROM '+(role==='PUBLIC'?'PUBLIC':ident(role))+';';
+    for(const [grantor,grantee,privilege,grantable]of expectedAcl){need(allowed.includes(privilege),'RESTORE_OBJECT_GRANT_UNKNOWN');replay+='SET SESSION AUTHORIZATION '+ident(grantor)+';GRANT '+privilege+' ON '+object+' TO '+(grantee==='PUBLIC'?'PUBLIC':ident(grantee))+(grantable?' WITH GRANT OPTION':'')+';RESET SESSION AUTHORIZATION;';}
+    aclObjectsReplayed++;
+   }
+   if(replay)await sql(replay);
+  }
   const catalogMismatches=[];
   for(const [family,query]of Object.entries(CATALOG_QUERIES)){
    phase='catalog.'+family;const actual=await jsonSql(aggregate(query));
@@ -349,7 +385,7 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
   need(equal(upgraded,{history:16,app_tables:144,forced_rls:144,native_policies:144}),'RESTORE_INITIAL_UPGRADE_INCOMPLETE');
   await checkJobs();report={passed:true,scope:'INITIAL_STAGING_LOGICAL_RESTORE_AND_UPGRADE',logical_database_restored:true,
    physical_relations_verified:original.data.length,physical_rows_verified:original.data.reduce((sum,row)=>sum+row.rows,0),sequences_verified:original.sequences.length,
-   baseline_catalog_families_verified:28,native_archive_sections_restored:3,native_restore_passes:4,native_toc_entries_preserved:lists.entries,extensions_precreated_with_source_owner:extensionsPrecreated,extension_privilege_warnings:extensionPrivilegeWarnings,post_data_owner_mode:'session_authorization',bootstrap_create_exceptions:1,source_migration_prefix:baseline.appliedPrefix,
+   baseline_catalog_families_verified:28,native_archive_sections_restored:3,native_restore_passes:4,native_toc_entries_preserved:lists.entries,extensions_precreated_with_source_owner:extensionsPrecreated,extension_owner_reassignments:extensionOwnerReassignments,extension_installers_removed:true,effective_acl_objects_replayed:aclObjectsReplayed,extension_privilege_warnings:extensionPrivilegeWarnings,post_data_owner_mode:'session_authorization',bootstrap_create_exceptions:1,source_migration_prefix:baseline.appliedPrefix,
    final_migration_prefix:16,non_superuser_upgrade_migrations:16-baseline.appliedPrefix,
    network_isolated:true,background_jobs_disabled:true,source_database_mutated:false,
    role_passwords_restored:false,provider_root_keys_restored:false,provider_services_verified:false,

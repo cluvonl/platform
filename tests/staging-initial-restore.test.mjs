@@ -38,7 +38,7 @@ function state(prefix){return {
  sourceRows:manifest.migrations.slice(0,prefix).map((m,index)=>({version:m.version,file:m.file,sha256:m.sha256,source_sha:sourceSha,
   actor:'fixture-source',scope:'staging',expected_version:index,idempotency_key:'cluvo-staging-initial16:2:'+m.version,workflow_run_id:'2'}))};}
 function runner(original,options={}){
- const observed={calls:[],upgrades:[],removed:false,replays:[],networkArgs:null,logReads:0,restoreSections:[],extensionCreates:[],extensionRoles:[]};let name,started=false,restoreFailed=false,extensionReads=0,prefix=original.source_history.applied_prefix;
+ const observed={calls:[],upgrades:[],removed:false,replays:[],networkArgs:null,logReads:0,restoreSections:[],extensionCreates:[],extensionRoles:[],aclReplays:[]};let name,started=false,restoreFailed=false,extensionReads=0,prefix=original.source_history.applied_prefix;
  const catalogSql=new Map(Object.entries(CATALOG_QUERIES).map(([family,query])=>[aggregate(query),family]));
  const inspect=()=>({id:cid,name:'/'+name,image:imageId,config_image:IMAGE,user:'postgres',label:options.badOwner||(restoreFailed&&options.badDiagnosticOwner)?'third-party':name,
   network:options.badNetwork?'bridge':'none',ports:null,binds:null,mounts:[],tmpfs:{'/restore':'rw,size=512m,mode=1777'},volumes_from:null,
@@ -70,6 +70,7 @@ function runner(original,options={}){
    if(options.logFailure)return failure();return ok(options.serverLog??'');
   }
   assert.ok(args.includes('psql'));assert.ok(args.includes('--set=VERBOSITY=sqlstate'));const role=args[args.indexOf('-U')+1],text=input.toString();
+  if(text.includes('CREATE ROLE "cluvo_restore_ext_'))return ok('');
   if(text.includes('CREATE ROLE')){observed.replays.push(text);assert.equal(text.includes('CREATE ROLE "'+bootstrapRole+'";'),false);assert.ok(text.includes('ALTER ROLE "'+bootstrapRole+'"'));if(options.globalsFailure)return {status:3,stdout:'',stderr:options.diagnostic??'ERROR:  42501\n'};return ok('');}
   const query=text.replace(/^SET client_min_messages=warning;\nSET search_path TO '';\n/,'').replace(/;\s*$/,'');
   if(catalogSql.has(query)){
@@ -77,6 +78,7 @@ function runner(original,options={}){
    if(family==='extensions'){if(extensionReads++===0){if(options.extensionAbsent)return ok([]);if(options.existingExtensionMismatch&&value.length)value[0].owner='unexpected_private_owner';}else if(options.lateExtensionMismatch&&value.length)value[0].owner='unexpected_private_owner';}
    if(options.catalogFailure===family)return {status:3,stdout:'',stderr:'ERROR:  42P01\n'};
    if(options.catalogMismatch&&family==='roles')value.push({name:'unexpected_fixture_role'});
+   if(options.aclMismatch&&family==='relations'&&!observed.aclReplays.length){value[0].acl.push([bootstrapRole,'anon','SELECT',false]);if(options.aclDefinitionMismatch)value[0].rls=true;}
    return ok(value);
   }
   if(query.includes("'unexpected_workers'"))return ok({listen_disabled:true,unexpected_workers:options.worker?1:0,cron_disabled:true,workers:0,version:170011});
@@ -93,7 +95,11 @@ function runner(original,options={}){
   }
   if(query.includes("'native_policies'"))return ok({native_policies:144,forced_rls:144,app_tables:144,history:16});
   if(query.startsWith('ALTER DATABASE postgres OWNER'))return ok('');
-  if(query.startsWith("SELECT jsonb_build_object('default_version',"))return ok({default_version:options.availableVersion??original.catalog.extensions[0]?.version});
+  if(query.startsWith("SELECT jsonb_build_object('available',"))return ok({available:options.versionUnavailable?false:true});
+  if(query.startsWith("SELECT jsonb_build_object('superuser',"))return ok({superuser:true,self:true,supautils_omitted:!options.installerSessionMismatch});
+  if(query.startsWith('REASSIGN OWNED BY "cluvo_restore_ext_'))return options.installerDropFailure?failure():ok('');
+  if(query.startsWith('REVOKE ALL ON TABLE ')){observed.aclReplays.push(query);return ok('');}
+  if(query.startsWith("SELECT jsonb_build_object('absent',"))return ok({absent:!options.installerStillPresent});
   if(query.startsWith('CREATE EXTENSION ')){observed.extensionCreates.push(query);observed.extensionRoles.push(role);return {...ok(''),stderr:options.extensionWarning??''};}
   assert.fail('unrecognized fixed protocol query');
  };
@@ -229,7 +235,8 @@ test('extensions are precreated with captured owners and versions; existing mism
   input.original.catalog.extensions.push(extension);
   const report=await restoreInitialBackup(input,{run});assert.equal(report.extensions_precreated_with_source_owner,1);
   assert.equal(observed.extensionCreates.length,1);
-  assert.equal(observed.extensionCreates[0],'CREATE EXTENSION "fixture_extension" WITH SCHEMA "auth"');assert.deepEqual(observed.extensionRoles,['postgres']);
+  assert.equal(observed.extensionCreates[0],'CREATE EXTENSION "fixture_extension" WITH SCHEMA "auth" VERSION \'1.2.3\'');assert.match(observed.extensionRoles[0],/^cluvo_restore_ext_[0-9a-f]{24}$/);
+  assert.equal(report.extension_owner_reassignments,1);assert.equal(report.extension_installers_removed,true);
   assert.equal(report.non_superuser_upgrade_migrations,16);assert.equal(observed.removed,true);
  },0,{extensionAbsent:true});
  await fixture(async(input,{run,observed})=>{
@@ -250,18 +257,38 @@ test('successful extension privilege warnings are counted and still require exac
   assert.equal(observed.upgrades.length,0);assert.equal(observed.removed,true);
  },0,{extensionAbsent:true,extensionWarning:'WARNING: 01007\n',lateExtensionMismatch:true});
 });
-test('a non-superuser default version must match the source before creation; superusers select explicitly',async()=>{
+test('the exact source version must be available before any installer or extension creation',async()=>{
  const extension={name:'fixture_extension',schema:'auth',owner:'postgres',version:'1.2.3',relocatable:true,config:[]};
  await fixture(async(input,{run,observed})=>{
   input.original.catalog.extensions.push(extension);
   await assert.rejects(restoreInitialBackup(input,{run}),error=>error.code==='RESTORE_EXTENSION_VERSION_UNAVAILABLE'&&error.phase==='extension_owners');
   assert.equal(observed.extensionCreates.length,0);assert.equal(observed.upgrades.length,0);assert.equal(observed.removed,true);
- },0,{extensionAbsent:true,availableVersion:'1.2.4'});
+ },0,{extensionAbsent:true,versionUnavailable:true});
  await fixture(async(input,{run,observed})=>{
   input.original.catalog.extensions.push({...extension,owner:bootstrapRole});
   const result=await restoreInitialBackup(input,{run});assert.equal(result.passed,true);
   assert.ok(observed.extensionCreates[0].includes(' VERSION \'1.2.3\''));assert.equal(observed.removed,true);
  },0,{extensionAbsent:true});
+});
+test('extension installers must prove their isolated session and be removed before verification',async()=>{
+ for(const [option,code]of [['installerSessionMismatch','RESTORE_INSTALLER_SESSION_UNPROVED'],['installerDropFailure','RESTORE_PROCESS_FAILED'],['installerStillPresent','RESTORE_INSTALLER_REMOVAL_UNPROVED']])await fixture(async(input,{run,observed})=>{
+  input.original.catalog.extensions.push({name:'fixture_extension',schema:'auth',owner:'postgres',version:'1.2.3',config:[]});
+  await assert.rejects(restoreInitialBackup(input,{run}),error=>error.code===code&&error.phase==='extension_owners');
+  assert.equal(observed.upgrades.length,0);assert.equal(observed.removed,true);
+ },0,{extensionAbsent:true,[option]:true});
+});
+test('effective ACL replay restores captured grantors and cannot hide a definition difference',async()=>{
+ await fixture(async(input,{run,observed})=>{
+  input.original.catalog.relations[0].acl=[['postgres','postgres','SELECT',false]];
+  const result=await restoreInitialBackup(input,{run});assert.equal(result.effective_acl_objects_replayed,1);
+  assert.equal(observed.aclReplays.length,1);assert.ok(observed.aclReplays[0].includes('SET SESSION AUTHORIZATION "postgres";GRANT SELECT ON TABLE "auth"."users" TO "postgres"'));
+  assert.equal(result.baseline_catalog_families_verified,28);assert.equal(observed.removed,true);
+ },0,{aclMismatch:true});
+ await fixture(async(input,{run,observed})=>{
+  input.original.catalog.relations[0].acl=[['postgres','postgres','SELECT',false]];
+  await assert.rejects(restoreInitialBackup(input,{run}),error=>error.code==='RESTORE_CATALOG_MISMATCH'&&error.phase==='catalog.relations');
+  assert.equal(observed.aclReplays.length,0);assert.equal(observed.upgrades.length,0);assert.equal(observed.removed,true);
+ },0,{aclMismatch:true,aclDefinitionMismatch:true});
 });
 test('unknown, mixed or failing extension warnings refuse and expose only finite diagnostics',async()=>{
  for(const warning of ['WARNING:  01000\n','WARNING:  01007\nERROR:  42501\n','WARNING: private@example.test\n'])await fixture(async(input,{run,observed})=>{
