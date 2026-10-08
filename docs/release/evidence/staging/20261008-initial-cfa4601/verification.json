@@ -1,0 +1,35 @@
+{
+  "source_sha": "cfa46013fd482f0b309f8d90b178a259c407790e",
+  "main_ci_run_id": "37772660894",
+  "main_ci_conclusion": "success",
+  "unnecessary_prototype_rebuild_run_id": "37773228346",
+  "prototype_rebuild_cancelled": true,
+  "unchanged_live_release": "147bb0eafb5cf0be5d7f4ba272ef4c36ee8d8302",
+  "restore_only_run_id": "37773228946",
+  "attempts": [
+    {
+      "attempt": 1,
+      "reached_database": false,
+      "failure": "PUBLIC_IMAGE_REGISTRY_RATE_LIMIT"
+    },
+    {
+      "attempt": 2,
+      "applied_migrations": 0,
+      "failure": "INITIAL_BACKUP_REMOTE_READBACK_FAILED"
+    },
+    {
+      "attempt": 3,
+      "applied_migrations": 0,
+      "backup_custody_remote_readback": true,
+      "failure": "RESTORE_PROCESS_FAILED",
+      "restore_failure_phase": "restore",
+      "restore_error_kind": "PROCESS_FAILURE"
+    }
+  ],
+  "restore_verified": false,
+  "application_activated": false,
+  "database_mutations_performed": false,
+  "private_values_exported": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

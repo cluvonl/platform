@@ -13,11 +13,15 @@ import {IMAGE} from './pg17-capture-worker.mjs';
 import {createInitialMigrationManifest,initialMigrationSQL,validateInitialHistory,INITIAL_LAYOUT_SQL,INITIAL_HISTORY_SQL,INITIAL_SOURCE_HISTORY_SQL,INITIAL_MIGRATION_POLICY,INITIAL_MIGRATION_LOCK_OBJECT} from './staging-initial-migrations.mjs';
 
 export const INITIAL_RESTORE_PHASES=Object.freeze(['input','image','create','start','ready','globals','restore','database','role_settings','database_acl','schema_acl',...Object.keys(CATALOG_QUERIES).map(family=>'catalog.'+family),'data','sequence','actor','history','upgrade','jobs','cleanup']);
+export const INITIAL_RESTORE_REASONS=Object.freeze(['EXTENSION_VERSION_UNAVAILABLE','EXTENSION_NOT_AVAILABLE','EXTENSION_LIBRARY_MISSING','READ_ONLY_TRANSACTION','ARCHIVE_TRUNCATED','ARCHIVE_VERSION_UNSUPPORTED','ARCHIVE_COMPRESSION_UNSUPPORTED','SERVER_DISCONNECTED','OUT_OF_MEMORY','DISK_FULL','GLOBAL_SETTING_UNSUPPORTED','STATEMENT_TIMEOUT','ROW_CONSTRAINT_VIOLATION','SCHEMA_REQUIRED','UNKNOWN_PROCESS_FAILURE']);
 export class InitialRestoreError extends Error {
- constructor(code,{phase='input',sqlstate=null,errorKind=null}={}){
+ constructor(code,{phase='input',sqlstate=null,errorKind=null,errorReason=null,exitStatus=null,processFailed=null}={}){
   super(code);this.code=code;this.phase=INITIAL_RESTORE_PHASES.includes(phase)?phase:'input';
   this.sqlstate=Object.hasOwn(SQLSTATE_KINDS,sqlstate)?sqlstate:null;
   this.errorKind=ERROR_KINDS.includes(errorKind)?errorKind:null;
+  this.errorReason=INITIAL_RESTORE_REASONS.includes(errorReason)?errorReason:null;
+  this.exitStatus=Number.isInteger(exitStatus)&&exitStatus>=0&&exitStatus<=255?exitStatus:null;
+  this.processFailed=typeof processFailed==='boolean'?processFailed:null;
  }
 }
 const SQLSTATE_KINDS=Object.freeze({'42501':'PERMISSION','42P01':'MISSING','3F000':'MISSING','42704':'MISSING','42883':'MISSING','3D000':'MISSING','42601':'SYNTAX','42710':'ALREADY_EXISTS','42P06':'ALREADY_EXISTS','42P07':'ALREADY_EXISTS','23505':'CONFLICT','57014':'TIMEOUT','55P03':'TIMEOUT','0A000':'UNSUPPORTED','55000':'UNSUPPORTED'});
@@ -26,13 +30,30 @@ const ERROR_KINDS=Object.freeze([...new Set(Object.values(SQLSTATE_KINDS)),'WARN
 // provider identifiers and data remain private even on failure.
 function processDiagnostic(result){
  const diagnostic=typeof result?.stderr==='string'?result.stderr:'';
+ const known=[
+  ['EXTENSION_VERSION_UNAVAILABLE','UNSUPPORTED',/has no installation script nor update path for version|extension .* version .* (?:not installed|not available)/i],
+  ['EXTENSION_NOT_AVAILABLE','MISSING',/extension .* is not available|could not open extension control file/i],
+  ['EXTENSION_LIBRARY_MISSING','MISSING',/could not (?:access|load|open) (?:file|library)|could not find function .* in file/i],
+  ['READ_ONLY_TRANSACTION','PERMISSION',/cannot execute .* in a read-only transaction/i],
+  ['ARCHIVE_TRUNCATED','PROCESS_FAILURE',/could not read from input file.*end of file|unexpected end of file|input file is too short|did not find magic string/i],
+  ['ARCHIVE_VERSION_UNSUPPORTED','UNSUPPORTED',/unsupported version .* in file header/i],
+  ['ARCHIVE_COMPRESSION_UNSUPPORTED','UNSUPPORTED',/unsupported compression|compression method .* not supported/i],
+  ['SERVER_DISCONNECTED','PROCESS_FAILURE',/server closed the connection|connection to server .* failed|could not receive data from server/i],
+  ['OUT_OF_MEMORY','PROCESS_FAILURE',/out of memory|cannot allocate memory/i],
+  ['DISK_FULL','PROCESS_FAILURE',/no space left on device|disk full/i],
+  ['GLOBAL_SETTING_UNSUPPORTED','UNSUPPORTED',/unrecognized configuration parameter|invalid value for parameter/i],
+  ['STATEMENT_TIMEOUT','TIMEOUT',/statement timeout|lock timeout|timed out/i],
+  ['ROW_CONSTRAINT_VIOLATION','CONFLICT',/violates .* constraint|duplicate key value/i],
+  ['SCHEMA_REQUIRED','MISSING',/no schema has been selected to create in/i],
+ ].find(([, ,pattern])=>pattern.test(diagnostic));
+ const details={errorReason:known?.[0]??'UNKNOWN_PROCESS_FAILURE',exitStatus:result?.status,processFailed:Boolean(result?.error)};
  const candidate=diagnostic.match(/(?:ERROR|FATAL|PANIC):\s+([0-9A-Z]{5})(?:\s|$)/)?.[1];
- if(Object.hasOwn(SQLSTATE_KINDS,candidate))return {sqlstate:candidate,errorKind:SQLSTATE_KINDS[candidate]};
+ if(Object.hasOwn(SQLSTATE_KINDS,candidate))return {...details,sqlstate:candidate,errorKind:SQLSTATE_KINDS[candidate]};
  const errorKind=[['PERMISSION',/permission denied|must be owner|must be superuser|only superusers/i],
   ['MISSING',/does not exist|could not find|no such file/i],['SYNTAX',/syntax error/i],
   ['ALREADY_EXISTS',/already exists/i],['TIMEOUT',/statement timeout|lock timeout|timed out/i],
   ['WARNING',/(?:WARNING|NOTICE):/]].find(([,pattern])=>pattern.test(diagnostic))?.[0]??'PROCESS_FAILURE';
- return {sqlstate:null,errorKind};
+ return {...details,sqlstate:null,errorKind:known?.[1]??errorKind};
 }
 const need=(condition,code)=>{if(!condition)throw new InitialRestoreError(code);};
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');

@@ -1,0 +1,16 @@
+{
+  "source_sha": "cfa46013fd482f0b309f8d90b178a259c407790e",
+  "workflow_run_id": "37773228946",
+  "attempt": 2,
+  "artifact_id": "11549320829",
+  "archive_sha256": "2c50a7cced07f9fc1dea175b3aa114670db752809128149c182eae4c256c0626",
+  "encrypted_bytes": 1497193,
+  "expired": false,
+  "post_failure_readback": true,
+  "same_process_custody_verified": false,
+  "restore_verified": false,
+  "database_mutations_performed": false,
+  "private_values_exported": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

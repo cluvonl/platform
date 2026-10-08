@@ -164,3 +164,21 @@ test('verification phases survive cleanup and unknown caller metadata cannot bec
  assert.equal(error.phase,'input');assert.equal(error.sqlstate,null);assert.equal(error.errorKind,null);
  assert.equal(JSON.stringify(error).includes('private_fixture'),false);assert.equal(JSON.stringify(error).includes('SECRT'),false);
 });
+test('private provider restore failures expose finite reasons and bounded process status only',async()=>{
+ for(const [diagnostic,reason,kind]of [
+  ['ERROR: extension "private_fixture" has no installation script nor update path for version "private_version"','EXTENSION_VERSION_UNAVAILABLE','UNSUPPORTED'],
+  ['ERROR: could not open extension control file "/private_fixture.control": No such file','EXTENSION_NOT_AVAILABLE','MISSING'],
+  ['ERROR: no schema has been selected to create in','SCHEMA_REQUIRED','MISSING'],
+  ['ERROR: unrecognized configuration parameter "private_fixture"','GLOBAL_SETTING_UNSUPPORTED','UNSUPPORTED'],
+  ['ERROR: cannot execute private_fixture in a read-only transaction','READ_ONLY_TRANSACTION','PERMISSION'],
+  ['pg_restore: error: could not read from input file: end of file','ARCHIVE_TRUNCATED','PROCESS_FAILURE'],
+  ['private_fixture_unknown_error','UNKNOWN_PROCESS_FAILURE','PROCESS_FAILURE'],
+ ])await fixture(async(input,{run,observed})=>{
+   await assert.rejects(restoreInitialBackup(input,{run}),error=>{
+    assert.equal(error.errorReason,reason);assert.equal(error.errorKind,kind);assert.equal(error.exitStatus,3);assert.equal(error.processFailed,false);
+    assert.equal(JSON.stringify(error).includes('private_fixture'),false);return true;
+   });assert.equal(observed.removed,true);
+  },0,{globalsFailure:true,diagnostic});
+ const unsafe=new InitialRestoreError('RESTORE_PROCESS_FAILED',{errorReason:'private_fixture',exitStatus:999,processFailed:'private_fixture'});
+ assert.equal(unsafe.errorReason,null);assert.equal(unsafe.exitStatus,null);assert.equal(unsafe.processFailed,null);
+});

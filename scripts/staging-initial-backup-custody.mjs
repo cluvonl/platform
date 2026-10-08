@@ -2,13 +2,18 @@
 import {hkdfSync,createHash} from 'node:crypto';
 import {readFile,lstat,writeFile} from 'node:fs/promises';
 import {join,isAbsolute} from 'node:path';
+import {setTimeout as pause} from 'node:timers/promises';
 import {executeDatabaseProcess} from './staging-database-process.mjs';
 
 export const INITIAL_BACKUP_KEY_PROFILE='cluvo-staging-initial16-backup-hkdf-sha256-v1';
 export const UPLOAD_ACTION_SHA='ea165f8d65b6e75b540449e92b4886f43607fa02';
 export const UPLOAD_ACTION_BUNDLE_SHA256='0165b8a75330f3228f2c7a234b4ff8a107b9139c2b519147f4c8e9fe99b262d8';
 const PROJECT='fbozlbgmktkgcdfqdaaz';
-export class BackupCustodyError extends Error{constructor(code){super(code);this.code=code;}}
+const RETRY_HTTP=new Set([404,429,500,502,503,504]);
+const PUBLIC_HTTP=new Set([200,301,302,303,307,308,400,401,403,404,408,410,422,429,500,502,503,504]);
+const RETRY_NETWORK=new Set(['EAI_AGAIN','ECONNRESET','ECONNREFUSED','ECONNABORTED','ETIMEDOUT','EPIPE','UND_ERR_CONNECT_TIMEOUT','UND_ERR_HEADERS_TIMEOUT','UND_ERR_BODY_TIMEOUT','UND_ERR_SOCKET']);
+const READBACK_BACKOFF=[250,500,1000,2000],READBACK_BUDGET=15000,READBACK_ATTEMPT=3000;
+export class BackupCustodyError extends Error{constructor(code,httpStatus=null){super(code);this.code=code;this.httpStatus=PUBLIC_HTTP.has(httpStatus)?httpStatus:null;}}
 const need=(value,code)=>{if(!value)throw new BackupCustodyError(code);};
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
 const plain=value=>value&&Object.getPrototypeOf(value)===Object.prototype;
@@ -43,23 +48,76 @@ export function parseInitialArtifactOutput(outputBytes,runId){
  return Object.freeze(outputs);
 }
 
+function readbackContext(environment){
+ need(environment&&typeof environment==='object','INITIAL_BACKUP_STAGING_CONTEXT_REQUIRED');
+ const context={};
+ for(const key of ['GITHUB_SHA','GITHUB_RUN_ID','GITHUB_RUN_ATTEMPT','GITHUB_REPOSITORY','GITHUB_REF','GITHUB_EVENT_NAME','GITHUB_SERVER_URL','GITHUB_TOKEN']){
+  const descriptor=Object.getOwnPropertyDescriptor(environment,key),value=descriptor?.value;
+  need(typeof value==='string'&&value.length>0&&value.length<=32768&&!/[\r\n\0]/.test(value),key==='GITHUB_TOKEN'?'INITIAL_BACKUP_READBACK_TOKEN_REQUIRED':'INITIAL_BACKUP_STAGING_CONTEXT_REQUIRED');
+  context[key]=value;
+ }
+ encryptedArtifactName(context.GITHUB_SHA,context.GITHUB_RUN_ID,context.GITHUB_RUN_ATTEMPT);
+ need(context.GITHUB_REPOSITORY==='cluvonl/platform'&&context.GITHUB_REF==='refs/heads/staging'
+  &&context.GITHUB_EVENT_NAME==='workflow_dispatch'&&context.GITHUB_SERVER_URL==='https://github.com','INITIAL_BACKUP_STAGING_CONTEXT_REQUIRED');
+ return Object.freeze(context);
+}
+
+// Readback projection only: this helper does not upload or authorize DDL. Each
+// request targets the same fixed GitHub API endpoint and receipt identity.
+export async function readbackInitialArtifact(outputBytes,environment,{fetcher=fetch,sleep=pause,now=()=>performance.now()}={}){
+ try{
+  const context=readbackContext(environment),outputs=parseInitialArtifactOutput(outputBytes,context.GITHUB_RUN_ID);
+  const name=encryptedArtifactName(context.GITHUB_SHA,context.GITHUB_RUN_ID,context.GITHUB_RUN_ATTEMPT);
+  const url=`https://api.github.com/repos/cluvonl/platform/actions/artifacts/${outputs['artifact-id']}`;
+  const deadline=now()+READBACK_BUDGET;
+  let lastError=new BackupCustodyError('INITIAL_BACKUP_REMOTE_READBACK_FAILED');
+  for(let attempt=0;attempt<=READBACK_BACKOFF.length;attempt++){
+   const remaining=deadline-now();if(remaining<=0)throw lastError;
+   const signal=AbortSignal.timeout(Math.max(1,Math.min(READBACK_ATTEMPT,Math.floor(remaining))));
+   try{
+    const response=await fetcher(url,{method:'GET',headers:{Accept:'application/vnd.github+json',Authorization:'Bearer '+context.GITHUB_TOKEN,'X-GitHub-Api-Version':'2022-11-28'},redirect:'error',signal});
+    if(response.status!==200){
+     lastError=new BackupCustodyError('INITIAL_BACKUP_REMOTE_READBACK_FAILED',response.status);
+     // Never read or replay error bodies, including authorization failures.
+     void response.body?.cancel().catch(()=>{});
+     if(!RETRY_HTTP.has(response.status))throw lastError;
+    }else{
+     let remote;
+     try{remote=await response.json();}catch(error){if(error instanceof SyntaxError)throw new BackupCustodyError('INITIAL_BACKUP_REMOTE_RECEIPT_INVALID',200);throw error;}
+     need(plain(remote)&&String(remote.id)===outputs['artifact-id']&&remote.name===name&&remote.expired===false
+      &&Number.isSafeInteger(remote.size_in_bytes)&&remote.size_in_bytes>0&&remote.digest==='sha256:'+outputs['artifact-digest']
+      &&String(remote.workflow_run?.id)===context.GITHUB_RUN_ID&&remote.workflow_run?.head_sha===context.GITHUB_SHA,'INITIAL_BACKUP_REMOTE_RECEIPT_INVALID');
+     if(now()>=deadline)throw new BackupCustodyError('INITIAL_BACKUP_REMOTE_READBACK_FAILED',200);
+     return Object.freeze({remote_readback:true,artifact_id:outputs['artifact-id'],archive_sha256:outputs['artifact-digest']});
+    }
+   }catch(error){
+    if(error instanceof BackupCustodyError)throw error;
+    if(!signal.aborted&&!(error instanceof TypeError&&RETRY_NETWORK.has(error.cause?.code)))throw new BackupCustodyError('INITIAL_BACKUP_REMOTE_READBACK_FAILED');
+    lastError=new BackupCustodyError('INITIAL_BACKUP_REMOTE_READBACK_FAILED');
+   }
+   if(attempt===READBACK_BACKOFF.length||deadline-now()<=READBACK_BACKOFF[attempt])throw lastError;
+   await sleep(READBACK_BACKOFF[attempt]);
+  }
+  throw lastError;
+ }catch(error){throw error instanceof BackupCustodyError?error:new BackupCustodyError('INITIAL_BACKUP_REMOTE_READBACK_FAILED');}
+}
+
 // A successful local JSON report is never a custody receipt. This function runs
 // the pinned official uploader and reads back its actual remote artifact.
 export async function uploadEncryptedInitialBackup({directory,actionBundle,environment},{run=executeDatabaseProcess,fetcher=fetch}={}){
  let output;
  try{
   need(isAbsolute(directory??'')&&isAbsolute(actionBundle??'')&&environment&&typeof environment==='object','INITIAL_BACKUP_UPLOAD_INPUT_REQUIRED');
+  const context=readbackContext(environment);
   const dir=await lstat(directory),file=await lstat(join(directory,'backup.encrypted.json')),bundle=await lstat(actionBundle);
   need(dir.isDirectory()&&!dir.isSymbolicLink()&&dir.uid===process.getuid()&&(dir.mode&0o777)===0o700
    &&file.isFile()&&!file.isSymbolicLink()&&file.nlink===1&&file.uid===process.getuid()&&(file.mode&0o777)===0o600
    &&file.size>0&&file.size<=90*1024*1024,'INITIAL_BACKUP_PRIVATE_ARTIFACT_REQUIRED');
   need(bundle.isFile()&&!bundle.isSymbolicLink()&&bundle.size===5051718&&hash(await readFile(actionBundle))===UPLOAD_ACTION_BUNDLE_SHA256,'INITIAL_BACKUP_UPLOADER_SOURCE_CHANGED');
-  const name=encryptedArtifactName(environment.GITHUB_SHA,environment.GITHUB_RUN_ID,environment.GITHUB_RUN_ATTEMPT);
-  need(environment.GITHUB_REPOSITORY==='cluvonl/platform'&&environment.GITHUB_REF==='refs/heads/staging'
-   &&environment.GITHUB_EVENT_NAME==='workflow_dispatch','INITIAL_BACKUP_STAGING_CONTEXT_REQUIRED');
+  const name=encryptedArtifactName(context.GITHUB_SHA,context.GITHUB_RUN_ID,context.GITHUB_RUN_ATTEMPT);
   const env={PATH:'/usr/bin:/bin',LANG:'C.UTF-8',GITHUB_WORKSPACE:directory};
   for(const key of ['ACTIONS_RUNTIME_TOKEN','ACTIONS_RUNTIME_URL','ACTIONS_RESULTS_URL','GITHUB_REPOSITORY','GITHUB_RUN_ID','GITHUB_RUN_ATTEMPT','GITHUB_SERVER_URL']){
-   const value=environment[key];need(typeof value==='string'&&value.length>0&&value.length<=32768&&!/[\r\n\0]/.test(value),'INITIAL_BACKUP_UPLOAD_CONTEXT_REQUIRED');env[key]=value;
+   const value=context[key]??environment[key];need(typeof value==='string'&&value.length>0&&value.length<=32768&&!/[\r\n\0]/.test(value),'INITIAL_BACKUP_UPLOAD_CONTEXT_REQUIRED');env[key]=value;
   }
   need(env.GITHUB_SERVER_URL==='https://github.com','INITIAL_BACKUP_UPLOAD_CONTEXT_REQUIRED');
   for(const key of ['ACTIONS_RUNTIME_URL','ACTIONS_RESULTS_URL']){
@@ -71,15 +129,8 @@ export async function uploadEncryptedInitialBackup({directory,actionBundle,envir
   // stdout/stderr are bounded private buffers; never replay action diagnostics.
   const result=await run(process.execPath,[actionBundle],{env,timeout:180000,maxBuffer:128000});
   need(result.status===0&&!result.error,'INITIAL_BACKUP_UPLOAD_FAILED');
-  const outputs=parseInitialArtifactOutput(await readFile(output),env.GITHUB_RUN_ID);
-  need(typeof environment.GITHUB_TOKEN==='string'&&environment.GITHUB_TOKEN.length>0,'INITIAL_BACKUP_READBACK_TOKEN_REQUIRED');
-  const response=await fetcher(`https://api.github.com/repos/cluvonl/platform/actions/artifacts/${outputs['artifact-id']}`,{
-   headers:{Accept:'application/vnd.github+json',Authorization:'Bearer '+environment.GITHUB_TOKEN,'X-GitHub-Api-Version':'2022-11-28'},redirect:'error',signal:AbortSignal.timeout(15000)});
-  need(response.status===200,'INITIAL_BACKUP_REMOTE_READBACK_FAILED');const remote=await response.json();
-  need(plain(remote)&&String(remote.id)===outputs['artifact-id']&&remote.name===name&&remote.expired===false
-   &&Number.isSafeInteger(remote.size_in_bytes)&&remote.size_in_bytes>0&&remote.digest==='sha256:'+outputs['artifact-digest']
-   &&String(remote.workflow_run?.id)===env.GITHUB_RUN_ID&&remote.workflow_run?.head_sha===environment.GITHUB_SHA,'INITIAL_BACKUP_REMOTE_RECEIPT_INVALID');
-  return Object.freeze({uploaded:true,remote_readback:true,artifact_id:outputs['artifact-id'],archive_sha256:outputs['artifact-digest'],
+  const receipt=await readbackInitialArtifact(await readFile(output),context,{fetcher});
+  return Object.freeze({uploaded:true,...receipt,
    retention_days:30,key_profile:INITIAL_BACKUP_KEY_PROFILE,plaintext_uploaded:false,secret_key_uploaded:false});
  }catch(error){throw error instanceof BackupCustodyError?error:new BackupCustodyError('INITIAL_BACKUP_CUSTODY_UNAVAILABLE');}
 }

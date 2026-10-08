@@ -11,8 +11,8 @@ import {IMMUTABLE16} from './staging-migration-files.mjs';
 import {createInitialMigrationManifest,validateInitialHistory} from './staging-initial-migrations.mjs';
 import {capturePlan,captureWithOwnedWorker,probeOwnedPg17Toolchain} from './pg17-capture-worker.mjs';
 import {packFiles,encryptCaptureFiles,decryptRestoreFiles} from './backup-artifact.mjs';
-import {deriveInitialBackupKey,uploadEncryptedInitialBackup,INITIAL_BACKUP_KEY_PROFILE} from './staging-initial-backup-custody.mjs';
-import {restoreInitialBackup,InitialRestoreError,INITIAL_RESTORE_PHASES} from './staging-initial-restore.mjs';
+import {deriveInitialBackupKey,uploadEncryptedInitialBackup,INITIAL_BACKUP_KEY_PROFILE,BackupCustodyError} from './staging-initial-backup-custody.mjs';
+import {restoreInitialBackup,InitialRestoreError,INITIAL_RESTORE_PHASES,INITIAL_RESTORE_REASONS} from './staging-initial-restore.mjs';
 // Concrete write owner is separate from the existing read-only bridge.
 import {InitialSession,INITIAL_SESSION_CHILD_SHA256} from './staging-initial-session.mjs';
 
@@ -129,9 +129,13 @@ export async function stagingInitialMigration(environment){
  }catch(error){
   primary??=typeof error?.code==='string'&&SAFE_ERROR.test(error.code)?error.code:'INITIAL_MIGRATION_UNAVAILABLE';
   if(/^[0-9A-Z]{5}$/.test(error?.sqlstate??''))report.sqlstate=error.sqlstate;
+  if(error instanceof BackupCustodyError&&[200,301,302,303,307,308,400,401,403,404,408,410,422,429,500,502,503,504].includes(error.httpStatus))report.backup_readback_http_status=error.httpStatus;
   if(error instanceof InitialRestoreError&&INITIAL_RESTORE_PHASES.includes(error.phase)){
    report.restore_failure_phase=error.phase;
    if(['PERMISSION','MISSING','SYNTAX','ALREADY_EXISTS','CONFLICT','TIMEOUT','UNSUPPORTED','WARNING','PROCESS_FAILURE'].includes(error.errorKind))report.restore_error_kind=error.errorKind;
+   if(INITIAL_RESTORE_REASONS.includes(error.errorReason))report.restore_error_reason=error.errorReason;
+   if(Number.isInteger(error.exitStatus)&&error.exitStatus>=0&&error.exitStatus<=255)report.restore_process_exit_status=error.exitStatus;
+   if(typeof error.processFailed==='boolean')report.restore_process_failed=error.processFailed;
   }
  }finally{
   clearTimeout(timer);for(const signal of ['SIGINT','SIGTERM'])process.removeListener(signal,interrupted);

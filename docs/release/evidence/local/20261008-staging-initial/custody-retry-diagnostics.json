@@ -1,0 +1,15 @@
+{
+  "scope": "BOUNDED_ARTIFACT_READBACK_AND_RESTORE_DIAGNOSTICS",
+  "files_sha256": {
+    "scripts/staging-initial-backup-custody.mjs": "18cf742b7f831d8369e019170349e2c14c962a14fe734f6619d09bc1c93b5f78",
+    "scripts/staging-initial-restore.mjs": "b18a64a186fc7d8e492e56622d4d37309ec6d8f23bae3b423224044ddd8f71bc",
+    "scripts/staging-initial-migrate.mjs": "bfa2a0251f33e890ecc81f140cd1d1b4d26fae6263a4dd2859725dfd0351baec"
+  },
+  "targeted_tests": 26,
+  "targeted_tests_passed": 26,
+  "eslint_passed": true,
+  "raw_diagnostics_exported": false,
+  "authority_or_receipt_checks_relaxed": false,
+  "v1_ready": false,
+  "production_enabled": false
+}
