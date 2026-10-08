@@ -1,0 +1,153 @@
+name: Prepare staging app runtime
+
+on:
+  workflow_dispatch:
+    inputs:
+      expected_source_sha:
+        description: Expected current staging release SHA
+        required: true
+        type: string
+      expected_config_version:
+        description: Expected runtime import version (0 for the first import)
+        required: true
+        type: string
+      compatible_rollback_shas:
+        description: JSON array of verified schema-compatible rollback source SHAs
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cluvo-staging
+  cancel-in-progress: false
+
+jobs:
+  verify_database:
+    if: github.repository == 'cluvonl/platform' && github.ref == 'refs/heads/staging'
+    runs-on: ubuntu-24.04
+    environment: staging
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: '.nvmrc'
+      - name: Prepare the pinned database CA
+        run: |
+          set -euo pipefail
+          sha256sum --check ops/tls/supabase-platform-root-ca.sha256
+          cat /etc/ssl/certs/ca-certificates.crt ops/tls/supabase-platform-root-ca.pem \
+            > "${RUNNER_TEMP}/cluvo-supabase-ca.pem"
+          chmod 600 "${RUNNER_TEMP}/cluvo-supabase-ca.pem"
+      - name: Refuse runtime import before schema and API authorization are ready
+        env:
+          APP_ENV: staging
+          RELEASE_SHA: ${{ github.sha }}
+          STAGING_SUPABASE_PROJECT_REF: ${{ vars.STAGING_SUPABASE_PROJECT_REF }}
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ vars.SUPABASE_PUBLISHABLE_KEY }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+          INVITATION_TOKEN_SECRET: ${{ secrets.INVITATION_TOKEN_SECRET }}
+          MIGRATION_DATABASE_URL: ${{ secrets.MIGRATION_DATABASE_URL }}
+          MIGRATION_SSL_ROOT_CERT_PATH: ${{ runner.temp }}/cluvo-supabase-ca.pem
+        run: |
+          set -euo pipefail
+          node --input-type=module - <<'JS'
+          import {stagingPreflight} from './scripts/staging-preflight.mjs';
+          import {verifyImmutable16} from './scripts/staging-capture-source.mjs';
+          try {
+            if (process.env.STAGING_SUPABASE_PROJECT_REF !== 'fbozlbgmktkgcdfqdaaz'
+              || process.env.SUPABASE_URL !== 'https://fbozlbgmktkgcdfqdaaz.supabase.co') throw new Error();
+            const migrations = await verifyImmutable16();
+            // No SendGrid credential is supplied: this check sends no mail.
+            const report = await stagingPreflight(process.env, {
+              expectedMigrations:migrations.map(({file}) => file.slice(0, 14)),
+            });
+            const db = report.checks.database;
+            const auth = report.checks.auth;
+            const passed = db?.passed === true && db.schema_ready === true
+              && db.server_certificate_verified === true
+              && db.applied_migrations === 16 && db.pending_migrations === 0
+              && db.app_tables === 144 && db.forced_rls_tables === 144
+              && db.native_session_policies === 144
+              && auth?.passed === true && auth.api_schema_accessible === true
+              && auth.email_provider_enabled === true && auth.email_confirmation_required === true;
+            console.log(JSON.stringify({scope:'STAGING_RUNTIME_SCHEMA_PREFLIGHT', passed,
+              database_mutations:false, email_sent:false, app_activation_proven:false,
+              v1_ready:false, production_enabled:false}));
+            if (!passed) process.exitCode = 1;
+          } catch {
+            console.error('STAGING_RUNTIME_SCHEMA_PREFLIGHT_FAILED');
+            process.exitCode = 1;
+          }
+          JS
+
+  configure:
+    needs: verify_database
+    if: >-
+      github.repository == 'cluvonl/platform' && github.ref == 'refs/heads/staging' &&
+      vars.STAGING_DEPLOY_ENABLED == 'true'
+    runs-on: [self-hosted, Linux, X64, cluvo-staging-deploy]
+    environment: staging
+    timeout-minutes: 3
+    steps:
+      # Trusted staging-only job on the dedicated VPS runner. No checkout,
+      # plaintext file, credential argument, migration DSN or build step.
+      - name: Import core runtime through the fixed root broker
+        env:
+          CONFIG_SOURCE_SHA: ${{ github.sha }}
+          CONFIG_RUN_ID: ${{ github.run_id }}
+          CONFIG_ACTOR: ${{ github.actor }}
+          EXPECTED_SOURCE_SHA: ${{ inputs.expected_source_sha }}
+          EXPECTED_CONFIG_VERSION: ${{ inputs.expected_config_version }}
+          COMPATIBLE_ROLLBACK_SHAS: ${{ inputs.compatible_rollback_shas }}
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ vars.SUPABASE_PUBLISHABLE_KEY }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+          INVITATION_TOKEN_SECRET: ${{ secrets.INVITATION_TOKEN_SECRET }}
+          MAIL_ALLOWLIST: ${{ secrets.MAIL_ALLOWLIST }}
+        run: |
+          set -euo pipefail
+          /usr/bin/python3 -I - <<'PY' | sudo --non-interactive \
+            /usr/local/sbin/cluvo-import-staging-config "$CONFIG_SOURCE_SHA" "$CONFIG_RUN_ID"
+          import json
+          import os
+          import re
+          import sys
+          try:
+              version = os.environ['EXPECTED_CONFIG_VERSION']
+              if not re.fullmatch(r'0|[1-9][0-9]{0,5}', version):
+                  raise ValueError()
+              rollback = json.loads(os.environ['COMPATIBLE_ROLLBACK_SHAS'])
+              if not isinstance(rollback, list) or not 1 <= len(rollback) <= 16:
+                  raise ValueError()
+              if any(not isinstance(value, str) or not re.fullmatch('[0-9a-f]{40}', value) for value in rollback):
+                  raise ValueError()
+              payload = {
+                  'format': 'cluvo-staging-runtime-config-v1',
+                  'source_sha': os.environ['CONFIG_SOURCE_SHA'],
+                  'workflow_run_id': os.environ['CONFIG_RUN_ID'],
+                  'expected_source_sha': os.environ['EXPECTED_SOURCE_SHA'],
+                  'expected_config_version': int(version),
+                  'actor': os.environ['CONFIG_ACTOR'],
+                  'project_ref': 'fbozlbgmktkgcdfqdaaz',
+                  'app_url': 'https://staging.cluvo.nl',
+                  'supabase_url': os.environ['SUPABASE_URL'],
+                  'supabase_publishable_key': os.environ['SUPABASE_PUBLISHABLE_KEY'],
+                  'supabase_secret_key': os.environ['SUPABASE_SECRET_KEY'],
+                  'invitation_token_secret': os.environ['INVITATION_TOKEN_SECRET'],
+                  'mail_allowlist': os.environ['MAIL_ALLOWLIST'],
+                  'compatible_rollback_shas': rollback,
+              }
+              encoded = json.dumps(payload, separators=(',', ':')).encode('utf-8')
+              if len(encoded) > 32768:
+                  raise ValueError()
+              sys.stdout.buffer.write(encoded)
+          except Exception:
+              print('STAGING_RUNTIME_INPUT_INVALID', file=sys.stderr)
+              raise SystemExit(1)
+          PY

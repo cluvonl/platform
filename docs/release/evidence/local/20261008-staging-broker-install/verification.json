@@ -1,0 +1,62 @@
+{
+  "scope": "LOCAL_SYNTHETIC_SERVER_OPERATIONS",
+  "source_files_sha256": {
+    "ops/cluvo-deploy-staging": "e1c66fd7fbb04543b3ae7b262e3bd6a9c57993ac30bffc8098bcc53f4bbaa901",
+    "ops/compose.staging.yml": "a45262ba3a499539c4739358f582e15f183e1815948d553bcb30494e6edb96a5",
+    "ops/cluvo-import-staging-config": "c8f473695c82f6271aaa2897dff661759f2289c1d6449e914356cd3a5496d185",
+    "ops/install-staging-app-broker": "cbb1df51b6c9ee17acbc20c87bb45294e5435a1a7964452cf97c9cc41dfb882e",
+    ".github/workflows/staging-configure-app.yml": "f643d0894545abf714f8bb60a4b669f7619714ea39957149adb4096f32ec25c8",
+    "tests/staging-broker-config.test.mjs": "c2afa889ec95c898618be10324476f5b7dcff8bb9928a6e17f38af51882cf01d",
+    "tests/staging-config-import.test.mjs": "a7ba9025dd4a7ca6f77d296c4fabb9460cdfef54fd41b56aeed6fb80ee90ee64",
+    "tests/staging-broker-install.test.mjs": "9c03d8e952c5fc0744ff2ab2c7b72242bc8b8ff1dc189a378772165782489c12"
+  },
+  "commands": [
+    {
+      "command": "npm run lint",
+      "result": "PASS"
+    },
+    {
+      "command": "npm test",
+      "result": "PASS",
+      "tests": 434
+    },
+    {
+      "command": "YAML, shell and embedded Python syntax validation",
+      "result": "PASS"
+    },
+    {
+      "command": "Workflow emitter to strict importer payload (synthetic values only)",
+      "result": "PASS",
+      "cases": 3
+    }
+  ],
+  "targeted_tests": {
+    "broker": 10,
+    "runtime_importer": 19,
+    "installer": 12
+  },
+  "test_log_sha256": "f6a527d2ec71bc5efb237ae350b0c82057b3dea7b79f5481acbf86246e2d9e09",
+  "executed_failure_cases": [
+    "foreign target and version drift",
+    "duplicate and unknown fields",
+    "replay conflict",
+    "private filesystem and symlink/hardlink refusal",
+    "transaction write failure",
+    "process interruption during writes, rollback and journal cleanup",
+    "pending journal deployment refusal",
+    "app-authorized compatible image recovery",
+    "ineffective sudoers grant and installation rollback"
+  ],
+  "fixture_scope": "OWNED_LOCAL_TEMPORARY_DIRECTORIES_AND_SYNTHETIC_ACCOUNTS",
+  "actual_sudo_or_vps_install_executed": false,
+  "sudo_policy_tests": "SIMULATED_EFFECTIVE_QUERY_RESULT; NO PRIVILEGED COMMAND EXECUTION",
+  "source_ci": "PENDING_NEW_COMMIT",
+  "server_files_mutated": false,
+  "database_mutations_performed": false,
+  "actual_mail_sent": false,
+  "native_login_proven": false,
+  "backup_restore_proven": false,
+  "app_activation_proven": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

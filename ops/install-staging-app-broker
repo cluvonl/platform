@@ -1,0 +1,354 @@
+#!/usr/bin/python3 -I
+"""Install a reviewed public staging bundle; never activate or alter runtime config.
+
+Run once as root after downloading the exact commit's public bundle into a private
+directory. Supply its independently verified bootstrap-manifest.json SHA256 and
+the existing dedicated runner account. There is deliberately no network access,
+environment configuration import, arbitrary destination or sudo-command option.
+"""
+
+import argparse
+import ast
+import fcntl
+import hashlib
+import json
+import os
+from pathlib import Path
+import pwd
+import re
+import stat
+import subprocess
+import time
+import uuid
+
+
+ROOT_UID = 0
+ROOT_GID = 0
+TRUST_ROOT = Path('/')
+STATE = Path('/var/lib/cluvo-staging')
+DESTINATIONS = {
+    'cluvo-deploy-staging': Path('/usr/local/sbin/cluvo-deploy-staging'),
+    'compose.staging.yml': Path('/etc/cluvo/compose.staging.yml'),
+    'cluvo-import-staging-config': Path('/usr/local/sbin/cluvo-import-staging-config'),
+}
+PRIVATE_CONFIG = (Path('/etc/cluvo/staging-target.json'), Path('/etc/cluvo/staging.env'))
+SUDOERS = Path('/etc/sudoers.d/cluvo-staging-config-import')
+SYSTEM_SUDOERS = Path('/etc/sudoers')
+SUDOERS_DIRECTORY = Path('/etc/sudoers.d')
+SOURCES = {name: 'ops/' + name for name in (*DESTINATIONS, 'install-staging-app-broker')}
+MODES = {'cluvo-deploy-staging': 0o755, 'compose.staging.yml': 0o644,
+         'cluvo-import-staging-config': 0o755}
+SAFE_ENV = {'PATH': '/usr/sbin:/usr/bin:/sbin:/bin', 'LC_ALL': 'C'}
+
+
+class InstallFailure(Exception):
+    pass
+
+
+def require(condition, code):
+    if not condition:
+        raise InstallFailure(code)
+
+
+def sha256(content):
+    return hashlib.sha256(content).hexdigest()
+
+
+def protected_directory(path):
+    path = Path(path)
+    require(path.is_relative_to(TRUST_ROOT), 'UNEXPECTED_INSTALL_PATH')
+    for parent in (path, *path.parents):
+        info = os.lstat(parent)
+        require(stat.S_ISDIR(info.st_mode) and info.st_uid == ROOT_UID
+                and not info.st_mode & 0o022, 'UNTRUSTED_INSTALL_DIRECTORY')
+        if parent == TRUST_ROOT:
+            return
+    raise InstallFailure('UNEXPECTED_INSTALL_PATH')
+
+
+def stable(info):
+    return (info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns, info.st_ctime_ns)
+
+
+def read_private(path, limit=131072):
+    protected_directory(Path(path).parent)
+    info = os.lstat(path)
+    require(stat.S_ISREG(info.st_mode) and info.st_nlink == 1
+            and info.st_uid == ROOT_UID and not info.st_mode & 0o022
+            and info.st_size <= limit, 'UNTRUSTED_INSTALL_FILE')
+    descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+    try:
+        opened = os.fstat(descriptor)
+        require(stable(opened) == stable(info), 'INSTALL_FILE_CHANGED')
+        chunks = []
+        remaining = limit + 1
+        while remaining:
+            part = os.read(descriptor, min(65536, remaining))
+            if not part:
+                break
+            chunks.append(part)
+            remaining -= len(part)
+        content = b''.join(chunks)
+        require(len(content) == info.st_size and stable(os.fstat(descriptor)) == stable(info)
+                and stable(os.lstat(path)) == stable(info), 'INSTALL_FILE_CHANGED')
+        return content, info
+    finally:
+        os.close(descriptor)
+
+
+def atomic_replace(path, content, mode, uid=None, gid=None):
+    uid = ROOT_UID if uid is None else uid
+    gid = ROOT_GID if gid is None else gid
+    protected_directory(Path(path).parent)
+    temporary = Path(path).with_name('.cluvo-install-' + uuid.uuid4().hex)
+    descriptor = os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
+    try:
+        position = 0
+        while position < len(content):
+            position += os.write(descriptor, content[position:])
+        os.fchown(descriptor, uid, gid)
+        os.fchmod(descriptor, mode)
+        os.fsync(descriptor)
+        os.close(descriptor)
+        descriptor = None
+        os.replace(temporary, path)
+        directory = os.open(Path(path).parent, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+        try:
+            os.fsync(directory)
+        finally:
+            os.close(directory)
+    finally:
+        if descriptor is not None:
+            os.close(descriptor)
+        if temporary.exists():
+            temporary.unlink()
+
+
+def validate_sudoers(path=None):
+    command = ['/usr/sbin/visudo', '--check']
+    if path is not None:
+        command += ['--file', str(path)]
+    result = subprocess.run(command, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL, env=SAFE_ENV, timeout=15, check=False)
+    require(result.returncode == 0, 'SUDOERS_VALIDATION_FAILED')
+
+
+def validate_import_grant(runner_user, source_sha):
+    # A valid drop-in does not prove that sudoers actually includes it. This is
+    # only a permission query for the dedicated runner, never helper execution.
+    result = subprocess.run(
+        ['/usr/bin/sudo', '--non-interactive', '--list', '--other-user', runner_user,
+         '--user=root', '--', '/usr/local/sbin/cluvo-import-staging-config', source_sha, '1'],
+        stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        env=SAFE_ENV, timeout=15, check=False)
+    require(result.returncode == 0, 'IMPORT_GRANT_UNCONFIRMED')
+
+
+def existing_runner_user():
+    """Recognize one direct existing broker grant; do not interpret sudo aliases."""
+    try:
+        main, _ = read_private(SYSTEM_SUDOERS)
+        policies = [main.decode('utf-8')]
+        include = r'^\s*(?:@includedir|#includedir)[ \t]+/etc/sudoers\.d[ \t]*(?:#[^\n]*)?$'
+        if re.search(include, policies[0], re.MULTILINE):
+            protected_directory(SUDOERS_DIRECTORY)
+            entries = sorted(SUDOERS_DIRECTORY.iterdir())
+            require(len(entries) <= 100, 'RUNNER_USER_REQUIRED')
+            for path in entries:
+                # sudo's includedir ignores dotted names and editor backups.
+                if '.' not in path.name and not path.name.endswith('~'):
+                    data, _ = read_private(path)
+                    policies.append(data.decode('utf-8'))
+        rule = re.compile(
+            r'^[ \t]*([a-z_][a-z0-9_-]{0,31})[ \t]+ALL[ \t]*=[ \t]*'
+            r'\([ \t]*(?:root|ALL)(?:[ \t]*:[ \t]*(?:root|ALL))?[ \t]*\)'
+            r'[ \t]+NOPASSWD:[ \t]*/usr/local/sbin/cluvo-deploy-staging'
+            r'(?:[ \t]+\*)?[ \t]*(?:#[^\n]*)?$', re.MULTILINE)
+        users = {match.group(1) for policy in policies for match in rule.finditer(policy)}
+        require(len(users) == 1, 'RUNNER_USER_REQUIRED')
+        return next(iter(users))
+    except (OSError, UnicodeError, InstallFailure):
+        raise InstallFailure('RUNNER_USER_REQUIRED') from None
+
+
+def read_bundle(directory, source_sha, manifest_sha):
+    protected_directory(directory)
+    require(stat.S_IMODE(os.lstat(directory).st_mode) == 0o700, 'PRIVATE_BUNDLE_REQUIRED')
+    raw, _ = read_private(directory / 'bootstrap-manifest.json')
+    require(sha256(raw) == manifest_sha, 'BOOTSTRAP_MANIFEST_HASH_MISMATCH')
+    manifest = json.loads(raw)
+    require(isinstance(manifest, dict)
+            and manifest.get('format') == 'cluvo-public-staging-server-bootstrap'
+            and manifest.get('source_sha') == source_sha
+            and manifest.get('project_ref') == 'fbozlbgmktkgcdfqdaaz'
+            and manifest.get('origin') == 'https://staging.cluvo.nl'
+            and manifest.get('contains_credentials') is False
+            and manifest.get('production_enabled') is False, 'INVALID_BOOTSTRAP_TARGET')
+    files = manifest.get('files')
+    require(isinstance(files, dict) and set(files) == set(SOURCES), 'INVALID_BOOTSTRAP_FILES')
+    verified = {}
+    for name, source in SOURCES.items():
+        entry = files[name]
+        require(isinstance(entry, dict) and set(entry) == {'repo_path', 'sha256'}
+                and entry['repo_path'] == source
+                and isinstance(entry['sha256'], str)
+                and re.fullmatch('[0-9a-f]{64}', entry['sha256']), 'INVALID_BOOTSTRAP_FILE')
+        content, _ = read_private(directory / name)
+        require(sha256(content) == entry['sha256'], 'BOOTSTRAP_FILE_HASH_MISMATCH')
+        verified[name] = content
+    require(sha256(Path(__file__).read_bytes()) == files['install-staging-app-broker']['sha256'],
+            'INSTALLER_SOURCE_MISMATCH')
+    require(verified['cluvo-import-staging-config'].startswith(b'#!/usr/bin/python3 -I\n'),
+            'ISOLATED_IMPORTER_REQUIRED')
+    ast.parse(verified['cluvo-import-staging-config'].decode('utf-8'))
+    result = subprocess.run(['/usr/bin/bash', '--noprofile', '--norc', '-n',
+                             str(directory / 'cluvo-deploy-staging')],
+                            stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL, env=SAFE_ENV, timeout=15, check=False)
+    require(result.returncode == 0, 'BROKER_SYNTAX_INVALID')
+    return verified
+
+
+def install(source_sha, runner_user, directory, manifest_sha):
+    require(os.geteuid() == ROOT_UID, 'ROOT_PROVISIONING_REQUIRED')
+    require(re.fullmatch('[0-9a-f]{40}', source_sha)
+            and re.fullmatch('[0-9a-f]{64}', manifest_sha), 'INVALID_SOURCE_BINDING')
+    if runner_user is None:
+        runner_user = existing_runner_user()
+    require(re.fullmatch('[a-z_][a-z0-9_-]{0,31}', runner_user)
+            and runner_user != 'cluvo-staging', 'INVALID_RUNNER_ACCOUNT')
+    try:
+        runner = pwd.getpwnam(runner_user)
+        runtime = pwd.getpwnam('cluvo-staging')
+    except KeyError:
+        raise InstallFailure('DEDICATED_RUNNER_ACCOUNT_MISSING') from None
+    require(runner.pw_uid != 0 and runner.pw_uid != runtime.pw_uid,
+            'DEDICATED_RUNNER_REQUIRED')
+    require(runtime.pw_gid not in os.getgrouplist(runner_user, runner.pw_gid),
+            'RUNNER_RUNTIME_GROUP_MUST_BE_SEPARATE')
+    contents = read_bundle(Path(directory), source_sha, manifest_sha)
+    protected_directory(STATE)
+    for path in (*DESTINATIONS.values(), *PRIVATE_CONFIG, SUDOERS):
+        protected_directory(path.parent)
+    lock = STATE / 'deploy.lock'
+    read_private(lock)
+    descriptor = os.open(lock, os.O_RDWR | os.O_NOFOLLOW | os.O_NONBLOCK)
+    try:
+        deadline = time.monotonic() + 30
+        while True:
+            try:
+                fcntl.flock(descriptor, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                break
+            except BlockingIOError:
+                require(time.monotonic() < deadline, 'DEPLOY_LOCK_BUSY')
+                time.sleep(0.1)
+        require(stable(os.fstat(descriptor)) == stable(os.lstat(lock)), 'DEPLOY_LOCK_CHANGED')
+        validate_sudoers()
+        originals = {}
+        for path in (*DESTINATIONS.values(), *PRIVATE_CONFIG, SUDOERS):
+            try:
+                originals[path] = read_private(path)
+            except FileNotFoundError:
+                require(path in (DESTINATIONS['cluvo-import-staging-config'], SUDOERS),
+                        'EXISTING_STAGING_INSTALL_REQUIRED')
+                originals[path] = None
+        sudoers = ("Defaults!/usr/local/sbin/cluvo-import-staging-config !log_input, !log_output\n"
+                   + runner_user + " ALL=(root) NOPASSWD: /usr/local/sbin/cluvo-import-staging-config *\n").encode()
+        desired = {DESTINATIONS[name]: (contents[name], MODES[name]) for name in DESTINATIONS}
+        desired[SUDOERS] = (sudoers, 0o440)
+        unchanged = all(originals[path] is not None
+                        and originals[path][0] == data
+                        and stat.S_IMODE(originals[path][1].st_mode) == mode
+                        for path, (data, mode) in desired.items())
+        if unchanged:
+            validate_import_grant(runner_user, source_sha)
+            return public_result(source_sha, contents, False)
+        backup_root = STATE / 'provision-backups'
+        if not backup_root.exists():
+            backup_root.mkdir(mode=0o700)
+        protected_directory(backup_root)
+        require(stat.S_IMODE(os.lstat(backup_root).st_mode) == 0o700, 'PRIVATE_BACKUP_REQUIRED')
+        backup = backup_root / ('install-' + uuid.uuid4().hex)
+        backup.mkdir(mode=0o700)
+        for index, original in enumerate(originals.values()):
+            if original is not None:
+                atomic_replace(backup / str(index), original[0], 0o600)
+        record = {str(path): None if original is None else {
+                    'index': index, 'mode': stat.S_IMODE(original[1].st_mode),
+                    'uid': original[1].st_uid, 'gid': original[1].st_gid}
+                  for index, (path, original) in enumerate(originals.items())}
+        atomic_replace(backup / 'restore.private.json',
+                       (json.dumps({'source_sha': source_sha, 'manifest_sha256': manifest_sha,
+                                    'files': record}, sort_keys=True) + '\n').encode(), 0o600)
+        candidate = backup / 'sudoers.candidate'
+        atomic_replace(candidate, sudoers, 0o440)
+        validate_sudoers(candidate)
+        changed = []
+        try:
+            for path, (data, mode) in desired.items():
+                # Include the attempted write: a filesystem error after replace
+                # but before directory-fsync still requires restoring this file.
+                changed.append(path)
+                atomic_replace(path, data, mode)
+            validate_sudoers()
+            validate_import_grant(runner_user, source_sha)
+            for path in PRIVATE_CONFIG:
+                data, info = read_private(path)
+                require(data == originals[path][0] and stable(info) == stable(originals[path][1]),
+                        'PRIVATE_CONFIG_CHANGED')
+        except BaseException as failure:
+            restored = True
+            for path in reversed(changed):
+                try:
+                    original = originals[path]
+                    if original is None:
+                        path.unlink(missing_ok=True)
+                    else:
+                        atomic_replace(path, original[0], stat.S_IMODE(original[1].st_mode),
+                                       original[1].st_uid, original[1].st_gid)
+                except BaseException:
+                    restored = False
+            try:
+                validate_sudoers()
+            except BaseException:
+                restored = False
+            if restored and isinstance(failure, InstallFailure) and str(failure) == 'IMPORT_GRANT_UNCONFIRMED':
+                raise InstallFailure('IMPORT_GRANT_UNCONFIRMED') from None
+            raise InstallFailure('BROKER_INSTALL_FAILED_RESTORED' if restored
+                                 else 'BROKER_INSTALL_ROLLBACK_FAILED') from None
+        return public_result(source_sha, contents, True)
+    finally:
+        os.close(descriptor)
+
+
+def public_result(source_sha, contents, backup_created):
+    return {'scope': 'STAGING_BROKER_PROVISIONING', 'source_sha': source_sha,
+            'installed_source_sha256': {name: sha256(contents[name]) for name in DESTINATIONS},
+            'configuration_backup_created': backup_created, 'runtime_config_preserved': True,
+            'target_config_preserved': True, 'app_activation_performed': False,
+            'database_mutations_performed': False, 'v1_ready': False, 'production_enabled': False}
+
+
+def main():
+    os.umask(0o077)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--source-sha', required=True)
+    parser.add_argument('--runner-user', help='Existing dedicated runner; otherwise recognize one direct broker sudo rule')
+    parser.add_argument('--bundle-directory', required=True)
+    parser.add_argument('--manifest-sha256', required=True)
+    arguments = parser.parse_args()
+    try:
+        result = install(arguments.source_sha, arguments.runner_user,
+                         arguments.bundle_directory, arguments.manifest_sha256)
+    except InstallFailure as error:
+        print(json.dumps({'installed': False, 'error': str(error)}))
+        return 1
+    except BaseException:
+        print(json.dumps({'installed': False, 'error': 'BROKER_INSTALL_UNCONFIRMED'}))
+        return 1
+    print(json.dumps(result, sort_keys=True))
+    return 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

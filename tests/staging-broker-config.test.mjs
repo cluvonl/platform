@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {spawnSync} from 'node:child_process';
-import {mkdtemp, readFile, rm, writeFile} from 'node:fs/promises';
+import {mkdir, mkdtemp, readFile, rm, symlink, writeFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 
@@ -22,6 +22,27 @@ const appConfig = {...baseConfig, app_mode:'app', supabase_project_ref:project,
 const appEnvironment = {...baseEnvironment, APP_MODE:'app', SUPABASE_URL:appConfig.supabase_url,
   SUPABASE_PUBLISHABLE_KEY:'sb_publishable_contract_test', SUPABASE_SECRET_KEY:'sb_secret_contract_test',
   INVITATION_TOKEN_SECRET:'not-a-secret-contract-test-32-bytes', MAIL_ALLOWLIST:'reviewer@cluvo.example'};
+
+test('deployment refuses every pending config-import journal before reading runtime configuration', async () => {
+  const guard = source.match(/if \[\[ -e "\$state\/config-import\.pending"[\s\S]*?\nfi/);
+  assert.ok(guard);
+  const directory = await mkdtemp(join(tmpdir(), 'cluvo-broker-journal-'));
+  const execute = () => spawnSync('bash', ['--noprofile', '--norc', '-c', `state="$1"\n${guard[0]}\necho CONTINUE`, 'guard', directory], {encoding:'utf8'});
+  try {
+    assert.equal(execute().status, 0);
+    const pending = join(directory, 'config-import.pending');
+    await mkdir(pending);
+    assert.equal(execute().status, 78);
+    assert.equal(execute().stdout, '');
+    await rm(pending, {recursive:true});
+    await symlink(join(directory, 'absent'), pending);
+    assert.equal(execute().status, 78);
+    assert.equal(execute().stdout, '');
+    await rm(pending);
+    await writeFile(pending, 'synthetic');
+    assert.equal(execute().status, 78);
+  } finally {await rm(directory, {recursive:true, force:true});}
+});
 
 async function validate(config, environment, previous = {workflow_run_id:'1', source_sha:previousSha, mode:'app'}, selectedImage = image, runId = '2') {
   const directory = await mkdtemp(join(tmpdir(), 'cluvo-broker-contract-'));
@@ -111,18 +132,47 @@ test('app health cannot pass with missing database/RLS readiness or a release-re
   }
 });
 
-test('failed transitions restore the recorded image and mode and verify recovery through health', () => {
+test('failed app transitions restore the compatible previous image with app authorization and readiness', () => {
   const recovery = source.match(/recover\(\) \{\n([\s\S]*?)\n\}\n\ntrap recover ERR/)?.[1];
   assert.ok(recovery);
   for (const previousMode of ['prototype', 'app']) {
     for (const verified of [true, false]) {
-      const program = `previous_image='${image}'\nprevious_sha='${previousSha}'\nprevious_mode='${previousMode}'\nselected_mode='app'\nimage='${image}'\nsha='${sha}'\ndocker_runtime() { :; }\ncompose_runtime() { printf 'COMPOSE:%s\\n' "$3"; }\nverify_health() { printf 'HEALTH:%s:%s\\n' "$1" "$2"; test '${verified}' = 'true'; }\nrecover() {\n${recovery}\n}\nrecover\n`;
+      const program = `previous_image='${image}'\nprevious_sha='${previousSha}'\nprevious_mode='${previousMode}'\nselected_mode='app'\nimage='${image}'\nsha='${sha}'\ndocker_runtime() { :; }\ncompose_runtime() { printf 'COMPOSE:%s\\n' "$3"; }\nverify_health() { printf 'HEALTH:%s:%s\\n' "$1" "$2"; test '${verified}' = 'true'; }\nrecord_recovery_state() { printf 'STATE:%s\\n' "$1"; }\nrecover() {\n${recovery}\n}\nrecover\n`;
       const result = spawnSync('bash', ['-s'], {input:program, encoding:'utf8'});
       assert.equal(result.status, 1, 'the failed deployment remains failed even after recovery');
-      assert.match(result.stdout, new RegExp(`COMPOSE:${previousMode}`));
-      assert.match(result.stdout, new RegExp(`HEALTH:${previousSha}:${previousMode}`));
-      if (verified) assert.match(result.stderr, /Vorige image en modus zijn via health teruggelezen/);
-      else assert.match(result.stderr, /Herstel is niet bevestigd; operatoractie vereist/);
+      assert.match(result.stdout, /COMPOSE:app/);
+      assert.match(result.stdout, new RegExp(`HEALTH:${previousSha}:app`));
+      if (verified) {
+        assert.match(result.stdout, /STATE:app/);
+        assert.match(result.stderr, /Vorige image en modus zijn via health teruggelezen/);
+      } else {
+        assert.doesNotMatch(result.stdout, /STATE:/);
+        assert.match(result.stderr, /Herstel is niet bevestigd; operatoractie vereist/);
+      }
     }
   }
+});
+
+test('verified recovery atomically records actual app mode without changing the active source or its original run', async () => {
+  const block = blocks.find((body) => body.includes('state, image, source_sha, mode, failed_run'));
+  assert.ok(block);
+  const directory = await mkdtemp(join(tmpdir(), 'cluvo-recovery-state-'));
+  try {
+    const path = join(directory, 'current.json');
+    const original = {image, source_sha:previousSha, workflow_run_id:'1', mode:'prototype', v1_ready:false};
+    await writeFile(path, JSON.stringify(original), {mode:0o600});
+    const result = spawnSync('python3', ['-', directory, image, previousSha, 'app', '2'], {input:block, encoding:'utf8'});
+    assert.equal(result.status, 0);
+    const actual = JSON.parse(await readFile(path, 'utf8'));
+    assert.equal(actual.mode, 'app');
+    assert.equal(actual.source_sha, previousSha);
+    assert.equal(actual.workflow_run_id, '1');
+    assert.equal(actual.rollback_workflow_run_id, '2');
+    assert.equal(actual.database_reachable, true);
+    assert.equal(actual.database_migrated, false);
+    assert.equal(actual.v1_ready, false);
+    const refused = spawnSync('python3', ['-', directory, image, sha, 'app', '3'], {input:block, encoding:'utf8'});
+    assert.notEqual(refused.status, 0);
+    assert.deepEqual(JSON.parse(await readFile(path, 'utf8')), actual);
+  } finally {await rm(directory, {recursive:true, force:true});}
 });

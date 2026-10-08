@@ -210,6 +210,11 @@ compose_runtime() {
 exec 9>"$state/deploy.lock"
 flock -w 600 9
 
+if [[ -e "$state/config-import.pending" || -L "$state/config-import.pending" ]]; then
+  echo 'Stagingconfiguratie-import vereist herstel; herhaal eerst de vaste import.' >&2
+  exit 78
+fi
+
 selected_mode="$(python3 \
   - "$config" "$runtime" "$image" "$run_id" "$state/current.json" \
   <<'PY'
@@ -409,20 +414,67 @@ if sys.argv[2] == "app":
 PY
 }
 
+record_recovery_state() {
+  python3 - "$state" "$previous_image" "$previous_sha" "$1" "$run_id" <<'PY'
+import datetime
+import json
+import os
+import pathlib
+import sys
+import tempfile
+
+try:
+    state, image, source_sha, mode, failed_run = sys.argv[1:]
+    root = pathlib.Path(state)
+    current = root / "current.json"
+    record = json.loads(current.read_bytes())
+    if record.get("image") != image or record.get("source_sha") != source_sha:
+        raise ValueError()
+    record.update(mode=mode, database_reachable=mode == "app", database_migrated=False,
+                  v1_ready=False, rollback_workflow_run_id=failed_run,
+                  rollback_verified_at=datetime.datetime.now(datetime.timezone.utc).isoformat())
+    descriptor, temporary = tempfile.mkstemp(prefix=".rollback-", dir=root)
+    try:
+        with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
+            json.dump(record, handle)
+            handle.write("\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, current)
+        directory = os.open(root, os.O_RDONLY | os.O_DIRECTORY)
+        try:
+            os.fsync(directory)
+        finally:
+            os.close(directory)
+    finally:
+        if os.path.exists(temporary):
+            os.unlink(temporary)
+except BaseException:
+    raise SystemExit("Gecontroleerde herstelstatus kon niet worden vastgelegd") from None
+PY
+}
+
 recover() {
   trap - ERR
 
-  echo 'Nieuwe release faalde; vorige image en appmodus herstellen.' >&2
+  echo 'Nieuwe release faalde; compatibele vorige image herstellen.' >&2
 
   if [[ -n "$previous_image" && -n "$previous_sha" ]]; then
+    recovery_mode="$previous_mode"
+    if [[ "$selected_mode" == 'app' ]]; then
+      # The current runtime has app credentials. The previously validated
+      # compatible image must keep app authorization and app readiness.
+      recovery_mode='app'
+    fi
     docker_runtime pull "$previous_image" || true
 
     if compose_runtime \
       "$previous_image" \
       "$previous_sha" \
-      "$previous_mode" \
+      "$recovery_mode" \
       up -d --no-build --wait --wait-timeout 120 web \
-      && verify_health "$previous_sha" "$previous_mode"
+      && verify_health "$previous_sha" "$recovery_mode" \
+      && record_recovery_state "$recovery_mode"
     then
       echo 'Vorige image en modus zijn via health teruggelezen.' >&2
     else
