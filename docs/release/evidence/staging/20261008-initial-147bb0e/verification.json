@@ -1,0 +1,16 @@
+{
+  "scope": "INITIAL_STAGING_RESTORE_ONLY_ATTEMPT",
+  "source_sha": "147bb0eafb5cf0be5d7f4ba272ef4c36ee8d8302",
+  "workflow_run_id": "37770843208",
+  "workflow_conclusion": "failure",
+  "encrypted_backup_remote_readback": true,
+  "restore_verified": false,
+  "error": "RESTORE_PROCESS_FAILED",
+  "diagnostic_phase_available": false,
+  "database_mutations_performed": false,
+  "applied_migrations": 0,
+  "application_activated": false,
+  "private_values_exported": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

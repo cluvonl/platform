@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {mkdtemp,writeFile,chmod,rm,symlink,readFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
-import {restoreInitialBackup,INITIAL_RESTORE_STARTUP} from '../scripts/staging-initial-restore.mjs';
+import {restoreInitialBackup,INITIAL_RESTORE_STARTUP,INITIAL_RESTORE_PHASES,InitialRestoreError} from '../scripts/staging-initial-restore.mjs';
 import {CATALOG_QUERIES} from '../scripts/staging-capture-catalog.mjs';
 import {aggregate} from '../scripts/staging-capture-queries.mjs';
 import {IMMUTABLE16} from '../scripts/staging-migration-files.mjs';
@@ -57,11 +57,12 @@ function runner(original,options={}){
   assert.equal(command,'exec');
   if(args.includes('pg_isready'))return ok('');
   if(args.includes('pg_restore')){assert.ok(args.includes('--single-transaction'));assert.ok(args.includes('--exit-on-error'));assert.equal(input.subarray(0,5).toString(),'PGDMP');if(options.restoreFailure)return failure();return ok('');}
-  assert.ok(args.includes('psql'));const role=args[args.indexOf('-U')+1],text=input.toString();
-  if(text.includes('CREATE ROLE')){observed.replays.push(text);assert.equal(text.includes('CREATE ROLE "'+bootstrapRole+'";'),false);assert.ok(text.includes('ALTER ROLE "'+bootstrapRole+'"'));return ok('');}
+  assert.ok(args.includes('psql'));assert.ok(args.includes('--set=VERBOSITY=sqlstate'));const role=args[args.indexOf('-U')+1],text=input.toString();
+  if(text.includes('CREATE ROLE')){observed.replays.push(text);assert.equal(text.includes('CREATE ROLE "'+bootstrapRole+'";'),false);assert.ok(text.includes('ALTER ROLE "'+bootstrapRole+'"'));if(options.globalsFailure)return {status:3,stdout:'',stderr:options.diagnostic??'ERROR:  42501\n'};return ok('');}
   const query=text.replace(/^SET client_min_messages=warning;\nSET search_path TO '';\n/,'').replace(/;\s*$/,'');
   if(catalogSql.has(query)){
    const family=catalogSql.get(query),value=structuredClone(original.catalog[family]);
+   if(options.catalogFailure===family)return {status:3,stdout:'',stderr:'ERROR:  42P01\n'};
    if(options.catalogMismatch&&family==='roles')value.push({name:'unexpected_fixture_role'});
    return ok(value);
   }
@@ -141,4 +142,25 @@ test('restored history and source audit must prove the exact prefix before any s
 test('migration failure cleans the clone and cleanup failure can never return a passing report',async()=>{
  await fixture(async(input,{run,observed})=>{await assert.rejects(restoreInitialBackup(input,{run}),code('RESTORE_PROCESS_FAILED'));assert.equal(observed.removed,true);},0,{upgradeFailure:true});
  await fixture(async(input,{run})=>{await assert.rejects(restoreInitialBackup(input,{run}),code('INITIAL_RESTORE_CLEANUP_UNPROVED'));},0,{cleanupFailure:true});
+});
+test('failed globals and catalog commands expose only fixed phase and whitelisted SQLSTATE metadata',async()=>{
+ for(const [options,phase,sqlstate,errorKind]of [[{globalsFailure:true},'globals','42501','PERMISSION'],
+  [{catalogFailure:'roles'},'catalog.roles','42P01','MISSING'],
+  [{globalsFailure:true,diagnostic:'ERROR:  private_fixture_identity missing@example.test\n'},'globals',null,'PROCESS_FAILURE'],
+  [{globalsFailure:true,diagnostic:'ERROR: permission denied for private_fixture_identity\nCommand was: private_fixture_sql\n'},'globals',null,'PERMISSION']]){
+  await fixture(async(input,{run,observed})=>{
+   await assert.rejects(restoreInitialBackup(input,{run}),error=>{
+    assert.equal(error.code,'RESTORE_PROCESS_FAILED');assert.equal(error.phase,phase);assert.equal(error.sqlstate,sqlstate);assert.equal(error.errorKind,errorKind);
+    assert.equal(JSON.stringify(error).includes('private_fixture'),false);assert.equal(JSON.stringify(error).includes('@'),false);assert.ok(INITIAL_RESTORE_PHASES.includes(error.phase));return true;
+   });assert.equal(observed.removed,true);assert.equal(observed.upgrades.length,0);
+  },0,options);
+ }
+});
+test('verification phases survive cleanup and unknown caller metadata cannot become public error fields',async()=>{
+ for(const [options,phase]of [[{dataMismatch:true},'data'],[{sequenceMismatch:true},'sequence'],[{superuser:true},'actor'],[{worker:true},'jobs'],[{auditMismatch:true},'history'],[{upgradeFailure:true},'upgrade'],[{cleanupFailure:true},'cleanup']]){
+  await fixture(async(input,{run})=>{await assert.rejects(restoreInitialBackup(input,{run}),error=>{assert.equal(error.phase,phase);return true;});},options.auditMismatch?3:0,options);
+ }
+ const error=new InitialRestoreError('RESTORE_PROCESS_FAILED',{phase:'private_fixture',sqlstate:'SECRT',errorKind:'private_fixture'});
+ assert.equal(error.phase,'input');assert.equal(error.sqlstate,null);assert.equal(error.errorKind,null);
+ assert.equal(JSON.stringify(error).includes('private_fixture'),false);assert.equal(JSON.stringify(error).includes('SECRT'),false);
 });

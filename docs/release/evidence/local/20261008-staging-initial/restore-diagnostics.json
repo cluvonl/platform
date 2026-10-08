@@ -1,0 +1,21 @@
+{
+  "scope": "LOCAL_RESTORE_COMPONENT_RECHECK",
+  "adapter_sha256": "fbeaac9fa85cf1050028a56f0d2829dff649b77581c80fed395cbd1a3fe1c76b",
+  "test_source_sha256": "95ce053121d99d520ce796dfa7389041d75ed3241ff5ca982832745afe5f0c06",
+  "targeted_tests": 13,
+  "targeted_tests_passed": 13,
+  "eslint_passed": true,
+  "actual_local_pg17_dump_restore_and_non_superuser_upgrade_passed": true,
+  "catalog_families_verified": 28,
+  "physical_relations_verified": 4,
+  "synthetic_rows_verified": 1,
+  "sequences_verified": 1,
+  "initial_prefix": 0,
+  "final_prefix": 16,
+  "owned_source_and_restore_clones_removed": true,
+  "hosted_restore_verified": false,
+  "provider_services_verified": false,
+  "o08_restore_accepted": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

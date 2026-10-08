@@ -12,7 +12,7 @@ import {createInitialMigrationManifest,validateInitialHistory} from './staging-i
 import {capturePlan,captureWithOwnedWorker,probeOwnedPg17Toolchain} from './pg17-capture-worker.mjs';
 import {packFiles,encryptCaptureFiles,decryptRestoreFiles} from './backup-artifact.mjs';
 import {deriveInitialBackupKey,uploadEncryptedInitialBackup,INITIAL_BACKUP_KEY_PROFILE} from './staging-initial-backup-custody.mjs';
-import {restoreInitialBackup} from './staging-initial-restore.mjs';
+import {restoreInitialBackup,InitialRestoreError,INITIAL_RESTORE_PHASES} from './staging-initial-restore.mjs';
 // Concrete write owner is separate from the existing read-only bridge.
 import {InitialSession,INITIAL_SESSION_CHILD_SHA256} from './staging-initial-session.mjs';
 
@@ -129,6 +129,10 @@ export async function stagingInitialMigration(environment){
  }catch(error){
   primary??=typeof error?.code==='string'&&SAFE_ERROR.test(error.code)?error.code:'INITIAL_MIGRATION_UNAVAILABLE';
   if(/^[0-9A-Z]{5}$/.test(error?.sqlstate??''))report.sqlstate=error.sqlstate;
+  if(error instanceof InitialRestoreError&&INITIAL_RESTORE_PHASES.includes(error.phase)){
+   report.restore_failure_phase=error.phase;
+   if(['PERMISSION','MISSING','SYNTAX','ALREADY_EXISTS','CONFLICT','TIMEOUT','UNSUPPORTED','WARNING','PROCESS_FAILURE'].includes(error.errorKind))report.restore_error_kind=error.errorKind;
+  }
  }finally{
   clearTimeout(timer);for(const signal of ['SIGINT','SIGTERM'])process.removeListener(signal,interrupted);
   if(bridge){try{await bridge.close();closed=true;}catch{primary='INITIAL_CONNECTION_CLOSE_UNPROVED';}}

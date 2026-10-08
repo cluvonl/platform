@@ -1,0 +1,20 @@
+{
+  "source_sha": "147bb0eafb5cf0be5d7f4ba272ef4c36ee8d8302",
+  "main_ci_run_id": "37770222222",
+  "main_ci_conclusion": "success",
+  "prototype_deploy_run_id": "37770801357",
+  "prototype_deploy_conclusion": "success",
+  "liveness": {
+    "status": "ok",
+    "service": "cluvo",
+    "mode": "prototype",
+    "environment": "staging",
+    "release": "147bb0eafb5cf0be5d7f4ba272ef4c36ee8d8302"
+  },
+  "http_status": 200,
+  "noindex": true,
+  "app_activation_performed": false,
+  "database_mutations_performed": false,
+  "v1_ready": false,
+  "production_enabled": false
+}
