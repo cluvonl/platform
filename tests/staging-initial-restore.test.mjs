@@ -213,6 +213,24 @@ test('private server reasons supplement unmatched stderr without publishing iden
   serverLog:'2026-10-08 [87654] ERROR:  22023: extension "private_fixture" has no installation script nor update path for version "private_version"\n'});
 });
 
+test('upstream error locations and extension failures become finite component labels only',async()=>{
+ for(const [message,file,origin,reason]of [
+  ['could not register a background worker private_fixture','pg_net.c','PG_NET','BACKGROUND_WORKER_REGISTRATION_FAILED'],
+  ['invalid secret key private_fixture','pgsodium.c','PGSODIUM','SERVER_KEY_UNAVAILABLE'],
+  ['private_fixture must be loaded via shared_preload_libraries','extension.c','POSTGRES_CORE','EXTENSION_MUST_BE_PRELOADED'],
+  ['cache lookup failed for private_fixture','lsyscache.c','POSTGRES_CORE','CATALOG_LOOKUP_FAILED'],
+  ['private_fixture unknown provider message','private_fixture.c',null,'SERVER_SQLSTATE_REPORTED'],
+  ['private_fixture unknown provider message','worker.c',null,'SERVER_SQLSTATE_REPORTED'],
+ ])await fixture(async(input,{run,observed})=>{
+  await assert.rejects(restoreInitialBackup(input,{run}),error=>{
+   assert.equal(error.sqlstate,'XX000');assert.equal(error.errorOrigin,origin);assert.equal(error.errorReason,reason);
+   const output=JSON.stringify(error);for(const privateValue of ['private_fixture','private@example.test','12345','LOCATION',file])assert.equal(output.includes(privateValue),false);return true;
+  });assert.equal(observed.logReads,1);assert.equal(observed.removed,true);
+ },0,{restoreFailure:true,diagnostic:'unmatched private client diagnostic',serverLog:'2026-10-08 [12345] ERROR:  XX000: '+message+'\n2026-10-08 [12345] DETAIL: private@example.test\n2026-10-08 [12345] LOCATION: private_fixture_routine, /private_fixture/path/'+file+':12345\n'});
+ const error=new InitialRestoreError('RESTORE_PROCESS_FAILED',{errorOrigin:'private_fixture'});assert.equal(error.errorOrigin,null);
+ assert.equal(JSON.stringify(error).includes('private_fixture'),false);
+});
+
 test('an unknown SQLSTATE or TOC type is never copied from a private log',async()=>{
  await fixture(async(input,{run,observed})=>{
   await assert.rejects(restoreInitialBackup(input,{run}),error=>{

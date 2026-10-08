@@ -1,0 +1,17 @@
+{
+  "source_sha": "958b080f38f4cbe211f2bcc71822fa700558d96f",
+  "main_ci_run_id": "37779520609",
+  "main_ci_conclusion": "success",
+  "restore_only_run_id": "37780455324",
+  "restore_only_conclusion": "failure",
+  "restore_failure_phase": "restore",
+  "sqlstate": "XX000",
+  "encrypted_backup_remote_readback": true,
+  "restore_verified": false,
+  "applied_migrations": 0,
+  "database_mutations_performed": false,
+  "application_activated": false,
+  "private_values_exported": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

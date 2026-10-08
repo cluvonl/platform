@@ -1,0 +1,11 @@
+{
+  "scope": "LOCAL_PRIVATE_RESTORE_ORIGIN_CLASSIFICATION",
+  "adapter_sha256": "d1716f87cdfebc0c55bf82776548c4dabfbab25b02d2fc1d10f1c94fbb96ab32",
+  "targeted_tests_passed": 19,
+  "upstream_component_labels_whitelisted": true,
+  "unknown_and_ambiguous_source_files_not_exported": true,
+  "raw_diagnostics_exported": false,
+  "hosted_restore_verified": false,
+  "v1_ready": false,
+  "production_enabled": false
+}
