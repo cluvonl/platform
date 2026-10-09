@@ -1,0 +1,519 @@
+{
+  "scope": "OWNED_NETWORK_ISOLATED_POSTGRESQL17_FINAL30_LEGACY_CONCURRENCY",
+  "observed_at": "2026-10-09T03:15:29.421Z",
+  "source_count": 30,
+  "migration_hashes": [
+    {
+      "file": "20261002163042_cluvo_wp1_wp2_core.sql",
+      "sha256": "7e4efdaa139d2fe3120c43c0e7fcfe966438f154c08358734b6c555968acd32e"
+    },
+    {
+      "file": "20261002165306_wp3_wp5_obligations_execution.sql",
+      "sha256": "1dd88883e99acd63cbea6f33c47b1c39008a6832904f1da6150374fbe1474eb7"
+    },
+    {
+      "file": "20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "sha256": "9707da512d46b23d8472bf222981242f8020ac3612709f536136876674b50702"
+    },
+    {
+      "file": "20261002170949_wp1_onboarding_storage.sql",
+      "sha256": "6de61a4843cd9a3d77fccb6c0be0591c178b516518e4bb7ce9c2ae1cec3d4c03"
+    },
+    {
+      "file": "20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "sha256": "bdff3e58102376de4195840cc7cd3a02a59c7648cc19403c306ae72e96605719"
+    },
+    {
+      "file": "20261002183000_vertical_read_models.sql",
+      "sha256": "bf50215a774296882cb5aa8067b43bb2c853bbb991968859b8ceece58d197eaf"
+    },
+    {
+      "file": "20261002184500_assisted_member_actions.sql",
+      "sha256": "c7d74823e3be555b7115b1eab4e4180cdb48c7668680fa3a0a6b0e8420629bab"
+    },
+    {
+      "file": "20261006180000_account_help_preferences.sql",
+      "sha256": "f6b7d1db5f420b5e5daeaf142326289dd1fb6918123c001386956f512f7755ff"
+    },
+    {
+      "file": "20261006193000_complete_personal_intake.sql",
+      "sha256": "488d4722f830a0a2a2d35ff89a483bcd6f5e40ed3aa255d367d4346aaad22ad9"
+    },
+    {
+      "file": "20261006210000_household_dossier_projection.sql",
+      "sha256": "0f1b29d8bbde85300f704270bc5ead062344bffe01f5688b67daa085099450a2"
+    },
+    {
+      "file": "20261006223000_versioned_household_invitation_commands.sql",
+      "sha256": "99b456fda630c15eca25f197d971edcf8134a5181deb114c398dde852b6b62fe"
+    },
+    {
+      "file": "20261006230000_household_invitation_cancellation.sql",
+      "sha256": "6d3738db24d2a02576fa6fa4a9273390d04872565edd66d662024df230425a1c"
+    },
+    {
+      "file": "20261006233000_contract_household_invitation_bootstrap.sql",
+      "sha256": "1731ab3cec4921ad31e6f30a90ee21d8dc6101fa205285a51c5b65bc52e2c3f2"
+    },
+    {
+      "file": "20261006234500_personal_intake_reconfirmation.sql",
+      "sha256": "e4f95b65789485e86131d21c0c085a83c8fc5b4195f36b4f81e24b9c6c171625"
+    },
+    {
+      "file": "20261007010000_native_session_authority.sql",
+      "sha256": "9c165f68f413be04aa958358ec088c422dd21fea92b66e9ba84e04378817607a"
+    },
+    {
+      "file": "20261007013000_intake_assistance_management.sql",
+      "sha256": "1512b7cbfd1fd63065fa09ad17aba0a2c71aaba1c875326f11e089175a5979c3"
+    },
+    {
+      "file": "20261009100000_pwa_domain.sql",
+      "sha256": "18cc63b457fddea3f003bceb4d31f310291692e70485e6aa013e4091a8d47d41"
+    },
+    {
+      "file": "20261009101000_pwa_commands.sql",
+      "sha256": "dbf600e3aabc225e5031ca83c24031c27c287cec47cce0b0f64bf81eb6e00f97"
+    },
+    {
+      "file": "20261009102000_pwa_snapshot.sql",
+      "sha256": "969346799a4e591b7f85f8bacc4a877c1ea42dd628c3e041cf9b976f79e19ef0"
+    },
+    {
+      "file": "20261009103000_pwa_delivery_and_receipts.sql",
+      "sha256": "73714397962f5ca54b5a94d1b6cc901ed744b8f8bcccd87fc32cd12673fbfe6f"
+    },
+    {
+      "file": "20261009104000_pwa_buddy_integrity.sql",
+      "sha256": "c2e1bfdccf311f50bd9e0ff1686ce2301d1c65ff29b02cd78512666f0ec5305c"
+    },
+    {
+      "file": "20261009105000_pwa_automation.sql",
+      "sha256": "7e20fdaee644e5a2f0b037f0d34001a773cf47b6b23a0294f23fddad45e5dbef"
+    },
+    {
+      "file": "20261009106000_pwa_provider_receipts.sql",
+      "sha256": "5e6923e41dfd6d5da1ab12380f1be31b25e466eba02b685f7361b11e1ffe9eed"
+    },
+    {
+      "file": "20261009107000_pwa_compatibility_and_cluster_scope.sql",
+      "sha256": "d60b59920adac4c45a3ec336a6a0cb27e31abb3c8aa69e0ddf5b47ed729e4486"
+    },
+    {
+      "file": "20261009108000_pwa_repeatable_command_events.sql",
+      "sha256": "7ad42704ec974bd670deb70c14dcd13a2079f1b0d9fd6a416e0d4dcdf3859ef2"
+    },
+    {
+      "file": "20261009109000_pwa_digest_dispatch_day.sql",
+      "sha256": "881aaf6a7ff6ed1e22604d810c1194fc140c4dfb79240e869b25feb3a9be4210"
+    },
+    {
+      "file": "20261009110000_pwa_card_version_gate.sql",
+      "sha256": "7d237cb0e27bf8d4f27e649143a77e39dc29977279fc7bc6db6e506da52ff4cc"
+    },
+    {
+      "file": "20261009111000_pwa_handover_checklist_integrity.sql",
+      "sha256": "2d10644befebd17fb8893d4e1363a6a4f61588bd55ac3ab45a7653d6489e3307"
+    },
+    {
+      "file": "20261009112000_pwa_task_offer_category_seed.sql",
+      "sha256": "1e2bb5b181e7e0d4279c8270b12bfee8743cb7dcaaa0e4267256eaf689c59c17"
+    },
+    {
+      "file": "20261009113000_pwa_nested_version_integrity.sql",
+      "sha256": "60eedfed603a1450d42524dc070e8fa4661c1bb323d55e660faef52845b98f19"
+    }
+  ],
+  "unchanged_script_hashes": {
+    "scripts/db-concurrency-a13.mjs": "cd662e183dcae7175e30b9b162aea44f0b52842dc69c3d860fa31562f9178ca2",
+    "scripts/db-concurrency-season-lock.mjs": "f40748e176690260888a7b27095706c9b6a4b9904b699cb68a98df5ae3abf06d",
+    "scripts/db-concurrency-intake-booking.mjs": "4fe49971517d3751553d4f9478decd4ed1fca7e8f103898171ee85f1b87a8bef",
+    "scripts/db-concurrency-invitations.mjs": "912baf7979ea2fc1302ab112c8b84fcdf8d3579be7985324a79edc7f9ad25f81",
+    "scripts/db-concurrency-invitation-lifecycle.mjs": "4f033488a960a52adc1f775b1259859d12d9a28fff662a320062c175d5e237a3",
+    "scripts/db-concurrency-intake-reconfirmation.mjs": "7dd55c9ffd9f8af24c9b35b777a0070f9cd8ce9c3e2b2ac9c58172fea7336f05",
+    "scripts/db-concurrency-intake-assistance.mjs": "935864fdddd0a4471f0dfec652d7639a2bf38cb01821b9570e2fa35932d102be"
+  },
+  "unchanged_core_fixture_sha256": "ffc09f1d4f81455d61bb2c43ed2f118ccdf4480a8bfb935da6ec33eda7ec2650",
+  "npm_commands": [
+    {
+      "command": "npm run db:test:race",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "npm run db:test:locks",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "npm run db:test:intake-lock",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "npm run db:test:invitations",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "npm run db:test:reconfirmation",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "npm run db:test:assistance",
+      "exit_code": 0,
+      "result": "PASS"
+    }
+  ],
+  "families": [
+    {
+      "scenario": "A13_LAST_POSITION_RACE",
+      "contenders": 2,
+      "persisted_bookings": 1,
+      "conflict": "CAPACITY_FULL",
+      "result": "PASS"
+    },
+    {
+      "scenario": "SEASON_CLOSE_LEDGER_SERIALIZATION",
+      "contenders": 2,
+      "waited_milliseconds": 3003,
+      "result": "PASS"
+    },
+    {
+      "scenario": "INTAKE_UNAVAILABILITY_BOOKING_SERIALIZATION",
+      "contenders": 2,
+      "waited_milliseconds": 2875,
+      "conflict": "NOT_ELIGIBLE",
+      "persisted_bookings": 0,
+      "result": "PASS"
+    },
+    {
+      "scenario": "HOUSEHOLD_INVITATION_VERSION_SERIALIZATION",
+      "contenders": 2,
+      "waited_milliseconds": 3015,
+      "conflict": "STALE_VERSION",
+      "readback": {
+        "invitations": 1,
+        "household_version": 2,
+        "completed_commands": 1,
+        "creation_audits": 1
+      },
+      "result": "PASS"
+    },
+    {
+      "scenario": "INVITATION_LIFECYCLE_SERIALIZATION",
+      "scenarios": [
+        {
+          "winner": "cancellation",
+          "contenders": 2,
+          "waited_milliseconds": 3008,
+          "conflict": "INVALID_INVITATION",
+          "readback": {
+            "invitations": 1,
+            "status": "cancelled",
+            "invitation_version": 2,
+            "household_version": 3,
+            "recipient_grants": 0,
+            "recipient_profiles": 0,
+            "cancellation_audits": 1,
+            "acceptance_audits": 0,
+            "processing_commands": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "acceptance",
+          "contenders": 2,
+          "waited_milliseconds": 3011,
+          "conflict": "STALE_VERSION",
+          "readback": {
+            "invitations": 1,
+            "status": "accepted",
+            "invitation_version": 2,
+            "household_version": 3,
+            "recipient_grants": 1,
+            "recipient_profiles": 1,
+            "cancellation_audits": 0,
+            "acceptance_audits": 1,
+            "processing_commands": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "authority_revocation",
+          "contenders": 2,
+          "waited_milliseconds": 3010,
+          "conflict": "FORBIDDEN",
+          "readback": {
+            "invitations": 1,
+            "status": "pending",
+            "invitation_version": 1,
+            "household_version": 2,
+            "recipient_grants": 0,
+            "recipient_profiles": 0,
+            "cancellation_audits": 0,
+            "acceptance_audits": 0,
+            "processing_commands": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "creation_authority_revocation",
+          "contenders": 2,
+          "waited_milliseconds": 3009,
+          "conflict": "FORBIDDEN",
+          "readback": {
+            "invitations": 1,
+            "status": "pending",
+            "invitation_version": 1,
+            "household_version": 2,
+            "recipient_grants": 0,
+            "recipient_profiles": 0,
+            "cancellation_audits": 0,
+            "acceptance_audits": 0,
+            "processing_commands": 0
+          },
+          "result": "PASS"
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scenario": "INTAKE_RECONFIRMATION_SERIALIZATION",
+      "scenarios": [
+        {
+          "winner": "exact_confirmation",
+          "contenders": 2,
+          "waited_milliseconds": 3014,
+          "conflict": null,
+          "readback": {
+            "receipts": 1,
+            "profile_version": 2,
+            "answer_revision": 1,
+            "answer_versions": 1,
+            "annually_confirmed": true,
+            "item_state": "confirmed",
+            "item_version": 2,
+            "annual_audits": 1,
+            "annual_commands": 1,
+            "processing_commands": 0,
+            "obligations": 0,
+            "ledger_rows": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "answer_revision",
+          "contenders": 2,
+          "waited_milliseconds": 3016,
+          "conflict": "STALE_VERSION",
+          "readback": {
+            "receipts": 0,
+            "profile_version": 2,
+            "answer_revision": 2,
+            "answer_versions": 2,
+            "annually_confirmed": false,
+            "item_state": "open",
+            "item_version": 1,
+            "annual_audits": 0,
+            "annual_commands": 0,
+            "processing_commands": 0,
+            "obligations": 0,
+            "ledger_rows": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "assistance_revocation",
+          "contenders": 2,
+          "waited_milliseconds": 3015,
+          "conflict": "FORBIDDEN",
+          "readback": {
+            "receipts": 0,
+            "profile_version": 1,
+            "answer_revision": 1,
+            "answer_versions": 1,
+            "annually_confirmed": false,
+            "item_state": "open",
+            "item_version": 1,
+            "annual_audits": 0,
+            "annual_commands": 0,
+            "processing_commands": 0,
+            "obligations": 0,
+            "ledger_rows": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "native_session_revocation",
+          "contenders": 2,
+          "waited_milliseconds": 3009,
+          "conflict": "FORBIDDEN",
+          "readback": {
+            "receipts": 0,
+            "profile_version": 1,
+            "answer_revision": 1,
+            "answer_versions": 1,
+            "annually_confirmed": false,
+            "item_state": "open",
+            "item_version": 1,
+            "annual_audits": 0,
+            "annual_commands": 0,
+            "processing_commands": 0,
+            "obligations": 0,
+            "ledger_rows": 0
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "season_close",
+          "contenders": 2,
+          "waited_milliseconds": 3012,
+          "conflict": "SEASON_NOT_OPEN",
+          "readback": {
+            "receipts": 0,
+            "profile_version": 1,
+            "answer_revision": 1,
+            "answer_versions": 1,
+            "annually_confirmed": false,
+            "item_state": "open",
+            "item_version": 1,
+            "annual_audits": 0,
+            "annual_commands": 0,
+            "processing_commands": 0,
+            "obligations": 0,
+            "ledger_rows": 0
+          },
+          "result": "PASS"
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "scenario": "INTAKE_ASSISTANCE_SERIALIZATION",
+      "fixture": "disposable SQL native-session contexts; no provider login claimed",
+      "scenarios": [
+        {
+          "winner": "exact_grant",
+          "contenders": 2,
+          "waited_milliseconds": 3014,
+          "conflict": null,
+          "readback": {
+            "delegations": 1,
+            "decisions": 1,
+            "household_version": 2,
+            "profile_version": 1,
+            "answer_revision": 1,
+            "assistance_audits": 1,
+            "processing_commands": 0,
+            "confirmed_minutes": 60
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "competing_grants",
+          "contenders": 2,
+          "waited_milliseconds": 3014,
+          "conflict": "STALE_VERSION",
+          "readback": {
+            "delegations": 1,
+            "decisions": 1,
+            "household_version": 2,
+            "profile_version": 1,
+            "answer_revision": 1,
+            "assistance_audits": 1,
+            "processing_commands": 0,
+            "confirmed_minutes": 60
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "reviewer_revocation",
+          "contenders": 2,
+          "waited_milliseconds": 3011,
+          "conflict": "FORBIDDEN",
+          "readback": {
+            "delegations": 0,
+            "decisions": 0,
+            "household_version": 1,
+            "profile_version": 1,
+            "answer_revision": 1,
+            "assistance_audits": 0,
+            "processing_commands": 0,
+            "confirmed_minutes": 60
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "native_revocation",
+          "contenders": 2,
+          "waited_milliseconds": 3009,
+          "conflict": "FORBIDDEN",
+          "readback": {
+            "delegations": 0,
+            "decisions": 0,
+            "household_version": 1,
+            "profile_version": 1,
+            "answer_revision": 1,
+            "assistance_audits": 0,
+            "processing_commands": 0,
+            "confirmed_minutes": 60
+          },
+          "result": "PASS"
+        },
+        {
+          "winner": "revoke_vs_save",
+          "contenders": 2,
+          "waited_milliseconds": 3011,
+          "conflict": "FORBIDDEN",
+          "readback": {
+            "delegations": 1,
+            "decisions": 2,
+            "household_version": 3,
+            "profile_version": 1,
+            "answer_revision": 1,
+            "assistance_audits": 2,
+            "processing_commands": 0,
+            "confirmed_minutes": 60
+          },
+          "result": "PASS"
+        }
+      ],
+      "result": "PASS"
+    }
+  ],
+  "shared_database_mutations": 0,
+  "shared_auth_or_fixture_mutations": 0,
+  "provider_calls": 0,
+  "test_context": "Existing unmodified npm concurrency scripts with synthetic SQL Native-session fixtures; private psql transport adapter uses only owned container UNIX socket. No provider login claim.",
+  "container": {
+    "postgres_major": 17,
+    "network": "none",
+    "published_ports": 0,
+    "owned_label_verified": true,
+    "no_existing_database_connections": true
+  },
+  "actual_source30_loaded": true,
+  "psql_transport": {
+    "unchanged_original_local_url_guard": true,
+    "logical_url_port": 55322,
+    "logical_url_database": "postgres",
+    "actual_transport": "docker exec owned network-none container psql UNIX /restore postgres",
+    "transport_adapter_sha256": "d3a7573745fec932fa956dd3d3b5e53b8b80bafba362896892b620906060ac6b",
+    "localhost_tcp_connection_performed": false
+  },
+  "summary": {
+    "npm_commands": 6,
+    "families": 7,
+    "scenarios": 18,
+    "contenders_per_scenario": 2,
+    "observed_lock_wait_scenarios": 17,
+    "min_observed_wait_milliseconds": 2875,
+    "last_position_one_persisted_booking_and_one_capacity_conflict": true,
+    "result": "PASS"
+  },
+  "scripts_criteria_and_fixture_grants_unchanged": true,
+  "result": "PASS",
+  "owned_container_removed": true
+}

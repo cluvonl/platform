@@ -1,0 +1,133 @@
+{
+  "scope": "STAGING_PWA",
+  "baseline_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4",
+  "rollback_configuration": {
+    "workflow": {
+      "conclusion": "success",
+      "event": "workflow_dispatch",
+      "head_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4",
+      "html_url": "https://github.com/cluvonl/platform/actions/runs/37863836212",
+      "id": 37863836212,
+      "status": "completed"
+    },
+    "version": 2,
+    "compatible_sources": [
+      "147bb0eafb5cf0be5d7f4ba272ef4c36ee8d8302",
+      "b9a6ed995058e623d7887fb4a56630251ff4ffb4"
+    ],
+    "database_mutations_performed": false,
+    "application_activation_performed": false
+  },
+  "local_application_build": {
+    "command": "npm run build",
+    "result": "PASS",
+    "native_app_routes": 20,
+    "environment": "local",
+    "staging_verified": false,
+    "build_id": "Lbo4BE0TAUmKrYq-qxuRO",
+    "decorative_avatar_font200_verified": "decorative-avatar-text200-css-proof.json"
+  },
+  "node_tests": {
+    "command": "npm test",
+    "tests": 729,
+    "passed": 702,
+    "failed": 0,
+    "skipped": 27,
+    "owned_pg17_tests_executed_separately": true
+  },
+  "physical_device": {
+    "android": {
+      "model": "Samsung S24",
+      "os_version": "pending_exact_version",
+      "browser_version": "pending",
+      "executed": false
+    },
+    "iphone": {
+      "device_available": false,
+      "executed": false
+    }
+  },
+  "production_enabled": false,
+  "local_database_upgrade": {
+    "migrations": 31,
+    "forced_rls_tables": 180,
+    "unsafe_app_tables": 0,
+    "destructive_reset": false,
+    "latest_version": "20261009114000",
+    "api_security_invoker_views": 21
+  },
+  "active_delivery_release_guard": {
+    "tested_helper_cases": 3,
+    "target": "https://staging.cluvo.nl",
+    "baseline_active_source_confirmed": true,
+    "unactivated_source_refused": true,
+    "public_health_received_no_github_token": true,
+    "provider_calls": 0
+  },
+  "credential_pattern_review": {
+    "secret_patterns_flagged": 0,
+    "values_exported": false,
+    "synthetic_fixture_matches": 3,
+    "final_source_scan": {
+      "files": 830,
+      "sendgrid_secret_matches": 0,
+      "private_key_pem_matches": 0,
+      "supabase_secret_matches": 2,
+      "all_supabase_matches_explicit_synthetic_test_literals": true,
+      "values_exported": false
+    }
+  },
+  "staging_configuration_names": {
+    "required_secret_names_present": [
+      "INVITATION_TOKEN_SECRET",
+      "MAIL_ALLOWLIST",
+      "MIGRATION_DATABASE_URL",
+      "SENDGRID_API_KEY",
+      "STAGING_TEST_RECIPIENT",
+      "SUPABASE_SECRET_KEY",
+      "VAPID_PRIVATE_KEY"
+    ],
+    "missing_secret_names": [],
+    "public_vapid_key_matches_source": true,
+    "staging_project_and_sender_match": true,
+    "secret_values_read": false
+  },
+  "immutable_baseline": {
+    "original_migrations": 16,
+    "changed_original_migrations": 0,
+    "additive_migrations": 15,
+    "existing_deploy_broker_and_production_gates_changed": false
+  },
+  "local_database_suite": {
+    "proof": "owned-final31-sql-proof.json",
+    "suites": 31,
+    "assertions": 1437,
+    "result": "PASS",
+    "latest_migration_sha256": "afbe3c6218e2d81dae30107ec0f854f5fe0bdd87ae700da98f2b5d3165f4ad10"
+  },
+  "native_mobile_command_registry": {
+    "count": 51,
+    "authority": "server validation registry; each mutation authorized natively"
+  },
+  "root_visual_spotcheck": {
+    "build_id": "Lbo4BE0TAUmKrYq-qxuRO",
+    "screenshot": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-profile-390-text200.png",
+    "sha256": "427208fa3f4eae674f7660780b8fc0cc885ae11b076e41e25994e033dee29a4f",
+    "viewport_width": 390,
+    "text_enlargement_percent": 200,
+    "decorative_initials_within_circles": true,
+    "large_profile_text_preserved": true,
+    "synthetic_account": true,
+    "physical_device": false
+  },
+  "final_native_browser": {
+    "proof": "../20261009-pwa-mobile/browser-results.json",
+    "build_id": "Lbo4BE0TAUmKrYq-qxuRO",
+    "named_checks": 52,
+    "matrix_rows": 156,
+    "passed": true,
+    "actual_local_otp": true,
+    "physical_device": false,
+    "staging_verified": false
+  }
+}

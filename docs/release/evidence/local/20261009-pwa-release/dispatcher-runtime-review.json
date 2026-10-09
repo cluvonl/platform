@@ -1,0 +1,32 @@
+{
+  "scope": "LOCAL_OWNED_READONLY_DISPATCHER_REVIEW",
+  "observed_at": "2026-10-09T02:38:14.518113+00:00",
+  "shared_fixture_changes": false,
+  "migration_source_changes": false,
+  "provider_calls": false,
+  "handover_empty_checks": {
+    "context": "owned final25, pwa002 synthetic native actors, entire transaction rollback",
+    "prepare_empty_checks_confirmed": true,
+    "successor_accept_confirmed": true,
+    "checks_count": 0,
+    "accepted_state": "accepted",
+    "persistent_changes": false
+  },
+  "club_publication": {
+    "context": "existing native shared coordinator session, entire transaction rollback",
+    "sqlstate": "55000",
+    "code": "TASK_OFFER_CATEGORY_REQUIRED",
+    "persistent_changes": false
+  },
+  "instruction_propagation": {
+    "context": "owned final25,pwa002 synthetic native actor,entire transaction rollback",
+    "confirmed": true,
+    "changed_shift_versions": 2,
+    "immutable_instruction_versions": 2,
+    "stale_target_sqlstate": "40001",
+    "stale_target_code": "STALE_VERSION",
+    "stale_versions_persisted": 0,
+    "persistent_changes": false
+  },
+  "static_record_review": "Only card CASE unassigned v_other found; handled separately by additive110. Assigned records in handover, team credit/publication, distribution and instruction loop checked."
+}

@@ -1,0 +1,21 @@
+{
+  "scope": "LOCAL_SHARED_ADDITIVE_PWA_APPLICATION",
+  "observed_at": "2026-10-09T03:10:12.019461+00:00",
+  "migration": "20261009113000_pwa_nested_version_integrity.sql",
+  "sha256": "60eedfed603a1450d42524dc070e8fa4661c1bb323d55e660faef52845b98f19",
+  "source_hash_verified": true,
+  "transaction_committed": true,
+  "postgrest_schema_notified": true,
+  "gate_verified": true,
+  "migration_count": 30,
+  "latest_version": "20261009113000",
+  "older_history_rows_unchanged": 29,
+  "local_cli_repair": true,
+  "migration_rerun": false,
+  "statement_count": 3,
+  "stored_statement_content_exact_after_cli_whitespace_trim": true,
+  "database_reset": false,
+  "auth_rows_modified_by_migration": false,
+  "provider_calls": 0,
+  "owned_proof": "owned-final30-sql-proof.json"
+}

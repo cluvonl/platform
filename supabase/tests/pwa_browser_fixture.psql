@@ -1,0 +1,93 @@
+-- LOCAL_NATIVE_BROWSER_FIXTURE: additive, synthetic cb namespace only.
+-- Run only on the preserved native local Supabase postgres DB after the PWA
+-- migrations: psql -v cluvo_native_pwa_fixture=1 -f this-file.psql.
+-- Existing Auth users/sessions/persons remain untouched. No password or key.
+-- IDs use cb000000-0000-4000-8000-00000000NNNN.
+-- Household100, child200, committee300, team400, profiles501/502,
+-- obligation600, categories700, types711/721, shifts801..804,
+-- course1000/session1001, channel1100, board1200/card1203,
+-- private registered document1300, policy1400/version1401,
+-- vacancy1502, cluster1600/allocation1601, ready handover1700.
+\if :{?cluvo_native_pwa_fixture}
+\else
+\echo 'This fixture requires explicit cluvo_native_pwa_fixture=1 and never runs as a migration.'
+\quit
+\endif
+begin;
+do $guard$ begin
+ if current_database()<>'postgres' or current_user<>'postgres' or not exists(select 1 from app.tenants where id='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa' and slug='club-a') or (select count(*) from auth.users where id=any(array['11111111-1111-4111-8111-111111111111'::uuid,'22222222-2222-4222-8222-222222222222'::uuid,'33333333-3333-4333-8333-333333333333'::uuid]) and email like '%@example.test' and email_confirmed_at is not null)<>3 then raise exception 'LOCAL_NATIVE_FIXTURE_TARGET_MISMATCH';end if;
+end;$guard$;
+create function pg_temp.pwa_fixture_id(n integer) returns uuid language sql immutable as $$select ('cb000000-0000-4000-8000-'||lpad(n::text,12,'0'))::uuid$$;
+-- This owned fixture must never merge with an unrelated namespace occupant.
+do $fixture$ declare t uuid:='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';a uuid:='11111111-1111-4111-8111-111111111111';b uuid:='22222222-2222-4222-8222-222222222222';c uuid:='33333333-3333-4333-8333-333333333333';pa uuid;pb uuid;pc uuid;season uuid;future timestamptz;past timestamptz;n integer;s uuid;book uuid;instruction uuid;begin
+ select person_id into strict pa from app.account_person_links where tenant_id=t and auth_user_id=a and revoked_at is null and verified_at is not null;
+ select person_id into strict pb from app.account_person_links where tenant_id=t and auth_user_id=b and revoked_at is null and verified_at is not null;
+ select person_id into strict pc from app.account_person_links where tenant_id=t and auth_user_id=c and revoked_at is null and verified_at is not null;
+ select id into strict season from app.seasons where tenant_id=t and status='active';
+ future:=((statement_timestamp() at time zone 'Europe/Amsterdam')::date+7+time '09:00') at time zone 'Europe/Amsterdam';
+ past:=((statement_timestamp() at time zone 'Europe/Amsterdam')::date-1+time '09:00') at time zone 'Europe/Amsterdam';
+ if exists(select 1 from app.households where id=pg_temp.pwa_fixture_id(100)) then
+  if not exists(select 1 from app.households where id=pg_temp.pwa_fixture_id(100) and tenant_id=t and label='PWA lokaal testhuishouden') then raise exception 'FIXTURE_NAMESPACE_CONFLICT';end if;
+  return; -- Preserve existing fixture UI mutations on a repeated seed.
+ end if;
+ insert into app.households(id,tenant_id,label,intake_code_hash) values(pg_temp.pwa_fixture_id(100),t,'PWA lokaal testhuishouden',extensions.digest('public-synthetic-local-code','sha256'));
+ insert into app.persons(id,tenant_id,given_name,family_name,birth_date,birth_date_precision,status) values(pg_temp.pwa_fixture_id(200),t,'PWA','Testlid','2014-01-01','day','active');
+ insert into app.household_person_links(id,tenant_id,household_id,person_id,kind,starts_at,verified_by_auth_user_id) values(pg_temp.pwa_fixture_id(101),t,pg_temp.pwa_fixture_id(100),pa,'parent',statement_timestamp()-interval '1 day',c),(pg_temp.pwa_fixture_id(102),t,pg_temp.pwa_fixture_id(100),pb,'parent',statement_timestamp()-interval '1 day',c),(pg_temp.pwa_fixture_id(103),t,pg_temp.pwa_fixture_id(100),pg_temp.pwa_fixture_id(200),'member',statement_timestamp()-interval '1 day',c);
+ insert into app.household_access_grants(id,tenant_id,household_id,auth_user_id,can_view_progress,can_manage_contacts,can_invite_executor,can_book_for,starts_at,granted_by_auth_user_id) values(pg_temp.pwa_fixture_id(110),t,pg_temp.pwa_fixture_id(100),a,true,true,true,true,statement_timestamp()-interval '1 day',c),(pg_temp.pwa_fixture_id(111),t,pg_temp.pwa_fixture_id(100),b,true,false,false,false,statement_timestamp()-interval '1 day',c);
+ insert into app.guardian_authorizations(id,tenant_id,guardian_person_id,represented_member_id,scope,valid_from,verified_by_auth_user_id,evidence_ref) values(pg_temp.pwa_fixture_id(112),t,pa,pg_temp.pwa_fixture_id(200),'policy_acceptance',statement_timestamp()-interval '1 day',c,'local-synthetic-fixture');
+ insert into app.intake_profiles(id,tenant_id,person_id,household_context_id,desired_minutes,status,current_revision) values(pg_temp.pwa_fixture_id(501),t,pa,pg_temp.pwa_fixture_id(100),180,'submitted',1),(pg_temp.pwa_fixture_id(502),t,pb,pg_temp.pwa_fixture_id(100),180,'submitted',1);
+ insert into app.intake_answers_versions(id,tenant_id,profile_id,revision,answers,authored_by_auth_user_id) values(pg_temp.pwa_fixture_id(511),t,pg_temp.pwa_fixture_id(501),1,'{"schema_version":2,"experience":"Ervaring met clubtaken","preferences":["bar"],"skills":["organiseren"],"availability":["weekend"],"desired_monthly_minutes":120,"practical_limitations":"","reserve_willing":true,"buddy_requested":false}',a),(pg_temp.pwa_fixture_id(512),t,pg_temp.pwa_fixture_id(502),1,'{"schema_version":2,"experience":"","preferences":[],"skills":[],"availability":[],"desired_monthly_minutes":60,"practical_limitations":"LOCAL_PRIVATE_PROFILE_B_NOT_SHARED","reserve_willing":true,"buddy_requested":false}',b);
+ insert into app.obligations(id,tenant_id,season_id,assessed_household_id,base_target_minutes,effective_target_minutes,effective_winter_minutes,status) values(pg_temp.pwa_fixture_id(600),t,season,pg_temp.pwa_fixture_id(100),720,720,360,'active');
+ insert into app.household_obligation_links(id,tenant_id,household_id,obligation_id,link_kind,starts_at) values(pg_temp.pwa_fixture_id(601),t,pg_temp.pwa_fixture_id(100),pg_temp.pwa_fixture_id(600),'liable',statement_timestamp()-interval '1 day');
+ insert into app.executor_obligation_grants(id,tenant_id,person_id,obligation_id,valid_from,approved_by_auth_user_id) values(pg_temp.pwa_fixture_id(610),t,pa,pg_temp.pwa_fixture_id(600),statement_timestamp()-interval '30 days',c),(pg_temp.pwa_fixture_id(611),t,pb,pg_temp.pwa_fixture_id(600),statement_timestamp()-interval '30 days',c);
+ insert into app.committees(id,tenant_id,slug,name) values(pg_temp.pwa_fixture_id(300),t,'pwa-local','PWA lokale commissie');
+ insert into app.teams(id,tenant_id,name) values(pg_temp.pwa_fixture_id(400),t,'PWA lokaal team');
+ insert into app.team_person_memberships(id,tenant_id,team_id,person_id,membership_kind,starts_at) values(pg_temp.pwa_fixture_id(401),t,pg_temp.pwa_fixture_id(400),pg_temp.pwa_fixture_id(200),'player',statement_timestamp()-interval '1 day'),(pg_temp.pwa_fixture_id(402),t,pg_temp.pwa_fixture_id(400),pc,'team_parent',statement_timestamp()-interval '1 day');
+ insert into app.access_grants(id,tenant_id,auth_user_id,role_id,scope_kind,committee_id,starts_at,granted_by_auth_user_id) select pg_temp.pwa_fixture_id(310),t,c,r.id,'committee',pg_temp.pwa_fixture_id(300),statement_timestamp()-interval '1 day',c from app.permission_roles r where r.tenant_id=t and r.role_key='committee_coordinator';
+ insert into app.access_grants(id,tenant_id,auth_user_id,role_id,scope_kind,team_id,starts_at,granted_by_auth_user_id) select pg_temp.pwa_fixture_id(410),t,c,r.id,'team',pg_temp.pwa_fixture_id(400),statement_timestamp()-interval '1 day',c from app.permission_roles r where r.tenant_id=t and r.role_key='team_parent';
+ insert into app.access_grants(id,tenant_id,auth_user_id,role_id,scope_kind,starts_at,granted_by_auth_user_id) select pg_temp.pwa_fixture_id(311),t,c,r.id,'tenant',statement_timestamp()-interval '1 day',c from app.permission_roles r where r.tenant_id=t and r.role_key='volunteer_committee';
+ insert into app.task_categories(id,tenant_id,committee_id,name) values(pg_temp.pwa_fixture_id(700),t,pg_temp.pwa_fixture_id(300),'PWA praktische taken');
+ insert into app.task_types(id,tenant_id,category_id,name) values(pg_temp.pwa_fixture_id(710),t,pg_temp.pwa_fixture_id(700),'PWA zero-credit teamtaak'),(pg_temp.pwa_fixture_id(720),t,pg_temp.pwa_fixture_id(700),'PWA verenigingstaak');
+ insert into app.task_type_versions(id,tenant_id,task_type_id,revision,credit_minutes,approved_by_auth_user_id) values(pg_temp.pwa_fixture_id(711),t,pg_temp.pwa_fixture_id(710),1,0,c),(pg_temp.pwa_fixture_id(721),t,pg_temp.pwa_fixture_id(720),1,120,c);
+ for n in 1..4 loop
+  s:=pg_temp.pwa_fixture_id(800+n);
+  insert into app.shifts(id,tenant_id,type_version_id,committee_id,category_id,title,starts_at,ends_at,credit_minutes,cancellation_minutes,state,published_at) values(s,t,pg_temp.pwa_fixture_id(721),pg_temp.pwa_fixture_id(300),pg_temp.pwa_fixture_id(700),case n when 1 then 'PWA vrije verenigingstaak' when 2 then 'PWA teamplaats' when 3 then 'PWA geboekte voorbereiding' else 'PWA uitvoering controleren' end,case when n=4 then past else future+make_interval(days=>n-1) end,case when n=4 then past else future+make_interval(days=>n-1) end+interval '2 hours',120,2880,'published',statement_timestamp());
+  insert into app.shift_requirements(tenant_id,shift_id,minimum_age) values(t,s,16);
+  insert into app.pwa_instruction_versions(id,tenant_id,shift_id,revision,body,author_auth_user_id) values(pg_temp.pwa_fixture_id(820+n),t,s,1,'Lees de praktische voorbereiding. Meld je bij de PWA lokale commissie.',c);
+  insert into app.shift_positions(id,tenant_id,shift_id,ordinal,starts_at,ends_at) select pg_temp.pwa_fixture_id(830+n),t,s,1,starts_at,ends_at from app.shifts where id=s;
+ end loop;
+ insert into app.shift_positions(id,tenant_id,shift_id,ordinal,starts_at,ends_at) select pg_temp.pwa_fixture_id(840),t,id,2,starts_at,ends_at from app.shifts where id=pg_temp.pwa_fixture_id(801);
+ insert into app.pwa_clusters(id,tenant_id,season_id,team_id,title,mode,self_until,assign_until) values(pg_temp.pwa_fixture_id(1600),t,season,pg_temp.pwa_fixture_id(400),'PWA concrete teamcluster','assign',statement_timestamp()-interval '2 days',statement_timestamp()-interval '1 day');
+ insert into app.pwa_allocations(id,tenant_id,cluster_id,position_id,member_person_id,state,counts_for_team) values(pg_temp.pwa_fixture_id(1601),t,pg_temp.pwa_fixture_id(1600),pg_temp.pwa_fixture_id(832),pg_temp.pwa_fixture_id(200),'assigned',true);
+ insert into app.pwa_team_goals(id,tenant_id,season_id,team_id,goal) values(pg_temp.pwa_fixture_id(1602),t,season,pg_temp.pwa_fixture_id(400),3);
+ for n in 3..4 loop
+  s:=pg_temp.pwa_fixture_id(800+n);book:=pg_temp.pwa_fixture_id(900+n);instruction:=pg_temp.pwa_fixture_id(820+n);
+  insert into app.bookings(id,tenant_id,position_id,executor_person_id,obligation_id,booked_by_auth_user_id,starts_at_snapshot,ends_at_snapshot,credit_minutes_snapshot,cancellation_deadline_snapshot,task_version_snapshot,idempotency_key) select book,t,pg_temp.pwa_fixture_id(830+n),pa,pg_temp.pwa_fixture_id(600),a,starts_at,ends_at,credit_minutes,starts_at-interval '2 days',type_version_id,pg_temp.pwa_fixture_id(920+n) from app.shifts where id=s;
+  insert into app.pwa_booking_details(tenant_id,booking_id,instruction_version_id,instruction_body_snapshot,title_snapshot,actor_auth_user_id) select t,book,instruction,iv.body,sh.title,a from app.pwa_instruction_versions iv join app.shifts sh on sh.tenant_id=iv.tenant_id and sh.id=iv.shift_id where iv.id=instruction;
+ end loop;
+ insert into app.hour_ledger_entries(id,tenant_id,obligation_id,season_id,entry_kind,minutes_delta,performed_at,actor_auth_user_id,idempotency_key) values(pg_temp.pwa_fixture_id(950),t,pg_temp.pwa_fixture_id(600),season,'award',120,past-interval '1 day',c,pg_temp.pwa_fixture_id(951));
+ insert into app.courses(id,tenant_id,title,description) values(pg_temp.pwa_fixture_id(1000),t,'PWA cursus','Een concrete cursusinschrijving zonder automatische kwalificatie.');
+ insert into app.course_sessions(id,tenant_id,course_id,starts_at,ends_at,capacity) values(pg_temp.pwa_fixture_id(1001),t,pg_temp.pwa_fixture_id(1000),future+interval '10 days',future+interval '10 days 2 hours',2);
+ insert into app.pwa_channels(id,tenant_id,scope_kind,scope_id,title) values(pg_temp.pwa_fixture_id(1100),t,'committee',pg_temp.pwa_fixture_id(300),'PWA commissiegesprek');
+ insert into app.pwa_messages(id,tenant_id,channel_id,person_id,body,created_at) select pg_temp.pwa_fixture_id(1110+message_index),t,pg_temp.pwa_fixture_id(1100),pc,'PWA lokaal bericht '||message_index,statement_timestamp()-make_interval(mins=>60-message_index) from generate_series(1,55)message_index;
+ insert into app.kanban_boards(id,tenant_id,committee_id,name) values(pg_temp.pwa_fixture_id(1200),t,pg_temp.pwa_fixture_id(300),'PWA werkbord');
+ insert into app.kanban_columns(id,tenant_id,board_id,title,position,terminal) values(pg_temp.pwa_fixture_id(1201),t,pg_temp.pwa_fixture_id(1200),'Te doen',0,false),(pg_temp.pwa_fixture_id(1202),t,pg_temp.pwa_fixture_id(1200),'Klaar',1,true);
+ insert into app.kanban_cards(id,tenant_id,board_id,column_id,title,description,due_at,created_by_auth_user_id) values(pg_temp.pwa_fixture_id(1203),t,pg_temp.pwa_fixture_id(1200),pg_temp.pwa_fixture_id(1201),'PWA concrete werkafspraak','Controleer de voorbereiding en leg het resultaat vast.',future,c);
+ insert into app.kanban_card_assignees(id,tenant_id,card_id,person_id,assigned_by_auth_user_id) values(pg_temp.pwa_fixture_id(1204),t,pg_temp.pwa_fixture_id(1203),pc,c);
+ insert into app.card_checklist_items(id,tenant_id,card_id,label,position) values(pg_temp.pwa_fixture_id(1205),t,pg_temp.pwa_fixture_id(1203),'Voorbereiding gecontroleerd',0);
+ insert into app.committee_documents(id,tenant_id,title,owner_person_id,visibility,committee_id,current_revision) values(pg_temp.pwa_fixture_id(1300),t,'PWA geregistreerde werkinstructie',pc,'committee',pg_temp.pwa_fixture_id(300),1);
+ insert into app.committee_document_versions(id,tenant_id,document_id,revision,storage_object_path,content_hash,mime_type,size_bytes,authored_by_auth_user_id) values(pg_temp.pwa_fixture_id(1301),t,pg_temp.pwa_fixture_id(1300),1,t::text||'/committee/'||pg_temp.pwa_fixture_id(300)::text||'/pwa-local-proof.txt',extensions.digest('Cluvo PWA lokale werkinstructie.','sha256'),'text/plain',32,c);
+ insert into app.policy_documents(id,tenant_id,document_key,title,current_revision) values(pg_temp.pwa_fixture_id(1400),t,'pwa.local.rules','PWA lokale clubafspraken',1);
+ insert into app.policy_versions(id,tenant_id,document_id,revision,exact_body,body_hash,state,effective_at,approved_by_auth_user_id,approved_at,published_at,created_by_auth_user_id) values(pg_temp.pwa_fixture_id(1401),t,pg_temp.pwa_fixture_id(1400),1,'PWA lokale afspraken: kies een concrete taak en volg de instructies.',extensions.digest('PWA lokale afspraken: kies een concrete taak en volg de instructies.','sha256'),'published',statement_timestamp(),c,statement_timestamp(),statement_timestamp(),c);
+ insert into app.policy_audiences(id,tenant_id,policy_version_id,audience_key,criteria_snapshot,approved_by_auth_user_id) values(pg_temp.pwa_fixture_id(1402),t,pg_temp.pwa_fixture_id(1401),'pwa.local','{}',c);
+ insert into app.policy_assignments(id,tenant_id,policy_version_id,audience_id,member_person_id) values(pg_temp.pwa_fixture_id(1403),t,pg_temp.pwa_fixture_id(1401),pg_temp.pwa_fixture_id(1402),pa),(pg_temp.pwa_fixture_id(1404),t,pg_temp.pwa_fixture_id(1401),pg_temp.pwa_fixture_id(1402),pg_temp.pwa_fixture_id(200));
+ insert into app.volunteer_role_catalog(id,tenant_id,name) values(pg_temp.pwa_fixture_id(1500),t,'PWA praktische clubrol');
+ insert into app.volunteer_role_versions(id,tenant_id,role_id,revision,effective_from,approved_by_auth_user_id) values(pg_temp.pwa_fixture_id(1501),t,pg_temp.pwa_fixture_id(1500),1,(statement_timestamp() at time zone 'Europe/Amsterdam')::date,c);
+ insert into app.vacancies(id,tenant_id,role_version_id,committee_id,title,description,expected_minutes,contact_person_id,state) values(pg_temp.pwa_fixture_id(1502),t,pg_temp.pwa_fixture_id(1501),pg_temp.pwa_fixture_id(300),'PWA help de commissie','Een concrete lokale proefvacature.',120,pc,'published');
+ insert into app.pwa_handovers(id,tenant_id,season_id,team_id,predecessor_person_id,successor_person_id,note,checks) values(pg_temp.pwa_fixture_id(1700),t,season,pg_temp.pwa_fixture_id(400),pc,pa,'PWA exacte overdracht: open plaats, teamdoel, documenten en opvolging staan klaar.',array[true,true,true,true,true]);
+ insert into app.pwa_questions(id,tenant_id,household_id,person_id,subject,body) values(pg_temp.pwa_fixture_id(1800),t,pg_temp.pwa_fixture_id(100),pa,'PWA praktische vraag','Waar meld ik mij voor de concrete dienst?');
+ insert into app.pwa_question_history(tenant_id,question_id,question_version,state,actor_auth_user_id) values(t,pg_temp.pwa_fixture_id(1800),1,'open',a);
+end;$fixture$;
+commit;
+-- Only public synthetic resource identities are returned, never Auth metadata.
+select 'LOCAL_NATIVE_PWA_FIXTURE' scope,'cb000000-0000-4000-8000-000000000100' household_id,'cb000000-0000-4000-8000-000000000400' team_id,'cb000000-0000-4000-8000-000000000801' free_task_id,'cb000000-0000-4000-8000-000000000904' pending_execution_id;

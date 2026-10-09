@@ -1,0 +1,2563 @@
+{
+  "environment": "local",
+  "browser": {
+    "name": "Chromium",
+    "version": "153.0.8010.12",
+    "headless": true
+  },
+  "platform": {
+    "os": "linux",
+    "architecture": "x64",
+    "timezone": "Europe/Amsterdam",
+    "locale": "nl-NL"
+  },
+  "build": {
+    "mode": "production",
+    "id": "Lbo4BE0TAUmKrYq-qxuRO",
+    "sourceFilesSha256": {
+      "components/mobile/attendance-form.tsx": "9e48f0e0d799bbfd98aecd73e3161e1645b841df38bf8dd2c81bb4a879172324",
+      "components/mobile/calendar.mjs": "0d1c92406da010febd2469d14e4f634c5e5da906c5c0304c40c77ebce189e70a",
+      "components/mobile/club-task-creation.tsx": "51d5a63ffb597c119cb22c2aa8071daf919ff16f40c6d57bfd572a52bf75869f",
+      "components/mobile/club.tsx": "559e7dcac47d863555a38142e54a82bf39b97698478229fad22c5ddb96053234",
+      "components/mobile/cluster-reservation.tsx": "e7a46938e48fea70f82b2c36555a93d9b4eb91753651ad66b5a97067ed3a0ce7",
+      "components/mobile/command-form.tsx": "7b3ed227dbbef51be8f38745c644c31b77b1dfd7c1b94f09929508291c8f3af7",
+      "components/mobile/committee-followup.tsx": "a6324eff881a10d537de9e7ba64055bc5d4e1f6e81099c9d189be2ccff14b5ec",
+      "components/mobile/context-selection.tsx": "543285705a447911b5b6399ad1aeae42465aa0e75a1aa022b3219e4ed7de98fb",
+      "components/mobile/conversation.tsx": "ef323604b9f26849b6203c75493acd4bf9aa95ac5b3e4ac8e89e16adbe6347de",
+      "components/mobile/draft-state.ts": "06dd6ddc69f96359303e2872e58f68992bf91006b0c016dfd05f13fa3c21c996",
+      "components/mobile/instructions-form.tsx": "330a09235a9b06c3989313638297be19132a6858bd1c96217620a28839490107",
+      "components/mobile/mobile-link.tsx": "30ec65cbdad709e746580d60ed59c36382037fda4835f47eed1a50007862c0de",
+      "components/mobile/mobile.css": "4ff04ea04420e835ef564b89f77609aaeee3aadc23533421d665bd3d4d3788fd",
+      "components/mobile/personal.tsx": "8d0d903566bffed59ec660254fc7ecc79c61ac30dcc4f045a424e0231f1c8907",
+      "components/mobile/primitives.tsx": "ce9f0b008918efcbe37aabf642e554274f6baa1b1ae969a6d1b62c71a358bfd0",
+      "components/mobile/route.tsx": "7016a42764c5585e889d5511b960cf62fa33fc4dadea4d887705e5d160e9c264",
+      "components/mobile/screens.tsx": "8038e15e962df0b850e3a15622d07abea670a3f0dda4f8b6d48022694628ff26",
+      "components/mobile/shell.tsx": "1e3801cfaab1dafa9b08e3a9f01658b3ae4a6bbce94c45b8a8065bfab7c06faf",
+      "components/mobile/state-labels.ts": "b6ccf6c081da7b364e34ce34092bb9bf986164735baf08eff567d84f35af03bf",
+      "components/mobile/suitability.ts": "32ea6f6e3e3266284f0b21e002fe424b559aac00b4a077a0b4990128603c5bef",
+      "components/mobile/task-detail.tsx": "84b158f096f30058946b2ce5e8912c10a208f6cc1ff274f160b567db1ae18e3f",
+      "components/mobile/teams.tsx": "1e57f740e33e087f11d017ba055d815b3b3ecc369041166db2e065f3013e30db",
+      "components/mobile/types.ts": "f28d2286a3e54e0b6479183a1ec3d7d27b1bcf56a2c8c526c59113fb818ed6d2",
+      "components/mobile/work-card-form.tsx": "2da60217e0fb46fcec47cf08b65a0f17a6fe3dfc4425b8d16ea8c0374727a674",
+      "app/app/layout.tsx": "06b347ff1e4470d6ef7d77f88d9b3d2e1232d61b7f098d89f365478df0cc61b0",
+      "app/app/page.tsx": "d26073b1bf7773b229216402050a1931b34ad646670d13a00a462bb5c9e16c3d",
+      "app/app/workspaces/page.tsx": "148f6d25e03124ca8698f9286a392184290aaf51648237af523b450ae9f4cf93",
+      "app/app/sw.js/route.ts": "07ae98a119377168586057b531469cf6874f59a7478efbaf0026acc0471aa5cf",
+      "app/app/login/page.tsx": "1a7091911461e6a96127735a9e13dbc7184a5ecd5c7b2e47f8fa482079f4c51b",
+      "app/app/invite/accept/page.tsx": "82f318dfd024296753da2a7f19911a637bada364156ae98a1d9266526ddb847c",
+      "app/app/c/[club]/error.tsx": "51a15aa8b3d339ef031d69266d6de319329a26a1b910c04b911b6511260970cf",
+      "app/app/c/[club]/layout.tsx": "643a80aa8b5f66b7194ed1ec806f1c4e7683ea407772d42df1eff714141259d1",
+      "app/app/c/[club]/loading.tsx": "f01084ca7b721f2e547c8197f798f02cc6f095654634477c9c0569a936f8114f",
+      "app/app/c/[club]/page.tsx": "9deb1a9138c402b3eda047624654b0602d6e5b76cf28b525f7dab7aad175a0be",
+      "app/app/c/[club]/teams/page.tsx": "c84af472b64276ccbebe1f8d8e1ea725b2daaac944bad395bf0f6deb7f66e041",
+      "app/app/c/[club]/tasks/page.tsx": "97ee6720f052a84ac85a6e2f1a9452593ccbf67f6e61da5abff05bb29bc610d8",
+      "app/app/c/[club]/settings/page.tsx": "8fb24076a58ceef542f7918e1ce316aaa6e3c611316fb8814ed9acabe5ee7c92",
+      "app/app/c/[club]/reports/page.tsx": "d342c186b994a25bd25e52b37803fff8d30d2c280ae8510cf2dedddbdbe05405",
+      "app/app/c/[club]/reports/export/route.ts": "56911abdc58132c6a29f7c9c8899b4984d473025077d361cbcd6e52cf362e95d",
+      "app/app/c/[club]/profile/page.tsx": "06911da814c231d4fc383a85987b059b3e076726ee7e90c6ddef2fb76d1597cb",
+      "app/app/c/[club]/policies/page.tsx": "de502038446972c419706a80a935174c5e1e1e107b46d4d9fbf0642601f63303",
+      "app/app/c/[club]/opportunities/page.tsx": "e38c3d8fb7f7e4d8bd729ad5d41e02ed897d5081d92b2a4b4d6c9e3d254eb47f",
+      "app/app/c/[club]/notifications/page.tsx": "24fb2388ed45571dd16e29063eb6bee10c39a95c8b14733979b6b97e8ce55100",
+      "app/app/c/[club]/more/page.tsx": "c993e079abfecb2de6e1c1a892baa53dab4294216099f1c465939cff1a9fd63f",
+      "app/app/c/[club]/messages/page.tsx": "3fdc2121c288671a496e511a42c09f59b4136fe4c3a78a4b3c6b34b836f021de",
+      "app/app/c/[club]/manage/page.tsx": "e91aecfe0220c42a89b6bb6a7eacfb2a30f0047a2f1003f3fb76ecc2867fc89d",
+      "app/app/c/[club]/ledger/[entry]/route.ts": "1721a0261645a6622ad4e37650d5214b5ac510d34ad5a06d08ea3936fef48d63",
+      "app/app/c/[club]/install/page.tsx": "cf05fdd49f915e2b06222b7e671bd3db3992187c58b4a8871b4eba057cf18c1d",
+      "app/app/c/[club]/household/page.tsx": "912eb2371fd3f9f4c07cca4aabd44ca111dc9db66a151f3e08f863e6d98c4f3b",
+      "app/app/c/[club]/home/page.tsx": "22ba69f44fd25b588516d7a25eaa605b825adb8f95779c326a36d125139ea98f",
+      "app/app/c/[club]/help/page.tsx": "2b9108544f389b93d740c6cc453eddeead958824fa713fbb9d3e48ada4323a7a",
+      "app/app/c/[club]/finance/page.tsx": "285efc3729d64db4dc19adaf9da1532aca4c4677dedc0c3d14b4aba50054d263",
+      "app/app/c/[club]/documents/[document]/route.ts": "eb0adf131ad9d8eee9b9eaa4b5758444f3c6008aafa6517afdc07d70ec672606",
+      "app/app/c/[club]/courses/page.tsx": "c5003155f5ee2bf04aa511e28b16242cc5aa5030dd18aa398a274ade0b8a7c4b",
+      "app/app/c/[club]/committees/page.tsx": "2bba08fd1aeca02c13035809f48a8e89cf8483dbc26fe20bfe02731b36bfe0a0",
+      "app/app/c/[club]/agenda/page.tsx": "efc1f02f18c36e48c82b0c8f2846405829cf4b38f700ae40ee2656a3a186218c",
+      "app/app/c/[club]/agenda/export/route.ts": "df53aae0f36375e52b696ada5474afb982f79bbbff6887d5c4766a8d0085fc05",
+      "app/app/c/[club]/actions/page.tsx": "72121fa8e208934973c07ffbe578eda69eca925d91679633a080a3914626bc46",
+      "app/app/auth/verify/page.tsx": "9560423a603ed20d30153d5eb572bf6fa3cac7dd7fd191812454a109eb9f30cb",
+      "lib/pwa/actions.ts": "d0f79fc5a186ddb3d62ab9a2a8ee3e4e7a405a663758830d9e21508ada8dcd1b",
+      "lib/pwa/conversations.ts": "3825901c848af2bed85b5a8f0b917dc79da56efbd95dca1187404d164bd5a055",
+      "lib/pwa/exports.mjs": "325d86d23838d9f6b58c1c8b7ae1e82c7525db97259fda0a1d1f9ec3280fa85a",
+      "lib/pwa/help.ts": "f10c55e1c2028c76d33e8626be1d9607bdff59e910197968798e6751445701bb",
+      "lib/pwa/links.mjs": "68881af609f1d23bc316a8c3988361352db1b061ed22512d22bc6b58f224ad78",
+      "lib/pwa/pending.ts": "781e664955982e98174597d0768043cc3022091349de77cc75b325298af112de",
+      "lib/pwa/push-config.ts": "fb2fe8cf152eb2f9cff9a7b107e691d3123af5b50bd4d75aa7c7e8ee460e81e6",
+      "lib/pwa/receipts.mjs": "b787a63831fd6dea989e2f1a99489988c64fecfb1c801ff565d1727e0e915e25",
+      "lib/pwa/server.ts": "0c9431514136392ea52e40ca966e015515c3ed10ea6aeeadb522e7b5368a6132",
+      "lib/pwa/time.mjs": "a2d264b2c6c62320aefd665d6591a9bc3fed45e47614d345907326947f59302f",
+      "lib/pwa/validation.ts": "d35954a1a441f802f66eb1edc1b36a35cb1ee6996064525aab82b52f090e62c5",
+      "components/app/help-provider.tsx": "296f35de7ecd21a4daa4ddad9e19caf7ec1e2ef9963bf4b2624b15b040370dc7",
+      "components/pwa/pwa-controls.tsx": "f2d1f92964961d1623b8e65441799fa2ca1d15bea7eef1bbf80669807a84fdd1",
+      "components/pwa/push-subscription-control.tsx": "9d7871fc4a6f35644314c2584f6661746d7d7ce2098c78057c9022e3499fbcb1",
+      "scripts/browser-pwa-mobile.mjs": "80ad82c9d396480e82c2a9970b75c6cb0ecd8487642e7b517f4842dfab2546d1",
+      "scripts/pwa-mobile-extended-flows.mjs": "b72a2f390b943c83189fcae75598d354107f0f315c2b333844328a0410c8bebf"
+    }
+  },
+  "database": {
+    "sourceMigrationCount": 31,
+    "migrationsSha256": {
+      "20261002163042_cluvo_wp1_wp2_core.sql": "7e4efdaa139d2fe3120c43c0e7fcfe966438f154c08358734b6c555968acd32e",
+      "20261002165306_wp3_wp5_obligations_execution.sql": "1dd88883e99acd63cbea6f33c47b1c39008a6832904f1da6150374fbe1474eb7",
+      "20261002165327_wp6_wp8_collaboration_communication_policy.sql": "9707da512d46b23d8472bf222981242f8020ac3612709f536136876674b50702",
+      "20261002170949_wp1_onboarding_storage.sql": "6de61a4843cd9a3d77fccb6c0be0591c178b516518e4bb7ce9c2ae1cec3d4c03",
+      "20261002171135_wp9_wp11_finance_people_seasons.sql": "bdff3e58102376de4195840cc7cd3a02a59c7648cc19403c306ae72e96605719",
+      "20261002183000_vertical_read_models.sql": "bf50215a774296882cb5aa8067b43bb2c853bbb991968859b8ceece58d197eaf",
+      "20261002184500_assisted_member_actions.sql": "c7d74823e3be555b7115b1eab4e4180cdb48c7668680fa3a0a6b0e8420629bab",
+      "20261006180000_account_help_preferences.sql": "f6b7d1db5f420b5e5daeaf142326289dd1fb6918123c001386956f512f7755ff",
+      "20261006193000_complete_personal_intake.sql": "488d4722f830a0a2a2d35ff89a483bcd6f5e40ed3aa255d367d4346aaad22ad9",
+      "20261006210000_household_dossier_projection.sql": "0f1b29d8bbde85300f704270bc5ead062344bffe01f5688b67daa085099450a2",
+      "20261006223000_versioned_household_invitation_commands.sql": "99b456fda630c15eca25f197d971edcf8134a5181deb114c398dde852b6b62fe",
+      "20261006230000_household_invitation_cancellation.sql": "6d3738db24d2a02576fa6fa4a9273390d04872565edd66d662024df230425a1c",
+      "20261006233000_contract_household_invitation_bootstrap.sql": "1731ab3cec4921ad31e6f30a90ee21d8dc6101fa205285a51c5b65bc52e2c3f2",
+      "20261006234500_personal_intake_reconfirmation.sql": "e4f95b65789485e86131d21c0c085a83c8fc5b4195f36b4f81e24b9c6c171625",
+      "20261007010000_native_session_authority.sql": "9c165f68f413be04aa958358ec088c422dd21fea92b66e9ba84e04378817607a",
+      "20261007013000_intake_assistance_management.sql": "1512b7cbfd1fd63065fa09ad17aba0a2c71aaba1c875326f11e089175a5979c3",
+      "20261009100000_pwa_domain.sql": "18cc63b457fddea3f003bceb4d31f310291692e70485e6aa013e4091a8d47d41",
+      "20261009101000_pwa_commands.sql": "dbf600e3aabc225e5031ca83c24031c27c287cec47cce0b0f64bf81eb6e00f97",
+      "20261009102000_pwa_snapshot.sql": "969346799a4e591b7f85f8bacc4a877c1ea42dd628c3e041cf9b976f79e19ef0",
+      "20261009103000_pwa_delivery_and_receipts.sql": "73714397962f5ca54b5a94d1b6cc901ed744b8f8bcccd87fc32cd12673fbfe6f",
+      "20261009104000_pwa_buddy_integrity.sql": "c2e1bfdccf311f50bd9e0ff1686ce2301d1c65ff29b02cd78512666f0ec5305c",
+      "20261009105000_pwa_automation.sql": "7e20fdaee644e5a2f0b037f0d34001a773cf47b6b23a0294f23fddad45e5dbef",
+      "20261009106000_pwa_provider_receipts.sql": "5e6923e41dfd6d5da1ab12380f1be31b25e466eba02b685f7361b11e1ffe9eed",
+      "20261009107000_pwa_compatibility_and_cluster_scope.sql": "d60b59920adac4c45a3ec336a6a0cb27e31abb3c8aa69e0ddf5b47ed729e4486",
+      "20261009108000_pwa_repeatable_command_events.sql": "7ad42704ec974bd670deb70c14dcd13a2079f1b0d9fd6a416e0d4dcdf3859ef2",
+      "20261009109000_pwa_digest_dispatch_day.sql": "881aaf6a7ff6ed1e22604d810c1194fc140c4dfb79240e869b25feb3a9be4210",
+      "20261009110000_pwa_card_version_gate.sql": "7d237cb0e27bf8d4f27e649143a77e39dc29977279fc7bc6db6e506da52ff4cc",
+      "20261009111000_pwa_handover_checklist_integrity.sql": "2d10644befebd17fb8893d4e1363a6a4f61588bd55ac3ab45a7653d6489e3307",
+      "20261009112000_pwa_task_offer_category_seed.sql": "1e2bb5b181e7e0d4279c8270b12bfee8743cb7dcaaa0e4267256eaf689c59c17",
+      "20261009113000_pwa_nested_version_integrity.sql": "60eedfed603a1450d42524dc070e8fa4661c1bb323d55e660faef52845b98f19",
+      "20261009114000_pwa_policy_assignment_identity.sql": "afbe3c6218e2d81dae30107ec0f854f5fe0bdd87ae700da98f2b5d3165f4ad10"
+    },
+    "nativeAppliedSchemaAtStart": {
+      "migration_count": 31,
+      "versions": [
+        "20261002163042",
+        "20261002165306",
+        "20261002165327",
+        "20261002170949",
+        "20261002171135",
+        "20261002183000",
+        "20261002184500",
+        "20261006180000",
+        "20261006193000",
+        "20261006210000",
+        "20261006223000",
+        "20261006230000",
+        "20261006233000",
+        "20261006234500",
+        "20261007010000",
+        "20261007013000",
+        "20261009100000",
+        "20261009101000",
+        "20261009102000",
+        "20261009103000",
+        "20261009104000",
+        "20261009105000",
+        "20261009106000",
+        "20261009107000",
+        "20261009108000",
+        "20261009109000",
+        "20261009110000",
+        "20261009111000",
+        "20261009112000",
+        "20261009113000",
+        "20261009114000"
+      ]
+    }
+  },
+  "test_scope": {
+    "native_auth": true,
+    "synthetic_accounts": true,
+    "fixtureSourcesSha256": {
+      "supabase/tests/pwa_browser_fixture.psql": "50aa9ae4faa59f963d30506223797c4342dd54d4fbc2e627744629a31e6e42b0",
+      "supabase/tests/pwa_browser_batch_fixture.psql": "9af5e0e26838b2857d7d926e643fcedc829ca2de402926ffb5505869289b7740",
+      "supabase/tests/pwa_browser_document_repair.psql": "37efccacbb11786a0f237f1b14271f15751a5b2c8b84a67e22a93812f77b9164",
+      "supabase/tests/pwa_browser_report_grant.psql": "f0882ab795f7c9c4d99abeee2e45c24222c96be584f386ea8c9e9b17fd14cdd5"
+    },
+    "tenant": "club-a",
+    "household": "cb000000-0000-4000-8000-000000000100",
+    "cross_tenant_account": true
+  },
+  "physical_device": false,
+  "actual_otp": true,
+  "synthetic_accounts": true,
+  "checks": [
+    "ACTUAL_MOBILE_OTP",
+    "BOTTOM_SHEET_ENTER_ESCAPE_NATIVE_BACK_PRESERVES_OVERVIEW",
+    "TWENTY_ROUTES_320_390_430_DESKTOP_AND_200_PERCENT_TEXT",
+    "DECORATIVE_AVATARS_SINGLE_LINE_WITHIN_CIRCLES_AT_TEXT200_USER_COPY_DOUBLED",
+    "UNAUTHORIZED_SCREEN_HAS_REASON_WITHOUT_FALSE_ZERO_BALANCE",
+    "REAL_TASK_AGREEMENT_SHEET",
+    "OFFLINE_DOES_NOT_SUBMIT_OR_LOSE_DRAFT",
+    "DIRTY_WIZARD_INTERNAL_NAVIGATION_WARNING_PRESERVES_DRAFT",
+    "PREPARE_ROUNDTRIP_LOST_COMMIT_RESPONSE_STATUS_READBACK_ONE_REVISION",
+    "SECOND_DEVICE_SERVER_READ_SEPARATED_PARENT_PRIVATE_INTAKE",
+    "NATIVE_STALE_EXPECTED_VERSION_REJECTS_WRITE_KEEPS_DRAFT_EXPLICIT_REFRESH_ACCEPTS_ONE_NEW_REVISION",
+    "NATIVE_HELP_DISMISS_PRESERVES_DIRTY_PROFILE_STEP_AND_INPUT_WITHOUT_PROFILE_WRITE",
+    "NATIVE_VERSIONED_HELP_SEEN_CROSS_DEVICE_SEPARATED_PARENT_OWN_RESET",
+    "NATIVE_FOUR_NOTIFICATION_PREFERENCES_OWN_VERSION_CROSS_DEVICE_RESTORE_PUSH_INBOX_UNCHANGED",
+    "NATIVE_TWO_FRESH_BULK_INBOX_READ_COMMANDS_OWN_SCOPE_OTHER_PARENT_UNCHANGED",
+    "NATIVE_COURSE_ENROLL_WITHDRAW_WITHOUT_CERTIFICATE_AND_VOLUNTARY_INTEREST_READBACK",
+    "NATIVE_BOOKING_AND_PREPARATION_PRESERVE_LEDGER_UNTIL_ATTENDANCE",
+    "NATIVE_ASSIGNED_TEAM_PLACE_REAL_HOUSEHOLD_EXECUTOR_ACKS_BOOKING_NO_LEDGER_OR_TEAM_COMPLETION",
+    "NATIVE_HOUSEHOLD_QUESTION_CONFIRMED_READBACK",
+    "CROSS_TENANT_READ_DENIED",
+    "NATIVE_REGISTERED_PRIVATE_DOCUMENT_UPLOAD_ACL_HASH_BYTES_DOWNLOAD",
+    "NATIVE_TEAM_MANAGER_PER_POSITION_ACTUAL_EXECUTOR_AND_BOOKING_STATE",
+    "ACTUAL_COORDINATOR_SCOPED_ROUTES_320_390_430_DESKTOP_200_PERCENT_TEXT",
+    "TWENTY_ROUTES_AND_SIX_COORDINATOR_ROUTES_ACTUAL_TABLET_768",
+    "NATIVE_MESSAGE_OLDER_CURSOR_AUTHORED_SEND_AND_LIVE_DRAFT_RETENTION",
+    "NATIVE_WORK_CARD_CHECKLIST_REPLY_COMPLETION_WITHOUT_ATTENDANCE_LEDGER",
+    "NATIVE_QUESTION_TAKE_ANSWER_OWN_HOUSEHOLD_IMMUTABLE_HISTORY",
+    "NATIVE_ANSWER_INBOX_EXACT_QUESTION_BODY_HISTORY_OWN_DOSSIER_LINK_OTHER_PARENT_UNKNOWN_ID_DENIED",
+    "NATIVE_SEARCH_RESULT_SINGLE_NAVIGATION_HEADER_LINKS_MORE_PROFILE_CONTEXT_AND_DEMO_ABSENCE",
+    "NATIVE_TASK_SEARCH_EMPTY_FILTER_SELECTION_CLEAR_URL_TABS_AND_HISTORY",
+    "NATIVE_CALENDAR_WEEK_DAY_LAYERS_PERSON_RESET_AND_AUTHORIZED_PRIVATE_ICS",
+    "NATIVE_FAQ_SUBJECT_SELECTION_HONEST_BROWSER_INSTALL_HELP_NO_FAKE_INSTALL",
+    "NATIVE_REPORT_TOTALS_REAL_MINUTE_CSV_UNAUTHORIZED_PARENT_DENIED_READ_CONTROLS_NO_LEDGER_MUTATION",
+    "NATIVE_TEAM_SERIES_FOUR_WEEK_LOCAL_TIME_EIGHT_REAL_POSITIONS_ZERO_CREDIT",
+    "NATIVE_ZERO_DEFAULT_GOAL_RESTORE_PERSONAL_HIGHER_REASON_REAL_PROPOSAL_TWO_ATOMIC_ASSIGNMENTS_SIX_LEFT_OPEN",
+    "NATIVE_NEW_ASSIGNED_OWN_CHILD_PLACES_STAY_IN_MINE_WITH_EXACT_ALLOCATION_EXECUTOR_ACTION",
+    "NATIVE_POSITIVE_TEAM_CREDIT_UNBOOKABLE_UNTIL_REVIEW_AND_EXPLICIT_PUBLICATION_SOURCE_ZERO",
+    "NATIVE_CLUB_CREATION_PUBLIC_SELF_ASSIGN_ATOMIC_NATIVE_POSITIONS_AND_TEAM_RESERVATIONS",
+    "NATIVE_CLUSTER_CONCRETE_POSITION_REAL_TEAM_FACTS_EXPLICIT_SELECTION_AND_RESERVATION",
+    "NATIVE_CONFIRMED_PUBLIC_BOOKING_URL_AND_VISIBLE_MINE_TAB_NATIVE_BACK",
+    "NATIVE_MINE_ONLY_OWN_BOOKING_UNASSIGNED_TEAM_PLACE_DISCOVER_AND_TEAM_ALLOCATION_CONTEXT_PRESERVED",
+    "NATIVE_POLICY_FOLLOW_UP_READONLY_EXACT_BODY_NO_FORM_NO_OPEN_OR_ACCEPTANCE_MUTATION",
+    "NATIVE_OFFERED_POLICY_TYPED_DEEPLINK_EXPLICIT_OPEN_CONTROL_ACK_DISABLED_NO_GET_MUTATION",
+    "NATIVE_POLICY_CARD_EXPLICIT_OPEN_TWO_CURRENT_ASSIGNMENTS_NO_ACCEPTANCE_EXACT_REVISION",
+    "NATIVE_POLICY_EXACT_BODY_EXPLICIT_SELF_AND_VERIFIED_GUARDIAN_IMMUTABLE_ACCEPTANCES",
+    "NATIVE_ACCEPTED_POLICY_BODY_READONLY_REOPEN_NO_NEW_ASSIGNMENT_OR_ACCEPTANCE",
+    "NATIVE_HANDOVER_INBOX_EXACT_READY_ID_ACCEPTED_HISTORY_READONLY_UNKNOWN_ID_NO_CURRENT_FALLBACK",
+    "NATIVE_HANDOVER_DRAFT_BLOCKS_ACCEPTANCE_FIVE_CHECKS_EXACT_VERSION_NAMED_SUCCESSOR_AUTHORITY",
+    "NATIVE_TEAM_PLANNING_APPROVAL_POLICY_AND_HANDOVER_DO_NOT_AWARD_ATTENDANCE_MINUTES",
+    "NATIVE_ATOMIC_TWO_EXECUTIONS_PARTIAL_REASON_EXPLICIT_NO_SHOW_ACK_ONE75_MINUTE_LEDGER_POST_BOOKING_SNAPSHOT_UNCHANGED",
+    "NATIVE_OTHER_PARENT_HANDOVER_EXACT_ID_DENIED_NO_NOTE_NO_ACCEPT_ACTION",
+    "NO_HYDRATION_OR_UNCAUGHT_RENDER_ERRORS"
+  ],
+  "matrix": [
+    {
+      "actor": "ouder-a",
+      "route": "home",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-home-320.png",
+        "sha256": "cb3f9221b34bf51eef94c6f49bd71ae9b6c76b9476fd4062167eb0c0f9c972d6"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "home",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-home-390.png",
+        "sha256": "7b1473e0e16a715fdfafe9d00b31503c1cb6abfa75cd110aadb9ff44f307aba2"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "home",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-home-430.png",
+        "sha256": "db847b82b0597d2de7ff18b203b775e8e5de8008f3f2755120d17524aad6d40d"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "home",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-home-1440.png",
+        "sha256": "6ae281257877b0c76c3e493de23829197a9d2d5f124cab082bbfd940d4c4670d"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "home",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-home-390-text200.png",
+        "sha256": "696bd950241825e6442105539919b5a0a0ff1fb6bc8df4bc517de1303cc85d8c"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "tasks",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-tasks-320.png",
+        "sha256": "d4520b9c977627c88201dd88c92e1b17ef722e7b2e97f32ae5e973e0a34d3500"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "tasks",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-tasks-390.png",
+        "sha256": "d5e6d96daf9755cc68cf79bf378521ca2142efef46dc9924826e1dba627449fd"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "tasks",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-tasks-430.png",
+        "sha256": "7ed0a97597f87155a45f7cbcabeb89ade5ff94e26cade93eedd1d5246f8fe1ac"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "tasks",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-tasks-1440.png",
+        "sha256": "3d1dc5130b490846304cc1e45b9728ca2100d28e4fa439f004d5acce10f5860d"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "tasks",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-tasks-390-text200.png",
+        "sha256": "85a986f705afa11278aeb04fc016a8c2d5badead58586c831b04e3720fcb269f"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "agenda",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-agenda-320.png",
+        "sha256": "112262d3a58c19a3c9ebf06795d6117a645fbeb47e0f53dc10d38f6c0dfe8672"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "agenda",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-agenda-390.png",
+        "sha256": "ae548b3d2832f07853b7a4f91b6232f03f632c1809f9278ef8aa5e08e571187a"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "agenda",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-agenda-430.png",
+        "sha256": "d142b13b4e17f2bec5e9542c8baa6fc2b252c2610b8b54fc6e8028e8407e0ff4"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "agenda",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-agenda-1440.png",
+        "sha256": "38e0751a3be1c46dbb057c74359bd02349f18153ceb2b1acf7c27f7be83e539d"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "agenda",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-agenda-390-text200.png",
+        "sha256": "419a345a10d9ef6f6cf5f18d206951b612fc48e2e551b00022dad8f81f4d1cfd"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "teams",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-teams-320.png",
+        "sha256": "a824dcf4a94bb23073a41164c74db4f19bd3e6de4d0ce383ed5d465a28630f98"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "teams",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-teams-390.png",
+        "sha256": "66b6606cf18853ca9eb19a4f7b36158db7cd66d6ef56b66fba637a305f7fa0df"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "teams",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-teams-430.png",
+        "sha256": "3feee6204e9dd0b71905a21b74b2510c18a0b5e149e34f12702749ee201c6067"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "teams",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-teams-1440.png",
+        "sha256": "e05c767274921d00e5a128ccbf1340ba02dd8dfe28a13ca4db1a21bfc7097b7c"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "teams",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-teams-390-text200.png",
+        "sha256": "cbd05b5937f31a5220fa0059e9cdd1a858032e78103d227daf6e0a1638da866f"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "more",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-more-320.png",
+        "sha256": "1126662105755303afbf275b6a60c4008d6d6df2bcfce014316ce77b0e908301"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "more",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-more-390.png",
+        "sha256": "faeb032b42d131105670e5f3f8a0d4e964adbc556185ab7b3693e5329f635773"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "more",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-more-430.png",
+        "sha256": "6450f9aabf075d40b5bb7c0158cb0817cca6278f4effa80584a0de4cc6601b28"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "more",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-more-1440.png",
+        "sha256": "c0043f345ab60c913a6ae4ebd8466aebd234e925c0f93c5f750daa2d0ef99447"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "more",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-more-390-text200.png",
+        "sha256": "495b294d0eeed2616a92a28daa1648c924bb3bb39173d3069cb441014b4b4f1d"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "actions",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-actions-320.png",
+        "sha256": "0ed7cd2eb24c44c45ba174b29688db20d7aa09efc9627de70f45f1186828e0c5"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "actions",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-actions-390.png",
+        "sha256": "40d96e7c06593b0be48ce80d9131c5ef2628bab97a579d027d362245cade2191"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "actions",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-actions-430.png",
+        "sha256": "cbb854d6a4c88dbcc536c354219b591c11c5c6b33741eca6b8267487bacfb11c"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "actions",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-actions-1440.png",
+        "sha256": "c6e0750fdcdee57f9b29f5f2267386f0cda4d1567f4a33b36af6b907544b9dba"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "actions",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-actions-390-text200.png",
+        "sha256": "431a69e94091528529335fead7def653dccccb6b4133f37143b64f10e289c908"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "notifications",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-notifications-320.png",
+        "sha256": "8fd368b26507213ea3678eb17685f3bb1208be1feeade3b8663fcf00ca6eec73"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "notifications",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-notifications-390.png",
+        "sha256": "78fb55f44f4e607e0d1ee1b6ef2e0ee8e66ac73523d92e819d9dd7ef827373b4"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "notifications",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-notifications-430.png",
+        "sha256": "d217b0192ee8a6f73cc7648533fcdbdbae27dad91d36486517e5cd801cabcdfd"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "notifications",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-notifications-1440.png",
+        "sha256": "e88dab095571664c18458a96767e7c02d8750cb5ef0ba7e0c14baf41cc8beca1"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "notifications",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-notifications-390-text200.png",
+        "sha256": "cc28802c4df275625ec40961e5b927781e4bcc4fc9a982e11119827a0d474f4c"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "manage",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-manage-320.png",
+        "sha256": "e575dc8ecd977fb7a85059a89fc8308cad51cbfd405f0feec18c3f21c5e55357"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "manage",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-manage-390.png",
+        "sha256": "936a4f8d6b289ef5cf20e870bde4103d23b5be994039eb800f33af0c46a59547"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "manage",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-manage-430.png",
+        "sha256": "34e46fda7eb3f6ee6a99e35489e6a5da2db8b5197852729da332565309d84c67"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "manage",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-manage-1440.png",
+        "sha256": "8ffb83aa513cec425bc6bd851b73c90c3959ba830dcb8a7842549af8bb3b2883"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "manage",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-manage-390-text200.png",
+        "sha256": "51ad136e44462785e3fd93898a841821264731ed5b56353c4ed8dfeaeb4cb89f"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "profile",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-profile-320.png",
+        "sha256": "9a927c171de15b4f95f25694f011dc4ead8b12116465b4670a89f81776be0a54"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "profile",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-profile-390.png",
+        "sha256": "a51c6a7d99fbd420de3c681b4b728921c680d616147bda5992181f33bd236e5b"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "profile",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-profile-430.png",
+        "sha256": "42a72394972cb0ab09658e02a67e8e5987dafaabcb4d11a95659a43c7d350898"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "profile",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-profile-1440.png",
+        "sha256": "92234a84b25d6c35249bc122b28e1a66c38c42de9cf9ec41f6342e88bb35f896"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "profile",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-profile-390-text200.png",
+        "sha256": "427208fa3f4eae674f7660780b8fc0cc885ae11b076e41e25994e033dee29a4f"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "household",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-household-320.png",
+        "sha256": "bdf5b2b6b448666889e1387ecec836104b0d0d18e1f74acc17a84b791cfc6591"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "household",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-household-390.png",
+        "sha256": "fde4c832ab055b452a82f6d5f3626e6313d4cfb6f632ce057a9c4c46b8d2d9aa"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "household",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-household-430.png",
+        "sha256": "3f1fd3a3ee39deae092be6d116e51ce2f4465f6684a880d242c82e55e19de320"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "household",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-household-1440.png",
+        "sha256": "b3f9790a1b78e91b5e86162235aacc828aa42b39d307a638f02ca3ecb84792a9"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "household",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-household-390-text200.png",
+        "sha256": "1e069129e0723a741aa20336149d399d832b442dfbc57b58943acdf8cd5a4912"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "policies",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-policies-320.png",
+        "sha256": "7eaabbec5e9048e1adf5c1bbe9cc64fc3fdd40de23ab270a4cb87234b7f7de99"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "policies",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-policies-390.png",
+        "sha256": "d68a5f2a047641e64eea5cfc6a1bac1da2afe67f3893217787b7f95a924f4a57"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "policies",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-policies-430.png",
+        "sha256": "1c1725f31650cf52aea40027812e7d7fcf04495d6eb96ffcea61cdb692ce72f0"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "policies",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-policies-1440.png",
+        "sha256": "ba0bbda42559051c1c418c2ee80170e2110169441538f6c1694947f4c04af20c"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "policies",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-policies-390-text200.png",
+        "sha256": "49ffad38f7946bdde3bd921a976249b8920a80d0620830cc1d1d3c203777b0ec"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "courses",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-courses-320.png",
+        "sha256": "e7d8a9952f560867feab49e8d3012f0feff09799afdd43a4bfce6c187c18ecbf"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "courses",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-courses-390.png",
+        "sha256": "59f8adce070c7a5475cb4c895b693653cd2bd535e0af60fb1bafe98b81aff46b"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "courses",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-courses-430.png",
+        "sha256": "eb3d91886c3a57647712be7e253a5b4f72bfb7121d6dfb3489fad37d7457c0ac"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "courses",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-courses-1440.png",
+        "sha256": "a7a14df4a3abcfaa32c6930b6f721bc7bcac1a59689d04806e6d9ab7dd92a64e"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "courses",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-courses-390-text200.png",
+        "sha256": "e0b4bac228a9c5e0c96d96878c783681c37015d8b8da0aadadd01ad8512a9c92"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "opportunities",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-opportunities-320.png",
+        "sha256": "0f77ae8ef853e05803ec0e3997f8a0251da5d9d906fd866785c95020679cb738"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "opportunities",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-opportunities-390.png",
+        "sha256": "5fa4de048bbc096c549fee9e6f04ba0eddedbcbf4aa2d789e4cec836311bed3d"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "opportunities",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-opportunities-430.png",
+        "sha256": "bbd54b6b2234ae5e47e751bee8a5fd191d224611c0812f7d95c4e6b21e6d1432"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "opportunities",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-opportunities-1440.png",
+        "sha256": "4200cd7f0438c41b16e2801745670a078685d0916bdf0f1ab029eaf3ad279144"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "opportunities",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-opportunities-390-text200.png",
+        "sha256": "0f22a66d36810636b3d557d026f9389010342db0f7c25a4f89189005793a5da0"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "messages",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-messages-320.png",
+        "sha256": "4ecd8a4de281a5943b45b6449cb5a8f8413b7668083565185922704e3b9dfe2c"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "messages",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-messages-390.png",
+        "sha256": "2beccbfc8104d320efc49fd564965480a696aeaad80754319ccb6758b459dde2"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "messages",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-messages-430.png",
+        "sha256": "eccf920793b9845a07bf8271976e5b411628b5894ffe4f212ef5c36593b028aa"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "messages",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-messages-1440.png",
+        "sha256": "9ba71f41257bc173c6146797dbefc379346fd3163d963ca2f1b6142b39e0d837"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "messages",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-messages-390-text200.png",
+        "sha256": "2baa387873548b9535f63d656bed29a85e52877f28e7b43761083c9e0da88ed2"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "settings",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-settings-320.png",
+        "sha256": "6f917b038d0d14f8455795796121bfcfcffd8d8337476bdb76b6c352e4fb685b"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "settings",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-settings-390.png",
+        "sha256": "0bef7b66e756a55a3e3a650449fec61ac654bde3195b5e5d5fb82c36f97ea604"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "settings",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-settings-430.png",
+        "sha256": "dbf46f02f0dd1b3cf28325af806b05b342206fdf450b9ddbb37bb5147b782346"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "settings",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-settings-1440.png",
+        "sha256": "edb12d29b892321fb61ef3ca03417de41aa992feaa8300e3db2b22e4a3a37e57"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "settings",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-settings-390-text200.png",
+        "sha256": "d5f67bcb3a611754d2753b14ebcb4d6e4456906b3f56f0194f03ec22cac5ec3b"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "help",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-help-320.png",
+        "sha256": "9d42f1cef1ec6f9760ed6d95476d56d48ebc6b2ee420a6177bde776a670ac04b"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "help",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-help-390.png",
+        "sha256": "84b5de1f5ca0820be7772d438ab9a466ab68d283bd3e50293e05d2b4470b8a5b"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "help",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-help-430.png",
+        "sha256": "2acfebf986d7a369b3675a5caf7bdc3e42825208558f466246e200d5003e1a5b"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "help",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-help-1440.png",
+        "sha256": "82834537df0283238adf2c195b4aa49fe572ab647d6c276a69ecdab749c93800"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "help",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-help-390-text200.png",
+        "sha256": "3fc99a4fa7e862f216d4645ac36ffb4268e42f71c6eb576f7c106015aaedeb3b"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "install",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-install-320.png",
+        "sha256": "b5bdf8dd5daafe77e7910951d72bb34966c761b7448a4e1f93cd5e53defd6ffc"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "install",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-install-390.png",
+        "sha256": "04c43c1cdbcbc12cb50e982c597410989a32bbfadc2571a85615e20ea1d31d40"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "install",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-install-430.png",
+        "sha256": "6d43aeb597ca60009b75fb0bd12151ee1a1311103781a5a27deffeafe278c158"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "install",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-install-1440.png",
+        "sha256": "4290006b15ed6b2fed51b15ac59391756568c967bc3ad21734839be645f81c06"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "install",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-install-390-text200.png",
+        "sha256": "428a590b4e439e9e736d8655fe679bb722743bb8735ed3f4873f057fdfc49a0b"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "reports",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-reports-320.png",
+        "sha256": "e575dc8ecd977fb7a85059a89fc8308cad51cbfd405f0feec18c3f21c5e55357"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "reports",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-reports-390.png",
+        "sha256": "936a4f8d6b289ef5cf20e870bde4103d23b5be994039eb800f33af0c46a59547"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "reports",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-reports-430.png",
+        "sha256": "34e46fda7eb3f6ee6a99e35489e6a5da2db8b5197852729da332565309d84c67"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "reports",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-reports-1440.png",
+        "sha256": "8ffb83aa513cec425bc6bd851b73c90c3959ba830dcb8a7842549af8bb3b2883"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "reports",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-reports-390-text200.png",
+        "sha256": "51ad136e44462785e3fd93898a841821264731ed5b56353c4ed8dfeaeb4cb89f"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "finance",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-finance-320.png",
+        "sha256": "e575dc8ecd977fb7a85059a89fc8308cad51cbfd405f0feec18c3f21c5e55357"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "finance",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-finance-390.png",
+        "sha256": "936a4f8d6b289ef5cf20e870bde4103d23b5be994039eb800f33af0c46a59547"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "finance",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-finance-430.png",
+        "sha256": "34e46fda7eb3f6ee6a99e35489e6a5da2db8b5197852729da332565309d84c67"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "finance",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-finance-1440.png",
+        "sha256": "8ffb83aa513cec425bc6bd851b73c90c3959ba830dcb8a7842549af8bb3b2883"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "finance",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-finance-390-text200.png",
+        "sha256": "51ad136e44462785e3fd93898a841821264731ed5b56353c4ed8dfeaeb4cb89f"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "committees",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-committees-320.png",
+        "sha256": "e575dc8ecd977fb7a85059a89fc8308cad51cbfd405f0feec18c3f21c5e55357"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "committees",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-committees-390.png",
+        "sha256": "936a4f8d6b289ef5cf20e870bde4103d23b5be994039eb800f33af0c46a59547"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "committees",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-committees-430.png",
+        "sha256": "34e46fda7eb3f6ee6a99e35489e6a5da2db8b5197852729da332565309d84c67"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "committees",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-committees-1440.png",
+        "sha256": "8ffb83aa513cec425bc6bd851b73c90c3959ba830dcb8a7842549af8bb3b2883"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "committees",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-committees-390-text200.png",
+        "sha256": "51ad136e44462785e3fd93898a841821264731ed5b56353c4ed8dfeaeb4cb89f"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "home",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-home-320.png",
+        "sha256": "610d7feb9a81e4fe043947abbdd7d291f6d0db967788b4e3a440cc3fef74cbca"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "home",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-home-390.png",
+        "sha256": "6df3ddf257ed096fdc6bb886a4d6218d4710e5e2a4ea28582a7d333080b8416c"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "home",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-home-430.png",
+        "sha256": "0b6eeb88c1b778c3afa6b213864dfaa1b9b0d2ba1c8aa9e59a222b32dd61716f"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "home",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-home-1440.png",
+        "sha256": "a34210ce3da664844e38519f0c0aa4306fd68b83e6e699e0bc7eafa423d50607"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "home",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-home-390-text200.png",
+        "sha256": "ca9a42ea5d65c234e24a097ab0328c0585bdc5def430b1172d4fbbba9ea46390"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "manage",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-manage-320.png",
+        "sha256": "ffd7306813f76d7d2f321c16ed27f4709ee6581c43179ef8c55662242cee51a3"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "manage",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-manage-390.png",
+        "sha256": "3f4b946eaf9011d885cc2dc027ca786d633d2075844fa3c2f9f2f7a669298ca6"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "manage",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-manage-430.png",
+        "sha256": "81b81eacaf3bebaf51ca61c1328a4f53e1562ce4ef738fc02a05cd877ebf49ae"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "manage",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-manage-1440.png",
+        "sha256": "6ff9f2e65c88fc66d5a6a36313fb4378bad9b1488b8010baed6619b0cee47d1a"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "manage",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-manage-390-text200.png",
+        "sha256": "78b73838e8e8066fd337ee787ed36380c4da81bfa8aec2b80873b34d993581df"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "committees",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-committees-320.png",
+        "sha256": "f53acd01d9199431deec3812cc3c6e07f503d047550c599f184b179780b1f707"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "committees",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-committees-390.png",
+        "sha256": "f58832938d0379cdc593d7f9fa3652e4b29ca8577ca670bfbfbe6ac68868539e"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "committees",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-committees-430.png",
+        "sha256": "e2bcc8bf6953fa2f91668fafc6ed8b1d4feebd0632b7a3600cb21dd9028e4e5d"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "committees",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-committees-1440.png",
+        "sha256": "e0d15de9b6e18c54e1e7c1781ddaaeb135a8790c2e1286fe978e83d06c3da272"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "committees",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-committees-390-text200.png",
+        "sha256": "8caf394dbf0c608088b87d48cb3afac02d165884b0165ec04a53bfd63c5586b6"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "messages",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-messages-320.png",
+        "sha256": "9fe888621b07c5b5787040f10e091aa4cd1d89f58dc35157834e8c7156f8e674"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "messages",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-messages-390.png",
+        "sha256": "f264c541985038fb4227d6873ab556468bea53d61af408a89777247449861e90"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "messages",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-messages-430.png",
+        "sha256": "cc23f04f2dedffee709bd5a870820e3533a241f6460d971b2c3bf154196c761e"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "messages",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-messages-1440.png",
+        "sha256": "506420ccfca6bbf82aa00f986862c6856966f8784051145f22bd40d330195873"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "messages",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-messages-390-text200.png",
+        "sha256": "af94c719a8d9459887d507c8eb41b22b449b975e131a860bfdd028c16efba294"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "reports",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-reports-320.png",
+        "sha256": "a610458f075dcfec6f1d339a8c768b99ca975c095c890d75cb635edc57e80e51"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "reports",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-reports-390.png",
+        "sha256": "1357962c378e82d01d28a7fca4fbce292de1c2ed7b8435e642b154aa14a0e35c"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "reports",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-reports-430.png",
+        "sha256": "f9d646f8e1896fec9ab311c3afea0f696a25182768cef655f9aab27791e9f092"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "reports",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-reports-1440.png",
+        "sha256": "0a74e036f05f669975b9a241e901004f2257e55a8c587000e19c8cfb9f192b64"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "reports",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-reports-390-text200.png",
+        "sha256": "53eab0c703ee2d6ca1535bfc06810238675ede50a678e1d0df35476e9b209954"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "finance",
+      "width": 320,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-finance-320.png",
+        "sha256": "045d0ab5d10a605590582bc558e586e0c4dd9a75b2c2899e7150e3bc299501f0"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "finance",
+      "width": 390,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-finance-390.png",
+        "sha256": "1ecf572014f9b4d1ea3ee1d1bb70e296bff355024ab7fa762dc45646bf28a262"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "finance",
+      "width": 430,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-finance-430.png",
+        "sha256": "9ee1410697ad01a815683cc66020d7cc9762a89ddc12be0bcdf4a0cc19b4316a"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "finance",
+      "width": 1440,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-finance-1440.png",
+        "sha256": "820077cf385d478121c8685ac1b00455e07af4f8ddb76d6e1f5d250b05762b05"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "finance",
+      "width": 390,
+      "text200": true,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-finance-390-text200.png",
+        "sha256": "849cfe0dd9a9db39fd06f7373e8227953ecb16c771e2106625c73060276c1411"
+      }
+    }
+  ],
+  "tabletMatrix": [
+    {
+      "actor": "ouder-a",
+      "route": "home",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-home-768.png",
+        "sha256": "5bdf0df4e9117a27102b5c7c9fc666d8154137eb4db0b5f3d4433a5d820ab627"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "tasks",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-tasks-768.png",
+        "sha256": "f9d8cee650243752ae90e3ea173def689ed4dbff9db32c56b890af2b779fb5c3"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "agenda",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-agenda-768.png",
+        "sha256": "9a0ad4ffde2a1fac4b60c2c4cf334b5246155da9b994c767e4f86d4faa35d6f2"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "teams",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-teams-768.png",
+        "sha256": "7293c5cd4f090008aeefb9bfd7e786bbbcfd5291e9b32ccff92afc6e8a86cb85"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "more",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-more-768.png",
+        "sha256": "bc4378976a85991f728ff6e0bdfb170f57ec6566cfe0a9d5e3293377df2a0eca"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "actions",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-actions-768.png",
+        "sha256": "6232afdc3a7dd82ea9475600568a48f97442b40ce6b6b8de3161e30816ff3a8a"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "notifications",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-notifications-768.png",
+        "sha256": "e11a9202d0a93486ce1d1816c0778e58c7b95dc6f54622064d0bd4aeeedfb4c7"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "manage",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-manage-768.png",
+        "sha256": "a95126f7f3b9db5d01ce84aa13c27617424a51b30528c297da7ceb244738c267"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "profile",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-profile-768.png",
+        "sha256": "671ef2c16be5c6245cd0644122251efe4f336205452025957559be0ac4417955"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "household",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-household-768.png",
+        "sha256": "4bf3bf5fd6a731f52339dc63ea91f0c4a436cdb7f5c8a1eb1d9861e9da853da1"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "policies",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-policies-768.png",
+        "sha256": "b0933259aeca2298e947eee332ee458ad20113feee97dfb686064b7ed89a50a3"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "courses",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-courses-768.png",
+        "sha256": "deeb0ce1ff1f8ff3d54f134c0a8fc155d96e1443acf1edd5fe6b98e9ab6f72e6"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "opportunities",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-opportunities-768.png",
+        "sha256": "a16a2ad31ea1821bb621bb107c48f96bc16d0a42e2d7023fd68d9eb96887b5f6"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "messages",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-messages-768.png",
+        "sha256": "55e8fbd2d842de357d74d3f417d4c24b3fa2e116df8ddf43d84f7c6f84252d6e"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "settings",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-settings-768.png",
+        "sha256": "43fe8238acbc3298d8f804960e23515fa3c97e9e957eb716db7a41dec6385ce8"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "help",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-help-768.png",
+        "sha256": "82ea1459f4b9d43db573eef6214529fdd6537348f549fb87100deea95574513a"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "install",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-install-768.png",
+        "sha256": "14ad38b9171ab95d3c32e18b7dfab0ef20d3673a95826843ac060b898cb831fb"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "reports",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-reports-768.png",
+        "sha256": "a95126f7f3b9db5d01ce84aa13c27617424a51b30528c297da7ceb244738c267"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "finance",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-finance-768.png",
+        "sha256": "a95126f7f3b9db5d01ce84aa13c27617424a51b30528c297da7ceb244738c267"
+      }
+    },
+    {
+      "actor": "ouder-a",
+      "route": "committees",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/ouder-a-committees-768.png",
+        "sha256": "a95126f7f3b9db5d01ce84aa13c27617424a51b30528c297da7ceb244738c267"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "home",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-home-768.png",
+        "sha256": "c9f8d0fb898ead4bc34f537153bcbd1b1d76bd2ec247138f8092e90527077846"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "manage",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-manage-768.png",
+        "sha256": "4173ccd3316806a4436a7dfc2d4f11230ec12bc931a16abb1db87bceb5f300a8"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "committees",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-committees-768.png",
+        "sha256": "68c12cc2a94858f5d39aa2601bc2ed995ee86ed9dd61faec2b26e98c7cb56e3a"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "messages",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-messages-768.png",
+        "sha256": "b213c571ee992c5adaec35962495449582237312b922bc1e48f8861b9d4d7b3e"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "reports",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-reports-768.png",
+        "sha256": "132d1b9272db314f9100473ede490e9ba04f6a703279361c15d1fbe3368801e7"
+      }
+    },
+    {
+      "actor": "coordinator",
+      "route": "finance",
+      "width": 768,
+      "text200": false,
+      "decorative_avatar_fits": true,
+      "no_overflow": true,
+      "nav": true,
+      "club_scope": true,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa-mobile/screenshots/coordinator-finance-768.png",
+        "sha256": "5f03633f8f51494911eeffc40d022415e7623685b9e01ef2dfbe4e4cd13a2403"
+      }
+    }
+  ],
+  "debug_interest_blocked": false,
+  "passed": true,
+  "readback": {
+    "before": {
+      "version": 31,
+      "revision": 31,
+      "answers": 31,
+      "ledger": 180,
+      "target": 720
+    },
+    "after": {
+      "version": 34,
+      "revision": 34,
+      "answers": 34,
+      "ledger": 255,
+      "target": 720
+    },
+    "lost_response_only": {
+      "version": 32,
+      "revision": 32,
+      "answers": 32,
+      "ledger": 180,
+      "target": 720
+    }
+  },
+  "lostResponseProof": {
+    "posts": 2,
+    "committed": true,
+    "responseStatus": 200,
+    "statusConfirmed": true,
+    "versionDelta": 1,
+    "revisionDelta": 1,
+    "answerVersionDelta": 1,
+    "ledgerUnchanged": true,
+    "householdTargetUnchanged": true
+  },
+  "nativeDomainReadback": {
+    "before": {
+      "historical_bookings": [
+        {
+          "fixture_id": "0904",
+          "version": 1,
+          "state": "booked",
+          "credit_snapshot_minutes": 120,
+          "ledger_minutes": 0
+        },
+        {
+          "fixture_id": "0905",
+          "version": 1,
+          "state": "booked",
+          "credit_snapshot_minutes": 120,
+          "ledger_minutes": 0
+        }
+      ],
+      "policy_acceptances": [],
+      "handover_states": [
+        {
+          "state": "ready",
+          "version": 1,
+          "named_successor_is_parent_a": true
+        }
+      ],
+      "work_card": {
+        "version": 2,
+        "state": "completed",
+        "replies": 3,
+        "checklist_completed": true
+      },
+      "assigned_team_place": {
+        "state": "booked",
+        "version": 2,
+        "bookings": 1,
+        "team_execution_entries": 0
+      },
+      "question_state": "answered"
+    },
+    "after": {
+      "historical_bookings": [
+        {
+          "fixture_id": "0904",
+          "version": 2,
+          "state": "confirmed",
+          "credit_snapshot_minutes": 120,
+          "ledger_minutes": 75
+        },
+        {
+          "fixture_id": "0905",
+          "version": 2,
+          "state": "no_show",
+          "credit_snapshot_minutes": 120,
+          "ledger_minutes": 0
+        }
+      ],
+      "policy_acceptances": [
+        {
+          "assignment_fixture_id": "1403",
+          "capacity": "self",
+          "explicit_confirmation": true
+        },
+        {
+          "assignment_fixture_id": "1404",
+          "capacity": "guardian",
+          "explicit_confirmation": true
+        }
+      ],
+      "handover_states": [
+        {
+          "state": "revoked",
+          "version": 3,
+          "named_successor_is_parent_a": true
+        },
+        {
+          "state": "accepted",
+          "version": 4,
+          "named_successor_is_parent_a": true
+        },
+        {
+          "state": "revoked",
+          "version": 2,
+          "named_successor_is_parent_a": true
+        }
+      ],
+      "work_card": {
+        "version": 2,
+        "state": "completed",
+        "replies": 4,
+        "checklist_completed": true
+      },
+      "assigned_team_place": {
+        "state": "booked",
+        "version": 2,
+        "bookings": 1,
+        "team_execution_entries": 0
+      },
+      "question_state": "answered"
+    }
+  },
+  "staging_verified": false
+}

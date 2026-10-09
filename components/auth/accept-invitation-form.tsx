@@ -2,14 +2,14 @@
 
 import {useActionState, useState} from 'react';
 import {unstable_rethrow} from 'next/navigation';
-import {acceptInvitationAction, type AcceptInvitationState} from '@/app/invite/accept/actions';
+import {acceptInvitationAction, acceptMobileInvitationAction, type AcceptInvitationState} from '@/app/invite/accept/actions';
 
 const initialState: AcceptInvitationState = {status: 'idle'};
 
-export function AcceptInvitationForm({expectedVersion, idempotencyKey}: {expectedVersion: number; idempotencyKey: string}) {
+export function AcceptInvitationForm({expectedVersion, idempotencyKey, mobile = false}: {expectedVersion: number; idempotencyKey: string; mobile?: boolean}) {
   const [snapshot] = useState({expectedVersion, idempotencyKey});
   const [state, action, pending] = useActionState(async (previous: AcceptInvitationState, form: FormData): Promise<AcceptInvitationState> => {
-    try {return await acceptInvitationAction(previous, form);}
+    try {return await (mobile ? acceptMobileInvitationAction : acceptInvitationAction)(previous, form);}
     catch (error) {
       unstable_rethrow(error);
       return {status: 'error', message: 'Er is geen bevestiging van de acceptatie ontvangen. Je keuze blijft staan; probeer dezelfde acceptatie opnieuw.'};

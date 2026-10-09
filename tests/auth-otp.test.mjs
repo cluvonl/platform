@@ -11,6 +11,12 @@ const compiled = ts.transpileModule(source, {
   fileName: 'actions.ts',
   compilerOptions: {target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS},
 }).outputText;
+const returnSource = ts.transpileModule(await readFile(new URL('../lib/auth/mobile-return.ts', import.meta.url), 'utf8'), {
+  fileName: 'mobile-return.ts',
+  compilerOptions: {target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS},
+}).outputText;
+const returnModule = {exports: {}};
+runInNewContext(returnSource, {module: returnModule, exports: returnModule.exports, URL, URLSearchParams});
 
 // Execute the actual Server Action with synthetic cookies and provider replies.
 // No native Auth request, session, real recipient or real OTP is used here.
@@ -53,6 +59,7 @@ function harness({email = 'otp-fixture@example.invalid', verifyError = null,
     'next/navigation': {redirect(location) {throw Object.assign(new Error('REDIRECT'), {location});}},
     '@/lib/supabase/server': {async createSupabaseServerClient() {clientCreations++; return client;}},
     '@/lib/supabase/config': {appOrigin: () => 'https://staging.example.invalid'},
+    '@/lib/auth/mobile-return': returnModule.exports,
   };
   const testModule = {exports: {}};
   runInNewContext(compiled, {

@@ -1,0 +1,51 @@
+{
+  "environment": "local",
+  "scope": "BOUNDED_SYNTHETIC_NATIVE_REPORT_FIXTURE",
+  "source": "supabase/tests/pwa_browser_report_grant.psql",
+  "source_sha256": "f0882ab795f7c9c4d99abeee2e45c24222c96be584f386ea8c9e9b17fd14cdd5",
+  "container": "supabase_db_cluvo-local",
+  "database": "postgres",
+  "operator": "owned local postgres fixture runner",
+  "actor_fixture": "coordinator C/club-a",
+  "auth_or_session_mutations": false,
+  "product_authorization_changed": false,
+  "new_catalog_role": {
+    "id": "cb000000-0000-4000-8000-000000002010",
+    "key": "pwa_local_report_reader",
+    "system_role": false,
+    "permissions": [
+      "report.season.view"
+    ]
+  },
+  "expected_version": 0,
+  "result_version": 1,
+  "idempotency_key": "cb000000-0000-4000-8000-000000002015",
+  "executed": [
+    "owned-target and explicit-flag guard",
+    "transactional rollback-only fixture probe",
+    "actual additive fixture application",
+    "same-key fixture replay",
+    "assertion comparing every pre-existing C permission/grant before and after",
+    "assertion comparing every parent-A grant before and after",
+    "readback: role has exactly report.season.view",
+    "readback: one audit, one event, grant version1",
+    "readback: parent A has zero report grants"
+  ],
+  "readback": {
+    "grant_version": 1,
+    "audit_rows": 1,
+    "event_rows": 1,
+    "parent_a_report_grants": 0
+  },
+  "positive_browser_report_csv_proof": {
+    "artifact": "docs/release/evidence/local/20261009-pwa-mobile/browser-results.json",
+    "artifact_sha256": "ac21df47acb1a3719c74b137ecad86caea608265adebcf4641c38dba4eee95c6",
+    "actual_check": "NATIVE_REPORT_TOTALS_REAL_MINUTE_CSV_UNAUTHORIZED_PARENT_DENIED_READ_CONTROLS_NO_LEDGER_MUTATION",
+    "result": "PASS",
+    "actual_build": "Lbo4BE0TAUmKrYq-qxuRO",
+    "native_migrations": 31,
+    "scope": "Authorized report controls and private integer-minute CSV exercised in the native coordinator browser; parent denied403; no ledger mutation. This is local synthetic proof only."
+  },
+  "staging_verified": false,
+  "observed_at": "2026-10-09T02:26:32.074043+00:00"
+}

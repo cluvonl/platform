@@ -1,0 +1,50 @@
+{
+  "scope": "LOCAL_OWNED_PG17_FINAL30_PWA_RELEASE_OWNER",
+  "observed_at": "2026-10-09T03:12:49.253643+00:00",
+  "migration_count": 30,
+  "suffix_count": 14,
+  "manifest_sha256": "676dc3f0557d0b4f48928676ac5aa2013181bc342076a1ec59b7d780d9280160",
+  "upgrade_child_sha256": "aa5a0edf58e7e785dbdb527aac20adeda2f153518609242f0d0bf53c6aa5d6b4",
+  "native_child_sha256": "49e721d1d9910025c7463ae32190bdcd0e25cd60137f39e3569718d9d4e94769",
+  "passed": true,
+  "actual_test_cases": 1,
+  "network": "none",
+  "private_values_exported": false,
+  "hosted_writes": false,
+  "providers_called": false,
+  "owned_database_removed": true,
+  "proof": {
+    "scope": "LOCAL_OWNED_PG17",
+    "readonly_runtime_configuration_guard": true,
+    "actual_native_last_position_contenders": 2,
+    "private_teams_and_minor_contacts": true,
+    "old_bearer_after_logout_refused": true,
+    "scoped_automation": {
+      "scope": "STAGING_PWA_SCOPED_AUTOMATION_QA_V1",
+      "provider_called": false,
+      "matching_positive": true,
+      "source_run_actor_bound": true,
+      "global_scheduler_called": false,
+      "actual_synthetic_imports": 4,
+      "wrong_lease_owner_refused": true,
+      "unchanged_import_deduplicated": true,
+      "source_and_preference_revalidated": true,
+      "incomplete_import_preserves_success": true,
+      "source_change_preserves_booked_shift": true,
+      "rollback_verified": true
+    },
+    "automation": {
+      "unknown_slot_retained": true,
+      "immutable_provider_receipt": true,
+      "essential_operational_inbox": true,
+      "daily_cap_actual_concurrency": true,
+      "daily_cap_and_late_candidates": true,
+      "browser_private_worker_refused": true,
+      "native_approved_versioned_rules": true,
+      "dispatch_rebuild_current_matching": true,
+      "seven_day_and_24hour_source_reminders": true,
+      "verified_operational_and_team_binding": true,
+      "actual_fixture_match_import_and_local_slots": true
+    }
+  }
+}

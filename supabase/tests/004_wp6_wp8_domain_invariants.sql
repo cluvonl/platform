@@ -281,7 +281,6 @@ select is((select dst_resolution from internal.resolve_local_slot('2026-10-25', 
 -- A20/A21: per-person/task dedupe, one local-day digest, immutable template
 -- versions, and a delivery state that does not overclaim provider evidence.
 insert into app.notification_categories (id, tenant_id, category_key, name, essential) values
-  ('67000000-0000-4000-8000-000000000001', '62000000-0000-4000-8000-000000000001', 'task.offer', 'Taakaanbod', false),
   ('6b000000-0000-4000-8000-000000000001', '62000000-0000-4000-8000-000000000001', 'shift.change', 'Dienstwijziging', true);
 insert into app.domain_events (id, tenant_id, aggregate_type, aggregate_id, aggregate_version, event_type) values
   ('67000000-0000-4000-8000-000000000002', '62000000-0000-4000-8000-000000000001', 'shift', current_setting('cluvo.test.shift')::uuid, 2, 'task.offer.created'),
@@ -290,13 +289,13 @@ insert into app.notification_intents (
   id, tenant_id, domain_event_id, recipient_person_id, category_id, channels,
   dedupe_key, safe_title, safe_body
 ) values
-  ('67000000-0000-4000-8000-000000000004', '62000000-0000-4000-8000-000000000001', '67000000-0000-4000-8000-000000000002', '63000000-0000-4000-8000-000000000002', '67000000-0000-4000-8000-000000000001', array['push','inbox'], 'task:one:person-2', 'Nieuwe taak', 'Taak één'),
-  ('67000000-0000-4000-8000-000000000005', '62000000-0000-4000-8000-000000000001', '67000000-0000-4000-8000-000000000003', '63000000-0000-4000-8000-000000000002', '67000000-0000-4000-8000-000000000001', array['push','inbox'], 'task:two:person-2', 'Nog een taak', 'Taak twee');
+  ('67000000-0000-4000-8000-000000000004', '62000000-0000-4000-8000-000000000001', '67000000-0000-4000-8000-000000000002', '63000000-0000-4000-8000-000000000002', (select id from app.notification_categories where tenant_id='62000000-0000-4000-8000-000000000001'and category_key='task.offer'), array['push','inbox'], 'task:one:person-2', 'Nieuwe taak', 'Taak één'),
+  ('67000000-0000-4000-8000-000000000005', '62000000-0000-4000-8000-000000000001', '67000000-0000-4000-8000-000000000003', '63000000-0000-4000-8000-000000000002', (select id from app.notification_categories where tenant_id='62000000-0000-4000-8000-000000000001'and category_key='task.offer'), array['push','inbox'], 'task:two:person-2', 'Nog een taak', 'Taak twee');
 select throws_ok(
   $$insert into app.notification_intents (
       tenant_id, domain_event_id, recipient_person_id, category_id, channels, dedupe_key, safe_title, safe_body
     ) values ('62000000-0000-4000-8000-000000000001', '67000000-0000-4000-8000-000000000002',
-              '63000000-0000-4000-8000-000000000002', '67000000-0000-4000-8000-000000000001',
+              '63000000-0000-4000-8000-000000000002', (select id from app.notification_categories where tenant_id='62000000-0000-4000-8000-000000000001'and category_key='task.offer'),
               array['push'], 'task:one:person-2', 'Dubbel', 'Tweede rol')$$,
   '23505', null, 'A20: two matching roles cannot duplicate a person/task intent'
 );

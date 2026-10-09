@@ -1,0 +1,26 @@
+-- Explicit local synthetic fixture repair. No Auth changes and no reset.
+-- Preserve revision1; append the corrected real-byte-size/native-ACL revision.
+\if :{?cluvo_native_pwa_fixture}
+\else
+\echo 'Refused: requires -v cluvo_native_pwa_fixture=1'
+\quit
+\endif
+\set ON_ERROR_STOP on
+begin;
+do $repair$ declare d app.committee_documents%rowtype;old app.committee_document_versions%rowtype;actor uuid;key uuid:=md5('cluvo-native-pwa-document-1300-revision-2')::uuid;expected_path text:='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa/committee/cb000000-0000-4000-8000-000000000300/pwa-local-proof-v2.txt';begin
+ if current_database()<>'postgres' or current_user<>'postgres' or current_setting('cluvo.local_fixture',true) is distinct from 'native-pwa-document-repair' then raise exception 'LOCAL_FIXTURE_REPAIR_GUARD_REQUIRED';end if;
+ select * into strict d from app.committee_documents where tenant_id='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa' and id='cb000000-0000-4000-8000-000000001300' for update;
+ if d.title<>'PWA geregistreerde werkinstructie' or d.committee_id<>'cb000000-0000-4000-8000-000000000300'::uuid or not exists(select 1 from app.tenants where id=d.tenant_id and slug='club-a') then raise exception 'OWNED_SYNTHETIC_DOCUMENT_REQUIRED';end if;
+ select * into strict old from app.committee_document_versions where tenant_id=d.tenant_id and document_id=d.id and revision=1;
+ if old.id<>'cb000000-0000-4000-8000-000000001301'::uuid or old.size_bytes<>31 or old.content_hash<>extensions.digest('Cluvo PWA lokale werkinstructie.','sha256') then raise exception 'ORIGINAL_SYNTHETIC_REVISION_MISMATCH';end if;
+ if d.current_revision=2 then
+  if not exists(select 1 from app.committee_document_versions where tenant_id=d.tenant_id and document_id=d.id and id='cb000000-0000-4000-8000-000000001302' and revision=2 and size_bytes=32 and storage_object_path=expected_path and content_hash=old.content_hash) then raise exception 'EXISTING_REPAIR_MISMATCH';end if;return;
+ end if;
+ if d.version<>1 or d.current_revision<>1 then raise exception 'STALE_SYNTHETIC_DOCUMENT_VERSION';end if;
+ select l.auth_user_id into strict actor from app.account_person_links l join auth.users u on u.id=l.auth_user_id where l.tenant_id=d.tenant_id and l.person_id=d.owner_person_id and l.revoked_at is null and l.verified_at is not null and u.email like '%@example.test';
+ insert into app.committee_document_versions(id,tenant_id,document_id,revision,storage_object_path,content_hash,mime_type,size_bytes,authored_by_auth_user_id) values('cb000000-0000-4000-8000-000000001302',d.tenant_id,d.id,2,expected_path,old.content_hash,'text/plain',octet_length('Cluvo PWA lokale werkinstructie.'),actor);
+ update app.committee_documents set current_revision=2,version=version+1,updated_at=statement_timestamp() where tenant_id=d.tenant_id and id=d.id and version=1;
+ insert into app.audit_events(tenant_id,actor_auth_user_id,action,resource_type,resource_id,scope_kind,scope_id,reason_code,idempotency_key,payload_minimal) values(d.tenant_id,actor,'local_fixture.document_revision_added','committee_document',d.id,'committee',d.committee_id,'SYNTHETIC_LOCAL_FIXTURE',key,jsonb_build_object('expected_version',1,'version',2,'revision',2,'size_bytes',32,'execution_role',current_user));
+ insert into app.domain_events(tenant_id,aggregate_type,aggregate_id,aggregate_version,event_type,payload_minimal) values(d.tenant_id,'committee_document',d.id,2,'local_fixture.document_revision_added',jsonb_build_object('revision',2,'size_bytes',32));
+end;$repair$;
+commit;

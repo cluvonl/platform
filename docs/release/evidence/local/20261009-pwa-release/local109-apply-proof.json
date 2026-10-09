@@ -1,0 +1,34 @@
+{
+  "scope": "LOCAL_SHARED_ADDITIVE_PWA109_APPLICATION",
+  "observed_at": "2026-10-09T02:26:33.586171+00:00",
+  "migration": "20261009109000_pwa_digest_dispatch_day.sql",
+  "sha256": "881aaf6a7ff6ed1e22604d810c1194fc140c4dfb79240e869b25feb3a9be4210",
+  "source_hash_verified": true,
+  "transaction_committed": true,
+  "postgrest_schema_notified": true,
+  "function_authority_readback": {
+    "owner": "postgres",
+    "volatility": "v",
+    "observed_at": "2026-10-09T02:26:33.586171+00:00",
+    "security_definer": false,
+    "history_before_repair_count": 25,
+    "current_timezone_dispatch_day_gate": true
+  },
+  "local_migration_history": {
+    "109_name": "pwa_digest_dispatch_day",
+    "older_rows": 25,
+    "109_statements": 3,
+    "latest_version": "20261009109000",
+    "migration_count": 26,
+    "explicit_local_cli_repair": true,
+    "migration_rerun": false,
+    "source_statement_content_exact_after_cli_whitespace_trim": true
+  },
+  "database_reset": false,
+  "auth_rows_changed": false,
+  "migration_data_mutations": false,
+  "provider_calls": false,
+  "owned_proof": "owned-final26-sql-proof.json",
+  "owned_suites": 26,
+  "owned_assertions": 1133
+}

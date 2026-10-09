@@ -51,6 +51,15 @@ jobs:
 
       - run: npm ci --no-audit --no-fund
 
+      - name: Prove the closed additive writer and native PWA contracts in an owned PostgreSQL17 database
+        env:
+          CLUVO_PWA_UPGRADE_NATIVE_TESTS: owned-pg17
+          CLUVO_PWA_UPGRADE_DOCKER_SCOPE: hosted
+        run: |
+          set -euo pipefail
+          docker --host unix:///var/run/docker.sock pull public.ecr.aws/supabase/postgres@sha256:0450166354dc9c1d25f0322ac8b580774d4fb0184d2b087f6e4fe9499c66cf53
+          node --test tests/staging-pwa-upgrade-native.test.mjs
+
       - name: Migrations, pgTAP and database lint
         run: |
           set -euo pipefail

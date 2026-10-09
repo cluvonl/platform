@@ -1,0 +1,5 @@
+name: Preserve and upgrade fixed Cluvo staging PWA
+description: Run the additive source-bound owner with Actions artifact runtime credentials
+runs:
+  using: node24
+  main: index.mjs

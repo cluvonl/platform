@@ -1,0 +1,468 @@
+{
+  "scope": "LOCAL_OWNED_PWA_FINAL24_COMPATIBILITY",
+  "observed_at": "2026-10-09T01:35:20.257153+00:00",
+  "postgres_major": 17,
+  "owned_database": "cluvo_pwa_upgrade_20261009",
+  "migration_count": 24,
+  "original16_source_changed": false,
+  "shared100_to_106_source_changed": false,
+  "shared_local_database_changed": false,
+  "private_values_exported": false,
+  "provider_calls": false,
+  "upgrade_from_original16_sql_passed": true,
+  "empty24_proof_owner": "pwa_platform_review: completed separate isolated-container proof; see ../20261009-pwa-platform/verification.json",
+  "migration_hashes": [
+    {
+      "file": "20261002163042_cluvo_wp1_wp2_core.sql",
+      "sha256": "7e4efdaa139d2fe3120c43c0e7fcfe966438f154c08358734b6c555968acd32e"
+    },
+    {
+      "file": "20261002165306_wp3_wp5_obligations_execution.sql",
+      "sha256": "1dd88883e99acd63cbea6f33c47b1c39008a6832904f1da6150374fbe1474eb7"
+    },
+    {
+      "file": "20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "sha256": "9707da512d46b23d8472bf222981242f8020ac3612709f536136876674b50702"
+    },
+    {
+      "file": "20261002170949_wp1_onboarding_storage.sql",
+      "sha256": "6de61a4843cd9a3d77fccb6c0be0591c178b516518e4bb7ce9c2ae1cec3d4c03"
+    },
+    {
+      "file": "20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "sha256": "bdff3e58102376de4195840cc7cd3a02a59c7648cc19403c306ae72e96605719"
+    },
+    {
+      "file": "20261002183000_vertical_read_models.sql",
+      "sha256": "bf50215a774296882cb5aa8067b43bb2c853bbb991968859b8ceece58d197eaf"
+    },
+    {
+      "file": "20261002184500_assisted_member_actions.sql",
+      "sha256": "c7d74823e3be555b7115b1eab4e4180cdb48c7668680fa3a0a6b0e8420629bab"
+    },
+    {
+      "file": "20261006180000_account_help_preferences.sql",
+      "sha256": "f6b7d1db5f420b5e5daeaf142326289dd1fb6918123c001386956f512f7755ff"
+    },
+    {
+      "file": "20261006193000_complete_personal_intake.sql",
+      "sha256": "488d4722f830a0a2a2d35ff89a483bcd6f5e40ed3aa255d367d4346aaad22ad9"
+    },
+    {
+      "file": "20261006210000_household_dossier_projection.sql",
+      "sha256": "0f1b29d8bbde85300f704270bc5ead062344bffe01f5688b67daa085099450a2"
+    },
+    {
+      "file": "20261006223000_versioned_household_invitation_commands.sql",
+      "sha256": "99b456fda630c15eca25f197d971edcf8134a5181deb114c398dde852b6b62fe"
+    },
+    {
+      "file": "20261006230000_household_invitation_cancellation.sql",
+      "sha256": "6d3738db24d2a02576fa6fa4a9273390d04872565edd66d662024df230425a1c"
+    },
+    {
+      "file": "20261006233000_contract_household_invitation_bootstrap.sql",
+      "sha256": "1731ab3cec4921ad31e6f30a90ee21d8dc6101fa205285a51c5b65bc52e2c3f2"
+    },
+    {
+      "file": "20261006234500_personal_intake_reconfirmation.sql",
+      "sha256": "e4f95b65789485e86131d21c0c085a83c8fc5b4195f36b4f81e24b9c6c171625"
+    },
+    {
+      "file": "20261007010000_native_session_authority.sql",
+      "sha256": "9c165f68f413be04aa958358ec088c422dd21fea92b66e9ba84e04378817607a"
+    },
+    {
+      "file": "20261007013000_intake_assistance_management.sql",
+      "sha256": "1512b7cbfd1fd63065fa09ad17aba0a2c71aaba1c875326f11e089175a5979c3"
+    },
+    {
+      "file": "20261009100000_pwa_domain.sql",
+      "sha256": "18cc63b457fddea3f003bceb4d31f310291692e70485e6aa013e4091a8d47d41"
+    },
+    {
+      "file": "20261009101000_pwa_commands.sql",
+      "sha256": "dbf600e3aabc225e5031ca83c24031c27c287cec47cce0b0f64bf81eb6e00f97"
+    },
+    {
+      "file": "20261009102000_pwa_snapshot.sql",
+      "sha256": "969346799a4e591b7f85f8bacc4a877c1ea42dd628c3e041cf9b976f79e19ef0"
+    },
+    {
+      "file": "20261009103000_pwa_delivery_and_receipts.sql",
+      "sha256": "73714397962f5ca54b5a94d1b6cc901ed744b8f8bcccd87fc32cd12673fbfe6f"
+    },
+    {
+      "file": "20261009104000_pwa_buddy_integrity.sql",
+      "sha256": "c2e1bfdccf311f50bd9e0ff1686ce2301d1c65ff29b02cd78512666f0ec5305c"
+    },
+    {
+      "file": "20261009105000_pwa_automation.sql",
+      "sha256": "7e20fdaee644e5a2f0b037f0d34001a773cf47b6b23a0294f23fddad45e5dbef"
+    },
+    {
+      "file": "20261009106000_pwa_provider_receipts.sql",
+      "sha256": "5e6923e41dfd6d5da1ab12380f1be31b25e466eba02b685f7361b11e1ffe9eed"
+    },
+    {
+      "file": "20261009107000_pwa_compatibility_and_cluster_scope.sql",
+      "sha256": "d60b59920adac4c45a3ec336a6a0cb27e31abb3c8aa69e0ddf5b47ed729e4486"
+    }
+  ],
+  "suite_count": 24,
+  "assertions": 1064,
+  "suites": [
+    {
+      "file": "001_wp1_wp2_core.sql",
+      "exit_code": 0,
+      "assertions": 32,
+      "failed_assertions": [],
+      "error": false
+    },
+    {
+      "file": "002_wp1_onboarding.sql",
+      "exit_code": 0,
+      "assertions": 56,
+      "failed_assertions": [],
+      "error": false
+    },
+    {
+      "file": "003_wp3_wp5_obligations_execution.sql",
+      "exit_code": 0,
+      "assertions": 74,
+      "failed_assertions": [],
+      "error": false
+    },
+    {
+      "file": "004_wp6_wp8_domain_invariants.sql",
+      "exit_code": 0,
+      "assertions": 113,
+      "failed_assertions": [],
+      "error": false
+    },
+    {
+      "file": "005_wp6_wp8_rls.sql",
+      "exit_code": 0,
+      "assertions": 30,
+      "failed_assertions": [],
+      "error": false
+    },
+    {
+      "file": "006_vertical_read_models.sql",
+      "exit_code": 0,
+      "assertions": 11,
+      "failed_assertions": [],
+      "error": false
+    },
+    {
+      "file": "007_wp9_wp11_finance_people_seasons.sql",
+      "exit_code": 0,
+      "assertions": 81,
+      "failed_assertions": [],
+      "error": false
+    },
+    {
+      "file": "008_a29_assisted_member_actions.sql",
+      "exit_code": 0,
+      "assertions": 38,
+      "failed_assertions": [],
+      "error": false
+    },
+    {
+      "file": "009_account_help_preferences.sql",
+      "exit_code": 0,
+      "assertions": 30,
+      "failed_assertions": [],
+      "error": false
+    },
+    {
+      "file": "010_household_season_projection.sql",
+      "exit_code": 0,
+      "assertions": 11,
+      "failed_assertions": [],
+      "error": false
+    },
+    {
+      "file": "011_complete_personal_intake.sql",
+      "exit_code": 0,
+      "assertions": 65,
+      "failed_assertions": [],
+      "error": false
+    },
+    {
+      "file": "012_household_dossier.sql",
+      "exit_code": 0,
+      "assertions": 35,
+      "failed_assertions": [],
+      "error": false
+    },
+    {
+      "file": "013_versioned_household_invitations.sql",
+      "exit_code": 0,
+      "assertions": 52,
+      "failed_assertions": [],
+      "error": false
+    },
+    {
+      "file": "014_household_invitation_cancellation.sql",
+      "exit_code": 0,
+      "assertions": 44,
+      "failed_assertions": [],
+      "error": false
+    },
+    {
+      "file": "015_invitation_api_contract.sql",
+      "exit_code": 0,
+      "assertions": 42,
+      "failed_assertions": [],
+      "error": false
+    },
+    {
+      "file": "016_intake_reconfirmation.sql",
+      "exit_code": 0,
+      "assertions": 55,
+      "failed_assertions": [],
+      "error": false
+    },
+    {
+      "file": "017_native_session_authority.sql",
+      "exit_code": 0,
+      "assertions": 42,
+      "failed_assertions": [],
+      "error": false
+    },
+    {
+      "file": "018_intake_assistance_management.sql",
+      "exit_code": 0,
+      "assertions": 46,
+      "failed_assertions": [],
+      "error": false
+    },
+    {
+      "file": "pwa001_domain_and_privacy.sql",
+      "exit_code": 0,
+      "assertions": 33,
+      "failed_assertions": [],
+      "error": false
+    },
+    {
+      "file": "pwa002_coordination_and_history.sql",
+      "exit_code": 0,
+      "assertions": 29,
+      "failed_assertions": [],
+      "error": false
+    },
+    {
+      "file": "pwa003_tally_delivery_and_cursor.sql",
+      "exit_code": 0,
+      "assertions": 26,
+      "failed_assertions": [],
+      "error": false
+    },
+    {
+      "file": "pwa004_documents_and_receiving.sql",
+      "exit_code": 0,
+      "assertions": 18,
+      "failed_assertions": [],
+      "error": false
+    },
+    {
+      "file": "pwa005_buddy_and_onboarding.sql",
+      "exit_code": 0,
+      "assertions": 56,
+      "failed_assertions": [],
+      "error": false
+    },
+    {
+      "file": "pwa006_compatibility_and_cluster_scope.sql",
+      "exit_code": 0,
+      "assertions": 45,
+      "failed_assertions": [],
+      "error": false
+    }
+  ],
+  "db_lint": {
+    "schemas": [
+      "app",
+      "api",
+      "internal"
+    ],
+    "fail_on": "warning",
+    "exit_code": 0,
+    "results": []
+  },
+  "legacy_races": {
+    "state": "passed",
+    "families": 7,
+    "scenarios": 18,
+    "source_recipe_guard_change": "Only the fixed database-name guard points at the independent owned DB; race logic/source fixtures remain unchanged.",
+    "results": [
+      {
+        "file": "db-concurrency-a13.mjs",
+        "exit_code": 0,
+        "scenario": "A13_LAST_POSITION_RACE",
+        "result": "PASS",
+        "cases": [
+          {
+            "winner": null,
+            "contenders": 2,
+            "conflict": "CAPACITY_FULL",
+            "result": "PASS"
+          }
+        ]
+      },
+      {
+        "file": "db-concurrency-season-lock.mjs",
+        "exit_code": 0,
+        "scenario": "SEASON_CLOSE_LEDGER_SERIALIZATION",
+        "result": "PASS",
+        "cases": [
+          {
+            "winner": null,
+            "contenders": 2,
+            "conflict": null,
+            "result": "PASS"
+          }
+        ]
+      },
+      {
+        "file": "db-concurrency-intake-booking.mjs",
+        "exit_code": 0,
+        "scenario": "INTAKE_UNAVAILABILITY_BOOKING_SERIALIZATION",
+        "result": "PASS",
+        "cases": [
+          {
+            "winner": null,
+            "contenders": 2,
+            "conflict": "NOT_ELIGIBLE",
+            "result": "PASS"
+          }
+        ]
+      },
+      {
+        "file": "db-concurrency-invitations.mjs",
+        "exit_code": 0,
+        "scenario": "HOUSEHOLD_INVITATION_VERSION_SERIALIZATION",
+        "result": "PASS",
+        "cases": [
+          {
+            "winner": null,
+            "contenders": 2,
+            "conflict": "STALE_VERSION",
+            "result": "PASS"
+          }
+        ]
+      },
+      {
+        "file": "db-concurrency-invitation-lifecycle.mjs",
+        "exit_code": 0,
+        "scenario": "INVITATION_LIFECYCLE_SERIALIZATION",
+        "result": "PASS",
+        "cases": [
+          {
+            "winner": "cancellation",
+            "contenders": 2,
+            "conflict": "INVALID_INVITATION",
+            "result": "PASS"
+          },
+          {
+            "winner": "acceptance",
+            "contenders": 2,
+            "conflict": "STALE_VERSION",
+            "result": "PASS"
+          },
+          {
+            "winner": "authority_revocation",
+            "contenders": 2,
+            "conflict": "FORBIDDEN",
+            "result": "PASS"
+          },
+          {
+            "winner": "creation_authority_revocation",
+            "contenders": 2,
+            "conflict": "FORBIDDEN",
+            "result": "PASS"
+          }
+        ]
+      },
+      {
+        "file": "db-concurrency-intake-reconfirmation.mjs",
+        "exit_code": 0,
+        "scenario": "INTAKE_RECONFIRMATION_SERIALIZATION",
+        "result": "PASS",
+        "cases": [
+          {
+            "winner": "exact_confirmation",
+            "contenders": 2,
+            "conflict": null,
+            "result": "PASS"
+          },
+          {
+            "winner": "answer_revision",
+            "contenders": 2,
+            "conflict": "STALE_VERSION",
+            "result": "PASS"
+          },
+          {
+            "winner": "assistance_revocation",
+            "contenders": 2,
+            "conflict": "FORBIDDEN",
+            "result": "PASS"
+          },
+          {
+            "winner": "native_session_revocation",
+            "contenders": 2,
+            "conflict": "FORBIDDEN",
+            "result": "PASS"
+          },
+          {
+            "winner": "season_close",
+            "contenders": 2,
+            "conflict": "SEASON_NOT_OPEN",
+            "result": "PASS"
+          }
+        ]
+      },
+      {
+        "file": "db-concurrency-intake-assistance.mjs",
+        "exit_code": 0,
+        "scenario": "INTAKE_ASSISTANCE_SERIALIZATION",
+        "result": "PASS",
+        "cases": [
+          {
+            "winner": "exact_grant",
+            "contenders": 2,
+            "conflict": null,
+            "result": "PASS"
+          },
+          {
+            "winner": "competing_grants",
+            "contenders": 2,
+            "conflict": "STALE_VERSION",
+            "result": "PASS"
+          },
+          {
+            "winner": "reviewer_revocation",
+            "contenders": 2,
+            "conflict": "FORBIDDEN",
+            "result": "PASS"
+          },
+          {
+            "winner": "native_revocation",
+            "contenders": 2,
+            "conflict": "FORBIDDEN",
+            "result": "PASS"
+          },
+          {
+            "winner": "revoke_vs_save",
+            "contenders": 2,
+            "conflict": "FORBIDDEN",
+            "result": "PASS"
+          }
+        ]
+      }
+    ]
+  },
+  "passed_sql_and_lint": true,
+  "passed_upgrade_sql_lint_and_legacy_races": true
+}

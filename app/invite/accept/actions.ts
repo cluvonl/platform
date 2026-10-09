@@ -15,8 +15,16 @@ export async function acceptInvitationAction(
   formData: FormData,
 ): Promise<AcceptInvitationState> {
   void _previous;
+  return acceptInvitation(false, formData);
+}
+
+export async function acceptMobileInvitationAction(_previous: AcceptInvitationState, formData: FormData): Promise<AcceptInvitationState> {
+  return acceptInvitation(true, formData);
+}
+
+async function acceptInvitation(mobile: boolean, formData: FormData): Promise<AcceptInvitationState> {
   const cookieStore = await cookies();
-  const token = tokenSchema.safeParse(cookieStore.get(invitationCookie)?.value);
+  const token = tokenSchema.safeParse(cookieStore.get(mobile ? 'cluvo_app_household_invitation' : invitationCookie)?.value);
   if (!token.success) return {status: 'error', message: 'Deze uitnodiging is ongeldig of onvolledig.'};
   const command = commandSchema.safeParse(Object.fromEntries(formData));
   if (!command.success) return {status: 'error', message: 'Open de uitnodiging opnieuw om de actuele gegevens te controleren.'};
@@ -32,6 +40,7 @@ export async function acceptInvitationAction(
   } catch {
     return {status: 'error', message: 'De uitnodiging kan nu niet worden verwerkt. Probeer het later opnieuw.'};
   }
-  cookieStore.delete({name: invitationCookie, path: '/invite/accept'});
-  redirect(`/c/${encodeURIComponent(tenantSlug)}/intake`);
+  if (mobile) cookieStore.delete({name: 'cluvo_app_household_invitation', path: '/app/invite/accept'});
+  else cookieStore.delete({name: invitationCookie, path: '/invite/accept'});
+  redirect(mobile ? `/app/c/${encodeURIComponent(tenantSlug)}/profile` : `/c/${encodeURIComponent(tenantSlug)}/intake`);
 }

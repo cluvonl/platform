@@ -1,0 +1,81 @@
+\set ON_ERROR_STOP on
+-- LOCAL synthetic browser fixture only. This is deliberately not a migration.
+-- Invoke exclusively with docker exec supabase_db_cluvo-local and
+-- -v cluvo_native_pwa_report_fixture=1; never point this at staging/production.
+\if :{?cluvo_native_pwa_report_fixture}
+\else
+\echo 'Explicit local report fixture guard is required.'
+\quit
+\endif
+\if :cluvo_native_pwa_report_fixture
+\else
+\echo 'Explicit local report fixture guard is required.'
+\quit
+\endif
+begin;
+select pg_advisory_xact_lock(hashtextextended('cluvo-local:pwa-browser-report-fixture',0));
+do $fixture$
+declare
+ t uuid:='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
+ a uuid:='11111111-1111-4111-8111-111111111111';
+ c uuid:='33333333-3333-4333-8333-333333333333';
+ fixture_role_id uuid:='cb000000-0000-4000-8000-000000002010';
+ permission_id uuid:='cb000000-0000-4000-8000-000000002011';
+ grant_id uuid:='cb000000-0000-4000-8000-000000002012';
+ audit_id uuid:='cb000000-0000-4000-8000-000000002013';
+ event_id uuid:='cb000000-0000-4000-8000-000000002014';
+ command_key uuid:='cb000000-0000-4000-8000-000000002015';
+ before_permissions jsonb;
+ after_permissions jsonb;
+ a_grants jsonb;
+begin
+ if current_database()<>'postgres' or current_user<>'postgres'
+ or not exists(select 1 from app.tenants where id=t and slug='club-a')
+ or not exists(select 1 from app.households where id='cb000000-0000-4000-8000-000000000100' and tenant_id=t and label='PWA lokaal testhuishouden')
+ or not exists(select 1 from auth.users where id=c and email='coordinator@example.test' and email_confirmed_at is not null)
+ or not exists(select 1 from auth.users where id=a and email='ouder-a@example.test' and email_confirmed_at is not null)
+ or not exists(select 1 from app.account_person_links where tenant_id=t and auth_user_id=c and person_id='a1000000-0000-4000-8000-000000000003' and verified_at is not null and revoked_at is null)
+ or not exists(select 1 from app.permissions where permission_key='report.season.view')
+ then raise exception 'LOCAL_NATIVE_REPORT_FIXTURE_TARGET_MISMATCH';end if;
+
+ -- The one new role is excluded when comparing every pre-existing grant and
+ -- permission; cluster, team, committee and household authority stay exact.
+ select coalesce(jsonb_agg(jsonb_build_array(g.id,p.permission_key,g.scope_kind,g.committee_id,g.team_id,g.household_id,g.version,g.starts_at,g.ends_at,g.revoked_at) order by g.id,p.permission_key),'[]') into before_permissions
+ from app.access_grants g join app.role_permissions p on p.tenant_id=g.tenant_id and p.role_id=g.role_id
+ where g.tenant_id=t and g.auth_user_id=c and g.id<>grant_id;
+ select coalesce(jsonb_agg(to_jsonb(g) order by g.id),'[]') into a_grants from app.access_grants g where g.tenant_id=t and g.auth_user_id=a;
+
+ if exists(select 1 from app.permission_roles where tenant_id=t and role_key='pwa_local_report_reader' and id<>fixture_role_id)
+ or exists(select 1 from app.permission_roles where id=fixture_role_id and (tenant_id<>t or role_key<>'pwa_local_report_reader' or system_role or version<>1))
+ or exists(select 1 from app.role_permissions where id=permission_id and (tenant_id<>t or role_id<>fixture_role_id or permission_key<>'report.season.view'))
+ or exists(select 1 from app.access_grants where id=grant_id and (tenant_id<>t or auth_user_id<>c or role_id<>fixture_role_id or scope_kind<>'tenant' or num_nonnulls(committee_id,team_id,household_id)<>0 or version<>1 or revoked_at is not null or ends_at is not null))
+ then raise exception 'LOCAL_REPORT_FIXTURE_NAMESPACE_CONFLICT';end if;
+
+ insert into app.permission_roles(id,tenant_id,role_key,name,description,system_role)
+ values(fixture_role_id,t,'pwa_local_report_reader','Lokale PWA rapportproef','Owned synthetic fixture; report.season.view only. No additional command or team authority.',false) on conflict(id) do nothing;
+ insert into app.role_permissions(id,tenant_id,role_id,permission_key)
+ values(permission_id,t,fixture_role_id,'report.season.view') on conflict(id) do nothing;
+ if (select array_agg(permission_key order by permission_key) from app.role_permissions where tenant_id=t and app.role_permissions.role_id=fixture_role_id)<>array['report.season.view']::text[] then raise exception 'REPORT_FIXTURE_ROLE_BROADER_THAN_READ_ONLY';end if;
+ insert into app.access_grants(id,tenant_id,auth_user_id,role_id,scope_kind,starts_at,granted_by_auth_user_id)
+ values(grant_id,t,c,fixture_role_id,'tenant',statement_timestamp(),c) on conflict(id) do nothing;
+
+ if exists(select 1 from app.audit_events where id=audit_id and (tenant_id<>t or actor_auth_user_id<>c or action<>'local.fixture.grant_report' or resource_id<>grant_id or idempotency_key<>command_key))
+ or exists(select 1 from app.domain_events where id=event_id and (tenant_id<>t or aggregate_id<>grant_id or aggregate_version<>1 or event_type<>'local.pwa.report_grant.prepared')) then raise exception 'LOCAL_REPORT_FIXTURE_AUDIT_NAMESPACE_CONFLICT';end if;
+ insert into app.audit_events(id,tenant_id,actor_auth_user_id,action,resource_type,resource_id,scope_kind,scope_id,reason_code,idempotency_key,payload_minimal)
+ values(audit_id,t,c,'local.fixture.grant_report','access_grant',grant_id,'tenant',t,'LOCAL_SYNTHETIC_BROWSER_FIXTURE',command_key,jsonb_build_object('fixture','pwa_browser_report_grant','fixture_operator','owned_local_postgres','expected_version',0,'result_version',1,'permission_key','report.season.view','role_key','pwa_local_report_reader')) on conflict(id) do nothing;
+ insert into app.domain_events(id,tenant_id,aggregate_type,aggregate_id,aggregate_version,event_type,payload_minimal)
+ values(event_id,t,'local_fixture_access_grant',grant_id,1,'local.pwa.report_grant.prepared',jsonb_build_object('fixture','pwa_browser_report_grant','expected_version',0,'permission_key','report.season.view','idempotency_key',command_key)) on conflict(id) do nothing;
+
+ select coalesce(jsonb_agg(jsonb_build_array(g.id,p.permission_key,g.scope_kind,g.committee_id,g.team_id,g.household_id,g.version,g.starts_at,g.ends_at,g.revoked_at) order by g.id,p.permission_key),'[]') into after_permissions
+ from app.access_grants g join app.role_permissions p on p.tenant_id=g.tenant_id and p.role_id=g.role_id
+ where g.tenant_id=t and g.auth_user_id=c and g.id<>grant_id;
+ if before_permissions<>after_permissions
+ or a_grants<>(select coalesce(jsonb_agg(to_jsonb(g) order by g.id),'[]') from app.access_grants g where g.tenant_id=t and g.auth_user_id=a)
+ then raise exception 'REPORT_FIXTURE_CHANGED_OTHER_AUTHORITY';end if;
+ if (select count(*) from app.audit_events where idempotency_key=command_key and tenant_id=t)<>1 then raise exception 'REPORT_FIXTURE_AUDIT_NOT_ONCE';end if;
+end;$fixture$;
+\if :{?cluvo_report_fixture_rollback}
+rollback;
+\else
+commit;
+\endif

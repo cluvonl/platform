@@ -1,0 +1,21 @@
+{
+  "scope": "LOCAL_SHARED_ADDITIVE_PWA_APPLICATION",
+  "observed_at": "2026-10-09T02:59:18.894871+00:00",
+  "migration": "20261009112000_pwa_task_offer_category_seed.sql",
+  "sha256": "1e2bb5b181e7e0d4279c8270b12bfee8743cb7dcaaa0e4267256eaf689c59c17",
+  "source_hash_verified": true,
+  "transaction_committed": true,
+  "postgrest_schema_notified": true,
+  "gate_verified": true,
+  "migration_count": 29,
+  "latest_version": "20261009112000",
+  "older_history_rows_unchanged": 28,
+  "local_cli_repair": true,
+  "migration_rerun": false,
+  "statement_count": 6,
+  "stored_statement_content_exact_after_cli_whitespace_trim": true,
+  "database_reset": false,
+  "auth_rows_modified_by_migration": false,
+  "provider_calls": 0,
+  "owned_proof": "owned-final29-sql-proof.json"
+}

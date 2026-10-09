@@ -1,0 +1,633 @@
+/* Derived from the mobile handover; scoped to the PWA and its portals. */
+:is(.cluvo-mobile,.cluvo-mobile-portal){--background:#f5f7f8;--foreground:#20282e;--card:#fff;--card-foreground:#20282e;--popover:#fff;--popover-foreground:#20282e;--primary:#d74735;--primary-foreground:#fff;--secondary:#eef1f3;--secondary-foreground:#283137;--muted:#edf0f2;--muted-foreground:#657078;--accent:#fff0ec;--accent-foreground:#b83a2a;--destructive:#c53939;--border:#e2e7eb;--input:#d4dce1;--ring:#e6624d;--radius:1rem;--sidebar:#151c20;--sidebar-foreground:#d3dde2;--sidebar-primary:#f77560;--sidebar-primary-foreground:#151c20;--sidebar-accent:#332724;--sidebar-accent-foreground:#ff9b86;--sidebar-border:#2b353b;--sidebar-ring:#f77560}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .dark,:is(.cluvo-mobile,.cluvo-mobile-portal).dark{--background:#161e23;--foreground:#f4f6f7;--card:#202a30;--card-foreground:#f4f6f7;--popover:#202a30;--popover-foreground:#f4f6f7;--primary:#f77560;--primary-foreground:#11191d;--secondary:#2e3940;--secondary-foreground:#fff;--muted:#2e3940;--muted-foreground:#b0bec6;--accent:#442e29;--accent-foreground:#ffb19f;--destructive:#ff8a8a;--border:#3a454b;--input:#4c5b63;--ring:#f77560}
+:is(.cluvo-mobile,.cluvo-mobile-portal) *{box-sizing:border-box}
+:is(.cluvo-mobile,.cluvo-mobile-portal){margin:0;background:#e9edf0;color:var(--foreground);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:16px;line-height:1.5}
+:is(.cluvo-mobile,.cluvo-mobile-portal) button,:is(.cluvo-mobile,.cluvo-mobile-portal) a,:is(.cluvo-mobile,.cluvo-mobile-portal) input,:is(.cluvo-mobile,.cluvo-mobile-portal) select,:is(.cluvo-mobile,.cluvo-mobile-portal) textarea{-webkit-tap-highlight-color:transparent;font:inherit}
+:is(.cluvo-mobile,.cluvo-mobile-portal) button{cursor:pointer}
+:is(.cluvo-mobile,.cluvo-mobile-portal) button:disabled{cursor:not-allowed;opacity:.5}
+:is(.cluvo-mobile,.cluvo-mobile-portal) button:focus-visible,:is(.cluvo-mobile,.cluvo-mobile-portal) a:focus-visible{outline:3px solid #f18973;outline-offset:3px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) h1,:is(.cluvo-mobile,.cluvo-mobile-portal) h2,:is(.cluvo-mobile,.cluvo-mobile-portal) h3,:is(.cluvo-mobile,.cluvo-mobile-portal) p{margin:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) h1{font-size:1.9rem;line-height:1.2;font-weight:700;letter-spacing:-.8px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) h2{font-size:1.13rem;font-weight:650;letter-spacing:-.3px;line-height:1.45}
+:is(.cluvo-mobile,.cluvo-mobile-portal) h3{font-size:1rem;line-height:1.45;font-weight:650;letter-spacing:-.15px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) small{font-size:.8rem;color:#687680;line-height:1.5}
+:is(.cluvo-mobile,.cluvo-mobile-portal) svg{flex-shrink:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) input,:is(.cluvo-mobile,.cluvo-mobile-portal) textarea{font-size:1rem!important}
+:is(.cluvo-mobile,.cluvo-mobile-portal) textarea{resize:vertical;min-height:112px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) a{color:inherit}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .full,:is(.cluvo-mobile,.cluvo-mobile-portal).full{width:100%}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .subtle,:is(.cluvo-mobile,.cluvo-mobile-portal).subtle{font-size:.85rem;color:#687680;line-height:1.7;margin:12px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .page-enter,:is(.cluvo-mobile,.cluvo-mobile-portal).page-enter{animation:mobile-page-in .2s ease-out}
+@keyframes mobile-page-in{from{opacity:.4;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-frame,:is(.cluvo-mobile,.cluvo-mobile-portal).app-frame{display:grid;grid-template-columns:218px minmax(0,1fr);max-width:1120px;min-height:100dvh;margin:auto;background:var(--background);box-shadow:0 0 60px #2334440d}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .desktop-rail,:is(.cluvo-mobile,.cluvo-mobile-portal).desktop-rail{background:#141b20;color:#dae3e7;position:sticky;top:0;height:100dvh;padding:30px 20px;display:flex;flex-direction:column}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .desktop-rail>img,:is(.cluvo-mobile,.cluvo-mobile-portal).desktop-rail>img{width:142px;height:55px;object-fit:contain;object-position:left}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .rail-club,:is(.cluvo-mobile,.cluvo-mobile-portal).rail-club{display:flex;align-items:center;gap:10px;border:1px solid #303b43;border-radius:14px;padding:13px 10px;margin:28px 0 34px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .rail-club b,:is(.cluvo-mobile,.cluvo-mobile-portal).rail-club b{font-size:.875rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .rail-club small,:is(.cluvo-mobile,.cluvo-mobile-portal).rail-club small{display:block;color:#9caeb9;font-size:.75rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .club-monogram,:is(.cluvo-mobile,.cluvo-mobile-portal).club-monogram{width:37px;height:42px;flex:0 0 auto;border-radius:10px;background:#e4efea;color:#355b4b;display:flex;align-items:center;justify-content:center;flex-direction:column;font-size:1.35rem;font-weight:800;line-height:1}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .club-monogram span,:is(.cluvo-mobile,.cluvo-mobile-portal).club-monogram span{font-size:.55rem;letter-spacing:1px;margin-top:3px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .desktop-rail nav,:is(.cluvo-mobile,.cluvo-mobile-portal).desktop-rail nav{display:grid;gap:8px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .desktop-rail nav button,:is(.cluvo-mobile,.cluvo-mobile-portal).desktop-rail nav button{display:flex;align-items:center;gap:12px;min-height:48px;padding:12px 15px;border-radius:12px;font-size:.95rem;color:#adbcc5;text-align:left}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .desktop-rail nav button:hover,:is(.cluvo-mobile,.cluvo-mobile-portal).desktop-rail nav button:hover{background:#252e34;color:#fff}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .desktop-rail nav button.active,:is(.cluvo-mobile,.cluvo-mobile-portal).desktop-rail nav button.active{background:#382b29;color:#ff9f8b;font-weight:650}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .rail-bottom,:is(.cluvo-mobile,.cluvo-mobile-portal).rail-bottom{margin-top:auto;padding-top:24px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .rail-bottom>button:first-child,:is(.cluvo-mobile,.cluvo-mobile-portal).rail-bottom>button:first-child{display:flex;flex-direction:column;gap:7px;align-items:flex-start;padding:16px 10px;margin-bottom:16px;border-bottom:1px solid #303b43;width:100%;text-align:left}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .rail-bottom b,:is(.cluvo-mobile,.cluvo-mobile-portal).rail-bottom b{font-size:.85rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .rail-bottom small,:is(.cluvo-mobile,.cluvo-mobile-portal).rail-bottom small{color:#9caeb9}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .rail-user,:is(.cluvo-mobile,.cluvo-mobile-portal).rail-user{display:flex;gap:10px;align-items:center;font-size:.85rem;padding:10px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-main,:is(.cluvo-mobile,.cluvo-mobile-portal).app-main{min-width:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-header,:is(.cluvo-mobile,.cluvo-mobile-portal).app-header{height:83px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:#141b20;color:#fff;position:sticky;top:0;z-index:30;gap:14px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .header-brand,:is(.cluvo-mobile,.cluvo-mobile-portal).header-brand{display:flex;gap:16px;align-items:center;min-width:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .header-brand img,:is(.cluvo-mobile,.cluvo-mobile-portal).header-brand img{width:111px;height:37px;object-fit:contain;display:none}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .header-club-name,:is(.cluvo-mobile,.cluvo-mobile-portal).header-club-name{font-size:.94rem;font-weight:600}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .header-actions,:is(.cluvo-mobile,.cluvo-mobile-portal).header-actions{display:flex;align-items:center;gap:9px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .icon-button,:is(.cluvo-mobile,.cluvo-mobile-portal).icon-button{width:42px;height:44px;display:grid;place-items:center;position:relative;border-radius:12px;color:#edf2f4;flex-shrink:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .icon-button.light,:is(.cluvo-mobile,.cluvo-mobile-portal).icon-button.light{background:#fff;border:1px solid var(--border);color:#41505a}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .profile-button,:is(.cluvo-mobile,.cluvo-mobile-portal).profile-button{display:grid;place-items:center;min-height:44px;min-width:44px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .avatar,:is(.cluvo-mobile,.cluvo-mobile-portal).avatar{height:38px;width:38px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;color:#803d31;--avatar-font-cap:16px;font-size:min(var(--avatar-font-size,.75rem),var(--avatar-font-cap));white-space:nowrap;line-height:1;font-weight:700;background:#fae0d8;border:2px solid #fff}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .avatar.large,:is(.cluvo-mobile,.cluvo-mobile-portal).avatar.large{width:64px;height:64px;--avatar-font-cap:26px;font-size:min(var(--avatar-font-size,1.25rem),var(--avatar-font-cap));border:3px solid #fff}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .unread-dot,:is(.cluvo-mobile,.cluvo-mobile-portal).unread-dot{position:absolute;right:9px;top:8px;background:#fb886e;border-radius:50%;height:7px;width:7px;box-shadow:0 0 0 2px #141b20}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-content,:is(.cluvo-mobile,.cluvo-mobile-portal).app-content{max-width:810px;padding:28px 32px 45px;margin:auto;min-height:calc(100dvh - 83px)}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-end,:is(.cluvo-mobile,.cluvo-mobile-portal).app-end{display:flex;align-items:center;justify-content:center;gap:10px;color:#76818a;font-size:.75rem;margin:36px 0 10px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-end span:first-child,:is(.cluvo-mobile,.cluvo-mobile-portal).app-end span:first-child{font-weight:700}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .bottom-nav,:is(.cluvo-mobile,.cluvo-mobile-portal).bottom-nav{display:none}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .page-heading,:is(.cluvo-mobile,.cluvo-mobile-portal).page-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .page-heading p,:is(.cluvo-mobile,.cluvo-mobile-portal).page-heading p{font-size:.94rem;color:#65717a;margin-top:7px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .today-pill,:is(.cluvo-mobile,.cluvo-mobile-portal).today-pill{background:#fff;border:1px solid var(--border);padding:8px 11px;border-radius:12px;white-space:nowrap;font-size:.8rem;color:#687680}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .back-button,:is(.cluvo-mobile,.cluvo-mobile-portal).back-button{display:flex;gap:5px;align-items:center;color:#667680;font-size:.875rem;min-height:44px;margin-top:-12px;margin-bottom:12px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .offline-bar,:is(.cluvo-mobile,.cluvo-mobile-portal).offline-bar{display:flex;gap:10px;align-items:center;background:#ffedca;padding:11px 20px;font-size:.875rem;color:#6f4a19;border-bottom:1px solid #eddaaf}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .section,:is(.cluvo-mobile,.cluvo-mobile-portal).section{margin:25px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .section-heading,:is(.cluvo-mobile,.cluvo-mobile-portal).section-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .text-link,:is(.cluvo-mobile,.cluvo-mobile-portal).text-link{color:#b84431;font-size:.875rem;font-weight:600;min-height:40px;display:inline-flex;align-items:center;gap:5px;text-align:left}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-btn,:is(.cluvo-mobile,.cluvo-mobile-portal).app-btn{height:auto!important;min-height:48px;border-radius:13px!important;font-size:.95rem!important;font-weight:650;box-shadow:none;gap:9px;padding:12px 18px!important;white-space:normal}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-btn.primary,:is(.cluvo-mobile,.cluvo-mobile-portal).app-btn.primary{background:#d74735;color:white;border:1px solid #d74735}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-btn.primary:hover,:is(.cluvo-mobile,.cluvo-mobile-portal).app-btn.primary:hover{background:#c63e2d}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-btn.outline,:is(.cluvo-mobile,.cluvo-mobile-portal).app-btn.outline{background:#fff;border:1px solid #d8e0e5;color:#35424b}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-btn.quiet,:is(.cluvo-mobile,.cluvo-mobile-portal).app-btn.quiet{background:transparent;color:#b84431}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-btn.danger,:is(.cluvo-mobile,.cluvo-mobile-portal).app-btn.danger{background:#a93636;color:white}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .button-pair,:is(.cluvo-mobile,.cluvo-mobile-portal).button-pair{display:flex;gap:10px;width:100%}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .button-pair>*,:is(.cluvo-mobile,.cluvo-mobile-portal).button-pair>*{flex:1;min-width:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .tag,:is(.cluvo-mobile,.cluvo-mobile-portal).tag{display:inline-flex;align-items:center;line-height:1.5;padding:4px 8px;border-radius:7px;font-size:.75rem;font-weight:600;white-space:normal;vertical-align:middle}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .tag.neutral,:is(.cluvo-mobile,.cluvo-mobile-portal).tag.neutral{background:#eef1f3;color:#617079}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .tag.coral,:is(.cluvo-mobile,.cluvo-mobile-portal).tag.coral{background:#ffede7;color:#ac4432}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .tag.purple,:is(.cluvo-mobile,.cluvo-mobile-portal).tag.purple{background:#f0ebfa;color:#70599d}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .tag.green,:is(.cluvo-mobile,.cluvo-mobile-portal).tag.green{background:#e6f4ec;color:#39785a}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .tag.blue,:is(.cluvo-mobile,.cluvo-mobile-portal).tag.blue{background:#e9f0fa;color:#446a9c}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .tag.amber,:is(.cluvo-mobile,.cluvo-mobile-portal).tag.amber{background:#fff1d7;color:#8b611d}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .tag.dark,:is(.cluvo-mobile,.cluvo-mobile-portal).tag.dark{background:#ffffff0d;color:#c0cdd4;font-size:.72rem;border:1px solid #ffffff0d}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .help-banner,:is(.cluvo-mobile,.cluvo-mobile-portal).help-banner{display:flex;align-items:flex-start;gap:10px;padding:14px 12px 8px;border:1px solid #eadfaa;background:#fff9df;border-radius:14px;margin:16px 0;color:#695931;position:relative}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .help-banner>svg,:is(.cluvo-mobile,.cluvo-mobile-portal).help-banner>svg{margin-top:2px;color:#927c3f}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .help-banner>div,:is(.cluvo-mobile,.cluvo-mobile-portal).help-banner>div{flex:1;min-width:0;padding-right:16px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .help-banner p,:is(.cluvo-mobile,.cluvo-mobile-portal).help-banner p{font-size:.875rem;line-height:1.6}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .help-banner>div>button,:is(.cluvo-mobile,.cluvo-mobile-portal).help-banner>div>button{display:flex;align-items:center;justify-content:center;gap:5px;font-size:.78rem;font-weight:600;min-height:34px;margin-left:auto;color:#796329;padding:4px 6px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .help-close,:is(.cluvo-mobile,.cluvo-mobile-portal).help-close{position:absolute;right:5px;top:5px;width:32px;height:32px;display:grid;place-items:center;color:#8c7a44}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .notice,:is(.cluvo-mobile,.cluvo-mobile-portal).notice{display:flex;gap:10px;padding:15px;border-radius:13px;font-size:.875rem;line-height:1.65;margin:14px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .notice>svg,:is(.cluvo-mobile,.cluvo-mobile-portal).notice>svg{margin-top:3px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .notice.blue,:is(.cluvo-mobile,.cluvo-mobile-portal).notice.blue{background:#ebf2f7;color:#4c677d;border:1px solid #dfe9ef}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .notice.amber,:is(.cluvo-mobile,.cluvo-mobile-portal).notice.amber{background:#fff3df;color:#7d5c28;border:1px solid #efdebd}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .notice.purple,:is(.cluvo-mobile,.cluvo-mobile-portal).notice.purple{background:#f2eef8;color:#6b578c;border:1px solid #e7def2}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .empty,:is(.cluvo-mobile,.cluvo-mobile-portal).empty{background:#fff;border:1px dashed #d3dde4;border-radius:18px;padding:30px 18px!important;margin:15px 0;gap:15px!important}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .empty [data-slot=empty-title],:is(.cluvo-mobile,.cluvo-mobile-portal).empty [data-slot=empty-title]{font-size:1rem;font-weight:650}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .empty [data-slot=empty-description],:is(.cluvo-mobile,.cluvo-mobile-portal).empty [data-slot=empty-description]{font-size:.875rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .household-meter,:is(.cluvo-mobile,.cluvo-mobile-portal).household-meter,:is(.cluvo-mobile,.cluvo-mobile-portal) .club-overview,:is(.cluvo-mobile,.cluvo-mobile-portal).club-overview{background:linear-gradient(135deg,#172229,#202e36);color:white;border-radius:22px;padding:22px;margin:18px 0;overflow:hidden}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .meter-top,:is(.cluvo-mobile,.cluvo-mobile-portal).meter-top{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:.875rem;font-weight:550;color:#d8e4e9}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .meter-figure,:is(.cluvo-mobile,.cluvo-mobile-portal).meter-figure{display:flex;align-items:center;justify-content:space-between;margin:14px 0 20px;gap:10px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .meter-figure strong,:is(.cluvo-mobile,.cluvo-mobile-portal).meter-figure strong{font-size:2.8rem;line-height:1.1;font-weight:650;letter-spacing:-1.2px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .meter-figure>div>span,:is(.cluvo-mobile,.cluvo-mobile-portal).meter-figure>div>span{color:#adbfc9;font-size:1.25rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .meter-figure p,:is(.cluvo-mobile,.cluvo-mobile-portal).meter-figure p{font-size:.8rem;color:#adbdc8;margin-top:5px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .meter-symbol,:is(.cluvo-mobile,.cluvo-mobile-portal).meter-symbol{height:65px;width:65px;border-radius:20px;background:#334149;display:grid;place-items:center;color:#ffc3af;transform:rotate(-5deg)}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .meter-progress,:is(.cluvo-mobile,.cluvo-mobile-portal).meter-progress{height:9px;background:#46535b;border-radius:8px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .meter-progress [data-slot=progress-indicator],:is(.cluvo-mobile,.cluvo-mobile-portal).meter-progress [data-slot=progress-indicator]{background:#fa8b6c}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .meter-split,:is(.cluvo-mobile,.cluvo-mobile-portal).meter-split{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#acbdc7;font-size:.77rem;margin:10px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .meter-split>span:first-child,:is(.cluvo-mobile,.cluvo-mobile-portal).meter-split>span:first-child{display:flex;align-items:center;gap:6px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .meter-split i,:is(.cluvo-mobile,.cluvo-mobile-portal).meter-split i{width:7px;height:7px;border-radius:50%;background:#8099ab}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .winter-line,:is(.cluvo-mobile,.cluvo-mobile-portal).winter-line{display:flex;align-items:center;justify-content:space-between;font-size:.8rem;color:#c0cdd5;margin-top:20px;margin-bottom:8px;padding-top:16px;border-top:1px solid #ffffff12}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .winter-line b,:is(.cluvo-mobile,.cluvo-mobile-portal).winter-line b{font-size:.8rem;color:#f0f6f8;font-weight:550}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .winter-progress,:is(.cluvo-mobile,.cluvo-mobile-portal).winter-progress{height:4px;background:#46535b}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .winter-progress [data-slot=progress-indicator],:is(.cluvo-mobile,.cluvo-mobile-portal).winter-progress [data-slot=progress-indicator]{background:#8bbeb1}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .meter-link,:is(.cluvo-mobile,.cluvo-mobile-portal).meter-link{color:#ffb39a;min-height:35px;font-size:.8rem;font-weight:600;margin-top:9px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .child-grid,:is(.cluvo-mobile,.cluvo-mobile-portal).child-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .child-card,:is(.cluvo-mobile,.cluvo-mobile-portal).child-card{display:flex;align-items:center;gap:10px;text-align:left;background:#fff;border:1px solid #e4e8ec;border-radius:17px;padding:15px 12px;min-width:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .child-card .avatar,:is(.cluvo-mobile,.cluvo-mobile-portal).child-card .avatar{width:32px;height:32px;--avatar-font-cap:14px;font-size:min(var(--avatar-font-size,.68rem),var(--avatar-font-cap));background:#edf0fa;color:#64739b}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .child-card>div,:is(.cluvo-mobile,.cluvo-mobile-portal).child-card>div{min-width:0;flex:1}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .child-card b,:is(.cluvo-mobile,.cluvo-mobile-portal).child-card b{display:flex;align-items:center;gap:7px;font-size:.875rem;flex-wrap:wrap}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .child-card b small,:is(.cluvo-mobile,.cluvo-mobile-portal).child-card b small{font-size:.7rem;color:#7b8791}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .child-card>div>span,:is(.cluvo-mobile,.cluvo-mobile-portal).child-card>div>span{display:block;font-size:.8rem;color:#73818a;margin:6px 0 8px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .child-card>div>span small,:is(.cluvo-mobile,.cluvo-mobile-portal).child-card>div>span small{font-size:.75rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .child-card [data-slot=progress],:is(.cluvo-mobile,.cluvo-mobile-portal).child-card [data-slot=progress]{height:4px;background:#e8edf2}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .child-card [data-slot=progress-indicator],:is(.cluvo-mobile,.cluvo-mobile-portal).child-card [data-slot=progress-indicator]{background:#9984bb}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .action-list,:is(.cluvo-mobile,.cluvo-mobile-portal).action-list{display:grid;gap:10px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .action-row,:is(.cluvo-mobile,.cluvo-mobile-portal).action-row{display:flex;align-items:center;gap:12px;padding:17px 15px;border:1px solid #ede3ca;background:#fffdfa;border-radius:17px;width:100%;text-align:left}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .action-row>span:nth-child(2),:is(.cluvo-mobile,.cluvo-mobile-portal).action-row>span:nth-child(2){flex:1;min-width:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .action-row b,:is(.cluvo-mobile,.cluvo-mobile-portal).action-row b{display:block;font-size:.94rem;line-height:1.45}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .action-row small,:is(.cluvo-mobile,.cluvo-mobile-portal).action-row small{display:block;margin-top:4px;font-size:.8rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .action-row em,:is(.cluvo-mobile,.cluvo-mobile-portal).action-row em{display:block;font-size:.78rem;color:#9b6621;font-style:normal;font-weight:600;margin-top:8px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .action-row>svg,:is(.cluvo-mobile,.cluvo-mobile-portal).action-row>svg{color:#9d9b8f}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .action-icon,:is(.cluvo-mobile,.cluvo-mobile-portal).action-icon{width:39px;height:42px;border-radius:12px;display:grid;place-items:center}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .action-icon.amber,:is(.cluvo-mobile,.cluvo-mobile-portal).action-icon.amber{background:#fbefd4;color:#a07b37}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .action-icon.blue,:is(.cluvo-mobile,.cluvo-mobile-portal).action-icon.blue{background:#e8eff7;color:#6583a9}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .task-card,:is(.cluvo-mobile,.cluvo-mobile-portal).task-card{display:flex;align-items:flex-start;gap:13px;width:100%;text-align:left;background:#fff;border:1px solid #e1e7eb;border-radius:18px;padding:18px 15px;margin:11px 0;position:relative;transition:border-color .2s,transform .2s}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .task-card:hover,:is(.cluvo-mobile,.cluvo-mobile-portal).task-card:hover{border-color:#f3b6a4;transform:translateY(-1px)}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .task-icon,:is(.cluvo-mobile,.cluvo-mobile-portal).task-icon{height:44px;width:44px;border-radius:13px;display:grid;place-items:center;background:#eaf0f3;color:#687d8b;flex-shrink:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .category-Bar,:is(.cluvo-mobile,.cluvo-mobile-portal).category-Bar{color:#ad654a;background:#ffede6}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .category-Keuken,:is(.cluvo-mobile,.cluvo-mobile-portal).category-Keuken{color:#6f7aa9;background:#eef0f9}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .category-Onderhoud,:is(.cluvo-mobile,.cluvo-mobile-portal).category-Onderhoud{color:#698b76;background:#edf4ed}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .category-Fluiten,:is(.cluvo-mobile,.cluvo-mobile-portal).category-Fluiten,:is(.cluvo-mobile,.cluvo-mobile-portal) .category-Grensrechter,:is(.cluvo-mobile,.cluvo-mobile-portal).category-Grensrechter{color:#85759d;background:#f2edf8}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .task-copy,:is(.cluvo-mobile,.cluvo-mobile-portal).task-copy{flex:1;min-width:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .task-top,:is(.cluvo-mobile,.cluvo-mobile-portal).task-top{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .task-card h3,:is(.cluvo-mobile,.cluvo-mobile-portal).task-card h3{margin-bottom:7px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .task-meta,:is(.cluvo-mobile,.cluvo-mobile-portal).task-meta{display:flex;align-items:center;gap:5px;color:#6d7a84;font-size:.875rem;line-height:1.5;margin:5px 0;flex-wrap:wrap}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .task-meta span,:is(.cluvo-mobile,.cluvo-mobile-portal).task-meta span{padding:0 2px;color:#a2aab0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .task-bottom,:is(.cluvo-mobile,.cluvo-mobile-portal).task-bottom{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;padding-top:12px;margin-top:10px;border-top:1px solid #eef0f3;font-size:.8rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .task-bottom b,:is(.cluvo-mobile,.cluvo-mobile-portal).task-bottom b{font-size:.8rem;font-weight:600;color:#ad5440}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .task-bottom>span,:is(.cluvo-mobile,.cluvo-mobile-portal).task-bottom>span{color:#657985;font-size:.78rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .row-chevron,:is(.cluvo-mobile,.cluvo-mobile-portal).row-chevron{margin-top:18px;color:#96a3ad}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .task-card.compact,:is(.cluvo-mobile,.cluvo-mobile-portal).task-card.compact{padding:15px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .task-card.compact .task-icon,:is(.cluvo-mobile,.cluvo-mobile-portal).task-card.compact .task-icon{width:38px;height:38px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .task-card.compact .task-bottom,:is(.cluvo-mobile,.cluvo-mobile-portal).task-card.compact .task-bottom{padding-top:8px;margin-top:6px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .match-card,:is(.cluvo-mobile,.cluvo-mobile-portal).match-card,:is(.cluvo-mobile,.cluvo-mobile-portal) .club-event,:is(.cluvo-mobile,.cluvo-mobile-portal).club-event,:is(.cluvo-mobile,.cluvo-mobile-portal) .outline-banner,:is(.cluvo-mobile,.cluvo-mobile-portal).outline-banner{display:flex;width:100%;gap:13px;align-items:center;background:#fff;border:1px solid #e1e7eb;border-radius:18px;padding:18px 15px;text-align:left;margin:11px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .match-icon,:is(.cluvo-mobile,.cluvo-mobile-portal).match-icon{display:grid;place-items:center;background:#eaf3ed;color:#548267;width:42px;height:44px;border-radius:13px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .match-card>span:nth-child(2),:is(.cluvo-mobile,.cluvo-mobile-portal).match-card>span:nth-child(2),:is(.cluvo-mobile,.cluvo-mobile-portal) .club-event>div:nth-child(2),:is(.cluvo-mobile,.cluvo-mobile-portal).club-event>div:nth-child(2),:is(.cluvo-mobile,.cluvo-mobile-portal) .outline-banner>span,:is(.cluvo-mobile,.cluvo-mobile-portal).outline-banner>span{flex:1;min-width:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .match-card h3,:is(.cluvo-mobile,.cluvo-mobile-portal).match-card h3{margin:6px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .match-card small,:is(.cluvo-mobile,.cluvo-mobile-portal).match-card small{font-size:.83rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .match-card>svg,:is(.cluvo-mobile,.cluvo-mobile-portal).match-card>svg,:is(.cluvo-mobile,.cluvo-mobile-portal) .club-event>svg,:is(.cluvo-mobile,.cluvo-mobile-portal).club-event>svg,:is(.cluvo-mobile,.cluvo-mobile-portal) .outline-banner>svg:last-child,:is(.cluvo-mobile,.cluvo-mobile-portal).outline-banner>svg:last-child{color:#94a2ab}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .club-event h3,:is(.cluvo-mobile,.cluvo-mobile-portal).club-event h3{font-size:1.15rem;margin:8px 0 5px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .club-event p,:is(.cluvo-mobile,.cluvo-mobile-portal).club-event p{font-size:.85rem;color:#73818a}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .date-tile,:is(.cluvo-mobile,.cluvo-mobile-portal).date-tile{background:#fbf0ec;color:#c66e53;border-radius:12px;min-width:49px;height:63px;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.2}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .date-tile span,:is(.cluvo-mobile,.cluvo-mobile-portal).date-tile span{font-size:.65rem;letter-spacing:1px;font-weight:650}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .date-tile b,:is(.cluvo-mobile,.cluvo-mobile-portal).date-tile b{font-size:1.6rem;letter-spacing:-1px;font-weight:650;margin-top:4px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .outline-banner,:is(.cluvo-mobile,.cluvo-mobile-portal).outline-banner{border-style:dashed;margin:18px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .outline-banner>svg:first-child,:is(.cluvo-mobile,.cluvo-mobile-portal).outline-banner>svg:first-child{color:#708792}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .outline-banner b,:is(.cluvo-mobile,.cluvo-mobile-portal).outline-banner b{display:block;font-size:.94rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .outline-banner small,:is(.cluvo-mobile,.cluvo-mobile-portal).outline-banner small{display:block;margin-top:4px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .club-stats,:is(.cluvo-mobile,.cluvo-mobile-portal).club-stats{display:grid;grid-template-columns:repeat(3,1fr);margin:24px 0 10px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .club-stats>div,:is(.cluvo-mobile,.cluvo-mobile-portal).club-stats>div{display:flex;flex-direction:column;gap:5px;text-align:center;border-right:1px solid #ffffff13}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .club-stats>div:last-child,:is(.cluvo-mobile,.cluvo-mobile-portal).club-stats>div:last-child{border:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .club-stats strong,:is(.cluvo-mobile,.cluvo-mobile-portal).club-stats strong{font-size:2rem;font-weight:650;color:#ffc2ae}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .club-stats span,:is(.cluvo-mobile,.cluvo-mobile-portal).club-stats span{color:#bbcbd4;font-size:.78rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .quick-grid,:is(.cluvo-mobile,.cluvo-mobile-portal).quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .quick-grid>button,:is(.cluvo-mobile,.cluvo-mobile-portal).quick-grid>button{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:9px;min-height:90px;padding:15px 7px;border-radius:16px;background:#fff;border:1px solid #e2e7ec;color:#697d87;font-size:.8rem;font-weight:550}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .quick-grid>button:first-child,:is(.cluvo-mobile,.cluvo-mobile-portal).quick-grid>button:first-child{color:#b65d46}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-tabs,:is(.cluvo-mobile,.cluvo-mobile-portal).app-tabs{gap:14px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-tabs-list,:is(.cluvo-mobile,.cluvo-mobile-portal).app-tabs-list{height:48px!important;width:100%!important;padding:4px!important;border-radius:14px!important;background:#e9eef2}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-tabs-list [data-slot=tabs-trigger],:is(.cluvo-mobile,.cluvo-mobile-portal).app-tabs-list [data-slot=tabs-trigger]{height:40px;font-size:.875rem;font-weight:600;border-radius:11px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-tabs-list [data-state=active],:is(.cluvo-mobile,.cluvo-mobile-portal).app-tabs-list [data-state=active]{background:#fff;color:#1e2e38;box-shadow:0 2px 7px #1b2f4010}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .scope-chips,:is(.cluvo-mobile,.cluvo-mobile-portal).scope-chips{display:flex;align-items:center;gap:8px;overflow:auto;scrollbar-width:none;padding:3px 1px;margin:14px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .scope-chips button,:is(.cluvo-mobile,.cluvo-mobile-portal).scope-chips button{display:flex;gap:6px;align-items:center;white-space:nowrap;min-height:44px;padding:9px 13px;font-size:.875rem;border:1px solid #dce3e8;background:#fff;color:#647580;border-radius:10px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .scope-chips button.active,:is(.cluvo-mobile,.cluvo-mobile-portal).scope-chips button.active{background:#243540;color:#fff;border-color:#243540}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .search-filter,:is(.cluvo-mobile,.cluvo-mobile-portal).search-filter{display:flex;gap:10px;margin:17px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .search-filter>label,:is(.cluvo-mobile,.cluvo-mobile-portal).search-filter>label{display:flex;align-items:center;gap:10px;flex:1;min-width:0;border:1px solid #dce4e9;background:#fff;border-radius:13px;padding:0 13px;color:#8998a2}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .search-filter input,:is(.cluvo-mobile,.cluvo-mobile-portal).search-filter input{height:47px;border:0;background:transparent;box-shadow:none;padding:0;width:100%;font-size:.94rem!important}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .search-filter>button,:is(.cluvo-mobile,.cluvo-mobile-portal).search-filter>button{width:47px;border-radius:13px;background:#fff;border:1px solid #dce4e9;display:grid;place-items:center;color:#6e808c}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .search-filter>button.active,:is(.cluvo-mobile,.cluvo-mobile-portal).search-filter>button.active{background:#fff0e9;color:#b34e36;border-color:#edb9a8}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .results-line,:is(.cluvo-mobile,.cluvo-mobile-portal).results-line{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:.8rem;color:#75838d;margin:17px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .results-line>span:last-child,:is(.cluvo-mobile,.cluvo-mobile-portal).results-line>span:last-child{font-size:.75rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .week-control,:is(.cluvo-mobile,.cluvo-mobile-portal).week-control{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:20px 0 12px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .week-control button,:is(.cluvo-mobile,.cluvo-mobile-portal).week-control button{font-size:.8rem;color:#8c5140;min-height:44px;padding:6px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .week-control b,:is(.cluvo-mobile,.cluvo-mobile-portal).week-control b{font-size:.875rem;font-weight:600}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .week-strip,:is(.cluvo-mobile,.cluvo-mobile-portal).week-strip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;margin-bottom:20px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .week-strip button,:is(.cluvo-mobile,.cluvo-mobile-portal).week-strip button{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 3px 7px;border:1px solid #e0e6eb;background:#fff;border-radius:13px;gap:7px;min-height:81px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .week-strip button span,:is(.cluvo-mobile,.cluvo-mobile-portal).week-strip button span{font-size:.75rem;color:#7b8993}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .week-strip button b,:is(.cluvo-mobile,.cluvo-mobile-portal).week-strip button b{font-size:1.05rem;font-weight:600}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .week-strip button i,:is(.cluvo-mobile,.cluvo-mobile-portal).week-strip button i{height:4px;width:4px;border-radius:50%;background:transparent}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .week-strip button i.has-item,:is(.cluvo-mobile,.cluvo-mobile-portal).week-strip button i.has-item{background:#cf8b74}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .week-strip button.today,:is(.cluvo-mobile,.cluvo-mobile-portal).week-strip button.today{border-color:#edbea9}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .week-strip button.selected,:is(.cluvo-mobile,.cluvo-mobile-portal).week-strip button.selected{background:#bf5139;border-color:#bf5139;color:#fff}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .week-strip button.selected span,:is(.cluvo-mobile,.cluvo-mobile-portal).week-strip button.selected span{color:#fff}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .week-strip button.selected i.has-item,:is(.cluvo-mobile,.cluvo-mobile-portal).week-strip button.selected i.has-item{background:#fff}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .agenda-list>h2,:is(.cluvo-mobile,.cluvo-mobile-portal).agenda-list>h2{margin:23px 0 12px;text-transform:capitalize;font-size:.94rem;color:#556773}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .agenda-row,:is(.cluvo-mobile,.cluvo-mobile-portal).agenda-row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;margin:13px 0;min-width:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .agenda-time,:is(.cluvo-mobile,.cluvo-mobile-portal).agenda-time{width:46px;display:flex;flex-direction:column;align-items:flex-end;font-size:.875rem;gap:2px;color:#2d3f49;flex-shrink:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .agenda-time b,:is(.cluvo-mobile,.cluvo-mobile-portal).agenda-time b{font-weight:600}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .agenda-time span,:is(.cluvo-mobile,.cluvo-mobile-portal).agenda-time span{font-size:.8rem;color:#8b99a2}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .agenda-event,:is(.cluvo-mobile,.cluvo-mobile-portal).agenda-event{flex:1;min-width:0;padding:15px 14px;background:#fff;border:1px solid #e2e7eb;border-left:3px solid #e8896c;border-radius:0 15px 15px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .agenda-row.match .agenda-event,:is(.cluvo-mobile,.cluvo-mobile-portal).agenda-row.match .agenda-event{border-left-color:#91b9a0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .agenda-row.event .agenda-event,:is(.cluvo-mobile,.cluvo-mobile-portal).agenda-row.event .agenda-event{border-left-color:#bca6d1}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .agenda-row.assigned .agenda-event,:is(.cluvo-mobile,.cluvo-mobile-portal).agenda-row.assigned .agenda-event{border-left-color:#d9b76d}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .agenda-event h3,:is(.cluvo-mobile,.cluvo-mobile-portal).agenda-event h3{margin:7px 0 5px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .agenda-event p,:is(.cluvo-mobile,.cluvo-mobile-portal).agenda-event p{font-size:.875rem;color:#647682;margin:3px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .agenda-event small,:is(.cluvo-mobile,.cluvo-mobile-portal).agenda-event small{display:flex;gap:4px;align-items:center;font-size:.78rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .agenda-row>svg,:is(.cluvo-mobile,.cluvo-mobile-portal).agenda-row>svg{color:#9aa8b0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-sheet,:is(.cluvo-mobile,.cluvo-mobile-portal).app-sheet{max-height:91dvh;width:min(100%,560px)!important;left:0!important;right:0!important;margin-inline:auto;border-radius:25px 25px 0 0!important;background:#f7f9fa;gap:0!important;box-shadow:0 -15px 60px #14283625;overflow:hidden}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .sheet-handle,:is(.cluvo-mobile,.cluvo-mobile-portal).sheet-handle{display:block;align-self:center;width:37px;height:4px;border-radius:4px;background:#ccd5dc;margin:12px 0 2px;flex-shrink:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .sheet-head,:is(.cluvo-mobile,.cluvo-mobile-portal).sheet-head{position:relative;padding:19px 25px 17px!important;border-bottom:1px solid #e6ecf0;flex-shrink:0;gap:7px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .sheet-head [data-slot=sheet-title],:is(.cluvo-mobile,.cluvo-mobile-portal).sheet-head [data-slot=sheet-title]{font-size:1.35rem;font-weight:680;letter-spacing:-.5px;padding-right:34px;line-height:1.3}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .sheet-head [data-slot=sheet-description],:is(.cluvo-mobile,.cluvo-mobile-portal).sheet-head [data-slot=sheet-description]{font-size:.875rem;color:#6a7c88;line-height:1.5;padding-right:15px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .sheet-close,:is(.cluvo-mobile,.cluvo-mobile-portal).sheet-close{position:absolute;top:12px;right:13px;width:42px;height:44px;border-radius:11px;display:grid;place-items:center;color:#82939d}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .sheet-body,:is(.cluvo-mobile,.cluvo-mobile-portal).sheet-body{overflow-y:auto;overscroll-behavior:contain;padding:7px 24px 26px;min-height:0;font-size:1rem;display:flex;flex-direction:column;gap:13px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .sheet-body>p,:is(.cluvo-mobile,.cluvo-mobile-portal).sheet-body>p{line-height:1.65}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .sheet-body .help-banner,:is(.cluvo-mobile,.cluvo-mobile-portal).sheet-body .help-banner{margin:9px 0 3px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .sheet-foot,:is(.cluvo-mobile,.cluvo-mobile-portal).sheet-foot{padding:15px 24px calc(17px + env(safe-area-inset-bottom));background:#ffffffed;border-top:1px solid #e1e8ed;flex-shrink:0;backdrop-filter:blur(12px)}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .field,:is(.cluvo-mobile,.cluvo-mobile-portal).field{display:flex;flex-direction:column;gap:8px;margin:12px 0;min-width:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .field>span,:is(.cluvo-mobile,.cluvo-mobile-portal).field>span{font-size:.875rem;font-weight:600;color:#4e6370}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .field [data-slot=input],:is(.cluvo-mobile,.cluvo-mobile-portal).field [data-slot=input],:is(.cluvo-mobile,.cluvo-mobile-portal) .field [data-slot=textarea],:is(.cluvo-mobile,.cluvo-mobile-portal).field [data-slot=textarea]{border-radius:12px;background:#fff;box-shadow:none;min-height:48px;padding:12px 13px;border:1px solid #d4dee5;line-height:1.5}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .field-select,:is(.cluvo-mobile,.cluvo-mobile-portal).field-select{width:100%!important;height:auto!important;min-height:48px;border-radius:12px;box-shadow:none!important;background:#fff;white-space:normal!important;padding:12px!important;font-size:.94rem!important}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .form-row,:is(.cluvo-mobile,.cluvo-mobile-portal).form-row{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .check-row,:is(.cluvo-mobile,.cluvo-mobile-portal).check-row{display:flex;align-items:flex-start;gap:12px;min-height:48px;margin:9px 0;font-size:.875rem;line-height:1.65;cursor:pointer}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .check-row [data-slot=checkbox],:is(.cluvo-mobile,.cluvo-mobile-portal).check-row [data-slot=checkbox]{margin-top:3px;width:20px;height:20px;border-radius:5px;flex-shrink:0;border-color:#b8c7d2}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .switch-row,:is(.cluvo-mobile,.cluvo-mobile-portal).switch-row{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:16px 0;min-height:69px;cursor:pointer;font-size:.94rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .switch-row>span,:is(.cluvo-mobile,.cluvo-mobile-portal).switch-row>span{flex:1;min-width:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .switch-row b,:is(.cluvo-mobile,.cluvo-mobile-portal).switch-row b{display:block;font-size:.94rem;font-weight:600}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .switch-row small,:is(.cluvo-mobile,.cluvo-mobile-portal).switch-row small{display:block;margin-top:5px;font-size:.8rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .switch-row [data-slot=switch],:is(.cluvo-mobile,.cluvo-mobile-portal).switch-row [data-slot=switch]{width:43px!important;height:26px!important;background:#c9d3da}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .switch-row [data-slot=switch][data-state=checked],:is(.cluvo-mobile,.cluvo-mobile-portal).switch-row [data-slot=switch][data-state=checked]{background:#d74735}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .switch-row [data-slot=switch-thumb],:is(.cluvo-mobile,.cluvo-mobile-portal).switch-row [data-slot=switch-thumb]{height:21px!important;width:21px!important}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .switch-row [data-slot=switch-thumb][data-state=checked],:is(.cluvo-mobile,.cluvo-mobile-portal).switch-row [data-slot=switch-thumb][data-state=checked]{transform:translateX(18px)}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .switch-row [data-slot=switch-thumb][data-state=unchecked],:is(.cluvo-mobile,.cluvo-mobile-portal).switch-row [data-slot=switch-thumb][data-state=unchecked]{transform:translateX(2px)}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .detail-tags,:is(.cluvo-mobile,.cluvo-mobile-portal).detail-tags{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:8px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .detail-facts,:is(.cluvo-mobile,.cluvo-mobile-portal).detail-facts{display:grid;gap:16px;margin:13px 0 18px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .detail-facts>div,:is(.cluvo-mobile,.cluvo-mobile-portal).detail-facts>div{display:flex;gap:12px;align-items:flex-start;font-size:.94rem;color:#526873}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .detail-facts svg,:is(.cluvo-mobile,.cluvo-mobile-portal).detail-facts svg{width:20px;height:20px;margin-top:2px;color:#90a0ab}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .detail-heading,:is(.cluvo-mobile,.cluvo-mobile-portal).detail-heading{margin-top:14px;font-size:1.05rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .instruction-text,:is(.cluvo-mobile,.cluvo-mobile-portal).instruction-text,:is(.cluvo-mobile,.cluvo-mobile-portal) .policy-text,:is(.cluvo-mobile,.cluvo-mobile-portal).policy-text{white-space:pre-wrap;color:#4f6470;line-height:1.8;font-size:.94rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .policy-text,:is(.cluvo-mobile,.cluvo-mobile-portal).policy-text{padding:10px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .conditions,:is(.cluvo-mobile,.cluvo-mobile-portal).conditions{border:1px solid #dce5eb;border-radius:15px;background:#fff;padding:18px;margin:14px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .conditions h3,:is(.cluvo-mobile,.cluvo-mobile-portal).conditions h3{margin-bottom:12px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .conditions p,:is(.cluvo-mobile,.cluvo-mobile-portal).conditions p{display:flex;align-items:center;gap:10px;color:#6d808c;font-size:.875rem;line-height:1.65;margin:9px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .executor-list,:is(.cluvo-mobile,.cluvo-mobile-portal).executor-list{display:flex;flex-direction:column;gap:12px;margin:12px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .executor-option,:is(.cluvo-mobile,.cluvo-mobile-portal).executor-option{display:flex;align-items:center;gap:11px;padding:17px 13px;background:#fff;border:1px solid #dce5eb;border-radius:15px;cursor:pointer}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .executor-option.selected,:is(.cluvo-mobile,.cluvo-mobile-portal).executor-option.selected{border-color:#e6997f;background:#fff8f5;box-shadow:0 0 0 2px #f4c7b635}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .executor-option>span:nth-child(2),:is(.cluvo-mobile,.cluvo-mobile-portal).executor-option>span:nth-child(2){flex:1;min-width:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .executor-option b,:is(.cluvo-mobile,.cluvo-mobile-portal).executor-option b{display:block;font-size:.94rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .executor-option small,:is(.cluvo-mobile,.cluvo-mobile-portal).executor-option small{display:block;margin-top:5px;font-size:.8rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .form-summary,:is(.cluvo-mobile,.cluvo-mobile-portal).form-summary{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:0 0 13px;font-size:.8rem;color:#71838f}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .form-summary b,:is(.cluvo-mobile,.cluvo-mobile-portal).form-summary b{font-weight:550;color:#a15a44;text-align:right}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .success-state,:is(.cluvo-mobile,.cluvo-mobile-portal).success-state{display:flex;align-items:center;flex-direction:column;text-align:center;gap:18px;padding:28px 4px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .success-state>span,:is(.cluvo-mobile,.cluvo-mobile-portal).success-state>span{width:78px;height:78px;border-radius:50%;display:grid;place-items:center;background:#e4f2e9;color:#4c8b66}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .success-state h2,:is(.cluvo-mobile,.cluvo-mobile-portal).success-state h2{font-size:1.45rem;letter-spacing:-.5px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .success-state p,:is(.cluvo-mobile,.cluvo-mobile-portal).success-state p{color:#637986;line-height:1.7}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .success-summary,:is(.cluvo-mobile,.cluvo-mobile-portal).success-summary{background:#fff;border:1px solid #dde8ee;border-radius:17px;padding:19px;width:100%}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .success-summary b,:is(.cluvo-mobile,.cluvo-mobile-portal).success-summary b{font-size:1.02rem;text-transform:capitalize}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .success-summary p,:is(.cluvo-mobile,.cluvo-mobile-portal).success-summary p{font-size:.875rem;margin-top:8px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .checklist,:is(.cluvo-mobile,.cluvo-mobile-portal).checklist{display:flex;flex-direction:column;gap:14px;margin:15px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .checklist>div,:is(.cluvo-mobile,.cluvo-mobile-portal).checklist>div{display:flex;align-items:flex-start;gap:11px;background:#fff;border:1px solid #e0e7ec;border-radius:12px;padding:15px;font-size:.875rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .checklist svg,:is(.cluvo-mobile,.cluvo-mobile-portal).checklist svg{height:20px;width:20px;color:#72967d;margin-top:2px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .simple-card,:is(.cluvo-mobile,.cluvo-mobile-portal).simple-card,:is(.cluvo-mobile,.cluvo-mobile-portal) .form-card,:is(.cluvo-mobile,.cluvo-mobile-portal).form-card,:is(.cluvo-mobile,.cluvo-mobile-portal) .goal-card,:is(.cluvo-mobile,.cluvo-mobile-portal).goal-card,:is(.cluvo-mobile,.cluvo-mobile-portal) .qualification-card,:is(.cluvo-mobile,.cluvo-mobile-portal).qualification-card,:is(.cluvo-mobile,.cluvo-mobile-portal) .course-card,:is(.cluvo-mobile,.cluvo-mobile-portal).course-card,:is(.cluvo-mobile,.cluvo-mobile-portal) .opportunity-card,:is(.cluvo-mobile,.cluvo-mobile-portal).opportunity-card,:is(.cluvo-mobile,.cluvo-mobile-portal) .profile-card,:is(.cluvo-mobile,.cluvo-mobile-portal).profile-card,:is(.cluvo-mobile,.cluvo-mobile-portal) .contact-card,:is(.cluvo-mobile,.cluvo-mobile-portal).contact-card,:is(.cluvo-mobile,.cluvo-mobile-portal) .document-card,:is(.cluvo-mobile,.cluvo-mobile-portal).document-card,:is(.cluvo-mobile,.cluvo-mobile-portal) .history-entry,:is(.cluvo-mobile,.cluvo-mobile-portal).history-entry,:is(.cluvo-mobile,.cluvo-mobile-portal) .approval-card,:is(.cluvo-mobile,.cluvo-mobile-portal).approval-card,:is(.cluvo-mobile,.cluvo-mobile-portal) .proposal-card,:is(.cluvo-mobile,.cluvo-mobile-portal).proposal-card,:is(.cluvo-mobile,.cluvo-mobile-portal) .team-advice,:is(.cluvo-mobile,.cluvo-mobile-portal).team-advice,:is(.cluvo-mobile,.cluvo-mobile-portal) .work-card,:is(.cluvo-mobile,.cluvo-mobile-portal).work-card,:is(.cluvo-mobile,.cluvo-mobile-portal) .comment,:is(.cluvo-mobile,.cluvo-mobile-portal).comment,:is(.cluvo-mobile,.cluvo-mobile-portal) .money-entry,:is(.cluvo-mobile,.cluvo-mobile-portal).money-entry{background:#fff;border:1px solid #e1e8ed;border-radius:18px;padding:20px 17px;margin:14px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .simple-card p,:is(.cluvo-mobile,.cluvo-mobile-portal).simple-card p{font-size:.94rem;color:#6c808d;line-height:1.75;margin:8px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .simple-card h3,:is(.cluvo-mobile,.cluvo-mobile-portal).simple-card h3{margin-bottom:9px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .summary-line,:is(.cluvo-mobile,.cluvo-mobile-portal).summary-line{display:flex;justify-content:space-between;gap:18px;font-size:.875rem;padding:12px 0;border-bottom:1px solid #eaf0f4;align-items:flex-start}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .summary-line:last-child,:is(.cluvo-mobile,.cluvo-mobile-portal).summary-line:last-child{border:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .summary-line>span,:is(.cluvo-mobile,.cluvo-mobile-portal).summary-line>span{color:#687d8b;max-width:48%}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .summary-line b,:is(.cluvo-mobile,.cluvo-mobile-portal).summary-line b{font-weight:600;color:#465e6e;text-align:right;max-width:54%;overflow-wrap:anywhere}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .profile-card,:is(.cluvo-mobile,.cluvo-mobile-portal).profile-card,:is(.cluvo-mobile,.cluvo-mobile-portal) .profile-summary,:is(.cluvo-mobile,.cluvo-mobile-portal).profile-summary,:is(.cluvo-mobile,.cluvo-mobile-portal) .contact-card,:is(.cluvo-mobile,.cluvo-mobile-portal).contact-card,:is(.cluvo-mobile,.cluvo-mobile-portal) .qualification-card,:is(.cluvo-mobile,.cluvo-mobile-portal).qualification-card,:is(.cluvo-mobile,.cluvo-mobile-portal) .course-card,:is(.cluvo-mobile,.cluvo-mobile-portal).course-card,:is(.cluvo-mobile,.cluvo-mobile-portal) .history-entry,:is(.cluvo-mobile,.cluvo-mobile-portal).history-entry,:is(.cluvo-mobile,.cluvo-mobile-portal) .document-card,:is(.cluvo-mobile,.cluvo-mobile-portal).document-card,:is(.cluvo-mobile,.cluvo-mobile-portal) .money-entry,:is(.cluvo-mobile,.cluvo-mobile-portal).money-entry,:is(.cluvo-mobile,.cluvo-mobile-portal) .goal-card,:is(.cluvo-mobile,.cluvo-mobile-portal).goal-card{display:flex;align-items:center;gap:14px;width:100%;text-align:left}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .profile-card>div,:is(.cluvo-mobile,.cluvo-mobile-portal).profile-card>div,:is(.cluvo-mobile,.cluvo-mobile-portal) .contact-card>div,:is(.cluvo-mobile,.cluvo-mobile-portal).contact-card>div,:is(.cluvo-mobile,.cluvo-mobile-portal) .history-entry>span,:is(.cluvo-mobile,.cluvo-mobile-portal).history-entry>span,:is(.cluvo-mobile,.cluvo-mobile-portal) .document-card>span,:is(.cluvo-mobile,.cluvo-mobile-portal).document-card>span,:is(.cluvo-mobile,.cluvo-mobile-portal) .money-entry>span,:is(.cluvo-mobile,.cluvo-mobile-portal).money-entry>span,:is(.cluvo-mobile,.cluvo-mobile-portal) .goal-card>div,:is(.cluvo-mobile,.cluvo-mobile-portal).goal-card>div{flex:1;min-width:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .profile-card h2,:is(.cluvo-mobile,.cluvo-mobile-portal).profile-card h2{font-size:1.1rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .profile-card p,:is(.cluvo-mobile,.cluvo-mobile-portal).profile-card p,:is(.cluvo-mobile,.cluvo-mobile-portal) .contact-card p,:is(.cluvo-mobile,.cluvo-mobile-portal).contact-card p,:is(.cluvo-mobile,.cluvo-mobile-portal) .qualification-card p,:is(.cluvo-mobile,.cluvo-mobile-portal).qualification-card p,:is(.cluvo-mobile,.cluvo-mobile-portal) .goal-card p,:is(.cluvo-mobile,.cluvo-mobile-portal).goal-card p{font-size:.875rem;color:#738793;margin:5px 0 10px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .profile-card>svg,:is(.cluvo-mobile,.cluvo-mobile-portal).profile-card>svg,:is(.cluvo-mobile,.cluvo-mobile-portal) .document-card>svg:last-child,:is(.cluvo-mobile,.cluvo-mobile-portal).document-card>svg:last-child,:is(.cluvo-mobile,.cluvo-mobile-portal) .history-entry>svg:last-child,:is(.cluvo-mobile,.cluvo-mobile-portal).history-entry>svg:last-child{color:#95a6b0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .more-section .section-heading h2,:is(.cluvo-mobile,.cluvo-mobile-portal).more-section .section-heading h2{font-size:.75rem;font-weight:600;letter-spacing:1.2px;color:#7b8a94}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .more-menu,:is(.cluvo-mobile,.cluvo-mobile-portal).more-menu,:is(.cluvo-mobile,.cluvo-mobile-portal) .organize-menu,:is(.cluvo-mobile,.cluvo-mobile-portal).organize-menu,:is(.cluvo-mobile,.cluvo-mobile-portal) .household-members,:is(.cluvo-mobile,.cluvo-mobile-portal).household-members,:is(.cluvo-mobile,.cluvo-mobile-portal) .settings-list,:is(.cluvo-mobile,.cluvo-mobile-portal).settings-list,:is(.cluvo-mobile,.cluvo-mobile-portal) .notification-list,:is(.cluvo-mobile,.cluvo-mobile-portal).notification-list,:is(.cluvo-mobile,.cluvo-mobile-portal) .faq,:is(.cluvo-mobile,.cluvo-mobile-portal).faq{background:#fff;border:1px solid #dfe7ed;border-radius:18px;overflow:hidden}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .more-menu button,:is(.cluvo-mobile,.cluvo-mobile-portal).more-menu button,:is(.cluvo-mobile,.cluvo-mobile-portal) .organize-menu>button,:is(.cluvo-mobile,.cluvo-mobile-portal).organize-menu>button{display:flex;align-items:center;gap:14px;min-height:77px;padding:18px 16px;width:100%;text-align:left;border-bottom:1px solid #edf2f6}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .more-menu button:last-child,:is(.cluvo-mobile,.cluvo-mobile-portal).more-menu button:last-child,:is(.cluvo-mobile,.cluvo-mobile-portal) .organize-menu>button:last-child,:is(.cluvo-mobile,.cluvo-mobile-portal).organize-menu>button:last-child{border:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .more-menu button>svg:first-child,:is(.cluvo-mobile,.cluvo-mobile-portal).more-menu button>svg:first-child{color:#748997}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .more-menu button>span,:is(.cluvo-mobile,.cluvo-mobile-portal).more-menu button>span,:is(.cluvo-mobile,.cluvo-mobile-portal) .organize-menu>button>div,:is(.cluvo-mobile,.cluvo-mobile-portal).organize-menu>button>div{flex:1;min-width:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .more-menu b,:is(.cluvo-mobile,.cluvo-mobile-portal).more-menu b,:is(.cluvo-mobile,.cluvo-mobile-portal) .organize-menu b,:is(.cluvo-mobile,.cluvo-mobile-portal).organize-menu b{display:block;font-size:.94rem;font-weight:600}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .more-menu small,:is(.cluvo-mobile,.cluvo-mobile-portal).more-menu small,:is(.cluvo-mobile,.cluvo-mobile-portal) .organize-menu small,:is(.cluvo-mobile,.cluvo-mobile-portal).organize-menu small{display:block;margin-top:3px;font-size:.8rem;color:#728490}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .more-menu button>svg:last-child,:is(.cluvo-mobile,.cluvo-mobile-portal).more-menu button>svg:last-child,:is(.cluvo-mobile,.cluvo-mobile-portal) .organize-menu>button>svg,:is(.cluvo-mobile,.cluvo-mobile-portal).organize-menu>button>svg{color:#96a8b2}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .prototype-note,:is(.cluvo-mobile,.cluvo-mobile-portal).prototype-note{text-align:center;font-size:.8rem;margin:35px 0 0;color:#81919d}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .prototype-note p,:is(.cluvo-mobile,.cluvo-mobile-portal).prototype-note p{margin:10px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .prototype-note>.text-link,:is(.cluvo-mobile,.cluvo-mobile-portal).prototype-note>.text-link{justify-content:center}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .household-members,:is(.cluvo-mobile,.cluvo-mobile-portal).household-members{padding:0 17px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .household-members>div,:is(.cluvo-mobile,.cluvo-mobile-portal).household-members>div{display:flex;gap:13px;align-items:center;padding:16px 0;border-bottom:1px solid #edf2f5}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .household-members>div:last-child,:is(.cluvo-mobile,.cluvo-mobile-portal).household-members>div:last-child{border:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .household-members>div>span:nth-child(2),:is(.cluvo-mobile,.cluvo-mobile-portal).household-members>div>span:nth-child(2){flex:1}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .household-members b,:is(.cluvo-mobile,.cluvo-mobile-portal).household-members b,:is(.cluvo-mobile,.cluvo-mobile-portal) .history-entry b,:is(.cluvo-mobile,.cluvo-mobile-portal).history-entry b,:is(.cluvo-mobile,.cluvo-mobile-portal) .money-entry b,:is(.cluvo-mobile,.cluvo-mobile-portal).money-entry b{display:block;font-size:.94rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .household-members small,:is(.cluvo-mobile,.cluvo-mobile-portal).household-members small,:is(.cluvo-mobile,.cluvo-mobile-portal) .history-entry small,:is(.cluvo-mobile,.cluvo-mobile-portal).history-entry small,:is(.cluvo-mobile,.cluvo-mobile-portal) .money-entry small,:is(.cluvo-mobile,.cluvo-mobile-portal).money-entry small{display:block;margin-top:3px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .household-members svg,:is(.cluvo-mobile,.cluvo-mobile-portal).household-members svg,:is(.cluvo-mobile,.cluvo-mobile-portal) .history-entry>svg:first-child,:is(.cluvo-mobile,.cluvo-mobile-portal).history-entry>svg:first-child,:is(.cluvo-mobile,.cluvo-mobile-portal) .qualification-card svg,:is(.cluvo-mobile,.cluvo-mobile-portal).qualification-card svg{color:#709d83}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .profile-summary,:is(.cluvo-mobile,.cluvo-mobile-portal).profile-summary{margin:24px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .profile-summary p,:is(.cluvo-mobile,.cluvo-mobile-portal).profile-summary p{font-size:.85rem;overflow-wrap:anywhere;color:#738794;margin:5px 0 8px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .wizard-progress,:is(.cluvo-mobile,.cluvo-mobile-portal).wizard-progress{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:26px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .wizard-progress>button,:is(.cluvo-mobile,.cluvo-mobile-portal).wizard-progress>button{display:flex;flex-direction:column;align-items:center;gap:8px;min-height:60px;color:#8496a3}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .wizard-progress>button>span,:is(.cluvo-mobile,.cluvo-mobile-portal).wizard-progress>button>span{display:grid;place-items:center;min-width:29px;height:29px;background:#e8eef3;border-radius:50%;font-size:.8rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .wizard-progress>button.active>span,:is(.cluvo-mobile,.cluvo-mobile-portal).wizard-progress>button.active>span{background:#bf5139;color:#fff}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .wizard-progress>button.active small,:is(.cluvo-mobile,.cluvo-mobile-portal).wizard-progress>button.active small{color:#9e604c;font-weight:600}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .wizard-progress>button.done>span,:is(.cluvo-mobile,.cluvo-mobile-portal).wizard-progress>button.done>span{background:#e4f2e9;color:#659375}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .wizard-progress small,:is(.cluvo-mobile,.cluvo-mobile-portal).wizard-progress small{font-size:.75rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .form-card h2,:is(.cluvo-mobile,.cluvo-mobile-portal).form-card h2{margin-bottom:22px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .form-card h3,:is(.cluvo-mobile,.cluvo-mobile-portal).form-card h3{margin:24px 0 16px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .radio-card,:is(.cluvo-mobile,.cluvo-mobile-portal).radio-card{display:flex;align-items:flex-start;gap:12px;border:1px solid #e1e8ed;background:#f9fbfc;padding:18px 14px;border-radius:15px;margin:3px 0 11px;cursor:pointer}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .radio-card>span,:is(.cluvo-mobile,.cluvo-mobile-portal).radio-card>span{flex:1}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .radio-card b,:is(.cluvo-mobile,.cluvo-mobile-portal).radio-card b{display:block;font-size:.94rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .radio-card small,:is(.cluvo-mobile,.cluvo-mobile-portal).radio-card small{display:block;margin-top:5px;font-size:.8rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .radio-card [data-slot=radio-group-item],:is(.cluvo-mobile,.cluvo-mobile-portal).radio-card [data-slot=radio-group-item]{margin-top:2px;width:20px;height:20px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .radio-card:has([data-state=checked]),:is(.cluvo-mobile,.cluvo-mobile-portal).radio-card:has([data-state=checked]){border-color:#e8ab97;background:#fff8f4}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .wizard-actions,:is(.cluvo-mobile,.cluvo-mobile-portal).wizard-actions{display:flex;gap:13px;margin:20px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .wizard-actions>*,:is(.cluvo-mobile,.cluvo-mobile-portal).wizard-actions>*{flex:1}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .preference-chips,:is(.cluvo-mobile,.cluvo-mobile-portal).preference-chips{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .preference-chips button,:is(.cluvo-mobile,.cluvo-mobile-portal).preference-chips button{display:flex;align-items:center;gap:6px;min-height:44px;padding:10px 13px;border:1px solid #dbe5eb;border-radius:12px;font-size:.9rem;background:#f8fafb;color:#708594}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .preference-chips button.selected,:is(.cluvo-mobile,.cluvo-mobile-portal).preference-chips button.selected{background:#fff0e8;border-color:#e6ae97;color:#a95a42}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .document-card,:is(.cluvo-mobile,.cluvo-mobile-portal).document-card{min-height:108px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .document-card small,:is(.cluvo-mobile,.cluvo-mobile-portal).document-card small{display:block;margin:6px 0 10px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .document-card>svg:first-child,:is(.cluvo-mobile,.cluvo-mobile-portal).document-card>svg:first-child{color:#7f97a7}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .course-card,:is(.cluvo-mobile,.cluvo-mobile-portal).course-card{align-items:flex-start;gap:17px;padding:22px 18px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .course-card h3,:is(.cluvo-mobile,.cluvo-mobile-portal).course-card h3{margin:9px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .course-card p,:is(.cluvo-mobile,.cluvo-mobile-portal).course-card p{color:#6f8493;font-size:.875rem;margin-bottom:17px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .opportunity-card,:is(.cluvo-mobile,.cluvo-mobile-portal).opportunity-card{display:block;width:100%;text-align:left;position:relative;padding:23px 20px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .opportunity-icon,:is(.cluvo-mobile,.cluvo-mobile-portal).opportunity-icon{display:grid;place-items:center;width:48px;height:48px;border-radius:15px;color:#ad7a63;background:#fdf0e8;margin-bottom:18px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .opportunity-card h3,:is(.cluvo-mobile,.cluvo-mobile-portal).opportunity-card h3{font-size:1.14rem;margin:11px 0 8px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .opportunity-card p,:is(.cluvo-mobile,.cluvo-mobile-portal).opportunity-card p{font-size:.875rem;color:#738796}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .opportunity-card>svg,:is(.cluvo-mobile,.cluvo-mobile-portal).opportunity-card>svg{position:absolute;right:20px;bottom:29px;color:#96a9b7}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .team-cover,:is(.cluvo-mobile,.cluvo-mobile-portal).team-cover{padding:21px 20px;background:#eceff7;border:1px solid #dfe4ef;border-radius:20px;margin:23px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .team-cover>div:first-child,:is(.cluvo-mobile,.cluvo-mobile-portal).team-cover>div:first-child{display:flex;align-items:center;gap:14px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .team-badge,:is(.cluvo-mobile,.cluvo-mobile-portal).team-badge{display:grid;place-items:center;width:49px;height:52px;border-radius:15px;background:#fff;color:#8997b0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .team-cover h2,:is(.cluvo-mobile,.cluvo-mobile-portal).team-cover h2{font-size:1.35rem;color:#455675}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .team-cover p,:is(.cluvo-mobile,.cluvo-mobile-portal).team-cover p{font-size:.875rem;color:#6c7c99;margin-top:3px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .team-cover-foot,:is(.cluvo-mobile,.cluvo-mobile-portal).team-cover-foot{display:flex;gap:10px;align-items:center;justify-content:space-between;padding-top:18px;margin-top:18px;border-top:1px solid #dce2ef;font-size:.8rem;color:#6c7e99}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .team-cover-foot>span:first-child,:is(.cluvo-mobile,.cluvo-mobile-portal).team-cover-foot>span:first-child{display:flex;gap:6px;align-items:center}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .goal-card>svg,:is(.cluvo-mobile,.cluvo-mobile-portal).goal-card>svg{color:#8b84ac}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .progress-members article,:is(.cluvo-mobile,.cluvo-mobile-portal).progress-members article{border:1px solid #e0e8ee;border-radius:18px;background:#fff;padding:19px 17px;margin:16px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .member-row,:is(.cluvo-mobile,.cluvo-mobile-portal).member-row{display:flex;align-items:center;gap:11px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .member-row>div,:is(.cluvo-mobile,.cluvo-mobile-portal).member-row>div{flex:1}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .member-row b,:is(.cluvo-mobile,.cluvo-mobile-portal).member-row b{display:block;font-size:.94rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .member-row span,:is(.cluvo-mobile,.cluvo-mobile-portal).member-row span{display:block;font-size:.8rem;color:#708492;margin-top:4px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .member-row strong,:is(.cluvo-mobile,.cluvo-mobile-portal).member-row strong{font-size:1.4rem;color:#657790;font-weight:600}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .member-row strong small,:is(.cluvo-mobile,.cluvo-mobile-portal).member-row strong small{font-size:.85rem;color:#99a8b7}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .progress-members [data-slot=progress],:is(.cluvo-mobile,.cluvo-mobile-portal).progress-members [data-slot=progress]{height:6px;margin-top:16px;background:#e8eef4}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .progress-members [data-slot=progress-indicator],:is(.cluvo-mobile,.cluvo-mobile-portal).progress-members [data-slot=progress-indicator]{background:#a490bb}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .member-breakdown,:is(.cluvo-mobile,.cluvo-mobile-portal).member-breakdown{display:flex;gap:10px;justify-content:space-between;margin-top:12px;color:#708492;font-size:.78rem;flex-wrap:wrap}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .team-summary,:is(.cluvo-mobile,.cluvo-mobile-portal).team-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .team-summary>div,:is(.cluvo-mobile,.cluvo-mobile-portal).team-summary>div{display:flex;align-items:center;flex-direction:column;gap:7px;background:#fff;border:1px solid #e0e8ee;border-radius:16px;padding:18px 8px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .team-summary strong,:is(.cluvo-mobile,.cluvo-mobile-portal).team-summary strong{font-size:1.6rem;font-weight:650;color:#65768e}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .team-summary span,:is(.cluvo-mobile,.cluvo-mobile-portal).team-summary span{font-size:.78rem;color:#6e8595;text-align:center}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .organize-menu,:is(.cluvo-mobile,.cluvo-mobile-portal).organize-menu{margin:22px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .organize-menu>button>span,:is(.cluvo-mobile,.cluvo-mobile-portal).organize-menu>button>span{display:grid;place-items:center;height:42px;width:42px;border-radius:13px;background:#f1eef7;color:#8c7caa}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .allocation-list>div,:is(.cluvo-mobile,.cluvo-mobile-portal).allocation-list>div{display:flex;gap:15px;align-items:center;justify-content:space-between;border:1px solid #e1e9ef;background:#fff;padding:19px 16px;border-radius:17px;margin:13px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .allocation-list b,:is(.cluvo-mobile,.cluvo-mobile-portal).allocation-list b{display:block;font-size:.94rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .allocation-list small,:is(.cluvo-mobile,.cluvo-mobile-portal).allocation-list small{display:block;font-size:.8rem;margin-top:5px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .allocation-list span,:is(.cluvo-mobile,.cluvo-mobile-portal).allocation-list span{display:block;font-size:.85rem;color:#92769c;margin-top:8px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .handover-banner,:is(.cluvo-mobile,.cluvo-mobile-portal).handover-banner{display:flex;align-items:flex-start;gap:13px;background:#fff5e8;border:1px solid #eadabf;padding:19px;border-radius:18px;margin:20px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .handover-banner p,:is(.cluvo-mobile,.cluvo-mobile-portal).handover-banner p{font-size:.875rem;color:#8a7250;margin:10px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .proposal-card h3,:is(.cluvo-mobile,.cluvo-mobile-portal).proposal-card h3,:is(.cluvo-mobile,.cluvo-mobile-portal) .team-advice h3,:is(.cluvo-mobile,.cluvo-mobile-portal).team-advice h3{margin:10px 0 5px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .proposal-card>p,:is(.cluvo-mobile,.cluvo-mobile-portal).proposal-card>p{font-size:.875rem;color:#708594}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .proposal-card ul,:is(.cluvo-mobile,.cluvo-mobile-portal).proposal-card ul,:is(.cluvo-mobile,.cluvo-mobile-portal) .team-advice ul,:is(.cluvo-mobile,.cluvo-mobile-portal).team-advice ul{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:9px;color:#627c68;font-size:.85rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .proposal-card li,:is(.cluvo-mobile,.cluvo-mobile-portal).proposal-card li,:is(.cluvo-mobile,.cluvo-mobile-portal) .team-advice li,:is(.cluvo-mobile,.cluvo-mobile-portal).team-advice li{display:flex;gap:7px;align-items:flex-start;line-height:1.6}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .proposal-card li svg,:is(.cluvo-mobile,.cluvo-mobile-portal).proposal-card li svg,:is(.cluvo-mobile,.cluvo-mobile-portal) .team-advice li svg,:is(.cluvo-mobile,.cluvo-mobile-portal).team-advice li svg{margin-top:3px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .followup-stages,:is(.cluvo-mobile,.cluvo-mobile-portal).followup-stages{display:flex;flex-direction:column;gap:16px;margin:19px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .followup-stages>div,:is(.cluvo-mobile,.cluvo-mobile-portal).followup-stages>div{position:relative;padding-left:44px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .followup-stages>div>span,:is(.cluvo-mobile,.cluvo-mobile-portal).followup-stages>div>span{position:absolute;left:0;top:2px;width:30px;height:30px;display:grid;place-items:center;background:#e8eff5;color:#7790a2;border-radius:9px;font-size:.8rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .followup-stages b,:is(.cluvo-mobile,.cluvo-mobile-portal).followup-stages b{font-size:.94rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .followup-stages p,:is(.cluvo-mobile,.cluvo-mobile-portal).followup-stages p{color:#758a99;font-size:.875rem;margin-top:4px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .confirmation-card,:is(.cluvo-mobile,.cluvo-mobile-portal).confirmation-card{display:flex;gap:14px;align-items:flex-start;border:1px solid #e0e9ef;border-radius:18px;background:#fff;padding:20px 17px;margin:15px 0;cursor:pointer}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .confirmation-card>div,:is(.cluvo-mobile,.cluvo-mobile-portal).confirmation-card>div{flex:1;min-width:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .confirmation-card>[data-slot=checkbox],:is(.cluvo-mobile,.cluvo-mobile-portal).confirmation-card>[data-slot=checkbox]{width:21px;height:21px;margin-top:2px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .confirmation-card b,:is(.cluvo-mobile,.cluvo-mobile-portal).confirmation-card b{font-size:.85rem;color:#647e90}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .confirmation-card h3,:is(.cluvo-mobile,.cluvo-mobile-portal).confirmation-card h3{margin:8px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .confirmation-card p,:is(.cluvo-mobile,.cluvo-mobile-portal).confirmation-card p{font-size:.875rem;color:#708796;margin:8px 0 12px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .confirmation-card .tag,:is(.cluvo-mobile,.cluvo-mobile-portal).confirmation-card .tag{margin-right:5px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .sticky-action,:is(.cluvo-mobile,.cluvo-mobile-portal).sticky-action{display:flex;gap:10px;position:sticky;bottom:15px;padding:13px;background:#f4f7f9e6;border:1px solid #e1e9ef;border-radius:17px;backdrop-filter:blur(14px);margin-top:22px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .sticky-action>*,:is(.cluvo-mobile,.cluvo-mobile-portal).sticky-action>*{flex:1}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .approval-card h3,:is(.cluvo-mobile,.cluvo-mobile-portal).approval-card h3{margin:12px 0 7px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .approval-card>p,:is(.cluvo-mobile,.cluvo-mobile-portal).approval-card>p{font-size:.875rem;color:#708594}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .approval-card>b,:is(.cluvo-mobile,.cluvo-mobile-portal).approval-card>b{display:block;font-size:.94rem;margin:14px 0;color:#92715f}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .plan-task,:is(.cluvo-mobile,.cluvo-mobile-portal).plan-task{margin:14px 0 24px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .plan-task .task-card,:is(.cluvo-mobile,.cluvo-mobile-portal).plan-task .task-card{margin-bottom:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .plan-team-line,:is(.cluvo-mobile,.cluvo-mobile-portal).plan-team-line{display:flex;align-items:center;gap:7px;padding:10px 13px;background:#efeefa;color:#84779b;font-size:.8rem;border-radius:0 0 12px 12px;margin:-1px 11px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .cluster-positions article,:is(.cluvo-mobile,.cluvo-mobile-portal).cluster-positions article{border:1px solid #e0e9ef;background:#fff;border-radius:17px;padding:18px 15px;margin:13px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .cluster-positions b,:is(.cluvo-mobile,.cluvo-mobile-portal).cluster-positions b{font-size:.94rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .cluster-positions p,:is(.cluvo-mobile,.cluvo-mobile-portal).cluster-positions p{font-size:.85rem;color:#6e8596;margin:7px 0 15px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .cluster-positions article>div,:is(.cluvo-mobile,.cluvo-mobile-portal).cluster-positions article>div{display:flex;flex-wrap:wrap;gap:12px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .position-choice,:is(.cluvo-mobile,.cluvo-mobile-portal).position-choice{display:flex;align-items:center;gap:7px;font-size:.875rem;border:1px solid #dce7ef;border-radius:9px;padding:10px;cursor:pointer}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .team-advice.chosen,:is(.cluvo-mobile,.cluvo-mobile-portal).team-advice.chosen{background:#f5faf5;border-color:#d2e3d3}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .notification-list>button,:is(.cluvo-mobile,.cluvo-mobile-portal).notification-list>button{display:flex;gap:12px;align-items:flex-start;width:100%;padding:21px 16px;border-bottom:1px solid #ecf2f5;text-align:left}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .notification-list>button:last-child,:is(.cluvo-mobile,.cluvo-mobile-portal).notification-list>button:last-child{border:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .notification-list>button.read,:is(.cluvo-mobile,.cluvo-mobile-portal).notification-list>button.read{background:#fafbfc}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .notification-symbol,:is(.cluvo-mobile,.cluvo-mobile-portal).notification-symbol{display:grid;place-items:center;height:39px;width:39px;background:#fff0e8;color:#b8846e;border-radius:12px;flex-shrink:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .notification-list>button>span:nth-child(2),:is(.cluvo-mobile,.cluvo-mobile-portal).notification-list>button>span:nth-child(2){flex:1;min-width:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .notification-list b,:is(.cluvo-mobile,.cluvo-mobile-portal).notification-list b{display:block;font-size:.94rem;margin:8px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .notification-list p,:is(.cluvo-mobile,.cluvo-mobile-portal).notification-list p{font-size:.875rem;color:#6c8596;line-height:1.65}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .notification-list i,:is(.cluvo-mobile,.cluvo-mobile-portal).notification-list i{height:6px;width:6px;border-radius:50%;background:#d77554;margin-top:18px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .notification-list>button>svg,:is(.cluvo-mobile,.cluvo-mobile-portal).notification-list>button>svg{color:#97aab6;margin-top:13px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .chat-heading,:is(.cluvo-mobile,.cluvo-mobile-portal).chat-heading{display:flex;gap:13px;align-items:center;padding:19px;border:1px solid #dfe9f0;background:#fff;border-radius:18px;margin:20px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .chat-heading p,:is(.cluvo-mobile,.cluvo-mobile-portal).chat-heading p{color:#708594;font-size:.8rem;margin-top:3px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .chat-messages,:is(.cluvo-mobile,.cluvo-mobile-portal).chat-messages{min-height:230px;padding:16px 0 24px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .chat-messages>article,:is(.cluvo-mobile,.cluvo-mobile-portal).chat-messages>article{display:flex;gap:10px;margin:18px 0;align-items:flex-start}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .chat-messages>article>div,:is(.cluvo-mobile,.cluvo-mobile-portal).chat-messages>article>div{background:#fff;border:1px solid #e0e9f0;border-radius:3px 17px 17px 17px;padding:16px;flex:1;min-width:0;max-width:85%}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .chat-messages>article.mine>div,:is(.cluvo-mobile,.cluvo-mobile-portal).chat-messages>article.mine>div{background:#fff2e9;border-color:#f1d5c3;border-radius:17px 3px 17px 17px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .chat-messages>article.mine,:is(.cluvo-mobile,.cluvo-mobile-portal).chat-messages>article.mine{flex-direction:row-reverse}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .chat-messages p,:is(.cluvo-mobile,.cluvo-mobile-portal).chat-messages p{font-size:.94rem;color:#586f7f;line-height:1.7;margin-top:9px;overflow-wrap:anywhere}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .chat-author,:is(.cluvo-mobile,.cluvo-mobile-portal).chat-author{display:flex;align-items:center;justify-content:space-between;gap:12px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .chat-author b,:is(.cluvo-mobile,.cluvo-mobile-portal).chat-author b{font-size:.85rem;color:#5e7b90}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .chat-author small,:is(.cluvo-mobile,.cluvo-mobile-portal).chat-author small{font-size:.75rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .chat-composer,:is(.cluvo-mobile,.cluvo-mobile-portal).chat-composer{display:flex;gap:10px;align-items:flex-end;background:#fff;border:1px solid #dbe6ee;padding:10px;border-radius:17px;position:sticky;bottom:12px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .chat-composer textarea,:is(.cluvo-mobile,.cluvo-mobile-portal).chat-composer textarea{border:0;box-shadow:none;min-height:50px;height:60px;flex:1;resize:none;padding:9px;font-size:.94rem!important}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .chat-composer>button,:is(.cluvo-mobile,.cluvo-mobile-portal).chat-composer>button{display:grid;place-items:center;height:46px;width:46px;border-radius:12px;background:#c95136;color:#fff;flex-shrink:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .chat-empty,:is(.cluvo-mobile,.cluvo-mobile-portal).chat-empty{text-align:center;color:#758b9a;padding:38px 10px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .chat-empty svg,:is(.cluvo-mobile,.cluvo-mobile-portal).chat-empty svg{margin:0 auto 20px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .chat-empty p,:is(.cluvo-mobile,.cluvo-mobile-portal).chat-empty p{font-size:.875rem;margin-top:10px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .settings-list,:is(.cluvo-mobile,.cluvo-mobile-portal).settings-list{padding:0 18px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .settings-list .switch-row,:is(.cluvo-mobile,.cluvo-mobile-portal).settings-list .switch-row{border-bottom:1px solid #edf2f5}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .settings-list .switch-row:last-child,:is(.cluvo-mobile,.cluvo-mobile-portal).settings-list .switch-row:last-child{border:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .demo-roles,:is(.cluvo-mobile,.cluvo-mobile-portal).demo-roles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .demo-roles>button,:is(.cluvo-mobile,.cluvo-mobile-portal).demo-roles>button{display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;padding:14px;background:#fff;border:1px solid #dce7ef;border-radius:13px;font-size:.875rem;min-height:54px;color:#6b8497}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .demo-roles>button.selected,:is(.cluvo-mobile,.cluvo-mobile-portal).demo-roles>button.selected{background:#fff1e8;border-color:#efbea4;color:#a86445}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .faq,:is(.cluvo-mobile,.cluvo-mobile-portal).faq{margin:26px 0;padding:2px 17px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .faq [data-slot=accordion-trigger],:is(.cluvo-mobile,.cluvo-mobile-portal).faq [data-slot=accordion-trigger]{font-size:.94rem;line-height:1.65;padding:19px 0;text-align:left;font-weight:600}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .faq [data-slot=accordion-content],:is(.cluvo-mobile,.cluvo-mobile-portal).faq [data-slot=accordion-content]{font-size:.875rem;line-height:1.8;color:#718a9b}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .install-card,:is(.cluvo-mobile,.cluvo-mobile-portal).install-card{display:flex;align-items:center;flex-direction:column;text-align:center;background:#fff;border:1px solid #e0e9ef;border-radius:23px;padding:34px 25px;margin:23px 0;gap:20px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .install-icon,:is(.cluvo-mobile,.cluvo-mobile-portal).install-icon{display:grid;place-items:center;width:86px;height:86px;border-radius:24px;background:#141b20;overflow:hidden}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .install-icon img,:is(.cluvo-mobile,.cluvo-mobile-portal).install-icon img{width:100%;height:100%;object-fit:contain}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .install-card h2,:is(.cluvo-mobile,.cluvo-mobile-portal).install-card h2{font-size:1.45rem;letter-spacing:-.6px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .install-card p,:is(.cluvo-mobile,.cluvo-mobile-portal).install-card p{font-size:.94rem;line-height:1.8;color:#6e8595}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .install-steps,:is(.cluvo-mobile,.cluvo-mobile-portal).install-steps{list-style:decimal;margin:20px 0;padding:18px 22px 18px 37px;border:1px solid #e1e9ef;background:#fff;border-radius:18px;font-size:.94rem;color:#6e8a9d}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .install-steps li,:is(.cluvo-mobile,.cluvo-mobile-portal).install-steps li{padding:8px 0 8px 5px;line-height:1.7}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .report-stats,:is(.cluvo-mobile,.cluvo-mobile-portal).report-stats{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:24px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .report-stats>div,:is(.cluvo-mobile,.cluvo-mobile-portal).report-stats>div{display:flex;flex-direction:column;gap:8px;padding:23px 17px;border:1px solid #e0e9ef;border-radius:18px;background:#fff}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .report-stats>div:last-child,:is(.cluvo-mobile,.cluvo-mobile-portal).report-stats>div:last-child{grid-column:span 2}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .report-stats strong,:is(.cluvo-mobile,.cluvo-mobile-portal).report-stats strong{font-size:1.6rem;font-weight:600;color:#6b7f9a}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .report-stats span,:is(.cluvo-mobile,.cluvo-mobile-portal).report-stats span{color:#708594;font-size:.8rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .report-households article,:is(.cluvo-mobile,.cluvo-mobile-portal).report-households article{padding:19px 17px;background:#fff;border:1px solid #e0e9ef;border-radius:17px;margin:14px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .report-households article>div:first-child,:is(.cluvo-mobile,.cluvo-mobile-portal).report-households article>div:first-child{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:.94rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .report-households [data-slot=progress],:is(.cluvo-mobile,.cluvo-mobile-portal).report-households [data-slot=progress]{height:5px;margin-top:17px;background:#edf2f6}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .report-households [data-slot=progress-indicator],:is(.cluvo-mobile,.cluvo-mobile-portal).report-households [data-slot=progress-indicator]{background:#ba998d}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .report-households p,:is(.cluvo-mobile,.cluvo-mobile-portal).report-households p{font-size:.85rem;color:#718594;margin-top:11px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .money-card,:is(.cluvo-mobile,.cluvo-mobile-portal).money-card{background:#203641;color:#fff;display:flex;align-items:flex-start;flex-direction:column;gap:14px;border-radius:21px;padding:25px;margin:24px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .money-card>span,:is(.cluvo-mobile,.cluvo-mobile-portal).money-card>span{font-size:.875rem;color:#c8dce5}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .money-card>strong,:is(.cluvo-mobile,.cluvo-mobile-portal).money-card>strong{font-size:2.4rem;letter-spacing:-1px;font-weight:600}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .money-card>p,:is(.cluvo-mobile,.cluvo-mobile-portal).money-card>p{font-size:.85rem;color:#acc5d2}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .money-entry>strong,:is(.cluvo-mobile,.cluvo-mobile-portal).money-entry>strong{font-size:.94rem;color:#73889b;font-weight:550}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .work-card,:is(.cluvo-mobile,.cluvo-mobile-portal).work-card{display:block;position:relative;width:100%;text-align:left}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .work-card h3,:is(.cluvo-mobile,.cluvo-mobile-portal).work-card h3{margin:12px 22px 9px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .work-card>p,:is(.cluvo-mobile,.cluvo-mobile-portal).work-card>p,:is(.cluvo-mobile,.cluvo-mobile-portal) .work-card>span:last-of-type,:is(.cluvo-mobile,.cluvo-mobile-portal).work-card>span:last-of-type{font-size:.85rem;color:#70899a}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .work-card>span:last-of-type,:is(.cluvo-mobile,.cluvo-mobile-portal).work-card>span:last-of-type{display:block;margin-top:11px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .work-card>svg,:is(.cluvo-mobile,.cluvo-mobile-portal).work-card>svg{position:absolute;right:17px;top:50%;color:#a0b1be}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .comment>b,:is(.cluvo-mobile,.cluvo-mobile-portal).comment>b{font-size:.85rem;color:#68879b}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .comment>p,:is(.cluvo-mobile,.cluvo-mobile-portal).comment>p{font-size:.94rem;line-height:1.7;margin:9px 0;color:#5f7a8d}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .club-choice,:is(.cluvo-mobile,.cluvo-mobile-portal).club-choice{display:flex;align-items:center;gap:13px;width:100%;padding:20px;background:#fff;border:1px solid #dfe9ef;border-radius:18px;text-align:left;margin:20px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .club-choice>span:nth-child(2),:is(.cluvo-mobile,.cluvo-mobile-portal).club-choice>span:nth-child(2){flex:1}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .club-choice b,:is(.cluvo-mobile,.cluvo-mobile-portal).club-choice b{display:block;font-size:1rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .club-choice small,:is(.cluvo-mobile,.cluvo-mobile-portal).club-choice small{display:block;margin-top:5px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .club-choice>svg,:is(.cluvo-mobile,.cluvo-mobile-portal).club-choice>svg{color:#86a18d}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-command,:is(.cluvo-mobile,.cluvo-mobile-portal).app-command{border:1px solid #e0e8ee;border-radius:15px;background:#fff}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-command [data-slot=command-input],:is(.cluvo-mobile,.cluvo-mobile-portal).app-command [data-slot=command-input]{font-size:1rem;min-height:51px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-command [data-slot=command-item],:is(.cluvo-mobile,.cluvo-mobile-portal).app-command [data-slot=command-item]{min-height:44px;font-size:.94rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-command [data-slot=command-list],:is(.cluvo-mobile,.cluvo-mobile-portal).app-command [data-slot=command-list]{max-height:55dvh}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-command [data-slot=command-group-heading],:is(.cluvo-mobile,.cluvo-mobile-portal).app-command [data-slot=command-group-heading]{font-size:.8rem;color:#728b9c;margin-top:13px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-command [data-slot=command-input-wrapper],:is(.cluvo-mobile,.cluvo-mobile-portal).app-command [data-slot=command-input-wrapper]{height:53px}
+@media(max-width:800px){:is(.cluvo-mobile,.cluvo-mobile-portal){background:#f5f7f8}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-frame,:is(.cluvo-mobile,.cluvo-mobile-portal).app-frame{display:block;box-shadow:none;max-width:none}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .desktop-rail,:is(.cluvo-mobile,.cluvo-mobile-portal).desktop-rail{display:none}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-header,:is(.cluvo-mobile,.cluvo-mobile-portal).app-header{padding:env(safe-area-inset-top) 18px 0;height:calc(76px + env(safe-area-inset-top))}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .header-brand,:is(.cluvo-mobile,.cluvo-mobile-portal).header-brand{align-items:center;gap:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .header-brand img,:is(.cluvo-mobile,.cluvo-mobile-portal).header-brand img{display:block;width:103px;height:30px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .header-club-name,:is(.cluvo-mobile,.cluvo-mobile-portal).header-club-name{display:none}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .header-actions,:is(.cluvo-mobile,.cluvo-mobile-portal).header-actions{gap:5px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .profile-button .avatar,:is(.cluvo-mobile,.cluvo-mobile-portal).profile-button .avatar{width:33px;height:33px;border-color:#414d55;--avatar-font-cap:14px;font-size:min(var(--avatar-font-size,.75rem),var(--avatar-font-cap))}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .icon-button,:is(.cluvo-mobile,.cluvo-mobile-portal).icon-button{width:39px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-content,:is(.cluvo-mobile,.cluvo-mobile-portal).app-content{padding:25px 19px 103px;max-width:600px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) h1{font-size:1.68rem;letter-spacing:-.6px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .page-heading p,:is(.cluvo-mobile,.cluvo-mobile-portal).page-heading p{font-size:.875rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .today-pill,:is(.cluvo-mobile,.cluvo-mobile-portal).today-pill{padding:7px 9px;font-size:.75rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .bottom-nav,:is(.cluvo-mobile,.cluvo-mobile-portal).bottom-nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));position:fixed;left:0;right:0;bottom:0;z-index:35;background:#ffffffed;border-top:1px solid #e1e7eb;backdrop-filter:blur(18px);padding:8px 9px calc(7px + env(safe-area-inset-bottom));min-height:75px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .bottom-nav>button,:is(.cluvo-mobile,.cluvo-mobile-portal).bottom-nav>button{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;color:#788894;padding:0 3px;min-height:56px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .bottom-nav>button>span,:is(.cluvo-mobile,.cluvo-mobile-portal).bottom-nav>button>span{width:52px;display:grid;place-items:center;height:31px;border-radius:12px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .bottom-nav b,:is(.cluvo-mobile,.cluvo-mobile-portal).bottom-nav b{font-size:.875rem;font-weight:500}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .bottom-nav>button[aria-current=page],:is(.cluvo-mobile,.cluvo-mobile-portal).bottom-nav>button[aria-current=page]{color:#a84b36}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .bottom-nav>button[aria-current=page]>span,:is(.cluvo-mobile,.cluvo-mobile-portal).bottom-nav>button[aria-current=page]>span{background:#fff0e9}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .bottom-nav>button[aria-current=page] b,:is(.cluvo-mobile,.cluvo-mobile-portal).bottom-nav>button[aria-current=page] b{font-weight:650}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .section,:is(.cluvo-mobile,.cluvo-mobile-portal).section{margin:23px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .section-heading h2,:is(.cluvo-mobile,.cluvo-mobile-portal).section-heading h2{font-size:1.05rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .help-banner,:is(.cluvo-mobile,.cluvo-mobile-portal).help-banner{padding:12px 11px 5px;margin:14px 0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .help-banner p,:is(.cluvo-mobile,.cluvo-mobile-portal).help-banner p{font-size:.875rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .household-meter,:is(.cluvo-mobile,.cluvo-mobile-portal).household-meter{padding:20px 18px;border-radius:20px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .meter-figure strong,:is(.cluvo-mobile,.cluvo-mobile-portal).meter-figure strong{font-size:2.65rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .meter-symbol,:is(.cluvo-mobile,.cluvo-mobile-portal).meter-symbol{width:55px;height:55px;border-radius:17px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .meter-split,:is(.cluvo-mobile,.cluvo-mobile-portal).meter-split{font-size:.75rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .child-grid,:is(.cluvo-mobile,.cluvo-mobile-portal).child-grid{gap:9px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .child-card,:is(.cluvo-mobile,.cluvo-mobile-portal).child-card{padding:13px 11px;gap:7px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .child-card .avatar,:is(.cluvo-mobile,.cluvo-mobile-portal).child-card .avatar{display:none}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .child-card b,:is(.cluvo-mobile,.cluvo-mobile-portal).child-card b{font-size:.875rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .child-card>div>span small,:is(.cluvo-mobile,.cluvo-mobile-portal).child-card>div>span small{display:block;margin-top:2px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .task-card,:is(.cluvo-mobile,.cluvo-mobile-portal).task-card{padding:17px 13px;gap:11px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .task-icon,:is(.cluvo-mobile,.cluvo-mobile-portal).task-icon{width:39px;height:41px;border-radius:12px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .task-icon svg,:is(.cluvo-mobile,.cluvo-mobile-portal).task-icon svg{width:21px;height:21px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .task-bottom b,:is(.cluvo-mobile,.cluvo-mobile-portal).task-bottom b{font-size:.8rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .row-chevron,:is(.cluvo-mobile,.cluvo-mobile-portal).row-chevron{width:14px;margin-top:20px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .match-card,:is(.cluvo-mobile,.cluvo-mobile-portal).match-card{padding:16px 13px;gap:11px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .match-card h3,:is(.cluvo-mobile,.cluvo-mobile-portal).match-card h3{font-size:1rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .match-icon,:is(.cluvo-mobile,.cluvo-mobile-portal).match-icon{width:37px;height:41px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .club-event,:is(.cluvo-mobile,.cluvo-mobile-portal).club-event{padding:19px 14px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .club-event h3,:is(.cluvo-mobile,.cluvo-mobile-portal).club-event h3{font-size:1.07rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-sheet,:is(.cluvo-mobile,.cluvo-mobile-portal).app-sheet{max-height:93dvh}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .sheet-head,:is(.cluvo-mobile,.cluvo-mobile-portal).sheet-head{padding:18px 20px 16px!important}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .sheet-body,:is(.cluvo-mobile,.cluvo-mobile-portal).sheet-body{padding:7px 20px 22px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .sheet-foot,:is(.cluvo-mobile,.cluvo-mobile-portal).sheet-foot{padding:14px 20px calc(17px + env(safe-area-inset-bottom))}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .sheet-head [data-slot=sheet-title],:is(.cluvo-mobile,.cluvo-mobile-portal).sheet-head [data-slot=sheet-title]{font-size:1.25rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .task-card.compact,:is(.cluvo-mobile,.cluvo-mobile-portal).task-card.compact{padding:14px 12px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .action-row,:is(.cluvo-mobile,.cluvo-mobile-portal).action-row{padding:16px 13px;gap:10px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .action-row b,:is(.cluvo-mobile,.cluvo-mobile-portal).action-row b{font-size:.94rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .action-icon,:is(.cluvo-mobile,.cluvo-mobile-portal).action-icon{width:34px;height:38px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .action-row>svg,:is(.cluvo-mobile,.cluvo-mobile-portal).action-row>svg{width:14px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .sticky-action,:is(.cluvo-mobile,.cluvo-mobile-portal).sticky-action,:is(.cluvo-mobile,.cluvo-mobile-portal) .chat-composer,:is(.cluvo-mobile,.cluvo-mobile-portal).chat-composer{bottom:87px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .team-cover,:is(.cluvo-mobile,.cluvo-mobile-portal).team-cover{padding:19px 16px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .week-strip,:is(.cluvo-mobile,.cluvo-mobile-portal).week-strip{gap:5px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .week-strip button,:is(.cluvo-mobile,.cluvo-mobile-portal).week-strip button{border-radius:11px;min-height:77px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .agenda-time,:is(.cluvo-mobile,.cluvo-mobile-portal).agenda-time{width:40px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .agenda-event,:is(.cluvo-mobile,.cluvo-mobile-portal).agenda-event{padding:14px 12px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .summary-line,:is(.cluvo-mobile,.cluvo-mobile-portal).summary-line{gap:10px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .goal-card,:is(.cluvo-mobile,.cluvo-mobile-portal).goal-card{padding:18px 14px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .report-households article>div:first-child,:is(.cluvo-mobile,.cluvo-mobile-portal).report-households article>div:first-child{align-items:flex-start}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .simple-card,:is(.cluvo-mobile,.cluvo-mobile-portal).simple-card{padding:17px 15px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .more-menu,:is(.cluvo-mobile,.cluvo-mobile-portal).more-menu{border-radius:16px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .more-menu button,:is(.cluvo-mobile,.cluvo-mobile-portal).more-menu button{padding:18px 15px;gap:13px;min-height:78px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .more-section,:is(.cluvo-mobile,.cluvo-mobile-portal).more-section{margin-top:27px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .profile-card,:is(.cluvo-mobile,.cluvo-mobile-portal).profile-card{padding:21px 16px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .offline-bar,:is(.cluvo-mobile,.cluvo-mobile-portal).offline-bar{font-size:.875rem;line-height:1.6;padding:10px 17px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .field-select,:is(.cluvo-mobile,.cluvo-mobile-portal).field-select{font-size:.94rem!important}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-end,:is(.cluvo-mobile,.cluvo-mobile-portal).app-end{margin-top:29px}
+}
+@media(max-width:360px){:is(.cluvo-mobile,.cluvo-mobile-portal) .app-content,:is(.cluvo-mobile,.cluvo-mobile-portal).app-content{padding-left:15px;padding-right:15px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .task-icon,:is(.cluvo-mobile,.cluvo-mobile-portal).task-icon{display:none}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .header-actions,:is(.cluvo-mobile,.cluvo-mobile-portal).header-actions{gap:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .header-brand img,:is(.cluvo-mobile,.cluvo-mobile-portal).header-brand img{width:98px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .header-actions .profile-button,:is(.cluvo-mobile,.cluvo-mobile-portal).header-actions .profile-button{display:none}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .demo-roles,:is(.cluvo-mobile,.cluvo-mobile-portal).demo-roles{grid-template-columns:1fr}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-tabs-list [data-slot=tabs-trigger],:is(.cluvo-mobile,.cluvo-mobile-portal).app-tabs-list [data-slot=tabs-trigger]{font-size:.8rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .week-strip,:is(.cluvo-mobile,.cluvo-mobile-portal).week-strip{gap:4px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .week-strip button,:is(.cluvo-mobile,.cluvo-mobile-portal).week-strip button{padding-inline:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .meter-split,:is(.cluvo-mobile,.cluvo-mobile-portal).meter-split{font-size:.75rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .today-pill,:is(.cluvo-mobile,.cluvo-mobile-portal).today-pill{display:none}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .team-cover-foot,:is(.cluvo-mobile,.cluvo-mobile-portal).team-cover-foot{flex-wrap:wrap}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .button-pair,:is(.cluvo-mobile,.cluvo-mobile-portal).button-pair{gap:7px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-btn,:is(.cluvo-mobile,.cluvo-mobile-portal).app-btn{font-size:.875rem!important;padding:11px 13px!important}
+}
+@media(prefers-reduced-motion:reduce){:is(.cluvo-mobile,.cluvo-mobile-portal) *,:is(.cluvo-mobile,.cluvo-mobile-portal) *:before,:is(.cluvo-mobile,.cluvo-mobile-portal) *:after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .page-enter,:is(.cluvo-mobile,.cluvo-mobile-portal).page-enter{animation:none}
+}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .cluvo-sidebar-root,:is(.cluvo-mobile,.cluvo-mobile-portal).cluvo-sidebar-root{display:block;width:100%;min-height:100dvh}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .desktop-rail,:is(.cluvo-mobile,.cluvo-mobile-portal).desktop-rail{width:218px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .app-frame,:is(.cluvo-mobile,.cluvo-mobile-portal).app-frame{width:100%}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .more-club,:is(.cluvo-mobile,.cluvo-mobile-portal).more-club{display:flex;align-items:center;gap:16px;margin:18px 0 23px;padding:20px;background:#fff;border:1px solid #dfe9ef;border-radius:18px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .more-club-content,:is(.cluvo-mobile,.cluvo-mobile-portal).more-club-content{flex:1;min-width:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .more-club-content>span,:is(.cluvo-mobile,.cluvo-mobile-portal).more-club-content>span{display:block;font-size:.875rem;color:#708594;margin-bottom:2px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .more-club-content>small,:is(.cluvo-mobile,.cluvo-mobile-portal).more-club-content>small{display:block;font-size:.875rem;color:#708594;margin-top:4px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .more-club-select,:is(.cluvo-mobile,.cluvo-mobile-portal).more-club-select{width:100%;height:auto!important;min-height:44px;padding:4px 0!important;border:0!important;box-shadow:none!important;background:transparent!important;font-size:1.08rem!important;font-weight:650;color:#334b5a}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .more-club-select:focus-visible,:is(.cluvo-mobile,.cluvo-mobile-portal).more-club-select:focus-visible{outline:2px solid #d74735;outline-offset:3px;border-radius:6px}
+@media(max-width:800px){:is(.cluvo-mobile,.cluvo-mobile-portal) .more-club,:is(.cluvo-mobile,.cluvo-mobile-portal).more-club{padding:17px 16px;gap:13px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .more-club-select,:is(.cluvo-mobile,.cluvo-mobile-portal).more-club-select{font-size:1rem!important}
+}
+
+/* Native links preserve the same mobile controls and hit areas. */
+:is(.cluvo-mobile,.cluvo-mobile-portal) a{text-decoration:none}
+.cluvo-mobile{background:#e9edf0;min-height:100dvh}
+.cluvo-mobile .desktop-rail nav a{display:flex;align-items:center;gap:12px;min-height:48px;padding:12px 15px;border-radius:12px;font-size:.95rem;color:#adbcc5}
+.cluvo-mobile .desktop-rail nav a.active{background:#382b29;color:#ff9f8b;font-weight:650}
+.cluvo-mobile .desktop-rail nav a:hover{background:#252e34;color:#fff}
+.cluvo-mobile .quick-grid>a{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:9px;min-height:90px;padding:15px 7px;border-radius:16px;background:#fff;border:1px solid #e2e7ec;color:#697d87;font-size:.8rem;font-weight:550}
+.cluvo-mobile .more-menu>a{display:flex;align-items:center;gap:14px;min-height:77px;padding:18px 16px;width:100%;text-align:left;border-bottom:1px solid #edf2f6}
+.cluvo-mobile .more-menu>a:last-child{border:0}
+.cluvo-mobile .more-menu>a>span{flex:1;min-width:0}
+.cluvo-mobile .more-menu>a>svg{color:#748997}
+.cluvo-mobile .more-club-content>label{display:block;font-size:.875rem;color:#708594;margin-bottom:2px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) fieldset{border:0;padding:0;margin:0;min-width:0}
+:is(.cluvo-mobile,.cluvo-mobile-portal) input:not([type=checkbox]):not([type=radio]),:is(.cluvo-mobile,.cluvo-mobile-portal) textarea{border:1px solid #d4dee5;border-radius:12px;background:#fff;min-height:48px;padding:12px 13px;width:100%;line-height:1.5;color:#334b5a}
+:is(.cluvo-mobile,.cluvo-mobile-portal) input[type=checkbox],:is(.cluvo-mobile,.cluvo-mobile-portal) input[type=radio]{width:20px;height:20px;flex-shrink:0;accent-color:#d74735;margin-top:3px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .notice.success{background:#e6f4ec;border:1px solid #d0e8da;color:#39785a}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .notice>span{display:flex;align-items:center;gap:8px}
+.cluvo-mobile .mobile-segments{display:flex;min-height:48px;gap:4px;padding:4px;background:#e9eef2;border-radius:14px;margin-bottom:14px}
+.cluvo-mobile .mobile-segments>button{flex:1;padding:8px 6px;border-radius:11px;font-size:.875rem;min-height:40px;color:#657078}
+.cluvo-mobile .mobile-segments>button[aria-pressed=true]{background:#fff;color:#1e2e38;font-weight:650;box-shadow:0 2px 7px #1b2f4010}
+.cluvo-mobile .meter-progress>i,.cluvo-mobile .winter-progress>i,.cluvo-mobile .child-progress>i{height:100%;display:block;background:#fa8b6c;border-radius:inherit}
+.cluvo-mobile .winter-progress>i{background:#8bbeb1}
+.cluvo-mobile .child-progress{height:4px;background:#e8edf2;border-radius:4px;margin:8px 0}
+.cluvo-mobile .child-progress>i{background:#9984bb}
+.cluvo-mobile .notification-list>article{display:flex;gap:12px;padding:21px 16px;border-bottom:1px solid #ecf2f5}
+.cluvo-mobile .notification-list>article>div{flex:1;min-width:0}
+.cluvo-mobile .notification-list b{display:block;margin:8px 0;font-size:.94rem}
+.cluvo-mobile .notification-list p{font-size:.875rem;color:#6c8596;line-height:1.65}
+.cluvo-mobile .faq>details{border-bottom:1px solid #edf2f5;padding:18px 0}
+.cluvo-mobile .faq summary{font-size:.94rem;font-weight:600;cursor:pointer;min-height:44px}
+.cluvo-mobile .faq p{font-size:.875rem;line-height:1.8;color:#718a9b;padding-top:10px}
+.cluvo-mobile .mobile-context-selection{display:flex;gap:12px;flex-wrap:wrap;align-items:end;margin-bottom:20px}
+.cluvo-mobile .mobile-context-selection label{display:grid;gap:6px;font-size:.875rem}
+.cluvo-mobile .mobile-context-selection select{min-height:44px;padding:8px;border:1px solid #dce5eb;border-radius:10px;background:#fff;max-width:100%}
+.cluvo-mobile-portal .mobile-search-results{display:grid;gap:8px}
+.cluvo-mobile-portal .mobile-search-results>a{min-height:44px;padding:12px;background:#fff;border:1px solid #e1e7eb;border-radius:10px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .cluvo-help-banner{margin:16px 0;border-color:#eadfaa;border-radius:14px;padding:12px 12px 6px;grid-template-columns:18px minmax(0,1fr) 32px;gap:8px;color:#695931}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .cluvo-help-copy h3{font-size:.875rem}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .cluvo-help-copy p{font-size:.875rem;line-height:1.6}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .cluvo-help-close{width:44px;height:44px;position:relative;right:5px;top:-5px}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .cluvo-help-seen{min-height:44px}
+.cluvo-mobile .mobile-heading-skeleton{width:65%;height:42px;margin-bottom:24px}
+.cluvo-mobile .mobile-card-skeleton{height:180px;border-radius:18px;margin:20px 0}
+@media(max-width:800px){.cluvo-mobile{background:#f5f7f8}.cluvo-mobile .bottom-nav>a{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;color:#788894;padding:0 3px;min-height:56px}.cluvo-mobile .bottom-nav>a>span{width:52px;display:grid;place-items:center;height:31px;border-radius:12px}.cluvo-mobile .bottom-nav>a[aria-current=page]{color:#a84b36}.cluvo-mobile .bottom-nav>a[aria-current=page]>span{background:#fff0e9}.cluvo-mobile .bottom-nav>a[aria-current=page] b{font-weight:650}.cluvo-mobile .header-brand img{display:block}.cluvo-mobile .more-menu>a{padding:18px 15px;gap:13px;min-height:78px}}
+@media(max-width:360px){.cluvo-mobile .mobile-context-selection{display:grid}.cluvo-mobile .mobile-segments>button{font-size:.8rem}.cluvo-mobile .app-content{overflow-wrap:anywhere}}
+.cluvo-mobile .notification-open {width:100%;border:0;background:none;text-align:left;color:inherit;padding:0;cursor:pointer;min-height:44px;}
+.cluvo-mobile .notification-open span {font-size:12px;font-weight:700;color:var(--primary);}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .icon-button,:is(.cluvo-mobile,.cluvo-mobile-portal) .profile-button{min-width:44px;min-height:44px;}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .text-link{min-height:44px;display:inline-flex;align-items:center;}
+.cluvo-mobile .mobile-segments>button{min-height:44px;min-width:0;overflow-wrap:anywhere;}
+.cluvo-mobile .bottom-nav>a,.cluvo-mobile .bottom-nav b{min-width:0;max-width:100%;overflow-wrap:anywhere;text-align:center;}
+:is(.cluvo-mobile,.cluvo-mobile-portal) .check-row{min-height:44px;}
+@media(max-width:800px){:is(.cluvo-mobile,.cluvo-mobile-portal){overflow-wrap:anywhere}.cluvo-mobile .week-control{flex-wrap:wrap}.cluvo-mobile .week-control>b{text-align:center;min-width:0;flex:1}.cluvo-mobile .report-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.cluvo-mobile .report-stats>div{min-width:0}.cluvo-mobile .page-heading{flex-wrap:wrap}.cluvo-mobile .meter-top,.cluvo-mobile .meter-split{flex-wrap:wrap}.cluvo-mobile .more-menu>a>svg{flex-shrink:0}}
+
+:is(.cluvo-mobile, .cluvo-mobile-portal) .question-history {margin: 14px 0 0; padding-left: 22px; color: var(--app-muted); font-size: 13px; line-height: 1.7;}
+
+:is(.cluvo-mobile, .cluvo-mobile-portal) .executor-suitability p {display: flex; flex-direction: column; gap: 4px; margin: 12px 0; font-size: 13px;}
+:is(.cluvo-mobile, .cluvo-mobile-portal) .executor-suitability span {color: var(--app-muted);}
+
+:is(.cluvo-mobile, .cluvo-mobile-portal) .task-card {flex-direction: row;}
+
+.cluvo-mobile .mobile-context-selection {max-width: 100%;}
+.cluvo-mobile .mobile-context-selection label {min-width: 0; max-width: 100%;}
+.cluvo-mobile .mobile-context-selection select {width: 100%; max-width: 100%; min-width: 0;}

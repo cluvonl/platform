@@ -1,0 +1,13 @@
+{
+  "scope": "LOCAL_OWNED_PG17_CARD_VERSION_GATE",
+  "network": "none",
+  "database": "postgres",
+  "original16": true,
+  "additivePrefix": 26,
+  "actual_old_failure_assertions": 2,
+  "assertions": 34,
+  "authority_unchanged": true,
+  "passed": true,
+  "provider_called": false,
+  "migration_sha256": "7d237cb0e27bf8d4f27e649143a77e39dc29977279fc7bc6db6e506da52ff4cc"
+}

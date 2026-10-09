@@ -1,7 +1,7 @@
 'use client';
 
 import {useActionState} from 'react';
-import {type AuthActionState, requestOtpAction, verifyOtpAction} from '@/app/auth/actions';
+import {type AuthActionState, requestOtpAction, verifyOtpAction, requestMobileOtpAction, verifyMobileOtpAction} from '@/app/auth/actions';
 
 const initialState: AuthActionState = {status: 'idle'};
 
@@ -9,10 +9,11 @@ function SubmitButton({children, pending}: {children: React.ReactNode; pending: 
   return <button className="auth-primary" type="submit" disabled={pending}>{pending ? 'Even geduld…' : children}</button>;
 }
 
-export function RequestOtpForm() {
-  const [state, action, pending] = useActionState(requestOtpAction, initialState);
+export function RequestOtpForm({mobile = false, nextPath}: {mobile?: boolean;nextPath?:string} = {}) {
+  const [state, action, pending] = useActionState(mobile ? requestMobileOtpAction : requestOtpAction, initialState);
   return (
     <form action={action} className="auth-form" noValidate>
+      {mobile && nextPath ? <input type="hidden" name="next" value={nextPath} /> : null}
       <label htmlFor="email">Persoonlijk e-mailadres</label>
       <input id="email" name="email" type="email" inputMode="email" autoComplete="email" required maxLength={254} aria-describedby={state.message ? 'login-message' : undefined} />
       {state.message ? <p id="login-message" className="auth-error" role="alert">{state.message}</p> : null}
@@ -21,8 +22,8 @@ export function RequestOtpForm() {
   );
 }
 
-export function VerifyOtpForm() {
-  const [state, action, pending] = useActionState(verifyOtpAction, initialState);
+export function VerifyOtpForm({mobile = false}: {mobile?: boolean} = {}) {
+  const [state, action, pending] = useActionState(mobile ? verifyMobileOtpAction : verifyOtpAction, initialState);
   return (
     <form action={action} className="auth-form" noValidate>
       <label htmlFor="token">Eenmalige code</label>

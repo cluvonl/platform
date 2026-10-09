@@ -1,0 +1,47 @@
+{
+  "scope": "LOCAL_SHARED_ADDITIVE_PWA108_APPLICATION",
+  "observed_at": "2026-10-09T02:03:09.947372+00:00",
+  "migration": "20261009108000_pwa_repeatable_command_events.sql",
+  "sha256": "7ad42704ec974bd670deb70c14dcd13a2079f1b0d9fd6a416e0d4dcdf3859ef2",
+  "source_hash_verified": true,
+  "transaction_committed": true,
+  "postgrest_schema_notified": true,
+  "function_authority_readback": {
+    "command_owner": "cluvo_command_owner",
+    "security_definer": true,
+    "native_guard_preserved": true,
+    "delete_permission_preserved": true,
+    "reset_command_event_applied": true
+  },
+  "migration_data_mutations": false,
+  "auth_rows_changed": false,
+  "database_reset": false,
+  "provider_calls": false,
+  "native_existing_session_rollback_probe": {
+    "actor": "local_B",
+    "action": "reset_help",
+    "before_sqlstate": "23505",
+    "after_state": "confirmed",
+    "ok": true,
+    "version": 1,
+    "persistent_mutations": false,
+    "http_provider_jwt_verification_claimed": false
+  },
+  "owned_sql_proof": "owned-final25-sql-proof.json",
+  "owned_suites": 25,
+  "owned_assertions": 1105,
+  "owned_lint_issues": 0,
+  "local_migration_history": {
+    "108_name": "pwa_repeatable_command_events",
+    "older_rows": 24,
+    "108_statements": 3,
+    "latest_version": "20261009108000",
+    "migration_count": 25,
+    "source_hash_verified": true,
+    "native_cli_statement_layout_preserved": true,
+    "source_statement_content_exact_after_cli_whitespace_trim": true,
+    "repair_command_scope": "local, explicit version 20261009108000 only",
+    "migration_rerun": false,
+    "database_reset": false
+  }
+}

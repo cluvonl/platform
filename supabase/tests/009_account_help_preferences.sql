@@ -8,7 +8,15 @@ insert into auth.users (id, aud, role, email) values
 
 select ok((select relrowsecurity and relforcerowsecurity from pg_class where oid = 'app.user_help_seen'::regclass), 'account preferences force RLS');
 select ok((select relrowsecurity and relforcerowsecurity from pg_class where oid = 'app.help_topics'::regclass), 'help catalog forces RLS');
-select is((select count(*)::integer from app.help_topics), 149, 'all reference topics are registered');
+select is((select count(*)::integer from app.help_topics where topic_id not like 'pwa.%'), 149, 'all 149 legacy reference topics are preserved');
+select is((select array_agg(topic_id order by topic_id) from app.help_topics where topic_id like 'pwa.%'),
+  (select array_agg(topic order by topic) from unnest(array[
+    'pwa.home','pwa.tasks','pwa.agenda','pwa.teams','pwa.more','pwa.actions',
+    'pwa.notifications','pwa.manage','pwa.profile','pwa.household','pwa.policies',
+    'pwa.courses','pwa.opportunities','pwa.messages','pwa.settings','pwa.help',
+    'pwa.install','pwa.reports','pwa.finance','pwa.committees','pwa.booking',
+    'pwa.team-allocation','pwa.handover','pwa.instructions','pwa.feedback'
+  ]::text[]) topic), 'exactly the 25 versioned PWA topics are registered separately');
 select ok(not has_table_privilege('authenticated', 'app.user_help_seen', 'INSERT'), 'no direct preference insert');
 select ok(not has_table_privilege('authenticated', 'app.user_help_seen', 'UPDATE'), 'no direct preference update');
 select ok(not has_table_privilege('authenticated', 'app.user_help_seen', 'DELETE'), 'no direct preference delete');

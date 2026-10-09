@@ -45,6 +45,7 @@ const schema = z.object({
   canBookFor: z.string().optional().transform((value) => value === 'on'),
   idempotencyKey: z.string().uuid(),
   expectedHouseholdVersion: z.coerce.number().int().min(1).max(Number.MAX_SAFE_INTEGER),
+  surface: z.enum(['web', 'mobile']).optional().default('web'),
 });
 
 export async function inviteExecutorAction(
@@ -54,7 +55,7 @@ export async function inviteExecutorAction(
   const parsed = schema.safeParse(Object.fromEntries(formData));
   if (!parsed.success) return {status: 'error', message: 'Controleer de naam, het e-mailadres en de gekozen rechten.'};
 
-  const {client, workspace} = await requireWorkspace(parsed.data.club);
+  const {client, workspace} = await requireWorkspace(parsed.data.club, parsed.data.surface === 'mobile' ? '/app/login' : '/login');
   if (!isAllowedMailRecipient(parsed.data.email, {environment: process.env.APP_ENV ?? 'local', allowlist: process.env.MAIL_ALLOWLIST})) {
     return {status: 'error', message: 'Dit e-mailadres is niet beschikbaar voor uitnodigingen in deze testomgeving.'};
   }
@@ -72,7 +73,7 @@ export async function inviteExecutorAction(
     .update(parsed.data.idempotencyKey, 'utf8')
     .digest('base64url');
   const tokenHashHex = createHash('sha256').update(token, 'utf8').digest('hex');
-  const {data, error} = await client.schema('api').rpc('create_household_invitation_v2', {
+  const {data, error} = await client.schema('api').rpc(parsed.data.surface === 'mobile' ? 'pwa_create_household_invitation' : 'create_household_invitation_v2', {
     p_tenant_id: workspace.tenant_id,
     p_household_id: parsed.data.householdId,
     p_given_name: parsed.data.givenName,
@@ -104,7 +105,7 @@ export async function inviteExecutorAction(
   let delivered = false;
   try {
     const admin = createSupabaseAdminClient();
-    const next = `/invite/accept?token=${encodeURIComponent(token)}`;
+    const next = `${parsed.data.surface === 'mobile' ? '/app/invite/accept' : '/invite/accept'}?token=${encodeURIComponent(token)}`;
     const redirectTo = `${appOrigin()}/auth/confirm?next=${encodeURIComponent(next)}`;
     const {error: inviteError} = await admin.auth.admin.inviteUserByEmail(parsed.data.email, {
       redirectTo,
@@ -135,6 +136,7 @@ export async function inviteExecutorAction(
   revalidatePath(`/c/${parsed.data.club}/intake`);
   revalidatePath(`/c/${parsed.data.club}/huishouden`);
   revalidatePath(`/c/${parsed.data.club}/overzicht`);
+  revalidatePath(`/app/c/${parsed.data.club}`, 'layout');
   if (statusError) return {status: 'error', message: 'De verzendstatus kon niet worden bevestigd. Je invoer blijft staan; controleer de uitnodiging voordat je opnieuw verzendt.'};
   if (!delivered) return {status: 'error', message: 'De verzending kon niet worden bevestigd. Je invoer blijft staan; probeer dezelfde uitnodiging opnieuw.'};
   return {status: 'sent', message: 'De persoonlijke uitnodiging is verzonden en verloopt na één uur.'};

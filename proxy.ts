@@ -6,7 +6,6 @@ export async function proxy(request: NextRequest) {
   return response;
 }
 
-// De onveranderde demo-root en de publieke loginroute blijven ook zonder
-// Supabase-configuratie bekijkbaar. Alleen echte dossierwerkruimtes verversen
-// een sessiecookie via de geconfigureerde Supabase-omgeving.
-export const config = {matcher: ['/c/:path*', '/workspaces', '/invite/:path*']};
+// Publieke PWA-assets blijven buiten sessieverversing. Iedere persoonlijke
+// werkruimte controleert daarnaast de actuele rechten op de server.
+export const config = {matcher: ['/c/:path*', '/workspaces', '/invite/:path*', '/app/workspaces', '/app/c/:path*', '/app/invite/:path*']};

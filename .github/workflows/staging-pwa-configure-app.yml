@@ -1,0 +1,130 @@
+name: Prepare staging PWA app runtime
+
+on:
+  workflow_dispatch:
+    inputs:
+      expected_active_source_sha:
+        description: Expected currently active staging image source SHA
+        required: true
+        type: string
+      expected_config_version:
+        description: Expected existing runtime import version (2 or higher)
+        required: true
+        type: string
+      compatible_rollback_shas:
+        description: JSON array containing current and new verified compatible image source SHAs
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: cluvo-staging
+  cancel-in-progress: false
+
+jobs:
+  verify_database:
+    if: github.repository == 'cluvonl/platform' && github.ref == 'refs/heads/staging' && github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    environment: staging
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: '.nvmrc'
+      - name: Verify exact current tested promotion before private configuration access
+        env:
+          APP_ENV: staging
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: ${{ github.sha }}
+          EXPECTED_ACTIVE_SOURCE_SHA: ${{ inputs.expected_active_source_sha }}
+          EXPECTED_CONFIG_VERSION: ${{ inputs.expected_config_version }}
+          COMPATIBLE_ROLLBACK_SHAS: ${{ inputs.compatible_rollback_shas }}
+        run: node scripts/staging-pwa-runtime-preflight.mjs --verify-release
+      - name: Verify closed31 history, native privacy and public Auth using read-only access
+        env:
+          APP_ENV: staging
+          APP_URL: https://staging.cluvo.nl
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: ${{ github.sha }}
+          EXPECTED_ACTIVE_SOURCE_SHA: ${{ inputs.expected_active_source_sha }}
+          EXPECTED_CONFIG_VERSION: ${{ inputs.expected_config_version }}
+          COMPATIBLE_ROLLBACK_SHAS: ${{ inputs.compatible_rollback_shas }}
+          STAGING_SUPABASE_PROJECT_REF: ${{ vars.STAGING_SUPABASE_PROJECT_REF }}
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ vars.SUPABASE_PUBLISHABLE_KEY }}
+          MIGRATION_DATABASE_URL: ${{ secrets.MIGRATION_DATABASE_URL }}
+        run: node scripts/staging-pwa-runtime-preflight.mjs --readonly-preflight
+
+  configure:
+    needs: verify_database
+    permissions:
+      contents: read
+    if: >-
+      github.repository == 'cluvonl/platform' && github.ref == 'refs/heads/staging' &&
+      vars.STAGING_DEPLOY_ENABLED == 'true'
+    runs-on: [self-hosted, Linux, X64, cluvo-staging-deploy]
+    environment: staging
+    timeout-minutes: 3
+    steps:
+      # Trusted staging-only job on the dedicated VPS runner. No checkout,
+      # plaintext file, credential argument, migration DSN or build step.
+      - name: Import verified PWA runtime through the unchanged fixed root broker
+        env:
+          CONFIG_SOURCE_SHA: ${{ github.sha }}
+          CONFIG_RUN_ID: ${{ github.run_id }}
+          CONFIG_ACTOR: ${{ github.actor }}
+          EXPECTED_SOURCE_SHA: ${{ inputs.expected_active_source_sha }}
+          EXPECTED_CONFIG_VERSION: ${{ inputs.expected_config_version }}
+          COMPATIBLE_ROLLBACK_SHAS: ${{ inputs.compatible_rollback_shas }}
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ vars.SUPABASE_PUBLISHABLE_KEY }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+          INVITATION_TOKEN_SECRET: ${{ secrets.INVITATION_TOKEN_SECRET }}
+          MAIL_ALLOWLIST: ${{ secrets.MAIL_ALLOWLIST }}
+        run: |
+          set -euo pipefail
+          /usr/bin/python3 -I - <<'PY' | sudo --non-interactive \
+            /usr/local/sbin/cluvo-import-staging-config "$CONFIG_SOURCE_SHA" "$CONFIG_RUN_ID"
+          import json
+          import os
+          import re
+          import sys
+          try:
+              version = os.environ['EXPECTED_CONFIG_VERSION']
+              if not re.fullmatch(r'0|[1-9][0-9]{0,5}', version):
+                  raise ValueError()
+              rollback = json.loads(os.environ['COMPATIBLE_ROLLBACK_SHAS'])
+              if not isinstance(rollback, list) or not 1 <= len(rollback) <= 16:
+                  raise ValueError()
+              if any(not isinstance(value, str) or not re.fullmatch('[0-9a-f]{40}', value) for value in rollback):
+                  raise ValueError()
+              payload = {
+                  'format': 'cluvo-staging-runtime-config-v1',
+                  'source_sha': os.environ['CONFIG_SOURCE_SHA'],
+                  'workflow_run_id': os.environ['CONFIG_RUN_ID'],
+                  'expected_source_sha': os.environ['EXPECTED_SOURCE_SHA'],
+                  'expected_config_version': int(version),
+                  'actor': os.environ['CONFIG_ACTOR'],
+                  'project_ref': 'fbozlbgmktkgcdfqdaaz',
+                  'app_url': 'https://staging.cluvo.nl',
+                  'supabase_url': os.environ['SUPABASE_URL'],
+                  'supabase_publishable_key': os.environ['SUPABASE_PUBLISHABLE_KEY'],
+                  'supabase_secret_key': os.environ['SUPABASE_SECRET_KEY'],
+                  'invitation_token_secret': os.environ['INVITATION_TOKEN_SECRET'],
+                  'mail_allowlist': os.environ['MAIL_ALLOWLIST'],
+                  'compatible_rollback_shas': rollback,
+              }
+              encoded = json.dumps(payload, separators=(',', ':')).encode('utf-8')
+              if len(encoded) > 32768:
+                  raise ValueError()
+              sys.stdout.buffer.write(encoded)
+          except Exception:
+              print('STAGING_RUNTIME_INPUT_INVALID', file=sys.stderr)
+              raise SystemExit(1)
+          PY

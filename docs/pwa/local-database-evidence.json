@@ -1,0 +1,2438 @@
+{
+  "scope": "LOCAL_SYNTHETIC_POSTGRESQL_NATIVE_AUTHORITY",
+  "source_bound_executed_report": "docs/release/evidence/local/20261009-pwa-release/owned-final31-sql-proof.json",
+  "source_bound_report_sha256": "d72b270d6be242982c589ed969863eff4e2dc633531ee37b1f813e8b88c6db6c",
+  "migration_count": 31,
+  "all_sql_suites": 31,
+  "all_sql_assertions": 1437,
+  "pwa_sql_suites": 13,
+  "pwa_sql_assertions": 580,
+  "suites": [
+    {
+      "suite": "supabase/tests/pwa001_domain_and_privacy.sql",
+      "source_sha256": "9d62e31e7fe1ec74b9ba42bac749f147fcad047b0d4e055949a758933b01d332",
+      "actually_executed": true,
+      "passed_assertions": [
+        {
+          "number": 1,
+          "name": "authorized complete mobile snapshot executes"
+        },
+        {
+          "number": 2,
+          "name": "identity comes only from verified actor"
+        },
+        {
+          "number": 3,
+          "name": "foreign tenant snapshot denied"
+        },
+        {
+          "number": 4,
+          "name": "member cannot read financial transactions"
+        },
+        {
+          "number": 5,
+          "name": "snapshot excludes Auth source data"
+        },
+        {
+          "number": 6,
+          "name": "push endpoints and secrets not directly readable"
+        },
+        {
+          "number": 7,
+          "name": "server key has no human PWA command authority"
+        },
+        {
+          "number": 8,
+          "name": "actor override and unknown payload fields refused"
+        },
+        {
+          "number": 9,
+          "name": "preferences commit durable version"
+        },
+        {
+          "number": 10,
+          "name": "unknown response retry returns same receipt"
+        },
+        {
+          "number": 11,
+          "name": "changed payload cannot reuse command key"
+        },
+        {
+          "number": 12,
+          "name": "own command status readback confirms commit"
+        },
+        {
+          "number": 13,
+          "name": "versioned explanation persists"
+        },
+        {
+          "number": 14,
+          "name": "unknown help topic rejected"
+        },
+        {
+          "number": 15,
+          "name": "own course enrollment commits"
+        },
+        {
+          "number": 16,
+          "name": "other actor cannot see command receipt"
+        },
+        {
+          "number": 17,
+          "name": "help preferences separated between parents"
+        },
+        {
+          "number": 18,
+          "name": "last occupied course place rejects other account"
+        },
+        {
+          "number": 19,
+          "name": "team parent assigns actual child without booking executor"
+        },
+        {
+          "number": 20,
+          "name": "team goal zero is valid and durable"
+        },
+        {
+          "number": 21,
+          "name": "reserved concrete place disappears from public market"
+        },
+        {
+          "number": 22,
+          "name": "legacy public booking cannot bypass reservation"
+        },
+        {
+          "number": 23,
+          "name": "authorized household chooses executor and books reserved place"
+        },
+        {
+          "number": 24,
+          "name": "preparation is durable and does not confirm execution"
+        },
+        {
+          "number": 25,
+          "name": "practical household question is separate from formal exception"
+        },
+        {
+          "number": 26,
+          "name": "other parent cannot read private practical question"
+        },
+        {
+          "number": 27,
+          "name": "planning/preparation creates no team execution credit"
+        },
+        {
+          "number": 28,
+          "name": "planning/preparation creates no confirmed household minutes"
+        },
+        {
+          "number": 29,
+          "name": "transaction reservation authorization never persists"
+        },
+        {
+          "number": 30,
+          "name": "terminal confirmed place cannot be rebooked"
+        },
+        {
+          "number": 31,
+          "name": "all new PWA relations force RLS"
+        },
+        {
+          "number": 32,
+          "name": "revoked native session cannot read PWA snapshot"
+        },
+        {
+          "number": 33,
+          "name": "revoked native session cannot mutate PWA"
+        }
+      ],
+      "scope": "Owned local PostgreSQL17 with real synthetic actor/session authority; rollback-only SQL suite. This is API/domain evidence, not a UI click or remote-staging proof."
+    },
+    {
+      "suite": "supabase/tests/pwa002_coordination_and_history.sql",
+      "source_sha256": "643395b4a842bb1d005a170179ea0b20a27285a05fa5e34baf32bc199e5f2164",
+      "actually_executed": true,
+      "passed_assertions": [
+        {
+          "number": 1,
+          "name": "team series creates four real shifts"
+        },
+        {
+          "number": 2,
+          "name": "two concrete places per occurrence"
+        },
+        {
+          "number": 3,
+          "name": "weekly local time survives DST"
+        },
+        {
+          "number": 4,
+          "name": "original team tasks remain zero-credit"
+        },
+        {
+          "number": 5,
+          "name": "real distribution proposal uses all free positions"
+        },
+        {
+          "number": 6,
+          "name": "DST gap rejects entire series"
+        },
+        {
+          "number": 7,
+          "name": "failed series leaves no partial tasks"
+        },
+        {
+          "number": 8,
+          "name": "unreviewed credit cannot publish"
+        },
+        {
+          "number": 9,
+          "name": "canonical volunteer review persists"
+        },
+        {
+          "number": 10,
+          "name": "reviewed request publishes real concrete capacity"
+        },
+        {
+          "number": 11,
+          "name": "approved minutes apply only to market shift"
+        },
+        {
+          "number": 12,
+          "name": "approval preserves requested capacity"
+        },
+        {
+          "number": 13,
+          "name": "source task still zero after approval"
+        },
+        {
+          "number": 14,
+          "name": "native planning and publication create club task"
+        },
+        {
+          "number": 15,
+          "name": "editable actual requirements persisted"
+        },
+        {
+          "number": 16,
+          "name": "successor cannot accept unfinished concept"
+        },
+        {
+          "number": 17,
+          "name": "only reviewed exact handover version may transfer authority"
+        },
+        {
+          "number": 18,
+          "name": "named successor acquires actual team-parent authority"
+        },
+        {
+          "number": 19,
+          "name": "accepted handover role is authoritative"
+        },
+        {
+          "number": 20,
+          "name": "command identity survives unknown response"
+        },
+        {
+          "number": 21,
+          "name": "intent key cannot change payload hash"
+        },
+        {
+          "number": 22,
+          "name": "absent transaction is resolved only behind shared fence"
+        },
+        {
+          "number": 23,
+          "name": "actual own push subscription persists"
+        },
+        {
+          "number": 24,
+          "name": "snapshot never reveals delivery endpoint"
+        },
+        {
+          "number": 25,
+          "name": "arbitrary or private push origin refused in SQL"
+        },
+        {
+          "number": 26,
+          "name": "authorized message is stored"
+        },
+        {
+          "number": 27,
+          "name": "card stores real deadline and scoped assignee"
+        },
+        {
+          "number": 28,
+          "name": "other parent cannot read committee conversation"
+        },
+        {
+          "number": 29,
+          "name": "foreign card mutation refused"
+        }
+      ],
+      "scope": "Owned local PostgreSQL17 with real synthetic actor/session authority; rollback-only SQL suite. This is API/domain evidence, not a UI click or remote-staging proof."
+    },
+    {
+      "suite": "supabase/tests/pwa003_tally_delivery_and_cursor.sql",
+      "source_sha256": "e84aced24ddd78d65fda5936d4db1013cfb5396156f1b9018a941c04f14e577d",
+      "actually_executed": true,
+      "passed_assertions": [
+        {
+          "number": 1,
+          "name": "concrete member assignment"
+        },
+        {
+          "number": 2,
+          "name": "regular cancellation cannot silently remove team occupancy"
+        },
+        {
+          "number": 3,
+          "name": "actual canonical confirmation succeeds"
+        },
+        {
+          "number": 4,
+          "name": "exactly one confirmed team execution"
+        },
+        {
+          "number": 5,
+          "name": "team count and household minute ledger remain independent"
+        },
+        {
+          "number": 6,
+          "name": "native correction appends decisions and ledger correction"
+        },
+        {
+          "number": 7,
+          "name": "corrected no-show removes count through causal negative entry"
+        },
+        {
+          "number": 8,
+          "name": "original team tally retained"
+        },
+        {
+          "number": 9,
+          "name": "ledger reversal leaves original unrelated confirmed minutes"
+        },
+        {
+          "number": 10,
+          "name": "team tally cannot be overwritten"
+        },
+        {
+          "number": 11,
+          "name": "authorized canonical evidence contains actual posted record"
+        },
+        {
+          "number": 12,
+          "name": "cross-tenant ledger evidence refused"
+        },
+        {
+          "number": 13,
+          "name": "evidence omits Auth identities"
+        },
+        {
+          "number": 14,
+          "name": "snapshot bounds each authorized conversation"
+        },
+        {
+          "number": 15,
+          "name": "native cursor page has fixed maximum"
+        },
+        {
+          "number": 16,
+          "name": "keyset continuation has remaining distinct rows"
+        },
+        {
+          "number": 17,
+          "name": "null limit cannot unbound cursor"
+        },
+        {
+          "number": 18,
+          "name": "oversized cursor limit refused"
+        },
+        {
+          "number": 19,
+          "name": "different parent cannot use authorized cursor identity"
+        },
+        {
+          "number": 20,
+          "name": "private worker leases concrete delivery targets"
+        },
+        {
+          "number": 21,
+          "name": "provider acceptance is recorded against exact worker lease"
+        },
+        {
+          "number": 22,
+          "name": "completed delivery cannot double-record same lease"
+        },
+        {
+          "number": 23,
+          "name": "expired external-send lease is never automatically replayed"
+        },
+        {
+          "number": 24,
+          "name": "expired outcome stays explicitly unknown"
+        },
+        {
+          "number": 25,
+          "name": "provider attempt history is append-only"
+        },
+        {
+          "number": 26,
+          "name": "human JWT cannot impersonate provider worker"
+        }
+      ],
+      "scope": "Owned local PostgreSQL17 with real synthetic actor/session authority; rollback-only SQL suite. This is API/domain evidence, not a UI click or remote-staging proof."
+    },
+    {
+      "suite": "supabase/tests/pwa004_documents_and_receiving.sql",
+      "source_sha256": "19dcafc01da0d32195146aa5276df8d5ff07c707298d2fa57540da807524ce0a",
+      "actually_executed": true,
+      "passed_assertions": [
+        {
+          "number": 1,
+          "name": "authorized exact document metadata resolves"
+        },
+        {
+          "number": 2,
+          "name": "registered immutable version authorizes Storage read"
+        },
+        {
+          "number": 3,
+          "name": "ACL does not authorize unrelated private paths"
+        },
+        {
+          "number": 4,
+          "name": "other household parent does not inherit private document ACL"
+        },
+        {
+          "number": 5,
+          "name": "Storage rechecks actual document ACL"
+        },
+        {
+          "number": 6,
+          "name": "explicit central capability and own committee scope permit actual receiving teams"
+        },
+        {
+          "number": 7,
+          "name": "selection carries actual immutable read version"
+        },
+        {
+          "number": 8,
+          "name": "proposal counts actual suitable household executors"
+        },
+        {
+          "number": 9,
+          "name": "occupied place cannot become a receiving proposal"
+        },
+        {
+          "number": 10,
+          "name": "duplicate concrete place rejected"
+        },
+        {
+          "number": 11,
+          "name": "member cannot inspect central distribution proposal"
+        },
+        {
+          "number": 12,
+          "name": "user gesture binds actual push device"
+        },
+        {
+          "number": 13,
+          "name": "registering push atomically enables own push preference"
+        },
+        {
+          "number": 14,
+          "name": "second device preserves first subscription"
+        },
+        {
+          "number": 15,
+          "name": "only named own push device revoked"
+        },
+        {
+          "number": 16,
+          "name": "remaining active device keeps push enabled"
+        },
+        {
+          "number": 17,
+          "name": "last owned device revokes"
+        },
+        {
+          "number": 18,
+          "name": "last device revocation disables delivery preference"
+        }
+      ],
+      "scope": "Owned local PostgreSQL17 with real synthetic actor/session authority; rollback-only SQL suite. This is API/domain evidence, not a UI click or remote-staging proof."
+    },
+    {
+      "suite": "supabase/tests/pwa005_buddy_and_onboarding.sql",
+      "source_sha256": "fd820ed200502d41c7df4ce93183a45c1adbdf0473c28626b13f887691c976b2",
+      "actually_executed": true,
+      "passed_assertions": [
+        {
+          "number": 1,
+          "name": "unqualified native booking cannot forge a mentor waiver"
+        },
+        {
+          "number": 2,
+          "name": "unqualified PWA booking needs an explicit booked qualified mentor"
+        },
+        {
+          "number": 3,
+          "name": "a human cannot read private transactional mentor proofs"
+        },
+        {
+          "number": 4,
+          "name": "private proof issuance cannot be invoked by the browser"
+        },
+        {
+          "number": 5,
+          "name": "readmodel offers only a real qualified versioned booked mentor"
+        },
+        {
+          "number": 6,
+          "name": "stale mentor version is rejected"
+        },
+        {
+          "number": 7,
+          "name": "mentor from another shift is rejected"
+        },
+        {
+          "number": 8,
+          "name": "all remaining hard eligibility conditions permit explicit mentor choice"
+        },
+        {
+          "number": 9,
+          "name": "mentor availability never masks an unavailable executor"
+        },
+        {
+          "number": 10,
+          "name": "revoked mentor qualification cannot authorize a novice"
+        },
+        {
+          "number": 11,
+          "name": "explicit live mentor permits only a waitlist interest for an otherwise suitable beginner"
+        },
+        {
+          "number": 12,
+          "name": "occupied capacity does not mask an otherwise suitable qualified transfer executor"
+        },
+        {
+          "number": 13,
+          "name": "the real novice booking satisfies durable mentor coverage at transaction end"
+        },
+        {
+          "number": 14,
+          "name": "the named mentor cannot cancel and leave an active novice unsupported"
+        },
+        {
+          "number": 15,
+          "name": "qualified takeover appends a current mentor link and preserves the original choice"
+        },
+        {
+          "number": 16,
+          "name": "replacement is a genuinely qualified booking of the same physical place"
+        },
+        {
+          "number": 17,
+          "name": "session and transaction bound proofs are consumed before commit"
+        },
+        {
+          "number": 18,
+          "name": "booking, mentor choice and takeover create no fictitious execution credit"
+        },
+        {
+          "number": 19,
+          "name": "mentor substitution history is immutable"
+        },
+        {
+          "number": 20,
+          "name": "own intake start replays the same acknowledged command"
+        },
+        {
+          "number": 21,
+          "name": "intake start checks the selected household version"
+        },
+        {
+          "number": 22,
+          "name": "another parent cannot initialize the private new household intake"
+        },
+        {
+          "number": 23,
+          "name": "initialized profile belongs only to the verified current person"
+        },
+        {
+          "number": 24,
+          "name": "draft initialization invents no personal answers"
+        },
+        {
+          "number": 25,
+          "name": "future planning uses actual shift.manage action authority"
+        },
+        {
+          "number": 26,
+          "name": "all newly published positions are reserved in the same atomic club command"
+        },
+        {
+          "number": 27,
+          "name": "reserved creation creates no public booking window"
+        },
+        {
+          "number": 28,
+          "name": "ordinary member cannot configure a published club contact"
+        },
+        {
+          "number": 29,
+          "name": "organization.manage can configure the actual club contact"
+        },
+        {
+          "number": 30,
+          "name": "authorized mobile contact readback shows the actual versioned configured address"
+        },
+        {
+          "number": 31,
+          "name": "mentor substitution is important durable information for the actual novice"
+        },
+        {
+          "number": 32,
+          "name": "OS permission alone does not establish a server push binding"
+        },
+        {
+          "number": 33,
+          "name": "synthetic device binds via the actual own command"
+        },
+        {
+          "number": 34,
+          "name": "own existing subscription has a database-confirmed binding"
+        },
+        {
+          "number": 35,
+          "name": "another account cannot inherit an existing device binding"
+        },
+        {
+          "number": 36,
+          "name": "binding status reauthorizes the actual tenant"
+        },
+        {
+          "number": 37,
+          "name": "cross-club mentor or physical-place identifiers never authorize a booking"
+        },
+        {
+          "number": 38,
+          "name": "initialized own profile can append a real private intake revision"
+        },
+        {
+          "number": 39,
+          "name": "even an explicit household mandate cannot bypass the canonical sixteen-plus execution floor"
+        },
+        {
+          "number": 40,
+          "name": "optional channel/category preferences can be disabled by their actual owner"
+        },
+        {
+          "number": 41,
+          "name": "book-for informs the actual executor through a durable essential inbox despite optional preferences"
+        },
+        {
+          "number": 42,
+          "name": "essential inbox does not override disabled email or push consent"
+        },
+        {
+          "number": 43,
+          "name": "illness remains reportable while an actual qualified replacement is required"
+        },
+        {
+          "number": 44,
+          "name": "reported mentor obstruction does not silently free the physical place"
+        },
+        {
+          "number": 45,
+          "name": "a sickness report creates no execution credit"
+        },
+        {
+          "number": 46,
+          "name": "all mentor and qualification constraints hold for the final actual transaction state"
+        },
+        {
+          "number": 47,
+          "name": "an explicit offset-selected base instant remains valid during the autumn fold"
+        },
+        {
+          "number": 48,
+          "name": "an inferred later fold rejects the complete series without guessing an offset"
+        },
+        {
+          "number": 49,
+          "name": "ambiguous recurrence rolls back every preceding creation in its transaction"
+        },
+        {
+          "number": 50,
+          "name": "the actual PWA interest wrapper locks and writes a published vacancy with correct private role privileges"
+        },
+        {
+          "number": 51,
+          "name": "unpublished vacancy denies interest before disclosing its private version"
+        },
+        {
+          "number": 52,
+          "name": "published interest checks the expected vacancy version"
+        },
+        {
+          "number": 53,
+          "name": "the browser receives no direct vacancy-write grant"
+        },
+        {
+          "number": 54,
+          "name": "a foreign-club resource identifier does not authorize an interest or private version read"
+        },
+        {
+          "number": 55,
+          "name": "exactly one actual interest record is committed inside the test transaction"
+        },
+        {
+          "number": 56,
+          "name": "interest alone grants no appointment, role or household exemption"
+        }
+      ],
+      "scope": "Owned local PostgreSQL17 with real synthetic actor/session authority; rollback-only SQL suite. This is API/domain evidence, not a UI click or remote-staging proof."
+    },
+    {
+      "suite": "supabase/tests/pwa006_compatibility_and_cluster_scope.sql",
+      "source_sha256": "e0fc975ca9526368f6b4ac628ad38cfcd00816cb858e2cd896e8c58bcee3d166",
+      "actually_executed": true,
+      "passed_assertions": [
+        {
+          "number": 1,
+          "name": "new tenants seed central club authority for board and volunteers"
+        },
+        {
+          "number": 2,
+          "name": "central distribution does not broaden team-task management"
+        },
+        {
+          "number": 3,
+          "name": "volatile automation guard remains private"
+        },
+        {
+          "number": 4,
+          "name": "service key cannot call the worker guard"
+        },
+        {
+          "number": 5,
+          "name": "worker guard correctly describes its volatile recovery check"
+        },
+        {
+          "number": 6,
+          "name": "plain committee coordinator has no central distribution"
+        },
+        {
+          "number": 7,
+          "name": "plain coordinator receives no receiving-team profile/count scope"
+        },
+        {
+          "number": 8,
+          "name": "plain coordinator cannot reserve club positions in readmodel"
+        },
+        {
+          "number": 9,
+          "name": "plain coordinator cannot atomically create a self-distributed club task"
+        },
+        {
+          "number": 10,
+          "name": "plain coordinator cannot atomically create an assigned club task"
+        },
+        {
+          "number": 11,
+          "name": "plain coordinator cannot reserve an existing club place"
+        },
+        {
+          "number": 12,
+          "name": "plain coordinator cannot inspect central household-fit aggregates"
+        },
+        {
+          "number": 13,
+          "name": "only the authorized public task was persisted"
+        },
+        {
+          "number": 14,
+          "name": "denied commands create no cluster"
+        },
+        {
+          "number": 15,
+          "name": "denied commands reserve no position"
+        },
+        {
+          "number": 16,
+          "name": "coordinator plus own-team parent remains noncentral"
+        },
+        {
+          "number": 17,
+          "name": "own-team management remains independently authorized"
+        },
+        {
+          "number": 18,
+          "name": "own-team parent can still set its real team goal"
+        },
+        {
+          "number": 19,
+          "name": "hybrid coordinator/team parent cannot distribute club tasks"
+        },
+        {
+          "number": 20,
+          "name": "hybrid coordinator/team parent cannot reserve club places even for its own team"
+        },
+        {
+          "number": 21,
+          "name": "hybrid denials create zero clusters"
+        },
+        {
+          "number": 22,
+          "name": "hybrid denials reserve zero positions"
+        },
+        {
+          "number": 23,
+          "name": "actual board tenant grant enables central distribution"
+        },
+        {
+          "number": 24,
+          "name": "central receiving capability does not imply managing another team"
+        },
+        {
+          "number": 25,
+          "name": "central native grant can preview real receiving teams"
+        },
+        {
+          "number": 26,
+          "name": "central board commands persist both concrete clusters"
+        },
+        {
+          "number": 27,
+          "name": "central creation and existing reservation atomically reserve three actual positions"
+        },
+        {
+          "number": 28,
+          "name": "central authority can receive club work without a team-parent grant"
+        },
+        {
+          "number": 29,
+          "name": "central reserved creation never exposes a public booking window"
+        },
+        {
+          "number": 30,
+          "name": "central catalogue adds no cross-tenant actor access"
+        },
+        {
+          "number": 31,
+          "name": "central club authority alone cannot answer a private household question"
+        },
+        {
+          "number": 32,
+          "name": "actual volunteer committee tenant grant also enables central distribution"
+        },
+        {
+          "number": 33,
+          "name": "central volunteers can create real self-distributed club work"
+        },
+        {
+          "number": 34,
+          "name": "answer checks the exact private question version"
+        },
+        {
+          "number": 35,
+          "name": "native reviewer answers using the typed question-recipient query"
+        },
+        {
+          "number": 36,
+          "name": "same answer key replays its acknowledged result"
+        },
+        {
+          "number": 37,
+          "name": "one durable answer notification is addressed to the actual question owner"
+        },
+        {
+          "number": 38,
+          "name": "question open and answered states append once despite replay"
+        },
+        {
+          "number": 39,
+          "name": "another parent receives no private answer notification"
+        },
+        {
+          "number": 40,
+          "name": "owner reads exact answer and append-only question history"
+        },
+        {
+          "number": 41,
+          "name": "owner native inbox reads exactly one actual question deep link"
+        },
+        {
+          "number": 42,
+          "name": "shared household progress grant does not reveal another person private question"
+        },
+        {
+          "number": 43,
+          "name": "another native account inbox excludes the private answer"
+        },
+        {
+          "number": 44,
+          "name": "central authority still requires an actual source-committee manage grant"
+        },
+        {
+          "number": 45,
+          "name": "central distribution cannot replace revoked source-committee planning authority"
+        }
+      ],
+      "scope": "Owned local PostgreSQL17 with real synthetic actor/session authority; rollback-only SQL suite. This is API/domain evidence, not a UI click or remote-staging proof."
+    },
+    {
+      "suite": "supabase/tests/pwa007_repeatable_commands.sql",
+      "source_sha256": "d0d14bdd1b6ebc276d96bdd4beac543d95d96a35f86a5689fe779fb104fce647",
+      "actually_executed": true,
+      "passed_assertions": [
+        {
+          "number": 1,
+          "name": "A dismisses own versioned topic"
+        },
+        {
+          "number": 2,
+          "name": "fresh acknowledgement of unchanged seen topic is a valid command"
+        },
+        {
+          "number": 3,
+          "name": "B independently dismisses the same versioned topic"
+        },
+        {
+          "number": 4,
+          "name": "A reads its own explanations as reset"
+        },
+        {
+          "number": 5,
+          "name": "A reset does not delete B preference despite household progress sharing"
+        },
+        {
+          "number": 6,
+          "name": "B can reset after A in the same tenant"
+        },
+        {
+          "number": 7,
+          "name": "another explicit own reset succeeds even with no seen rows"
+        },
+        {
+          "number": 8,
+          "name": "same reset key replays the original receipt"
+        },
+        {
+          "number": 9,
+          "name": "caller cannot address another person preference resource"
+        },
+        {
+          "number": 10,
+          "name": "delegated person payload cannot reset someone else preferences"
+        },
+        {
+          "number": 11,
+          "name": "own-account acknowledgement still reauthorizes tenant"
+        },
+        {
+          "number": 12,
+          "name": "B marks its actual own inbox read"
+        },
+        {
+          "number": 13,
+          "name": "B own inbox row is marked"
+        },
+        {
+          "number": 14,
+          "name": "B bulk inbox mutation leaves A row unread"
+        },
+        {
+          "number": 15,
+          "name": "A bulk read succeeds after B in the same tenant"
+        },
+        {
+          "number": 16,
+          "name": "another explicit empty bulk read succeeds"
+        },
+        {
+          "number": 17,
+          "name": "revoking already absent own device remains a valid acknowledgement"
+        },
+        {
+          "number": 18,
+          "name": "fresh-key repeated missing-device revoke also succeeds"
+        },
+        {
+          "number": 19,
+          "name": "first actual attendance batch confirms partial performed minutes"
+        },
+        {
+          "number": 20,
+          "name": "second independent attendance batch confirms actual no-show without shared-tenant event conflict"
+        },
+        {
+          "number": 21,
+          "name": "same batch key replays without another confirmation or award"
+        },
+        {
+          "number": 22,
+          "name": "independent batches preserve exact performed ledger minutes"
+        },
+        {
+          "number": 23,
+          "name": "two original confirmations remain exactly once after batch replay"
+        },
+        {
+          "number": 24,
+          "name": "fresh resets create their own immutable events; same-key replay adds none"
+        },
+        {
+          "number": 25,
+          "name": "each actual reset keeps its own actor audit exactly once"
+        },
+        {
+          "number": 26,
+          "name": "different parents receive distinct completed-command event identities"
+        },
+        {
+          "number": 27,
+          "name": "repeatable events identify their actual completed command"
+        },
+        {
+          "number": 28,
+          "name": "independent attendance batches append separate command events"
+        },
+        {
+          "number": 29,
+          "name": "first distribution updates the actual selected allocation"
+        },
+        {
+          "number": 30,
+          "name": "second different distribution succeeds for unchanged team metadata"
+        },
+        {
+          "number": 31,
+          "name": "actual eligible opted-in reserve receives its request"
+        },
+        {
+          "number": 32,
+          "name": "another explicit reserve request has a separate command identity"
+        },
+        {
+          "number": 33,
+          "name": "no fake team version is introduced to avoid a command event conflict"
+        },
+        {
+          "number": 34,
+          "name": "both independent allocation versions are actual assignment changes"
+        },
+        {
+          "number": 35,
+          "name": "repeat acknowledgement does not duplicate the durable reserve recipient"
+        },
+        {
+          "number": 36,
+          "name": "existing own intake initialization acknowledges the actual profile"
+        },
+        {
+          "number": 37,
+          "name": "fresh-key own intake initialization is also safe"
+        },
+        {
+          "number": 38,
+          "name": "repeated initialization preserves existing private answers"
+        },
+        {
+          "number": 39,
+          "name": "A accepts its exact actual policy assignment"
+        },
+        {
+          "number": 40,
+          "name": "B independent acceptance succeeds after A tenant acknowledgement"
+        },
+        {
+          "number": 41,
+          "name": "both exact policy acceptance records survive independently"
+        }
+      ],
+      "scope": "Owned local PostgreSQL17 with real synthetic actor/session authority; rollback-only SQL suite. This is API/domain evidence, not a UI click or remote-staging proof."
+    },
+    {
+      "suite": "supabase/tests/pwa008_digest_dispatch_day.sql",
+      "source_sha256": "2507357448b8108b53ba8adafe1e3e79b315e21312d89c283746f8b5e4e6d506",
+      "actually_executed": true,
+      "passed_assertions": [
+        {
+          "number": 1,
+          "name": "four real email targets leased without external requests"
+        },
+        {
+          "number": 2,
+          "name": "real source is still an eligible future free shift"
+        },
+        {
+          "number": 3,
+          "name": "actual current tenant calendar day differs from UTC"
+        },
+        {
+          "number": 4,
+          "name": "historical digest timezone snapshot remains unchanged"
+        },
+        {
+          "number": 5,
+          "name": "previous-day queued digest cannot dispatch today"
+        },
+        {
+          "number": 6,
+          "name": "today digest dispatches using current club timezone rather than UTC or snapshot"
+        },
+        {
+          "number": 7,
+          "name": "known previous-day 429 is recorded through native receipt path"
+        },
+        {
+          "number": 8,
+          "name": "unknown previous-day outcome is retained through native receipt path"
+        },
+        {
+          "number": 9,
+          "name": "known 429 keeps historical digest failed"
+        },
+        {
+          "number": 10,
+          "name": "unknown keeps historical digest unknown"
+        },
+        {
+          "number": 11,
+          "name": "second worker can lease only due known-failed target, never in-flight or unknown"
+        },
+        {
+          "number": 12,
+          "name": "known 429 retry from an old day is denied immediately before provider"
+        },
+        {
+          "number": 13,
+          "name": "unknown target is never automatically replayed"
+        },
+        {
+          "number": 14,
+          "name": "other worker cannot revalidate today target leased to first worker"
+        },
+        {
+          "number": 15,
+          "name": "old queued digest is cancelled with durable acknowledgement"
+        },
+        {
+          "number": 16,
+          "name": "old known failure is cancelled after revalidation rejects it"
+        },
+        {
+          "number": 17,
+          "name": "synthetic current-day provider acceptance records one native receipt"
+        },
+        {
+          "number": 18,
+          "name": "current digest now has real receipt state without actual provider claim"
+        },
+        {
+          "number": 19,
+          "name": "all historical calendar slots remain reserved"
+        },
+        {
+          "number": 20,
+          "name": "same-day second digest cannot reserve another slot after acceptance"
+        },
+        {
+          "number": 21,
+          "name": "unknown outcome never releases its historical daily slot"
+        },
+        {
+          "number": 22,
+          "name": "second worker cannot replay accepted, cancelled or unknown targets"
+        },
+        {
+          "number": 23,
+          "name": "current slot has exactly one accepted attempt"
+        },
+        {
+          "number": 24,
+          "name": "dispatch day correction cannot erase receipt history"
+        },
+        {
+          "number": 25,
+          "name": "all initial leases, known failure, retry lease, unknown and terminal receipts are append-only"
+        },
+        {
+          "number": 26,
+          "name": "authenticated cannot invoke private dispatch revalidation"
+        },
+        {
+          "number": 27,
+          "name": "service role cannot bypass native automation gate"
+        },
+        {
+          "number": 28,
+          "name": "command owner cannot invoke private worker gate"
+        }
+      ],
+      "scope": "Owned local PostgreSQL17 with real synthetic actor/session authority; rollback-only SQL suite. This is API/domain evidence, not a UI click or remote-staging proof."
+    },
+    {
+      "suite": "supabase/tests/pwa009_card_version_gate.sql",
+      "source_sha256": "eaa9cdffae74afef0cbf023e26c245c0595c47d0ca1744aa0b3e2e1a331ad3fe",
+      "actually_executed": true,
+      "passed_assertions": [
+        {
+          "number": 1,
+          "name": "dispatcher retains definer owner, volatility and empty path"
+        },
+        {
+          "number": 2,
+          "name": "public dispatcher remains security invoker"
+        },
+        {
+          "number": 3,
+          "name": "anonymous role has no internal command authority"
+        },
+        {
+          "number": 4,
+          "name": "manager reply reaches actual dispatcher without unassigned record error"
+        },
+        {
+          "number": 5,
+          "name": "card update returns actual new version"
+        },
+        {
+          "number": 6,
+          "name": "stale card version is rejected"
+        },
+        {
+          "number": 7,
+          "name": "reply version uses actual card version"
+        },
+        {
+          "number": 8,
+          "name": "checklist requires item version even when supplied version matches card"
+        },
+        {
+          "number": 9,
+          "name": "checklist completion increments item version"
+        },
+        {
+          "number": 10,
+          "name": "stale checklist item cannot be cleared"
+        },
+        {
+          "number": 11,
+          "name": "current checklist version may clear completion"
+        },
+        {
+          "number": 12,
+          "name": "assigned viewer can reply through native own-person scope"
+        },
+        {
+          "number": 13,
+          "name": "exact reply replay returns original receipt"
+        },
+        {
+          "number": 14,
+          "name": "same reply key cannot change content"
+        },
+        {
+          "number": 15,
+          "name": "assigned actor reads only the explicitly assigned card"
+        },
+        {
+          "number": 16,
+          "name": "assignment does not authorize manager-only deadline change"
+        },
+        {
+          "number": 17,
+          "name": "other parent cannot read the private commission card"
+        },
+        {
+          "number": 18,
+          "name": "other parent cannot reply"
+        },
+        {
+          "number": 19,
+          "name": "other parent cannot update"
+        },
+        {
+          "number": 20,
+          "name": "other parent cannot change checklist"
+        },
+        {
+          "number": 21,
+          "name": "coordinator role does not cross committee"
+        },
+        {
+          "number": 22,
+          "name": "coordinator role does not cross club"
+        },
+        {
+          "number": 23,
+          "name": "spoofed session cannot use the repaired path"
+        },
+        {
+          "number": 24,
+          "name": "replay and negative writes create no extra reply"
+        },
+        {
+          "number": 25,
+          "name": "reply author is the native actor person"
+        },
+        {
+          "number": 26,
+          "name": "actual card column reads back after update"
+        },
+        {
+          "number": 27,
+          "name": "denied deadline mutation rolls back preceding card update"
+        },
+        {
+          "number": 28,
+          "name": "failed mutations do not increment card version"
+        },
+        {
+          "number": 29,
+          "name": "successful update appends exactly one history row"
+        },
+        {
+          "number": 30,
+          "name": "history binds actual manager and card version"
+        },
+        {
+          "number": 31,
+          "name": "checklist readback preserves explicit cleared state"
+        },
+        {
+          "number": 32,
+          "name": "replayed reply retains one actual event"
+        },
+        {
+          "number": 33,
+          "name": "reply contents stay outside audit payload"
+        },
+        {
+          "number": 34,
+          "name": "card mutations create no confirmed hour credit"
+        }
+      ],
+      "scope": "Owned local PostgreSQL17 with real synthetic actor/session authority; rollback-only SQL suite. This is API/domain evidence, not a UI click or remote-staging proof."
+    },
+    {
+      "suite": "supabase/tests/pwa010_handover_checklist_integrity.sql",
+      "source_sha256": "8c386daf9b36fb9ed1361b4eb529db5c66b0b4a8a45e02f2c3acf51a236d54cd",
+      "actually_executed": true,
+      "passed_assertions": [
+        {
+          "number": 1,
+          "name": "direct native preparation rejects empty"
+        },
+        {
+          "number": 2,
+          "name": "direct native preparation rejects missing"
+        },
+        {
+          "number": 3,
+          "name": "direct native preparation rejects null"
+        },
+        {
+          "number": 4,
+          "name": "direct native preparation rejects scalar string"
+        },
+        {
+          "number": 5,
+          "name": "direct native preparation rejects scalar boolean"
+        },
+        {
+          "number": 6,
+          "name": "direct native preparation rejects object"
+        },
+        {
+          "number": 7,
+          "name": "direct native preparation rejects four choices"
+        },
+        {
+          "number": 8,
+          "name": "direct native preparation rejects six choices"
+        },
+        {
+          "number": 9,
+          "name": "direct native preparation rejects null choice"
+        },
+        {
+          "number": 10,
+          "name": "direct native preparation rejects string choice"
+        },
+        {
+          "number": 11,
+          "name": "direct native preparation rejects number choice"
+        },
+        {
+          "number": 12,
+          "name": "direct native preparation rejects object choice"
+        },
+        {
+          "number": 13,
+          "name": "direct native preparation rejects nested choice"
+        },
+        {
+          "number": 14,
+          "name": "direct native preparation rejects unchecked ready choice"
+        },
+        {
+          "number": 15,
+          "name": "draft also requires exactly five typed choices"
+        },
+        {
+          "number": 16,
+          "name": "invalid preparations leave no handover rows"
+        },
+        {
+          "number": 17,
+          "name": "rejected preparations create no successful mutation audit"
+        },
+        {
+          "number": 18,
+          "name": "five choices never supply missing team authority"
+        },
+        {
+          "number": 19,
+          "name": "five unchecked choices remain a valid draft"
+        },
+        {
+          "number": 20,
+          "name": "draft persists all five boolean positions"
+        },
+        {
+          "number": 21,
+          "name": "named successor cannot accept a draft"
+        },
+        {
+          "number": 22,
+          "name": "another parent cannot take the named successor authority"
+        },
+        {
+          "number": 23,
+          "name": "another tenant cannot accept a known handover id"
+        },
+        {
+          "number": 24,
+          "name": "valid choices do not loosen expected version"
+        },
+        {
+          "number": 25,
+          "name": "named successor accepts exact ready five-check version"
+        },
+        {
+          "number": 26,
+          "name": "same key replays confirmed authority transfer without duplicating grants"
+        },
+        {
+          "number": 27,
+          "name": "five-check acceptance supplies actual team-parent authority"
+        },
+        {
+          "number": 28,
+          "name": "accepted history preserves the ready record"
+        },
+        {
+          "number": 29,
+          "name": "exact replay grants the new role once"
+        },
+        {
+          "number": 30,
+          "name": "table independently rejects empty array under SQL NULL semantics"
+        },
+        {
+          "number": 31,
+          "name": "table rejects null choices in draft too"
+        },
+        {
+          "number": 32,
+          "name": "native actor has no direct handover INSERT bypass"
+        },
+        {
+          "number": 33,
+          "name": "acceptance guard separately rejects legacy empty ready checklist"
+        },
+        {
+          "number": 34,
+          "name": "legacy malformed acceptance grants no authority"
+        },
+        {
+          "number": 35,
+          "name": "legacy failure does not overwrite malformed historical record"
+        },
+        {
+          "number": 36,
+          "name": "legacy failed acceptance creates no successful transfer audit"
+        }
+      ],
+      "scope": "Owned local PostgreSQL17 with real synthetic actor/session authority; rollback-only SQL suite. This is API/domain evidence, not a UI click or remote-staging proof."
+    },
+    {
+      "suite": "supabase/tests/pwa011_task_offer_category_seed.sql",
+      "source_sha256": "2c90363f0ab8e3ba258764788c53e52e159c09aa90dba971137f599561f31fd0",
+      "actually_executed": true,
+      "passed_assertions": [
+        {
+          "number": 1,
+          "name": "all three newly created tenants get their own task offer category"
+        },
+        {
+          "number": 2,
+          "name": "new tenant receives actual canonical copy"
+        },
+        {
+          "number": 3,
+          "name": "news category is optional and starts at actual version one"
+        },
+        {
+          "number": 4,
+          "name": "category identities are tenant bound rather than shared"
+        },
+        {
+          "number": 5,
+          "name": "browser cannot invoke private seeding function"
+        },
+        {
+          "number": 6,
+          "name": "service role cannot invoke private seeding function"
+        },
+        {
+          "number": 7,
+          "name": "no new command owner seed RPC privilege"
+        },
+        {
+          "number": 8,
+          "name": "seed uses existing migration authority with empty search path and no definer escalation"
+        },
+        {
+          "number": 9,
+          "name": "notification category native forced RLS remains enabled"
+        },
+        {
+          "number": 10,
+          "name": "current member reads actual own default category"
+        },
+        {
+          "number": 11,
+          "name": "member cannot read another club category"
+        },
+        {
+          "number": 12,
+          "name": "seed does not grant browser direct category INSERT"
+        },
+        {
+          "number": 13,
+          "name": "seed does not create a browser tenant creation route"
+        },
+        {
+          "number": 14,
+          "name": "category default never supplies missing planning authority"
+        },
+        {
+          "number": 15,
+          "name": "actual first publication succeeds and exact key replays without another shift"
+        },
+        {
+          "number": 16,
+          "name": "known default category cannot authorize cross-tenant publication"
+        },
+        {
+          "number": 17,
+          "name": "first publication and replay preserve one actual shift"
+        },
+        {
+          "number": 18,
+          "name": "canonical publication really changed shift state"
+        },
+        {
+          "number": 19,
+          "name": "actual public shift has the requested two places"
+        },
+        {
+          "number": 20,
+          "name": "publication preserves actual eligibility rules"
+        },
+        {
+          "number": 21,
+          "name": "publication has immutable actual preparation text"
+        },
+        {
+          "number": 22,
+          "name": "public first task introduces no hidden reservation"
+        },
+        {
+          "number": 23,
+          "name": "registered category opt-out remains unchanged by publication"
+        },
+        {
+          "number": 24,
+          "name": "PWA optional email and news consent remain unchanged"
+        },
+        {
+          "number": 25,
+          "name": "canonical first-publication outbox respects existing email opt-out"
+        },
+        {
+          "number": 26,
+          "name": "publishing a task does not award execution minutes"
+        }
+      ],
+      "scope": "Owned local PostgreSQL17 with real synthetic actor/session authority; rollback-only SQL suite. This is API/domain evidence, not a UI click or remote-staging proof."
+    },
+    {
+      "suite": "supabase/tests/pwa012_nested_version_integrity.sql",
+      "source_sha256": "f7664b86f44ff92d496bf3edb02fe8d73772392cc85126c340e9d5f84f204f8f",
+      "actually_executed": true,
+      "passed_assertions": [
+        {
+          "number": 1,
+          "name": "native coordinator publishes the actual target version before propagation"
+        },
+        {
+          "number": 2,
+          "name": "propagation rejects null nested version at the native API"
+        },
+        {
+          "number": 3,
+          "name": "propagation rejects zero nested version at the native API"
+        },
+        {
+          "number": 4,
+          "name": "propagation rejects negative nested version at the native API"
+        },
+        {
+          "number": 5,
+          "name": "propagation rejects string nested version at the native API"
+        },
+        {
+          "number": 6,
+          "name": "propagation rejects boolean nested version at the native API"
+        },
+        {
+          "number": 7,
+          "name": "propagation rejects fractional nested version at the native API"
+        },
+        {
+          "number": 8,
+          "name": "propagation rejects an omitted captured target version"
+        },
+        {
+          "number": 9,
+          "name": "propagation rejects the actual prior target version"
+        },
+        {
+          "number": 10,
+          "name": "rejected propagation preserves every immutable instruction version scope audit receipt and ledger"
+        },
+        {
+          "number": 11,
+          "name": "correct nested versions do not grant an ordinary member instruction authority"
+        },
+        {
+          "number": 12,
+          "name": "correct nested versions do not cross the native tenant boundary"
+        },
+        {
+          "number": 13,
+          "name": "unauthorized propagation also leaves all durable state unchanged"
+        },
+        {
+          "number": 14,
+          "name": "correctly captured propagation replays the same completed command"
+        },
+        {
+          "number": 15,
+          "name": "target version reflects exactly its two actual instruction publications"
+        },
+        {
+          "number": 16,
+          "name": "source version changes once for the actual bulk publication"
+        },
+        {
+          "number": 17,
+          "name": "correct propagation and replay retain exactly two immutable instruction records"
+        },
+        {
+          "number": 18,
+          "name": "real team parent first assigns the actual reserved member position"
+        },
+        {
+          "number": 19,
+          "name": "distribution rejects null captured allocation version"
+        },
+        {
+          "number": 20,
+          "name": "distribution rejects zero captured allocation version"
+        },
+        {
+          "number": 21,
+          "name": "distribution rejects negative captured allocation version"
+        },
+        {
+          "number": 22,
+          "name": "distribution rejects string captured allocation version"
+        },
+        {
+          "number": 23,
+          "name": "distribution rejects boolean captured allocation version"
+        },
+        {
+          "number": 24,
+          "name": "distribution rejects fractional captured allocation version"
+        },
+        {
+          "number": 25,
+          "name": "distribution rejects an omitted captured allocation version"
+        },
+        {
+          "number": 26,
+          "name": "distribution rejects the actual previous allocation version"
+        },
+        {
+          "number": 27,
+          "name": "one missing nested version rolls back the whole distribution including an earlier valid item"
+        },
+        {
+          "number": 28,
+          "name": "failed bulk distribution preserves assignment versions members immutable audit command receipts and hours"
+        },
+        {
+          "number": 29,
+          "name": "correct allocation version does not grant a player team parent authority"
+        },
+        {
+          "number": 30,
+          "name": "unauthorized allocation changes leave the same full historical fingerprint"
+        },
+        {
+          "number": 31,
+          "name": "correct captured reallocation replays without another assignment"
+        },
+        {
+          "number": 32,
+          "name": "real reallocation increments only the chosen position once"
+        },
+        {
+          "number": 33,
+          "name": "readback contains the actual chosen member"
+        },
+        {
+          "number": 34,
+          "name": "no team metadata version is forged by the bulk command"
+        },
+        {
+          "number": 35,
+          "name": "the failed mixed batch leaves its second allocation reserved at version one"
+        },
+        {
+          "number": 36,
+          "name": "PWA acceptance rejects a null element in the expected version vector"
+        },
+        {
+          "number": 37,
+          "name": "PWA acceptance rejects a zero element in the expected version vector"
+        },
+        {
+          "number": 38,
+          "name": "PWA acceptance rejects a negative element in the expected version vector"
+        },
+        {
+          "number": 39,
+          "name": "PWA acceptance rejects a string element in the expected version vector"
+        },
+        {
+          "number": 40,
+          "name": "PWA acceptance rejects a boolean element in the expected version vector"
+        },
+        {
+          "number": 41,
+          "name": "PWA acceptance rejects a fractional element in the expected version vector"
+        },
+        {
+          "number": 42,
+          "name": "PWA acceptance rejects a missing version vector"
+        },
+        {
+          "number": 43,
+          "name": "PWA acceptance rejects a null version vector"
+        },
+        {
+          "number": 44,
+          "name": "PWA acceptance rejects a empty version vector"
+        },
+        {
+          "number": 45,
+          "name": "PWA acceptance rejects a wrong length version vector"
+        },
+        {
+          "number": 46,
+          "name": "canonical API rejects missing canonical vector without a web form"
+        },
+        {
+          "number": 47,
+          "name": "canonical API rejects null canonical element without a web form"
+        },
+        {
+          "number": 48,
+          "name": "canonical API rejects empty canonical vector without a web form"
+        },
+        {
+          "number": 49,
+          "name": "canonical API rejects wrong canonical length without a web form"
+        },
+        {
+          "number": 50,
+          "name": "canonical API rejects zero canonical version without a web form"
+        },
+        {
+          "number": 51,
+          "name": "canonical API rejects negative canonical version without a web form"
+        },
+        {
+          "number": 52,
+          "name": "canonical API rejects canonical lower bound zero without a web form"
+        },
+        {
+          "number": 53,
+          "name": "canonical API rejects multidimensional canonical vector without a web form"
+        },
+        {
+          "number": 54,
+          "name": "canonical API rejects assignment lower bound zero"
+        },
+        {
+          "number": 55,
+          "name": "canonical API rejects multidimensional assignment IDs"
+        },
+        {
+          "number": 56,
+          "name": "canonical API rejects null assignment ID"
+        },
+        {
+          "number": 57,
+          "name": "PWA policy acceptance still rejects a nonnull stale version"
+        },
+        {
+          "number": 58,
+          "name": "canonical policy comparison still rejects an incorrect captured assignment version"
+        },
+        {
+          "number": 59,
+          "name": "one null version denies an entire multi-person policy vector before any acceptance"
+        },
+        {
+          "number": 60,
+          "name": "invalid policy vectors preserve exact opened assignments acceptance history rights audits and receipts"
+        },
+        {
+          "number": 61,
+          "name": "another parent cannot accept the other adult exact policy despite a correct vector"
+        },
+        {
+          "number": 62,
+          "name": "another club native session cannot accept this tenant policy"
+        },
+        {
+          "number": 63,
+          "name": "cross adult and cross club policy attempts retain the same whole durable history"
+        },
+        {
+          "number": 64,
+          "name": "valid PWA vector binds exact document revision independently of assignment version"
+        },
+        {
+          "number": 65,
+          "name": "same policy command key replays its actual confirmed acceptance"
+        },
+        {
+          "number": 66,
+          "name": "valid direct canonical API vector confirms only the other parent own exact policy"
+        },
+        {
+          "number": 67,
+          "name": "direct canonical policy replay does not append another acceptance"
+        },
+        {
+          "number": 68,
+          "name": "both parents own acceptance proofs remain exactly once"
+        },
+        {
+          "number": 69,
+          "name": "only actual valid acceptance increments each assignment version"
+        },
+        {
+          "number": 70,
+          "name": "instruction assignment and policy corrections never invent performed ledger credit"
+        },
+        {
+          "number": 71,
+          "name": "all 50 public PWA action branches independently reject a null top level version"
+        },
+        {
+          "number": 72,
+          "name": "canonical attendance retains its existing independent null version rejection"
+        },
+        {
+          "number": 73,
+          "name": "all null top level guards and the canonical attendance guard preserve ledger audit scope and receipt history"
+        },
+        {
+          "number": 74,
+          "name": "both narrowed native functions retain canonical owner definer volatility and empty search path"
+        }
+      ],
+      "scope": "Owned local PostgreSQL17 with real synthetic actor/session authority; rollback-only SQL suite. This is API/domain evidence, not a UI click or remote-staging proof."
+    },
+    {
+      "suite": "supabase/tests/pwa013_policy_assignment_identity.sql",
+      "source_sha256": "5e14faf522d13a4a749e38885743787ca52578e33f980277a1198c3869fecabc",
+      "actually_executed": true,
+      "passed_assertions": [
+        {
+          "number": 1,
+          "name": "own actor sees own three exact documents plus the explicitly authorized child assignment"
+        },
+        {
+          "number": 2,
+          "name": "assigned club document title is canonical"
+        },
+        {
+          "number": 3,
+          "name": "second document retains a distinct exact identity"
+        },
+        {
+          "number": 4,
+          "name": "multiple document titles are distinct rather than a generic policy label"
+        },
+        {
+          "number": 5,
+          "name": "assigned policy revision is not latest document revision four"
+        },
+        {
+          "number": 6,
+          "name": "assignment expected version remains distinct from document revision"
+        },
+        {
+          "number": 7,
+          "name": "body follows assigned historical version rather than unassigned draft"
+        },
+        {
+          "number": 8,
+          "name": "unassigned draft and foreign club canaries are absent"
+        },
+        {
+          "number": 9,
+          "name": "published own offered assignment exposes actual native acceptance capability"
+        },
+        {
+          "number": 10,
+          "name": "explicit verified guardian has actual child acceptance capability"
+        },
+        {
+          "number": 11,
+          "name": "retired assigned exact body remains readable"
+        },
+        {
+          "number": 12,
+          "name": "retired historical assignment remains read only"
+        },
+        {
+          "number": 13,
+          "name": "same household other adult and foreign household or tenant assignments remain private"
+        },
+        {
+          "number": 14,
+          "name": "direct canonical read registration rejects missing expected version"
+        },
+        {
+          "number": 15,
+          "name": "direct canonical read registration rejects zero expected version"
+        },
+        {
+          "number": 16,
+          "name": "direct canonical read registration rejects negative expected version"
+        },
+        {
+          "number": 17,
+          "name": "open_policy rejects missing vectors in the native API"
+        },
+        {
+          "number": 18,
+          "name": "open_policy rejects null vector in the native API"
+        },
+        {
+          "number": 19,
+          "name": "open_policy rejects empty vector in the native API"
+        },
+        {
+          "number": 20,
+          "name": "open_policy rejects wrong length vector in the native API"
+        },
+        {
+          "number": 21,
+          "name": "open_policy rejects null element in the native API"
+        },
+        {
+          "number": 22,
+          "name": "open_policy rejects zero element in the native API"
+        },
+        {
+          "number": 23,
+          "name": "open_policy rejects negative element in the native API"
+        },
+        {
+          "number": 24,
+          "name": "open_policy rejects string element in the native API"
+        },
+        {
+          "number": 25,
+          "name": "open_policy rejects boolean element in the native API"
+        },
+        {
+          "number": 26,
+          "name": "open_policy rejects fractional element in the native API"
+        },
+        {
+          "number": 27,
+          "name": "open_policy rejects null assignment in the native API"
+        },
+        {
+          "number": 28,
+          "name": "open_policy rejects boolean assignment in the native API"
+        },
+        {
+          "number": 29,
+          "name": "open_policy rejects malformed assignment in the native API"
+        },
+        {
+          "number": 30,
+          "name": "open_policy rejects duplicate assignments in the native API"
+        },
+        {
+          "number": 31,
+          "name": "open_policy rejects document ID instead of assigned text version"
+        },
+        {
+          "number": 32,
+          "name": "open_policy rejects latest unassigned draft"
+        },
+        {
+          "number": 33,
+          "name": "open_policy rejects assignment version instead of policy revision"
+        },
+        {
+          "number": 34,
+          "name": "open_policy rejects zero document revision"
+        },
+        {
+          "number": 35,
+          "name": "open_policy cannot bind two distinct text versions to one body identity"
+        },
+        {
+          "number": 36,
+          "name": "open_policy cannot act for the other adult despite shared household access"
+        },
+        {
+          "number": 37,
+          "name": "open_policy cannot act for another household child"
+        },
+        {
+          "number": 38,
+          "name": "open_policy cannot bind an assignment from another tenant"
+        },
+        {
+          "number": 39,
+          "name": "open_policy checks captured assignment version independently of body revision"
+        },
+        {
+          "number": 40,
+          "name": "accept_policy rejects missing vectors in the native API"
+        },
+        {
+          "number": 41,
+          "name": "accept_policy rejects null vector in the native API"
+        },
+        {
+          "number": 42,
+          "name": "accept_policy rejects empty vector in the native API"
+        },
+        {
+          "number": 43,
+          "name": "accept_policy rejects wrong length vector in the native API"
+        },
+        {
+          "number": 44,
+          "name": "accept_policy rejects null element in the native API"
+        },
+        {
+          "number": 45,
+          "name": "accept_policy rejects zero element in the native API"
+        },
+        {
+          "number": 46,
+          "name": "accept_policy rejects negative element in the native API"
+        },
+        {
+          "number": 47,
+          "name": "accept_policy rejects string element in the native API"
+        },
+        {
+          "number": 48,
+          "name": "accept_policy rejects boolean element in the native API"
+        },
+        {
+          "number": 49,
+          "name": "accept_policy rejects fractional element in the native API"
+        },
+        {
+          "number": 50,
+          "name": "accept_policy rejects null assignment in the native API"
+        },
+        {
+          "number": 51,
+          "name": "accept_policy rejects boolean assignment in the native API"
+        },
+        {
+          "number": 52,
+          "name": "accept_policy rejects malformed assignment in the native API"
+        },
+        {
+          "number": 53,
+          "name": "accept_policy rejects duplicate assignments in the native API"
+        },
+        {
+          "number": 54,
+          "name": "accept_policy rejects document ID instead of assigned text version"
+        },
+        {
+          "number": 55,
+          "name": "accept_policy rejects latest unassigned draft"
+        },
+        {
+          "number": 56,
+          "name": "accept_policy rejects assignment version instead of policy revision"
+        },
+        {
+          "number": 57,
+          "name": "accept_policy rejects zero document revision"
+        },
+        {
+          "number": 58,
+          "name": "accept_policy cannot bind two distinct text versions to one body identity"
+        },
+        {
+          "number": 59,
+          "name": "accept_policy cannot act for the other adult despite shared household access"
+        },
+        {
+          "number": 60,
+          "name": "accept_policy cannot act for another household child"
+        },
+        {
+          "number": 61,
+          "name": "accept_policy cannot bind an assignment from another tenant"
+        },
+        {
+          "number": 62,
+          "name": "accept_policy checks captured assignment version independently of body revision"
+        },
+        {
+          "number": 63,
+          "name": "acceptance cannot automatically mark a merely offered document as opened"
+        },
+        {
+          "number": 64,
+          "name": "one stale selected child rolls back an earlier valid first read atomically"
+        },
+        {
+          "number": 65,
+          "name": "all invalid identity and typed version attempts preserve data history receipts audit notifications and ledger"
+        },
+        {
+          "number": 66,
+          "name": "follow up actor reads only the seven authorized tenant assignments"
+        },
+        {
+          "number": 67,
+          "name": "oversight read authority grants neither a represented subject nor acceptance capability for other members"
+        },
+        {
+          "number": 68,
+          "name": "follow up cannot open another adult text without a native mandate"
+        },
+        {
+          "number": 69,
+          "name": "follow up cannot accept another adult text without a native mandate"
+        },
+        {
+          "number": 70,
+          "name": "second parent reads only its own two documents"
+        },
+        {
+          "number": 71,
+          "name": "household parent access alone cannot open the child policy"
+        },
+        {
+          "number": 72,
+          "name": "other club actor reads only its own policy identity"
+        },
+        {
+          "number": 73,
+          "name": "native foreign club actor sees zero assignments for tenant A"
+        },
+        {
+          "number": 74,
+          "name": "other tenant native session cannot open this club document"
+        },
+        {
+          "number": 75,
+          "name": "oversight household and tenant authorization failures leave immutable history intact"
+        },
+        {
+          "number": 76,
+          "name": "revoked guardian mandate hides the child assignment"
+        },
+        {
+          "number": 77,
+          "name": "revoked guardian cannot open the child document"
+        },
+        {
+          "number": 78,
+          "name": "expired guardian mandate hides the child assignment"
+        },
+        {
+          "number": 79,
+          "name": "oversight may read an expired guardian assignment but cannot act"
+        },
+        {
+          "number": 80,
+          "name": "separate follow up authority cannot replace expired guardian authority"
+        },
+        {
+          "number": 81,
+          "name": "oversight plus revoked guardian remains read only"
+        },
+        {
+          "number": 82,
+          "name": "unconfirmed native account cannot read policy data"
+        },
+        {
+          "number": 83,
+          "name": "unconfirmed native account cannot open a document"
+        },
+        {
+          "number": 84,
+          "name": "expired native session cannot read policy identity"
+        },
+        {
+          "number": 85,
+          "name": "expired native session cannot mark reading"
+        },
+        {
+          "number": 86,
+          "name": "expired own exact text remains readable with actual subject identity"
+        },
+        {
+          "number": 87,
+          "name": "expired exact text cannot produce a new PWA read acknowledgement"
+        },
+        {
+          "number": 88,
+          "name": "retired historical text cannot produce a new PWA read acknowledgement"
+        },
+        {
+          "number": 89,
+          "name": "expired and retired read-status failures preserve history receipts audit and notifications"
+        },
+        {
+          "number": 90,
+          "name": "direct canonical API retains actual correctly versioned reading without acceptance"
+        },
+        {
+          "number": 91,
+          "name": "direct canonical reading replays its actual original captured version"
+        },
+        {
+          "number": 92,
+          "name": "direct canonical read increments the actual assignment once"
+        },
+        {
+          "number": 93,
+          "name": "durable native intent accepts the explicit open action without storing policy payload"
+        },
+        {
+          "number": 94,
+          "name": "actual document click opens the own offered assignment"
+        },
+        {
+          "number": 95,
+          "name": "opening increments actual assignment version once while body revision remains three"
+        },
+        {
+          "number": 96,
+          "name": "opening alone creates no acceptance"
+        },
+        {
+          "number": 97,
+          "name": "native opening appends one actual assignment history event"
+        },
+        {
+          "number": 98,
+          "name": "policy read acknowledgement creates no own inbox or provider notification"
+        },
+        {
+          "number": 99,
+          "name": "identical open key replays the original assignment receipt after its version changed"
+        },
+        {
+          "number": 100,
+          "name": "native receipt resolves the actual opening command as confirmed"
+        },
+        {
+          "number": 101,
+          "name": "opening a mixed already read and new guardian vector records only actual new reads"
+        },
+        {
+          "number": 102,
+          "name": "reopening does not invent an assignment version increment"
+        },
+        {
+          "number": 103,
+          "name": "explicit verified guardian actually opens the selected child text"
+        },
+        {
+          "number": 104,
+          "name": "new child read obtains its actual next assignment version"
+        },
+        {
+          "number": 105,
+          "name": "overlapping read vector still creates no adult or child acceptance"
+        },
+        {
+          "number": 106,
+          "name": "three actual first reads have three canonical immutable history events"
+        },
+        {
+          "number": 107,
+          "name": "another key cannot silently upgrade the old child assignment version"
+        },
+        {
+          "number": 108,
+          "name": "self capacity cannot silently accept a child alongside an adult"
+        },
+        {
+          "number": 109,
+          "name": "wrong visible document identity cannot accept a correctly versioned opened assignment"
+        },
+        {
+          "number": 110,
+          "name": "stale read mixed capacity and wrong body failures preserve opened history atomically"
+        },
+        {
+          "number": 111,
+          "name": "explicit own acceptance binds body revision three and assignment version six"
+        },
+        {
+          "number": 112,
+          "name": "same exact acceptance key replays without duplicate history"
+        },
+        {
+          "number": 113,
+          "name": "verified guardian separately accepts the already opened child exact body"
+        },
+        {
+          "number": 114,
+          "name": "own and verified child acceptance produce exactly two records"
+        },
+        {
+          "number": 115,
+          "name": "accepted immutable hashes refer to the exact assigned body"
+        },
+        {
+          "number": 116,
+          "name": "opening and acceptance never fabricate hour credits"
+        },
+        {
+          "number": 117,
+          "name": "accepted own assignment retains actual subject identity and is exposed read only"
+        },
+        {
+          "number": 118,
+          "name": "accepted exact body cannot be rewritten as a new read acknowledgement"
+        },
+        {
+          "number": 119,
+          "name": "retired assigned exact text remains readable but cannot be newly accepted"
+        },
+        {
+          "number": 120,
+          "name": "second parent explicitly opens its own club policy"
+        },
+        {
+          "number": 121,
+          "name": "second parent separately opens its own other exact document"
+        },
+        {
+          "number": 122,
+          "name": "unchanged canonical batch intentionally accepts multiple exact document versions"
+        },
+        {
+          "number": 123,
+          "name": "native batch retains two-document behavior without changing PWA exact body guard"
+        },
+        {
+          "number": 124,
+          "name": "different readers and overlapping opens have distinct actual command event identities"
+        },
+        {
+          "number": 125,
+          "name": "only two PWA acceptances notify while all four PWA read acknowledgements remain silent"
+        },
+        {
+          "number": 126,
+          "name": "policy identity projection uses native invoker RLS"
+        },
+        {
+          "number": 127,
+          "name": "projection appends five identity and capability columns to the fourteen existing fields"
+        },
+        {
+          "number": 128,
+          "name": "projection exposes no Auth or reviewer identifiers"
+        },
+        {
+          "number": 129,
+          "name": "private arbitrary-person action helper remains unavailable to JWT roles"
+        },
+        {
+          "number": 130,
+          "name": "minimal current actor capability wrapper is available only to authenticated"
+        },
+        {
+          "number": 131,
+          "name": "current actor helper preserves native command owner and empty search path"
+        },
+        {
+          "number": 132,
+          "name": "new policy view grants no writes or anonymous service read shortcut"
+        },
+        {
+          "number": 133,
+          "name": "all underlying policy tables retain forced RLS"
+        },
+        {
+          "number": 134,
+          "name": "JWT actor cannot write policy read status directly"
+        }
+      ],
+      "scope": "Owned local PostgreSQL17 with real synthetic actor/session authority; rollback-only SQL suite. This is API/domain evidence, not a UI click or remote-staging proof."
+    }
+  ],
+  "staging_verified": false,
+  "physical_device_verified": false
+}

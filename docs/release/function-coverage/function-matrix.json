@@ -1,6 +1,6 @@
 {
   "base_sha": "47386491859b47fbebf85c3b209724dcc20407fc",
-  "source_head": "3168a4dcc38a784ee21c6b3a17a9c1dbefcec41d",
+  "source_head": "b9a6ed995058e623d7887fb4a56630251ff4ffb4",
   "worktree_dirty": true,
   "prototype_sha": "e9c1d8bca2089b0944577eed73d1bedf7e70a3b6",
   "acceptance_ready": false,
@@ -16,10 +16,10 @@
       "api_views": 16
     },
     "current": {
-      "migrations": 16,
-      "app_tables": 144,
-      "api_function_definitions": 69,
-      "api_views": 20
+      "migrations": 31,
+      "app_tables": 180,
+      "api_function_definitions": 84,
+      "api_views": 21
     }
   },
   "migrations": [
@@ -1285,6 +1285,349 @@
           "kind": "function",
           "name": "api.revoke_intake_assistance",
           "line": 260
+        }
+      ]
+    },
+    {
+      "file": "20261009100000_pwa_domain.sql",
+      "sha256": "18cc63b457fddea3f003bceb4d31f310291692e70485e6aa013e4091a8d47d41",
+      "objects": [
+        {
+          "kind": "table",
+          "name": "app.pwa_instruction_versions",
+          "line": 5
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_clusters",
+          "line": 15
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_allocations",
+          "line": 25
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_team_goals",
+          "line": 35
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_booking_details",
+          "line": 45
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_booking_authorizations",
+          "line": 55
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_team_execution_entries",
+          "line": 65
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_handovers",
+          "line": 75
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_feedback",
+          "line": 85
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_questions",
+          "line": 95
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_channels",
+          "line": 105
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_messages",
+          "line": 115
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_card_replies",
+          "line": 125
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_preferences",
+          "line": 135
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_help_preferences",
+          "line": 145
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_transfer_offers",
+          "line": 155
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_notifications",
+          "line": 165
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_delivery_outbox",
+          "line": 175
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_reserve_requests",
+          "line": 185
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_push_subscriptions",
+          "line": 195
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_team_task_sources",
+          "line": 205
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_feedback_revisions",
+          "line": 215
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_question_history",
+          "line": 320
+        }
+      ]
+    },
+    {
+      "file": "20261009101000_pwa_commands.sql",
+      "sha256": "dbf600e3aabc225e5031ca83c24031c27c287cec47cce0b0f64bf81eb6e00f97",
+      "objects": [
+        {
+          "kind": "function",
+          "name": "api.pwa_command",
+          "line": 568
+        },
+        {
+          "kind": "function",
+          "name": "api.pwa_command_status",
+          "line": 577
+        }
+      ]
+    },
+    {
+      "file": "20261009102000_pwa_snapshot.sql",
+      "sha256": "969346799a4e591b7f85f8bacc4a877c1ea42dd628c3e041cf9b976f79e19ef0",
+      "objects": [
+        {
+          "kind": "function",
+          "name": "api.pwa_snapshot",
+          "line": 201
+        },
+        {
+          "kind": "function",
+          "name": "api.pwa_document",
+          "line": 221
+        },
+        {
+          "kind": "function",
+          "name": "api.pwa_ledger_entry",
+          "line": 236
+        },
+        {
+          "kind": "function",
+          "name": "api.pwa_receiving_team_proposals",
+          "line": 253
+        }
+      ]
+    },
+    {
+      "file": "20261009103000_pwa_delivery_and_receipts.sql",
+      "sha256": "73714397962f5ca54b5a94d1b6cc901ed744b8f8bcccd87fc32cd12673fbfe6f",
+      "objects": [
+        {
+          "kind": "table",
+          "name": "app.pwa_command_intents",
+          "line": 5
+        },
+        {
+          "kind": "function",
+          "name": "api.pwa_prepare_command",
+          "line": 54
+        },
+        {
+          "kind": "function",
+          "name": "api.pwa_pending_commands",
+          "line": 62
+        },
+        {
+          "kind": "function",
+          "name": "api.pwa_resolve_command_intent",
+          "line": 79
+        },
+        {
+          "kind": "function",
+          "name": "api.pwa_create_household_invitation",
+          "line": 90
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_delivery_targets",
+          "line": 95
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_delivery_attempt_log",
+          "line": 112
+        },
+        {
+          "kind": "function",
+          "name": "api.pwa_message_page",
+          "line": 184
+        },
+        {
+          "kind": "function",
+          "name": "api.pwa_card_reply_page",
+          "line": 198
+        }
+      ]
+    },
+    {
+      "file": "20261009104000_pwa_buddy_integrity.sql",
+      "sha256": "c2e1bfdccf311f50bd9e0ff1686ce2301d1c65ff29b02cd78512666f0ec5305c",
+      "objects": [
+        {
+          "kind": "table",
+          "name": "app.pwa_buddy_authorizations",
+          "line": 11
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_buddy_links",
+          "line": 23
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_club_contacts",
+          "line": 48
+        },
+        {
+          "kind": "function",
+          "name": "api.pwa_push_binding_status",
+          "line": 426
+        }
+      ]
+    },
+    {
+      "file": "20261009105000_pwa_automation.sql",
+      "sha256": "7e20fdaee644e5a2f0b037f0d34001a773cf47b6b23a0294f23fddad45e5dbef",
+      "objects": [
+        {
+          "kind": "table",
+          "name": "app.pwa_reminder_rules",
+          "line": 4
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_reminder_jobs",
+          "line": 5
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_automation_sources",
+          "line": 7
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_automation_run_log",
+          "line": 8
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_fixture_run_sources",
+          "line": 9
+        },
+        {
+          "kind": "table",
+          "name": "app.pwa_offer_processing",
+          "line": 10
+        },
+        {
+          "kind": "function",
+          "name": "api.pwa_reminder_settings",
+          "line": 48
+        },
+        {
+          "kind": "function",
+          "name": "api.pwa_set_reminder_rule",
+          "line": 49
+        }
+      ]
+    },
+    {
+      "file": "20261009106000_pwa_provider_receipts.sql",
+      "sha256": "5e6923e41dfd6d5da1ab12380f1be31b25e466eba02b685f7361b11e1ffe9eed",
+      "objects": [
+        {
+          "kind": "table",
+          "name": "app.pwa_provider_receipts",
+          "line": 5
+        }
+      ]
+    },
+    {
+      "file": "20261009107000_pwa_compatibility_and_cluster_scope.sql",
+      "sha256": "d60b59920adac4c45a3ec336a6a0cb27e31abb3c8aa69e0ddf5b47ed729e4486",
+      "objects": []
+    },
+    {
+      "file": "20261009108000_pwa_repeatable_command_events.sql",
+      "sha256": "7ad42704ec974bd670deb70c14dcd13a2079f1b0d9fd6a416e0d4dcdf3859ef2",
+      "objects": []
+    },
+    {
+      "file": "20261009109000_pwa_digest_dispatch_day.sql",
+      "sha256": "881aaf6a7ff6ed1e22604d810c1194fc140c4dfb79240e869b25feb3a9be4210",
+      "objects": []
+    },
+    {
+      "file": "20261009110000_pwa_card_version_gate.sql",
+      "sha256": "7d237cb0e27bf8d4f27e649143a77e39dc29977279fc7bc6db6e506da52ff4cc",
+      "objects": []
+    },
+    {
+      "file": "20261009111000_pwa_handover_checklist_integrity.sql",
+      "sha256": "2d10644befebd17fb8893d4e1363a6a4f61588bd55ac3ab45a7653d6489e3307",
+      "objects": []
+    },
+    {
+      "file": "20261009112000_pwa_task_offer_category_seed.sql",
+      "sha256": "1e2bb5b181e7e0d4279c8270b12bfee8743cb7dcaaa0e4267256eaf689c59c17",
+      "objects": []
+    },
+    {
+      "file": "20261009113000_pwa_nested_version_integrity.sql",
+      "sha256": "60eedfed603a1450d42524dc070e8fa4661c1bb323d55e660faef52845b98f19",
+      "objects": []
+    },
+    {
+      "file": "20261009114000_pwa_policy_assignment_identity.sql",
+      "sha256": "afbe3c6218e2d81dae30107ec0f854f5fe0bdd87ae700da98f2b5d3165f4ad10",
+      "objects": [
+        {
+          "kind": "view",
+          "name": "api.pwa_policy_assignments",
+          "line": 12
         }
       ]
     }

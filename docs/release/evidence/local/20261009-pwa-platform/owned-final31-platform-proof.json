@@ -1,0 +1,52 @@
+{
+  "scope": "LOCAL_OWNED_PG17_FINAL31_PWA_RELEASE_OWNER",
+  "observed_at": "2026-10-09T04:27:02.231Z",
+  "migration_count": 31,
+  "suffix_count": 15,
+  "manifest_sha256": "4d00699a669e26e0e030523c56c87a231177c5887470d6fe2903ead7164b7e4d",
+  "upgrade_child_sha256": "916b9acc648d5ccd97d3eac13888db378f184bff0f5943e1af76d4ec1e01a848",
+  "native_child_sha256": "e7ade85e6f36deab51c5fdc18789d8e37dbb636da9f8ba8cbcfeb12e8a66d40c",
+  "passed": true,
+  "actual_test_cases": 1,
+  "network": "none",
+  "private_values_exported": false,
+  "hosted_writes": false,
+  "providers_called": false,
+  "owned_database_removed": true,
+  "proof": {
+    "scope": "LOCAL_OWNED_PG17",
+    "readonly_runtime_configuration_guard": true,
+    "api_security_invoker_views": 21,
+    "actual_unsafe_api_view_refused_in_readonly_transaction": true,
+    "actual_native_last_position_contenders": 2,
+    "private_teams_and_minor_contacts": true,
+    "old_bearer_after_logout_refused": true,
+    "scoped_automation": {
+      "scope": "STAGING_PWA_SCOPED_AUTOMATION_QA_V1",
+      "provider_called": false,
+      "matching_positive": true,
+      "source_run_actor_bound": true,
+      "global_scheduler_called": false,
+      "actual_synthetic_imports": 4,
+      "wrong_lease_owner_refused": true,
+      "unchanged_import_deduplicated": true,
+      "source_and_preference_revalidated": true,
+      "incomplete_import_preserves_success": true,
+      "source_change_preserves_booked_shift": true,
+      "rollback_verified": true
+    },
+    "automation": {
+      "unknown_slot_retained": true,
+      "immutable_provider_receipt": true,
+      "essential_operational_inbox": true,
+      "daily_cap_actual_concurrency": true,
+      "daily_cap_and_late_candidates": true,
+      "browser_private_worker_refused": true,
+      "native_approved_versioned_rules": true,
+      "dispatch_rebuild_current_matching": true,
+      "seven_day_and_24hour_source_reminders": true,
+      "verified_operational_and_team_binding": true,
+      "actual_fixture_match_import_and_local_slots": true
+    }
+  }
+}

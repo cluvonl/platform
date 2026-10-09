@@ -1,0 +1,163 @@
+{
+  "scope": "LOCAL_PWA_PLATFORM_SOURCE_VERIFICATION",
+  "observed_at": "2026-10-09T02:33:46.793061+00:00",
+  "source_binding": {
+    "kind": "uncommitted_worktree",
+    "baseline_commit": "b9a6ed995058e623d7887fb4a56630251ff4ffb4",
+    "migration_count": 27,
+    "original_16_unchanged": true,
+    "migration_manifest_sha256": "1b710c8e5a0217afd759522eb843ff5b03eb5273fb8a7fe4036582eb88aa1b1b",
+    "migration_105_sha256": "7e20fdaee644e5a2f0b037f0d34001a773cf47b6b23a0294f23fddad45e5dbef",
+    "migration_106_sha256": "5e6923e41dfd6d5da1ab12380f1be31b25e466eba02b685f7361b11e1ffe9eed",
+    "migration_107_sha256": "d60b59920adac4c45a3ec336a6a0cb27e31abb3c8aa69e0ddf5b47ed729e4486",
+    "suffix_count": 11,
+    "owner_pins": {
+      "upgrade": {
+        "helpers": 6,
+        "child_sha256": "c2f8195e6a9e1651e4d0f838a949ea8d5e26ffd757f810777028f39161bc4997"
+      },
+      "native_qa": {
+        "helpers": 9,
+        "child_sha256": "32fbef651f3205f3d719cb29671479ca8204143b845199f4882e0b4a025711cf"
+      },
+      "all_verified": true
+    },
+    "migration_108_sha256": "7ad42704ec974bd670deb70c14dcd13a2079f1b0d9fd6a416e0d4dcdf3859ef2",
+    "migration_109_sha256": "881aaf6a7ff6ed1e22604d810c1194fc140c4dfb79240e869b25feb3a9be4210",
+    "migration_110_sha256": "7d237cb0e27bf8d4f27e649143a77e39dc29977279fc7bc6db6e506da52ff4cc",
+    "closed_100_through_110_hashes_verified": true
+  },
+  "historical_narrow_tests": {
+    "passed": 93,
+    "failed": 0
+  },
+  "current_targeted_tests": {
+    "passed": 109,
+    "failed": 0,
+    "skipped": 0,
+    "command": "node --test tests/auth-otp.test.mjs tests/pwa-links.test.mjs tests/pwa-platform-*.test.mjs tests/staging-pwa-native-qa*.test.mjs tests/staging-pwa-upgrade-migrations.test.mjs tests/staging-pwa-upgrade-session.test.mjs tests/staging-pwa-upgrade-restore.test.mjs tests/staging-pwa-upgrade-workflow.test.mjs tests/staging-pwa-release-workflow.test.mjs tests/staging-pwa-runtime-preflight.test.mjs"
+  },
+  "owned_pg17": {
+    "passed": true,
+    "migration_count": 27,
+    "command": "CLUVO_PWA_UPGRADE_NATIVE_TESTS=owned-pg17 node --test tests/staging-pwa-upgrade-native.test.mjs",
+    "network": "none",
+    "original_16_then_additive_suffix": true,
+    "actual_native_last_position_contenders": 2,
+    "actual_daily_digest_workers": 2,
+    "private_teams_and_minor_contacts": true,
+    "old_bearer_after_logout_refused": true,
+    "verified_operational_and_team_binding": true,
+    "dispatch_rebuild_current_matching": true,
+    "unknown_digest_slot_retained": true,
+    "seven_day_and_24hour_source_reminders": true,
+    "immutable_provider_receipt": true,
+    "actual_fixture_match_import_and_local_slots": true,
+    "scoped_hosted_recipe": {
+      "actually_executed_locally": true,
+      "synthetic_imports": 4,
+      "source_run_actor_bound": true,
+      "source_change_preserves_booked_shift": true,
+      "incomplete_import_preserves_success": true,
+      "wrong_lease_owner_refused": true,
+      "source_and_preference_revalidated": true,
+      "rollback_verified": true,
+      "provider_called": false,
+      "global_scheduler_called": false,
+      "foreign_source_refused": true
+    },
+    "foreign_automation_source_refused": true,
+    "readonly_runtime_configuration_guard": true,
+    "actual_unsafe_command_owner_refused_in_readonly_transaction": true
+  },
+  "production_next_http": {
+    "anonymous_notification_status": 307,
+    "forged_return_header_overwritten": true,
+    "returned_to": "/app/login?next=%2Fapp%2Fc%2Fcluvo-demo%2Fnotifications"
+  },
+  "runtime_baseline": {
+    "source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4",
+    "configuration_run_id": "37863836212",
+    "configuration_run_completed_success": true,
+    "expected_config_version": 2,
+    "broker_state_read_directly": false,
+    "source_sha_must_be_in_compatible_rollback_shas": true
+  },
+  "release_gates": {
+    "push_build_only": true,
+    "manual_upgrade_native_qa_deploy_sequence": true,
+    "exact_current_main_and_successful_ci_required": true,
+    "encrypted_custody_actual_pg17_restore_and_fresh_source_fence_required": true,
+    "self_hosted_runner_receives_only_image_source_run": true,
+    "production_enabled": false
+  },
+  "limits": {
+    "hosted_upgrade_executed_by_this_agent": false,
+    "hosted_native_qa_executed_by_this_agent": false,
+    "physical_email_or_push_delivery_verified": false,
+    "live_match_provider_called": false,
+    "physical_android_ios_acceptance": false,
+    "future_suffix_upgrade": {
+      "current_owner": "closed first original16 to27",
+      "already_applied_pwa_release_manifest_extension_supported": false,
+      "next_append_requires": "A versioned owner which recognizes immutable prior manifest envelopes. Never rewrite applied migration or receipt history."
+    }
+  },
+  "validation": {
+    "own_lint_passed": true,
+    "diff_check_passed": true
+  },
+  "runtime_configuration_route": {
+    "workflow": ".github/workflows/staging-pwa-configure-app.yml",
+    "closed_migration_count": 27,
+    "new_gate_tests_passed": 8,
+    "existing_broker_tests_passed": 19,
+    "actual_workflow_yaml_parsed": true,
+    "original_initial16_configuration_workflow_unchanged": true,
+    "original_fixed_brokers_unchanged": true,
+    "exact_current_main_and_staging_and_green_ci_before_private_access": true,
+    "owned_readonly_sql_actually_executed": true,
+    "private_runtime_secrets_only_existing_stdin_contract": true,
+    "requires_expected_active_source_sha_and_config_version": true,
+    "requires_active_and_new_source_in_compatibility_list": true,
+    "hosted_import_executed_by_this_agent": false,
+    "public_auth_probes_executed_against_hosted_by_this_agent": false
+  },
+  "card_version_gate": {
+    "migration": "20261009110000_pwa_card_version_gate.sql",
+    "actual_old_authorized_reply_and_update_failures_reproduced": 2,
+    "actual_empty_compile_and_native_assertions": 34,
+    "actual_populated26_to27_native_assertions": 34,
+    "populated_card_checklist_history_ledger_data_preserved": true,
+    "owner_acl_definer_search_path_volatility_preserved": true,
+    "manager_and_assigned_reader_positive": true,
+    "stale_card_and_item_version_negatives": true,
+    "other_parent_other_committee_other_club_and_spoofed_session_negatives": true,
+    "history_readback_and_no_hour_credit": true,
+    "providers_called": false
+  },
+  "independent_delivery_review": {
+    "tests_passed": 15,
+    "ssrf_endpoint_and_redirect_boundary_reviewed": true,
+    "provider_credentials_never_forwarded_to_health_probes": true,
+    "acceptance_distinct_from_physical_delivery": true,
+    "ambiguous_external_or_commit_outcome_not_replayed": true,
+    "cross_day_digest_issue_resolved_by_additive109": true,
+    "future_suffix_limit_documented": true
+  },
+  "intermediate_release_phase": true,
+  "superseded_final_release_pending": [
+    "20261009111000",
+    "20261009112000"
+  ],
+  "independent_full_sql_proof": {
+    "passed": true,
+    "migration_count": 27,
+    "suite_count": 27,
+    "assertions": 1167,
+    "actual_plpgsql_lint_zero_issues": true,
+    "daily_digest_two_worker_race_passed": true,
+    "artifact": "docs/release/evidence/local/20261009-pwa-release/owned-final27-sql-proof.json",
+    "executed_by": "domain_agent"
+  }
+}

@@ -1,22 +1,25 @@
 import 'server-only';
 
 import {redirect} from 'next/navigation';
+import {headers} from 'next/headers';
+import {mobileLoginPath,mobileReturnHeader} from './mobile-return';
 import {createSupabaseServerClient} from '@/lib/supabase/server';
 
 export type WorkspaceRole = {role_key: string; scope_kind: string; scope_id: string | null};
 export type WorkspaceContext = {tenant_id: string; tenant_slug: string; tenant_name: string; person_id: string; display_name: string; roles: WorkspaceRole[]};
 type WorkspaceRow = Omit<WorkspaceContext, 'roles'> & WorkspaceRole;
 
-export async function requireWorkspace(tenantSlug: string): Promise<{client: Awaited<ReturnType<typeof createSupabaseServerClient>>; workspace: WorkspaceContext}> {
+export async function requireWorkspace(tenantSlug: string, loginPath: '/login' | '/app/login' = '/login'): Promise<{client: Awaited<ReturnType<typeof createSupabaseServerClient>>; workspace: WorkspaceContext}> {
+  const loginDestination=loginPath==='/app/login'?mobileLoginPath((await headers()).get(mobileReturnHeader)):'/login';
   const client = await createSupabaseServerClient();
   const {data: claimsData, error: claimsError} = await client.auth.getClaims();
-  if (claimsError || typeof claimsData?.claims?.sub !== 'string') redirect('/login');
+  if (claimsError || typeof claimsData?.claims?.sub !== 'string') redirect(loginDestination);
 
   const {data, error} = await client.schema('api').from('my_workspaces')
     .select('tenant_id,tenant_slug,tenant_name,person_id,display_name,role_key,scope_kind,scope_id')
     .eq('tenant_slug', tenantSlug);
   const rows = (data ?? []) as WorkspaceRow[];
-  if (error || rows.length === 0) redirect('/login');
+  if (error || rows.length === 0) redirect(loginDestination);
   const first = rows[0];
   return {client, workspace: {
     tenant_id: first.tenant_id,

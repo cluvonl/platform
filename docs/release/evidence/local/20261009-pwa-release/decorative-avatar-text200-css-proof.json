@@ -1,0 +1,85 @@
+{
+  "environment": "local",
+  "scope": "Standalone actual product CSS with synthetic aria-hidden initials; no Auth, member data, application flow or staging proof.",
+  "observedAt": "2026-10-09T04:37:45.351Z",
+  "browser": {
+    "name": "Chromium",
+    "version": "153.0.8010.12",
+    "headless": true
+  },
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "physicalDevice": false,
+  "nativeAuth": false,
+  "stagingVerified": false,
+  "sourceHashes": {
+    "components/mobile/mobile.css": "4ff04ea04420e835ef564b89f77609aaeee3aadc23533421d665bd3d4d3788fd",
+    "scripts/browser-pwa-mobile.mjs": "80ad82c9d396480e82c2a9970b75c6cb0ecd8487642e7b517f4842dfab2546d1"
+  },
+  "probeSourceSha256": "5ddcd0f75f5a75b0872b64876fd741e9a02aa0e2e5bf76ad1b6e5d8b80e75f17",
+  "positive": {
+    "result": "PASS",
+    "desiredFontScale": 2,
+    "cssAppliesItsOwnMinCap": true,
+    "rows": [
+      {
+        "width": 38,
+        "height": 38,
+        "requestedFontPixels": 24,
+        "actualFontPixels": 16,
+        "oneLine": true,
+        "fits": true
+      },
+      {
+        "width": 64,
+        "height": 64,
+        "requestedFontPixels": 40,
+        "actualFontPixels": 26,
+        "oneLine": true,
+        "fits": true
+      },
+      {
+        "width": 33,
+        "height": 33,
+        "requestedFontPixels": 24,
+        "actualFontPixels": 14,
+        "oneLine": true,
+        "fits": true
+      }
+    ]
+  },
+  "negative": {
+    "result": "PASS",
+    "mutation": "Only the synthetic33pxavatar font-size is changed to var(--avatar-font-size), bypassing its actual product CSS cap.",
+    "sameBoundsCheckDetectsOverflow": true,
+    "rows": [
+      {
+        "width": 38,
+        "height": 38,
+        "requestedFontPixels": 24,
+        "actualFontPixels": 16,
+        "oneLine": true,
+        "fits": true
+      },
+      {
+        "width": 64,
+        "height": 64,
+        "requestedFontPixels": 40,
+        "actualFontPixels": 26,
+        "oneLine": true,
+        "fits": true
+      },
+      {
+        "width": 33,
+        "height": 33,
+        "requestedFontPixels": 24,
+        "actualFontPixels": 24,
+        "oneLine": true,
+        "fits": false
+      }
+    ]
+  },
+  "result": "PASS"
+}
