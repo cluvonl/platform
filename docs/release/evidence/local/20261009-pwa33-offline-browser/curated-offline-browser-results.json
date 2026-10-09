@@ -1,0 +1,207 @@
+{
+  "scope": "LOCAL_NATIVE_CHROMIUM_PWA_OFFLINE_RECONNECT_DENIAL_AND_CACHE_PRIVACY",
+  "observed_at": "2026-10-09T07:54:00.442Z",
+  "source_sha": "71bd79daf4548c974c2467bf53e0aced99b51543",
+  "build_id": "DjodKXFrrC5uKVgChE7vg",
+  "browser": {
+    "name": "Chromium",
+    "version": "153.0.8010.12",
+    "headless": true
+  },
+  "platform": {
+    "os": "linux",
+    "width": 390,
+    "height": 844
+  },
+  "native_local_auth": true,
+  "actual_local_otp_digits": 6,
+  "synthetic_account_only": true,
+  "source_files_sha256": {
+    "components/mobile/action-detail.tsx": "12d7cd999d0b6ffb813f3cc2cb7f75dcd427b4e6a0ac079889ac2ac535841af0",
+    "components/mobile/attendance-form.tsx": "9e48f0e0d799bbfd98aecd73e3161e1645b841df38bf8dd2c81bb4a879172324",
+    "components/mobile/calendar.mjs": "0d1c92406da010febd2469d14e4f634c5e5da906c5c0304c40c77ebce189e70a",
+    "components/mobile/club-task-creation.tsx": "51d5a63ffb597c119cb22c2aa8071daf919ff16f40c6d57bfd572a52bf75869f",
+    "components/mobile/club.tsx": "3b9260e9445f5c482f37b5199596d6b9c14f09789d1956b249b02a8bb5fbe68a",
+    "components/mobile/cluster-reservation.tsx": "e7a46938e48fea70f82b2c36555a93d9b4eb91753651ad66b5a97067ed3a0ce7",
+    "components/mobile/command-form.tsx": "7b3ed227dbbef51be8f38745c644c31b77b1dfd7c1b94f09929508291c8f3af7",
+    "components/mobile/committee-followup.tsx": "a6324eff881a10d537de9e7ba64055bc5d4e1f6e81099c9d189be2ccff14b5ec",
+    "components/mobile/context-selection.tsx": "543285705a447911b5b6399ad1aeae42465aa0e75a1aa022b3219e4ed7de98fb",
+    "components/mobile/conversation.tsx": "ef323604b9f26849b6203c75493acd4bf9aa95ac5b3e4ac8e89e16adbe6347de",
+    "components/mobile/draft-state.ts": "06dd6ddc69f96359303e2872e58f68992bf91006b0c016dfd05f13fa3c21c996",
+    "components/mobile/instructions-form.tsx": "330a09235a9b06c3989313638297be19132a6858bd1c96217620a28839490107",
+    "components/mobile/mobile-link.tsx": "30ec65cbdad709e746580d60ed59c36382037fda4835f47eed1a50007862c0de",
+    "components/mobile/mobile.css": "4ff04ea04420e835ef564b89f77609aaeee3aadc23533421d665bd3d4d3788fd",
+    "components/mobile/personal.tsx": "8d0d903566bffed59ec660254fc7ecc79c61ac30dcc4f045a424e0231f1c8907",
+    "components/mobile/primitives.tsx": "ce9f0b008918efcbe37aabf642e554274f6baa1b1ae969a6d1b62c71a358bfd0",
+    "components/mobile/route.tsx": "7016a42764c5585e889d5511b960cf62fa33fc4dadea4d887705e5d160e9c264",
+    "components/mobile/screens.tsx": "a44272da2a64795d5b7375a6946a4045c79dd2f3d82d69d90d641ff39d962a02",
+    "components/mobile/shell.tsx": "1e3801cfaab1dafa9b08e3a9f01658b3ae4a6bbce94c45b8a8065bfab7c06faf",
+    "components/mobile/state-labels.ts": "b6ccf6c081da7b364e34ce34092bb9bf986164735baf08eff567d84f35af03bf",
+    "components/mobile/suitability.ts": "32ea6f6e3e3266284f0b21e002fe424b559aac00b4a077a0b4990128603c5bef",
+    "components/mobile/task-detail.tsx": "84b158f096f30058946b2ce5e8912c10a208f6cc1ff274f160b567db1ae18e3f",
+    "components/mobile/teams.tsx": "1e57f740e33e087f11d017ba055d815b3b3ecc369041166db2e065f3013e30db",
+    "components/mobile/types.ts": "45e09a391d42bc9c30131baa95ae939d80d596e91dd845dd9298fe388dfb2414",
+    "components/mobile/work-card-form.tsx": "2da60217e0fb46fcec47cf08b65a0f17a6fe3dfc4425b8d16ea8c0374727a674",
+    "app/app/layout.tsx": "06b347ff1e4470d6ef7d77f88d9b3d2e1232d61b7f098d89f365478df0cc61b0",
+    "app/app/page.tsx": "d26073b1bf7773b229216402050a1931b34ad646670d13a00a462bb5c9e16c3d",
+    "app/app/workspaces/page.tsx": "148f6d25e03124ca8698f9286a392184290aaf51648237af523b450ae9f4cf93",
+    "app/app/sw.js/route.ts": "07ae98a119377168586057b531469cf6874f59a7478efbaf0026acc0471aa5cf",
+    "app/app/login/page.tsx": "1a7091911461e6a96127735a9e13dbc7184a5ecd5c7b2e47f8fa482079f4c51b",
+    "app/app/invite/accept/page.tsx": "82f318dfd024296753da2a7f19911a637bada364156ae98a1d9266526ddb847c",
+    "app/app/c/[club]/error.tsx": "51a15aa8b3d339ef031d69266d6de319329a26a1b910c04b911b6511260970cf",
+    "app/app/c/[club]/layout.tsx": "643a80aa8b5f66b7194ed1ec806f1c4e7683ea407772d42df1eff714141259d1",
+    "app/app/c/[club]/loading.tsx": "f01084ca7b721f2e547c8197f798f02cc6f095654634477c9c0569a936f8114f",
+    "app/app/c/[club]/page.tsx": "9deb1a9138c402b3eda047624654b0602d6e5b76cf28b525f7dab7aad175a0be",
+    "app/app/c/[club]/teams/page.tsx": "c84af472b64276ccbebe1f8d8e1ea725b2daaac944bad395bf0f6deb7f66e041",
+    "app/app/c/[club]/tasks/page.tsx": "97ee6720f052a84ac85a6e2f1a9452593ccbf67f6e61da5abff05bb29bc610d8",
+    "app/app/c/[club]/settings/page.tsx": "8fb24076a58ceef542f7918e1ce316aaa6e3c611316fb8814ed9acabe5ee7c92",
+    "app/app/c/[club]/reports/page.tsx": "d342c186b994a25bd25e52b37803fff8d30d2c280ae8510cf2dedddbdbe05405",
+    "app/app/c/[club]/reports/export/route.ts": "56911abdc58132c6a29f7c9c8899b4984d473025077d361cbcd6e52cf362e95d",
+    "app/app/c/[club]/profile/page.tsx": "06911da814c231d4fc383a85987b059b3e076726ee7e90c6ddef2fb76d1597cb",
+    "app/app/c/[club]/policies/page.tsx": "de502038446972c419706a80a935174c5e1e1e107b46d4d9fbf0642601f63303",
+    "app/app/c/[club]/opportunities/page.tsx": "e38c3d8fb7f7e4d8bd729ad5d41e02ed897d5081d92b2a4b4d6c9e3d254eb47f",
+    "app/app/c/[club]/notifications/page.tsx": "24fb2388ed45571dd16e29063eb6bee10c39a95c8b14733979b6b97e8ce55100",
+    "app/app/c/[club]/more/page.tsx": "c993e079abfecb2de6e1c1a892baa53dab4294216099f1c465939cff1a9fd63f",
+    "app/app/c/[club]/messages/page.tsx": "3fdc2121c288671a496e511a42c09f59b4136fe4c3a78a4b3c6b34b836f021de",
+    "app/app/c/[club]/manage/page.tsx": "e91aecfe0220c42a89b6bb6a7eacfb2a30f0047a2f1003f3fb76ecc2867fc89d",
+    "app/app/c/[club]/ledger/[entry]/route.ts": "1721a0261645a6622ad4e37650d5214b5ac510d34ad5a06d08ea3936fef48d63",
+    "app/app/c/[club]/install/page.tsx": "cf05fdd49f915e2b06222b7e671bd3db3992187c58b4a8871b4eba057cf18c1d",
+    "app/app/c/[club]/household/page.tsx": "912eb2371fd3f9f4c07cca4aabd44ca111dc9db66a151f3e08f863e6d98c4f3b",
+    "app/app/c/[club]/home/page.tsx": "22ba69f44fd25b588516d7a25eaa605b825adb8f95779c326a36d125139ea98f",
+    "app/app/c/[club]/help/page.tsx": "2b9108544f389b93d740c6cc453eddeead958824fa713fbb9d3e48ada4323a7a",
+    "app/app/c/[club]/finance/page.tsx": "285efc3729d64db4dc19adaf9da1532aca4c4677dedc0c3d14b4aba50054d263",
+    "app/app/c/[club]/documents/[document]/route.ts": "eb0adf131ad9d8eee9b9eaa4b5758444f3c6008aafa6517afdc07d70ec672606",
+    "app/app/c/[club]/courses/page.tsx": "c5003155f5ee2bf04aa511e28b16242cc5aa5030dd18aa398a274ade0b8a7c4b",
+    "app/app/c/[club]/committees/page.tsx": "2bba08fd1aeca02c13035809f48a8e89cf8483dbc26fe20bfe02731b36bfe0a0",
+    "app/app/c/[club]/agenda/page.tsx": "efc1f02f18c36e48c82b0c8f2846405829cf4b38f700ae40ee2656a3a186218c",
+    "app/app/c/[club]/agenda/export/route.ts": "df53aae0f36375e52b696ada5474afb982f79bbbff6887d5c4766a8d0085fc05",
+    "app/app/c/[club]/actions/page.tsx": "72121fa8e208934973c07ffbe578eda69eca925d91679633a080a3914626bc46",
+    "app/app/auth/verify/page.tsx": "9560423a603ed20d30153d5eb572bf6fa3cac7dd7fd191812454a109eb9f30cb",
+    "lib/pwa/action-details.mjs": "1d4359b7db089e5e9c6a9136fccf90e3aeba8c7e7ec8ec4f65a92f00069a9b17",
+    "lib/pwa/actions.ts": "d0f79fc5a186ddb3d62ab9a2a8ee3e4e7a405a663758830d9e21508ada8dcd1b",
+    "lib/pwa/conversations.ts": "3825901c848af2bed85b5a8f0b917dc79da56efbd95dca1187404d164bd5a055",
+    "lib/pwa/exports.mjs": "325d86d23838d9f6b58c1c8b7ae1e82c7525db97259fda0a1d1f9ec3280fa85a",
+    "lib/pwa/help.ts": "f10c55e1c2028c76d33e8626be1d9607bdff59e910197968798e6751445701bb",
+    "lib/pwa/home-upcoming.mjs": "2cb14f7c2a118ab8e0b1691d55b120f86003f6b2ae35906d5f94c7716f96b5b2",
+    "lib/pwa/links.mjs": "043bdafa330fe85408a49ab3bc3625022016dd87f17ebf5ff363437706a0d32b",
+    "lib/pwa/match-details.mjs": "07ca50b26d83ee5e093f39674766be954ea5abcd3b6e862322b80636bd390117",
+    "lib/pwa/pending.ts": "781e664955982e98174597d0768043cc3022091349de77cc75b325298af112de",
+    "lib/pwa/planning.mjs": "a00fc5a19d982f86cc9aee9f1d058e3ce8ebfb3013f8a48f1336eb356588f05a",
+    "lib/pwa/push-config.ts": "fb2fe8cf152eb2f9cff9a7b107e691d3123af5b50bd4d75aa7c7e8ee460e81e6",
+    "lib/pwa/receipts.mjs": "b787a63831fd6dea989e2f1a99489988c64fecfb1c801ff565d1727e0e915e25",
+    "lib/pwa/server.ts": "b103769e25b7176acaa4c9caa6b8f476ec5a3b76edf99fe389ba40d413c3cc7c",
+    "lib/pwa/time.mjs": "a2d264b2c6c62320aefd665d6591a9bc3fed45e47614d345907326947f59302f",
+    "lib/pwa/validation.ts": "d35954a1a441f802f66eb1edc1b36a35cb1ee6996064525aab82b52f090e62c5",
+    "components/app/help-provider.tsx": "296f35de7ecd21a4daa4ddad9e19caf7ec1e2ef9963bf4b2624b15b040370dc7",
+    "components/pwa/pwa-controls.tsx": "f2d1f92964961d1623b8e65441799fa2ca1d15bea7eef1bbf80669807a84fdd1",
+    "components/pwa/push-subscription-control.tsx": "9d7871fc4a6f35644314c2584f6661746d7d7ce2098c78057c9022e3499fbcb1",
+    "scripts/browser-pwa-mobile.mjs": "b0dcb411d5b77ad095c64c73e4049bd1dc5e62795aa46a2d44fb6f96991b5a9b",
+    "scripts/pwa-mobile-extended-flows.mjs": "b72a2f390b943c83189fcae75598d354107f0f315c2b333844328a0410c8bebf",
+    "scripts/pwa-mobile-acceptance-flows.mjs": "fe32013e8490f69d2f10aa86c50b3fcdc5fb3c602aaad5dee2978aaa1e1abdef"
+  },
+  "worker_source_sha256": "eddb7f61bca5c932c58c968127cf3a731e2a10062d3ca1ac6bad09639c4604e2",
+  "actual_worker_bytes_sha256": "99106c4507cc4ed9f10a11364b0ac574acd1cafb1a3ff1cc3c777c03f9481107",
+  "actual_worker_local_release": "local",
+  "registered": {
+    "scope": "http://127.0.0.1:3200/app/",
+    "script": "http://127.0.0.1:3200/app/sw.js",
+    "controller": true
+  },
+  "cache_inventory": [
+    {
+      "key": "cluvo-app-assets-local",
+      "paths": [
+        "/app/icons/apple-touch-icon.png",
+        "/app/icons/icon-192.png",
+        "/app/icons/icon-512.png",
+        "/app/icons/icon-maskable-512.png",
+        "/app/offline.html"
+      ]
+    }
+  ],
+  "private_cache_entries": 0,
+  "actual_no_offline_mutations": true,
+  "booking_and_ledger_bytes_unchanged": true,
+  "native_logout_then_private_route_denied": true,
+  "cases": [
+    {
+      "id": "NATIVE_AUTHENTICATED_FRESH_OFFLINE_NAVIGATION_AND_RELOAD_PUBLIC_CACHE_ONLY",
+      "integration_ids": [],
+      "passed": true,
+      "environment": "local",
+      "physical_device_verified": false,
+      "staging_verified": false,
+      "new_document_navigation": true,
+      "no_private_form_or_app_cached": true,
+      "only_five_public_assets_cached": true,
+      "no_offline_command": true,
+      "function_ids": [
+        "F146",
+        "F147"
+      ]
+    },
+    {
+      "id": "NATIVE_RECONNECT_RETRY_RETURNS_AUTHORIZED_PRIVATE_SERVER_ROUTE",
+      "integration_ids": [],
+      "passed": true,
+      "environment": "local",
+      "physical_device_verified": false,
+      "staging_verified": false,
+      "function_ids": [
+        "F146"
+      ]
+    },
+    {
+      "id": "ACTUAL_BROWSER_PERMISSION_DENIED_HONEST_INBOX_FALLBACK",
+      "integration_ids": [
+        "INT-051"
+      ],
+      "passed": true,
+      "environment": "local",
+      "permission": "denied",
+      "permission_method": "Chromium native CDP permission control",
+      "device_push_delivery_verified": false,
+      "physical_device_verified": false,
+      "staging_verified": false,
+      "function_ids": [
+        "F112",
+        "F122"
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-offline-browser/attempt3/screenshots/fresh-offline-private-navigation-390.png",
+      "sha256": "2dd42ace087132b5dbb7a857b2e88740e2ec40ecbb9db43ef6d3ac360ad4887b"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-offline-browser/attempt3/screenshots/reconnect-authorized-profile-390.png",
+      "sha256": "c5f709a1b42978608b5390583da9d7433503eef768e61022fe17c1f94ba845e6"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-offline-browser/attempt3/screenshots/browser-notifications-denied-inbox-fallback-390.png",
+      "sha256": "f69d476495a124eafabd91ef2dd0315c2bd76d78e8ea62d74c1be5ea644cd013"
+    }
+  ],
+  "passed": true,
+  "hosted_mutations": false,
+  "physical_device_verified": false,
+  "staging_verified": false,
+  "whole_acceptance_passed": false,
+  "production_enabled": false,
+  "limitations": [
+    "Native Linux Chromium headless browser with genuine local provider OTP; not physical Android or iPhone.",
+    "Browser permission denial is controlled through native Chromium CDP; real handset permission and delivery pending.",
+    "Local worker release metadata is recorded separately from committed source/build; no active hosted release claimed."
+  ],
+  "external_provider_calls": false,
+  "native_local_provider_auth": true,
+  "metadata_review": {
+    "observed_at": "2026-10-09T07:57:34.497352+00:00",
+    "basis": "Canonical function/integration register checked after execution. IDs reflect only actual named bounded behavior; offline navigation does not prove iPhone installation or push revoked deep links.",
+    "original_execution_artifact": "docs/release/evidence/local/20261009-pwa33-offline-browser/attempt3/offline-browser-results.json",
+    "original_sha256": "48689ade2bf1617801fc5a1f82b8c6e05dff7acb4d7b8bc0fef614370a167a8a",
+    "runtime_behavior_changed": false,
+    "physical_integration_PASS_inferred": false
+  }
+}

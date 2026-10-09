@@ -31,6 +31,45 @@ class UpgradeOperations(unittest.TestCase):
         session.check_lock = lambda: {**identity, 'exclusive_lock': True}
         return session
 
+    def test_deparse_read_is_fixed_snapshot_only_and_does_not_mutate(self):
+        for phase in ('locked', 'captured', 'fresh_read', 'fresh_read_complete', 'initial_ready', 'closed'):
+            with self.assertRaises(module.Failure):
+                self.fake(phase).read_deparse_context()
+        session, queries = self.fake('capture'), []
+        session.pq = SimpleNamespace(PQtransactionStatus=lambda unused: module.bounded.TX_VALID)
+        session.check_lock = lambda: {**identity, 'exclusive_lock': True, 'read_only': True, 'isolation': 'repeatable read'}
+        value = {'server_version_num': 170011, 'time_zone': 'UTC', 'date_style': 'ISO, MDY',
+                 'interval_style': 'postgres', 'search_path': 'pg_catalog', 'extra_float_digits': 1,
+                 'standard_conforming_strings': True, 'quote_all_identifiers': False,
+                 'bytea_output': 'hex', 'client_encoding': 'UTF8'}
+        session.one_json = lambda query: queries.append(query) or dict(value)
+        self.assertEqual(session.read_deparse_context(), value)
+        self.assertEqual(queries, [module.DEPARSE_CONTEXT_SQL])
+        self.assertEqual(session.state, 'capture')
+        self.assertNotIn('SET ', queries[0])
+        self.assertNotIn('SHOW ', queries[0])
+        session.one_json = lambda unused: {**value, 'private_setting': 'synthetic-secret'}
+        with self.assertRaises(module.Failure):
+            session.read_deparse_context()
+        session.one_json = lambda unused: {**value, 'search_path': 'invalid\nprivate'}
+        with self.assertRaises(module.Failure):
+            session.read_deparse_context()
+
+    def test_deparse_read_refuses_lost_snapshot_or_changed_backend(self):
+        session = self.fake('capture')
+        session.pq = SimpleNamespace(PQtransactionStatus=lambda unused: module.bounded.TX_VALID)
+        session.check_lock = lambda: {**identity, 'read_only': False, 'isolation': 'repeatable read'}
+        session.one_json = lambda unused: self.fail('read must not start outside read-only snapshot')
+        with self.assertRaises(module.Failure):
+            session.read_deparse_context()
+        checks = iter([{**identity, 'read_only': True, 'isolation': 'repeatable read'},
+                       {**identity, 'backend_pid': 322, 'read_only': True, 'isolation': 'repeatable read'}])
+        session.check_lock = lambda: next(checks)
+        session.one_json = lambda unused: {}
+        with self.assertRaises(module.Failure) as failure:
+            session.read_deparse_context()
+        self.assertEqual(failure.exception.code, 'PWA_DEPARSE_CONTEXT_SESSION_CHANGED')
+
     def test_source_pins_and_generator_environment_are_closed(self):
         module.verify_sources()
         def invoke(command, **options):
@@ -105,7 +144,7 @@ class UpgradeOperations(unittest.TestCase):
                 self.transport = {'synthetic': True}
             def close(self):
                 pass
-        for operation in ('apply_initial', 'configure_api', 'bootstrap_core', 'execute_sql'):
+        for operation in ('apply_initial', 'configure_api', 'bootstrap_core', 'execute_sql', 'read_deparse_context'):
             request = {'id': 1, 'operation': 'connect', 'argument': {'lock_object': module.LOCK_OBJECT}}
             unsafe = {'id': 2, 'operation': operation, 'argument': {'sql': 'DELETE FROM auth.users'}}
             stdin, stdout = io.BytesIO((json.dumps(request)+'\n'+json.dumps(unsafe)+'\n').encode()), io.BytesIO()

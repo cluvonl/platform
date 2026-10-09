@@ -1,0 +1,84 @@
+{
+  "scope": "LOCAL_SYNTHETIC_READ_CONTEXT_CONSTRUCTION",
+  "fund_entries": [
+    {
+      "id": "cb000000-0000-4000-8000-000000002330",
+      "kind": "receipt",
+      "spent": 0,
+      "reserved": 0,
+      "available": 12500,
+      "tenant_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
+    },
+    {
+      "id": "cb000000-0000-4000-8000-000000002331",
+      "kind": "reserve",
+      "spent": 0,
+      "reserved": 1234,
+      "available": -1234,
+      "tenant_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
+    },
+    {
+      "id": "cb000000-0000-4000-8000-000000002332",
+      "kind": "spend_reserved",
+      "spent": 234,
+      "reserved": -234,
+      "available": 0,
+      "tenant_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
+    },
+    {
+      "id": "cb000000-0000-4000-8000-000000002333",
+      "kind": "spend_direct",
+      "spent": 321,
+      "reserved": 0,
+      "available": -321,
+      "tenant_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
+    },
+    {
+      "id": "cb000000-0000-4000-8000-000000002334",
+      "kind": "release",
+      "spent": 0,
+      "reserved": -100,
+      "available": 100,
+      "tenant_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
+    },
+    {
+      "id": "cb000000-0000-4000-8000-000000002335",
+      "kind": "correction",
+      "spent": -321,
+      "reserved": 0,
+      "available": 321,
+      "tenant_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
+    },
+    {
+      "id": "cb000000-0000-4000-8000-000000002340",
+      "kind": "receipt",
+      "spent": 0,
+      "reserved": 0,
+      "available": 78901,
+      "tenant_id": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"
+    }
+  ],
+  "committed_fixture": true,
+  "fund_balance_club_a": {
+    "spent": 234,
+    "reserved": 900,
+    "available": 11366
+  },
+  "new_finance_entries": 7,
+  "new_hour_ledger_rows": 0,
+  "old_app_rows_preserved": true,
+  "new_actor_or_grant_rows": 0,
+  "new_qualification_types": 4,
+  "old_app_snapshot_sha256": "f3f0c996a8c8d7f8acb896defb28ae2063a67353c97be076217facaadb3438d3",
+  "migration_history_sha256": "f01cf2f7f58d7e84d8fd592f3fbf3505fdf94e8d41252b0db1bcdb8fb3a0c738",
+  "identity_authority_sha256": "5b6db1a69925a72a10cb441ea6ac3f7d96bbabfb89bd31713815796c4e842fee",
+  "new_person_qualifications": 4,
+  "formal_certificate_award_proved": false,
+  "financial_approval_or_payment_proved": false,
+  "observed_at": "2026-10-09T08:19:46.182213+00:00",
+  "actual_sql_transaction_committed": true,
+  "seed_source_path": "/tmp/cluvo-pwa33-positive-seed.psql",
+  "seed_source_sha256": "681fb2be53532034d3d46f7e1a7ae8a8c77f3237bd1819a1267ac4ddb24adc60",
+  "hosted_writes": false,
+  "source_or_migration_edits": false
+}

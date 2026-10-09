@@ -1,0 +1,297 @@
+{
+  "scope": "LOCAL_PWA33_READ_DISPLAY_AND_STRICT_RESTORE_CANDIDATE_CLOSURE",
+  "observed_at": "2026-10-09T08:38:45.181126+00:00",
+  "parent_source_sha": "71bd79daf4548c974c2467bf53e0aced99b51543",
+  "candidate_runtime_file_sha256": {
+    "components/mobile/personal.tsx": "cbfcac76f520f2691d5fc4a632db0e82cd7a1b0d6390674d771c40af5a477f29",
+    "components/mobile/types.ts": "739d14fac5280a29688b2a2dda07ea69f8be007068312350d0315faa88cc4cd9",
+    "components/mobile/state-labels.ts": "113d7dd4cf24717dd83b48af707d4d34800733cdd4fe4f48683cf0a11c95cf30",
+    "lib/pwa/server.ts": "36cd57f79ead8b246561160fbcbb61b2627f068cbc2f6bf4af7c2b659b1aeec5"
+  },
+  "final_runtime_build": {
+    "observed_at": "2026-10-09T08:28:58.913306+00:00",
+    "phases": [
+      {
+        "phase": "lint",
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exit_code": 0,
+        "passed": true,
+        "summary": "\n> cluvo@0.1.0 lint\n> eslint .\n"
+      },
+      {
+        "phase": "typecheck",
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exit_code": 0,
+        "passed": true,
+        "summary": "\n> cluvo@0.1.0 typecheck\n> tsc --noEmit\n"
+      },
+      {
+        "phase": "node_tests",
+        "command": [
+          "npm",
+          "test"
+        ],
+        "exit_code": 0,
+        "passed": true,
+        "summary": "✔ runtime en instrumentation blokkeren production en bewaken geconfigureerde appmodus (5.644626ms)\n✔ er bestaat geen actieve productieworkflow en de template weigert altijd (9.560808ms)\nℹ tests 777\nℹ suites 0\nℹ pass 747\nℹ fail 0\nℹ cancelled 0\nℹ skipped 30\nℹ todo 0\nℹ duration_ms 9246.364644",
+        "counts": {
+          "tests": 777,
+          "pass": 747,
+          "fail": 0,
+          "skipped": 30
+        }
+      },
+      {
+        "phase": "production_build",
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exit_code": 0,
+        "passed": true,
+        "summary": "├ ƒ /invite/accept\n├ ○ /login\n└ ƒ /workspaces\n\n\nƒ Proxy (Middleware)\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n"
+      },
+      {
+        "phase": "wp0",
+        "command": [
+          "npm",
+          "run",
+          "test:wp0"
+        ],
+        "exit_code": 0,
+        "passed": true,
+        "summary": "✔ er bestaat geen actieve productieworkflow en de template weigert altijd (4.600201ms)\nℹ tests 5\nℹ suites 0\nℹ pass 5\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 70.287893\nWP0-smoke geslaagd via Next.js standalone server op http://127.0.0.1:32827."
+      },
+      {
+        "phase": "coverage",
+        "command": [
+          "npm",
+          "run",
+          "check:coverage"
+        ],
+        "exit_code": 0,
+        "passed": true,
+        "summary": "\n> cluvo@0.1.0 check:coverage\n> node scripts/coverage-matrix.mjs\n\n{\"pages\":23,\"shared_shells\":1,\"functions\":219,\"acceptance_criteria\":102,\"baseline\":{\"migrations\":7,\"app_tables\":140,\"api_function_definitions\":52,\"api_views\":16},\"current\":{\"migrations\":33,\"app_tables\":180,\"api_function_definitions\":86,\"api_views\":21}}"
+      }
+    ],
+    "build_id": "dW1tJTXS7_nASiYNd6Ajy",
+    "completed_at": "2026-10-09T08:29:44.882602+00:00"
+  },
+  "post_ops_source_closed_root_checks": {
+    "npm_test": {
+      "tests": 777,
+      "passed": 747,
+      "failed": 0,
+      "opt_in_skipped": 30
+    },
+    "lint_passed": true,
+    "typecheck_passed": true
+  },
+  "bounded_executed_proof_bindings": [
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-additional-readflows/browser-results.json",
+      "sha256": "3995c72bff45bf71cd5dc8861b498f81e2f4ce2b3980379d76a082022040356d"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-vacancy-effort/browser-results.json",
+      "sha256": "7eaa144a0e546f237e398cfa777f150ad4106e5b9f276e406488bcffc5102435"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-offline-browser/curated-offline-browser-results.json",
+      "sha256": "6ec2d5d529d8c4e46fb2fbda74071595a0496fa8939b71794b58dfb753d8d153"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-positive-read-contexts/browser-results.json",
+      "sha256": "879104d70b0f4cb702a7d70330021ee658822646cb3279831f57fdf734c8e1e3"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-positive-read-contexts/finance-label-regression/browser-results.json",
+      "sha256": "64427012a3bec808013fc3258b1c0da81c350c347b8201227e3378f5750f3cc2"
+    },
+    {
+      "path": "docs/release/evidence/staging/20261009-pwa33-restore-alignment-closure.json",
+      "sha256": "9bc5a40b174b36ceea89ac3bc18afb52ae5e6869ac56d4a865e289b504c031ae"
+    },
+    {
+      "path": "docs/release/evidence/staging/20261009-pwa33-deparse-owned-proof.json",
+      "sha256": "1d39c9d905b83a66aadfc5152a51dbe4570595543a3b0e43d685f393499730fe"
+    }
+  ],
+  "selected_screenshots_sha256": [
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-additional-readflows/screenshots/home-household-meter-390.png",
+      "sha256": "e23bedcd1883eb353e4cbe172b931f00f2f19239e545281067d0684b11112ad8"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-additional-readflows/screenshots/household-current-native-agreement-390.png",
+      "sha256": "2ae44cd961456ad0292a2a7a0883185c0211a56a64cfab7991c74116c34ca3f2"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-additional-readflows/screenshots/home-own-child-team-tallies-390.png",
+      "sha256": "e23bedcd1883eb353e4cbe172b931f00f2f19239e545281067d0684b11112ad8"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-additional-readflows/screenshots/child-exact-team-progress-390.png",
+      "sha256": "e69705407bacf6dcb87794db31db2b969e9caeb5c8c4470cb5e919eec0a93803"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-additional-readflows/screenshots/home-native-task-preference-selection-390.png",
+      "sha256": "e23bedcd1883eb353e4cbe172b931f00f2f19239e545281067d0684b11112ad8"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-additional-readflows/screenshots/native-vacancy-list-390.png",
+      "sha256": "34ab2a5523898fb5b2e4164b44a8afb519c9fd84494747e7e8ab45451c3995c8"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-additional-readflows/screenshots/exact-native-vacancy-detail-390.png",
+      "sha256": "4c76b573afce12ac142f5b11f52ed99e6f511bca4d3f1b7d4a7a08635bac8273"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-additional-readflows/screenshots/coordinator-native-home-counts-390.png",
+      "sha256": "b111dba2da281790c546247d5f72aa2edb46e089b6c477a113f193cd78fd69c6"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-additional-readflows/screenshots/exact-native-linked-team-selection-390.png",
+      "sha256": "131ecd8cc4330b69f79525c10785e7498ab0a833a3ef099e2bedd3ad2699a0fc"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-additional-readflows/screenshots/team-published-policy-route-no-accept-390.png",
+      "sha256": "1fcd4953d7bb3ba5863520c689db32d6cafb7743428f30f922400721090d6605"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-additional-readflows/screenshots/coordinator-exact-tab-plan-390.png",
+      "sha256": "a887abc5720853d5655aa5039c62be51c4132e068371d44d38216b0420d02091"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-additional-readflows/screenshots/coordinator-exact-tab-confirm-390.png",
+      "sha256": "17e6ca350a690f76247ebc26c0b4f9057dfa40fbcb7c1ce287076a22f9a25644"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-additional-readflows/screenshots/coordinator-exact-tab-requests-390.png",
+      "sha256": "3347b9e11021784350491ba9b8e330e69ff2ad701f8ef6d46a607c3fd15d9291"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-additional-readflows/screenshots/member-direct-management-denial-390.png",
+      "sha256": "c14cff345f56f5d739f69b6962e95e8ba0382196f1d5a5a059180242b573907d"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-additional-readflows/screenshots/committee-native-clusters-deadline-phase-390.png",
+      "sha256": "a887abc5720853d5655aa5039c62be51c4132e068371d44d38216b0420d02091"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-additional-readflows/screenshots/native-reserve-help-eligibility-boundary-390.png",
+      "sha256": "a887abc5720853d5655aa5039c62be51c4132e068371d44d38216b0420d02091"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-additional-readflows/screenshots/native-team-feedback-read-boundary-390.png",
+      "sha256": "68fe0a91582236a6bc1d518e57735f9f5729bfcff7671173327ea98a209d413d"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-additional-readflows/screenshots/native-match-review-current-actor-boundary-390.png",
+      "sha256": "3347b9e11021784350491ba9b8e330e69ff2ad701f8ef6d46a607c3fd15d9291"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-additional-readflows/screenshots/own-native-qualification-boundary-390.png",
+      "sha256": "98acc4d39601e54144e8f9c792652c381e7914c23771c9b676a9fa70afc09108"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-additional-readflows/screenshots/native-finance-current-authority-boundary-390.png",
+      "sha256": "53e9ae8f5c5bf5124398bd82641a60374b6e5d665884148ed8679859ca201cad"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-additional-readflows/screenshots/agenda-exact-current-booking-once-390.png",
+      "sha256": "c79c5421e656cd8d2f202a5bfc38599b6b38ad274cf7ea0f7961cd7c68f900d6"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-additional-readflows/screenshots/agenda-exact-booking-detail-390.png",
+      "sha256": "5177d14d3d40200b36ae32e4d8363da48e0a93f7234c66d9cd886909e8857e86"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-vacancy-effort/screenshots/actual-native-120-minute-vacancy-list-320.png",
+      "sha256": "a727602d75480e720843da1cff0aa6d2182142e135d9c7eb76c3f9058bd44a0d"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-vacancy-effort/screenshots/actual-native-120-minute-vacancy-list-390.png",
+      "sha256": "c7680c16203963f8237bdd8971e763ba4357e696948aa3381afe65e0bcd82ee1"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-vacancy-effort/screenshots/actual-native-120-minute-vacancy-list-430.png",
+      "sha256": "7f6b8c7f3aa2be335464fa05c9e53986cac4c96cf66809367e9c98c569287afd"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-vacancy-effort/screenshots/exact-vacancy-native-effort-drawer-390.png",
+      "sha256": "65b3f81086e6e27bd6041bbca4e8d5fb2c2b9d2bc02002d3937930cfae435172"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-vacancy-effort/screenshots/exact-vacancy-native-effort-drawer-390-text200.png",
+      "sha256": "d105c0e26e05272c04371d73d5adaaa415b05751b79f9ab5ca732403773e4122"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-vacancy-effort/screenshots/exact-vacancy-native-effort-reload-390.png",
+      "sha256": "1bfcd3af8e3ff6558b6e9a7157b9d62f65cc69e0d78097f42a35764a9c0b15fd"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-vacancy-effort/screenshots/foreign-tenant-exact-vacancy-ID-denial-390.png",
+      "sha256": "0b7101d9c42014e82f90c070ce08f38cfaf6d4409892ad5dd2c933867b5018d9"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-offline-browser/attempt3/screenshots/fresh-offline-private-navigation-390.png",
+      "sha256": "2dd42ace087132b5dbb7a857b2e88740e2ec40ecbb9db43ef6d3ac360ad4887b"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-offline-browser/attempt3/screenshots/reconnect-authorized-profile-390.png",
+      "sha256": "c5f709a1b42978608b5390583da9d7433503eef768e61022fe17c1f94ba845e6"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-offline-browser/attempt3/screenshots/browser-notifications-denied-inbox-fallback-390.png",
+      "sha256": "f69d476495a124eafabd91ef2dd0315c2bd76d78e8ea62d74c1be5ea644cd013"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-positive-read-contexts/screenshots/own-valid-and-expired-certificates-390.png",
+      "sha256": "50e333bc1fea2b8d38e7f1fbb407c745a364990c1d449cd157870267d4e1413a"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-positive-read-contexts/screenshots/coordinator-only-own-qualification-390.png",
+      "sha256": "c371f139d38406cf4cce7eabd3c593a0bacc2ed1870376d4c3ee6e1a648b8776"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-positive-read-contexts/screenshots/native-cent-ledger-and-current-status-projection-390.png",
+      "sha256": "78eaec925aead7e0313cb16dd9aec3abfe154b0b1ce0078a27f249faf7b75380"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-positive-read-contexts/screenshots/ordinary-parent-finance-read-denied-390.png",
+      "sha256": "c14cff345f56f5d739f69b6962e95e8ba0382196f1d5a5a059180242b573907d"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-positive-read-contexts/finance-label-regression/screenshots/canonical-cent-labels-390.png",
+      "sha256": "abd4365bdb22c5091379ff9ad311ac48652b7ff237389cbca032dc25f923bff8"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-positive-read-contexts/finance-label-regression/screenshots/three-canonical-native-statuses-viewport-390.png",
+      "sha256": "da8c975e412b0e295365ad8753aa7aa04e77342a5e7dbdb36d7dacd3d976e30a"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-positive-read-contexts/finance-label-regression/screenshots/ordinary-parent-finance-denied-390.png",
+      "sha256": "c14cff345f56f5d739f69b6962e95e8ba0382196f1d5a5a059180242b573907d"
+    }
+  ],
+  "whole_scope_preserved": {
+    "functions": 147,
+    "integrations": 61,
+    "main_screens": 20
+  },
+  "hosted_upgrade_verified": false,
+  "staging_app_activation_verified": false,
+  "physical_device_verified": false,
+  "whole_acceptance_passed": false,
+  "production_enabled": false
+}

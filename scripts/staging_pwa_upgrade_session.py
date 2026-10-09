@@ -18,6 +18,7 @@ LOCK_OBJECT = int.from_bytes(hashlib.sha256(PROJECT.encode()).digest()[:4], 'big
 PINS = {'staging_backup_session.py': 'e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1', 'staging-pwa-upgrade-sql.mjs': '0337f2134a3c57128719a26287d4395ade94471ad4e8939ee70d7fc51166d242', 'staging-pwa-upgrade-migrations.mjs': '628107706945b38f3bf2c3697b4ef9ef49d695483e13c7289bc12ec36740c55f', 'staging-pwa-upgrade-files.mjs': '13e1fd23bd040d9902b7b622878332b149b500f63dcb65cb8a6c4ef601ccc4a6', 'staging-initial-migrations.mjs': '7f49cf8dcdb2eda53633dd3596486779ea2dd001d1a2813a07fa45e859784004', 'staging-migration-files.mjs': '83aa2aae6d4cc358965208e39e73dd0d1038ee4a6c0bc9a62675b829e30c94bd'}
 READ_OPERATIONS = {'begin_capture', 'capture_query', 'check_lock', 'end_capture',
                    'begin_fresh_read', 'fresh_read_query', 'end_fresh_read'}
+DEPARSE_CONTEXT_SQL = "SELECT jsonb_build_object('server_version_num',current_setting('server_version_num')::int,'time_zone',current_setting('TimeZone'),'date_style',current_setting('DateStyle'),'interval_style',current_setting('IntervalStyle'),'search_path',current_setting('search_path'),'extra_float_digits',current_setting('extra_float_digits')::int,'standard_conforming_strings',current_setting('standard_conforming_strings')='on','quote_all_identifiers',current_setting('quote_all_identifiers')='on','bytea_output',current_setting('bytea_output'),'client_encoding',current_setting('client_encoding'));"
 
 
 def verify_sources():
@@ -75,6 +76,34 @@ class PwaUpgradeSession(Session):
     def __init__(self, environment, lock):
         self.upgrade_environment = dict(environment)
         super().__init__(environment, lock)
+
+    def read_deparse_context(self):
+        # The existing snapshot and same-backend project lock remain authority.
+        # No caller SQL or setting name enters this fixed READ ONLY operation.
+        require(self.state == 'capture' and self.pq.PQtransactionStatus(self.connection) == bounded.TX_VALID,
+                'PWA_DEPARSE_CONTEXT_PHASE_INVALID')
+        before = self.check_lock()
+        require(before.get('read_only') is True and before.get('isolation') == 'repeatable read',
+                'PWA_DEPARSE_CONTEXT_PHASE_INVALID')
+        value = self.one_json(DEPARSE_CONTEXT_SQL)
+        after = self.check_lock()
+        require(self.pq.PQtransactionStatus(self.connection) == bounded.TX_VALID
+                and after.get('read_only') is True and after.get('isolation') == 'repeatable read'
+                and before['backend_pid'] == after['backend_pid']
+                and before['backend_start'] == after['backend_start'], 'PWA_DEPARSE_CONTEXT_SESSION_CHANGED')
+        fields = {'server_version_num', 'time_zone', 'date_style', 'interval_style', 'search_path',
+                  'extra_float_digits', 'standard_conforming_strings', 'quote_all_identifiers',
+                  'bytea_output', 'client_encoding'}
+        require(type(value) is dict and set(value) == fields
+                and type(value['server_version_num']) is int and 100000 <= value['server_version_num'] <= 999999
+                and type(value['extra_float_digits']) is int and -15 <= value['extra_float_digits'] <= 3
+                and type(value['standard_conforming_strings']) is bool and type(value['quote_all_identifiers']) is bool
+                and value['bytea_output'] in ('hex', 'escape')
+                and all(type(value[field]) is str and len(value[field].encode()) <= 1024
+                        and not re.search(r'[\r\n\x00]', value[field])
+                        for field in ('time_zone', 'date_style', 'interval_style', 'search_path', 'client_encoding')),
+                'PWA_DEPARSE_CONTEXT_UNKNOWN')
+        return value
 
     def read_upgrade_state(self):
         require(self.state in ('fresh_read_complete', 'initial_ready')
@@ -156,6 +185,9 @@ def main():
                 elif operation == 'read_upgrade_state':
                     require(argument is None and session is not None, 'PWA_UPGRADE_OPERATION_INVALID')
                     value = session.read_upgrade_state()
+                elif operation == 'read_deparse_context':
+                    require(argument is None and session is not None, 'PWA_UPGRADE_OPERATION_INVALID')
+                    value = session.read_deparse_context()
                 elif operation == 'apply_upgrade':
                     require(session is not None, 'PWA_UPGRADE_OPERATION_INVALID')
                     value = session.apply_upgrade(argument)

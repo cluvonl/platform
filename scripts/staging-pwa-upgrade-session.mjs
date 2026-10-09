@@ -5,11 +5,12 @@ import {createHash} from 'node:crypto';
 import {readFile,lstat} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {projectTarget,databaseTarget,databaseEnvironment} from './staging-preflight.mjs';
+import {publicDeparseContext} from './staging-pwa-restore-diagnostic.mjs';
 
 const BRIDGE=fileURLToPath(new URL('./staging_pwa_upgrade_session.py',import.meta.url));
 const SESSION=fileURLToPath(new URL('./staging_backup_session.py',import.meta.url));
 const SESSION_PIN='e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1';
-export const PWA_UPGRADE_SESSION_CHILD_SHA256='04035b688c11711416046671a272bc7ad61ede229d690b25c1fb71de8a29cf39';
+export const PWA_UPGRADE_SESSION_CHILD_SHA256='ed00bc2b33812fc6a5e4a6da4679460cd74c9970411db19dd341a0e48616ee9b';
 const BRIDGE_PIN=PWA_UPGRADE_SESSION_CHILD_SHA256;
 const sourceBindings=new WeakMap();
 const PROJECT='fbozlbgmktkgcdfqdaaz';
@@ -148,6 +149,13 @@ export class PwaUpgradeSession {
  #phase(expected){requireTrue(!this.#closing&&!this.#exited&&this.#child.killed!==true&&this.#state===expected,'BRIDGE_PHASE_CLOSED');}
  async beginCapture(){requireTrue(this.#state==='locked','CAPTURE_PHASE_INVALID');this.#phase('locked');const value=await this.#request('begin_capture');this.#phase('locked');this.#state='capture';return value;}
  async captureQuery(sql){requireTrue(this.#state==='capture','CAPTURE_PHASE_INVALID');requireTrue(typeof sql==='string','BRIDGE_QUERY_INVALID');this.#phase('capture');const value=await this.#request('capture_query',sql);this.#phase('capture');return value;}
+ async readDeparseContext(){
+  requireTrue(this.#state==='capture','PWA_DEPARSE_CONTEXT_PHASE_INVALID');this.#phase('capture');
+  try{
+   const raw=await this.#request('read_deparse_context');this.#phase('capture');
+   return publicDeparseContext(raw);
+  }catch(error){this.#abort('PWA_DEPARSE_CONTEXT_UNPROVED');throw error instanceof BridgeError?error:new BridgeError('PWA_DEPARSE_CONTEXT_UNKNOWN');}
+ }
  async checkLock(){const value=await this.#request('check_lock');requireTrue(!this.#closing&&!this.#exited&&!['failed','closed'].includes(this.#state),'BRIDGE_PHASE_CLOSED');return value;}
  async endCapture(){requireTrue(this.#state==='capture','CAPTURE_PHASE_INVALID');this.#phase('capture');const value=await this.#request('end_capture');this.#phase('capture');this.#state='captured';return value;}
  async beginFreshRead(){requireTrue(this.#state==='captured','FRESH_READ_PHASE_INVALID');this.#phase('captured');const value=await this.#request('begin_fresh_read');this.#phase('captured');this.#state='fresh_read';return value;}
@@ -202,7 +210,7 @@ export class PwaUpgradeSession {
 
 // Reader is imported directly by the operational collector. There is no caller
 // binding-reader option or public property which can register source authority.
-const trustedMethods=Object.freeze(Object.fromEntries(['beginCapture','captureQuery','checkLock','endCapture','beginFreshRead','freshReadQuery','endFreshRead','readUpgradeState','applyUpgrade','close']
+const trustedMethods=Object.freeze(Object.fromEntries(['beginCapture','captureQuery','readDeparseContext','checkLock','endCapture','beginFreshRead','freshReadQuery','endFreshRead','readUpgradeState','applyUpgrade','close']
  .map(name=>[name,PwaUpgradeSession.prototype[name]])));
 Object.freeze(PwaUpgradeSession.prototype);
 export function sourceBindingForUpgradeCollector(instance){

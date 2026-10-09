@@ -1,0 +1,99 @@
+{
+  "scope": "LOCAL_OWNED_PWA33_CLONE_ALIGNMENT_AND_BOUNDED_DIAGNOSTICS",
+  "observed_at": "2026-10-09T08:35:17.076386+00:00",
+  "source_base_sha": "71bd79daf4548c974c2467bf53e0aced99b51543",
+  "candidate_file_sha256": {
+    "scripts/staging-pwa-restore-diagnostic.mjs": "b9522e700ec095638e0c1807885a51d4ac06cfd27e63f4aa2a10127709a4af10",
+    "scripts/staging-pwa-upgrade-restore.mjs": "77fd48dec78521d4d2bfb0595de4017b8500d41b077b23173d083cc6cb7d9a3d",
+    "scripts/staging-pwa-upgrade.mjs": "0e33c12b3a5bd3277417e4fb70d591f12a55c68f273c41e9d4da8e3c48794ec4",
+    "scripts/staging-pwa-upgrade-session.mjs": "ed2a73ed92b02152f7d0683347e8b2dfb52b06b4df82530979068212c6065195",
+    "scripts/staging_pwa_upgrade_session.py": "ed00bc2b33812fc6a5e4a6da4679460cd74c9970411db19dd341a0e48616ee9b",
+    "tests/staging-pwa-restore-diagnostic.test.mjs": "f90c4ce91a5f3a316aec06998bec0dd1e3e2d4de94867d4cadb1518ad43fffca",
+    "tests/staging-pwa-upgrade-restore.test.mjs": "1da33bb461b48774dce2d77b3c48fcca75198f3aa71e168b26f6a4adbc710ce3",
+    "tests/staging-pwa-upgrade-session.test.mjs": "9d49a12d409e046fbb495276dfb17acb9898ab87d799c02a2adcbdbc29709c77",
+    "tests/helpers/staging-pwa-upgrade-session-tests.py": "434949ea40bcb12097a9b3cffa60ba29f73a90b67716329bd99f0f665d8d2b79",
+    "tests/pwa-restore-deparse-owned.test.mjs": "666e1ee3ccedf5552097dbce1b249f4026bdbd443001e596d6028cab240ec3b3"
+  },
+  "unchanged_frozen_transport_original16_catalog_and_gates": [
+    "scripts/staging_backup_session.py",
+    "scripts/staging-capture-catalog.mjs",
+    "scripts/staging-initial-restore.mjs",
+    "scripts/staging-initial-migrations.mjs",
+    "scripts/staging-migration-files.mjs",
+    "scripts/staging-pwa-upgrade-files.mjs",
+    "scripts/staging-pwa-upgrade-migrations.mjs",
+    "scripts/staging-pwa-runtime-preflight.mjs",
+    "scripts/staging_pwa_native_qa_session.py",
+    "scripts/staging-pwa-native-qa-session.mjs",
+    ".github/workflows/staging.yml",
+    ".github/workflows/staging-pwa-configure-app.yml"
+  ],
+  "all33_migration_source_bytes_unchanged": true,
+  "all31_predecessor8762_migration_bytes_unchanged": true,
+  "migration_manifest_sha256": "3153f4cffbf47c1c8d0821e0fa80c4bc5146964a188a4ee21a71c3e1de6b1090",
+  "closed_python_owner_pins": 6,
+  "bridge_python_pin_matches": true,
+  "executed_checks": {
+    "targeted_node_owner_restore_workflow_privacy_tests": {
+      "passed": 32,
+      "failed": 0,
+      "skipped": 0
+    },
+    "python_protocol_tests": {
+      "passed": 8
+    },
+    "targeted_eslint": {
+      "passed": true
+    },
+    "python_source_compile": {
+      "passed": true
+    },
+    "actual_owned_pg17_fresh16_to33": {
+      "passed": true,
+      "migrations": 33,
+      "forced_native_tables": 180,
+      "security_invoker_functions": 85,
+      "security_invoker_views": 21,
+      "blocked_last_position_contenders": 2
+    },
+    "actual_owned_pg17_approved8762_31_to33": {
+      "passed": true,
+      "previous_migrations": 31,
+      "executed_new_migrations": 2,
+      "previous_history_and_receipts_unchanged": true,
+      "original16_receipts_unchanged": true,
+      "help_catalog_data_unchanged": true,
+      "receipt_tamper_negatives": 8,
+      "forced_native_tables": 180,
+      "security_invoker_functions": 85,
+      "security_invoker_views": 21,
+      "blocked_last_position_contenders": 2
+    }
+  },
+  "actual_deparse_archive_and_28_catalog_proof": {
+    "path": "docs/release/evidence/staging/20261009-pwa33-deparse-owned-proof.json",
+    "sha256": "1d39c9d905b83a66aadfc5152a51dbe4570595543a3b0e43d685f393499730fe",
+    "source_role_and_provider_backup_received": false,
+    "all28_frozen_queries_compared": true,
+    "fixed_source_profile_alignment_proven": true,
+    "semantic_threshold_missing_extra_table_and_acl_drift_rejected": true,
+    "owned_clone_removed": true
+  },
+  "alignment_scope": "OWNED_CLONE_CONTROL_SESSIONS_ONLY",
+  "exact_catalog_comparator_retained": true,
+  "source_settings_changed": false,
+  "provider_archive_process_settings_changed": false,
+  "semantic_differences_ignored": false,
+  "whitelisted_source_profile_required": true,
+  "unknown_malformed_or_lossy_source_profile_refused": true,
+  "public_diagnostics_max_rows": 8,
+  "public_diagnostics_include_only_categories_hashes_flags": true,
+  "object_identities_or_private_definitions_exported": false,
+  "hosted_failure_cause_proven": false,
+  "hosted_upgrade_verified": false,
+  "staging_app_activation_verified": false,
+  "physical_device_verified": false,
+  "full_pwa_acceptance": false,
+  "provider_services_verified": false,
+  "production_enabled": false
+}

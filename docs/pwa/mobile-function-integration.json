@@ -71,14 +71,25 @@
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 0,
+        "local_targeted_browser_checks": 1,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 0
       },
       "local_browser_evidence": [],
       "local_concurrency_evidence": [],
-      "local_database_evidence": []
+      "local_database_evidence": [],
+      "native_additional33_read_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-additional-readflows/browser-results.json",
+          "sha256": "3995c72bff45bf71cd5dc8861b498f81e2f4ce2b3980379d76a082022040356d",
+          "case_id": "HOME_NATIVE_HOUSEHOLD_METER_LINK_AND_AGREEMENT",
+          "bounded_scope": "The current household/season meter renders native confirmed/planned/pending/winter values, and its link opens the same household agreement without changing the goal.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        }
+      ]
     },
     {
       "id": "F003",
@@ -95,14 +106,25 @@
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 0,
+        "local_targeted_browser_checks": 1,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 0
       },
       "local_browser_evidence": [],
       "local_concurrency_evidence": [],
-      "local_database_evidence": []
+      "local_database_evidence": [],
+      "native_additional33_read_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-additional-readflows/browser-results.json",
+          "sha256": "3995c72bff45bf71cd5dc8861b498f81e2f4ce2b3980379d76a082022040356d",
+          "case_id": "HOME_OWN_CHILD_TEAM_TALLY_EXACT_PROGRESS_LINK",
+          "bounded_scope": "Each rendered child card points to the exact authorized team and reads the current completed/planned team tally; other household membership is not inferred.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        }
+      ]
     },
     {
       "id": "F004",
@@ -153,14 +175,25 @@
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 0,
+        "local_targeted_browser_checks": 1,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 0
       },
       "local_browser_evidence": [],
       "local_concurrency_evidence": [],
-      "local_database_evidence": []
+      "local_database_evidence": [],
+      "native_additional33_read_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-additional-readflows/browser-results.json",
+          "sha256": "3995c72bff45bf71cd5dc8861b498f81e2f4ce2b3980379d76a082022040356d",
+          "case_id": "HOME_NATIVE_PUBLIC_TASK_PREFERENCES_BOUNDED_SELECTION",
+          "bounded_scope": "The Home suggestion list is exactly the first two authorized available public tasks matching the actor’s current native preferences; this reads suggestions without booking.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        }
+      ]
     },
     {
       "id": "F006",
@@ -177,14 +210,25 @@
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 0,
+        "local_targeted_browser_checks": 1,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 0
       },
       "local_browser_evidence": [],
       "local_concurrency_evidence": [],
-      "local_database_evidence": []
+      "local_database_evidence": [],
+      "native_additional33_read_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-additional-readflows/browser-results.json",
+          "sha256": "3995c72bff45bf71cd5dc8861b498f81e2f4ce2b3980379d76a082022040356d",
+          "case_id": "HOME_STRUCTURAL_ROLE_LINK_AND_NATIVE_VACANCY_DETAIL",
+          "bounded_scope": "Home opens the published native vacancy list and exact detail with actual committee and description; nullable guidance and the missing supplied-minute dimension are reported separately. No interest is submitted and no exemption is granted.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        }
+      ]
     },
     {
       "id": "F007",
@@ -243,14 +287,25 @@
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 0,
+        "local_targeted_browser_checks": 1,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 0
       },
       "local_browser_evidence": [],
       "local_concurrency_evidence": [],
-      "local_database_evidence": []
+      "local_database_evidence": [],
+      "native_additional33_read_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-additional-readflows/browser-results.json",
+          "sha256": "3995c72bff45bf71cd5dc8861b498f81e2f4ce2b3980379d76a082022040356d",
+          "case_id": "COORDINATOR_HOME_NATIVE_COUNTS_EXACT_QUICKLINKS",
+          "bounded_scope": "The native coordinator variant renders public free places, unresolved team places and reviewable execution counts, with exact task/create/confirm links; the ordinary actor lacks management access.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        }
+      ]
     },
     {
       "id": "F009",
@@ -1697,14 +1752,25 @@
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 0,
+        "local_targeted_browser_checks": 1,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 0
       },
       "local_browser_evidence": [],
       "local_concurrency_evidence": [],
-      "local_database_evidence": []
+      "local_database_evidence": [],
+      "native_additional33_read_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-additional-readflows/browser-results.json",
+          "sha256": "3995c72bff45bf71cd5dc8861b498f81e2f4ce2b3980379d76a082022040356d",
+          "case_id": "AGENDA_NATIVE_BOOKING_EXACT_DETAIL_NO_DUPLICATE_ASSIGNMENT",
+          "bounded_scope": "The native personal calendar shows each current booking once and omits a same-place assignment; clicking an actual booking opens its exact booking/task IDs.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        }
+      ]
     },
     {
       "id": "F038",
@@ -1871,14 +1937,25 @@
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 0,
+        "local_targeted_browser_checks": 1,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 0
       },
       "local_browser_evidence": [],
       "local_concurrency_evidence": [],
-      "local_database_evidence": []
+      "local_database_evidence": [],
+      "native_additional33_read_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-additional-readflows/browser-results.json",
+          "sha256": "3995c72bff45bf71cd5dc8861b498f81e2f4ce2b3980379d76a082022040356d",
+          "case_id": "NATIVE_TEAM_SELECTION_AND_POLICY_LINK_NO_ACCEPTANCE",
+          "bounded_scope": "Only native linked/managed team IDs are selectable; team parent and selected season render, and reading the published-policy route creates no acceptance.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        }
+      ]
     },
     {
       "id": "F043",
@@ -1969,14 +2046,25 @@
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 0,
+        "local_targeted_browser_checks": 1,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 0
       },
       "local_browser_evidence": [],
       "local_concurrency_evidence": [],
-      "local_database_evidence": []
+      "local_database_evidence": [],
+      "native_additional33_read_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-additional-readflows/browser-results.json",
+          "sha256": "3995c72bff45bf71cd5dc8861b498f81e2f4ce2b3980379d76a082022040356d",
+          "case_id": "NATIVE_TEAM_SELECTION_AND_POLICY_LINK_NO_ACCEPTANCE",
+          "bounded_scope": "Only native linked/managed team IDs are selectable; team parent and selected season render, and reading the published-policy route creates no acceptance.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        }
+      ]
     },
     {
       "id": "F045",
@@ -2689,7 +2777,7 @@
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 0,
+        "local_targeted_browser_checks": 1,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 3
@@ -2716,6 +2804,17 @@
           ],
           "scope": "Exact related native SQL assertions only; this is backend permission/state/readback evidence, not a UI interaction or complete function acceptance."
         }
+      ],
+      "native_additional33_read_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-additional-readflows/browser-results.json",
+          "sha256": "3995c72bff45bf71cd5dc8861b498f81e2f4ce2b3980379d76a082022040356d",
+          "case_id": "RESERVE_HELP_ELIGIBILITY_READ_BOUNDARY",
+          "bounded_scope": "Reserve-help controls are displayed only for actual native eligible allocations and suitable volunteers; no request, invitation or booking is submitted.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        }
       ]
     },
     {
@@ -2733,14 +2832,25 @@
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 0,
+        "local_targeted_browser_checks": 1,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 0
       },
       "local_browser_evidence": [],
       "local_concurrency_evidence": [],
-      "local_database_evidence": []
+      "local_database_evidence": [],
+      "native_additional33_read_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-additional-readflows/browser-results.json",
+          "sha256": "3995c72bff45bf71cd5dc8861b498f81e2f4ce2b3980379d76a082022040356d",
+          "case_id": "NATIVE_TEAM_FEEDBACK_READ_BOUNDARY",
+          "bounded_scope": "The managed-team feedback drawer reads only feedback belonging to that exact authorized team and displays an honest empty state when absent; no instruction is saved.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        }
+      ]
     },
     {
       "id": "F056",
@@ -3528,14 +3638,25 @@
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 0,
+        "local_targeted_browser_checks": 1,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 0
       },
       "local_browser_evidence": [],
       "local_concurrency_evidence": [],
-      "local_database_evidence": []
+      "local_database_evidence": [],
+      "native_additional33_read_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-additional-readflows/browser-results.json",
+          "sha256": "3995c72bff45bf71cd5dc8861b498f81e2f4ce2b3980379d76a082022040356d",
+          "case_id": "NATIVE_COORDINATOR_TABS_DIRECT_MEMBER_DENIAL",
+          "bounded_scope": "The coordinator can read each exact Planning/Uitvoering/Aanvragen tab; direct management URLs do not grant the ordinary member extra authority.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        }
+      ]
     },
     {
       "id": "F069",
@@ -4193,14 +4314,25 @@
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 0,
+        "local_targeted_browser_checks": 1,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 0
       },
       "local_browser_evidence": [],
       "local_concurrency_evidence": [],
-      "local_database_evidence": []
+      "local_database_evidence": [],
+      "native_additional33_read_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-additional-readflows/browser-results.json",
+          "sha256": "3995c72bff45bf71cd5dc8861b498f81e2f4ce2b3980379d76a082022040356d",
+          "case_id": "COMMITTEE_ACTUAL_CLUSTER_FOLLOWUP_READ",
+          "bounded_scope": "The coordinator reads actual scoped clusters, exact deadlines and their current phase; no deadlines or reserve requests are changed.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        }
+      ]
     },
     {
       "id": "F075",
@@ -4450,14 +4582,25 @@
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 0,
+        "local_targeted_browser_checks": 1,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 0
       },
       "local_browser_evidence": [],
       "local_concurrency_evidence": [],
-      "local_database_evidence": []
+      "local_database_evidence": [],
+      "native_additional33_read_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-additional-readflows/browser-results.json",
+          "sha256": "3995c72bff45bf71cd5dc8861b498f81e2f4ce2b3980379d76a082022040356d",
+          "case_id": "MATCH_REVIEW_NATIVE_CURRENT_ACTOR_BOUNDARY",
+          "bounded_scope": "The rendered request review forms follow native exact actor/request authority; a committee is not given a match-review control by opening the request tab.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        }
+      ]
     },
     {
       "id": "F079",
@@ -5422,14 +5565,25 @@
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 0,
+        "local_targeted_browser_checks": 1,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 0
       },
       "local_browser_evidence": [],
       "local_concurrency_evidence": [],
-      "local_database_evidence": []
+      "local_database_evidence": [],
+      "native_additional33_read_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-additional-readflows/browser-results.json",
+          "sha256": "3995c72bff45bf71cd5dc8861b498f81e2f4ce2b3980379d76a082022040356d",
+          "case_id": "HOME_NATIVE_HOUSEHOLD_METER_LINK_AND_AGREEMENT",
+          "bounded_scope": "The current household/season meter renders native confirmed/planned/pending/winter values, and its link opens the same household agreement without changing the goal.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        }
+      ]
     },
     {
       "id": "F096",
@@ -7195,14 +7349,45 @@
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 0,
+        "local_targeted_browser_checks": 3,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 0
       },
       "local_browser_evidence": [],
       "local_concurrency_evidence": [],
-      "local_database_evidence": []
+      "local_database_evidence": [],
+      "native_additional33_read_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-additional-readflows/browser-results.json",
+          "sha256": "3995c72bff45bf71cd5dc8861b498f81e2f4ce2b3980379d76a082022040356d",
+          "case_id": "OWN_QUALIFICATION_NATIVE_EMPTY_BOUNDARY",
+          "bounded_scope": "The qualifications section renders the current own native result without inventing certificates or validity data.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        }
+      ],
+      "native_positive33_read_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-positive-read-contexts/browser-results.json",
+          "sha256": "879104d70b0f4cb702a7d70330021ee658822646cb3279831f57fdf734c8e1e3",
+          "case_id": "OWN_ACTUAL_VALID_AND_EXPIRED_QUALIFICATION_READ_RELOAD",
+          "bounded_scope": "Native own valid/expired qualification and authorized integer-cent finance read, with reload and person/tenant denial; original finance label gap is retained in this historical proof.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        },
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-positive-read-contexts/browser-results.json",
+          "sha256": "879104d70b0f4cb702a7d70330021ee658822646cb3279831f57fdf734c8e1e3",
+          "case_id": "QUALIFICATIONS_NATIVE_PERSON_HOUSEHOLD_AND_TENANT_PRIVACY",
+          "bounded_scope": "Native own valid/expired qualification and authorized integer-cent finance read, with reload and person/tenant denial; original finance label gap is retained in this historical proof.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        }
+      ]
     },
     {
       "id": "F103",
@@ -7338,12 +7523,14 @@
       "status": "implemented_targeted_acceptance_pending",
       "remaining": "Prescribed acceptance AC-F106 remains open on staging: Toont commissie, functie, inzet en beschrijving; mogelijke vrijstelling is voorwaardelijk. Record its exact permitted/forbidden scope, transition/readback and any required second-device assertions. Only named executed local scopes below are proven; route rendering alone does not prove this entire behavior.",
       "implementation_files": [
-        "components/mobile/personal.tsx"
+        "components/mobile/personal.tsx",
+        "lib/pwa/server.ts",
+        "components/mobile/types.ts"
       ],
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 0,
+        "local_targeted_browser_checks": 4,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 5
@@ -7377,6 +7564,46 @@
             }
           ],
           "scope": "Exact related native SQL assertions only; this is backend permission/state/readback evidence, not a UI interaction or complete function acceptance."
+        }
+      ],
+      "native_additional33_read_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-additional-readflows/browser-results.json",
+          "sha256": "3995c72bff45bf71cd5dc8861b498f81e2f4ce2b3980379d76a082022040356d",
+          "case_id": "HOME_STRUCTURAL_ROLE_LINK_AND_NATIVE_VACANCY_DETAIL",
+          "bounded_scope": "Home opens the published native vacancy list and exact detail with actual committee and description; nullable guidance and the missing supplied-minute dimension are reported separately. No interest is submitted and no exemption is granted.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        }
+      ],
+      "native_vacancy33_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-vacancy-effort/browser-results.json",
+          "sha256": "7eaa144a0e546f237e398cfa777f150ad4106e5b9f276e406488bcffc5102435",
+          "case_id": "NATIVE_EXPECTED_VACANCY_MINUTES_WITH_NULL_GUIDANCE_ON_LIST",
+          "bounded_scope": "An actual native published vacancy with expected_minutes=120 and guidance=NULL renders the exact 120-minute commitment on its authorized card, without an invented frequency.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        },
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-vacancy-effort/browser-results.json",
+          "sha256": "7eaa144a0e546f237e398cfa777f150ad4106e5b9f276e406488bcffc5102435",
+          "case_id": "EXACT_VACANCY_MINUTE_DETAIL_SURVIVES_NATIVE_READ_RELOAD",
+          "bounded_scope": "The actual card opens the exact vacancy ID; its current native description and 120 minutes remain visible after a full reload. No interest command is submitted.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        },
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-vacancy-effort/browser-results.json",
+          "sha256": "7eaa144a0e546f237e398cfa777f150ad4106e5b9f276e406488bcffc5102435",
+          "case_id": "FOREIGN_NATIVE_TENANT_VACANCY_ID_RETURNS_NO_DETAIL_OR_INTEREST_AUTHORITY",
+          "bounded_scope": "An actual independently authenticated tenant-B actor cannot read the tenant-A vacancy by putting its exact ID into the tenant-B route; no foreign title, body, drawer or interest authority appears. Public vacancies remain visible to authorized actors of their own tenant.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
         }
       ]
     },
@@ -7702,7 +7929,7 @@
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 1,
+        "local_targeted_browser_checks": 2,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 7
@@ -7766,6 +7993,17 @@
             }
           ],
           "scope": "Exact related native SQL assertions only; this is backend permission/state/readback evidence, not a UI interaction or complete function acceptance."
+        }
+      ],
+      "native_offline33_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-offline-browser/curated-offline-browser-results.json",
+          "sha256": "6ec2d5d529d8c4e46fb2fbda74071595a0496fa8939b71794b58dfb753d8d153",
+          "case_id": "ACTUAL_BROWSER_PERMISSION_DENIED_HONEST_INBOX_FALLBACK",
+          "bounded_scope": "Actual native local Chromium worker: ACTUAL_BROWSER_PERMISSION_DENIED_HONEST_INBOX_FALLBACK. Fresh neutral offline/reload/reconnect or native CDP notification denial as named. No private cache; no physical-device or whole scenario claim.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
         }
       ]
     },
@@ -8148,7 +8386,7 @@
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 1,
+        "local_targeted_browser_checks": 2,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 0
@@ -8163,7 +8401,18 @@
         }
       ],
       "local_concurrency_evidence": [],
-      "local_database_evidence": []
+      "local_database_evidence": [],
+      "native_offline33_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-offline-browser/curated-offline-browser-results.json",
+          "sha256": "6ec2d5d529d8c4e46fb2fbda74071595a0496fa8939b71794b58dfb753d8d153",
+          "case_id": "ACTUAL_BROWSER_PERMISSION_DENIED_HONEST_INBOX_FALLBACK",
+          "bounded_scope": "Actual native local Chromium worker: ACTUAL_BROWSER_PERMISSION_DENIED_HONEST_INBOX_FALLBACK. Fresh neutral offline/reload/reconnect or native CDP notification denial as named. No private cache; no physical-device or whole scenario claim.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        }
+      ]
     },
     {
       "id": "F123",
@@ -8418,19 +8667,71 @@
       "status": "implemented_targeted_acceptance_pending",
       "remaining": "Prescribed acceptance AC-F131 remains open on staging: Toont geautoriseerde bijdragen/bestedingen/status; formele beoordeling, onafhankelijke goedkeuring en correctie blijven backoffice. Record its exact permitted/forbidden scope, transition/readback and any required second-device assertions. Only named executed local scopes below are proven; route rendering alone does not prove this entire behavior.",
       "implementation_files": [
-        "components/mobile/screens.tsx"
+        "components/mobile/screens.tsx",
+        "components/mobile/state-labels.ts"
       ],
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 0,
+        "local_targeted_browser_checks": 5,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 0
       },
       "local_browser_evidence": [],
       "local_concurrency_evidence": [],
-      "local_database_evidence": []
+      "local_database_evidence": [],
+      "native_additional33_read_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-additional-readflows/browser-results.json",
+          "sha256": "3995c72bff45bf71cd5dc8861b498f81e2f4ce2b3980379d76a082022040356d",
+          "case_id": "FINANCE_NATIVE_AUTHORITY_AND_TRANSACTION_BOUNDARY",
+          "bounded_scope": "Finance reads follow native authority and show no fabricated transaction or zero balance to an unauthorized actor.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        }
+      ],
+      "native_positive33_read_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-positive-read-contexts/browser-results.json",
+          "sha256": "879104d70b0f4cb702a7d70330021ee658822646cb3279831f57fdf734c8e1e3",
+          "case_id": "AUTHORIZED_NATIVE_CENT_ENTRIES_BALANCES_CORRECTION_AND_RELOAD",
+          "bounded_scope": "Native own valid/expired qualification and authorized integer-cent finance read, with reload and person/tenant denial; original finance label gap is retained in this historical proof.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        },
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-positive-read-contexts/browser-results.json",
+          "sha256": "879104d70b0f4cb702a7d70330021ee658822646cb3279831f57fdf734c8e1e3",
+          "case_id": "ACTUAL_CENT_READ_AUTHORITY_AND_FOREIGN_TENANT_DENIAL",
+          "bounded_scope": "Native own valid/expired qualification and authorized integer-cent finance read, with reload and person/tenant denial; original finance label gap is retained in this historical proof.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        }
+      ],
+      "native_finance33_label_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-positive-read-contexts/finance-label-regression/browser-results.json",
+          "sha256": "64427012a3bec808013fc3258b1c0da81c350c347b8201227e3378f5750f3cc2",
+          "case_id": "F131_NATIVE_CANONICAL_LABELS_CENTS_AND_RELOAD",
+          "bounded_scope": "Native canonical financial entry labels and integer-cent balances survive reload; unauthorized person and foreign-tenant access refused.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        },
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-positive-read-contexts/finance-label-regression/browser-results.json",
+          "sha256": "64427012a3bec808013fc3258b1c0da81c350c347b8201227e3378f5750f3cc2",
+          "case_id": "F131_NATIVE_AUTHORIZED_CENT_AND_TENANT_PRIVACY",
+          "bounded_scope": "Native canonical financial entry labels and integer-cent balances survive reload; unauthorized person and foreign-tenant access refused.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        }
+      ]
     },
     {
       "id": "F132",
@@ -9299,7 +9600,7 @@
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": false,
-        "local_targeted_browser_checks": 2,
+        "local_targeted_browser_checks": 4,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 7
@@ -9364,6 +9665,26 @@
           ],
           "scope": "Exact related native SQL assertions only; this is backend permission/state/readback evidence, not a UI interaction or complete function acceptance."
         }
+      ],
+      "native_offline33_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-offline-browser/curated-offline-browser-results.json",
+          "sha256": "6ec2d5d529d8c4e46fb2fbda74071595a0496fa8939b71794b58dfb753d8d153",
+          "case_id": "NATIVE_AUTHENTICATED_FRESH_OFFLINE_NAVIGATION_AND_RELOAD_PUBLIC_CACHE_ONLY",
+          "bounded_scope": "Actual native local Chromium worker: NATIVE_AUTHENTICATED_FRESH_OFFLINE_NAVIGATION_AND_RELOAD_PUBLIC_CACHE_ONLY. Fresh neutral offline/reload/reconnect or native CDP notification denial as named. No private cache; no physical-device or whole scenario claim.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        },
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-offline-browser/curated-offline-browser-results.json",
+          "sha256": "6ec2d5d529d8c4e46fb2fbda74071595a0496fa8939b71794b58dfb753d8d153",
+          "case_id": "NATIVE_RECONNECT_RETRY_RETURNS_AUTHORIZED_PRIVATE_SERVER_ROUTE",
+          "bounded_scope": "Actual native local Chromium worker: NATIVE_RECONNECT_RETRY_RETURNS_AUTHORIZED_PRIVATE_SERVER_ROUTE. Fresh neutral offline/reload/reconnect or native CDP notification denial as named. No private cache; no physical-device or whole scenario claim.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        }
       ]
     },
     {
@@ -9382,7 +9703,7 @@
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": false,
-        "local_targeted_browser_checks": 5,
+        "local_targeted_browser_checks": 6,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 201
@@ -10264,6 +10585,17 @@
             }
           ],
           "scope": "Exact related native SQL assertions only; this is backend permission/state/readback evidence, not a UI interaction or complete function acceptance."
+        }
+      ],
+      "native_offline33_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-offline-browser/curated-offline-browser-results.json",
+          "sha256": "6ec2d5d529d8c4e46fb2fbda74071595a0496fa8939b71794b58dfb753d8d153",
+          "case_id": "NATIVE_AUTHENTICATED_FRESH_OFFLINE_NAVIGATION_AND_RELOAD_PUBLIC_CACHE_ONLY",
+          "bounded_scope": "Actual native local Chromium worker: NATIVE_AUTHENTICATED_FRESH_OFFLINE_NAVIGATION_AND_RELOAD_PUBLIC_CACHE_ONLY. Fresh neutral offline/reload/reconnect or native CDP notification denial as named. No private cache; no physical-device or whole scenario claim.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
         }
       ]
     }
@@ -18693,15 +19025,15 @@
     "components/app/help-provider.tsx": "296f35de7ecd21a4daa4ddad9e19caf7ec1e2ef9963bf4b2624b15b040370dc7",
     "components/mobile/attendance-form.tsx": "9e48f0e0d799bbfd98aecd73e3161e1645b841df38bf8dd2c81bb4a879172324",
     "components/mobile/club-task-creation.tsx": "51d5a63ffb597c119cb22c2aa8071daf919ff16f40c6d57bfd572a52bf75869f",
-    "components/mobile/club.tsx": "559e7dcac47d863555a38142e54a82bf39b97698478229fad22c5ddb96053234",
+    "components/mobile/club.tsx": "3b9260e9445f5c482f37b5199596d6b9c14f09789d1956b249b02a8bb5fbe68a",
     "components/mobile/cluster-reservation.tsx": "e7a46938e48fea70f82b2c36555a93d9b4eb91753651ad66b5a97067ed3a0ce7",
     "components/mobile/command-form.tsx": "7b3ed227dbbef51be8f38745c644c31b77b1dfd7c1b94f09929508291c8f3af7",
     "components/mobile/committee-followup.tsx": "a6324eff881a10d537de9e7ba64055bc5d4e1f6e81099c9d189be2ccff14b5ec",
     "components/mobile/conversation.tsx": "ef323604b9f26849b6203c75493acd4bf9aa95ac5b3e4ac8e89e16adbe6347de",
     "components/mobile/instructions-form.tsx": "330a09235a9b06c3989313638297be19132a6858bd1c96217620a28839490107",
-    "components/mobile/personal.tsx": "8d0d903566bffed59ec660254fc7ecc79c61ac30dcc4f045a424e0231f1c8907",
+    "components/mobile/personal.tsx": "cbfcac76f520f2691d5fc4a632db0e82cd7a1b0d6390674d771c40af5a477f29",
     "components/mobile/primitives.tsx": "ce9f0b008918efcbe37aabf642e554274f6baa1b1ae969a6d1b62c71a358bfd0",
-    "components/mobile/screens.tsx": "8038e15e962df0b850e3a15622d07abea670a3f0dda4f8b6d48022694628ff26",
+    "components/mobile/screens.tsx": "a44272da2a64795d5b7375a6946a4045c79dd2f3d82d69d90d641ff39d962a02",
     "components/mobile/shell.tsx": "1e3801cfaab1dafa9b08e3a9f01658b3ae4a6bbce94c45b8a8065bfab7c06faf",
     "components/mobile/task-detail.tsx": "84b158f096f30058946b2ce5e8912c10a208f6cc1ff274f160b567db1ae18e3f",
     "components/mobile/teams.tsx": "1e57f740e33e087f11d017ba055d815b3b3ecc369041166db2e065f3013e30db",
@@ -18710,8 +19042,8 @@
     "components/pwa/pwa-controls.tsx": "f2d1f92964961d1623b8e65441799fa2ca1d15bea7eef1bbf80669807a84fdd1",
     "lib/auth/mobile-return.ts": "197da83d16e9e1f290cde0cff6cb406e3f5c05cff3ca9345ce2e1080b54d6eaf",
     "lib/pwa/actions.ts": "d0f79fc5a186ddb3d62ab9a2a8ee3e4e7a405a663758830d9e21508ada8dcd1b",
-    "lib/pwa/links.mjs": "68881af609f1d23bc316a8c3988361352db1b061ed22512d22bc6b58f224ad78",
-    "lib/pwa/server.ts": "0c9431514136392ea52e40ca966e015515c3ed10ea6aeeadb522e7b5368a6132",
+    "lib/pwa/links.mjs": "043bdafa330fe85408a49ab3bc3625022016dd87f17ebf5ff363437706a0d32b",
+    "lib/pwa/server.ts": "36cd57f79ead8b246561160fbcbb61b2627f068cbc2f6bf4af7c2b659b1aeec5",
     "lib/pwa/validation.ts": "d35954a1a441f802f66eb1edc1b36a35cb1ee6996064525aab82b52f090e62c5"
   },
   "browser_evidence_summary": {
@@ -18922,6 +19254,141 @@
       "actual_owned_committed31_to33": true,
       "previous_history_receipts_retained": true,
       "staging_verified": false
+    },
+    "native_additional33_read": {
+      "artifact": "docs/release/evidence/local/20261009-pwa33-additional-readflows/browser-results.json",
+      "sha256": "3995c72bff45bf71cd5dc8861b498f81e2f4ce2b3980379d76a082022040356d",
+      "result": "PASS",
+      "build": "DjodKXFrrC5uKVgChE7vg",
+      "bounded_cases": 14,
+      "bounded_function_ids": [
+        "F002",
+        "F003",
+        "F005",
+        "F006",
+        "F008",
+        "F037",
+        "F042",
+        "F044",
+        "F054",
+        "F055",
+        "F068",
+        "F074",
+        "F078",
+        "F095",
+        "F102",
+        "F106",
+        "F131"
+      ],
+      "native_otp_users": 2,
+      "actual_local_otp_digits": [
+        6
+      ],
+      "screenshots": 22,
+      "all_source_migration_and_image_hashes_verified": true,
+      "native_app_tables_unchanged": 180,
+      "staging_verified": false,
+      "physical_device_verified": false,
+      "whole_acceptance_passed": false
+    },
+    "native_vacancy33": {
+      "artifact": "docs/release/evidence/local/20261009-pwa33-vacancy-effort/browser-results.json",
+      "sha256": "7eaa144a0e546f237e398cfa777f150ad4106e5b9f276e406488bcffc5102435",
+      "result": "PASS",
+      "build": "kVENqwJT_rXK_funX32GL",
+      "bounded_cases": 3,
+      "bounded_function_ids": [
+        "F106"
+      ],
+      "native_otp_users": 2,
+      "actual_local_otp_digits": [
+        6
+      ],
+      "screenshots": 7,
+      "all_source_migration_and_image_hashes_verified": true,
+      "native_app_tables_unchanged": 180,
+      "staging_verified": false,
+      "physical_device_verified": false,
+      "whole_acceptance_passed": false
+    },
+    "native_offline33": {
+      "artifact": "docs/release/evidence/local/20261009-pwa33-offline-browser/curated-offline-browser-results.json",
+      "sha256": "6ec2d5d529d8c4e46fb2fbda74071595a0496fa8939b71794b58dfb753d8d153",
+      "build": "DjodKXFrrC5uKVgChE7vg",
+      "bounded_cases": 3,
+      "screenshots": 3,
+      "actual_local_otp_digits": 6,
+      "only_five_public_assets_cached": true,
+      "private_cache_entries": 0,
+      "native_logout_and_private_read_denied": true,
+      "staging_verified": false,
+      "physical_device_verified": false,
+      "whole_acceptance_passed": false
+    },
+    "native_positive33_read": {
+      "artifact": "docs/release/evidence/local/20261009-pwa33-positive-read-contexts/browser-results.json",
+      "sha256": "879104d70b0f4cb702a7d70330021ee658822646cb3279831f57fdf734c8e1e3",
+      "result": "PASS_BOUNDED_POSITIVE_READ_WITH_RECORDED_LABEL_GAP",
+      "build": "kVENqwJT_rXK_funX32GL",
+      "bounded_cases": 4,
+      "bounded_function_ids": [
+        "F102",
+        "F131"
+      ],
+      "native_otp_users": 2,
+      "actual_local_otp_digits": [
+        6
+      ],
+      "screenshots": 4,
+      "native_app_tables_unchanged_during_browser": 180,
+      "fixture_constructor_only": true,
+      "formal_certificate_award_proved": false,
+      "financial_approval_or_payment_proved": false,
+      "staging_verified": false,
+      "physical_device_verified": false,
+      "whole_acceptance_passed": false
+    },
+    "native_finance33_labels": {
+      "artifact": "docs/release/evidence/local/20261009-pwa33-positive-read-contexts/finance-label-regression/browser-results.json",
+      "sha256": "64427012a3bec808013fc3258b1c0da81c350c347b8201227e3378f5750f3cc2",
+      "result": "PASS",
+      "build": "dW1tJTXS7_nASiYNd6Ajy",
+      "bounded_cases": 2,
+      "bounded_function_ids": [
+        "F131"
+      ],
+      "actual_local_otp_digits": [
+        6
+      ],
+      "screenshots": 3,
+      "native_app_tables_unchanged_during_browser": 180,
+      "fixture_rows_unchanged": true,
+      "financial_approval_or_payment_proved": false,
+      "staging_verified": false,
+      "physical_device_verified": false,
+      "whole_acceptance_passed": false
+    },
+    "operational_restore_alignment33": {
+      "artifact": "docs/release/evidence/staging/20261009-pwa33-restore-alignment-closure.json",
+      "sha256": "9bc5a40b174b36ceea89ac3bc18afb52ae5e6869ac56d4a865e289b504c031ae",
+      "actual_pg17_archive_and_all28_catalog_proof": {
+        "path": "docs/release/evidence/staging/20261009-pwa33-deparse-owned-proof.json",
+        "sha256": "1d39c9d905b83a66aadfc5152a51dbe4570595543a3b0e43d685f393499730fe",
+        "source_role_and_provider_backup_received": false,
+        "all28_frozen_queries_compared": true,
+        "fixed_source_profile_alignment_proven": true,
+        "semantic_threshold_missing_extra_table_and_acl_drift_rejected": true,
+        "owned_clone_removed": true
+      },
+      "actual_owned_fresh16_to33": true,
+      "actual_owned_approved31_to33": true,
+      "exact_catalog_comparator_retained": true,
+      "source_database_mutated": false,
+      "hosted_cause_proven": false,
+      "hosted_upgrade_verified": false,
+      "staging_app_activation_verified": false,
+      "physical_device_verified": false,
+      "whole_acceptance_passed": false
     }
   },
   "server_command_registry": {

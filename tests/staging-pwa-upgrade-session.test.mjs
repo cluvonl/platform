@@ -16,6 +16,7 @@ const environment={APP_ENV:'staging',STAGING_SUPABASE_PROJECT_REF:'fbozlbgmktkgc
  MIGRATION_SSL_ROOT_CERT_PATH:fileURLToPath(new URL('../ops/tls/supabase-platform-root-ca.pem',import.meta.url)),
  GITHUB_REPOSITORY:'cluvonl/platform',GITHUB_REF:'refs/heads/staging',GITHUB_EVENT_NAME:'workflow_dispatch',GITHUB_SHA:sourceSha,RELEASE_SHA:sourceSha,GITHUB_RUN_ID:'123',GITHUB_ACTOR:'upgrade-test'};
 const context={actor:'upgrade-test',sourceSha,workflowRunId:'123',manifestSha256:'b'.repeat(64),backupArtifactId:'456',backupArtifactSha256:'c'.repeat(64)};
+const deparse={server_version_num:170011,time_zone:'UTC',date_style:'ISO, MDY',interval_style:'postgres',search_path:'pg_catalog',extra_float_digits:1,standard_conforming_strings:true,quote_all_identifiers:false,bytea_output:'hex',client_encoding:'UTF8'};
 function processFixture(options={}){
  const child=new EventEmitter(),requests=[];child.stdout=new PassThrough();child.stderr=new PassThrough();let closed=false;
  const stop=()=>{if(!closed){closed=true;queueMicrotask(()=>child.emit('close',0,null));}};
@@ -25,7 +26,8 @@ function processFixture(options={}){
   const value=request.operation==='connect'?{scope:'HOSTED_VERIFY_FULL',client_tls:true,client_tls_protocol:'TLSv1.3',libpq_version:180006,postgres_version:170011}:
    request.operation==='read_upgrade_state'?{layout:{schemas:['api','app','internal'],app_objects:500},historyRows:Array(16).fill({}),sourceRows:Array(16).fill({}),upgradeRows:[]}:
    request.operation==='apply_upgrade'?{applied_prefix:request.argument.index+1,atomic_transaction_committed:!options.unconfirmed,exclusive_session_lock_retained:true}:{synthetic:true};
-  queueMicrotask(()=>child.stdout.write(JSON.stringify({id:request.id,ok:true,value})+'\n'));done();
+  const response=request.operation==='read_deparse_context'?options.deparse??deparse:value;
+  queueMicrotask(()=>child.stdout.write(JSON.stringify({id:request.id,ok:true,value:response})+'\n'));done();
  }});
  child.stdin.on('finish',stop);
  return{child,requests,closed:()=>closed};
@@ -51,6 +53,25 @@ test('writer child environment excludes sender, provider, artifact and ambient p
  for(const key of ['STAGING_TEST_RECIPIENT','INVITATION_TOKEN_SECRET','GITHUB_TOKEN','LD_PRELOAD','PGSERVICEFILE','SUPABASE_SECRET_KEY'])assert.equal(Object.hasOwn(childEnvironment,key),false);
  assert.equal(childEnvironment.PGSSLMODE,'verify-full');assert.equal(childEnvironment.PWA_UPGRADE_NODE_EXECUTABLE,process.execPath);
  await session.close();
+});
+
+test('fixed deparser context is available only during capture and exposes no unrecognized GUC value',async()=>{
+ const {session,fixture}=await synthetic({deparse:{...deparse,search_path:'private_schema_name'}});
+ await assert.rejects(session.readDeparseContext());assert.equal(fixture.requests.some(row=>row.operation==='read_deparse_context'),false);
+ await session.beginCapture();const value=await session.readDeparseContext();
+ assert.equal(value.search_path.category,'OTHER');assert.match(value.search_path.sha256,/^[0-9a-f]{64}$/);
+ assert.equal(JSON.stringify(value).includes('private_schema_name'),false);
+ assert.deepEqual(fixture.requests.find(row=>row.operation==='read_deparse_context').argument,null);
+ await session.endCapture();await assert.rejects(session.readDeparseContext());
+ assert.equal(fixture.requests.filter(row=>row.operation==='read_deparse_context').length,1);await session.close();
+});
+
+test('extra or malformed deparser metadata revokes the bridge without exposing raw values',async()=>{
+ for(const changed of [{...deparse,private_setting:'synthetic-secret'},{...deparse,search_path:'private\ninvalid'},{...deparse,server_version_num:'170011'}]){
+  const {session}=await synthetic({deparse:changed});await session.beginCapture();
+  await assert.rejects(session.readDeparseContext(),{code:'PWA_DEPARSE_CONTEXT_UNKNOWN'});
+  await assert.rejects(session.captureQuery('SELECT 1'));await session.close();
+ }
 });
 
 test('apply requires ended fresh read and fixed readback; wire writes contain only bounded receipt metadata',async()=>{
@@ -91,5 +112,5 @@ test('nonstaging or untrusted workflow context is refused before process creatio
 
 test('actual Python additive owner enforces generator isolation, phase, transaction and closed protocol',()=>{
  const result=spawnSync('/usr/bin/python3',['-B','tests/helpers/staging-pwa-upgrade-session-tests.py'],{env:{PATH:'/usr/bin:/bin',PWA_UPGRADE_TEST_NODE:process.execPath},encoding:'utf8',timeout:20000,maxBuffer:128000});
- assert.equal(result.status,0,result.stderr);assert.match(result.stderr,/Ran 6 tests/);assert.match(result.stderr,/\bOK\b/);
+ assert.equal(result.status,0,result.stderr);assert.match(result.stderr,/Ran 8 tests/);assert.match(result.stderr,/\bOK\b/);
 });

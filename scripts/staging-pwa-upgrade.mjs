@@ -17,6 +17,7 @@ import {restoreInitialBackup,InitialRestoreError,INITIAL_RESTORE_PHASES,INITIAL_
 // Concrete write owner is separate from the existing read-only bridge.
 import {PwaUpgradeSession,PWA_UPGRADE_SESSION_CHILD_SHA256} from './staging-pwa-upgrade-session.mjs';
 import {publicCatalogDiagnostics} from './staging-catalog-diagnostic.mjs';
+import {publicRestoreDefinitionDiagnostics,publicDeparseAlignment} from './staging-pwa-restore-diagnostic.mjs';
 
 const PROJECT='fbozlbgmktkgcdfqdaaz';
 const CA=fileURLToPath(new URL('../ops/tls/supabase-platform-root-ca.pem',import.meta.url));
@@ -73,6 +74,8 @@ export async function stagingPwaUpgrade(environment){
   bridge=await PwaUpgradeSession.connect({...fixed,MIGRATION_SSL_ROOT_CERT_PATH:CA,
    GITHUB_RUN_ID:environment.GITHUB_RUN_ID,GITHUB_ACTOR:environment.GITHUB_ACTOR},PWA_UPGRADE_SESSION_CHILD_SHA256);
   const original=await collectSnapshot(bridge,{source_sha:fixed.RELEASE_SHA,migration_files:UPGRADE_FILES});
+  const sourceDeparseContext=await bridge.readDeparseContext();
+  report.source_deparse_context=sourceDeparseContext;
   const bootstrapRole=await bootstrapRoleFromSnapshot(bridge,original);
   report.initial_applied_prefix=original.source_history.applied_prefix;
   need(report.initial_applied_prefix>=16,'PWA_UPGRADE_ORIGINAL16_REQUIRED');
@@ -101,7 +104,7 @@ export async function stagingPwaUpgrade(environment){
   report.backup_custody=await uploadEncryptedInitialBackup({directory:artifact.directory,actionBundle:BUNDLE,environment});
   need(report.backup_custody.uploaded&&report.backup_custody.remote_readback,'INITIAL_DURABLE_BACKUP_REQUIRED');
   const restoredFiles=await decryptRestoreFiles(artifact.directory,privateRoot,key,bindings);
-  report.restore=await restoreInitialBackup({directory:restoredFiles.directory,original,bootstrapRole,executionScope:'HOSTED'});
+  report.restore=await restoreInitialBackup({directory:restoredFiles.directory,original,bootstrapRole,executionScope:'HOSTED',sourceDeparseContext});
   need(report.restore.passed===true,'INITIAL_RESTORE_PROOF_REQUIRED');
   await bridge.checkLock();need(!primary,'INITIAL_MIGRATION_INTERRUPTED');
   const fresh=await recheckFreshSnapshot(bridge,original);
@@ -142,6 +145,10 @@ export async function stagingPwaUpgrade(environment){
    if(Array.isArray(error.errorTopics))report.restore_error_topics=INITIAL_RESTORE_ERROR_TOPICS.filter(topic=>error.errorTopics.includes(topic)).slice(0,16);
    if(INITIAL_RESTORE_SECTIONS.includes(error.restoreSection))report.restore_failure_section=error.restoreSection;
    if(error.catalogMismatches.length)report.restore_catalog_mismatches=publicCatalogDiagnostics(error.catalogMismatches);
+   const definitions=publicRestoreDefinitionDiagnostics(error.definitionDiagnostics);
+   if(definitions)report.restore_constraint_definition_diagnostics=definitions;
+   const alignment=publicDeparseAlignment(error.deparseAlignment);
+   if(alignment)report.restore_deparse_alignment=alignment;
   }
  }finally{
   clearTimeout(timer);for(const signal of ['SIGINT','SIGTERM'])process.removeListener(signal,interrupted);

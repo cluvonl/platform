@@ -11,6 +11,7 @@ import {aggregate} from '../scripts/staging-capture-queries.mjs';
 import {UPGRADE_FILES,createUpgradeMigrationManifest,UPGRADE_SOURCE_HISTORY_SQL} from '../scripts/staging-pwa-upgrade-migrations.mjs';
 import {IMAGE} from '../scripts/pg17-capture-worker.mjs';
 import {INITIAL_LAYOUT_SQL,INITIAL_HISTORY_SQL,INITIAL_SOURCE_HISTORY_SQL} from '../scripts/staging-initial-migrations.mjs';
+import {PWA_DEPARSE_CONTEXT_SQL,publicDeparseContext,cloneDeparseSettingsSQL} from '../scripts/staging-pwa-restore-diagnostic.mjs';
 
 const sourceSha='a'.repeat(40),bootstrapRole='fixture_bootstrap',cid='b'.repeat(64),imageId='sha256:'+'c'.repeat(64);
 const sources=await Promise.all(UPGRADE_FILES.map(async file=>({file:file.file,bytes:await readFile(new URL('../supabase/migrations/'+file.file,import.meta.url))})));
@@ -19,6 +20,7 @@ const code=expected=>error=>error?.code===expected;
 const ok=stdout=>({status:0,stdout:typeof stdout==='string'?stdout:JSON.stringify(stdout),stderr:''});
 const failure=()=>({status:1,stdout:'',stderr:'private fixture diagnostics'});
 const missing=reference=>({status:1,stdout:'',stderr:'Error: No such object: '+reference+'\n'});
+const deparse={server_version_num:170011,time_zone:'UTC',date_style:'ISO, MDY',interval_style:'postgres',search_path:'',extra_float_digits:1,standard_conforming_strings:true,quote_all_identifiers:false,bytea_output:'hex',client_encoding:'UTF8'};
 function fixtureReceipt(prefix=16){
  const catalog=Object.fromEntries(Object.keys(CATALOG_QUERIES).map(key=>[key,[]]));
  catalog.roles=[{name:bootstrapRole,superuser:true,login:true},{name:'postgres',superuser:false,login:true}];
@@ -74,18 +76,24 @@ function runner(original,options={}){
   assert.ok(args.includes('psql'));assert.ok(args.includes('--set=VERBOSITY=sqlstate'));const role=args[args.indexOf('-U')+1],text=input.toString();
   if(text.includes('CREATE ROLE "cluvo_restore_ext_'))return ok('');
   if(text.includes('CREATE ROLE')){observed.replays.push(text);assert.equal(text.includes('CREATE ROLE "'+bootstrapRole+'";'),false);assert.ok(text.includes('ALTER ROLE "'+bootstrapRole+'"'));if(options.globalsFailure)return {status:3,stdout:'',stderr:options.diagnostic??'ERROR:  42501\n'};return ok('');}
-  const query=text.replace(/^SET client_min_messages=warning;\nSET search_path TO '';\n/,'').replace(/;\s*$/,'');
+  let query=text.replace(/^SET client_min_messages=warning;\nSET search_path TO '';\n/,'');
+  const aligned=query.startsWith('SET TimeZone TO ');
+  if(aligned){const prefix=cloneDeparseSettingsSQL(publicDeparseContext(options.deparseAligned));assert.ok(query.startsWith(prefix));query=query.slice(prefix.length);}
+  query=query.replace(/;\s*$/,'');
   if(catalogSql.has(query)){
    const family=catalogSql.get(query),value=structuredClone(original.catalog[family]);
    if(family==='schemas'&&schemaUsageActive)for(const schema of value)schema.acl.push(['postgres','fixture_auth_owner','USAGE',false]);
    if(family==='extensions'){if(extensionReads++===0){if(options.extensionAbsent)return ok([]);if(options.existingExtensionMismatch&&value.length)value[0].owner='unexpected_private_owner';}else if(options.lateExtensionMismatch&&value.length)value[0].owner='unexpected_private_owner';}
    if(options.catalogFailure===family)return {status:3,stdout:'',stderr:'ERROR:  42P01\n'};
    if(options.catalogMismatch&&family==='roles')value.push({name:'unexpected_fixture_role'});
+   if(options.constraintDefinitionMismatch&&family==='constraints')value[0].definition=options.constraintDefinitionMismatch;
+   if(!aligned&&options.constraintDefinitionBefore&&family==='constraints')value[0].definition=options.constraintDefinitionBefore;
    if(options.aclMismatch&&family==='relations'&&!observed.aclReplays.length){value[0].acl.push([bootstrapRole,'anon','SELECT',false]);if(options.aclDefinitionMismatch)value[0].rls=true;}
    if(options.columnAclMismatch&&family==='columns'&&!observed.columnAclReplays.length){value[0].acl=[];if(options.columnDefinitionMismatch)value[0].not_null=true;}
    return ok(value);
   }
   if(query.includes("'unexpected_workers'"))return ok({listen_disabled:true,unexpected_workers:options.worker?1:0,cron_disabled:true,workers:0,version:170011});
+  if(query===PWA_DEPARSE_CONTEXT_SQL.replace(/;$/,''))return ok(aligned?options.deparseAligned:options.deparse??deparse);
   if(query.includes("'rows',count(*)"))return ok({rows:1,sha256:options.dataMismatch?'e'.repeat(64):'d'.repeat(64)});
   if(query.includes("'last_value'"))return ok({last_value:options.sequenceMismatch?'8':'7',is_called:true});
   if(query.includes("'session_role'")){assert.equal(role,'postgres');return ok({superuser:!!options.superuser,session_role:'postgres',role:'postgres',bypass_rls:true});}
@@ -177,6 +185,51 @@ test('catalog, physical data, sequence and actor failures still refuse any suffi
   await assert.rejects(restoreInitialBackup(input,{run}),code(expected));
   assert.equal(observed.upgrades.length,0);assert.equal(observed.removed,true);
  },16,{[option]:true});
+});
+
+test('known source formatting is aligned only in clone sessions, while semantic constraint drift still refuses any suffix',async()=>{
+ const source="CHECK ((private_temporal_column > '2026-10-09 10:00:00+02'::timestamp with time zone))";
+ const before="CHECK ((private_temporal_column > '2026-10-09 08:00:00+00'::timestamp with time zone))";
+ const sourceRaw={...deparse,time_zone:'Europe/Amsterdam',search_path:'pg_catalog'};
+ await fixture(async(input,{run,observed})=>{
+  input.original.catalog.constraints=[{schema:'app',relation:'private_relation_name',name:'private_constraint_name',kind:'c',deferrable:false,deferred:false,validated:true,definition:source}];
+  input.sourceDeparseContext=publicDeparseContext(sourceRaw);
+  const report=await restoreInitialBackup(input,{run});
+  assert.equal(report.passed,true);assert.equal(report.baseline_catalog_families_verified,28);
+  const alignment=report.deparse_alignment;
+  assert.equal(alignment.used,true);assert.deepEqual(alignment.aligned_context,input.sourceDeparseContext);
+  assert.equal(alignment.before_constraint_diagnostics.entries[0].flags.temporal_literal_text_changed,true);
+  assert.equal(alignment.before_constraint_diagnostics.guc_difference_flags.time_zone_changed,true);
+  assert.equal(alignment.source_settings_changed,false);assert.equal(alignment.semantic_differences_ignored,false);
+  assert.equal(observed.removed,true);assert.equal(observed.upgrades.length,1);assert.equal(observed.logReads,0);
+ },31,{constraintDefinitionBefore:before,deparseAligned:sourceRaw});
+ const restored="CHECK ((private_temporal_column > '2026-10-10 10:00:00+02'::timestamp with time zone))";
+ await fixture(async(input,{run,observed})=>{
+   input.original.catalog.constraints=[{schema:'app',relation:'private_relation_name',name:'private_constraint_name',kind:'c',deferrable:false,deferred:false,validated:true,definition:source}];
+   input.sourceDeparseContext=publicDeparseContext(sourceRaw);
+   await assert.rejects(restoreInitialBackup(input,{run}),error=>{
+    assert.equal(error.code,'RESTORE_CATALOG_MISMATCH');assert.equal(error.phase,'catalog.constraints');
+    assert.equal(error.catalogMismatches[0].changed_rows,1);
+    const diagnostic=error.definitionDiagnostics;
+    assert.equal(diagnostic.changed_definition_rows,1);assert.equal(diagnostic.exact_comparison_rejected,true);assert.equal(diagnostic.semantic_equivalence_proven,false);
+    assert.equal(diagnostic.entries[0].schema_category,'APP');assert.equal(diagnostic.entries[0].kind_category,'CHECK');
+    assert.equal(diagnostic.entries[0].flags.temporal_literal_text_changed,true);
+    assert.equal(diagnostic.entries[0].flags.unchanged_after_literals_redacted,true);
+    assert.equal(diagnostic.guc_difference_flags.time_zone_changed,false);
+    assert.equal(error.deparseAlignment.used,true);
+    for(const forbidden of ['private_relation_name','private_constraint_name','private_temporal_column','2026-10-09 10:00:00+02','2026-10-10 08:00:00+00'])assert.equal(JSON.stringify(diagnostic).includes(forbidden),false);
+    return true;
+   });
+   assert.equal(observed.upgrades.length,0);assert.equal(observed.removed,true);assert.equal(observed.logReads,0);
+  },31,{constraintDefinitionMismatch:restored,deparseAligned:sourceRaw});
+});
+
+test('unsupported source GUC profile cannot start a clone or weaken the existing comparison',async()=>{
+ await fixture(async(input,{run,observed})=>{
+  input.sourceDeparseContext=publicDeparseContext({...deparse,search_path:'pg_catalog',time_zone:'synthetic_private_zone'});
+  await assert.rejects(restoreInitialBackup(input,{run}),code('RESTORE_DEPARSE_PROFILE_UNSUPPORTED'));
+  assert.equal(observed.calls.length,0);assert.equal(observed.upgrades.length,0);
+ });
 });
 
 test('guard proof covers every newly added app table rather than the original fixed144',async()=>{

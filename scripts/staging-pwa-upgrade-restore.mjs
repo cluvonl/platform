@@ -9,6 +9,7 @@ import {isDeepStrictEqual} from 'node:util';
 import {executeDatabaseProcess} from './staging-database-process.mjs';
 import {CATALOG_QUERIES} from './staging-capture-catalog.mjs';
 import {catalogMismatchDiagnostic,publicCatalogDiagnostics} from './staging-catalog-diagnostic.mjs';
+import {PWA_DEPARSE_CONTEXT_SQL,publicDeparseContext,cloneDeparseSettingsSQL,publicConstraintDefinitionDiagnostics,publicRestoreDefinitionDiagnostics,publicDeparseAlignment} from './staging-pwa-restore-diagnostic.mjs';
 import {schemaFirstRestoreLists} from './staging-restore-toc.mjs';
 import {aggregate} from './staging-capture-queries.mjs';
 import {IMMUTABLE16} from './staging-migration-files.mjs';
@@ -30,7 +31,7 @@ export const INITIAL_RESTORE_ERROR_TOPICS=Object.freeze(['EXTENSION','LIBRARY','
 export const INITIAL_RESTORE_ERROR_SOURCE_FILES=Object.freeze([...PG17_PUBLIC_CORE_SOURCE_FILES,'pl_exec.c','pl_comp.c','pl_handler.c','pg_net.c','pgsodium.c','vault.c','supautils.c','pg_cron.c','job_metadata.c','pg_tle.c','pg_stat_statements.c','pgaudit.c','plpgsql_check.c','elog.rs','ffi.rs','panic.rs']);
 export const INITIAL_RESTORE_TOC_TYPES=Object.freeze(['ACL','AGGREGATE','BLOB','BLOB COMMENTS','BLOBS','CAST','CHECK CONSTRAINT','COLLATION','COMMENT','CONSTRAINT','DATABASE','DATABASE PROPERTIES','DEFAULT','DEFAULT ACL','DOMAIN','DOMAIN CONSTRAINT','ENCODING','EVENT TRIGGER','EXTENSION','FK CONSTRAINT','FOREIGN DATA WRAPPER','FOREIGN SERVER','FOREIGN TABLE','FUNCTION','INDEX','INDEX ATTACH','MATERIALIZED VIEW','MATERIALIZED VIEW DATA','OPERATOR','OPERATOR CLASS','OPERATOR FAMILY','POLICY','PROCEDURE','PUBLICATION','PUBLICATION TABLE','PUBLICATION TABLES IN SCHEMA','ROW SECURITY','RULE','SCHEMA','SEARCHPATH','SEQUENCE','SEQUENCE OWNED BY','SEQUENCE SET','SHELL TYPE','STATISTICS','STDSTRINGS','SUBSCRIPTION','TABLE','TABLE ATTACH','TABLE DATA','TABLESPACE','TEXT SEARCH CONFIGURATION','TEXT SEARCH DICTIONARY','TEXT SEARCH PARSER','TEXT SEARCH TEMPLATE','TRANSFORM','TRIGGER','TYPE','USER MAPPING','VIEW']);
 export class InitialRestoreError extends Error {
- constructor(code,{phase='input',sqlstate=null,errorKind=null,errorReason=null,exitStatus=null,processFailed=null,tocType=null,errorOrigin=null,errorSourceFile=null,errorTopics=[],restoreSection=null,catalogMismatches=[]}={}){
+ constructor(code,{phase='input',sqlstate=null,errorKind=null,errorReason=null,exitStatus=null,processFailed=null,tocType=null,errorOrigin=null,errorSourceFile=null,errorTopics=[],restoreSection=null,catalogMismatches=[],definitionDiagnostics=null,deparseAlignment=null}={}){
   super(code);this.code=code;this.phase=INITIAL_RESTORE_PHASES.includes(phase)?phase:'input';
   this.sqlstate=Object.hasOwn(SQLSTATE_KINDS,sqlstate)?sqlstate:null;
   this.errorKind=ERROR_KINDS.includes(errorKind)?errorKind:null;
@@ -43,6 +44,8 @@ export class InitialRestoreError extends Error {
   this.errorTopics=Object.freeze(INITIAL_RESTORE_ERROR_TOPICS.filter(topic=>Array.isArray(errorTopics)&&errorTopics.includes(topic)).slice(0,16));
   this.restoreSection=INITIAL_RESTORE_SECTIONS.includes(restoreSection)?restoreSection:null;
   this.catalogMismatches=publicCatalogDiagnostics(catalogMismatches);
+  this.definitionDiagnostics=publicRestoreDefinitionDiagnostics(definitionDiagnostics);
+  this.deparseAlignment=publicDeparseAlignment(deparseAlignment);
  }
 }
 const SQLSTATE_KINDS=Object.freeze({'01000':'WARNING','01006':'WARNING','01007':'WARNING','42501':'PERMISSION','42P01':'MISSING','3F000':'MISSING','42704':'MISSING','42883':'MISSING','3D000':'MISSING','42601':'SYNTAX','42P17':'SYNTAX','42710':'ALREADY_EXISTS','42P06':'ALREADY_EXISTS','42P07':'ALREADY_EXISTS','23505':'CONFLICT','23502':'CONFLICT','23503':'CONFLICT','23514':'CONFLICT','55006':'CONFLICT','57014':'TIMEOUT','55P03':'TIMEOUT','0A000':'UNSUPPORTED','55000':'UNSUPPORTED','22023':'UNSUPPORTED','XX000':'PROCESS_FAILURE','53100':'PROCESS_FAILURE','53200':'PROCESS_FAILURE','53300':'PROCESS_FAILURE','57P01':'PROCESS_FAILURE','08006':'PROCESS_FAILURE'});
@@ -159,11 +162,16 @@ async function defaultRun(args,input,maximum=8_000_000,timeout=30_000){
  return await executeDatabaseProcess('/usr/bin/docker',args,{env:ENV,input,timeout,maxBuffer:maximum});
 }
 
-export async function restoreInitialBackup({directory,original,bootstrapRole,executionScope='LOCAL'},{run=defaultRun}={}){
+export async function restoreInitialBackup({directory,original,bootstrapRole,executionScope='LOCAL',sourceDeparseContext=null},{run=defaultRun}={}){
  // This component never converts supplied JSON booleans into hosted authority.
  // The release orchestrator must retain the concrete collector/bridge receipt.
  try{original=structuredClone(original);}catch{throw new InitialRestoreError('INITIAL_RESTORE_SCOPE_UNSUPPORTED');}
  initialReceipt(original,bootstrapRole,executionScope);
+ let deparseSQL='';
+ if(sourceDeparseContext!==null){
+  try{deparseSQL=cloneDeparseSettingsSQL(sourceDeparseContext);}
+  catch{throw new InitialRestoreError('RESTORE_DEPARSE_PROFILE_UNSUPPORTED');}
+ }
  need(typeof directory==='string'&&isAbsolute(directory),'RESTORE_PRIVATE_DIRECTORY_REQUIRED');
  const metadata=await lstat(directory);
  need(metadata.isDirectory()&&!metadata.isSymbolicLink()&&metadata.uid===process.getuid()
@@ -176,7 +184,7 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
   need(dump.subarray(0,5).toString('ascii')==='PGDMP','RESTORE_ARCHIVE_REQUIRED');
   for(const file of UPGRADE_FILES){const bytes=await readFile(new URL('../supabase/migrations/'+file.file,import.meta.url));need(hash(bytes)===file.sha256,'IMMUTABLE16_SOURCE_BYTES_CHANGED');files.push({file,bytes});}
  }catch(error){dump?.fill(0);globals?.fill(0);throw error instanceof InitialRestoreError?error:new InitialRestoreError('RESTORE_INPUT_UNAVAILABLE');}
- let phase='input',restoreSection=null,extensionPrivilegeWarnings=0;
+ let phase='input',restoreSection=null,extensionPrivilegeWarnings=0,deparseAlignment=null;
  const name='cluvo-pwa-upgrade-restore-'+randomBytes(16).toString('hex'),socket=SOCKETS[executionScope];
  const command=async(args,input,maximum,timeout)=>{
   let result;try{result=await run(['--host',socket,...args],input,maximum,timeout);}catch{throw new InitialRestoreError('RESTORE_PROCESS_UNAVAILABLE',{phase,errorKind:'PROCESS_FAILURE'});}
@@ -217,7 +225,7 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
   &&Array.isArray(value.mounts)&&value.mounts.every(mount=>mount.Type==='tmpfs'&&mount.Destination==='/restore'), 'RESTORE_CLONE_ISOLATION_UNKNOWN');
  const inspect=reference=>jsonCommand(['inspect',reference,'--format',INSPECT]);
  const sqlArgs=(role,extensionInstaller=false)=>['exec',...(extensionInstaller?['--env','PGOPTIONS=-c session_preload_libraries=']:[]),'-i',id,'psql','-X','--quiet','--no-align','--tuples-only','--no-password','--set=ON_ERROR_STOP=1','--set=VERBOSITY=sqlstate','-h','/restore','-U',role,'-d','postgres'];
- const sql=async(query,role=bootstrapRole,extensionInstaller=false)=>await command(sqlArgs(role,extensionInstaller),Buffer.from("SET client_min_messages=warning;\nSET search_path TO '';\n"+query.replace(/;?\s*$/,';\n')),8_000_000,120000);
+ const sql=async(query,role=bootstrapRole,extensionInstaller=false,unaligned=false)=>await command(sqlArgs(role,extensionInstaller),Buffer.from("SET client_min_messages=warning;\nSET search_path TO '';\n"+(unaligned?'':deparseSQL)+query.replace(/;?\s*$/,';\n')),8_000_000,120000);
  const jsonSql=async(query,role=bootstrapRole)=>{try{return JSON.parse((await sql(query,role)).trim());}catch(error){throw error instanceof InitialRestoreError?error:new InitialRestoreError('RESTORE_SQL_RESPONSE_UNKNOWN');}};
  const checkJobs=async()=>{
   phase='jobs';
@@ -378,12 +386,30 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
    }
    if(replay)await sql(replay);
   }
-  const catalogMismatches=[];
+  // Temporal/float deparsing and JSON row serialization depend on native GUCs.
+  // Match only the proven fixed source profile in this owned clone's transient
+  // control sessions. Source, archive processes and captured role settings
+  // remain unchanged. No DDL is normalized or excluded from the exact gate.
+  let restoredDeparseContext=null;
+  if(sourceDeparseContext!==null){
+   phase='catalog.constraints';
+   const beforeContext=publicDeparseContext(JSON.parse((await sql(PWA_DEPARSE_CONTEXT_SQL,bootstrapRole,false,true)).trim()));
+   const beforeConstraints=JSON.parse((await sql(aggregate(CATALOG_QUERIES.constraints),bootstrapRole,false,true)).trim());
+   restoredDeparseContext=publicDeparseContext(await jsonSql(PWA_DEPARSE_CONTEXT_SQL));
+   need(equal(sourceDeparseContext,restoredDeparseContext),'RESTORE_DEPARSE_ALIGNMENT_UNPROVED');
+   deparseAlignment=publicDeparseAlignment({format:'PWA_RESTORE_DEPARSE_ALIGNMENT_V1',used:true,scope:'OWNED_CLONE_CONTROL_SESSIONS_ONLY',
+    source_context:sourceDeparseContext,before_context:beforeContext,aligned_context:restoredDeparseContext,
+    before_constraint_diagnostics:publicConstraintDefinitionDiagnostics(original.catalog.constraints,beforeConstraints,{sourceContext:sourceDeparseContext,restoredContext:beforeContext}),
+    exact_catalog_comparison_unchanged:true,source_settings_changed:false,provider_archive_process_settings_changed:false,source_database_mutated:false,semantic_differences_ignored:false});
+   need(deparseAlignment!==null,'RESTORE_DEPARSE_ALIGNMENT_UNPROVED');
+  }
+  const catalogMismatches=[];let definitionDiagnostics=null;
   for(const [family,query]of Object.entries(CATALOG_QUERIES)){
    phase='catalog.'+family;const actual=await jsonSql(aggregate(query));
    if(!equal(actual,original.catalog[family]))catalogMismatches.push(catalogMismatchDiagnostic(family,original.catalog[family],actual));
+   if(family==='constraints'&&!equal(actual,original.catalog[family]))definitionDiagnostics=publicConstraintDefinitionDiagnostics(original.catalog[family],actual,{sourceContext:sourceDeparseContext,restoredContext:restoredDeparseContext});
   }
-  if(catalogMismatches.length){phase='catalog.'+catalogMismatches[0].family;throw new InitialRestoreError('RESTORE_CATALOG_MISMATCH',{phase,catalogMismatches});}
+  if(catalogMismatches.length){phase='catalog.'+catalogMismatches[0].family;throw new InitialRestoreError('RESTORE_CATALOG_MISMATCH',{phase,catalogMismatches,definitionDiagnostics,deparseAlignment});}
   phase='data';for(const row of original.data){const result=await jsonSql("SELECT jsonb_build_object('rows',count(*),'sha256',encode(sha256(convert_to(coalesce(string_agg(to_jsonb(t)::text,E'\\n' ORDER BY to_jsonb(t)::text),''),'UTF8')),'hex')) FROM "+(row.kind==='r'?'ONLY ':'')+table(row.schema,row.relation)+' t;');need(result.rows===row.rows&&result.sha256===row.sha256,'RESTORE_PHYSICAL_DATA_MISMATCH');}
   phase='sequence';for(const row of original.sequences){const result=await jsonSql("SELECT jsonb_build_object('last_value',last_value::text,'is_called',is_called) FROM "+table(row.schema,row.name));need(result.last_value===row.last_value&&result.is_called===row.is_called,'RESTORE_SEQUENCE_VALUES_MISMATCH');}
   await checkJobs();
@@ -427,9 +453,9 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
    baseline_catalog_families_verified:28,native_archive_sections_restored:3,native_restore_passes:4,native_toc_entries_preserved:lists.entries,extensions_precreated_with_source_owner:extensionsPrecreated,extension_owner_reassignments:extensionOwnerReassignments,extension_installers_removed:true,effective_acl_objects_replayed:aclObjectsReplayed,temporary_schema_usage_grants:temporarySchemaUsageGrants,temporary_reference_grants:temporaryReferenceGrants,temporary_restore_privileges_removed:true,extension_privilege_warnings:extensionPrivilegeWarnings,post_data_owner_mode:'session_authorization',bootstrap_create_exceptions:1,source_migration_prefix:baseline.appliedPrefix,
    final_migration_prefix:UPGRADE_FILES.length,non_superuser_upgrade_migrations:UPGRADE_FILES.length-baseline.appliedPrefix,app_tables:upgraded.app_tables,native_policies:upgraded.native_policies,
    network_isolated:true,background_jobs_disabled:true,source_database_mutated:false,
-   role_passwords_restored:false,provider_root_keys_restored:false,provider_services_verified:false,
+   ...(deparseAlignment?{deparse_alignment:deparseAlignment}:{}),role_passwords_restored:false,provider_root_keys_restored:false,provider_services_verified:false,
    full_provider_restore_verified:false,all_object_families_verified:false,live_migration_authorized:false,v1_ready:false,production_enabled:false};
- }catch(error){primary=error instanceof InitialRestoreError?error:new InitialRestoreError('INITIAL_RESTORE_UNAVAILABLE');primary.phase=phase;}
+ }catch(error){primary=error instanceof InitialRestoreError?error:new InitialRestoreError('INITIAL_RESTORE_UNAVAILABLE');primary.phase=phase;if(deparseAlignment)primary.deparseAlignment=deparseAlignment;}
  finally{
   dump.fill(0);globals.fill(0);
   phase='cleanup';
