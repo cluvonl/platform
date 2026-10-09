@@ -25,7 +25,7 @@ function requireSuccess(result) {
   return result.stdout.trim();
 }
 const scenarios = [];
-for (const winner of ['cancellation', 'acceptance', 'authority_revocation', 'creation_authority_revocation']) {
+for (const winner of ['cancellation', 'acceptance', 'authority_revocation', 'creation_authority_revocation', 'pwa_creation_authority_revocation', 'pwa_creation_session_revocation']) {
   const ids = Object.fromEntries(['tenant', 'household', 'author', 'recipient'].map((name) => [name, randomUUID()]));
   const suffix = ids.tenant.slice(0, 8);
   const authorEmail = `lifecycle-author-${suffix}@example.test`, recipientEmail = `lifecycle-recipient-${suffix}@example.test`;
@@ -56,11 +56,15 @@ for (const winner of ['cancellation', 'acceptance', 'authority_revocation', 'cre
   const revoke = `select 1 from app.households where id=${literal(ids.household)} for update;
     update app.household_access_grants set can_invite_executor=false,version=version+1
       where tenant_id=${literal(ids.tenant)} and auth_user_id=${literal(ids.author)};`;
-  const winningCommand = winner === 'cancellation' ? cancel() : winner === 'acceptance' ? accept : revoke;
+  const revokeSession = `select 1 from app.households where id=${literal(ids.household)} for update;
+    update auth.sessions set not_after=statement_timestamp()-interval '1 second'
+      where id=${literal(ids.author)} and user_id=${literal(ids.author)};`;
+  const winningCommand = winner === 'cancellation' ? cancel() : winner === 'acceptance' ? accept : winner === 'pwa_creation_session_revocation' ? revokeSession : revoke;
+  const creationFunction = winner.startsWith('pwa_creation_') ? 'pwa_create_household_invitation' : 'create_household_invitation_v2';
   const creation = `${actor(ids.author, authorEmail)}
-    select * from api.create_household_invitation_v2(${literal(ids.tenant)},${literal(ids.household)},'Extra','After revoke',
+    select * from api.${creationFunction}(${literal(ids.tenant)},${literal(ids.household)},'Extra','After revoke',
       ${literal('second-'+recipientEmail)},${literal(createHash('sha256').update(randomUUID()).digest('hex'))},true,false,2,${literal(randomUUID())});`;
-  const losingCommand = winner === 'cancellation' ? accept : winner === 'creation_authority_revocation' ? creation : cancel();
+  const losingCommand = winner === 'cancellation' ? accept : winner === 'creation_authority_revocation' || winner.startsWith('pwa_creation_') ? creation : cancel();
   let markReady;
   const ready = new Promise((resolve) => {markReady = resolve;});
   const first = psql(`begin; ${winningCommand} select 'LIFECYCLE_LOCK_HELD'; select pg_sleep(3); commit;`, markReady);
@@ -88,7 +92,7 @@ for (const winner of ['cancellation', 'acceptance', 'authority_revocation', 'cre
     'cancellation_audits',(select count(*) from app.audit_events where tenant_id=${literal(ids.tenant)} and action='household.invitation_cancelled'),
     'acceptance_audits',(select count(*) from app.audit_events where tenant_id=${literal(ids.tenant)} and action='household.invitation_acceptance_recorded'),
     'processing_commands',(select count(*) from app.idempotency_records where tenant_id=${literal(ids.tenant)} and status='processing'));`)));
-  const accepted = winner === 'acceptance', revoked = ['authority_revocation', 'creation_authority_revocation'].includes(winner);
+  const accepted = winner === 'acceptance', revoked = ['authority_revocation', 'creation_authority_revocation', 'pwa_creation_authority_revocation', 'pwa_creation_session_revocation'].includes(winner);
   assert.deepEqual(readback, {invitations: 1, status: accepted ? 'accepted' : revoked ? 'pending' : 'cancelled', invitation_version: revoked ? 1 : 2,
     household_version: revoked ? 2 : 3, recipient_grants: accepted ? 1 : 0, recipient_profiles: accepted ? 1 : 0,
     cancellation_audits: winner === 'cancellation' ? 1 : 0, acceptance_audits: accepted ? 1 : 0, processing_commands: 0});

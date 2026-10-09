@@ -1,0 +1,371 @@
+{
+  "scope": "LOCAL_NATIVE_F092_MOBILE_INVITATION_ACCEPTANCE",
+  "source_sha": "174615bd8c0aeda5c0161a022312b14b66fb2a5f",
+  "build": {
+    "id": "dW1tJTXS7_nASiYNd6Ajy",
+    "mode": "production",
+    "sourceFilesSha256": {
+      "components/mobile/action-detail.tsx": "12d7cd999d0b6ffb813f3cc2cb7f75dcd427b4e6a0ac079889ac2ac535841af0",
+      "components/mobile/attendance-form.tsx": "9e48f0e0d799bbfd98aecd73e3161e1645b841df38bf8dd2c81bb4a879172324",
+      "components/mobile/calendar.mjs": "0d1c92406da010febd2469d14e4f634c5e5da906c5c0304c40c77ebce189e70a",
+      "components/mobile/club-task-creation.tsx": "51d5a63ffb597c119cb22c2aa8071daf919ff16f40c6d57bfd572a52bf75869f",
+      "components/mobile/club.tsx": "3b9260e9445f5c482f37b5199596d6b9c14f09789d1956b249b02a8bb5fbe68a",
+      "components/mobile/cluster-reservation.tsx": "e7a46938e48fea70f82b2c36555a93d9b4eb91753651ad66b5a97067ed3a0ce7",
+      "components/mobile/command-form.tsx": "7b3ed227dbbef51be8f38745c644c31b77b1dfd7c1b94f09929508291c8f3af7",
+      "components/mobile/committee-followup.tsx": "a6324eff881a10d537de9e7ba64055bc5d4e1f6e81099c9d189be2ccff14b5ec",
+      "components/mobile/context-selection.tsx": "543285705a447911b5b6399ad1aeae42465aa0e75a1aa022b3219e4ed7de98fb",
+      "components/mobile/conversation.tsx": "ef323604b9f26849b6203c75493acd4bf9aa95ac5b3e4ac8e89e16adbe6347de",
+      "components/mobile/draft-state.ts": "06dd6ddc69f96359303e2872e58f68992bf91006b0c016dfd05f13fa3c21c996",
+      "components/mobile/instructions-form.tsx": "330a09235a9b06c3989313638297be19132a6858bd1c96217620a28839490107",
+      "components/mobile/mobile-link.tsx": "30ec65cbdad709e746580d60ed59c36382037fda4835f47eed1a50007862c0de",
+      "components/mobile/mobile.css": "4ff04ea04420e835ef564b89f77609aaeee3aadc23533421d665bd3d4d3788fd",
+      "components/mobile/personal.tsx": "cbfcac76f520f2691d5fc4a632db0e82cd7a1b0d6390674d771c40af5a477f29",
+      "components/mobile/primitives.tsx": "ce9f0b008918efcbe37aabf642e554274f6baa1b1ae969a6d1b62c71a358bfd0",
+      "components/mobile/route.tsx": "7016a42764c5585e889d5511b960cf62fa33fc4dadea4d887705e5d160e9c264",
+      "components/mobile/screens.tsx": "a44272da2a64795d5b7375a6946a4045c79dd2f3d82d69d90d641ff39d962a02",
+      "components/mobile/shell.tsx": "1e3801cfaab1dafa9b08e3a9f01658b3ae4a6bbce94c45b8a8065bfab7c06faf",
+      "components/mobile/state-labels.ts": "113d7dd4cf24717dd83b48af707d4d34800733cdd4fe4f48683cf0a11c95cf30",
+      "components/mobile/suitability.ts": "32ea6f6e3e3266284f0b21e002fe424b559aac00b4a077a0b4990128603c5bef",
+      "components/mobile/task-detail.tsx": "84b158f096f30058946b2ce5e8912c10a208f6cc1ff274f160b567db1ae18e3f",
+      "components/mobile/teams.tsx": "1e57f740e33e087f11d017ba055d815b3b3ecc369041166db2e065f3013e30db",
+      "components/mobile/types.ts": "739d14fac5280a29688b2a2dda07ea69f8be007068312350d0315faa88cc4cd9",
+      "components/mobile/work-card-form.tsx": "2da60217e0fb46fcec47cf08b65a0f17a6fe3dfc4425b8d16ea8c0374727a674",
+      "app/app/layout.tsx": "06b347ff1e4470d6ef7d77f88d9b3d2e1232d61b7f098d89f365478df0cc61b0",
+      "app/app/page.tsx": "d26073b1bf7773b229216402050a1931b34ad646670d13a00a462bb5c9e16c3d",
+      "app/app/workspaces/page.tsx": "148f6d25e03124ca8698f9286a392184290aaf51648237af523b450ae9f4cf93",
+      "app/app/sw.js/route.ts": "07ae98a119377168586057b531469cf6874f59a7478efbaf0026acc0471aa5cf",
+      "app/app/login/page.tsx": "1a7091911461e6a96127735a9e13dbc7184a5ecd5c7b2e47f8fa482079f4c51b",
+      "app/app/invite/accept/page.tsx": "82f318dfd024296753da2a7f19911a637bada364156ae98a1d9266526ddb847c",
+      "app/app/c/[club]/error.tsx": "51a15aa8b3d339ef031d69266d6de319329a26a1b910c04b911b6511260970cf",
+      "app/app/c/[club]/layout.tsx": "643a80aa8b5f66b7194ed1ec806f1c4e7683ea407772d42df1eff714141259d1",
+      "app/app/c/[club]/loading.tsx": "f01084ca7b721f2e547c8197f798f02cc6f095654634477c9c0569a936f8114f",
+      "app/app/c/[club]/page.tsx": "9deb1a9138c402b3eda047624654b0602d6e5b76cf28b525f7dab7aad175a0be",
+      "app/app/c/[club]/teams/page.tsx": "c84af472b64276ccbebe1f8d8e1ea725b2daaac944bad395bf0f6deb7f66e041",
+      "app/app/c/[club]/tasks/page.tsx": "97ee6720f052a84ac85a6e2f1a9452593ccbf67f6e61da5abff05bb29bc610d8",
+      "app/app/c/[club]/settings/page.tsx": "8fb24076a58ceef542f7918e1ce316aaa6e3c611316fb8814ed9acabe5ee7c92",
+      "app/app/c/[club]/reports/page.tsx": "d342c186b994a25bd25e52b37803fff8d30d2c280ae8510cf2dedddbdbe05405",
+      "app/app/c/[club]/reports/export/route.ts": "56911abdc58132c6a29f7c9c8899b4984d473025077d361cbcd6e52cf362e95d",
+      "app/app/c/[club]/profile/page.tsx": "06911da814c231d4fc383a85987b059b3e076726ee7e90c6ddef2fb76d1597cb",
+      "app/app/c/[club]/policies/page.tsx": "de502038446972c419706a80a935174c5e1e1e107b46d4d9fbf0642601f63303",
+      "app/app/c/[club]/opportunities/page.tsx": "e38c3d8fb7f7e4d8bd729ad5d41e02ed897d5081d92b2a4b4d6c9e3d254eb47f",
+      "app/app/c/[club]/notifications/page.tsx": "24fb2388ed45571dd16e29063eb6bee10c39a95c8b14733979b6b97e8ce55100",
+      "app/app/c/[club]/more/page.tsx": "c993e079abfecb2de6e1c1a892baa53dab4294216099f1c465939cff1a9fd63f",
+      "app/app/c/[club]/messages/page.tsx": "3fdc2121c288671a496e511a42c09f59b4136fe4c3a78a4b3c6b34b836f021de",
+      "app/app/c/[club]/manage/page.tsx": "e91aecfe0220c42a89b6bb6a7eacfb2a30f0047a2f1003f3fb76ecc2867fc89d",
+      "app/app/c/[club]/ledger/[entry]/route.ts": "1721a0261645a6622ad4e37650d5214b5ac510d34ad5a06d08ea3936fef48d63",
+      "app/app/c/[club]/install/page.tsx": "cf05fdd49f915e2b06222b7e671bd3db3992187c58b4a8871b4eba057cf18c1d",
+      "app/app/c/[club]/household/page.tsx": "912eb2371fd3f9f4c07cca4aabd44ca111dc9db66a151f3e08f863e6d98c4f3b",
+      "app/app/c/[club]/home/page.tsx": "22ba69f44fd25b588516d7a25eaa605b825adb8f95779c326a36d125139ea98f",
+      "app/app/c/[club]/help/page.tsx": "2b9108544f389b93d740c6cc453eddeead958824fa713fbb9d3e48ada4323a7a",
+      "app/app/c/[club]/finance/page.tsx": "285efc3729d64db4dc19adaf9da1532aca4c4677dedc0c3d14b4aba50054d263",
+      "app/app/c/[club]/documents/[document]/route.ts": "eb0adf131ad9d8eee9b9eaa4b5758444f3c6008aafa6517afdc07d70ec672606",
+      "app/app/c/[club]/courses/page.tsx": "c5003155f5ee2bf04aa511e28b16242cc5aa5030dd18aa398a274ade0b8a7c4b",
+      "app/app/c/[club]/committees/page.tsx": "2bba08fd1aeca02c13035809f48a8e89cf8483dbc26fe20bfe02731b36bfe0a0",
+      "app/app/c/[club]/agenda/page.tsx": "efc1f02f18c36e48c82b0c8f2846405829cf4b38f700ae40ee2656a3a186218c",
+      "app/app/c/[club]/agenda/export/route.ts": "df53aae0f36375e52b696ada5474afb982f79bbbff6887d5c4766a8d0085fc05",
+      "app/app/c/[club]/actions/page.tsx": "72121fa8e208934973c07ffbe578eda69eca925d91679633a080a3914626bc46",
+      "app/app/auth/verify/page.tsx": "9560423a603ed20d30153d5eb572bf6fa3cac7dd7fd191812454a109eb9f30cb",
+      "lib/pwa/action-details.mjs": "1d4359b7db089e5e9c6a9136fccf90e3aeba8c7e7ec8ec4f65a92f00069a9b17",
+      "lib/pwa/actions.ts": "d0f79fc5a186ddb3d62ab9a2a8ee3e4e7a405a663758830d9e21508ada8dcd1b",
+      "lib/pwa/conversations.ts": "3825901c848af2bed85b5a8f0b917dc79da56efbd95dca1187404d164bd5a055",
+      "lib/pwa/exports.mjs": "325d86d23838d9f6b58c1c8b7ae1e82c7525db97259fda0a1d1f9ec3280fa85a",
+      "lib/pwa/help.ts": "f10c55e1c2028c76d33e8626be1d9607bdff59e910197968798e6751445701bb",
+      "lib/pwa/home-upcoming.mjs": "2cb14f7c2a118ab8e0b1691d55b120f86003f6b2ae35906d5f94c7716f96b5b2",
+      "lib/pwa/links.mjs": "043bdafa330fe85408a49ab3bc3625022016dd87f17ebf5ff363437706a0d32b",
+      "lib/pwa/match-details.mjs": "07ca50b26d83ee5e093f39674766be954ea5abcd3b6e862322b80636bd390117",
+      "lib/pwa/pending.ts": "781e664955982e98174597d0768043cc3022091349de77cc75b325298af112de",
+      "lib/pwa/planning.mjs": "a00fc5a19d982f86cc9aee9f1d058e3ce8ebfb3013f8a48f1336eb356588f05a",
+      "lib/pwa/push-config.ts": "fb2fe8cf152eb2f9cff9a7b107e691d3123af5b50bd4d75aa7c7e8ee460e81e6",
+      "lib/pwa/receipts.mjs": "b787a63831fd6dea989e2f1a99489988c64fecfb1c801ff565d1727e0e915e25",
+      "lib/pwa/server.ts": "36cd57f79ead8b246561160fbcbb61b2627f068cbc2f6bf4af7c2b659b1aeec5",
+      "lib/pwa/time.mjs": "a2d264b2c6c62320aefd665d6591a9bc3fed45e47614d345907326947f59302f",
+      "lib/pwa/validation.ts": "d35954a1a441f802f66eb1edc1b36a35cb1ee6996064525aab82b52f090e62c5",
+      "app/auth/confirm/route.ts": "71c28d63c26df790254d9b78d3e72bd466309bb613f368180d75d4e708b78824",
+      "app/invite/accept/actions.ts": "512c62134f97a737b8546c28256650b055f6ac596ecbb725506d8b509a3e7cea",
+      "components/auth/accept-invitation-form.tsx": "6d168b91bbd82a5ab60b841138f7c0634e851d84861262be733ba9c0ab03a00b",
+      "app/c/[club]/huishouden/actions.ts": "c5444151c67a7eb71d9bfb8b432a94e207ce03f1b099d79a141b0654d5111d42",
+      "lib/domain/mail-recipient.mjs": "c4f7535a5a76bdd3006a58d31bed827a9f3f9f819d35bb7ce51306c193a8d138"
+    }
+  },
+  "environment": "local",
+  "native_schema_count": 34,
+  "migrationHashes": {
+    "20261002163042_cluvo_wp1_wp2_core.sql": "7e4efdaa139d2fe3120c43c0e7fcfe966438f154c08358734b6c555968acd32e",
+    "20261002165306_wp3_wp5_obligations_execution.sql": "1dd88883e99acd63cbea6f33c47b1c39008a6832904f1da6150374fbe1474eb7",
+    "20261002165327_wp6_wp8_collaboration_communication_policy.sql": "9707da512d46b23d8472bf222981242f8020ac3612709f536136876674b50702",
+    "20261002170949_wp1_onboarding_storage.sql": "6de61a4843cd9a3d77fccb6c0be0591c178b516518e4bb7ce9c2ae1cec3d4c03",
+    "20261002171135_wp9_wp11_finance_people_seasons.sql": "bdff3e58102376de4195840cc7cd3a02a59c7648cc19403c306ae72e96605719",
+    "20261002183000_vertical_read_models.sql": "bf50215a774296882cb5aa8067b43bb2c853bbb991968859b8ceece58d197eaf",
+    "20261002184500_assisted_member_actions.sql": "c7d74823e3be555b7115b1eab4e4180cdb48c7668680fa3a0a6b0e8420629bab",
+    "20261006180000_account_help_preferences.sql": "f6b7d1db5f420b5e5daeaf142326289dd1fb6918123c001386956f512f7755ff",
+    "20261006193000_complete_personal_intake.sql": "488d4722f830a0a2a2d35ff89a483bcd6f5e40ed3aa255d367d4346aaad22ad9",
+    "20261006210000_household_dossier_projection.sql": "0f1b29d8bbde85300f704270bc5ead062344bffe01f5688b67daa085099450a2",
+    "20261006223000_versioned_household_invitation_commands.sql": "99b456fda630c15eca25f197d971edcf8134a5181deb114c398dde852b6b62fe",
+    "20261006230000_household_invitation_cancellation.sql": "6d3738db24d2a02576fa6fa4a9273390d04872565edd66d662024df230425a1c",
+    "20261006233000_contract_household_invitation_bootstrap.sql": "1731ab3cec4921ad31e6f30a90ee21d8dc6101fa205285a51c5b65bc52e2c3f2",
+    "20261006234500_personal_intake_reconfirmation.sql": "e4f95b65789485e86131d21c0c085a83c8fc5b4195f36b4f81e24b9c6c171625",
+    "20261007010000_native_session_authority.sql": "9c165f68f413be04aa958358ec088c422dd21fea92b66e9ba84e04378817607a",
+    "20261007013000_intake_assistance_management.sql": "1512b7cbfd1fd63065fa09ad17aba0a2c71aaba1c875326f11e089175a5979c3",
+    "20261009100000_pwa_domain.sql": "18cc63b457fddea3f003bceb4d31f310291692e70485e6aa013e4091a8d47d41",
+    "20261009101000_pwa_commands.sql": "dbf600e3aabc225e5031ca83c24031c27c287cec47cce0b0f64bf81eb6e00f97",
+    "20261009102000_pwa_snapshot.sql": "969346799a4e591b7f85f8bacc4a877c1ea42dd628c3e041cf9b976f79e19ef0",
+    "20261009103000_pwa_delivery_and_receipts.sql": "73714397962f5ca54b5a94d1b6cc901ed744b8f8bcccd87fc32cd12673fbfe6f",
+    "20261009104000_pwa_buddy_integrity.sql": "c2e1bfdccf311f50bd9e0ff1686ce2301d1c65ff29b02cd78512666f0ec5305c",
+    "20261009105000_pwa_automation.sql": "7e20fdaee644e5a2f0b037f0d34001a773cf47b6b23a0294f23fddad45e5dbef",
+    "20261009106000_pwa_provider_receipts.sql": "5e6923e41dfd6d5da1ab12380f1be31b25e466eba02b685f7361b11e1ffe9eed",
+    "20261009107000_pwa_compatibility_and_cluster_scope.sql": "d60b59920adac4c45a3ec336a6a0cb27e31abb3c8aa69e0ddf5b47ed729e4486",
+    "20261009108000_pwa_repeatable_command_events.sql": "7ad42704ec974bd670deb70c14dcd13a2079f1b0d9fd6a416e0d4dcdf3859ef2",
+    "20261009109000_pwa_digest_dispatch_day.sql": "881aaf6a7ff6ed1e22604d810c1194fc140c4dfb79240e869b25feb3a9be4210",
+    "20261009110000_pwa_card_version_gate.sql": "7d237cb0e27bf8d4f27e649143a77e39dc29977279fc7bc6db6e506da52ff4cc",
+    "20261009111000_pwa_handover_checklist_integrity.sql": "2d10644befebd17fb8893d4e1363a6a4f61588bd55ac3ab45a7653d6489e3307",
+    "20261009112000_pwa_task_offer_category_seed.sql": "1e2bb5b181e7e0d4279c8270b12bfee8743cb7dcaaa0e4267256eaf689c59c17",
+    "20261009113000_pwa_nested_version_integrity.sql": "60eedfed603a1450d42524dc070e8fa4661c1bb323d55e660faef52845b98f19",
+    "20261009114000_pwa_policy_assignment_identity.sql": "afbe3c6218e2d81dae30107ec0f854f5fe0bdd87ae700da98f2b5d3165f4ad10",
+    "20261009115000_pwa_personal_action_context.sql": "10dfcebb3e8f61623586f41123e8967815e743745f991f68f84bcfd686e3a195",
+    "20261009116000_pwa_committee_planning.sql": "2bca259cd9041307c7daab5bf4e950fc0ddad72109aa180631634ce290b3e311",
+    "20261009117000_pwa_invitation_authority_fence.sql": "943eb1502da863da7d51bcd390bb58a5815896ab67a76db074638dad361d95b3"
+  },
+  "local_native_auth_provider_used": true,
+  "local_mail_capture_used": true,
+  "external_provider_calls": false,
+  "synthetic_accounts": true,
+  "source_or_migration_edits": false,
+  "local_append34_provenance": "docs/release/evidence/local/20261009-pwa34-local-append-proof.json",
+  "physical_device": false,
+  "staging_verified": false,
+  "complete_function_acceptance": false,
+  "whole_suite_passed": false,
+  "actual_otp_lengths": [
+    6
+  ],
+  "hosted_eight_digit_otp_proved": false,
+  "private_auth_tokens_and_mail_contents_retained_or_exported": false,
+  "cases": [
+    {
+      "id": "F092_MOBILE_NEW_NATIVE_AUTH_LINK_EXPLICIT_ACCEPT_LIMITED_RIGHTS_RELOAD",
+      "functionIds": [
+        "F092"
+      ],
+      "passed": true,
+      "native_auth_delivery": true,
+      "token_free_callback": true,
+      "explicit_consent": true,
+      "readback": {
+        "grants": [
+          {
+            "book": true,
+            "invite": false,
+            "revoked": false,
+            "contacts": false,
+            "progress": false,
+            "own_household": true
+          }
+        ],
+        "intakes": 1,
+        "auth_users": 1,
+        "memberships": 1,
+        "person_links": 1,
+        "household_links": 1
+      },
+      "invitation": {
+        "book": true,
+        "count": 1,
+        "status": "accepted",
+        "version": 3,
+        "progress": false,
+        "source_actor": true,
+        "creation_audits": 1,
+        "lifetime_seconds": 3600,
+        "source_household": true,
+        "acceptance_audits": 1
+      },
+      "second_browser_context_server_read": true,
+      "lost_acceptance_response": true
+    },
+    {
+      "id": "F092_MOBILE_EXISTING_NATIVE_AUTH_LINK_EXPLICIT_ACCEPT_LIMITED_RIGHTS_RELOAD",
+      "functionIds": [
+        "F092"
+      ],
+      "passed": true,
+      "native_auth_delivery": true,
+      "token_free_callback": true,
+      "explicit_consent": true,
+      "readback": {
+        "grants": [
+          {
+            "book": false,
+            "invite": false,
+            "revoked": false,
+            "contacts": false,
+            "progress": true,
+            "own_household": true
+          }
+        ],
+        "intakes": 1,
+        "auth_users": 1,
+        "memberships": 1,
+        "person_links": 1,
+        "household_links": 1
+      },
+      "invitation": {
+        "book": false,
+        "count": 1,
+        "status": "accepted",
+        "version": 3,
+        "progress": true,
+        "source_actor": true,
+        "creation_audits": 1,
+        "lifetime_seconds": 3600,
+        "source_household": true,
+        "acceptance_audits": 1
+      },
+      "second_browser_context_server_read": true,
+      "lost_acceptance_response": false
+    },
+    {
+      "id": "F092_MOBILE_EXPIRED_INVITATION_NEUTRAL_NO_AUTHORITY",
+      "functionIds": [
+        "F092"
+      ],
+      "passed": true,
+      "controlled_owned_fixture_time_shift": true,
+      "affected_rows": 1,
+      "version_unchanged": true,
+      "readback": {
+        "grants": [],
+        "intakes": 0,
+        "auth_users": 1,
+        "memberships": 0,
+        "person_links": 0,
+        "household_links": 0
+      }
+    },
+    {
+      "id": "F092_MOBILE_CANCELLED_INVITATION_NEUTRAL_NO_AUTHORITY",
+      "functionIds": [
+        "F092"
+      ],
+      "passed": true,
+      "cancellation_via_actual_A_native_versioned_command": true,
+      "readback": {
+        "grants": [],
+        "intakes": 0,
+        "auth_users": 1,
+        "memberships": 0,
+        "person_links": 0,
+        "household_links": 0
+      }
+    }
+  ],
+  "checks": [
+    "ACTUAL_NATIVE_MOBILE_OTP",
+    "MOBILE_NON_TEST_RECIPIENT_DENIED_BEFORE_DB_AND_AUTH",
+    "MOBILE_INVITATION_LOST_RESPONSE_RECONCILED_ONE_EMAIL",
+    "MOBILE_WRONG_VERIFIED_ACCOUNT_NEUTRAL_NO_CONSENT",
+    "MOBILE_FORGED_TOKEN_NEUTRAL_NO_CONSENT",
+    "MOBILE_ACCEPTANCE_LOST_RESPONSE_SAME_KEY_ONE_GRANT",
+    "EXISTING_AUTH_IDENTITY_NATIVE_FIXTURE_NO_CLUB_AUTHORITY",
+    "EXPIRED_ORIGINAL_CONSENT_POST_DENIED",
+    "CANCELLED_ORIGINAL_CONSENT_POST_DENIED",
+    "ORIGINAL_APP_ROWS_EXCEPT_VERSIONED_TARGET_HOUSEHOLD_PRESERVED",
+    "BOOKINGS_QUALIFICATIONS_OBLIGATIONS_AND_LEDGER_UNCHANGED",
+    "SOURCE_MIGRATIONS_BUILD_AND_NATIVE_HISTORY_UNCHANGED"
+  ],
+  "screenshots": [
+    {
+      "path": "docs/release/evidence/local/20261009-pwa34-f092-native/screenshots/new-explicit-consent-390.png",
+      "sha256": "4b1660af77ea2099cbaf3a4ef8e3a591cd7fab7ab833771bad48d76748f82917",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa34-f092-native/screenshots/new-own-profile-after-reload-390.png",
+      "sha256": "b95c25097c17a9ec38155e3c1049945916a8f3f57924ab8d72f2628b3347df1d",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa34-f092-native/screenshots/existing-explicit-consent-390.png",
+      "sha256": "8362e976f136159b70ebf72744c48a37857a22b74e294a15a4e3e22708ac46e3",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa34-f092-native/screenshots/existing-own-profile-after-reload-390.png",
+      "sha256": "5c57e83d156179b2ea30253680508a584403e4772cfe226c62fea5b6fd6e44b3",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa34-f092-native/screenshots/expired-explicit-consent-390.png",
+      "sha256": "7ef9d1e53844683b55a0375ad7f2d64bf757e45e4c9f7da846858602900a1c08",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa34-f092-native/screenshots/expired-neutral-390.png",
+      "sha256": "26ad199e05721db65b13e6738840cc36a1938dd79b014349b23fe9f2ee26a8ab",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa34-f092-native/screenshots/cancelled-explicit-consent-390.png",
+      "sha256": "73482a59aafd512ebb8ed6142ebc7dde23be8004d41cc09b85aeb5b234a6f88c",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa34-f092-native/screenshots/cancelled-neutral-390.png",
+      "sha256": "26ad199e05721db65b13e6738840cc36a1938dd79b014349b23fe9f2ee26a8ab",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    }
+  ],
+  "errors": [],
+  "runner_sha256": "980b73cd40bed2b320723a8e2bccbc3bcad561e1210cec4138893756c7950a35",
+  "passed": true,
+  "native_mobile_invitation_and_acceptance_passed": true,
+  "source_and_migration_bytes_preserved_during_browser": true,
+  "original_app_primary_key_rows_preserved": 6355,
+  "original_app_tables_checked": 180,
+  "original_app_rows_except_target_household_preserved": true,
+  "target_household_version": {
+    "before": 1,
+    "after": 8,
+    "changed_by_native_commands": true
+  },
+  "protected_native_rows": {
+    "before": {
+      "ledger": "972f1b49f357b0031ae467d96d07d9480ab926099219c3e23aa5c01b11c990c0",
+      "bookings": "0bece4d8cb6002dfab1a2816a25912a4d4e7f604d4113292ddb5b95652f04a43",
+      "obligations": "b06a73d3f3a6fe18c85caf57ad2a4c25b69188abfbe21654fc5fcbe267cb706f",
+      "qualifications": "bd979573370a521acad68ffb037bc8000c3a425c1d0c25c744dd17b4871e7b9b",
+      "household_version": 1
+    },
+    "after": {
+      "ledger": "972f1b49f357b0031ae467d96d07d9480ab926099219c3e23aa5c01b11c990c0",
+      "bookings": "0bece4d8cb6002dfab1a2816a25912a4d4e7f604d4113292ddb5b95652f04a43",
+      "obligations": "b06a73d3f3a6fe18c85caf57ad2a4c25b69188abfbe21654fc5fcbe267cb706f",
+      "qualifications": "bd979573370a521acad68ffb037bc8000c3a425c1d0c25c744dd17b4871e7b9b",
+      "household_version": 8
+    }
+  },
+  "migration_history_sha256": "971e23eded627c610cb1f588d32cd57619c2236fdc898e8d652c8ad26626ced4"
+}

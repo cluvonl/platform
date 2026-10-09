@@ -1414,7 +1414,7 @@
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 0,
+        "local_targeted_browser_checks": 10,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 21
@@ -1512,6 +1512,98 @@
             }
           ],
           "scope": "Exact related native SQL assertions only; this is backend permission/state/readback evidence, not a UI interaction or complete function acceptance."
+        }
+      ],
+      "native_buddy33_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-buddy-native-ui/browser-results.json",
+          "sha256": "4bfb0b9927b1690c86cf765092df592850598a49cffb7215a83b781c616bd304",
+          "case_id": "F021_UI_NOVICE_UNAVAILABLE_WITHOUT_REAL_BOOKED_MENTOR",
+          "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        },
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-buddy-native-ui/browser-results.json",
+          "sha256": "4bfb0b9927b1690c86cf765092df592850598a49cffb7215a83b781c616bd304",
+          "case_id": "F021_NATIVE_UNQUALIFIED_NO_MENTOR_DENIED",
+          "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        },
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-buddy-native-ui/browser-results.json",
+          "sha256": "4bfb0b9927b1690c86cf765092df592850598a49cffb7215a83b781c616bd304",
+          "case_id": "F021_NATIVE_BROWSER_QUALIFIED_MENTOR_BOOKED_REAL_SAME_AND_OTHER_SHIFT",
+          "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        },
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-buddy-native-ui/browser-results.json",
+          "sha256": "4bfb0b9927b1690c86cf765092df592850598a49cffb7215a83b781c616bd304",
+          "case_id": "F021_NATIVE_STALE_MENTOR_VERSION_DENIED",
+          "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        },
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-buddy-native-ui/browser-results.json",
+          "sha256": "4bfb0b9927b1690c86cf765092df592850598a49cffb7215a83b781c616bd304",
+          "case_id": "F021_NATIVE_OTHER_SHIFT_MENTOR_DENIED",
+          "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        },
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-buddy-native-ui/browser-results.json",
+          "sha256": "4bfb0b9927b1690c86cf765092df592850598a49cffb7215a83b781c616bd304",
+          "case_id": "F021_NATIVE_SAME_EXECUTOR_CANNOT_BE_OWN_MENTOR",
+          "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        },
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-buddy-native-ui/browser-results.json",
+          "sha256": "4bfb0b9927b1690c86cf765092df592850598a49cffb7215a83b781c616bd304",
+          "case_id": "F021_NATIVE_WRONG_TENANT_BOOKING_DENIED",
+          "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        },
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-buddy-native-ui/browser-results.json",
+          "sha256": "4bfb0b9927b1690c86cf765092df592850598a49cffb7215a83b781c616bd304",
+          "case_id": "F021_ACTUAL_PROVIDER_SESSION_REVOKED_NEW_MENTOR_QUALIFICATION_DENIED_ROLLBACK",
+          "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        },
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-buddy-native-ui/browser-results.json",
+          "sha256": "4bfb0b9927b1690c86cf765092df592850598a49cffb7215a83b781c616bd304",
+          "case_id": "F021_NATIVE_BROWSER_EXACT_MENTOR_AND_INSTRUCTION_ACK_BOOKING_RELOAD",
+          "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        },
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-buddy-native-ui/browser-results.json",
+          "sha256": "4bfb0b9927b1690c86cf765092df592850598a49cffb7215a83b781c616bd304",
+          "case_id": "F021_NATIVE_LAST_NAMED_MENTOR_CANCEL_DENIED",
+          "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
         }
       ]
     },
@@ -6380,19 +6472,74 @@
       "status": "IMPLEMENTED_ACCEPTANCE_PARTIAL",
       "evidence": [],
       "implementation_files": [
-        "components/mobile/personal.tsx"
+        "components/mobile/personal.tsx",
+        "lib/pwa/actions.ts",
+        "app/c/[club]/huishouden/actions.ts",
+        "app/auth/confirm/route.ts",
+        "app/app/invite/accept/page.tsx",
+        "app/invite/accept/actions.ts",
+        "supabase/migrations/20261009117000_pwa_invitation_authority_fence.sql"
       ],
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 0,
+        "local_targeted_browser_checks": 4,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 0
       },
       "implementation_status": "implemented_with_native_server_authorization",
       "local_concurrency_evidence": [],
-      "local_database_evidence": []
+      "local_database_evidence": [],
+      "native_invitation34_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa34-f092-native/browser-results.json",
+          "sha256": "7f4c0ec4257171206211273152e4b9ab605e87da897690a29441bb83ab4e3f37",
+          "case_id": "F092_MOBILE_NEW_NATIVE_AUTH_LINK_EXPLICIT_ACCEPT_LIMITED_RIGHTS_RELOAD",
+          "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        },
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa34-f092-native/browser-results.json",
+          "sha256": "7f4c0ec4257171206211273152e4b9ab605e87da897690a29441bb83ab4e3f37",
+          "case_id": "F092_MOBILE_EXISTING_NATIVE_AUTH_LINK_EXPLICIT_ACCEPT_LIMITED_RIGHTS_RELOAD",
+          "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        },
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa34-f092-native/browser-results.json",
+          "sha256": "7f4c0ec4257171206211273152e4b9ab605e87da897690a29441bb83ab4e3f37",
+          "case_id": "F092_MOBILE_EXPIRED_INVITATION_NEUTRAL_NO_AUTHORITY",
+          "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        },
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa34-f092-native/browser-results.json",
+          "sha256": "7f4c0ec4257171206211273152e4b9ab605e87da897690a29441bb83ab4e3f37",
+          "case_id": "F092_MOBILE_CANCELLED_INVITATION_NEUTRAL_NO_AUTHORITY",
+          "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+          "staging_verified": false,
+          "physical_device_verified": false,
+          "complete_function_acceptance": false
+        }
+      ],
+      "native_invitation_authority34_evidence": {
+        "artifact": "docs/release/evidence/local/20261009-pwa34-invitation-authority-owned-proof.json",
+        "sha256": "cd644bb4451b88091b011f38dc3bf2bb842f64381b6666039584f1fca729ea6f",
+        "actual_positive_and_negative_owned_cases": 4,
+        "same_command_retry_once": true,
+        "completed_key_after_author_revocation_refused": true,
+        "post_household_lock_author_and_session_rechecked": true,
+        "source_migration": 34,
+        "staging_verified": false,
+        "complete_function_acceptance": false
+      }
     },
     {
       "id": "F093",
@@ -12751,6 +12898,98 @@
             ],
             "scope": "Exact related native SQL assertions only; this is backend permission/state/readback evidence, not a UI interaction or complete function acceptance."
           }
+        ],
+        "native_buddy33_evidence": [
+          {
+            "artifact": "docs/release/evidence/local/20261009-pwa33-buddy-native-ui/browser-results.json",
+            "sha256": "4bfb0b9927b1690c86cf765092df592850598a49cffb7215a83b781c616bd304",
+            "case_id": "F021_UI_NOVICE_UNAVAILABLE_WITHOUT_REAL_BOOKED_MENTOR",
+            "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+            "staging_verified": false,
+            "physical_device_verified": false,
+            "complete_function_acceptance": false
+          },
+          {
+            "artifact": "docs/release/evidence/local/20261009-pwa33-buddy-native-ui/browser-results.json",
+            "sha256": "4bfb0b9927b1690c86cf765092df592850598a49cffb7215a83b781c616bd304",
+            "case_id": "F021_NATIVE_UNQUALIFIED_NO_MENTOR_DENIED",
+            "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+            "staging_verified": false,
+            "physical_device_verified": false,
+            "complete_function_acceptance": false
+          },
+          {
+            "artifact": "docs/release/evidence/local/20261009-pwa33-buddy-native-ui/browser-results.json",
+            "sha256": "4bfb0b9927b1690c86cf765092df592850598a49cffb7215a83b781c616bd304",
+            "case_id": "F021_NATIVE_BROWSER_QUALIFIED_MENTOR_BOOKED_REAL_SAME_AND_OTHER_SHIFT",
+            "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+            "staging_verified": false,
+            "physical_device_verified": false,
+            "complete_function_acceptance": false
+          },
+          {
+            "artifact": "docs/release/evidence/local/20261009-pwa33-buddy-native-ui/browser-results.json",
+            "sha256": "4bfb0b9927b1690c86cf765092df592850598a49cffb7215a83b781c616bd304",
+            "case_id": "F021_NATIVE_STALE_MENTOR_VERSION_DENIED",
+            "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+            "staging_verified": false,
+            "physical_device_verified": false,
+            "complete_function_acceptance": false
+          },
+          {
+            "artifact": "docs/release/evidence/local/20261009-pwa33-buddy-native-ui/browser-results.json",
+            "sha256": "4bfb0b9927b1690c86cf765092df592850598a49cffb7215a83b781c616bd304",
+            "case_id": "F021_NATIVE_OTHER_SHIFT_MENTOR_DENIED",
+            "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+            "staging_verified": false,
+            "physical_device_verified": false,
+            "complete_function_acceptance": false
+          },
+          {
+            "artifact": "docs/release/evidence/local/20261009-pwa33-buddy-native-ui/browser-results.json",
+            "sha256": "4bfb0b9927b1690c86cf765092df592850598a49cffb7215a83b781c616bd304",
+            "case_id": "F021_NATIVE_SAME_EXECUTOR_CANNOT_BE_OWN_MENTOR",
+            "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+            "staging_verified": false,
+            "physical_device_verified": false,
+            "complete_function_acceptance": false
+          },
+          {
+            "artifact": "docs/release/evidence/local/20261009-pwa33-buddy-native-ui/browser-results.json",
+            "sha256": "4bfb0b9927b1690c86cf765092df592850598a49cffb7215a83b781c616bd304",
+            "case_id": "F021_NATIVE_WRONG_TENANT_BOOKING_DENIED",
+            "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+            "staging_verified": false,
+            "physical_device_verified": false,
+            "complete_function_acceptance": false
+          },
+          {
+            "artifact": "docs/release/evidence/local/20261009-pwa33-buddy-native-ui/browser-results.json",
+            "sha256": "4bfb0b9927b1690c86cf765092df592850598a49cffb7215a83b781c616bd304",
+            "case_id": "F021_ACTUAL_PROVIDER_SESSION_REVOKED_NEW_MENTOR_QUALIFICATION_DENIED_ROLLBACK",
+            "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+            "staging_verified": false,
+            "physical_device_verified": false,
+            "complete_function_acceptance": false
+          },
+          {
+            "artifact": "docs/release/evidence/local/20261009-pwa33-buddy-native-ui/browser-results.json",
+            "sha256": "4bfb0b9927b1690c86cf765092df592850598a49cffb7215a83b781c616bd304",
+            "case_id": "F021_NATIVE_BROWSER_EXACT_MENTOR_AND_INSTRUCTION_ACK_BOOKING_RELOAD",
+            "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+            "staging_verified": false,
+            "physical_device_verified": false,
+            "complete_function_acceptance": false
+          },
+          {
+            "artifact": "docs/release/evidence/local/20261009-pwa33-buddy-native-ui/browser-results.json",
+            "sha256": "4bfb0b9927b1690c86cf765092df592850598a49cffb7215a83b781c616bd304",
+            "case_id": "F021_NATIVE_LAST_NAMED_MENTOR_CANCEL_DENIED",
+            "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+            "staging_verified": false,
+            "physical_device_verified": false,
+            "complete_function_acceptance": false
+          }
         ]
       },
       {
@@ -17205,7 +17444,45 @@
         ],
         "evidence": [],
         "staging_verified": false,
-        "local_database_evidence": []
+        "local_database_evidence": [],
+        "native_invitation34_evidence": [
+          {
+            "artifact": "docs/release/evidence/local/20261009-pwa34-f092-native/browser-results.json",
+            "sha256": "7f4c0ec4257171206211273152e4b9ab605e87da897690a29441bb83ab4e3f37",
+            "case_id": "F092_MOBILE_NEW_NATIVE_AUTH_LINK_EXPLICIT_ACCEPT_LIMITED_RIGHTS_RELOAD",
+            "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+            "staging_verified": false,
+            "physical_device_verified": false,
+            "complete_function_acceptance": false
+          },
+          {
+            "artifact": "docs/release/evidence/local/20261009-pwa34-f092-native/browser-results.json",
+            "sha256": "7f4c0ec4257171206211273152e4b9ab605e87da897690a29441bb83ab4e3f37",
+            "case_id": "F092_MOBILE_EXISTING_NATIVE_AUTH_LINK_EXPLICIT_ACCEPT_LIMITED_RIGHTS_RELOAD",
+            "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+            "staging_verified": false,
+            "physical_device_verified": false,
+            "complete_function_acceptance": false
+          },
+          {
+            "artifact": "docs/release/evidence/local/20261009-pwa34-f092-native/browser-results.json",
+            "sha256": "7f4c0ec4257171206211273152e4b9ab605e87da897690a29441bb83ab4e3f37",
+            "case_id": "F092_MOBILE_EXPIRED_INVITATION_NEUTRAL_NO_AUTHORITY",
+            "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+            "staging_verified": false,
+            "physical_device_verified": false,
+            "complete_function_acceptance": false
+          },
+          {
+            "artifact": "docs/release/evidence/local/20261009-pwa34-f092-native/browser-results.json",
+            "sha256": "7f4c0ec4257171206211273152e4b9ab605e87da897690a29441bb83ab4e3f37",
+            "case_id": "F092_MOBILE_CANCELLED_INVITATION_NEUTRAL_NO_AUTHORITY",
+            "bounded_scope": "Actual native local mobile UI and canonical transaction/readback only; local six-digit Auth/Mailpit is distinct from hosted SMTP and physical standalone acceptance.",
+            "staging_verified": false,
+            "physical_device_verified": false,
+            "complete_function_acceptance": false
+          }
+        ]
       },
       {
         "id": "AC-F093",
@@ -28493,6 +28770,59 @@
       "hosted_upgrade_verified": false,
       "staging_app_activation_verified": false,
       "physical_device_verified": false,
+      "whole_acceptance_passed": false
+    },
+    "native_buddy33": {
+      "artifact": "docs/release/evidence/local/20261009-pwa33-buddy-native-ui/browser-results.json",
+      "sha256": "4bfb0b9927b1690c86cf765092df592850598a49cffb7215a83b781c616bd304",
+      "result": "PASS",
+      "build": "dW1tJTXS7_nASiYNd6Ajy",
+      "native_schema_count": 33,
+      "bounded_cases": 10,
+      "bounded_function_ids": [
+        "F021"
+      ],
+      "actual_local_otp_digits": [
+        6
+      ],
+      "screenshots": 3,
+      "old_hour_ledger_preserved": true,
+      "staging_verified": false,
+      "physical_device_verified": false,
+      "whole_acceptance_passed": false
+    },
+    "native_invitation34": {
+      "artifact": "docs/release/evidence/local/20261009-pwa34-f092-native/browser-results.json",
+      "sha256": "7f4c0ec4257171206211273152e4b9ab605e87da897690a29441bb83ab4e3f37",
+      "result": "PASS",
+      "build": "dW1tJTXS7_nASiYNd6Ajy",
+      "native_schema_count": 34,
+      "bounded_cases": 4,
+      "bounded_function_ids": [
+        "F092"
+      ],
+      "actual_local_otp_digits": [
+        6
+      ],
+      "screenshots": 8,
+      "old_hour_ledger_preserved": true,
+      "staging_verified": false,
+      "physical_device_verified": false,
+      "whole_acceptance_passed": false
+    },
+    "operational_upgrade34": {
+      "artifact": "docs/release/evidence/local/20261009-pwa34-ops-owned-proof.json",
+      "sha256": "130fb50d1d4b202717a156751aea51b7a864e18c59c9b27358453027addf23dd",
+      "actual_fresh16_to34": true,
+      "actual_approved31_to34": true,
+      "approved_predecessor31_history_receipts_preserved": true,
+      "executed_new_migrations_from31": 3,
+      "source_migration_count": 34,
+      "actual_native_guard_functions": 85,
+      "actual_native_guard_views": 21,
+      "actual_native_guard_tables": 180,
+      "actual_two_blocked_last_place_contenders": true,
+      "staging_verified": false,
       "whole_acceptance_passed": false
     }
   },

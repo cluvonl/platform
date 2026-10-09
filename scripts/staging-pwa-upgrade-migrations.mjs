@@ -29,7 +29,7 @@ const element=(value,index,code)=>{
 const first16=(array,code)=>Array.from({length:16},(_,index)=>element(array,index,code));
 
 // Approved from the completed hosted31 safe aggregate. Earlier receipts are
-// immutable: only this complete, byte-identical predecessor can accompany33.
+// immutable: only this complete, byte-identical predecessor can accompany34.
 export const APPROVED_PWA_PREDECESSOR31=Object.freeze({
  appliedPrefix:31,
  manifestSha256:'4d00699a669e26e0e030523c56c87a231177c5887470d6fe2903ead7164b7e4d',
@@ -39,7 +39,7 @@ export const APPROVED_PWA_PREDECESSOR31=Object.freeze({
  backupArtifactSha256:'013e009fcfbe1a86403bcb8dfbf58fa3ed5ec36416190edc0444112e1d3a0d6b',
 });
 function predecessor31(manifestHash){
- if(UPGRADE_FILES.length!==33||manifestHash===APPROVED_PWA_PREDECESSOR31.manifestSha256)return null;
+ if(UPGRADE_FILES.length!==34||manifestHash===APPROVED_PWA_PREDECESSOR31.manifestSha256)return null;
  need(digest(JSON.stringify(UPGRADE_FILES.slice(0,31)))===APPROVED_PWA_PREDECESSOR31.manifestSha256,'PWA_UPGRADE_PREDECESSOR_BYTES_CHANGED');
  return APPROVED_PWA_PREDECESSOR31;
 }

@@ -83,7 +83,7 @@ RESET ROLE;`,{role:'supabase_admin'});
   sql('DROP TABLE app.pwa_instruction_versions;');
   let predecessorProof=null;
   if(lineage==='approved31'){
-   assert.equal(manifest.migrations.length,33);
+   assert.equal(manifest.migrations.length,34);
    const closed=await loadClosed31Upgrade(),approved=APPROVED_PWA_PREDECESSOR31;
    const previous=closed.createUpgradeMigrationManifest(approved.sourceSha,sources.slice(0,31));
    assert.equal(previous.sha256,approved.manifestSha256);assert.equal(previous.migrations.length,31);
@@ -92,7 +92,7 @@ RESET ROLE;`,{role:'supabase_admin'});
    const previousHistory=json(INITIAL_HISTORY_SQL),previousReceipts=json(UPGRADE_SOURCE_HISTORY_SQL),previousInitial=json(INITIAL_SOURCE_HISTORY_SQL);
    const helpDigest=json("SELECT to_jsonb(md5(coalesce(jsonb_agg(to_jsonb(t)ORDER BY topic_id)::text,'')))FROM app.help_topics t;");
    const prior={layout:json(INITIAL_LAYOUT_SQL),historyRows:previousHistory,sourceRows:previousInitial,upgradeRows:previousReceipts};
-   assert.equal(validateUpgradeHistory(manifest,prior).pending.length,2);
+   assert.equal(validateUpgradeHistory(manifest,prior).pending.length,3);
    assert.equal(json("SELECT to_jsonb(to_regprocedure('api.pwa_personal_action_context(uuid,uuid,bigint)')IS NULL);"),true);
    const firstReceipt=literal(previousReceipts[0].version);
    const badMutations=[
@@ -113,15 +113,17 @@ RESET ROLE;`,{role:'supabase_admin'});
    }
    sql(lock+envelope(31));
    const middle={layout:json(INITIAL_LAYOUT_SQL),historyRows:json(INITIAL_HISTORY_SQL),sourceRows:json(INITIAL_SOURCE_HISTORY_SQL),upgradeRows:json(UPGRADE_SOURCE_HISTORY_SQL)};
-   assert.equal(middle.historyRows.length,32);assert.equal(validateUpgradeHistory(manifest,middle).pending.length,1);
+   assert.equal(middle.historyRows.length,32);assert.equal(validateUpgradeHistory(manifest,middle).pending.length,2);
    assert.equal(validateUpgradeHistory(manifest,middle).complete,false);
    assert.equal(json("SELECT to_jsonb(to_regprocedure('api.pwa_committee_planning(uuid,uuid)')IS NULL);"),true);
    sql(lock+envelope(32));
+   assert.equal(json('SELECT count(*) FROM supabase_migrations.schema_migrations;'),33);
+   sql(lock+envelope(33));
    assert.deepEqual(json(INITIAL_HISTORY_SQL).slice(0,31),previousHistory);
    assert.deepEqual(json(UPGRADE_SOURCE_HISTORY_SQL).slice(0,15),previousReceipts);
    assert.deepEqual(json(INITIAL_SOURCE_HISTORY_SQL),previousInitial);
    assert.equal(json("SELECT to_jsonb(md5(coalesce(jsonb_agg(to_jsonb(t)ORDER BY topic_id)::text,'')))FROM app.help_topics t;"),helpDigest);
-   predecessorProof={actual_closed31_renderer:true,previous_migrations:31,executed_new_migrations:2,previous_history_and_receipts_unchanged:true,
+   predecessorProof={actual_closed31_renderer:true,previous_migrations:31,executed_new_migrations:3,previous_history_and_receipts_unchanged:true,
     original16_receipts_unchanged:true,help_catalog_data_unchanged:true,actual_tamper_negatives:badMutations.length,approved_predecessor_source_sha:approved.sourceSha,approved_predecessor_manifest_sha256:approved.manifestSha256};
   }else sql(lock+manifest.migrations.slice(16).map((_,index)=>envelope(index+16)).join('\n'));
   const readback={layout:json(INITIAL_LAYOUT_SQL),historyRows:json(INITIAL_HISTORY_SQL),sourceRows:json(INITIAL_SOURCE_HISTORY_SQL),upgradeRows:json(UPGRADE_SOURCE_HISTORY_SQL)};

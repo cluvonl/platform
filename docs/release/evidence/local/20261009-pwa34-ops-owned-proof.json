@@ -1,0 +1,117 @@
+{
+  "scope": "LOCAL_OWNED_PG17_PWA34_EMPTY_AND_APPROVED31_UPGRADE",
+  "observed_at": "2026-10-09T09:17:10.200468+00:00",
+  "parent_source_sha": "174615bd8c0aeda5c0161a022312b14b66fb2a5f",
+  "passed": true,
+  "reports": [
+    {
+      "scope": "LOCAL_OWNED_PG17",
+      "readonly_runtime_configuration_guard": true,
+      "api_security_invoker_functions": 85,
+      "actual_planning_rpc_metadata_negatives": 8,
+      "api_security_invoker_views": 21,
+      "actual_unsafe_api_view_refused_in_readonly_transaction": true,
+      "actual_native_last_position_contenders": 2,
+      "private_teams_and_minor_contacts": true,
+      "old_bearer_after_logout_refused": true,
+      "scoped_automation": {
+        "scope": "STAGING_PWA_SCOPED_AUTOMATION_QA_V1",
+        "provider_called": false,
+        "matching_positive": true,
+        "source_run_actor_bound": true,
+        "global_scheduler_called": false,
+        "actual_synthetic_imports": 4,
+        "wrong_lease_owner_refused": true,
+        "unchanged_import_deduplicated": true,
+        "source_and_preference_revalidated": true,
+        "incomplete_import_preserves_success": true,
+        "source_change_preserves_booked_shift": true,
+        "rollback_verified": true
+      },
+      "automation": {
+        "unknown_slot_retained": true,
+        "immutable_provider_receipt": true,
+        "essential_operational_inbox": true,
+        "daily_cap_actual_concurrency": true,
+        "daily_cap_and_late_candidates": true,
+        "browser_private_worker_refused": true,
+        "native_approved_versioned_rules": true,
+        "dispatch_rebuild_current_matching": true,
+        "seven_day_and_24hour_source_reminders": true,
+        "verified_operational_and_team_binding": true,
+        "actual_fixture_match_import_and_local_slots": true
+      },
+      "lineage": "fresh16",
+      "predecessor_upgrade": null,
+      "actual_native_guard_inventory": {
+        "forced": 180,
+        "native": 180,
+        "tables": 180
+      },
+      "actual_migration_count": 34,
+      "actual_suffix_history_typed_json_boolean": true
+    },
+    {
+      "scope": "LOCAL_OWNED_PG17",
+      "readonly_runtime_configuration_guard": true,
+      "api_security_invoker_functions": 85,
+      "actual_planning_rpc_metadata_negatives": 8,
+      "api_security_invoker_views": 21,
+      "actual_unsafe_api_view_refused_in_readonly_transaction": true,
+      "actual_native_last_position_contenders": 2,
+      "private_teams_and_minor_contacts": true,
+      "old_bearer_after_logout_refused": true,
+      "scoped_automation": {
+        "scope": "STAGING_PWA_SCOPED_AUTOMATION_QA_V1",
+        "provider_called": false,
+        "matching_positive": true,
+        "source_run_actor_bound": true,
+        "global_scheduler_called": false,
+        "actual_synthetic_imports": 4,
+        "wrong_lease_owner_refused": true,
+        "unchanged_import_deduplicated": true,
+        "source_and_preference_revalidated": true,
+        "incomplete_import_preserves_success": true,
+        "source_change_preserves_booked_shift": true,
+        "rollback_verified": true
+      },
+      "automation": {
+        "unknown_slot_retained": true,
+        "immutable_provider_receipt": true,
+        "essential_operational_inbox": true,
+        "daily_cap_actual_concurrency": true,
+        "daily_cap_and_late_candidates": true,
+        "browser_private_worker_refused": true,
+        "native_approved_versioned_rules": true,
+        "dispatch_rebuild_current_matching": true,
+        "seven_day_and_24hour_source_reminders": true,
+        "verified_operational_and_team_binding": true,
+        "actual_fixture_match_import_and_local_slots": true
+      },
+      "lineage": "approved31",
+      "predecessor_upgrade": {
+        "actual_closed31_renderer": true,
+        "previous_migrations": 31,
+        "executed_new_migrations": 3,
+        "previous_history_and_receipts_unchanged": true,
+        "original16_receipts_unchanged": true,
+        "help_catalog_data_unchanged": true,
+        "actual_tamper_negatives": 8,
+        "approved_predecessor_source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+        "approved_predecessor_manifest_sha256": "4d00699a669e26e0e030523c56c87a231177c5887470d6fe2903ead7164b7e4d"
+      },
+      "actual_native_guard_inventory": {
+        "forced": 180,
+        "native": 180,
+        "tables": 180
+      },
+      "actual_migration_count": 34,
+      "actual_suffix_history_typed_json_boolean": true
+    }
+  ],
+  "provider_called": false,
+  "staging_verified": false,
+  "physical_device_verified": false,
+  "whole_acceptance_passed": false,
+  "production_enabled": false
+}

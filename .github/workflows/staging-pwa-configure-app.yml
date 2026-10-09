@@ -46,7 +46,7 @@ jobs:
           EXPECTED_CONFIG_VERSION: ${{ inputs.expected_config_version }}
           COMPATIBLE_ROLLBACK_SHAS: ${{ inputs.compatible_rollback_shas }}
         run: node scripts/staging-pwa-runtime-preflight.mjs --verify-release
-      - name: Verify closed33 history, native privacy and public Auth using read-only access
+      - name: Verify closed34 history, native privacy and public Auth using read-only access
         env:
           APP_ENV: staging
           APP_URL: https://staging.cluvo.nl

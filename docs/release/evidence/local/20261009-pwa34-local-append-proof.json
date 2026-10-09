@@ -1,0 +1,44 @@
+{
+  "scope": "GUARDED_EXISTING_LOCAL_SCHEMA33_TO34_APPEND_ONLY",
+  "observed_at": "2026-10-09T09:13:27.751088+00:00",
+  "parent_source_sha": "174615bd8c0aeda5c0161a022312b14b66fb2a5f",
+  "passed": true,
+  "existing_migrations": 33,
+  "appended_migration": {
+    "file": "20261009117000_pwa_invitation_authority_fence.sql",
+    "sha256": "943eb1502da863da7d51bcd390bb58a5815896ab67a76db074638dad361d95b3"
+  },
+  "final_migrations": 34,
+  "old_migration_history_preserved": true,
+  "original33_SQL_source_bytes_preserved": true,
+  "app_tables": 180,
+  "all_native_app_rows_and_authority_unchanged": true,
+  "reset_performed": false,
+  "staging_mutations": false,
+  "provider_called": false,
+  "production_enabled": false,
+  "native_command_guard": {
+    "owner": "cluvo_command_owner",
+    "search_path": [
+      "search_path=\"\""
+    ],
+    "anon_execute": false,
+    "locked_kernel": true,
+    "security_definer": true,
+    "authenticated_execute": true
+  },
+  "before_app_rows_sha256": "96ca1a03a73dc6b2a93e0cfba57d6ff8677a3b8df88312964cf7daf661ed75ba",
+  "after_app_rows_sha256": "96ca1a03a73dc6b2a93e0cfba57d6ff8677a3b8df88312964cf7daf661ed75ba",
+  "old_history_sha256": "5df6a554a1dafbc2b69d852f88785ac118921e9bd2c787b69bb4eec101a1df06",
+  "final_history_sha256": "688439bd4469f7add6dbe2f9b0d75a72441741b3508ca8ed1ffd1f6393eba667",
+  "authority_hashes": {
+    "auth_users": {
+      "rows": 71,
+      "sha256": "fc9b4fe8062eeeeb661a62121e44cb6318244d413e79272d39a8e952f9713f8b"
+    },
+    "auth_sessions": {
+      "rows": 189,
+      "sha256": "97de5adcc8482b976cb792f08812072d234e08a7b338074a143ecf65f44fc328"
+    }
+  }
+}

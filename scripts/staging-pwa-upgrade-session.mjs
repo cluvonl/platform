@@ -10,7 +10,7 @@ import {publicDeparseContext} from './staging-pwa-restore-diagnostic.mjs';
 const BRIDGE=fileURLToPath(new URL('./staging_pwa_upgrade_session.py',import.meta.url));
 const SESSION=fileURLToPath(new URL('./staging_backup_session.py',import.meta.url));
 const SESSION_PIN='e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1';
-export const PWA_UPGRADE_SESSION_CHILD_SHA256='ed00bc2b33812fc6a5e4a6da4679460cd74c9970411db19dd341a0e48616ee9b';
+export const PWA_UPGRADE_SESSION_CHILD_SHA256='5ddcee8e7b498feedbdc584675629a0f606f72bf1598faa00b42400233281de3';
 const BRIDGE_PIN=PWA_UPGRADE_SESSION_CHILD_SHA256;
 const sourceBindings=new WeakMap();
 const PROJECT='fbozlbgmktkgcdfqdaaz';

@@ -1,0 +1,75 @@
+{
+  "scope": "PWA34_CANONICAL_MOBILE_INVITATION_GUARD_AND_COMPLETE_LOCAL_FLOW_CLOSURE",
+  "observed_at": "2026-10-09T09:20:54.964899+00:00",
+  "parent_source_sha": "174615bd8c0aeda5c0161a022312b14b66fb2a5f",
+  "candidate_source_file_sha256": {
+    ".github/workflows/staging-pwa-configure-app.yml": "be320adc42dfeed60797efaf05d3eeb2d34b0508a3085eb07f0e95be50aff0be",
+    "scripts/db-concurrency-invitation-lifecycle.mjs": "54e84d02a79f8b86b66c4d645a26cdfaf91729be280304ecbf40c59701ef00ce",
+    "scripts/staging-pwa-native-qa-session.mjs": "f9016cfc561713e70a5ed8e44c86cf1e1fa55efca4eb984ba5adf959c995dadc",
+    "scripts/staging-pwa-runtime-preflight.mjs": "7dba2dbf0bfbce181a8adbf5db1cc86bf626d177888bf7440c6d51cc3e0afd35",
+    "scripts/staging-pwa-upgrade-files.mjs": "1f576a995c730de250eb05856cc529b08d19dd18b8dcef60cbc42e4be96e1136",
+    "scripts/staging-pwa-upgrade-migrations.mjs": "aff29cc7982832bb11f34f3294651889eb2d57cde1a664c1164a8cb2233ec2ea",
+    "scripts/staging-pwa-upgrade-session.mjs": "9c6c2aab5db01747fc77328eb3d343254d5c20cbe2ee9872e2a935867fe7f1a4",
+    "scripts/staging_pwa_native_qa_session.py": "22baec7ce0d3dde9c841b1b13350e9e11d537fa3f7465080927aa7204b134826",
+    "scripts/staging_pwa_upgrade_session.py": "5ddcee8e7b498feedbdc584675629a0f606f72bf1598faa00b42400233281de3",
+    "tests/helpers/pwa-owned-native-qa.mjs": "f3746bc8f326fd7d6d7cce337cebd1649d46975ca2e3f24c3a4068a05cd08c32",
+    "tests/staging-pwa-runtime-preflight.test.mjs": "04a429d9ef14a33cf0134a658edfbf27bc04c91620271857b4aa8c43719fcfd8",
+    "tests/staging-pwa-upgrade-migrations.test.mjs": "09f4cef2f992de29f5601bd18cb7d3b9531f400b4d4376695d9c3bc20b6e798b",
+    "tests/staging-pwa-upgrade-native.test.mjs": "36574043444aa2063cc52a193b43b30eb126bbb8f1b59452586d7ebb1cb35504",
+    "supabase/migrations/20261009117000_pwa_invitation_authority_fence.sql": "943eb1502da863da7d51bcd390bb58a5815896ab67a76db074638dad361d95b3",
+    "tests/helpers/pwa-owned-invitation-authority.mjs": "c2c09b41e74d95319669acb758c9c097714b910ca2400da5ec3274b14203ddc1",
+    "tests/pwa-invitation-authority-native.test.mjs": "8dcd72cba45ead0d54cf17f7773272d8868222f65f4e9e39bf0e9dc82280eb61"
+  },
+  "reused_runtime_build": "dW1tJTXS7_nASiYNd6Ajy",
+  "runtime_UI_bytes_match_parent_source": true,
+  "original33_migration_bytes_preserved": true,
+  "closed_current_migration_manifest_sha256": "2c51edc789a5a94ee859827778a0d4af57c310aad327d7c2378d43fa91b53853",
+  "local_checks": {
+    "lint_passed": true,
+    "typecheck_passed": true,
+    "node_tests": {
+      "tests": 778,
+      "passed": 747,
+      "failed": 0,
+      "opt_in_skipped": 31
+    },
+    "actual_owned_invitation_cases": 4,
+    "actual_owned_fresh16_and_approved31_to34": true,
+    "coverage_passed": true
+  },
+  "proof_bindings": [
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-buddy-native-ui/browser-results.json",
+      "sha256": "4bfb0b9927b1690c86cf765092df592850598a49cffb7215a83b781c616bd304"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa34-f092-native/browser-results.json",
+      "sha256": "7f4c0ec4257171206211273152e4b9ab605e87da897690a29441bb83ab4e3f37"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa34-invitation-authority-owned-proof.json",
+      "sha256": "cd644bb4451b88091b011f38dc3bf2bb842f64381b6666039584f1fca729ea6f"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa34-ops-owned-proof.json",
+      "sha256": "130fb50d1d4b202717a156751aea51b7a864e18c59c9b27358453027addf23dd"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa34-local-append-proof.json",
+      "sha256": "d40987b88dcd86a1ddb15ebb877e4adbb362802d7e3f065f2b55fb543de145fe"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa33-invitation-authority-regression-before-fix.json",
+      "sha256": "8bed01a2137fd4133a0166acf63cd05c081fe00268c18b7540d4596c401167f3"
+    }
+  ],
+  "scope_preserved": {
+    "functions": 147,
+    "integrations": 61,
+    "main_screens": 20
+  },
+  "staging_verified": false,
+  "physical_device_verified": false,
+  "whole_acceptance_passed": false,
+  "production_enabled": false
+}

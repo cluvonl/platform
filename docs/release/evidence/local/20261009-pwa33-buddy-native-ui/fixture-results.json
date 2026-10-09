@@ -1,0 +1,26 @@
+{
+  "scope": "LOCAL_SYNTHETIC_F021_BUDDY_CONTEXT_CONSTRUCTION",
+  "new_ids": [
+    "cb000000-0000-4000-8000-000000002400",
+    "cb000000-0000-4000-8000-000000002410",
+    "cb000000-0000-4000-8000-000000002411"
+  ],
+  "new_shifts": 2,
+  "new_bookings": 0,
+  "hosted_writes": false,
+  "new_positions": 5,
+  "history_sha256": "f01cf2f7f58d7e84d8fd592f3fbf3505fdf94e8d41252b0db1bcdb8fb3a0c738",
+  "new_requirements": 2,
+  "older_app_sha256": "2fd1f83bba2fdbf43bde1c97269ce7a803826a6fcf1f11cfc73b7dca27c70eb0",
+  "new_hour_ledger_rows": 0,
+  "new_qualification_types": 1,
+  "actual_committed_fixture": true,
+  "fixture_constructor_only": true,
+  "new_instruction_versions": 2,
+  "older_app_rows_preserved": true,
+  "new_person_qualifications": 1,
+  "new_grants_auth_or_memberships": 0,
+  "formal_certificate_award_proved": false,
+  "seed_source_sha256": "3c4fca954c4db2779681fdbe0e4f453aa8a2ec4fb61f7e2a6de610cf3ffadb88",
+  "seed_path": "/tmp/cluvo-pwa33-buddy-native-fixture.psql"
+}
