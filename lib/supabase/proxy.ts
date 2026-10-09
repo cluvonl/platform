@@ -4,6 +4,9 @@ import {mobileReturnHeader,mobileReturnPath} from '@/lib/auth/mobile-return';
 import {supabasePublicConfig} from './config';
 // Bouwsteen voor WP1; nog NIET gekoppeld aan de lokale demo-UI.
 export async function updateSupabaseSession(request:NextRequest) {
+  // Presentation routing only; every administrative read/action checks the
+  // native session and explicit scope again. Overwrite forged client headers.
+  request.headers.set('x-cluvo-request-path',request.nextUrl.pathname);
   // Always overwrite client input before forwarding an app destination. A
   // POST never carries a return route or silently resumes a submitted command.
   request.headers.delete(mobileReturnHeader);

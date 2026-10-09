@@ -96,10 +96,18 @@ async function verifyOtp(mobile: boolean, formData: FormData): Promise<AuthActio
       .limit(1);
     const selectedTenantSlug = data?.[0]?.tenant_slug;
     if (workspaceError || typeof selectedTenantSlug !== 'string') {
+      const platform=await client.schema('api').rpc('platform_access');
+      if(!platform.error&&platform.data?.authorized===true){returnPath='/platform';}
+      else{
+      const invitations=await client.schema('api').rpc('platform_read',{p_section:'personal_invitations'});
+      if(!invitations.error&&Array.isArray(invitations.data?.rows)&&invitations.data.rows.some((offer:{state?:string;expired?:boolean})=>offer.state==='pending'&&offer.expired===false)){returnPath='/workspaces';}
+      else{
       await client.auth.signOut({scope: 'local'});
       if (mobile) {cookieStore.delete({name: mobileOtpEmailCookie, path: '/app/auth/verify'});cookieStore.delete({name:mobileReturnCookie,path:'/app/auth/verify'});}
       else cookieStore.delete({name: otpEmailCookie, path: '/auth/verify'});
       return {status: 'error', message: 'Dit account heeft geen actieve verenigingswerkruimte. Neem contact op met de beheerder.'};
+      }
+      }
     }
     const tenant=mobile?mobileReturnTenant(returnPath):null;
     if(tenant){const target=await client.schema('api').from('my_workspaces').select('tenant_slug').eq('tenant_slug',tenant);if(target.error||!target.data?.some(row=>row.tenant_slug===tenant))returnPath='/app/workspaces';}

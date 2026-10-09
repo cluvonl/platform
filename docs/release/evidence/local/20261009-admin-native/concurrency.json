@@ -1,0 +1,64 @@
+{
+  "status": "PASS",
+  "database": "cluvo_admin_race_20261009",
+  "synthetic_accounts_only": true,
+  "sql_native_sessions": true,
+  "otp_provider_proof": false,
+  "source_accounts_copied": false,
+  "cases": [
+    {
+      "case": "booking-before-cluster",
+      "status": "PASS",
+      "native_connections": 2,
+      "observed_wait": "Lock:advisory",
+      "losing_result": "CAPACITY_FULL",
+      "bookings": 1,
+      "reservations": 0
+    },
+    {
+      "case": "cluster-before-booking",
+      "status": "PASS",
+      "native_connections": 2,
+      "observed_wait": "Lock:advisory",
+      "losing_result": "TEAM_POSITION_RESERVED",
+      "bookings": 0,
+      "reservations": 1
+    },
+    {
+      "case": "two-last-place-bookings",
+      "status": "PASS",
+      "native_connections": 2,
+      "observed_wait": "Lock:advisory",
+      "losing_result": "CAPACITY_FULL",
+      "bookings": 1,
+      "reservations": 0
+    },
+    {
+      "case": "revocation-before-command",
+      "status": "PASS",
+      "native_connections": 2,
+      "observed_wait": "Lock:advisory",
+      "losing_result": "FORBIDDEN",
+      "bookings": 0,
+      "reservations": 0
+    },
+    {
+      "case": "pause-before-command",
+      "status": "PASS",
+      "native_connections": 2,
+      "observed_wait": "Lock:advisory",
+      "losing_result": "FORBIDDEN",
+      "bookings": 0,
+      "reservations": 0
+    },
+    {
+      "case": "same-command-on-two-connections",
+      "status": "PASS",
+      "native_connections": 2,
+      "observed_wait": "Lock:advisory",
+      "losing_result": "same confirmed receipt",
+      "bookings": 0,
+      "reservations": 0
+    }
+  ]
+}

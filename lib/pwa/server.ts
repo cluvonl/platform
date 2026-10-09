@@ -28,13 +28,15 @@ const allowedSelection=(value:string|undefined) => value===undefined?null:z.stri
 // users, tenants or sessions, and never use an admin key for these projections.
 const load=cache(async (club:string,householdId:string|null,seasonId:string|null): Promise<MobileSnapshot> => {
   const {client,workspace}=await requireWorkspace(club,'/app/login');
-  const [snapshotResult,intakeResult,policyResult,workspacesResult,pendingResult,marketResult]=await Promise.all([
+  const [snapshotResult,intakeResult,policyResult,workspacesResult,pendingResult,marketResult,clubAdminResult,platformAdminResult]=await Promise.all([
     client.schema('api').rpc('pwa_snapshot',{p_tenant_id:workspace.tenant_id,p_household_id:householdId,p_season_id:seasonId}),
     client.schema('api').from('my_intake').select('profile_id,person_id,household_context_id,version,desired_minutes,answers').eq('tenant_id',workspace.tenant_id).eq('person_id',workspace.person_id),
     client.schema('api').from('pwa_policy_assignments').select('id,member_person_id,state,version,policy_version_id,policy_revision,policy_document_id,policy_document_title,exact_body,published_at,effective_at,offered_at,is_actor_subject,can_accept').eq('tenant_id',workspace.tenant_id),
     client.schema('api').from('my_workspaces').select('tenant_slug,tenant_name'),
     client.schema('api').rpc('pwa_pending_commands',{p_tenant_id:workspace.tenant_id}),
     client.schema('api').rpc('list_shift_market',{p_tenant_id:workspace.tenant_id}),
+    client.schema('api').rpc('club_admin_access',{p_slug:club}),
+    client.schema('api').rpc('platform_access'),
   ]);
   if (snapshotResult.error||intakeResult.error||policyResult.error||workspacesResult.error||pendingResult.error||marketResult.error||!snapshotResult.data) throw new Error('Het mobiele overzicht kan nu niet veilig worden geladen. Probeer het opnieuw.');
   const raw=object(snapshotResult.data),context=object(raw.context),base=`/app/c/${encodeURIComponent(workspace.tenant_slug)}`;
@@ -100,7 +102,7 @@ const load=cache(async (club:string,householdId:string|null,seasonId:string|null
   for(const assignment of records(policyResult.data)) policyGroups.set(string(assignment.policy_version_id),[...(policyGroups.get(string(assignment.policy_version_id))??[]),assignment]);
   const boards=records(raw.boards);
   const result:MobileSnapshot={workspace,workspaces:[...new Map(records(workspacesResult.data).map((row)=>[string(row.tenant_slug),{slug:string(row.tenant_slug),name:string(row.tenant_name)}])).values()],
-    season:selectedSeason?{id:string(selectedSeason.id),name:string(selectedSeason.name)}:null,timezone:string(context.timezone,'Europe/Amsterdam'),readAt:new Date().toISOString(),capabilities,commands:Object.keys(mobilePayloadSchemas),
+    season:selectedSeason?{id:string(selectedSeason.id),name:string(selectedSeason.name)}:null,timezone:string(context.timezone,'Europe/Amsterdam'),readAt:new Date().toISOString(),modules:Object.fromEntries(Object.entries(object(context.modules)).filter(([,value])=>typeof value==='boolean')) as Record<string,boolean>,capabilities,commands:Object.keys(mobilePayloadSchemas),
     household:dossier?{id:dossier.household.household_id,version:dossier.household.version,name:dossier.household.label,canInvite:dossier.household.can_invite_executor,obligationId:balance?.obligation_id}:null,
     householdMemberIds:records(dossier?.people).map((person)=>string(person.person_id)),
     progress:raw.progress?progress(object(raw.progress)):null,
@@ -160,6 +162,7 @@ const load=cache(async (club:string,householdId:string|null,seasonId:string|null
     reserveCandidates:records(raw.reserve_candidates).map((row)=>({allocationId:string(row.allocation_id),personId:string(row.person_id),name:string(row.name),reason:string(row.reason)})),
     distributionProposals:records(raw.distribution_proposals).map((row)=>({teamId:string(row.team_id),assignments:records(row.assignments).map((assignment)=>({allocationId:string(assignment.allocation_id),expectedVersion:integer(assignment.expected_version),memberId:string(assignment.member_person_id),reason:string(assignment.reason)}))})),
     teamCreditRequests:records(raw.team_credit_requests).map((row)=>({...resource(row),teamId:string(row.team_id),title:string(row.title),requestedMinutes:integer(row.requested_minutes),approvedMinutes:typeof row.approved_minutes==='number'?integer(row.approved_minutes):null,state:string(row.state),refereeNeeded:yes(row.referee_needed),matchId:string(row.match_id)||undefined,matchReviewed:yes(row.match_reviewed),canReviewMatch:yes(row.can_review_match),canReviewVolunteer:yes(row.can_review_volunteer),canPublish:yes(row.can_publish)})),
+    adminAccess:{club:!clubAdminResult.error&&clubAdminResult.data?.authorized===true,platform:!platformAdminResult.error&&platformAdminResult.data?.authorized===true},
     preferenceVersion:integer(object(raw.preferences).version),pushPublicKey:mobilePushPublicKey,serverPreferences:Object.fromEntries(['email','push','inbox','reminders','team','news'].map((key)=>[key,yes(object(raw.preferences)[key])]))});
 });
 

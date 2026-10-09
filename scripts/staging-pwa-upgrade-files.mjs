@@ -79,6 +79,26 @@ export const PWA_ADDITIONS=Object.freeze([
   {
     "file": "20261009119000_pwa_reserve_committee_scope.sql",
     "sha256": "f7d9f77df7cde15bc23bb6408cab6f56a79031e0ee13198b2a9bf3d397f6801c"
+  },
+  {
+    "file": "20261009120000_platform_administration.sql",
+    "sha256": "93a0e0fb3cd31f69cb44b807bae49c156898c548ede41801a482bc70cbb9aaea"
+  },
+  {
+    "file": "20261009121000_club_administration.sql",
+    "sha256": "e7d2700ed947ccb1f470304698e5c115e84f6ea10ffe5f9aa4b9408144384a9e"
+  },
+  {
+    "file": "20261009122000_administration_authority_fence.sql",
+    "sha256": "2815b49b9d3e6d2bb8cce86e85ebbfa7da3eec59f083ea1b469b35fcfa98fbd5"
+  },
+  {
+    "file": "20261009123000_admin_template_delivery.sql",
+    "sha256": "e7c6b3eebdeef07fef0c2c33d4b3e0e4244f4d5d2bd79ca2f02b6215c710a7a6"
+  },
+  {
+    "file": "20261009124000_admin_durable_commands.sql",
+    "sha256": "e5d5234e9a67578e8fae93ae50e014d36899f781e049273f20eaf33032fde38e"
   }
 ]
 .map(Object.freeze));

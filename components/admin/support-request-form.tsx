@@ -1,0 +1,14 @@
+
+'use client';
+import {useEffect,useState} from 'react';
+import {AdminForm} from './admin-form';
+import {adminForms} from '@/lib/admin/forms';
+import {platformSupportScopesAction} from '@/lib/admin/actions';
+export function SupportRequestForm({tenants,disabled}:{tenants:Array<{value:string;label:string}>;disabled:boolean}){
+ const [tenant,setTenant]=useState('');const [kind,setKind]=useState('tenant');const [committees,setCommittees]=useState<Array<{value:string;label:string}>>([]);const [loading,setLoading]=useState(false);const [failed,setFailed]=useState(false);
+ useEffect(()=>{let alive=true;if(!tenant)return;platformSupportScopesAction(tenant).then(rows=>{if(alive)setCommittees(rows);}).catch(()=>{if(alive)setFailed(true);}).finally(()=>{if(alive)setLoading(false);});return()=>{alive=false;};},[tenant]);
+ const allowed=kind==='committee'?['shift.manage','attendance.confirm','committee.workspace.manage']:['organization.manage','shift.manage','attendance.confirm','committee.workspace.manage','match.import'];
+ const labels:Record<string,string>={'organization.manage':'Verenigingsgegevens beheren','shift.manage':'Taakplanning beheren','attendance.confirm':'Uitvoering bevestigen','committee.workspace.manage':'Benoemde commissiewerkruimte beheren','match.import':'Wedstrijdimport controleren'};
+ const fields=adminForms.request_support.fields.filter(f=>!['tenant_id','scope_kind'].includes(f.name)&&!(kind==='tenant'&&f.name==='scope_id')).map(f=>f.name==='permission_keys'?{...f,options:allowed.map(value=>({value,label:labels[value]}))}:f);
+ return <section><label className="field"><span>Vereniging voor ondersteuning</span><select value={tenant} disabled={disabled} onChange={e=>{setKind('tenant');setCommittees([]);setFailed(false);setLoading(Boolean(e.target.value));setTenant(e.target.value);}}><option value="">Kies een benoemde vereniging</option>{tenants.map(t=><option key={t.value} value={t.value}>{t.label}</option>)}</select></label>{tenant&&<><label className="field"><span>Bereik van de ondersteuning</span><select value={kind} disabled={disabled||loading} onChange={e=>setKind(e.target.value)}><option value="tenant">Deze vereniging</option><option value="committee">Eén benoemde commissie</option></select></label>{loading&&<p role="status">Benoemde commissies controleren…</p>}{failed&&<p role="alert">De toegestane commissiecontext kon niet worden gecontroleerd. Kies de vereniging opnieuw.</p>}{!disabled&&!loading&&!failed&&(kind==='tenant'||committees.length>0)&&<AdminForm key={`${tenant}:${kind}`} surface="platform" action="request_support" fields={fields} payload={{tenant_id:tenant,scope_kind:kind,...(kind==='tenant'?{scope_id:null}:{})}} options={{scope_id:committees}}/>}{kind==='committee'&&!loading&&!committees.length&&<p>Er is geen actieve commissie binnen deze benoemde context.</p>}{disabled&&<p role="status">Controleer eerst de eerdere opdracht voordat je nieuwe ondersteuning aanvraagt.</p>}</>}</section>;
+}

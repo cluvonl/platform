@@ -18,5 +18,6 @@ export async function markHelpSeenAction(topicId: string): Promise<{ok: boolean;
     return {ok: false, message: 'Je keuze is nog niet opgeslagen. Probeer het opnieuw.'};
   }
   revalidatePath('/c', 'layout');
+  revalidatePath('/platform', 'layout');
   return {ok: true};
 }

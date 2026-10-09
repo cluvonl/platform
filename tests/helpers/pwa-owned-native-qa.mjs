@@ -4,7 +4,7 @@
 import assert from 'node:assert/strict';
 import {spawn} from 'node:child_process';
 import {randomBytes} from 'node:crypto';
-import {buildStagingNativeQaFixture,nativeQaProviderEmail,nativeQaProviderMetadata,nativeQaPreflightSql} from '../../scripts/staging-pwa-native-qa-fixture.mjs';
+import {buildStagingNativeQaFixture,nativeQaProviderEmail,nativeQaProviderMetadata,nativeQaPreflightSql,buildStagingNativeQaAdminAccess} from '../../scripts/staging-pwa-native-qa-fixture.mjs';
 import {buildStagingNativeQaBooking} from '../../scripts/staging-pwa-native-qa-booking.mjs';
 import {buildStagingNativeQaAutomation} from '../../scripts/staging-pwa-native-qa-automation.mjs';
 import {runOwnedPwaAutomation} from './pwa-owned-automation.mjs';
@@ -51,15 +51,15 @@ export async function runOwnedPwaNativeQa({name,socket,sql,json,lock}){
  const command=['--host',socket,'exec','-i',name,'psql','-X','--quiet','--no-align','--tuples-only','--no-password','--set=ON_ERROR_STOP=1','--set=VERBOSITY=verbose','-h','/restore','-U','supabase_admin','-d','postgres'];
  const ownerSql=persistent(command);let primary;
  try{
-  sql("ALTER ROLE authenticator LOGIN;GRANT authenticated TO authenticator;ALTER ROLE authenticator IN DATABASE postgres SET pgrst.db_schemas=\'api\';ALTER TABLE auth.users ADD COLUMN role text DEFAULT 'authenticated',ADD COLUMN raw_app_meta_data jsonb DEFAULT '{}'::jsonb;"+
+  sql("ALTER ROLE authenticator LOGIN;GRANT authenticated TO authenticator;ALTER ROLE authenticator IN DATABASE postgres SET pgrst.db_schemas=\'api\';ALTER TABLE auth.users ADD COLUMN IF NOT EXISTS role text DEFAULT 'authenticated',ADD COLUMN IF NOT EXISTS raw_app_meta_data jsonb DEFAULT '{}'::jsonb;"+
    providers.map(user=>`INSERT INTO auth.users(id,email,email_confirmed_at,role,raw_app_meta_data) VALUES('${user.id}',${quote(user.email)},statement_timestamp(),'authenticated',${quote(JSON.stringify(user.appMetadata))}::jsonb);`).join('\n')+
    sessions.map((id,index)=>`INSERT INTO auth.sessions(id,user_id) VALUES('${id}','${users[index]}');`).join('\n'),{role:'supabase_admin'});
   await ownerSql.query('SET client_min_messages=warning;SET ROLE postgres;'+lock);
   const preflight=rows(await ownerSql.query(nativeQaPreflightSql())).at(-1);
   assert.equal(preflight.scope,'STAGING_PWA_NATIVE_QA_PREFLIGHT_V1');assert.ok(preflight.native_guarded_tables>144);
   const readonly=rows(await ownerSql.query(runtimeReadOnlyPreflightSQL())).at(-1);
-  assert.equal(readonly.scope,'STAGING_PWA_RUNTIME_READONLY36');assert.equal(readonly.transaction_read_only,true);
-  assert.equal(readonly.migration_count,36);assert.equal(readonly.database_role_superuser,false);
+  assert.equal(readonly.scope,'STAGING_PWA_RUNTIME_READONLY41');assert.equal(readonly.transaction_read_only,true);
+  assert.equal(readonly.migration_count,41);assert.equal(readonly.database_role_superuser,false);
   assert.equal(readonly.app_tables,readonly.native_guarded_tables);assert.equal(readonly.app_tables,readonly.forced_rls_tables);
   await ownerSql.query("RESET ROLE;ALTER ROLE cluvo_command_owner BYPASSRLS;SET ROLE postgres;BEGIN READ ONLY;"+`DO $runtime_role_negative$BEGIN
    BEGIN EXECUTE ${quote(runtimeReadOnlyGuardSQL())};RAISE EXCEPTION 'OWNED_RUNTIME_UNRESTRICTED_COMMAND_OWNER_ALLOWED';
@@ -73,7 +73,7 @@ export async function runOwnedPwaNativeQa({name,socket,sql,json,lock}){
   END $runtime_view_negative$;COMMIT;ALTER VIEW api.pwa_policy_assignments SET(security_invoker=true);`);
   const planningIdentity='api.pwa_committee_planning(uuid,uuid)';
   const apiFunctions=rows(await ownerSql.query("SELECT jsonb_build_object('functions',count(*),'invoker_functions',count(*)FILTER(WHERE NOT p.prosecdef))FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='api';")).at(-1);
-  assert.deepEqual(apiFunctions,{functions:89,invoker_functions:89});
+  assert.deepEqual(apiFunctions,{functions:102,invoker_functions:102});
   for(const [change,restore]of [
    ["CREATE FUNCTION api.pwa_unregistered_inventory_probe()RETURNS integer LANGUAGE sql STABLE SECURITY INVOKER AS 'SELECT 1';","DROP FUNCTION api.pwa_unregistered_inventory_probe();"],
    [`ALTER FUNCTION ${planningIdentity} RENAME TO pwa_committee_planning_missing;`,`ALTER FUNCTION api.pwa_committee_planning_missing(uuid,uuid) RENAME TO pwa_committee_planning;`],
@@ -155,10 +155,21 @@ export async function runOwnedPwaNativeQa({name,socket,sql,json,lock}){
    const code=await new Promise(resolve=>{child.once('close',resolve);child.stdin.end('SET client_min_messages=warning;SET ROLE postgres;'+statement);});
    assert.equal(code,0,'OWNED_AUTOMATION_WORKER_FAILED_'+(err.match(/ERROR:\s+([0-9A-Z]{5}):/)?.[1]??'UNKNOWN'));return rows(out).at(-1);
   }});assert.equal(automation.unknown_slot_retained,true);
+  const admin=buildStagingNativeQaAdminAccess({sourceSha,workflowRunId,actor,expectedVersion:0,providers});
+  const adminFixture=rows(await ownerSql.query('BEGIN;'+context(admin)+admin.mutationSql+admin.readbackSql+'COMMIT;')).at(-1);
+  assert.equal(adminFixture.explicit_permissions,15);assert.equal(adminFixture.platform_grants_created,0);
+  assert.equal(json(`SELECT count(*)FROM app.access_grants WHERE id='${f.adminGrantA}' AND ends_at=starts_at+interval '30 minutes' AND revoked_at IS NULL;`),1);
+  await ownerSql.query(`BEGIN;${context(admin)}DO $admin_scope_negative$BEGIN
+   BEGIN
+    INSERT INTO app.role_permissions(tenant_id,role_id,permission_key)VALUES('${f.tenantA}','${f.adminRoleA}','household.review');
+    EXECUTE ${quote(fixture.teardownSql)};RAISE EXCEPTION 'OWNED_ADMIN_PRIVATE_GRANT_ALLOWED';
+   EXCEPTION WHEN SQLSTATE 'P0001'THEN IF SQLERRM<>'STAGING_NATIVE_QA_REFUSED'THEN RAISE;END IF;END;
+  END $admin_scope_negative$;ROLLBACK;`);
   const cleanup=rows(await ownerSql.query('BEGIN;'+context(fixture)+fixture.teardownSql+fixture.teardownReadbackSql+'COMMIT;')).at(-1);
+  assert.equal(json(`SELECT count(*)FROM app.access_grants WHERE id='${f.adminGrantA}' AND revoked_at IS NULL;`),0);
   assert.equal(cleanup.qa_scopes_archived,2);assert.equal(cleanup.retained_answer_revisions,3);assert.equal(cleanup.retained_bookings,1);assert.equal(cleanup.retained_ledger_entries,0);
   const again=rows(await ownerSql.query('BEGIN;'+context(fixture)+fixture.teardownSql+fixture.teardownReadbackSql+'COMMIT;')).at(-1);
   assert.equal(again.status,'already_archived');
-  return {scope:'LOCAL_OWNED_PG17',readonly_runtime_configuration_guard:true,api_security_invoker_functions:apiFunctions.functions,actual_planning_rpc_metadata_negatives:8,api_security_invoker_views:21,actual_unsafe_api_view_refused_in_readonly_transaction:true,actual_native_last_position_contenders:2,private_teams_and_minor_contacts:true,old_bearer_after_logout_refused:true,scoped_automation:{...scopedProof,rollback_verified:true},automation};
+  return {scope:'LOCAL_OWNED_PG17',admin_qa_scope:{fixed_finite_grant:true,private_dossier_escalation_refused:true,revoked_at_teardown:true},readonly_runtime_configuration_guard:true,api_security_invoker_functions:apiFunctions.functions,actual_planning_rpc_metadata_negatives:8,api_security_invoker_views:21,actual_unsafe_api_view_refused_in_readonly_transaction:true,actual_native_last_position_contenders:2,private_teams_and_minor_contacts:true,old_bearer_after_logout_refused:true,scoped_automation:{...scopedProof,rollback_verified:true},automation};
  }catch(error){primary=error;throw error;}finally{try{await ownerSql.close();}catch(error){if(!primary)throw error;}}
 }

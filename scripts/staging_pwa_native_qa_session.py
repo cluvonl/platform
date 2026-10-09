@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parent
 PROJECT = 'fbozlbgmktkgcdfqdaaz'
 LOCK = int.from_bytes(hashlib.sha256(PROJECT.encode()).digest()[:4], 'big', signed=True)
 # Completed source bytes are pinned before this owner is promoted.
-PINS = {'staging_backup_session.py': 'e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1', 'staging-initial-migrations.mjs': '7f49cf8dcdb2eda53633dd3596486779ea2dd001d1a2813a07fa45e859784004', 'staging-migration-files.mjs': '83aa2aae6d4cc358965208e39e73dd0d1038ee4a6c0bc9a62675b829e30c94bd', 'staging-pwa-upgrade-migrations.mjs': 'd931ae1ca408e755b244cf1232fa5e5fd4cbdc0f21a709fbe4ffdd4df2b878ee', 'staging-pwa-upgrade-files.mjs': 'a9b3b5c74dc7a9f8d495de2b8a8e9e3fc073052e6de726f9b462b7985a6c1b12', 'staging-pwa-native-qa-fixture.mjs': '50b050e173fceb91576e547f2710449eeca75251d8cb0d3951ea1479e7ab879d', 'staging-pwa-native-qa-booking.mjs': 'dceee6137debb1015b982e5a2877da9f6e368a810a0ad6ac467ace28d70e85dc', 'staging-pwa-native-qa-automation.mjs': 'b99f275ccb86c8b16e7ef558891cb738718488792dd8d210414260925b26afb4', 'staging-pwa-native-qa-sql.mjs': '016f74100a15cd8f6a20dfd1cd0e4b44b1cf7aaa3484e2fd9f7239267e8d5a30'}
+PINS = {'staging_backup_session.py': 'e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1', 'staging-initial-migrations.mjs': '7f49cf8dcdb2eda53633dd3596486779ea2dd001d1a2813a07fa45e859784004', 'staging-migration-files.mjs': '83aa2aae6d4cc358965208e39e73dd0d1038ee4a6c0bc9a62675b829e30c94bd', 'staging-pwa-upgrade-migrations.mjs': '289792c7990eb3657c1cd59db8bd9acd1f89e190fca70ef30c9f13770f2ab8e7', 'staging-pwa-upgrade-files.mjs': 'a41f1da30fe1c1a0296aa5f1dfe229f177a208950a681bd06be53c2da90b61f5', 'staging-pwa-native-qa-fixture.mjs': '759bbef39a8894fac984ae2b9308721a16c4ee746608bd8d7a727091e1274bdd', 'staging-pwa-native-qa-booking.mjs': 'dceee6137debb1015b982e5a2877da9f6e368a810a0ad6ac467ace28d70e85dc', 'staging-pwa-native-qa-automation.mjs': 'b99f275ccb86c8b16e7ef558891cb738718488792dd8d210414260925b26afb4', 'staging-pwa-native-qa-sql.mjs': 'dc0c9bcf08591117fc91b45e583334f4e214a5b2aff6eb3096df2b3b71fb0924'}
 
 
 def verify_sources():
@@ -251,6 +251,11 @@ class NativeSession(Session):
         self.providers, self.fixture, self.phase = argument, value, 'fixture'
         return result
 
+    def setup_admin_access(self):
+        require(self.phase == 'fixture', 'STAGING_NATIVE_QA_PHASE_INVALID')
+        value = recipe('admin_access', self.providers, self.qa_environment)
+        return self.transaction(value, 'mutationSql', 'readbackSql')
+
     def setup_booking(self):
         require(self.phase == 'fixture', 'STAGING_NATIVE_QA_PHASE_INVALID')
         value = recipe('booking', self.providers, self.qa_environment)
@@ -382,7 +387,7 @@ def main():
                     value = getattr(session, operation)(argument)
                 else:
                     require(session is not None and argument is None and operation in
-                            ('preflight', 'setup_booking', 'hold_last_position', 'count_blocked',
+                            ('preflight', 'setup_admin_access', 'setup_booking', 'hold_last_position', 'count_blocked',
                              'release_holder', 'booking_readback', 'scoped_automation_proof'), 'STAGING_NATIVE_QA_OPERATION_INVALID')
                     value = getattr(session, operation)()
                 response = {'id': request['id'], 'ok': True, 'value': value}

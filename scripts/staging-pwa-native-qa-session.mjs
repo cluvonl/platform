@@ -10,7 +10,7 @@ import {buildStagingNativeQaFixture} from './staging-pwa-native-qa-fixture.mjs';
 
 const PROJECT='fbozlbgmktkgcdfqdaaz';
 const CHILD=fileURLToPath(new URL('./staging_pwa_native_qa_session.py',import.meta.url));
-export const NATIVE_QA_SESSION_CHILD_SHA256='61d353adf00b67e358ccffa1cc9d6cdeeacf395201be33c9f33883cb7c40cdb0';
+export const NATIVE_QA_SESSION_CHILD_SHA256='5597f44828243cf2edd1c6660a1bfade0d69a6161d12a78753d6ab18d632b2f9';
 const registrations=new WeakMap();
 const hash=value=>createHash('sha256').update(value).digest('hex');
 const lock=createHash('sha256').update(PROJECT).digest().readInt32BE(0);
@@ -83,6 +83,7 @@ export class NativeQaSession{
   buildStagingNativeQaFixture({providers,sourceSha:this.#context.sourceSha,workflowRunId:this.#context.workflowRunId,actor:this.#context.actor,expectedVersion:0});
   return await this.#request('setup_fixture',providers);
  }
+ async setupAdminAccess(){return await this.#request('setup_admin_access');}
  async setupBooking(){return await this.#request('setup_booking');}
  async holdLastPosition(){return await this.#request('hold_last_position');}
  async countBlocked(){return await this.#request('count_blocked');}
@@ -101,7 +102,7 @@ export class NativeQaSession{
  }
 }
 
-const trusted=Object.freeze(Object.fromEntries(['preflight','setupFixture','setupBooking','holdLastPosition','countBlocked','releaseHolder','bookingReadback','scopedAutomationProof','teardown','close'].map(name=>[name,NativeQaSession.prototype[name]])));
+const trusted=Object.freeze(Object.fromEntries(['preflight','setupFixture','setupAdminAccess','setupBooking','holdLastPosition','countBlocked','releaseHolder','bookingReadback','scopedAutomationProof','teardown','close'].map(name=>[name,NativeQaSession.prototype[name]])));
 Object.freeze(NativeQaSession.prototype);
 export async function authorizeNativeQaProvider(owner,context){
  const registration=registrations.get(owner);

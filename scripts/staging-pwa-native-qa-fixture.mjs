@@ -33,6 +33,7 @@ const LABELS=Object.freeze([
   'executorGrantRaceA','executorGrantRaceB','householdPersonRaceB','householdObligationRaceA',
   'householdObligationRaceB','qaBookingAudit','instructionRace',
   'teamA','teamB','teamMembershipA','teamMembershipB','teamMembershipBForeign','minorContact',
+  'adminRoleA','adminGrantA','adminAuditA',
 ]);
 export function nativeQaFixtureIds(workflowRunId){
   need(validRun(workflowRunId));
@@ -58,6 +59,27 @@ export function nativeQaProviderMetadata(value){
 
 const literal=value=>"'"+value.replaceAll("'","''")+"'";
 const ids=(fixture,names)=>'ARRAY['+names.map(name=>literal(fixture[name])).join(',')+']::uuid[]';
+const ADMIN_QA_KEYS=Object.freeze(['organization.manage','organization.access.manage','shift.manage','attendance.confirm',
+ 'team_task.manage','club_cluster.manage','committee.workspace.view','committee.workspace.manage','communication.manage',
+ 'report.season.view','development.manage','policy.manage','vacancy.manage','volunteer_role.manage','hour_dispute.review']);
+function adminScopeGuard(f){return `
+ IF EXISTS(SELECT 1 FROM app.permission_roles WHERE id='${f.adminRoleA}')
+ OR EXISTS(SELECT 1 FROM app.access_grants WHERE id='${f.adminGrantA}')
+ OR EXISTS(SELECT 1 FROM app.audit_events WHERE id='${f.adminAuditA}') THEN
+  IF NOT EXISTS(SELECT 1 FROM app.permission_roles WHERE id='${f.adminRoleA}' AND tenant_id='${f.tenantA}'
+    AND role_key='staging_admin_qa' AND name='Tijdelijk synthetisch beheerproefmandaat' AND NOT system_role)
+   OR (SELECT array_agg(permission_key ORDER BY permission_key) FROM app.role_permissions WHERE role_id='${f.adminRoleA}' AND tenant_id='${f.tenantA}')
+       IS DISTINCT FROM (SELECT array_agg(k ORDER BY k) FROM unnest(ARRAY[${ADMIN_QA_KEYS.map(literal).join(',')}])k)
+   OR NOT EXISTS(SELECT 1 FROM app.access_grants WHERE id='${f.adminGrantA}' AND tenant_id='${f.tenantA}' AND auth_user_id=v_a
+     AND role_id='${f.adminRoleA}' AND scope_kind='tenant' AND num_nonnulls(committee_id,team_id,household_id)=0
+     AND granted_by_auth_user_id=v_a AND revoked_at IS NULL AND version=1 AND ends_at=starts_at+interval '30 minutes')
+   OR NOT EXISTS(SELECT 1 FROM app.audit_events WHERE id='${f.adminAuditA}' AND tenant_id='${f.tenantA}' AND actor_auth_user_id=v_a
+     AND action='staging.admin_qa_access_created' AND resource_id='${f.adminGrantA}' AND idempotency_key='${f.adminAuditA}'
+     AND payload_minimal->>'source_sha'=v_ctx->>'source_sha' AND payload_minimal->>'workflow_run_id'=v_ctx->>'workflow_run_id'
+     AND payload_minimal->>'actor'=v_ctx->>'actor' AND payload_minimal->'expected_version'='0'::jsonb)
+  THEN RAISE EXCEPTION 'STAGING_NATIVE_QA_REFUSED';END IF;
+ END IF;`;
+}
 const PROJECT=INITIAL_MIGRATION_POLICY.projectRef;
 const CONTEXT_SQL=`SELECT set_config('cluvo.native_qa_context',jsonb_build_object(
   'format','${NATIVE_QA_FORMAT}','scope','staging','project_ref','${PROJECT}',
@@ -135,7 +157,7 @@ function schemaGuard(){
     OR EXISTS(SELECT 1 FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
       WHERE n.nspname='api' AND c.relkind='v'
         AND NOT('security_invoker=true'=ANY(coalesce(c.reloptions,ARRAY[]::text[]))))
-    OR (SELECT count(*) FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='api')<>89
+    OR (SELECT count(*) FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='api')<>102
     OR EXISTS(SELECT 1 FROM (VALUES ('api.pwa_personal_action_context(uuid,uuid,bigint)'),
       ('api.pwa_committee_planning(uuid,uuid)')) required(signature)
       LEFT JOIN pg_proc p ON p.oid=to_regprocedure(required.signature)
@@ -199,6 +221,7 @@ function providerGuard(){return `
 }
 
 function scopeGuard(f,run){return `
+${adminScopeGuard(f)}
   IF (SELECT count(*) FROM app.tenants WHERE id=ANY(${ids(f,['tenantA','tenantB'])})
       AND status='active' AND version=1 AND timezone='Europe/Amsterdam' AND locale='nl-NL'
       AND branding_json=jsonb_build_object('fixture','${NATIVE_QA_FORMAT}','synthetic',true,'run_id','${run}'))<>2
@@ -224,10 +247,10 @@ function scopeGuard(f,run){return `
     OR NOT EXISTS(SELECT 1 FROM app.account_profiles WHERE auth_user_id=v_b AND display_name='QA actor B' AND locale='nl-NL' AND version=1)
     OR (SELECT count(*) FROM app.account_person_links WHERE auth_user_id IN(v_a,v_b))<>3
     OR (SELECT count(*) FROM app.tenant_memberships WHERE auth_user_id IN(v_a,v_b))<>3
-    OR (SELECT count(*) FROM app.access_grants WHERE auth_user_id IN(v_a,v_b))<>3
+    OR (SELECT count(*) FROM app.access_grants WHERE auth_user_id IN(v_a,v_b) AND id<>'${f.adminGrantA}')<>3
     OR (SELECT count(*) FROM app.account_person_links WHERE tenant_id=ANY(${ids(f,['tenantA','tenantB'])}))<>3
     OR (SELECT count(*) FROM app.tenant_memberships WHERE tenant_id=ANY(${ids(f,['tenantA','tenantB'])}))<>3
-    OR (SELECT count(*) FROM app.access_grants WHERE tenant_id=ANY(${ids(f,['tenantA','tenantB'])}))<>3
+    OR (SELECT count(*) FROM app.access_grants WHERE tenant_id=ANY(${ids(f,['tenantA','tenantB'])}) AND id<>'${f.adminGrantA}')<>3
     OR EXISTS(SELECT 1 FROM app.account_person_links l WHERE l.auth_user_id IN(v_a,v_b)
       AND (l.id<>ALL(${ids(f,['accountLinkA','accountLinkB','accountLinkBForeign'])}) OR l.relationship<>'self'
         OR l.verified_at IS NULL OR l.revoked_at IS NOT NULL))
@@ -238,7 +261,7 @@ function scopeGuard(f,run){return `
       AND (m.id<>ALL(${ids(f,['membershipA','membershipB','membershipBForeign'])}) OR m.status<>'active'
         OR m.starts_at>statement_timestamp() OR m.ends_at IS NOT NULL OR m.version<>1))
     OR EXISTS(SELECT 1 FROM app.access_grants g JOIN app.permission_roles r ON r.id=g.role_id AND r.tenant_id=g.tenant_id
-      WHERE g.auth_user_id IN(v_a,v_b) AND (g.id<>ALL(${ids(f,['memberGrantA','memberGrantB','memberGrantBForeign'])})
+      WHERE g.auth_user_id IN(v_a,v_b) AND g.id<>'${f.adminGrantA}' AND (g.id<>ALL(${ids(f,['memberGrantA','memberGrantB','memberGrantBForeign'])})
         OR r.role_key<>'member' OR g.scope_kind<>'tenant' OR num_nonnulls(g.committee_id,g.team_id,g.household_id)<>0
         OR g.starts_at>statement_timestamp() OR g.ends_at IS NOT NULL OR g.revoked_at IS NOT NULL OR g.version<>1))
     OR EXISTS(SELECT 1 FROM app.role_permissions p JOIN app.permission_roles r ON r.id=p.role_id AND r.tenant_id=p.tenant_id
@@ -502,6 +525,8 @@ ${scopeGuard(f,run)}${raceScopeGuard(f)}${scopeSignature(f)}
     UPDATE app.access_grants SET revoked_at=clock_timestamp(),version=version+1,updated_at=clock_timestamp()
       WHERE id=ANY(${ids(f,['memberGrantA','memberGrantB','memberGrantBForeign'])}) AND revoked_at IS NULL AND version=1;
     GET DIAGNOSTICS v_count=ROW_COUNT;IF v_count<>3 THEN RAISE EXCEPTION 'STAGING_NATIVE_QA_REFUSED'; END IF;
+    UPDATE app.access_grants SET revoked_at=clock_timestamp(),version=version+1,updated_at=clock_timestamp()
+      WHERE id='${f.adminGrantA}' AND tenant_id='${f.tenantA}' AND auth_user_id=v_a AND revoked_at IS NULL AND version=1;
     UPDATE app.household_access_grants SET revoked_at=clock_timestamp(),version=version+1,updated_at=clock_timestamp()
       WHERE id=ANY(${ids(f,['householdGrantA','householdGrantB','householdGrantBForeign','householdGrantRaceB'])})
       AND tenant_id=ANY(${ids(f,['tenantA','tenantB'])}) AND revoked_at IS NULL AND version=1;
@@ -603,4 +628,35 @@ ${contextGuard(run)}${schemaGuard()}${providerGuard()}${scopeGuard(f,run)}${race
  AND payload_minimal->>'actor'=v_ctx->>'actor'AND payload_minimal->'expected_version'='0'::jsonb)
  THEN RAISE EXCEPTION 'STAGING_NATIVE_QA_REFUSED';END IF;
 END $cluvo_owned_automation_scope$;`;
+}
+
+// One fixed, finite grant for actor A in the already verified owned QA tenant.
+// No platform grants, private dossier/finance rights, recipient choices or SQL
+// can be supplied by callers. The original teardown revokes this exact grant.
+export function buildStagingNativeQaAdminAccess(value){
+ const base=buildStagingNativeQaFixture(value),run=base.parameters[2],f=nativeQaFixtureIds(run);
+ return Object.freeze({contextSql:base.contextSql,parameters:base.parameters,
+  mutationSql:`DO $admin_fixture$ DECLARE v_ctx jsonb;v_a uuid;v_b uuid;BEGIN
+${contextGuard(run)}${schemaGuard()}${providerGuard()}${scopeGuard(f,run)}
+ IF NOT EXISTS(SELECT 1 FROM app.audit_events WHERE id='${f.qaFixtureAudit}' AND tenant_id='${f.tenantA}'
+   AND actor_auth_user_id=v_a AND payload_minimal->>'source_sha'=v_ctx->>'source_sha'
+   AND payload_minimal->>'workflow_run_id'=v_ctx->>'workflow_run_id' AND payload_minimal->>'actor'=v_ctx->>'actor')
+ THEN RAISE EXCEPTION 'STAGING_NATIVE_QA_REFUSED';END IF;
+ IF NOT EXISTS(SELECT 1 FROM app.access_grants WHERE id='${f.adminGrantA}')THEN
+  INSERT INTO app.permission_roles(id,tenant_id,role_key,name,system_role)
+   VALUES('${f.adminRoleA}','${f.tenantA}','staging_admin_qa','Tijdelijk synthetisch beheerproefmandaat',false);
+  INSERT INTO app.role_permissions(tenant_id,role_id,permission_key)
+   SELECT '${f.tenantA}','${f.adminRoleA}',k FROM unnest(ARRAY[${ADMIN_QA_KEYS.map(literal).join(',')}])k;
+  INSERT INTO app.access_grants(id,tenant_id,auth_user_id,role_id,scope_kind,starts_at,ends_at,granted_by_auth_user_id)
+   VALUES('${f.adminGrantA}','${f.tenantA}',v_a,'${f.adminRoleA}','tenant',statement_timestamp(),statement_timestamp()+interval '30 minutes',v_a);
+  INSERT INTO app.audit_events(id,tenant_id,actor_auth_user_id,action,resource_type,resource_id,scope_kind,scope_id,reason_code,idempotency_key,payload_minimal)
+   VALUES('${f.adminAuditA}','${f.tenantA}',v_a,'staging.admin_qa_access_created','access_grant','${f.adminGrantA}','tenant','${f.tenantA}',
+    'SYNTHETIC_STAGING_QA','${f.adminAuditA}',jsonb_build_object('source_sha',v_ctx->>'source_sha','workflow_run_id',v_ctx->>'workflow_run_id',
+     'actor',v_ctx->>'actor','expected_version',0,'finite_minutes',30));
+ END IF;
+${adminScopeGuard(f)}
+END $admin_fixture$;`,
+  readbackSql:`SELECT jsonb_build_object('scope','STAGING_ADMIN_QA_ACCESS_V1','owned_club_grants',1,
+   'explicit_permissions',${ADMIN_QA_KEYS.length},'expiry_minutes',30,'platform_grants_created',0,'private_dossier_rights',false,
+   'auth_mutations',false,'production_enabled',false);`});
 }

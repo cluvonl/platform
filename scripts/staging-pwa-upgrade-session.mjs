@@ -10,7 +10,7 @@ import {publicDeparseContext,publicSourceDeparseNormalization} from './staging-p
 const BRIDGE=fileURLToPath(new URL('./staging_pwa_upgrade_session.py',import.meta.url));
 const SESSION=fileURLToPath(new URL('./staging_backup_session.py',import.meta.url));
 const SESSION_PIN='e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1';
-export const PWA_UPGRADE_SESSION_CHILD_SHA256='7f19aa305cb43745df2f063736dbe65738526922bcd07f967986acbe3b0ed33d';
+export const PWA_UPGRADE_SESSION_CHILD_SHA256='05677c31d03a07b56691863e0c4c801421a3202630a7691a536baf59f3874245';
 const BRIDGE_PIN=PWA_UPGRADE_SESSION_CHILD_SHA256;
 const sourceBindings=new WeakMap();
 const PROJECT='fbozlbgmktkgcdfqdaaz';

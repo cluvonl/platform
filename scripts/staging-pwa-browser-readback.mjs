@@ -12,14 +12,17 @@ import {activeStagingRelease} from './staging-pwa-release-health.mjs';
 
 const ORIGIN='https://staging.cluvo.nl',PROJECT='fbozlbgmktkgcdfqdaaz';
 export const BROWSER_SCREENS=Object.freeze(['home','tasks','agenda','teams','more','actions','notifications','manage','profile','household','policies','courses','opportunities','messages','settings','help','install','reports','finance','committees']);
+export const ADMIN_BROWSER_SECTIONS=Object.freeze(['cockpit','organization','people','access','committees','teams','planning',
+ 'execution','requests','policies','courses','communication','reports','seasons','support']);
 const LIMITS={otp_flow_verified:false,coordinator_positive_flows_verified:false,physical_device_verified:false,
  email_sent:false,personal_account_changed:false,private_values_exported:false,v1_ready:false,production_enabled:false};
 const PHASES=new Set(['context','active_release_before','toolchain','native_connection','provider','fixture','fixture_privacy',
  'browser_launch','actor_a_session','positive_routes','own_profile','positive_page_errors','foreign_club','foreign_household',
- 'foreign_season','actor_b_session','minor_team','session_revocation','revoked_session','other_session','active_release_after','cleanup']);
+ 'foreign_season','actor_b_session','minor_team','admin_fixture','admin_routes','admin_save','admin_second_device','admin_denials',
+ 'session_revocation','revoked_session','other_session','active_release_after','cleanup']);
 const OPERATIONS=new Set(['validate','connect','setup','readback','launch','session','navigation','route_status','ssr_privacy',
  'app_shell','active_navigation','font_readiness','dom_privacy','private_cache','overflow','profile_control','page_errors',
- 'positive_content','revoke','claim_expiry','context_close','browser_close','fixture_teardown','provider_cleanup','connection_close']);
+ 'positive_content','form_ready','save','revoke','claim_expiry','context_close','browser_close','fixture_teardown','provider_cleanup','connection_close']);
 class BrowserQaError extends Error{constructor(code){super(code);this.code=code;}}
 const need=(condition,code)=>{if(!condition)throw new BrowserQaError(code);};
 const successful=response=>{need(response?.error===null,'STAGING_BROWSER_NATIVE_API_FAILED');return response.data;};
@@ -159,6 +162,31 @@ export async function browserRejectedContext(page,path,forbidden,onStage=()=>{})
   'STAGING_BROWSER_DENIAL_FAILED');
  return {denied:true,private_data_hidden:true};
 }
+async function adminRouteReadback(page,path,forbidden,onStage){
+ onStage({operation:'navigation'});
+ const response=await page.goto(ORIGIN+path,{waitUntil:'domcontentloaded',timeout:45000});
+ onStage({operation:'route_status',response_status:response?.status()});
+ need(response?.status()===200&&page.url()===ORIGIN+path,'STAGING_ADMIN_BROWSER_ROUTE_FAILED');
+ assertPrivateBrowserBody(await response.text(),forbidden);
+ await page.locator('.cluvo-admin h1').waitFor({state:'visible',timeout:15000});
+ await page.waitForFunction(()=>document.fonts.status==='loaded',null,{timeout:15000});
+ assertPrivateBrowserBody(await page.locator('body').innerText(),forbidden);
+ need(/private/.test(response.headers()['cache-control']??'')&&/no-store/.test(response.headers()['cache-control']??''),'STAGING_ADMIN_BROWSER_PRIVATE_CACHE_FAILED');
+ need(!await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),'STAGING_ADMIN_BROWSER_OVERFLOW');
+ need(await page.locator('.cluvo-admin h1').evaluate(el=>getComputedStyle(el).fontFamily.toLowerCase().includes('inter')),'STAGING_ADMIN_BROWSER_STYLE_FAILED');
+ return {section:path.split('?')[0].split('/').at(-1),status:200,native_authorized:true,private_cache:true,overflow:false};
+}
+async function adminDeniedReadback(page,path,forbidden,onStage){
+ onStage({operation:'navigation'});
+ const response=await page.goto(ORIGIN+path,{waitUntil:'domcontentloaded',timeout:45000});
+ onStage({operation:'route_status',response_status:response?.status()});
+ need(response,'STAGING_ADMIN_BROWSER_DENIAL_FAILED');
+ assertPrivateBrowserBody(await response.text(),forbidden);
+ const body=await page.locator('body').innerText();assertPrivateBrowserBody(body,forbidden);
+ need((response.status()===404||body.includes('404')||page.url().startsWith(ORIGIN+'/login'))
+   &&await page.locator('.cluvo-admin').count()===0,'STAGING_ADMIN_BROWSER_DENIAL_FAILED');
+ return {denied:true,private_data_hidden:true};
+}
 export async function stagingBrowserReadback(environment){
  const report={scope:'STAGING_PWA_ACTIVE_IMAGE_BROWSER_READBACK_V1',observed_at:new Date().toISOString(),passed:false,
   app_fixture_mutations_performed:false,...LIMITS};
@@ -219,6 +247,41 @@ export async function stagingBrowserReadback(environment){
   phase('minor_team','positive_content','teams');
   need((await minor.locator('body').innerText({timeout:15000})).includes('QA minor team B'),'STAGING_BROWSER_MINOR_TEAM_POSITIVE_FAILED');
   report.minor_team_positive_private_contacts_hidden=true;
+  phase('admin_fixture','setup');
+  report.administration_fixture=await owner.setupAdminAccess();
+  need(report.administration_fixture?.scope==='STAGING_ADMIN_QA_ACCESS_V1'
+    &&report.administration_fixture.platform_grants_created===0,'STAGING_ADMIN_BROWSER_FIXTURE_FAILED');
+  phase('admin_routes','navigation');report.administration_routes=[];
+  for(const section of ADMIN_BROWSER_SECTIONS)
+   report.administration_routes.push(await adminRouteReadback(page,'/c/'+slugA+'/beheer/'+section,forbidden,routeStage));
+  phase('admin_save','navigation');
+  await adminRouteReadback(page,'/c/'+slugA+'/beheer/organization?part=locations',forbidden,routeStage);
+  const panel=page.locator('.admin-form-panel').filter({has:page.getByRole('heading',{name:'Locatie',exact:true})});
+  phase('admin_save','form_ready');
+  await panel.and(page.locator('[data-ready="true"]')).waitFor({timeout:15000});
+  const location='QA opgeslagen locatie '+context.workflow_run_id;
+  await panel.getByLabel('Naam',{exact:true}).fill(location);
+  await panel.getByLabel('Reden en vervolgstap',{exact:true}).fill('Synthetische stagingcontrole op opslag en tweede apparaat');
+  phase('admin_save','save');await panel.getByRole('button',{name:'Locatie opslaan',exact:true}).click();
+  await panel.getByText('De wijziging is opgeslagen.',{exact:true}).waitFor({timeout:30000});
+  await provider.withActor('a',async({client})=>{
+   const saved=successful(await client.schema('api').rpc('club_admin_read',
+    {p_tenant:fixture.tenantA,p_season:null,p_section:'locations',p_filters:{}}));
+   need(saved?.rows?.filter(row=>row.name===location).length===1,'STAGING_ADMIN_BROWSER_SAVE_READBACK_FAILED');
+  });
+  phase('admin_second_device','session');
+  const second=await browser.newContext({viewport:{width:1440,height:1000},serviceWorkers:'block'});contexts.push(second);
+  await sessionCookies(provider,'a',environment,second);const desktop=await second.newPage();
+  phase('admin_second_device','navigation');
+  await adminRouteReadback(desktop,'/c/'+slugA+'/beheer/organization?part=locations',forbidden,routeStage);
+  need(await desktop.getByText(location,{exact:true}).count()>0,'STAGING_ADMIN_BROWSER_SECOND_DEVICE_FAILED');
+  report.administration_saved_action={native_readback:true,second_browser_context:true,same_provider_session:true,second_independent_otp_session:false};
+  phase('admin_denials','navigation');
+  report.administration_denials=[];
+  for(const path of ['/c/'+slugA+'/beheer/organization','/c/'+slugA+'/beheer/finance','/platform/overview'])
+   report.administration_denials.push(await adminDeniedReadback(minor,path,[...canaries,...privateCredentials],routeStage));
+  need(errors.length===0,'STAGING_ADMIN_BROWSER_PAGE_ERROR');
+  report.administration_positive_flows_verified=true;
   phase('session_revocation','revoke');
   const oldCookies=await a.cookies();await provider.revokeSession('a');await a.clearCookies();await a.addCookies(oldCookies);
   phase('session_revocation','claim_expiry');

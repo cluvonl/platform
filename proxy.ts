@@ -8,4 +8,4 @@ export async function proxy(request: NextRequest) {
 
 // Publieke PWA-assets blijven buiten sessieverversing. Iedere persoonlijke
 // werkruimte controleert daarnaast de actuele rechten op de server.
-export const config = {matcher: ['/c/:path*', '/workspaces', '/invite/:path*', '/app/workspaces', '/app/c/:path*', '/app/invite/:path*']};
+export const config = {matcher: ['/c/:path*', '/platform/:path*', '/workspaces', '/invite/:path*', '/app/workspaces', '/app/c/:path*', '/app/invite/:path*']};

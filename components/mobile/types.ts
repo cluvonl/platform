@@ -60,12 +60,14 @@ export type MobileSnapshot = {
   distributionProposals?: {teamId: string; assignments: {allocationId: string; expectedVersion: number; memberId: string; reason: string}[]}[];
   pendingCommands?: {idempotencyKey: string; command: string}[];
   helpSeen?: string[];
+  adminAccess?: {club:boolean;platform:boolean};
   executors?: {personId: string; obligationId: string}[];
   preferenceVersion?: number;
   serverPreferences?: {email?: boolean; push?: boolean; inbox?: boolean; reminders?: boolean; team?: boolean; news?: boolean};
   timezone: string;
   readAt: string;
   pushPublicKey?: string | null;
+  modules?: Record<string, boolean>;
   capabilities: MobileCapabilities;
   commands: string[];
   profile: MobileProfile | null;

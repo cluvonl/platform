@@ -22,6 +22,7 @@ runInNewContext(returnSource, {module: returnModule, exports: returnModule.expor
 // No native Auth request, session, real recipient or real OTP is used here.
 function harness({email = 'otp-fixture@example.invalid', verifyError = null,
   workspaceRows = [{tenant_slug: 'synthetic-club'}], workspaceError = null,
+  platformAuthorized = false, platformError = null, invitationRows = [], invitationError = null,
   providerThrows = false} = {}) {
   const calls = [], deleted = [], queries = [], signouts = [];
   let clientCreations = 0;
@@ -36,7 +37,7 @@ function harness({email = 'otp-fixture@example.invalid', verifyError = null,
     },
     schema(name) {
       queries.push(name);
-      return {from(name) {
+      return {async rpc(name,args) {queries.push(name);if(name==='platform_read'){assert.equal(args.p_section,'personal_invitations');return {data:{rows:invitationRows},error:invitationError};}assert.equal(name,'platform_access');return {data:{authorized:platformAuthorized},error:platformError};},from(name) {
         queries.push(name);
         return {select(name) {
           queries.push(name);
@@ -124,7 +125,7 @@ test('provider rejection of an eight-digit code prevents workspace lookup and ke
   assert.equal(fixture.deleted.length, 0);
 });
 
-test('a successful provider reply for eight digits still requires a readable active workspace', async () => {
+test('a successful provider reply still requires a readable club workspace or explicit platform authority', async () => {
   for (const reply of [{workspaceRows: []}, {workspaceError: {message: 'synthetic forbidden'}}]) {
     const fixture = harness(reply);
     const result = await fixture.action({status: 'idle'}, form('00000008'));
@@ -135,6 +136,21 @@ test('a successful provider reply for eight digits still requires a readable act
   }
 });
 
+test('a platform-only identity logs in through the real action without inventing a club membership', async () => {
+  const fixture=harness({workspaceRows:[],platformAuthorized:true});
+  await assert.rejects(fixture.action({status:'idle'},form('00000008')),error=>error.location==='/platform');
+  assert.ok(fixture.queries.includes('platform_access'));
+  assert.deepEqual(fixture.signouts,[]);
+  assert.deepEqual(fixture.deleted,[{name:'cluvo_otp_email',path:'/auth/verify'}]);
+});
+
+test('an unavailable platform authority projection does not authorize an otherwise unlinked account', async () => {
+  const fixture=harness({workspaceRows:[],platformAuthorized:true,platformError:{message:'synthetic permission failure'}});
+  const result=await fixture.action({status:'idle'},form('00000008'));
+  assert.equal(result.status,'error');assert.match(result.message,/geen actieve verenigingswerkruimte/);
+  assert.deepEqual(fixture.signouts,[{scope:'local'}]);
+});
+
 test('provider failure stays generic and is not retried', async () => {
   const fixture = harness({providerThrows: true});
   const result = await fixture.action({status: 'idle'}, form('00000008'));
@@ -142,4 +158,17 @@ test('provider failure stays generic and is not retried', async () => {
   assert.equal(result.message, 'Inloggen is nu niet beschikbaar. Probeer het later opnieuw.');
   assert.equal(fixture.calls.length, 1);
   assert.equal(fixture.queries.length, 0);
+});
+
+
+test('a named personal invitation reaches its scoped acceptance page after actual OTP action', async()=>{
+ const fixture=harness({workspaceRows:[],invitationRows:[{state:'pending',expired:false}]});
+ await assert.rejects(fixture.action({status:'idle'},form('00000008')),error=>error.location==='/workspaces');
+ assert.ok(fixture.queries.includes('platform_read'));assert.deepEqual(fixture.signouts,[]);
+});
+test('expired or unavailable invitations never open another workspace or platform role',async()=>{
+ for(const values of [{invitationRows:[{state:'pending',expired:true}]},{invitationRows:[{state:'pending',expired:false}],invitationError:{message:'synthetic unavailable'}}]){
+  const fixture=harness({workspaceRows:[],...values});const result=await fixture.action({status:'idle'},form('00000008'));
+  assert.equal(result.status,'error');assert.deepEqual(fixture.signouts,[{scope:'local'}]);
+ }
 });

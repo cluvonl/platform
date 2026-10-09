@@ -7,7 +7,7 @@ import {mkdtemp,writeFile,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {pathToFileURL} from 'node:url';
-import {APPROVED_PWA_PREDECESSOR31,APPROVED_PWA_PREDECESSOR35} from '../../scripts/staging-pwa-upgrade-migrations.mjs';
+import {APPROVED_PWA_PREDECESSOR31,APPROVED_PWA_PREDECESSOR35,APPROVED_PWA_PREDECESSOR36} from '../../scripts/staging-pwa-upgrade-migrations.mjs';
 
 const pins=Object.freeze({
  'staging-pwa-upgrade-migrations.mjs':'f3806ede75794d7c1bebe9960eccba38cb6439add629557018d154d63f85c8a7',
@@ -20,6 +20,12 @@ const pins35=Object.freeze({
  'staging-pwa-upgrade-files.mjs':'198c5ba8dd2483500db097260a71b91b02263ea565df24d7b55686c2aa8b196c',
  'staging-initial-migrations.mjs':'7f49cf8dcdb2eda53633dd3596486779ea2dd001d1a2813a07fa45e859784004',
  'staging-migration-files.mjs':'83aa2aae6d4cc358965208e39e73dd0d1038ee4a6c0bc9a62675b829e30c94bd',
+});
+const pins36=Object.freeze({
+  "staging-pwa-upgrade-migrations.mjs": "d931ae1ca408e755b244cf1232fa5e5fd4cbdc0f21a709fbe4ffdd4df2b878ee",
+  "staging-pwa-upgrade-files.mjs": "a9b3b5c74dc7a9f8d495de2b8a8e9e3fc073052e6de726f9b462b7985a6c1b12",
+  "staging-initial-migrations.mjs": "7f49cf8dcdb2eda53633dd3596486779ea2dd001d1a2813a07fa45e859784004",
+  "staging-migration-files.mjs": "83aa2aae6d4cc358965208e39e73dd0d1038ee4a6c0bc9a62675b829e30c94bd"
 });
 async function loadClosedUpgrade(approved,sourcePins){
  const directory=await mkdtemp(join(tmpdir(),'cluvo-pwa-closed-renderer-'));
@@ -36,3 +42,5 @@ async function loadClosedUpgrade(approved,sourcePins){
 }
 export const loadClosed31Upgrade=()=>loadClosedUpgrade(APPROVED_PWA_PREDECESSOR31,pins);
 export const loadClosed35Upgrade=()=>loadClosedUpgrade(APPROVED_PWA_PREDECESSOR35,pins35);
+
+export const loadClosed36Upgrade=()=>loadClosedUpgrade(APPROVED_PWA_PREDECESSOR36,pins36);

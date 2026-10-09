@@ -1,0 +1,328 @@
+{
+  "scope": "LOCAL_NATIVE_CLUB_AND_PLATFORM_ADMINISTRATION",
+  "observed_at": "2026-10-09T23:11:29.123664+00:00",
+  "passed": true,
+  "application_migrations": 41,
+  "sql_files": 55,
+  "sql_assertions": 2060,
+  "admin_sql_files": 20,
+  "admin_sql_assertions": 448,
+  "bootstrap_assertions": 8,
+  "full_native_tap": [
+    {
+      "file": "001_wp1_wp2_core.sql",
+      "assertions": 32
+    },
+    {
+      "file": "002_wp1_onboarding.sql",
+      "assertions": 56
+    },
+    {
+      "file": "003_wp3_wp5_obligations_execution.sql",
+      "assertions": 74
+    },
+    {
+      "file": "004_wp6_wp8_domain_invariants.sql",
+      "assertions": 113
+    },
+    {
+      "file": "005_wp6_wp8_rls.sql",
+      "assertions": 30
+    },
+    {
+      "file": "006_vertical_read_models.sql",
+      "assertions": 11
+    },
+    {
+      "file": "007_wp9_wp11_finance_people_seasons.sql",
+      "assertions": 81
+    },
+    {
+      "file": "008_a29_assisted_member_actions.sql",
+      "assertions": 38
+    },
+    {
+      "file": "009_account_help_preferences.sql",
+      "assertions": 30
+    },
+    {
+      "file": "010_household_season_projection.sql",
+      "assertions": 11
+    },
+    {
+      "file": "011_complete_personal_intake.sql",
+      "assertions": 65
+    },
+    {
+      "file": "012_household_dossier.sql",
+      "assertions": 35
+    },
+    {
+      "file": "013_versioned_household_invitations.sql",
+      "assertions": 52
+    },
+    {
+      "file": "014_household_invitation_cancellation.sql",
+      "assertions": 44
+    },
+    {
+      "file": "015_invitation_api_contract.sql",
+      "assertions": 42
+    },
+    {
+      "file": "016_intake_reconfirmation.sql",
+      "assertions": 55
+    },
+    {
+      "file": "017_native_session_authority.sql",
+      "assertions": 42
+    },
+    {
+      "file": "018_intake_assistance_management.sql",
+      "assertions": 46
+    },
+    {
+      "file": "admin001_platform_authority.sql",
+      "assertions": 43
+    },
+    {
+      "file": "admin002_club_commands_and_support.sql",
+      "assertions": 49
+    },
+    {
+      "file": "admin003_persisted_organization.sql",
+      "assertions": 26
+    },
+    {
+      "file": "admin004_onboarding_and_explanations.sql",
+      "assertions": 22
+    },
+    {
+      "file": "admin005_canonical_reports_and_finance.sql",
+      "assertions": 26
+    },
+    {
+      "file": "admin006_templates_and_provider_receipts.sql",
+      "assertions": 27
+    },
+    {
+      "file": "admin007_targeted_support_revocation.sql",
+      "assertions": 16
+    },
+    {
+      "file": "admin008_durable_command_recovery.sql",
+      "assertions": 27
+    },
+    {
+      "file": "admin009_modules_certificates_and_reduced_choices.sql",
+      "assertions": 24
+    },
+    {
+      "file": "admin010_controlled_delivery_retry.sql",
+      "assertions": 14
+    },
+    {
+      "file": "admin011_verified_appointments.sql",
+      "assertions": 18
+    },
+    {
+      "file": "admin012_execution_and_request_followup.sql",
+      "assertions": 24
+    },
+    {
+      "file": "admin013_support_grant_consistency.sql",
+      "assertions": 12
+    },
+    {
+      "file": "admin014_committee_contacts_and_members.sql",
+      "assertions": 17
+    },
+    {
+      "file": "admin015_team_planning_privacy.sql",
+      "assertions": 12
+    },
+    {
+      "file": "admin016_integrated_public_and_reserved_execution.sql",
+      "assertions": 13
+    },
+    {
+      "file": "admin017_vacancy_publication.sql",
+      "assertions": 15
+    },
+    {
+      "file": "admin018_historical_team_reports.sql",
+      "assertions": 16
+    },
+    {
+      "file": "admin019_named_administrator_invitations.sql",
+      "assertions": 37
+    },
+    {
+      "file": "admin020_scoped_platform_staff_privacy.sql",
+      "assertions": 10
+    },
+    {
+      "file": "pwa001_domain_and_privacy.sql",
+      "assertions": 33
+    },
+    {
+      "file": "pwa002_coordination_and_history.sql",
+      "assertions": 29
+    },
+    {
+      "file": "pwa003_tally_delivery_and_cursor.sql",
+      "assertions": 26
+    },
+    {
+      "file": "pwa004_documents_and_receiving.sql",
+      "assertions": 18
+    },
+    {
+      "file": "pwa005_buddy_and_onboarding.sql",
+      "assertions": 56
+    },
+    {
+      "file": "pwa006_compatibility_and_cluster_scope.sql",
+      "assertions": 45
+    },
+    {
+      "file": "pwa007_repeatable_commands.sql",
+      "assertions": 41
+    },
+    {
+      "file": "pwa008_digest_dispatch_day.sql",
+      "assertions": 28
+    },
+    {
+      "file": "pwa009_card_version_gate.sql",
+      "assertions": 34
+    },
+    {
+      "file": "pwa010_handover_checklist_integrity.sql",
+      "assertions": 36
+    },
+    {
+      "file": "pwa011_task_offer_category_seed.sql",
+      "assertions": 26
+    },
+    {
+      "file": "pwa012_nested_version_integrity.sql",
+      "assertions": 74
+    },
+    {
+      "file": "pwa013_policy_assignment_identity.sql",
+      "assertions": 134
+    },
+    {
+      "file": "pwa014_personal_action_context.sql",
+      "assertions": 41
+    },
+    {
+      "file": "pwa015_committee_planning.sql",
+      "assertions": 31
+    },
+    {
+      "file": "pwa016_sportlink_connection.sql",
+      "assertions": 36
+    },
+    {
+      "file": "pwa017_reserve_committee_scope.sql",
+      "assertions": 67
+    },
+    {
+      "file": "first-platform-control-plane-bootstrap",
+      "assertions": 8
+    }
+  ],
+  "native_guard_inventory": {
+    "forced": 191,
+    "native": 191,
+    "tables": 191
+  },
+  "api_security_invoker_functions": 102,
+  "api_security_invoker_views": 21,
+  "additive_upgrade_lineages": [
+    {
+      "lineage": "fresh16",
+      "passed": true,
+      "predecessor_upgrade": null,
+      "actual_migration_count": 41,
+      "redeploy_pending_sql": 0
+    },
+    {
+      "lineage": "approved31",
+      "passed": true,
+      "predecessor_upgrade": {
+        "actual_closed31_renderer": true,
+        "actual_closed35_renderer": false,
+        "actual_closed36_renderer": false,
+        "previous_migrations": 31,
+        "executed_new_migrations": 10,
+        "previous_history_and_receipts_unchanged": true,
+        "original16_receipts_unchanged": true,
+        "help_catalog_data_unchanged": true,
+        "actual_tamper_negatives": 8,
+        "approved_predecessor_source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+        "approved_predecessor_manifest_sha256": "4d00699a669e26e0e030523c56c87a231177c5887470d6fe2903ead7164b7e4d"
+      },
+      "actual_migration_count": 41,
+      "redeploy_pending_sql": 0
+    },
+    {
+      "lineage": "known35",
+      "passed": true,
+      "predecessor_upgrade": {
+        "actual_closed31_renderer": true,
+        "actual_closed35_renderer": true,
+        "actual_closed36_renderer": false,
+        "previous_migrations": 35,
+        "executed_new_migrations": 6,
+        "previous_history_and_receipts_unchanged": true,
+        "original16_receipts_unchanged": true,
+        "help_catalog_data_unchanged": true,
+        "actual_tamper_negatives": 16,
+        "approved_predecessor_source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+        "approved_predecessor_manifest_sha256": "b39a9bb9d167e02e5723f0efe68bacc3df1bfeb08a03551c8efe8dcd70171466"
+      },
+      "actual_migration_count": 41,
+      "redeploy_pending_sql": 0
+    },
+    {
+      "lineage": "known36",
+      "passed": true,
+      "predecessor_upgrade": {
+        "actual_closed31_renderer": true,
+        "actual_closed35_renderer": true,
+        "actual_closed36_renderer": true,
+        "previous_migrations": 36,
+        "executed_new_migrations": 5,
+        "previous_history_and_receipts_unchanged": true,
+        "original16_receipts_unchanged": true,
+        "help_catalog_data_unchanged": true,
+        "actual_tamper_negatives": 24,
+        "approved_predecessor_source_sha": "854af38a136d88127d8b411af51686d3ffd7be82",
+        "approved_predecessor_manifest_sha256": "0a2f59322b0d6e652b0e9561a9a748f08aef45d969a00c77ab1d697b55769d44"
+      },
+      "actual_migration_count": 41,
+      "redeploy_pending_sql": 0
+    }
+  ],
+  "admin_qa_scope": {
+    "fixed_finite_grant": true,
+    "private_dossier_escalation_refused": true,
+    "revoked_at_teardown": true
+  },
+  "database_lint": "PASS: no errors or warnings",
+  "source_accounts_copied": false,
+  "sql_claims_are_otp_proof": false,
+  "hosted_staging_database_changed": false,
+  "production_enabled": false,
+  "new_migration_sha256": {
+    "20261009120000_platform_administration.sql": "93a0e0fb3cd31f69cb44b807bae49c156898c548ede41801a482bc70cbb9aaea",
+    "20261009121000_club_administration.sql": "e7d2700ed947ccb1f470304698e5c115e84f6ea10ffe5f9aa4b9408144384a9e",
+    "20261009122000_administration_authority_fence.sql": "2815b49b9d3e6d2bb8cce86e85ebbfa7da3eec59f083ea1b469b35fcfa98fbd5",
+    "20261009123000_admin_template_delivery.sql": "e7c6b3eebdeef07fef0c2c33d4b3e0e4244f4d5d2bd79ca2f02b6215c710a7a6",
+    "20261009124000_admin_durable_commands.sql": "e5d5234e9a67578e8fae93ae50e014d36899f781e049273f20eaf33032fde38e"
+  },
+  "current_closed_manifest_sha256": "50b9d494b967681b5a88b8e1e15480ddc0966394a1a51b2e916dedc25efb6173"
+}

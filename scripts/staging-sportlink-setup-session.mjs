@@ -8,7 +8,7 @@ import {validatedStagingContext} from './staging-session-probe.mjs';
 import {buildStagingSportlinkSetup} from './staging-sportlink-setup-sql.mjs';
 
 const CHILD=fileURLToPath(new URL('./staging_sportlink_setup_session.py',import.meta.url));
-export const SPORTLINK_SETUP_CHILD_SHA256='18b4ff9a3c5fee9f357042546ed3476bc5b98ab620c8d45fc9a985e48494f32d';
+export const SPORTLINK_SETUP_CHILD_SHA256='406ecdbe17cb8947699cd94b36b17604d5859c59e39a8b7237e43343b9bbd8e7';
 const hash=value=>createHash('sha256').update(value).digest('hex');
 const need=(v,code)=>{if(!v)throw Object.assign(Error(code),{code});};
 export class SportlinkSetupSession{

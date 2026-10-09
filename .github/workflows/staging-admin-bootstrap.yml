@@ -1,0 +1,60 @@
+name: Staging first explicit platform mandate
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm_platform_mandate:
+        description: Explicitly grant the eight platform permissions for 90 days, with no club dossier access
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: cluvo-staging
+  cancel-in-progress: false
+
+jobs:
+  bootstrap:
+    if: github.repository == 'cluvonl/platform' && github.ref == 'refs/heads/staging' && github.event_name == 'workflow_dispatch' && inputs.confirm_platform_mandate
+    runs-on: ubuntu-24.04
+    environment: staging
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: '.nvmrc'
+      - name: Verify current green and active staging source before database access
+        env:
+          APP_ENV: staging
+          RELEASE_SHA: ${{ github.sha }}
+          GH_TOKEN: ${{ github.token }}
+          # Only release validation happens here. The actual approved account
+          # comes from the existing private staging recipient configuration.
+          BOOTSTRAP_ACCOUNT_EMAIL: release-gate@example.test
+          CONFIRM_PLATFORM_MANDATE: ${{ inputs.confirm_platform_mandate }}
+        run: node scripts/staging-admin-bootstrap.mjs --verify-release
+      - name: Provision only the first explicitly approved existing verified account
+        env:
+          APP_ENV: staging
+          RELEASE_SHA: ${{ github.sha }}
+          GH_TOKEN: ${{ github.token }}
+          BOOTSTRAP_ACCOUNT_EMAIL: ${{ secrets.STAGING_ADMIN_BOOTSTRAP_EMAIL || secrets.STAGING_TEST_RECIPIENT }}
+          CONFIRM_PLATFORM_MANDATE: ${{ inputs.confirm_platform_mandate }}
+          STAGING_SUPABASE_PROJECT_REF: ${{ vars.STAGING_SUPABASE_PROJECT_REF }}
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          MIGRATION_DATABASE_URL: ${{ secrets.MIGRATION_DATABASE_URL }}
+        run: node scripts/staging-admin-bootstrap.mjs
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: cluvo-staging-admin-bootstrap-${{ github.sha }}-${{ github.run_id }}
+          path: staging-admin-bootstrap.json
+          if-no-files-found: ignore
+          retention-days: 30

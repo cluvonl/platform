@@ -1,7 +1,7 @@
 import 'server-only';
 
 import {unstable_rethrow} from 'next/navigation';
-import {requireWorkspace} from '@/lib/auth/workspace';
+import {requireClubAdmin} from '@/lib/admin/server';
 import {invitationTokenSecret} from '@/lib/supabase/config';
 import {testSportlinkReadAccess} from './read-test.mjs';
 import {openSportlinkCredential} from './credentials.mjs';
@@ -9,8 +9,8 @@ import {checkSportlinkConnection, saveSportlinkConnection, sportlinkStateDTO} fr
 import type {SportlinkActionState, SportlinkState} from './contracts';
 
 async function authorize(club: string) {
-  const {client, workspace} = await requireWorkspace(club);
-  return {tenantId: workspace.tenant_id, rpc: async (name: string, args: Record<string, unknown>) => client.schema('api').rpc(name, args)};
+  const {client, access} = await requireClubAdmin(club);
+  return {tenantId: access.tenant_id, rpc: async (name: string, args: Record<string, unknown>) => client.schema('api').rpc(name, args)};
 }
 const dependencies = {authorize, secret: invitationTokenSecret, probe: testSportlinkReadAccess, rethrow: unstable_rethrow};
 

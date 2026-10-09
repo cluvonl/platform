@@ -9,9 +9,9 @@ import {Avatar, Blank, Btn, CommandStatus, Drawer, Heading, Help, hasUnresolvedM
 import type {MobileHandover, MobileSnapshot, MobileTeam} from './types';
 
 const HANDOVER_CHECKS = ['Open taken gecontroleerd', 'Belangrijke afspraken vastgelegd', 'Contacten gecontroleerd', 'Seizoensdoelen gecontroleerd', 'Open opvolging doorgenomen'];
-export function TeamsPage({snapshot}: {snapshot: MobileSnapshot}) {
+export function TeamsPage({snapshot, initialTeamId}: {snapshot: MobileSnapshot; initialTeamId?: string}) {
   const {search, open, close} = useSheetQuery();
-  const team = snapshot.teams.find((item) => item.id === search.get('team')) ?? (snapshot.teams.length === 1 ? snapshot.teams[0] : undefined);
+  const team = snapshot.teams.find((item) => item.id === (search.get('team') ?? initialTeamId)) ?? (snapshot.teams.length === 1 ? snapshot.teams[0] : undefined);
   const [tab, setTab] = useUrlSegment('tab', ['tasks', 'progress', 'organize'], 'tasks');
   if (!team) return <><Heading title="Mijn teams" subtitle="Alles rondom jouw team." />{snapshot.teams.length ? <Pick label="Team" value="" onChange={(value) => open({team: value})} options={snapshot.teams.map((item) => ({value: item.id, label: item.name}))} /> : <Blank title="Nog geen team gekoppeld" text="Je team verschijnt hier zodra je lidmaatschap is gekoppeld." action={<Btn asChild><Link href={`/app/c/${encodeURIComponent(snapshot.workspace.tenant_slug)}/help`}>Vraag hulp</Link></Btn>} />}<Drawer open={search.has('handover')} onClose={() => close(['handover', 'view'])} title="Deze overdracht is niet beschikbaar"><p>Deze exacte overdracht is niet beschikbaar binnen jouw geautoriseerde teamtoegang.</p></Drawer></>;
   const allocations = snapshot.allocations.filter((allocation) => allocation.teamId === team.id);

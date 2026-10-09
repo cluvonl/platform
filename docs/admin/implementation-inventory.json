@@ -1,0 +1,49 @@
+{
+  "scope": "CLUB_AND_PLATFORM_ADMINISTRATION",
+  "reference_date": "2026-10-06",
+  "baseline_commit": "854af38a136d88127d8b411af51686d3ffd7be82",
+  "environment": "local_and_staging",
+  "production_enabled": false,
+  "existing": {
+    "identity": "Native Supabase session, personal email OTP, current tenant membership and scoped grants",
+    "domain": "36 immutable migrations; canonical booking, cluster allocation, team goals, handover acceptance, execution decisions, minute ledger, exception reviews, finance, seasons, documents and communication",
+    "ui": "Club Signal shell and components, mobile app, user-bound versioned help preferences",
+    "deployment": "Successful CI on main, exact promotion to staging, encrypted custody, owned restore, native privacy/concurrency QA, image activation and readback"
+  },
+  "missing": [
+    "Coherent club cockpit and grouped organization, planning, review and configuration routes",
+    "Authorized organization/catalogue/access management commands and scoped administrative read models",
+    "Separate platform staff permissions, tenant onboarding and lifecycle, module/default configuration, operational monitoring, consented temporary support and platform audit",
+    "Normal personal login and navigation for a platform employee without a club membership",
+    "Native integration and browser acceptance across both administrative environments"
+  ],
+  "connections": {
+    "club_sources": "Use existing persons, households, grants, commissions, teams, task places, bookings, ledger and domain projections; no parallel hour or team-goal administration",
+    "club_commands": "Reuse current canonical RPCs and PWA command contracts; add bounded, versioned commands only for absent administrative operations",
+    "platform_sources": "Minimal authorized operational projections; platform grants never imply private club dossier access",
+    "support": "Explicit club consent, named employee, bounded permissions, expiry and immediate revocation; no impersonation",
+    "navigation": "Extend existing club management routes and add a separate /platform environment; keep PWA club choice at the top of Meer"
+  },
+  "acceptance": {
+    "state": "LOCAL_VERIFIED_STAGING_PENDING",
+    "empty_database": "PASS: actual PostgreSQL17 fresh16 application migrations and all 55 SQL suites",
+    "upgrade_from36": "PASS: pinned actual historical renderer, whole original history/receipts preserved, 24 tamper negatives, zero-SQL redeploy",
+    "upgrade_from31_and35": "PASS: approved exact history and source receipts preserved",
+    "negative_rls_and_delegation": "PASS: 448 administration assertions plus existing native privacy suites",
+    "last_place_cluster_race": "PASS: six actual independent-connection races with observed Lock:advisory",
+    "cross_device_help_and_saved_actions": "PASS: actual independent local Supabase OTP sessions",
+    "responsive_browser": "PASS: 77 real browser checks; 320/390/768/1440 pixels",
+    "javascript": "PASS: 801 executed, 41 explicitly skipped, 0 failures",
+    "typecheck_build_lint": "PASS; existing unrelated local PWA evidence has 21 lint warnings",
+    "database_lint": "PASS: 0 errors and 0 warnings",
+    "staging_readback": "pending exact green main promotion and deployment",
+    "first_personal_platform_mandate": "awaiting explicit named account choice; no real user grant created"
+  },
+  "implementation": {
+    "club": "Canonical organization, named access invitations, committee contacts/members, planning, execution, request followup, policy, training, communication, canonical reports and finance, seasons, support and immutable audit",
+    "platform": "Separate explicit employee grants, bounded verified account selection, actual tenant onboarding with accepted personal invitation, lifecycle impact/version, modules/defaults, operational integrations/delivery/support and minimal audit",
+    "native_tables": 191,
+    "api_invoker_functions": 102,
+    "migration_suffix": 5
+  }
+}

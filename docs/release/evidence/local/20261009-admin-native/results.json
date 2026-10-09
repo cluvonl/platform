@@ -1,0 +1,409 @@
+{
+  "status": "PASS",
+  "native_auth": true,
+  "database": "cluvo_admin_browser_20261009",
+  "synthetic_accounts_only": true,
+  "physical_device": false,
+  "browser": "153.0.8010.12",
+  "checks": [
+    {
+      "name": "native OTP session",
+      "status": "PASS",
+      "account": "coordinator"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "cockpit"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "organization"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "organization?part=locations"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "organization?part=settings"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "people"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "people?part=households"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "access"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "committees"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "teams"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "planning"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "planning?part=catalogue"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "planning?part=calendar"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "execution"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "requests"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "policies"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "courses"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "courses?part=qualifications"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "communication"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "communication?part=templates"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "reports"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "reports?part=winter"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "reports?part=annual"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "reports?part=report_teams"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "reports?part=report_occupancy"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "reports?part=fund"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "requests?part=vacancies"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "requests?part=volunteer_roles"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "finance"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "finance?part=fund"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "seasons"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "support"
+    },
+    {
+      "name": "Club route renders",
+      "status": "PASS",
+      "route": "support?part=audit"
+    },
+    {
+      "name": "native OTP session",
+      "status": "PASS",
+      "account": "platform"
+    },
+    {
+      "name": "Platform route renders",
+      "status": "PASS",
+      "route": "overview"
+    },
+    {
+      "name": "Platform route renders",
+      "status": "PASS",
+      "route": "tenants"
+    },
+    {
+      "name": "Platform route renders",
+      "status": "PASS",
+      "route": "staff"
+    },
+    {
+      "name": "Platform route renders",
+      "status": "PASS",
+      "route": "defaults"
+    },
+    {
+      "name": "Platform route renders",
+      "status": "PASS",
+      "route": "integrations"
+    },
+    {
+      "name": "Platform route renders",
+      "status": "PASS",
+      "route": "support"
+    },
+    {
+      "name": "Platform route renders",
+      "status": "PASS",
+      "route": "audit"
+    },
+    {
+      "name": "Forged route rejected",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/people",
+      "http_status": 404,
+      "not_found_ui": true
+    },
+    {
+      "name": "native OTP session",
+      "status": "PASS",
+      "account": "ouder-a"
+    },
+    {
+      "name": "Forged route rejected",
+      "status": "PASS",
+      "path": "/platform",
+      "http_status": 404,
+      "not_found_ui": true
+    },
+    {
+      "name": "Forged route rejected",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/finance",
+      "http_status": 404,
+      "not_found_ui": true
+    },
+    {
+      "name": "native OTP session",
+      "status": "PASS",
+      "account": "tenant-b"
+    },
+    {
+      "name": "Forged route rejected",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/people",
+      "http_status": 404,
+      "not_found_ui": true
+    },
+    {
+      "name": "native OTP session",
+      "status": "PASS",
+      "account": "coordinator"
+    },
+    {
+      "name": "Stored location survives reload and second device",
+      "status": "PASS",
+      "canonical_rows": 1
+    },
+    {
+      "name": "Uploaded club logo renders after stored read on a second native device",
+      "status": "PASS"
+    },
+    {
+      "name": "Committee contact and service membership persist across native devices",
+      "status": "PASS"
+    },
+    {
+      "name": "Admin vacancy publication appears in the original member PWA from the same row",
+      "status": "PASS"
+    },
+    {
+      "name": "Report CSV uses scoped canonical source",
+      "status": "PASS",
+      "section": "reports"
+    },
+    {
+      "name": "Report CSV uses scoped canonical source",
+      "status": "PASS",
+      "section": "report_teams"
+    },
+    {
+      "name": "Report CSV uses scoped canonical source",
+      "status": "PASS",
+      "section": "report_occupancy"
+    },
+    {
+      "name": "Explanation preference persists across native sessions",
+      "status": "PASS",
+      "topic": "admin.club.planning.v1",
+      "control": ".cluvo-help-close"
+    },
+    {
+      "name": "Explanation preference persists across native sessions",
+      "status": "PASS",
+      "topic": "admin.club.courses.v1",
+      "control": ".cluvo-help-seen"
+    },
+    {
+      "name": "Named verified account selected through native platform RPC",
+      "status": "PASS"
+    },
+    {
+      "name": "native OTP session",
+      "status": "PASS",
+      "account": "ouder-a"
+    },
+    {
+      "name": "Forged route rejected",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/people",
+      "http_status": 200,
+      "not_found_ui": true
+    },
+    {
+      "name": "Scoped administration invitation grants only after recipient acceptance and survives a second native OTP session",
+      "status": "PASS"
+    },
+    {
+      "name": "native OTP session",
+      "status": "PASS",
+      "account": "invitee"
+    },
+    {
+      "name": "Platform onboarding invitation creates the named membership only after verified recipient acceptance",
+      "status": "PASS"
+    },
+    {
+      "name": "Native calendar export is scoped and private",
+      "status": "PASS"
+    },
+    {
+      "name": "Forged route rejected",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/finance",
+      "http_status": 200,
+      "not_found_ui": true
+    },
+    {
+      "name": "Forged route rejected",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/people",
+      "http_status": 200,
+      "not_found_ui": true
+    },
+    {
+      "name": "Consented support uses own account and cannot open private dossiers",
+      "status": "PASS"
+    },
+    {
+      "name": "Mounted support context closes after native revocation without reload",
+      "status": "PASS"
+    },
+    {
+      "name": "Authorized platform context remains stable after native authority recheck",
+      "status": "PASS"
+    },
+    {
+      "name": "Responsive native page",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/planning",
+      "width": 320
+    },
+    {
+      "name": "Responsive native page",
+      "status": "PASS",
+      "path": "/platform/tenants",
+      "width": 320
+    },
+    {
+      "name": "Responsive native page",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/planning",
+      "width": 390
+    },
+    {
+      "name": "Responsive native page",
+      "status": "PASS",
+      "path": "/platform/tenants",
+      "width": 390
+    },
+    {
+      "name": "Responsive native page",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/planning",
+      "width": 768
+    },
+    {
+      "name": "Responsive native page",
+      "status": "PASS",
+      "path": "/platform/tenants",
+      "width": 768
+    },
+    {
+      "name": "Responsive native page",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/planning",
+      "width": 1440
+    },
+    {
+      "name": "Responsive native page",
+      "status": "PASS",
+      "path": "/platform/tenants",
+      "width": 1440
+    }
+  ]
+}

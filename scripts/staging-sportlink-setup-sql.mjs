@@ -29,12 +29,12 @@ function fields(value,names){
  }catch{throw Object.assign(Error('STAGING_SPORTLINK_SETUP_INPUT_INVALID'),{code:'STAGING_SPORTLINK_SETUP_INPUT_INVALID'});}
 }
 export function sportlinkSetupSchemaGuardSql(){
- need(UPGRADE_FILES.length===36&&UPGRADE_FILES.at(-1).file==='20261009119000_pwa_reserve_committee_scope.sql','STAGING_SPORTLINK_SETUP_SCHEMA_REQUIRED');
+ need(UPGRADE_FILES.length===41&&UPGRADE_FILES.at(-1).file==='20261009124000_admin_durable_commands.sql','STAGING_SPORTLINK_SETUP_SCHEMA_REQUIRED');
  // Reuse only the frozen pure byte-history/native-RLS guard. No QA identity,
  // fixture, provider factory, password, session or cleanup route is used.
  return nativeQaSchemaGuardSql().replaceAll('STAGING_NATIVE_QA_REFUSED','STAGING_SPORTLINK_SETUP_SCHEMA_REFUSED')+`
 DO $sportlink_setup_inventory$ BEGIN
- IF (SELECT count(*) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='app' AND c.relkind='r')<>181
+ IF (SELECT count(*) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='app' AND c.relkind='r')<>191
  THEN RAISE EXCEPTION 'STAGING_SPORTLINK_SETUP_SCHEMA_REFUSED';END IF;
 END $sportlink_setup_inventory$;`;
 }
