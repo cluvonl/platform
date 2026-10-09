@@ -1,0 +1,76 @@
+{
+  "environment": "staging",
+  "project_ref": "fbozlbgmktkgcdfqdaaz",
+  "observed_at": "2026-10-09T09:40:53.171Z",
+  "passed": false,
+  "database_mutations_performed": false,
+  "applied_migrations": 0,
+  "private_values_exported": false,
+  "app_activation_performed": false,
+  "email_sent": false,
+  "authenticated_native_login_verified": false,
+  "provider_services_verified": false,
+  "full_provider_restore_verified": false,
+  "o08_restore_accepted": false,
+  "v1_ready": false,
+  "production_enabled": false,
+  "execution_mode": "APPLY",
+  "source_sha": "996ba5914285d6dd19d9a23bcc4f236f839a82e3",
+  "workflow_run_id": "37911876949",
+  "migration_manifest_sha256": "2c51edc789a5a94ee859827778a0d4af57c310aad327d7c2378d43fa91b53853",
+  "pg17_toolchain": {
+    "image": "public.ecr.aws/supabase/postgres@sha256:0450166354dc9c1d25f0322ac8b580774d4fb0184d2b087f6e4fe9499c66cf53",
+    "tools": {
+      "pg_dump": "17.11",
+      "pg_dumpall": "17.11",
+      "pg_restore": "17.11"
+    },
+    "workers_removed": 3,
+    "network": "none",
+    "database_connections": 0,
+    "source_calls": 0
+  },
+  "source_deparse_context": {
+    "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+    "server_version_num": 170011,
+    "time_zone": {
+      "category": "UTC",
+      "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+    },
+    "date_style": {
+      "category": "ISO, MDY",
+      "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+    },
+    "interval_style": {
+      "category": "postgres",
+      "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+    },
+    "search_path": {
+      "category": "PG_CATALOG",
+      "sha256": "63e4aeee780860a18770fabeb89cb07e354670beb02c2c5808fa131f4e01fd4a"
+    },
+    "client_encoding": {
+      "category": "UTF8",
+      "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+    },
+    "extra_float_digits": 0,
+    "standard_conforming_strings": true,
+    "quote_all_identifiers": false,
+    "bytea_output": "hex"
+  },
+  "initial_applied_prefix": 31,
+  "backup_custody": {
+    "uploaded": true,
+    "remote_readback": true,
+    "artifact_id": "11607681202",
+    "archive_sha256": "2979eb0b849c7594172cfb9b7df981b3888dcf9af5d427ae41c9c8a46c1669eb",
+    "retention_days": 30,
+    "key_profile": "cluvo-staging-pwa-upgrade-backup-hkdf-sha256-v1",
+    "plaintext_uploaded": false,
+    "secret_key_uploaded": false
+  },
+  "restore_failure_phase": "input",
+  "restore_error_topics": [],
+  "returned_session_closed": true,
+  "error": "RESTORE_DEPARSE_PROFILE_UNSUPPORTED"
+}

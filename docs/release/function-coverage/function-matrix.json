@@ -1,6 +1,6 @@
 {
   "base_sha": "47386491859b47fbebf85c3b209724dcc20407fc",
-  "source_head": "174615bd8c0aeda5c0161a022312b14b66fb2a5f",
+  "source_head": "996ba5914285d6dd19d9a23bcc4f236f839a82e3",
   "worktree_dirty": true,
   "prototype_sha": "e9c1d8bca2089b0944577eed73d1bedf7e70a3b6",
   "acceptance_ready": false,
@@ -16,9 +16,9 @@
       "api_views": 16
     },
     "current": {
-      "migrations": 34,
-      "app_tables": 180,
-      "api_function_definitions": 86,
+      "migrations": 35,
+      "app_tables": 181,
+      "api_function_definitions": 90,
       "api_views": 21
     }
   },
@@ -1657,6 +1657,37 @@
       "file": "20261009117000_pwa_invitation_authority_fence.sql",
       "sha256": "943eb1502da863da7d51bcd390bb58a5815896ab67a76db074638dad361d95b3",
       "objects": []
+    },
+    {
+      "file": "20261009118000_pwa_sportlink_connection.sql",
+      "sha256": "b4cd0ed6b44fd2bac7d22bee84a3b15f5817c6122c132a42066c49f374277b87",
+      "objects": [
+        {
+          "kind": "table",
+          "name": "app.sportlink_connection_credentials",
+          "line": 5
+        },
+        {
+          "kind": "function",
+          "name": "api.sportlink_connection_state",
+          "line": 195
+        },
+        {
+          "kind": "function",
+          "name": "api.configure_sportlink_connection",
+          "line": 197
+        },
+        {
+          "kind": "function",
+          "name": "api.sportlink_connection_credential",
+          "line": 202
+        },
+        {
+          "kind": "function",
+          "name": "api.record_sportlink_connection_test",
+          "line": 205
+        }
+      ]
     }
   ],
   "route_compatibility": {

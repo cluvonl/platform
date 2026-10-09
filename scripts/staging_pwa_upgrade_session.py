@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parent
 PROJECT = 'fbozlbgmktkgcdfqdaaz'
 LOCK_OBJECT = int.from_bytes(hashlib.sha256(PROJECT.encode()).digest()[:4], 'big', signed=True)
 # Regenerated from reviewed owner source before release, never from secrets.
-PINS = {'staging_backup_session.py': 'e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1', 'staging-pwa-upgrade-sql.mjs': '0337f2134a3c57128719a26287d4395ade94471ad4e8939ee70d7fc51166d242', 'staging-pwa-upgrade-migrations.mjs': 'aff29cc7982832bb11f34f3294651889eb2d57cde1a664c1164a8cb2233ec2ea', 'staging-pwa-upgrade-files.mjs': '1f576a995c730de250eb05856cc529b08d19dd18b8dcef60cbc42e4be96e1136', 'staging-initial-migrations.mjs': '7f49cf8dcdb2eda53633dd3596486779ea2dd001d1a2813a07fa45e859784004', 'staging-migration-files.mjs': '83aa2aae6d4cc358965208e39e73dd0d1038ee4a6c0bc9a62675b829e30c94bd'}
+PINS = {'staging_backup_session.py': 'e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1', 'staging-pwa-upgrade-sql.mjs': '0337f2134a3c57128719a26287d4395ade94471ad4e8939ee70d7fc51166d242', 'staging-pwa-upgrade-migrations.mjs': '9cb88a31b773a04f161ed5ec3a92506833eeb6f57c2802a45b8a268ea1840a77', 'staging-pwa-upgrade-files.mjs': '198c5ba8dd2483500db097260a71b91b02263ea565df24d7b55686c2aa8b196c', 'staging-initial-migrations.mjs': '7f49cf8dcdb2eda53633dd3596486779ea2dd001d1a2813a07fa45e859784004', 'staging-migration-files.mjs': '83aa2aae6d4cc358965208e39e73dd0d1038ee4a6c0bc9a62675b829e30c94bd'}
 READ_OPERATIONS = {'begin_capture', 'capture_query', 'check_lock', 'end_capture',
                    'begin_fresh_read', 'fresh_read_query', 'end_fresh_read'}
 DEPARSE_CONTEXT_SQL = "SELECT jsonb_build_object('server_version_num',current_setting('server_version_num')::int,'time_zone',current_setting('TimeZone'),'date_style',current_setting('DateStyle'),'interval_style',current_setting('IntervalStyle'),'search_path',current_setting('search_path'),'extra_float_digits',current_setting('extra_float_digits')::int,'standard_conforming_strings',current_setting('standard_conforming_strings')='on','quote_all_identifiers',current_setting('quote_all_identifiers')='on','bytea_output',current_setting('bytea_output'),'client_encoding',current_setting('client_encoding'));"
@@ -75,12 +75,13 @@ def fixed_sql(argument, identity, environment):
 class PwaUpgradeSession(Session):
     def __init__(self, environment, lock):
         self.upgrade_environment = dict(environment)
+        self.source_precision_normalizations = {}
         super().__init__(environment, lock)
 
-    def read_deparse_context(self):
+    def _raw_deparse_context(self):
         # The existing snapshot and same-backend project lock remain authority.
         # No caller SQL or setting name enters this fixed READ ONLY operation.
-        require(self.state == 'capture' and self.pq.PQtransactionStatus(self.connection) == bounded.TX_VALID,
+        require(self.state in ('capture', 'fresh_read') and self.pq.PQtransactionStatus(self.connection) == bounded.TX_VALID,
                 'PWA_DEPARSE_CONTEXT_PHASE_INVALID')
         before = self.check_lock()
         require(before.get('read_only') is True and before.get('isolation') == 'repeatable read',
@@ -104,6 +105,50 @@ class PwaUpgradeSession(Session):
                         for field in ('time_zone', 'date_style', 'interval_style', 'search_path', 'client_encoding')),
                 'PWA_DEPARSE_CONTEXT_UNKNOWN')
         return value
+
+    def _normalize_source_precision(self):
+        # Only this PWA-owned, real READ ONLY/RR control transaction changes.
+        # The frozen base transport, database/role defaults, archive workers,
+        # catalog query bytes and exact comparisons remain unchanged.
+        original = self._raw_deparse_context()
+        result = self.run('SET LOCAL extra_float_digits TO 3;')
+        require(type(result) is list and len(result) == 1 and result[0] == {'command': 'SET', 'rows': []},
+                'PWA_SOURCE_PRECISION_SET_UNPROVED')
+        effective = self._raw_deparse_context()
+        require(effective == {**original, 'extra_float_digits': 3}, 'PWA_SOURCE_PRECISION_CONTEXT_CHANGED')
+        self.source_precision_normalizations[self.state] = {
+            'format': 'PWA_SOURCE_DEPARSE_NORMALIZATION_V1', 'used': True,
+            'scope': 'SOURCE_READ_ONLY_CONTROL_SESSION_ONLY', 'phase': self.state,
+            'original_context': original, 'effective_context': effective,
+            'fixed_extra_float_digits': 3, 'transaction_local': True,
+            'source_read_only_control_session_setting_changed': original['extra_float_digits'] != 3,
+            'same_backend_verified': True, 'same_snapshot_verified': True,
+            'read_only': True, 'isolation': 'repeatable read',
+            'source_global_or_database_settings_changed': False,
+            'provider_archive_process_settings_changed': False, 'source_database_mutated': False,
+            'row_or_catalog_values_rewritten': False,
+        }
+
+    def begin_capture(self):
+        snapshot = super().begin_capture()
+        self._normalize_source_precision()
+        return snapshot
+
+    def begin_fresh_read(self):
+        snapshot = super().begin_fresh_read()
+        self._normalize_source_precision()
+        return snapshot
+
+    def read_deparse_normalization(self):
+        current = self._raw_deparse_context()
+        proof = self.source_precision_normalizations.get(self.state)
+        require(type(proof) is dict and current == proof['effective_context']
+                and current['extra_float_digits'] == 3, 'PWA_SOURCE_PRECISION_UNPROVED')
+        return json.loads(json.dumps(proof))
+
+    def read_deparse_context(self):
+        require(self.state == 'capture', 'PWA_DEPARSE_CONTEXT_PHASE_INVALID')
+        return self.read_deparse_normalization()['effective_context']
 
     def read_upgrade_state(self):
         require(self.state in ('fresh_read_complete', 'initial_ready')
@@ -188,6 +233,9 @@ def main():
                 elif operation == 'read_deparse_context':
                     require(argument is None and session is not None, 'PWA_UPGRADE_OPERATION_INVALID')
                     value = session.read_deparse_context()
+                elif operation == 'read_deparse_normalization':
+                    require(argument is None and session is not None, 'PWA_UPGRADE_OPERATION_INVALID')
+                    value = session.read_deparse_normalization()
                 elif operation == 'apply_upgrade':
                     require(session is not None, 'PWA_UPGRADE_OPERATION_INVALID')
                     value = session.apply_upgrade(argument)

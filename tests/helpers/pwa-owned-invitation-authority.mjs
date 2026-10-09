@@ -43,14 +43,14 @@ try{
  CREATE TABLE auth.sessions(id uuid PRIMARY KEY,user_id uuid NOT NULL REFERENCES auth.users(id),not_after timestamptz);
  ALTER TABLE auth.users ENABLE ROW LEVEL SECURITY;ALTER TABLE auth.sessions ENABLE ROW LEVEL SECURITY;
  CREATE FUNCTION auth.uid() RETURNS uuid LANGUAGE sql STABLE AS $$SELECT (nullif(current_setting('request.jwt.claims',true),'')::jsonb->>'sub')::uuid$$;RESET ROLE;`,'supabase_admin');
- const sources=await Promise.all(UPGRADE_FILES.map(async file=>({file:file.file,bytes:await readFile(root+'supabase/migrations/'+file.file)})));assert.equal(sources.length,34);
+ const sources=await Promise.all(UPGRADE_FILES.map(async file=>({file:file.file,bytes:await readFile(root+'supabase/migrations/'+file.file)})));assert.equal(sources.length,35);
  const initial=createInitialMigrationManifest(sourceSha,sources.slice(0,16)),manifest=createUpgradeMigrationManifest(sourceSha,sources);
  const context={actor:'owned-inviter-race',workflowRunId:'995533',expectedBackendPid:1,expectedBackendStart:'2000-01-01T00:00:00Z',backupArtifactId:'123',backupArtifactSha256:'b'.repeat(64)};
  const lock=`SELECT pg_advisory_lock(${INITIAL_MIGRATION_POLICY.lockNamespace},${INITIAL_MIGRATION_LOCK_OBJECT});\n`;
  sql(lock+initial.migrations.map((_,i)=>localBackend(initialMigrationSQL(initial,i,context))).join('\n'));
  sql(lock+manifest.migrations.slice(16).map((_,i)=>localBackend(upgradeMigrationSQL(manifest,i+16,context))).join('\n'));
- assert.equal(json("SELECT jsonb_build_object('n',count(*)) FROM supabase_migrations.schema_migrations;").n,34);
- console.log(JSON.stringify({phase:'FULL34_READY',network:'none',source_sha:sourceSha}));
+ assert.equal(json("SELECT jsonb_build_object('n',count(*)) FROM supabase_migrations.schema_migrations;").n,35);
+ console.log(JSON.stringify({phase:'FULL35_READY',network:'none',source_sha:sourceSha}));
  for(const kind of ['authorized_mobile_control','mobile_author_revoked_while_waiting','mobile_session_expired_while_waiting','web_author_revoked_while_waiting']){
   const tenant=randomUUID(),household=randomUUID(),actor=randomUUID(),session=randomUUID(),grant=randomUUID(),key=randomUUID();
   const suffix=tenant.slice(0,8),email='owned-inviter-'+suffix+'@example.test',recipient='owned-invitee-'+suffix+'@example.test';
@@ -109,7 +109,7 @@ try{
    scenarios.push(scenario);console.log(JSON.stringify({phase:'SCENARIO_COMPLETE',...scenario}));
   }finally{if(holder)await holder.close();}
  }
- const proof={scope:'LOCAL_OWNED_PG17_INVITATION_AUTHORITY_FENCE_REGRESSION',source_sha:sourceSha,server_version:json("SELECT jsonb_build_object('v',current_setting('server_version'));").v,pinned_image:IMAGE,migrations:34,migration_manifest_sha256:manifest.sha256,migration_source_bytes_sha256:sources.map(s=>({file:s.file,sha256:sha(s.bytes)})),network:'none',native_claims_and_confirmed_auth_fixture:true,provider_called:false,shared_database_connections:0,hosted_connections:0,source_files_edited:false,scenarios};
+ const proof={scope:'LOCAL_OWNED_PG17_INVITATION_AUTHORITY_FENCE_REGRESSION',source_sha:sourceSha,server_version:json("SELECT jsonb_build_object('v',current_setting('server_version'));").v,pinned_image:IMAGE,migrations:35,migration_manifest_sha256:manifest.sha256,migration_source_bytes_sha256:sources.map(s=>({file:s.file,sha256:sha(s.bytes)})),network:'none',native_claims_and_confirmed_auth_fixture:true,provider_called:false,shared_database_connections:0,hosted_connections:0,source_files_edited:false,scenarios};
  guard();checked(['rm','--force','--volumes',cid]);assert.equal(run(['inspect',cid]).status,1);removed=true;proof.owned_container_removed=true;
  proof.passed=true;proof.production_enabled=false;return proof;
 }finally{if(created&&cid&&!removed){guard();checked(['rm','--force','--volumes',cid]);}}

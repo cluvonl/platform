@@ -8,6 +8,7 @@ import {createInitialMigrationManifest,initialMigrationSQL,INITIAL_MIGRATION_POL
 import {INITIAL_RESTORE_STARTUP,PWA_RESTORE_SUFFIX_LAYOUT_SQL} from '../scripts/staging-pwa-upgrade-restore.mjs';
 import {IMAGE} from '../scripts/pg17-capture-worker.mjs';
 import {runOwnedPwaNativeQa} from './helpers/pwa-owned-native-qa.mjs';
+import {runOwnedSportlinkAuthority} from './helpers/pwa-owned-sportlink-authority.mjs';
 import {loadClosed31Upgrade} from './helpers/pwa-closed31-upgrade.mjs';
 
 const literal=value=>"'"+value.replaceAll("'","''")+"'";
@@ -29,11 +30,14 @@ for(const lineage of ['fresh16','approved31'])test(`actual owned PG17 ${lineage}
  const run=(args,input)=>spawnSync('docker',['--host',socket,...args],{input,env:{PATH:'/usr/bin:/bin',LANG:'C.UTF-8'},encoding:'utf8',timeout:120000,maxBuffer:12000000});
  const checked=(args,input)=>{const result=run(args,input);assert.equal(result.status,0,'OWNED_PG17_PROCESS_FAILED');return result.stdout;};
  const sql=(text,{role='postgres',expectedFailure=false}={})=>{
-  const result=run(['exec','-i',name,'psql','-X','--quiet','--no-align','--tuples-only','--no-password','--set=ON_ERROR_STOP=1','--set=VERBOSITY=sqlstate','-h','/restore','-U',role,'-d','postgres'],"SET client_min_messages=warning;\n"+text);
+  const result=run(['exec','-i',name,'psql','-X','--quiet','--no-align','--tuples-only','--no-password','--set=ON_ERROR_STOP=1','--set=VERBOSITY=verbose','-h','/restore','-U',role,'-d','postgres'],"SET client_min_messages=warning;\n"+text);
   if(expectedFailure){assert.notEqual(result.status,0);return result.stderr;}
   const state=result.stderr.match(/ERROR:\s+([0-9A-Z]{5})\b/)?.[1]??'UNCLASSIFIED';
   const line=result.stderr.match(/:(\d+):\s+ERROR:/)?.[1]??'0';
-  assert.equal(result.status,0,`OWNED_PG17_SQL_FAILED_${state}_LINE_${line}`);return result.stdout.trim();
+  const permission=result.stderr.match(/permission denied for (?:schema|table|function) ([a-z_][a-z_0-9]*)/)?.[1]??'';
+  const lastTap=result.stdout.split('\n').filter(line=>/^(?:not )?ok [0-9]+ - /.test(line)).at(-1)??'';
+  const contextFunction=result.stderr.match(/PL\/pgSQL function ([a-z_][a-z_0-9.]*)\(/)?.[1]??'';
+  assert.equal(result.status,0,`OWNED_PG17_SQL_FAILED_${state}_LINE_${line}${permission?'_PERMISSION_'+permission:''}${contextFunction?'_FUNCTION_'+contextFunction:''}${lastTap?'_LAST_ASSERTION_'+lastTap:''}`);return result.stdout.trim();
  };
  const json=text=>JSON.parse(sql(text));
  const lock=`SELECT pg_advisory_lock(${INITIAL_MIGRATION_POLICY.lockNamespace},${INITIAL_MIGRATION_LOCK_OBJECT});\n`;
@@ -83,7 +87,7 @@ RESET ROLE;`,{role:'supabase_admin'});
   sql('DROP TABLE app.pwa_instruction_versions;');
   let predecessorProof=null;
   if(lineage==='approved31'){
-   assert.equal(manifest.migrations.length,34);
+   assert.equal(manifest.migrations.length,35);
    const closed=await loadClosed31Upgrade(),approved=APPROVED_PWA_PREDECESSOR31;
    const previous=closed.createUpgradeMigrationManifest(approved.sourceSha,sources.slice(0,31));
    assert.equal(previous.sha256,approved.manifestSha256);assert.equal(previous.migrations.length,31);
@@ -92,7 +96,7 @@ RESET ROLE;`,{role:'supabase_admin'});
    const previousHistory=json(INITIAL_HISTORY_SQL),previousReceipts=json(UPGRADE_SOURCE_HISTORY_SQL),previousInitial=json(INITIAL_SOURCE_HISTORY_SQL);
    const helpDigest=json("SELECT to_jsonb(md5(coalesce(jsonb_agg(to_jsonb(t)ORDER BY topic_id)::text,'')))FROM app.help_topics t;");
    const prior={layout:json(INITIAL_LAYOUT_SQL),historyRows:previousHistory,sourceRows:previousInitial,upgradeRows:previousReceipts};
-   assert.equal(validateUpgradeHistory(manifest,prior).pending.length,3);
+   assert.equal(validateUpgradeHistory(manifest,prior).pending.length,4);
    assert.equal(json("SELECT to_jsonb(to_regprocedure('api.pwa_personal_action_context(uuid,uuid,bigint)')IS NULL);"),true);
    const firstReceipt=literal(previousReceipts[0].version);
    const badMutations=[
@@ -113,17 +117,18 @@ RESET ROLE;`,{role:'supabase_admin'});
    }
    sql(lock+envelope(31));
    const middle={layout:json(INITIAL_LAYOUT_SQL),historyRows:json(INITIAL_HISTORY_SQL),sourceRows:json(INITIAL_SOURCE_HISTORY_SQL),upgradeRows:json(UPGRADE_SOURCE_HISTORY_SQL)};
-   assert.equal(middle.historyRows.length,32);assert.equal(validateUpgradeHistory(manifest,middle).pending.length,2);
+   assert.equal(middle.historyRows.length,32);assert.equal(validateUpgradeHistory(manifest,middle).pending.length,3);
    assert.equal(validateUpgradeHistory(manifest,middle).complete,false);
    assert.equal(json("SELECT to_jsonb(to_regprocedure('api.pwa_committee_planning(uuid,uuid)')IS NULL);"),true);
    sql(lock+envelope(32));
    assert.equal(json('SELECT count(*) FROM supabase_migrations.schema_migrations;'),33);
    sql(lock+envelope(33));
+   sql(lock+envelope(34));
    assert.deepEqual(json(INITIAL_HISTORY_SQL).slice(0,31),previousHistory);
    assert.deepEqual(json(UPGRADE_SOURCE_HISTORY_SQL).slice(0,15),previousReceipts);
    assert.deepEqual(json(INITIAL_SOURCE_HISTORY_SQL),previousInitial);
    assert.equal(json("SELECT to_jsonb(md5(coalesce(jsonb_agg(to_jsonb(t)ORDER BY topic_id)::text,'')))FROM app.help_topics t;"),helpDigest);
-   predecessorProof={actual_closed31_renderer:true,previous_migrations:31,executed_new_migrations:3,previous_history_and_receipts_unchanged:true,
+   predecessorProof={actual_closed31_renderer:true,previous_migrations:31,executed_new_migrations:4,previous_history_and_receipts_unchanged:true,
     original16_receipts_unchanged:true,help_catalog_data_unchanged:true,actual_tamper_negatives:badMutations.length,approved_predecessor_source_sha:approved.sourceSha,approved_predecessor_manifest_sha256:approved.manifestSha256};
   }else sql(lock+manifest.migrations.slice(16).map((_,index)=>envelope(index+16)).join('\n'));
   const readback={layout:json(INITIAL_LAYOUT_SQL),historyRows:json(INITIAL_HISTORY_SQL),sourceRows:json(INITIAL_SOURCE_HISTORY_SQL),upgradeRows:json(UPGRADE_SOURCE_HISTORY_SQL)};
@@ -142,7 +147,19 @@ RESET ROLE;`,{role:'supabase_admin'});
   const guards=json("SELECT jsonb_build_object('tables',count(*),'forced',count(*) FILTER(WHERE c.relrowsecurity AND c.relforcerowsecurity),'native',count(*) FILTER(WHERE EXISTS(SELECT 1 FROM pg_policy p WHERE p.polrelid=c.oid AND p.polname='native_session_required'))) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='app' AND c.relkind='r';");
   assert.equal(guards.forced,guards.tables);assert.equal(guards.native,guards.tables);
   assert.ok(guards.tables>144);
-  const proof=await runOwnedPwaNativeQa({name,socket,sql,json,lock});t.diagnostic(JSON.stringify({...proof,lineage,predecessor_upgrade:predecessorProof,actual_native_guard_inventory:guards,actual_migration_count:readback.historyRows.length,actual_suffix_history_typed_json_boolean:true}));
+  const proof=await runOwnedPwaNativeQa({name,socket,sql,json,lock});
+  // Extend only this owned minimal Auth fixture to run the same transactionally
+  // rolled-back native Sportlink privacy/commands suite as the real local CLI.
+  sql(`CREATE EXTENSION pgtap WITH SCHEMA extensions;
+GRANT USAGE ON SCHEMA extensions TO authenticated;
+ALTER TABLE auth.users ADD COLUMN aud text,ADD COLUMN created_at timestamptz,ADD COLUMN updated_at timestamptz;
+ALTER TABLE auth.sessions ADD COLUMN created_at timestamptz,ADD COLUMN updated_at timestamptz;`,{role:'supabase_admin'});
+  const sportlinkTap=sql(await readFile(new URL('../supabase/tests/pwa016_sportlink_connection.sql',import.meta.url),'utf8'),{role:'supabase_admin'});
+  assert.doesNotMatch(sportlinkTap,/^not ok\b/m,'OWNED_SPORTLINK_NATIVE_ASSERTION_FAILED');
+  const sportlinkAssertions=sportlinkTap.split('\n').filter(line=>/^ok [0-9]+ - /.test(line)).length;
+  assert.ok(sportlinkAssertions>=30,'OWNED_SPORTLINK_NATIVE_ASSERTIONS_MISSING');
+  const sportlinkAuthority=await runOwnedSportlinkAuthority({name,socket,sql,json});
+  t.diagnostic(JSON.stringify({...proof,lineage,predecessor_upgrade:predecessorProof,actual_native_guard_inventory:guards,actual_migration_count:readback.historyRows.length,actual_suffix_history_typed_json_boolean:true,sportlink_native_privacy_command_assertions:sportlinkAssertions,sportlink_suite_rolled_back:true,sportlink_native_authority_fence:sportlinkAuthority}));
  }finally{
   if(created){
    const ownership=checked(['inspect',name,'--format','{{index .Config.Labels "cluvo.pwa.writer-test"}}']);

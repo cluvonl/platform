@@ -5,12 +5,12 @@ import {createHash} from 'node:crypto';
 import {readFile,lstat} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {projectTarget,databaseTarget,databaseEnvironment} from './staging-preflight.mjs';
-import {publicDeparseContext} from './staging-pwa-restore-diagnostic.mjs';
+import {publicDeparseContext,publicSourceDeparseNormalization} from './staging-pwa-restore-diagnostic.mjs';
 
 const BRIDGE=fileURLToPath(new URL('./staging_pwa_upgrade_session.py',import.meta.url));
 const SESSION=fileURLToPath(new URL('./staging_backup_session.py',import.meta.url));
 const SESSION_PIN='e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1';
-export const PWA_UPGRADE_SESSION_CHILD_SHA256='5ddcee8e7b498feedbdc584675629a0f606f72bf1598faa00b42400233281de3';
+export const PWA_UPGRADE_SESSION_CHILD_SHA256='d02cdaa08082a9f9f64b7f78e447d7ad5fe94d3b7778b45ba3ed605006a24cde';
 const BRIDGE_PIN=PWA_UPGRADE_SESSION_CHILD_SHA256;
 const sourceBindings=new WeakMap();
 const PROJECT='fbozlbgmktkgcdfqdaaz';
@@ -61,6 +61,7 @@ export async function validatedConnectionEnvironment(environment){
 }
 
 export class PwaUpgradeSession {
+ #freshDeparseNormalization=null;
  #child;#workflow=null;#waiting=null;#next=1;#state='new';#decoder=new TextDecoder('utf-8',{fatal:true});#buffer='';#bytes=0;#closed;#exited=false;#closing=false;
  constructor(child,target){
   this.#child=child;Object.defineProperty(this,'targetBinding',{value:target,enumerable:true});
@@ -156,11 +157,24 @@ export class PwaUpgradeSession {
    return publicDeparseContext(raw);
   }catch(error){this.#abort('PWA_DEPARSE_CONTEXT_UNPROVED');throw error instanceof BridgeError?error:new BridgeError('PWA_DEPARSE_CONTEXT_UNKNOWN');}
  }
+ async readDeparseNormalization(){
+  if(this.#state==='fresh_read_complete'){
+   this.#phase('fresh_read_complete');requireTrue(this.#freshDeparseNormalization!==null,'PWA_SOURCE_PRECISION_UNPROVED');
+   return this.#freshDeparseNormalization;
+  }
+  requireTrue(['capture','fresh_read'].includes(this.#state),'PWA_DEPARSE_CONTEXT_PHASE_INVALID');
+  const expected=this.#state;this.#phase(expected);
+  try{
+   const raw=await this.#request('read_deparse_normalization');this.#phase(expected);
+   const proof=publicSourceDeparseNormalization(raw);
+   requireTrue(proof.phase===expected,'PWA_SOURCE_PRECISION_UNPROVED');return proof;
+  }catch(error){this.#abort('PWA_SOURCE_PRECISION_UNPROVED');throw error instanceof BridgeError?error:new BridgeError('PWA_SOURCE_PRECISION_UNPROVED');}
+ }
  async checkLock(){const value=await this.#request('check_lock');requireTrue(!this.#closing&&!this.#exited&&!['failed','closed'].includes(this.#state),'BRIDGE_PHASE_CLOSED');return value;}
  async endCapture(){requireTrue(this.#state==='capture','CAPTURE_PHASE_INVALID');this.#phase('capture');const value=await this.#request('end_capture');this.#phase('capture');this.#state='captured';return value;}
  async beginFreshRead(){requireTrue(this.#state==='captured','FRESH_READ_PHASE_INVALID');this.#phase('captured');const value=await this.#request('begin_fresh_read');this.#phase('captured');this.#state='fresh_read';return value;}
  async freshReadQuery(sql){requireTrue(this.#state==='fresh_read','FRESH_READ_PHASE_INVALID');requireTrue(typeof sql==='string','BRIDGE_QUERY_INVALID');this.#phase('fresh_read');const value=await this.#request('fresh_read_query',sql);this.#phase('fresh_read');return value;}
- async endFreshRead(){requireTrue(this.#state==='fresh_read','FRESH_READ_PHASE_INVALID');this.#phase('fresh_read');const value=await this.#request('end_fresh_read');this.#phase('fresh_read');this.#state='fresh_read_complete';return value;}
+ async endFreshRead(){requireTrue(this.#state==='fresh_read','FRESH_READ_PHASE_INVALID');this.#phase('fresh_read');const proof=await this.readDeparseNormalization();const value=await this.#request('end_fresh_read');this.#phase('fresh_read');this.#freshDeparseNormalization=proof;this.#state='fresh_read_complete';return value;}
  async readUpgradeState(){
   requireTrue(['fresh_read_complete','initial_ready'].includes(this.#state),'PWA_UPGRADE_PHASE_INVALID');
   const expected=this.#state;this.#phase(expected);
@@ -210,7 +224,7 @@ export class PwaUpgradeSession {
 
 // Reader is imported directly by the operational collector. There is no caller
 // binding-reader option or public property which can register source authority.
-const trustedMethods=Object.freeze(Object.fromEntries(['beginCapture','captureQuery','readDeparseContext','checkLock','endCapture','beginFreshRead','freshReadQuery','endFreshRead','readUpgradeState','applyUpgrade','close']
+const trustedMethods=Object.freeze(Object.fromEntries(['beginCapture','captureQuery','readDeparseContext','readDeparseNormalization','checkLock','endCapture','beginFreshRead','freshReadQuery','endFreshRead','readUpgradeState','applyUpgrade','close']
  .map(name=>[name,PwaUpgradeSession.prototype[name]])));
 Object.freeze(PwaUpgradeSession.prototype);
 export function sourceBindingForUpgradeCollector(instance){

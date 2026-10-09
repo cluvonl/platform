@@ -1,0 +1,106 @@
+{
+  "format": "CLUVO_PWA35_SOURCE_PRECISION_CLOSED_LOCAL_CHECKS_V1",
+  "scope": "PWA_SOURCE_READ_ONLY_CONTROL_SESSION_PRECISION_ONLY",
+  "actual_execution": {
+    "focused": {
+      "tests": 33,
+      "pass": 33,
+      "fail": 0,
+      "skipped": 0,
+      "tap_path": "/tmp/cluvo-pwa35-source-precision-focused-final.tap",
+      "tap_sha256": "87ca87f7913048529cfcd81669b57c677dcc7acb11c6fcf8062a5126f839d8e3"
+    },
+    "native": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "skipped": 0,
+      "tap_path": "/tmp/cluvo-pwa35-source-precision-native-final.tap",
+      "tap_sha256": "90dbf12d06e1a66834d3335ebe87093488d87db016bd1dce5258f07eb85dec1b"
+    },
+    "temporal": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "skipped": 0,
+      "tap_path": "/tmp/cluvo-pwa35-source-precision-temporal-final.tap",
+      "tap_sha256": "b22b30305be9651c94a90e5bfaa7397dbf69de5693ce369380b3bd35c733714e",
+      "artifact": {
+        "path": "docs/release/evidence/local/20261009-pwa35-temporal-catalog-controls-owned-proof.json",
+        "sha256": "b91a086f4ac33c3f828d948c2686890021f7cb74536a773b02a2a27cc06490fc"
+      }
+    }
+  },
+  "precision_artifact": {
+    "path": "docs/release/evidence/local/20261009-pwa35-source-precision-owned-proof.json",
+    "sha256": "8a4a02f118d6dab12e585a6fac3ee17053b25ffddd0b9738d20db10fa0bdc270"
+  },
+  "preserved_pre_final_pin_artifact": {
+    "path": "docs/release/evidence/local/20261009-pwa35-source-precision-owned-pre-final-pins-proof.json",
+    "sha256": "79f500d01234a401d25b769ec1a087332535631f6cd62c341ec7834f1076103b"
+  },
+  "source_files_sha256": {
+    "scripts/staging_backup_session.py": "e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1",
+    "scripts/staging_pwa_upgrade_session.py": "d02cdaa08082a9f9f64b7f78e447d7ad5fe94d3b7778b45ba3ed605006a24cde",
+    "scripts/staging-pwa-upgrade-session.mjs": "97932d5556449e59cf3fc0184274c2c1f5b3ecb1008f6ed2f5dacae42262c528",
+    "scripts/staging-pwa-restore-diagnostic.mjs": "dcec1ff6a4fc8584e8d9c8c4839aaa3f385252b39b76a773559b95d679716660",
+    "scripts/staging-pwa-upgrade-restore.mjs": "5e7bef4b840c13e010d573ee897c50b9444c46f30d4e55df0265f7d080b225bb",
+    "scripts/staging-pwa-upgrade.mjs": "c980f348b1a8a4d44881673d38a4a5b81832c1dbdfe6ea43d3d88787a9973af7",
+    "tests/staging-pwa-upgrade-session.test.mjs": "3b06da2e05e2184195081b9b6edc8108e988a8d88b7662e01372605684855179",
+    "tests/helpers/staging-pwa-upgrade-session-tests.py": "1627e291fc04ba7a727a41f74d0e54a82000cbd25c7243d135b41f71a534a6b2",
+    "tests/staging-pwa-restore-diagnostic.test.mjs": "bc5740e25b473336a18742eb05c2bcc52a181621ffb81b235309e5937af92ed7",
+    "tests/staging-pwa-upgrade-restore.test.mjs": "d5836693f2096946979d951f1d3d7e68a671dc53fb94d249efe7a46282342981",
+    "tests/helpers/staging-pwa-source-normalization-owned.py": "18aac25d3c518f873364f2151ec45cbc70fa8a7fab113ce825bef67874d2363a",
+    "tests/pwa-source-precision-owned.test.mjs": "6b554cb7dbb69d78678d963b3c6c4d65621e163b53a38cc4a616220d29eeddcc",
+    "tests/pwa-restore-deparse-owned.test.mjs": "666e1ee3ccedf5552097dbce1b249f4026bdbd443001e596d6028cab240ec3b3"
+  },
+  "older34_migration_bytes_unchanged_against_current_head": true,
+  "older34_migration_sha256": {
+    "20261002163042_cluvo_wp1_wp2_core.sql": "7e4efdaa139d2fe3120c43c0e7fcfe966438f154c08358734b6c555968acd32e",
+    "20261002165306_wp3_wp5_obligations_execution.sql": "1dd88883e99acd63cbea6f33c47b1c39008a6832904f1da6150374fbe1474eb7",
+    "20261002165327_wp6_wp8_collaboration_communication_policy.sql": "9707da512d46b23d8472bf222981242f8020ac3612709f536136876674b50702",
+    "20261002170949_wp1_onboarding_storage.sql": "6de61a4843cd9a3d77fccb6c0be0591c178b516518e4bb7ce9c2ae1cec3d4c03",
+    "20261002171135_wp9_wp11_finance_people_seasons.sql": "bdff3e58102376de4195840cc7cd3a02a59c7648cc19403c306ae72e96605719",
+    "20261002183000_vertical_read_models.sql": "bf50215a774296882cb5aa8067b43bb2c853bbb991968859b8ceece58d197eaf",
+    "20261002184500_assisted_member_actions.sql": "c7d74823e3be555b7115b1eab4e4180cdb48c7668680fa3a0a6b0e8420629bab",
+    "20261006180000_account_help_preferences.sql": "f6b7d1db5f420b5e5daeaf142326289dd1fb6918123c001386956f512f7755ff",
+    "20261006193000_complete_personal_intake.sql": "488d4722f830a0a2a2d35ff89a483bcd6f5e40ed3aa255d367d4346aaad22ad9",
+    "20261006210000_household_dossier_projection.sql": "0f1b29d8bbde85300f704270bc5ead062344bffe01f5688b67daa085099450a2",
+    "20261006223000_versioned_household_invitation_commands.sql": "99b456fda630c15eca25f197d971edcf8134a5181deb114c398dde852b6b62fe",
+    "20261006230000_household_invitation_cancellation.sql": "6d3738db24d2a02576fa6fa4a9273390d04872565edd66d662024df230425a1c",
+    "20261006233000_contract_household_invitation_bootstrap.sql": "1731ab3cec4921ad31e6f30a90ee21d8dc6101fa205285a51c5b65bc52e2c3f2",
+    "20261006234500_personal_intake_reconfirmation.sql": "e4f95b65789485e86131d21c0c085a83c8fc5b4195f36b4f81e24b9c6c171625",
+    "20261007010000_native_session_authority.sql": "9c165f68f413be04aa958358ec088c422dd21fea92b66e9ba84e04378817607a",
+    "20261007013000_intake_assistance_management.sql": "1512b7cbfd1fd63065fa09ad17aba0a2c71aaba1c875326f11e089175a5979c3",
+    "20261009100000_pwa_domain.sql": "18cc63b457fddea3f003bceb4d31f310291692e70485e6aa013e4091a8d47d41",
+    "20261009101000_pwa_commands.sql": "dbf600e3aabc225e5031ca83c24031c27c287cec47cce0b0f64bf81eb6e00f97",
+    "20261009102000_pwa_snapshot.sql": "969346799a4e591b7f85f8bacc4a877c1ea42dd628c3e041cf9b976f79e19ef0",
+    "20261009103000_pwa_delivery_and_receipts.sql": "73714397962f5ca54b5a94d1b6cc901ed744b8f8bcccd87fc32cd12673fbfe6f",
+    "20261009104000_pwa_buddy_integrity.sql": "c2e1bfdccf311f50bd9e0ff1686ce2301d1c65ff29b02cd78512666f0ec5305c",
+    "20261009105000_pwa_automation.sql": "7e20fdaee644e5a2f0b037f0d34001a773cf47b6b23a0294f23fddad45e5dbef",
+    "20261009106000_pwa_provider_receipts.sql": "5e6923e41dfd6d5da1ab12380f1be31b25e466eba02b685f7361b11e1ffe9eed",
+    "20261009107000_pwa_compatibility_and_cluster_scope.sql": "d60b59920adac4c45a3ec336a6a0cb27e31abb3c8aa69e0ddf5b47ed729e4486",
+    "20261009108000_pwa_repeatable_command_events.sql": "7ad42704ec974bd670deb70c14dcd13a2079f1b0d9fd6a416e0d4dcdf3859ef2",
+    "20261009109000_pwa_digest_dispatch_day.sql": "881aaf6a7ff6ed1e22604d810c1194fc140c4dfb79240e869b25feb3a9be4210",
+    "20261009110000_pwa_card_version_gate.sql": "7d237cb0e27bf8d4f27e649143a77e39dc29977279fc7bc6db6e506da52ff4cc",
+    "20261009111000_pwa_handover_checklist_integrity.sql": "2d10644befebd17fb8893d4e1363a6a4f61588bd55ac3ab45a7653d6489e3307",
+    "20261009112000_pwa_task_offer_category_seed.sql": "1e2bb5b181e7e0d4279c8270b12bfee8743cb7dcaaa0e4267256eaf689c59c17",
+    "20261009113000_pwa_nested_version_integrity.sql": "60eedfed603a1450d42524dc070e8fa4661c1bb323d55e660faef52845b98f19",
+    "20261009114000_pwa_policy_assignment_identity.sql": "afbe3c6218e2d81dae30107ec0f854f5fe0bdd87ae700da98f2b5d3165f4ad10",
+    "20261009115000_pwa_personal_action_context.sql": "10dfcebb3e8f61623586f41123e8967815e743745f991f68f84bcfd686e3a195",
+    "20261009116000_pwa_committee_planning.sql": "2bca259cd9041307c7daab5bf4e950fc0ddad72109aa180631634ce290b3e311",
+    "20261009117000_pwa_invitation_authority_fence.sql": "943eb1502da863da7d51bcd390bb58a5815896ab67a76db074638dad361d95b3"
+  },
+  "targeted_eslint_passed": true,
+  "actual_python_helper_unit_tests": 11,
+  "original16_transport_unchanged": true,
+  "hosted_or_shared_connections": 0,
+  "providers_called": false,
+  "existing_database_mutations_performed": false,
+  "production_enabled": false,
+  "staging_restore_verified": false,
+  "physical_device_verified": false,
+  "full35_schema_upgrade_claim": false,
+  "source_global_or_database_settings_changed": false,
+  "provider_archive_process_settings_changed": false
+}

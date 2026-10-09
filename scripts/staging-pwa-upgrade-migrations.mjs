@@ -39,7 +39,7 @@ export const APPROVED_PWA_PREDECESSOR31=Object.freeze({
  backupArtifactSha256:'013e009fcfbe1a86403bcb8dfbf58fa3ed5ec36416190edc0444112e1d3a0d6b',
 });
 function predecessor31(manifestHash){
- if(UPGRADE_FILES.length!==34||manifestHash===APPROVED_PWA_PREDECESSOR31.manifestSha256)return null;
+ if(UPGRADE_FILES.length!==35||manifestHash===APPROVED_PWA_PREDECESSOR31.manifestSha256)return null;
  need(digest(JSON.stringify(UPGRADE_FILES.slice(0,31)))===APPROVED_PWA_PREDECESSOR31.manifestSha256,'PWA_UPGRADE_PREDECESSOR_BYTES_CHANGED');
  return APPROVED_PWA_PREDECESSOR31;
 }

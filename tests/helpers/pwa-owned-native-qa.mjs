@@ -58,8 +58,8 @@ export async function runOwnedPwaNativeQa({name,socket,sql,json,lock}){
   const preflight=rows(await ownerSql.query(nativeQaPreflightSql())).at(-1);
   assert.equal(preflight.scope,'STAGING_PWA_NATIVE_QA_PREFLIGHT_V1');assert.ok(preflight.native_guarded_tables>144);
   const readonly=rows(await ownerSql.query(runtimeReadOnlyPreflightSQL())).at(-1);
-  assert.equal(readonly.scope,'STAGING_PWA_RUNTIME_READONLY34');assert.equal(readonly.transaction_read_only,true);
-  assert.equal(readonly.migration_count,34);assert.equal(readonly.database_role_superuser,false);
+  assert.equal(readonly.scope,'STAGING_PWA_RUNTIME_READONLY35');assert.equal(readonly.transaction_read_only,true);
+  assert.equal(readonly.migration_count,35);assert.equal(readonly.database_role_superuser,false);
   assert.equal(readonly.app_tables,readonly.native_guarded_tables);assert.equal(readonly.app_tables,readonly.forced_rls_tables);
   await ownerSql.query("RESET ROLE;ALTER ROLE cluvo_command_owner BYPASSRLS;SET ROLE postgres;BEGIN READ ONLY;"+`DO $runtime_role_negative$BEGIN
    BEGIN EXECUTE ${quote(runtimeReadOnlyGuardSQL())};RAISE EXCEPTION 'OWNED_RUNTIME_UNRESTRICTED_COMMAND_OWNER_ALLOWED';
@@ -73,7 +73,7 @@ export async function runOwnedPwaNativeQa({name,socket,sql,json,lock}){
   END $runtime_view_negative$;COMMIT;ALTER VIEW api.pwa_policy_assignments SET(security_invoker=true);`);
   const planningIdentity='api.pwa_committee_planning(uuid,uuid)';
   const apiFunctions=rows(await ownerSql.query("SELECT jsonb_build_object('functions',count(*),'invoker_functions',count(*)FILTER(WHERE NOT p.prosecdef))FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='api';")).at(-1);
-  assert.deepEqual(apiFunctions,{functions:85,invoker_functions:85});
+  assert.deepEqual(apiFunctions,{functions:89,invoker_functions:89});
   for(const [change,restore]of [
    ["CREATE FUNCTION api.pwa_unregistered_inventory_probe()RETURNS integer LANGUAGE sql STABLE SECURITY INVOKER AS 'SELECT 1';","DROP FUNCTION api.pwa_unregistered_inventory_probe();"],
    [`ALTER FUNCTION ${planningIdentity} RENAME TO pwa_committee_planning_missing;`,`ALTER FUNCTION api.pwa_committee_planning_missing(uuid,uuid) RENAME TO pwa_committee_planning;`],

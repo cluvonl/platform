@@ -27,6 +27,7 @@ class UpgradeOperations(unittest.TestCase):
         session = module.PwaUpgradeSession.__new__(module.PwaUpgradeSession)
         session.state, session.identity = phase, dict(identity)
         session.upgrade_environment, session.connection = dict(environment), object()
+        session.source_precision_normalizations = {}
         session.pq = SimpleNamespace(PQtransactionStatus=lambda unused: module.TX_IDLE)
         session.check_lock = lambda: {**identity, 'exclusive_lock': True}
         return session
@@ -39,10 +40,11 @@ class UpgradeOperations(unittest.TestCase):
         session.pq = SimpleNamespace(PQtransactionStatus=lambda unused: module.bounded.TX_VALID)
         session.check_lock = lambda: {**identity, 'exclusive_lock': True, 'read_only': True, 'isolation': 'repeatable read'}
         value = {'server_version_num': 170011, 'time_zone': 'UTC', 'date_style': 'ISO, MDY',
-                 'interval_style': 'postgres', 'search_path': 'pg_catalog', 'extra_float_digits': 1,
+                 'interval_style': 'postgres', 'search_path': 'pg_catalog', 'extra_float_digits': 3,
                  'standard_conforming_strings': True, 'quote_all_identifiers': False,
                  'bytea_output': 'hex', 'client_encoding': 'UTF8'}
         session.one_json = lambda query: queries.append(query) or dict(value)
+        session.source_precision_normalizations['capture'] = {'effective_context': dict(value)}
         self.assertEqual(session.read_deparse_context(), value)
         self.assertEqual(queries, [module.DEPARSE_CONTEXT_SQL])
         self.assertEqual(session.state, 'capture')
@@ -69,6 +71,88 @@ class UpgradeOperations(unittest.TestCase):
         with self.assertRaises(module.Failure) as failure:
             session.read_deparse_context()
         self.assertEqual(failure.exception.code, 'PWA_DEPARSE_CONTEXT_SESSION_CHANGED')
+
+
+    def normalized_fixture(self):
+        session = self.fake('locked')
+        session.pq = SimpleNamespace(PQtransactionStatus=lambda unused: module.bounded.TX_VALID)
+        session.check_lock = lambda: {**identity, 'exclusive_lock': True, 'read_only': True,
+                                     'isolation': 'repeatable read'}
+        value = {'server_version_num': 170011, 'time_zone': 'UTC', 'date_style': 'ISO, MDY',
+                 'interval_style': 'postgres', 'search_path': 'pg_catalog', 'extra_float_digits': 0,
+                 'standard_conforming_strings': True, 'quote_all_identifiers': False,
+                 'bytea_output': 'hex', 'client_encoding': 'UTF8'}
+        events = []
+        def begin(phase):
+            session.state = phase
+            events.append('BASE_CONFIRMED_READ_ONLY_RR_' + phase)
+            return {'snapshot': phase}
+        def read(query):
+            self.assertEqual(query, module.DEPARSE_CONTEXT_SQL)
+            events.append('CONTEXT_' + str(value['extra_float_digits']))
+            return dict(value)
+        def run(query):
+            self.assertEqual(query, 'SET LOCAL extra_float_digits TO 3;')
+            events.append('FIXED_SET_LOCAL_3')
+            value['extra_float_digits'] = 3
+            return [{'command': 'SET', 'rows': []}]
+        session.one_json, session.run = read, run
+        return session, value, events, begin
+
+    def test_both_snapshot_entries_normalize_before_first_data_read_and_preserve_shape(self):
+        for phase, base_name, own_name in [('capture', 'begin_capture', 'begin_capture'),
+                                         ('fresh_read', 'begin_fresh_read', 'begin_fresh_read')]:
+            session, value, events, begin = self.normalized_fixture()
+            with patch.object(module.Session, base_name, lambda unused: begin(phase)):
+                self.assertEqual(getattr(session, own_name)(), {'snapshot': phase})
+            self.assertEqual(events, ['BASE_CONFIRMED_READ_ONLY_RR_' + phase,
+                                     'CONTEXT_0', 'FIXED_SET_LOCAL_3', 'CONTEXT_3'])
+            proof = session.read_deparse_normalization()
+            self.assertEqual(proof['phase'], phase)
+            self.assertEqual(proof['original_context']['extra_float_digits'], 0)
+            self.assertEqual(proof['effective_context']['extra_float_digits'], 3)
+            self.assertTrue(proof['source_read_only_control_session_setting_changed'])
+            self.assertFalse(proof['source_global_or_database_settings_changed'])
+            self.assertFalse(proof['provider_archive_process_settings_changed'])
+            self.assertFalse(proof['source_database_mutated'])
+            value['extra_float_digits'] = 0
+            with self.assertRaises(module.Failure):
+                session.read_deparse_normalization()
+
+    def test_normalization_refuses_unconfirmed_set_unrelated_context_drift_and_lossy_effective(self):
+        for mode in ['wrong_command', 'no_effect', 'other_setting_changed']:
+            session, value, events, begin = self.normalized_fixture()
+            session.state = 'capture'
+            original_run = session.run
+            def changed_run(query):
+                if mode == 'wrong_command':
+                    return [{'command': 'UPDATE 1', 'rows': []}]
+                if mode == 'no_effect':
+                    return [{'command': 'SET', 'rows': []}]
+                result = original_run(query)
+                value['time_zone'] = 'Europe/Amsterdam'
+                return result
+            session.run = changed_run
+            with self.assertRaises(module.Failure):
+                session._normalize_source_precision()
+            self.assertEqual(session.source_precision_normalizations, {})
+
+    def test_normalization_refuses_non_readonly_or_changed_backend_before_acknowledgement(self):
+        session, value, events, begin = self.normalized_fixture()
+        session.state = 'capture'
+        session.check_lock = lambda: {**identity, 'exclusive_lock': True, 'read_only': False,
+                                     'isolation': 'repeatable read'}
+        with self.assertRaises(module.Failure):
+            session._normalize_source_precision()
+        self.assertEqual(events, [])
+        session, value, events, begin = self.normalized_fixture()
+        session.state = 'capture'
+        checks = iter([{**identity, 'read_only': True, 'isolation': 'repeatable read'},
+                       {**identity, 'backend_pid': 999, 'read_only': True, 'isolation': 'repeatable read'}])
+        session.check_lock = lambda: next(checks)
+        with self.assertRaises(module.Failure):
+            session._normalize_source_precision()
+        self.assertNotIn('FIXED_SET_LOCAL_3', events)
 
     def test_source_pins_and_generator_environment_are_closed(self):
         module.verify_sources()
@@ -144,7 +228,7 @@ class UpgradeOperations(unittest.TestCase):
                 self.transport = {'synthetic': True}
             def close(self):
                 pass
-        for operation in ('apply_initial', 'configure_api', 'bootstrap_core', 'execute_sql', 'read_deparse_context'):
+        for operation in ('apply_initial', 'configure_api', 'bootstrap_core', 'execute_sql', 'read_deparse_context', 'read_deparse_normalization'):
             request = {'id': 1, 'operation': 'connect', 'argument': {'lock_object': module.LOCK_OBJECT}}
             unsafe = {'id': 2, 'operation': operation, 'argument': {'sql': 'DELETE FROM auth.users'}}
             stdin, stdout = io.BytesIO((json.dumps(request)+'\n'+json.dumps(unsafe)+'\n').encode()), io.BytesIO()

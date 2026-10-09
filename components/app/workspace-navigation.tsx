@@ -3,23 +3,24 @@
 import {useEffect, useState} from 'react';
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
-import {ClipboardCheck, LayoutDashboard, Search, Store, UserRound} from 'lucide-react';
+import {ClipboardCheck, Database, LayoutDashboard, Search, Store, UserRound} from 'lucide-react';
 import {SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarTrigger, useSidebar} from '@/components/ui/sidebar';
 import {Avatar, Badge, Input, Modal} from '@/components/cluvo/ui';
 
-function navigationItems(canConfirmAttendance: boolean) {
+function navigationItems(canConfirmAttendance: boolean, canManageSportlink: boolean) {
   return [
     {path: 'overzicht', label: 'Overzicht', icon: LayoutDashboard, group: 'MIJN CLUB'},
     {path: 'taken', label: 'Takenmarkt', icon: Store, group: 'MIJN CLUB'},
     {path: 'intake', label: 'Mijn profiel en intake', icon: UserRound, group: 'MIJN CLUB'},
     ...(canConfirmAttendance ? [{path: 'beheer/presentie', label: 'Presentie', icon: ClipboardCheck, group: 'SAMEN ORGANISEREN'}] : []),
+    ...(canManageSportlink ? [{path: 'beheer/sportlink', label: 'Sportlink & wedstrijden', icon: Database, group: 'SAMEN ORGANISEREN'}] : []),
   ];
 }
 
-export function WorkspaceNavigation({base, canConfirmAttendance}: {base: string; canConfirmAttendance: boolean}) {
+export function WorkspaceNavigation({base, canConfirmAttendance, canManageSportlink = false}: {base: string; canConfirmAttendance: boolean; canManageSportlink?: boolean}) {
   const pathname = usePathname();
   const {setOpenMobile} = useSidebar();
-  const items = navigationItems(canConfirmAttendance);
+  const items = navigationItems(canConfirmAttendance, canManageSportlink);
   return <>{Array.from(new Set(items.map(({group}) => group))).map((group) => <SidebarGroup key={group}>
     <SidebarGroupLabel>{group}</SidebarGroupLabel><SidebarMenu>{items.filter((item) => item.group === group).map(({path, label, icon: Icon}) => <SidebarMenuItem key={path}>
       <SidebarMenuButton className="nav-item" isActive={pathname === `${base}/${path}`} asChild tooltip={label}>
@@ -29,11 +30,11 @@ export function WorkspaceNavigation({base, canConfirmAttendance}: {base: string;
   </SidebarGroup>)}</>;
 }
 
-export function WorkspaceTopbar({base, displayName, canConfirmAttendance}: {base: string; displayName: string; canConfirmAttendance: boolean}) {
+export function WorkspaceTopbar({base, displayName, canConfirmAttendance, canManageSportlink = false}: {base: string; displayName: string; canConfirmAttendance: boolean; canManageSportlink?: boolean}) {
   const pathname = usePathname();
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState('');
-  const items = navigationItems(canConfirmAttendance);
+  const items = navigationItems(canConfirmAttendance, canManageSportlink);
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {event.preventDefault(); setSearchOpen(true);}

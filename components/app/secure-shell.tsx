@@ -12,7 +12,7 @@ export const workspaceRoleLabels: Record<string, string> = {
   volunteer_coordinator: 'Vrijwilligerscoördinator', volunteer_committee: 'Vrijwilligerscommissie', team_parent: 'Teamouder', board: 'Bestuur', finance: 'Financieel beheer',
 };
 
-export function SecureShell({workspace, seasonName, children}: {workspace: WorkspaceContext; seasonName: string | null; children: React.ReactNode}) {
+export function SecureShell({workspace, seasonName, canManageSportlink = false, children}: {workspace: WorkspaceContext; seasonName: string | null; canManageSportlink?: boolean; children: React.ReactNode}) {
   const base = `/c/${encodeURIComponent(workspace.tenant_slug)}`;
   const roleLabel = Array.from(new Set(workspace.roles.map(({role_key}) => workspaceRoleLabels[role_key] ?? role_key))).join(' · ') || 'Persoonlijke toegang';
   const canConfirmAttendance = workspace.roles.some(({role_key}) => ['committee_coordinator', 'volunteer_committee'].includes(role_key));
@@ -23,14 +23,14 @@ export function SecureShell({workspace, seasonName, children}: {workspace: Works
         <span className="brand-caption">JOUW CLUB. SAMEN.</span>
         <Link href="/workspaces" className="club-switch"><span className="club-monogram">{workspace.tenant_name.slice(0, 1)}</span><span><b>{workspace.tenant_name}</b><small>{seasonName ? `Seizoen ${seasonName}` : 'Seizoen nog niet ingericht'}</small></span><ChevronDown size={16} /></Link>
       </SidebarHeader>
-      <SidebarContent><WorkspaceNavigation base={base} canConfirmAttendance={canConfirmAttendance} /></SidebarContent>
+      <SidebarContent><WorkspaceNavigation base={base} canConfirmAttendance={canConfirmAttendance} canManageSportlink={canManageSportlink} /></SidebarContent>
       <SidebarFooter>
         <Link className="profile-link" href={`${base}/intake`}><Avatar name={workspace.display_name} /><span><b>{workspace.display_name}</b><small>{roleLabel}</small></span><Settings size={15} /></Link>
         <form action={signOutAction}><button type="submit" className="help-link"><LogOut size={17} /> Uitloggen</button></form>
       </SidebarFooter>
     </Sidebar>
     <div className="app-main">
-      <WorkspaceTopbar base={base} displayName={workspace.display_name} canConfirmAttendance={canConfirmAttendance} />
+      <WorkspaceTopbar base={base} displayName={workspace.display_name} canConfirmAttendance={canConfirmAttendance} canManageSportlink={canManageSportlink} />
       <main className="workspace">{children}</main>
       <footer className="app-footer"><span>Cluvo · Club Signal</span><span>Staging · persoonlijke werkruimte</span></footer>
     </div>

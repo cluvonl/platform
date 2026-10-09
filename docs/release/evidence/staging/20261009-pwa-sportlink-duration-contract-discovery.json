@@ -1,0 +1,38 @@
+{
+  "scope": "READ_ONLY_PRIMARY_SOURCE_CONTRACT_DISCOVERY",
+  "observed_at": "2026-10-09T09:38:47.285968+00:00",
+  "candidate_source_sha": "996ba5914285d6dd19d9a23bcc4f236f839a82e3",
+  "function_id": "F038",
+  "source": {
+    "title": "Sportlink — Lijst met artikelen van Club.Dataservice",
+    "url": "https://sportlinkservices.freshdesk.com/nl/support/solutions/articles/9000062942-lijst-met-artikelen-van-club-dataservice",
+    "article": "Wedstrijd-informatie",
+    "official_field_name": "duur",
+    "documentation_lists_field": true,
+    "official_library_url": "https://sportlinkservices.github.io/navajofeeds-json-parser/article/?wedstrijd-informatie="
+  },
+  "current_native_contract_has_verified_duration": false,
+  "duration_units_verified": false,
+  "cluvo_provider_access_verified": true,
+  "actual_provider_payload_observed": true,
+  "required_before_implementation": [
+    "Verify duration units and null/zero/unknown/break semantics using an authoritative contract",
+    "Bind provider team identifiers to explicitly configured native tenant teams",
+    "Use append-only native storage/projection/import with honest absent-source fallback; do not infer a universal two-hour duration"
+  ],
+  "user_clarification_requested": true,
+  "deployment_blocked_by_discovery": false,
+  "physical_device_verified": false,
+  "production_enabled": false,
+  "authorized_readonly_access_followup": {
+    "observed_at": "2026-10-09T10:27:26.197454+00:00",
+    "probe_path": "docs/release/evidence/staging/20261009-pwa-sportlink-authorized-contract-probe.json",
+    "probe_sha256": "7c04022618879df9106d9ac1c02c71bfb5413d162f110ccdd490f502b065cd93",
+    "authorized_source_reads_succeeded": true,
+    "duration_observed_as_numeric_string": true,
+    "units_verified": false,
+    "raw_provider_data_retained": false,
+    "tenant_configuration_written": false,
+    "member_import_performed": false
+  }
+}

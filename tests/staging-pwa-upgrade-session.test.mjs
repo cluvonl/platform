@@ -16,17 +16,18 @@ const environment={APP_ENV:'staging',STAGING_SUPABASE_PROJECT_REF:'fbozlbgmktkgc
  MIGRATION_SSL_ROOT_CERT_PATH:fileURLToPath(new URL('../ops/tls/supabase-platform-root-ca.pem',import.meta.url)),
  GITHUB_REPOSITORY:'cluvonl/platform',GITHUB_REF:'refs/heads/staging',GITHUB_EVENT_NAME:'workflow_dispatch',GITHUB_SHA:sourceSha,RELEASE_SHA:sourceSha,GITHUB_RUN_ID:'123',GITHUB_ACTOR:'upgrade-test'};
 const context={actor:'upgrade-test',sourceSha,workflowRunId:'123',manifestSha256:'b'.repeat(64),backupArtifactId:'456',backupArtifactSha256:'c'.repeat(64)};
-const deparse={server_version_num:170011,time_zone:'UTC',date_style:'ISO, MDY',interval_style:'postgres',search_path:'pg_catalog',extra_float_digits:1,standard_conforming_strings:true,quote_all_identifiers:false,bytea_output:'hex',client_encoding:'UTF8'};
+const deparse={server_version_num:170011,time_zone:'UTC',date_style:'ISO, MDY',interval_style:'postgres',search_path:'pg_catalog',extra_float_digits:3,standard_conforming_strings:true,quote_all_identifiers:false,bytea_output:'hex',client_encoding:'UTF8'};
 function processFixture(options={}){
- const child=new EventEmitter(),requests=[];child.stdout=new PassThrough();child.stderr=new PassThrough();let closed=false;
+ const child=new EventEmitter(),requests=[];child.stdout=new PassThrough();child.stderr=new PassThrough();let closed=false,phase=null;
  const stop=()=>{if(!closed){closed=true;queueMicrotask(()=>child.emit('close',0,null));}};
  child.kill=()=>{stop();return true;};
  child.stdin=new Writable({write(raw,_encoding,done){
-  const request=JSON.parse(raw);requests.push(request);
+  const request=JSON.parse(raw);requests.push(request);if(request.operation==='begin_capture')phase='capture';if(request.operation==='begin_fresh_read')phase='fresh_read';
   const value=request.operation==='connect'?{scope:'HOSTED_VERIFY_FULL',client_tls:true,client_tls_protocol:'TLSv1.3',libpq_version:180006,postgres_version:170011}:
    request.operation==='read_upgrade_state'?{layout:{schemas:['api','app','internal'],app_objects:500},historyRows:Array(16).fill({}),sourceRows:Array(16).fill({}),upgradeRows:[]}:
    request.operation==='apply_upgrade'?{applied_prefix:request.argument.index+1,atomic_transaction_committed:!options.unconfirmed,exclusive_session_lock_retained:true}:{synthetic:true};
-  const response=request.operation==='read_deparse_context'?options.deparse??deparse:value;
+  const normalization={format:'PWA_SOURCE_DEPARSE_NORMALIZATION_V1',used:true,scope:'SOURCE_READ_ONLY_CONTROL_SESSION_ONLY',phase,original_context:{...deparse,extra_float_digits:0},effective_context:deparse,fixed_extra_float_digits:3,transaction_local:true,source_read_only_control_session_setting_changed:true,same_backend_verified:true,same_snapshot_verified:true,read_only:true,isolation:'repeatable read',source_global_or_database_settings_changed:false,provider_archive_process_settings_changed:false,source_database_mutated:false,row_or_catalog_values_rewritten:false};
+  const response=request.operation==='read_deparse_context'?options.deparse??deparse:request.operation==='read_deparse_normalization'?options.normalization??normalization:value;
   queueMicrotask(()=>child.stdout.write(JSON.stringify({id:request.id,ok:true,value:response})+'\n'));done();
  }});
  child.stdin.on('finish',stop);
@@ -112,5 +113,24 @@ test('nonstaging or untrusted workflow context is refused before process creatio
 
 test('actual Python additive owner enforces generator isolation, phase, transaction and closed protocol',()=>{
  const result=spawnSync('/usr/bin/python3',['-B','tests/helpers/staging-pwa-upgrade-session-tests.py'],{env:{PATH:'/usr/bin:/bin',PWA_UPGRADE_TEST_NODE:process.execPath},encoding:'utf8',timeout:20000,maxBuffer:128000});
- assert.equal(result.status,0,result.stderr);assert.match(result.stderr,/Ran 8 tests/);assert.match(result.stderr,/\bOK\b/);
+ assert.equal(result.status,0,result.stderr);assert.match(result.stderr,/Ran 11 tests/);assert.match(result.stderr,/\bOK\b/);
+});
+
+test('fixed source precision evidence is phase-bound, private-safe and retained only after completed fresh rollback',async()=>{
+ const {session,fixture}=await synthetic();await assert.rejects(session.readDeparseNormalization());
+ assert.equal(fixture.requests.some(x=>x.operation==='read_deparse_normalization'),false);
+ await session.beginCapture();const proof=await session.readDeparseNormalization();
+ assert.equal(proof.original_context.extra_float_digits,0);assert.equal(proof.effective_context.extra_float_digits,3);
+ assert.equal(proof.source_read_only_control_session_setting_changed,true);assert.equal(proof.source_global_or_database_settings_changed,false);
+ await session.endCapture();await assert.rejects(session.readDeparseNormalization());await session.beginFreshRead();await session.endFreshRead();
+ const fresh=await session.readDeparseNormalization();assert.equal(fresh.phase,'fresh_read');assert.equal(fresh.effective_context.extra_float_digits,3);
+ const requests=fixture.requests.filter(x=>x.operation==='read_deparse_normalization');assert.equal(requests.length,2);
+ assert.ok(requests.every(x=>x.argument===null));await session.close();await assert.rejects(session.readDeparseNormalization());
+});
+
+test('forged source precision evidence revokes the bridge before any capture can be accepted',async()=>{
+ for(const normalization of [{scope:'GLOBAL_DATABASE'},{format:'PWA_SOURCE_DEPARSE_NORMALIZATION_V1',private_setting:'synthetic-secret'}]){
+  const {session}=await synthetic({normalization});await session.beginCapture();await assert.rejects(session.readDeparseNormalization(),{code:'PWA_SOURCE_PRECISION_UNPROVED'});
+  await assert.rejects(session.captureQuery('SELECT 1'));await session.close();
+ }
 });

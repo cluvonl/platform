@@ -397,10 +397,10 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
    const beforeConstraints=JSON.parse((await sql(aggregate(CATALOG_QUERIES.constraints),bootstrapRole,false,true)).trim());
    restoredDeparseContext=publicDeparseContext(await jsonSql(PWA_DEPARSE_CONTEXT_SQL));
    need(equal(sourceDeparseContext,restoredDeparseContext),'RESTORE_DEPARSE_ALIGNMENT_UNPROVED');
-   deparseAlignment=publicDeparseAlignment({format:'PWA_RESTORE_DEPARSE_ALIGNMENT_V1',used:true,scope:'OWNED_CLONE_CONTROL_SESSIONS_ONLY',
+   deparseAlignment=publicDeparseAlignment({format:'PWA_RESTORE_DEPARSE_ALIGNMENT_V2',used:true,scope:'OWNED_CLONE_CONTROL_SESSIONS_ONLY',
     source_context:sourceDeparseContext,before_context:beforeContext,aligned_context:restoredDeparseContext,
     before_constraint_diagnostics:publicConstraintDefinitionDiagnostics(original.catalog.constraints,beforeConstraints,{sourceContext:sourceDeparseContext,restoredContext:beforeContext}),
-    exact_catalog_comparison_unchanged:true,source_settings_changed:false,provider_archive_process_settings_changed:false,source_database_mutated:false,semantic_differences_ignored:false});
+    exact_catalog_comparison_unchanged:true,source_global_or_database_settings_changed:false,provider_archive_process_settings_changed:false,source_database_mutated:false,semantic_differences_ignored:false});
    need(deparseAlignment!==null,'RESTORE_DEPARSE_ALIGNMENT_UNPROVED');
   }
   const catalogMismatches=[];let definitionDiagnostics=null;

@@ -1,0 +1,829 @@
+{
+  "scope": "AUTHORIZED_SPORTLINK_READ_ONLY_CONTRACT_PROBE",
+  "observed_at": "2026-10-09T09:43:52.632Z",
+  "reports": [
+    {
+      "article": "list",
+      "status": 200,
+      "bytes": 99692,
+      "body_sha256": "44041d8a72a2cb92dd669664c2e0a14671a24d9240fad4216febf839156829dc",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "keuzelijst-dagsoorten",
+          "kleuren-clubdata",
+          "kleuren-clubtv",
+          "team-gegevens",
+          "vrijwilligerstaken",
+          "team-sponsors",
+          "poulelijst",
+          "scheidsrechtersaanstellingen",
+          "wedstrijd-kleedkamers",
+          "wedstrijd-uitteam",
+          "wedstrijd-informatie",
+          "keuzelijst-geslacht",
+          "mijn-diplomas",
+          "keuzelijst-verenigingsactiviteit-kalendersoorten",
+          "keuzelijst-sorteervolgordes",
+          "mijn-teams",
+          "wedstrijd-thuisteam",
+          "wedstrijd-accommodatie",
+          "wedstrijd-officials",
+          "clubgegevens",
+          "mijn-factuurdetails",
+          "clublogo",
+          "aanmeldenaspirantlid",
+          "keuzelijst-spelsoorten",
+          "keuzelijst-teampersoonrollen",
+          "poulestand",
+          "commissie-details",
+          "poule-programma",
+          "wijzig-mijn-gegevens",
+          "wedstrijd-statistieken",
+          "wedstrijd-deelnemers",
+          "afgelastingen",
+          "adresboek",
+          "keuzelijst-competitieperiode",
+          "mijn-machtigingen",
+          "vrijwilligers",
+          "mijn-facturen",
+          "aanmeldenaspirantlid-form",
+          "mijn-commissies",
+          "keuzelijst-wedstrijdtypes",
+          "commissies",
+          "commissie-leden",
+          "info",
+          "keuzelijst-boolean",
+          "keuzelijst-periodenummers"
+        ],
+        "children": {
+          "keuzelijst-dagsoorten": {
+            "type": "object",
+            "keys": [
+              "name",
+              "input",
+              "output"
+            ],
+            "children": {
+              "name": {
+                "type": "string"
+              },
+              "input": {
+                "type": "array",
+                "count": 0
+              },
+              "output": {
+                "type": "array",
+                "count": 1,
+                "first": {
+                  "type": "object",
+                  "keys": [
+                    "columns"
+                  ]
+                }
+              }
+            }
+          },
+          "kleuren-clubdata": {
+            "type": "object",
+            "keys": [
+              "name",
+              "input",
+              "output"
+            ],
+            "children": {
+              "name": {
+                "type": "string"
+              },
+              "input": {
+                "type": "array",
+                "count": 0
+              },
+              "output": {
+                "type": "array",
+                "count": 1,
+                "first": {
+                  "type": "object",
+                  "keys": [
+                    "kleuren"
+                  ]
+                }
+              }
+            }
+          },
+          "kleuren-clubtv": {
+            "type": "object",
+            "keys": [
+              "name",
+              "input",
+              "output"
+            ],
+            "children": {
+              "name": {
+                "type": "string"
+              },
+              "input": {
+                "type": "array",
+                "count": 0
+              },
+              "output": {
+                "type": "array",
+                "count": 1,
+                "first": {
+                  "type": "object",
+                  "keys": [
+                    "kleuren"
+                  ]
+                }
+              }
+            }
+          },
+          "team-gegevens": {
+            "type": "object",
+            "keys": [
+              "name",
+              "input",
+              "output"
+            ],
+            "children": {
+              "name": {
+                "type": "string"
+              },
+              "input": {
+                "type": "array",
+                "count": 2,
+                "first": {
+                  "type": "object",
+                  "keys": [
+                    "name",
+                    "description",
+                    "type",
+                    "optional",
+                    "sourcearticle",
+                    "sourcekey"
+                  ]
+                }
+              },
+              "output": {
+                "type": "array",
+                "count": 1,
+                "first": {
+                  "type": "object",
+                  "keys": [
+                    "team"
+                  ]
+                }
+              }
+            }
+          },
+          "vrijwilligerstaken": {
+            "type": "object",
+            "keys": [
+              "name",
+              "input",
+              "output"
+            ],
+            "children": {
+              "name": {
+                "type": "string"
+              },
+              "input": {
+                "type": "array",
+                "count": 0
+              },
+              "output": {
+                "type": "array",
+                "count": 1,
+                "first": {
+                  "type": "object",
+                  "keys": [
+                    "columns"
+                  ]
+                }
+              }
+            }
+          },
+          "team-sponsors": {
+            "type": "object",
+            "keys": [
+              "name",
+              "input",
+              "output"
+            ],
+            "children": {
+              "name": {
+                "type": "string"
+              },
+              "input": {
+                "type": "array",
+                "count": 2,
+                "first": {
+                  "type": "object",
+                  "keys": [
+                    "name",
+                    "description",
+                    "type",
+                    "optional",
+                    "sourcearticle",
+                    "sourcekey"
+                  ]
+                }
+              },
+              "output": {
+                "type": "array",
+                "count": 1,
+                "first": {
+                  "type": "object",
+                  "keys": [
+                    "columns"
+                  ]
+                }
+              }
+            }
+          },
+          "poulelijst": {
+            "type": "object",
+            "keys": [
+              "name",
+              "input",
+              "output"
+            ],
+            "children": {
+              "name": {
+                "type": "string"
+              },
+              "input": {
+                "type": "array",
+                "count": 0
+              },
+              "output": {
+                "type": "array",
+                "count": 1,
+                "first": {
+                  "type": "object",
+                  "keys": [
+                    "columns"
+                  ]
+                }
+              }
+            }
+          },
+          "scheidsrechtersaanstellingen": {
+            "type": "object",
+            "keys": [
+              "name",
+              "input",
+              "output"
+            ],
+            "children": {
+              "name": {
+                "type": "string"
+              },
+              "input": {
+                "type": "array",
+                "count": 4,
+                "first": {
+                  "type": "object",
+                  "keys": [
+                    "name",
+                    "description",
+                    "type",
+                    "optional",
+                    "default"
+                  ]
+                }
+              },
+              "output": {
+                "type": "array",
+                "count": 1,
+                "first": {
+                  "type": "object",
+                  "keys": [
+                    "key",
+                    "columns"
+                  ]
+                }
+              }
+            }
+          },
+          "wedstrijd-kleedkamers": {
+            "type": "object",
+            "keys": [
+              "name",
+              "input",
+              "output"
+            ],
+            "children": {
+              "name": {
+                "type": "string"
+              },
+              "input": {
+                "type": "array",
+                "count": 1,
+                "first": {
+                  "type": "object",
+                  "keys": [
+                    "name",
+                    "description",
+                    "type",
+                    "optional",
+                    "sourcearticle",
+                    "sourcekey"
+                  ]
+                }
+              },
+              "output": {
+                "type": "array",
+                "count": 1,
+                "first": {
+                  "type": "object",
+                  "keys": [
+                    "kleedkamers"
+                  ]
+                }
+              }
+            }
+          },
+          "wedstrijd-uitteam": {
+            "type": "object",
+            "keys": [
+              "name",
+              "input",
+              "output"
+            ],
+            "children": {
+              "name": {
+                "type": "string"
+              },
+              "input": {
+                "type": "array",
+                "count": 2,
+                "first": {
+                  "type": "object",
+                  "keys": [
+                    "name",
+                    "description",
+                    "type",
+                    "optional",
+                    "sourcearticle",
+                    "sourcekey"
+                  ]
+                }
+              },
+              "output": {
+                "type": "array",
+                "count": 1,
+                "first": {
+                  "type": "object",
+                  "keys": [
+                    "columns"
+                  ]
+                }
+              }
+            }
+          },
+          "wedstrijd-informatie": {
+            "type": "object",
+            "keys": [
+              "name",
+              "input",
+              "output"
+            ],
+            "children": {
+              "name": {
+                "type": "string"
+              },
+              "input": {
+                "type": "array",
+                "count": 1,
+                "first": {
+                  "type": "object",
+                  "keys": [
+                    "name",
+                    "description",
+                    "type",
+                    "optional",
+                    "sourcearticle",
+                    "sourcekey"
+                  ]
+                }
+              },
+              "output": {
+                "type": "array",
+                "count": 7,
+                "first": {
+                  "type": "object",
+                  "keys": [
+                    "wedstrijdinformatie"
+                  ]
+                }
+              }
+            }
+          },
+          "keuzelijst-geslacht": {
+            "type": "object",
+            "keys": [
+              "name",
+              "input",
+              "output"
+            ],
+            "children": {
+              "name": {
+                "type": "string"
+              },
+              "input": {
+                "type": "array",
+                "count": 0
+              },
+              "output": {
+                "type": "array",
+                "count": 1,
+                "first": {
+                  "type": "object",
+                  "keys": [
+                    "columns"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "error_present": false
+    },
+    {
+      "article": "wedstrijd-informatie",
+      "schema_duration_metadata": [
+        {
+          "path": ".output[].wedstrijdinformatie.duur",
+          "definition": {}
+        }
+      ]
+    },
+    {
+      "article": "programma",
+      "status": 200,
+      "bytes": 1517,
+      "body_sha256": "3702fab740719d5f7cb0706b4dbd0e0948b19d1e290f9d6a0bb069807529e49f",
+      "shape": {
+        "type": "array",
+        "count": 1,
+        "first": {
+          "type": "object",
+          "keys": [
+            "wedstrijddatum",
+            "wedstrijdcode",
+            "wedstrijdnummer",
+            "teamnaam",
+            "thuisteamclubrelatiecode",
+            "uitteamclubrelatiecode",
+            "thuisteamid",
+            "thuisteam",
+            "thuisteamlogo",
+            "uitteamid",
+            "uitteam",
+            "uitteamlogo",
+            "teamvolgorde",
+            "competitiesoort",
+            "competitie",
+            "klasse",
+            "poule",
+            "klassepoule",
+            "kaledatum",
+            "datum",
+            "vertrektijd",
+            "verzameltijd",
+            "aanvangstijd",
+            "wedstrijd",
+            "status",
+            "scheidsrechters",
+            "scheidsrechter",
+            "accommodatie",
+            "veld",
+            "locatie",
+            "plaats",
+            "rijders",
+            "kleedkamerthuisteam",
+            "kleedkameruitteam",
+            "kleedkamerscheidsrechter",
+            "meer"
+          ],
+          "children": {
+            "wedstrijddatum": {
+              "type": "string"
+            },
+            "wedstrijdcode": {
+              "type": "number"
+            },
+            "wedstrijdnummer": {
+              "type": "number"
+            },
+            "teamnaam": {
+              "type": "string"
+            },
+            "thuisteamclubrelatiecode": {
+              "type": "string"
+            },
+            "uitteamclubrelatiecode": {
+              "type": "string"
+            },
+            "thuisteamid": {
+              "type": "number"
+            },
+            "thuisteam": {
+              "type": "string"
+            },
+            "thuisteamlogo": {
+              "type": "string"
+            },
+            "uitteamid": {
+              "type": "number"
+            },
+            "uitteam": {
+              "type": "string"
+            },
+            "uitteamlogo": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "error_present": false
+    },
+    {
+      "article": "wedstrijd-informatie",
+      "status": 200,
+      "bytes": 2356,
+      "body_sha256": "4dad0651750e96ede83b10c77c3e23fee227442c0c47a369b6e9f178049675c4",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "wedstrijdinformatie",
+          "officials",
+          "matchofficials",
+          "kleedkamers",
+          "accommodatie",
+          "thuisteam",
+          "uitteam"
+        ],
+        "children": {
+          "wedstrijdinformatie": {
+            "type": "object",
+            "keys": [
+              "wedstrijdnummer",
+              "wedstijdnummerintern",
+              "veldnaam",
+              "veldlocatie",
+              "vertrektijd",
+              "rijder",
+              "thuisscore",
+              "thuisscore-regulier",
+              "thuisscore-nv",
+              "thuisscore-s",
+              "uitscore",
+              "uitscore-regulier",
+              "uitscore-nv",
+              "uitscore-s",
+              "klasse",
+              "wedstrijdtype",
+              "competitietype",
+              "categorie",
+              "wedstrijddatetime",
+              "wedstrijddatum",
+              "wedstrijddatumopgemaakt",
+              "aanvangstijd",
+              "aanvangstijdopgemaakt",
+              "duur",
+              "speltype",
+              "aanduiding",
+              "poulecode",
+              "poule",
+              "thuisteamid",
+              "thuisteam",
+              "uitteamid",
+              "uitteam",
+              "opmerkingen"
+            ],
+            "children": {
+              "wedstrijdnummer": {
+                "type": "number"
+              },
+              "wedstijdnummerintern": {
+                "type": "number"
+              },
+              "veldnaam": {
+                "type": "string"
+              },
+              "veldlocatie": {
+                "type": "string"
+              },
+              "vertrektijd": {
+                "type": "null"
+              },
+              "rijder": {
+                "type": "string"
+              },
+              "thuisscore": {
+                "type": "null"
+              },
+              "thuisscore-regulier": {
+                "type": "null"
+              },
+              "thuisscore-nv": {
+                "type": "null"
+              },
+              "thuisscore-s": {
+                "type": "null"
+              },
+              "uitscore": {
+                "type": "null"
+              },
+              "uitscore-regulier": {
+                "type": "null"
+              }
+            }
+          },
+          "officials": {
+            "type": "object",
+            "keys": [
+              "verenigingsscheidsrechtercode",
+              "verenigingsscheidsrechter",
+              "overigeofficialcode",
+              "overigeofficial"
+            ],
+            "children": {
+              "verenigingsscheidsrechtercode": {
+                "type": "null"
+              },
+              "verenigingsscheidsrechter": {
+                "type": "null"
+              },
+              "overigeofficialcode": {
+                "type": "null"
+              },
+              "overigeofficial": {
+                "type": "null"
+              }
+            }
+          },
+          "matchofficials": {
+            "type": "object",
+            "keys": [
+              "scheidsrechters"
+            ],
+            "children": {
+              "scheidsrechters": {
+                "type": "string"
+              }
+            }
+          },
+          "kleedkamers": {
+            "type": "object",
+            "keys": [
+              "thuis",
+              "uit",
+              "official"
+            ],
+            "children": {
+              "thuis": {
+                "type": "string"
+              },
+              "uit": {
+                "type": "string"
+              },
+              "official": {
+                "type": "string"
+              }
+            }
+          },
+          "accommodatie": {
+            "type": "object",
+            "keys": [
+              "naam",
+              "straat",
+              "plaats",
+              "telefoon",
+              "routeplanner"
+            ],
+            "children": {
+              "naam": {
+                "type": "string"
+              },
+              "straat": {
+                "type": "string"
+              },
+              "plaats": {
+                "type": "string"
+              },
+              "telefoon": {
+                "type": "string"
+              },
+              "routeplanner": {
+                "type": "string"
+              }
+            }
+          },
+          "thuisteam": {
+            "type": "object",
+            "keys": [
+              "naam",
+              "code",
+              "website",
+              "shirtkleur",
+              "straat",
+              "postcodeplaats",
+              "telefoon",
+              "email"
+            ],
+            "children": {
+              "naam": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              },
+              "website": {
+                "type": "string"
+              },
+              "shirtkleur": {
+                "type": "string"
+              },
+              "straat": {
+                "type": "string"
+              },
+              "postcodeplaats": {
+                "type": "string"
+              },
+              "telefoon": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            }
+          },
+          "uitteam": {
+            "type": "object",
+            "keys": [
+              "naam",
+              "code",
+              "website",
+              "shirtkleur",
+              "straat",
+              "postcodeplaats",
+              "telefoon",
+              "email"
+            ],
+            "children": {
+              "naam": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              },
+              "website": {
+                "type": "string"
+              },
+              "shirtkleur": {
+                "type": "string"
+              },
+              "straat": {
+                "type": "string"
+              },
+              "postcodeplaats": {
+                "type": "string"
+              },
+              "telefoon": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "error_present": false
+    },
+    {
+      "article": "wedstrijd-informatie",
+      "duration_observations": [
+        {
+          "path": ".wedstrijdinformatie.duur",
+          "type": "string",
+          "is_null": false,
+          "integer": false,
+          "numeric_string": true,
+          "clock_duration": false
+        }
+      ],
+      "units_verified": false
+    }
+  ],
+  "client_id_logged": false,
+  "raw_payload_saved": false,
+  "member_data_requested": false,
+  "domain_import_performed": false,
+  "tenant_configuration_written": false,
+  "production_enabled": false
+}

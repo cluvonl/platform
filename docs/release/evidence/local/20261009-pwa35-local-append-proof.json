@@ -1,0 +1,43 @@
+{
+  "scope": "GUARDED_EXISTING_LOCAL_SCHEMA34_TO35_APPEND_ONLY",
+  "observed_at": "2026-10-09T10:23:04.223398+00:00",
+  "parent_source_sha": "996ba5914285d6dd19d9a23bcc4f236f839a82e3",
+  "passed": true,
+  "existing_migrations": 34,
+  "appended_migration": {
+    "file": "20261009118000_pwa_sportlink_connection.sql",
+    "sha256": "b4cd0ed6b44fd2bac7d22bee84a3b15f5817c6122c132a42066c49f374277b87"
+  },
+  "final_migrations": 35,
+  "old_migration_history_preserved": true,
+  "original34_SQL_source_bytes_preserved": true,
+  "all_native_app_rows_and_authority_unchanged": true,
+  "reset_performed": false,
+  "staging_mutations": false,
+  "provider_called": false,
+  "production_enabled": false,
+  "native_command_guard": {
+    "new_rows": 0,
+    "private_rls": true,
+    "api_wrappers": 4,
+    "auth_raw_select": false,
+    "service_raw_select": false
+  },
+  "before_app_rows_sha256": "251c9a2f1bb4d44b618ed24759931a51aa3540cf11aa841c5ee3dcd711fb3872",
+  "after_app_rows_sha256": "251c9a2f1bb4d44b618ed24759931a51aa3540cf11aa841c5ee3dcd711fb3872",
+  "old_history_sha256": "688439bd4469f7add6dbe2f9b0d75a72441741b3508ca8ed1ffd1f6393eba667",
+  "final_history_sha256": "a52125cd11c2a045167210b29aeffd45c57eedcbdf5af3f849c4810ec24f4f59",
+  "authority_hashes": {
+    "auth_users": {
+      "rows": 75,
+      "sha256": "ce7a2da9b3b1f6cab7be46bbe25b044a9b9abcc4867f36795b31bec78454c438"
+    },
+    "auth_sessions": {
+      "rows": 195,
+      "sha256": "a4936a6a2f14233567a623d8894c90ca9aaf64d73b8a3d5319c8cd5a6a6d2c7e"
+    }
+  },
+  "original_app_tables": 180,
+  "final_app_tables": 181,
+  "new_private_credential_table_empty": true
+}

@@ -1,0 +1,581 @@
+{
+  "scope": "LOCAL_OWNED_PG17_SYNTHETIC_DEPARSE",
+  "public_synthetic_ddl_only": true,
+  "pinned_image": "public.ecr.aws/supabase/postgres@sha256:0450166354dc9c1d25f0322ac8b580774d4fb0184d2b087f6e4fe9499c66cf53",
+  "server_version": "17.11",
+  "network": "none",
+  "owned_databases": 2,
+  "hosted_connections": 0,
+  "shared_database_connections": 0,
+  "credentials_received": false,
+  "private_backups_received": false,
+  "constraint_rows": 2,
+  "formatter": [
+    {
+      "setting": "timezone",
+      "definition_changed": true,
+      "exact_comparison_rejected": true,
+      "same_valid_row_accepted": true,
+      "same_below_threshold_row_rejected": true,
+      "definition_diagnostics": {
+        "format": "PWA_CONSTRAINT_DEFINITION_DIAGNOSTICS_V1",
+        "changed_definition_rows": 1,
+        "classified_rows": 1,
+        "omitted_rows": 0,
+        "source_deparse_context": {
+          "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+          "server_version_num": 170011,
+          "time_zone": {
+            "category": "UTC",
+            "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+          },
+          "date_style": {
+            "category": "ISO, MDY",
+            "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+          },
+          "interval_style": {
+            "category": "postgres",
+            "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+          },
+          "search_path": {
+            "category": "PG_CATALOG",
+            "sha256": "63e4aeee780860a18770fabeb89cb07e354670beb02c2c5808fa131f4e01fd4a"
+          },
+          "client_encoding": {
+            "category": "UTF8",
+            "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+          },
+          "extra_float_digits": 1,
+          "standard_conforming_strings": true,
+          "quote_all_identifiers": false,
+          "bytea_output": "hex"
+        },
+        "restored_deparse_context": {
+          "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+          "server_version_num": 170011,
+          "time_zone": {
+            "category": "EUROPE_AMSTERDAM",
+            "sha256": "c147c70a2945af0f92f810a649b257b00cce0b49c22880fab3eb964240d27f6e"
+          },
+          "date_style": {
+            "category": "ISO, MDY",
+            "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+          },
+          "interval_style": {
+            "category": "postgres",
+            "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+          },
+          "search_path": {
+            "category": "PG_CATALOG",
+            "sha256": "63e4aeee780860a18770fabeb89cb07e354670beb02c2c5808fa131f4e01fd4a"
+          },
+          "client_encoding": {
+            "category": "UTF8",
+            "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+          },
+          "extra_float_digits": 1,
+          "standard_conforming_strings": true,
+          "quote_all_identifiers": false,
+          "bytea_output": "hex"
+        },
+        "guc_difference_flags": {
+          "server_version_changed": false,
+          "time_zone_changed": true,
+          "date_style_changed": false,
+          "interval_style_changed": false,
+          "search_path_changed": false,
+          "extra_float_digits_changed": false,
+          "standard_conforming_strings_changed": false,
+          "quote_all_identifiers_changed": false,
+          "bytea_output_changed": false,
+          "client_encoding_changed": false
+        },
+        "entries": [
+          {
+            "schema_category": "PUBLIC",
+            "kind_category": "CHECK",
+            "source_definition_sha256": "3e91684a045f27d1e7ccf068c4bf039a34ed0407401096a6a0023e32dc029786",
+            "restored_definition_sha256": "5cab4080a227def0a99169ff8cf85152c0f47a8d0f3ad8bf31eab9f1875f8b49",
+            "flags": {
+              "temporal_cast_present": true,
+              "temporal_literal_text_changed": true,
+              "string_literal_text_changed": true,
+              "numeric_literal_text_changed": false,
+              "whitespace_only": false,
+              "case_only_outside_literals": false,
+              "parenthesis_tokens_only": false,
+              "casts_changed": false,
+              "unchanged_after_literals_redacted": true
+            }
+          }
+        ],
+        "exact_comparison_rejected": true,
+        "semantic_equivalence_proven": false
+      }
+    },
+    {
+      "setting": "datestyle",
+      "definition_changed": true,
+      "exact_comparison_rejected": true,
+      "same_valid_row_accepted": true,
+      "same_below_threshold_row_rejected": true,
+      "definition_diagnostics": {
+        "format": "PWA_CONSTRAINT_DEFINITION_DIAGNOSTICS_V1",
+        "changed_definition_rows": 1,
+        "classified_rows": 1,
+        "omitted_rows": 0,
+        "source_deparse_context": {
+          "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+          "server_version_num": 170011,
+          "time_zone": {
+            "category": "UTC",
+            "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+          },
+          "date_style": {
+            "category": "ISO, MDY",
+            "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+          },
+          "interval_style": {
+            "category": "postgres",
+            "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+          },
+          "search_path": {
+            "category": "PG_CATALOG",
+            "sha256": "63e4aeee780860a18770fabeb89cb07e354670beb02c2c5808fa131f4e01fd4a"
+          },
+          "client_encoding": {
+            "category": "UTF8",
+            "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+          },
+          "extra_float_digits": 1,
+          "standard_conforming_strings": true,
+          "quote_all_identifiers": false,
+          "bytea_output": "hex"
+        },
+        "restored_deparse_context": {
+          "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+          "server_version_num": 170011,
+          "time_zone": {
+            "category": "UTC",
+            "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+          },
+          "date_style": {
+            "category": "SQL, DMY",
+            "sha256": "1f5a6c3d1832f2d5423d328aaa94c6342329a013e093f2ef0a723afcc9859eb6"
+          },
+          "interval_style": {
+            "category": "postgres",
+            "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+          },
+          "search_path": {
+            "category": "PG_CATALOG",
+            "sha256": "63e4aeee780860a18770fabeb89cb07e354670beb02c2c5808fa131f4e01fd4a"
+          },
+          "client_encoding": {
+            "category": "UTF8",
+            "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+          },
+          "extra_float_digits": 1,
+          "standard_conforming_strings": true,
+          "quote_all_identifiers": false,
+          "bytea_output": "hex"
+        },
+        "guc_difference_flags": {
+          "server_version_changed": false,
+          "time_zone_changed": false,
+          "date_style_changed": true,
+          "interval_style_changed": false,
+          "search_path_changed": false,
+          "extra_float_digits_changed": false,
+          "standard_conforming_strings_changed": false,
+          "quote_all_identifiers_changed": false,
+          "bytea_output_changed": false,
+          "client_encoding_changed": false
+        },
+        "entries": [
+          {
+            "schema_category": "PUBLIC",
+            "kind_category": "CHECK",
+            "source_definition_sha256": "3e91684a045f27d1e7ccf068c4bf039a34ed0407401096a6a0023e32dc029786",
+            "restored_definition_sha256": "a0c8ba46d9844c843b97962f094fc261bee7a07d20a14c8b5eaac7381953166d",
+            "flags": {
+              "temporal_cast_present": true,
+              "temporal_literal_text_changed": true,
+              "string_literal_text_changed": true,
+              "numeric_literal_text_changed": false,
+              "whitespace_only": false,
+              "case_only_outside_literals": false,
+              "parenthesis_tokens_only": false,
+              "casts_changed": false,
+              "unchanged_after_literals_redacted": true
+            }
+          }
+        ],
+        "exact_comparison_rejected": true,
+        "semantic_equivalence_proven": false
+      }
+    },
+    {
+      "setting": "intervalstyle",
+      "definition_changed": true,
+      "exact_comparison_rejected": true,
+      "same_valid_row_accepted": true,
+      "same_below_threshold_row_rejected": true,
+      "definition_diagnostics": {
+        "format": "PWA_CONSTRAINT_DEFINITION_DIAGNOSTICS_V1",
+        "changed_definition_rows": 1,
+        "classified_rows": 1,
+        "omitted_rows": 0,
+        "source_deparse_context": {
+          "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+          "server_version_num": 170011,
+          "time_zone": {
+            "category": "UTC",
+            "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+          },
+          "date_style": {
+            "category": "ISO, MDY",
+            "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+          },
+          "interval_style": {
+            "category": "postgres",
+            "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+          },
+          "search_path": {
+            "category": "PG_CATALOG",
+            "sha256": "63e4aeee780860a18770fabeb89cb07e354670beb02c2c5808fa131f4e01fd4a"
+          },
+          "client_encoding": {
+            "category": "UTF8",
+            "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+          },
+          "extra_float_digits": 1,
+          "standard_conforming_strings": true,
+          "quote_all_identifiers": false,
+          "bytea_output": "hex"
+        },
+        "restored_deparse_context": {
+          "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+          "server_version_num": 170011,
+          "time_zone": {
+            "category": "UTC",
+            "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+          },
+          "date_style": {
+            "category": "ISO, MDY",
+            "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+          },
+          "interval_style": {
+            "category": "sql_standard",
+            "sha256": "7133e46f2d2fdd6ecfc4d81774da7ca9a258b839defb4e4662dcaead8d49280e"
+          },
+          "search_path": {
+            "category": "PG_CATALOG",
+            "sha256": "63e4aeee780860a18770fabeb89cb07e354670beb02c2c5808fa131f4e01fd4a"
+          },
+          "client_encoding": {
+            "category": "UTF8",
+            "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+          },
+          "extra_float_digits": 1,
+          "standard_conforming_strings": true,
+          "quote_all_identifiers": false,
+          "bytea_output": "hex"
+        },
+        "guc_difference_flags": {
+          "server_version_changed": false,
+          "time_zone_changed": false,
+          "date_style_changed": false,
+          "interval_style_changed": true,
+          "search_path_changed": false,
+          "extra_float_digits_changed": false,
+          "standard_conforming_strings_changed": false,
+          "quote_all_identifiers_changed": false,
+          "bytea_output_changed": false,
+          "client_encoding_changed": false
+        },
+        "entries": [
+          {
+            "schema_category": "PUBLIC",
+            "kind_category": "CHECK",
+            "source_definition_sha256": "3e91684a045f27d1e7ccf068c4bf039a34ed0407401096a6a0023e32dc029786",
+            "restored_definition_sha256": "2e381d4210caf77a2e68cd5b43fe9a5ff4730584e6941f77d89128cb3b42d1a4",
+            "flags": {
+              "temporal_cast_present": true,
+              "temporal_literal_text_changed": true,
+              "string_literal_text_changed": true,
+              "numeric_literal_text_changed": false,
+              "whitespace_only": false,
+              "case_only_outside_literals": false,
+              "parenthesis_tokens_only": false,
+              "casts_changed": false,
+              "unchanged_after_literals_redacted": true
+            }
+          }
+        ],
+        "exact_comparison_rejected": true,
+        "semantic_equivalence_proven": false
+      }
+    },
+    {
+      "setting": "search_path",
+      "definition_changed": false,
+      "exact_comparison_rejected": false,
+      "same_valid_row_accepted": true,
+      "same_below_threshold_row_rejected": true,
+      "definition_diagnostics": null
+    }
+  ],
+  "actual_custom_schema_archive_restore": true,
+  "restore_equal_under_identical_settings": true,
+  "exact_catalog_families_compared": 28,
+  "all_catalogs_equal_under_identical_settings": true,
+  "catalog_family_row_counts": {
+    "roles": 16,
+    "types": 2,
+    "ranges": 0,
+    "columns": 5,
+    "indexes": 1,
+    "schemas": 1,
+    "database": 1,
+    "policies": 0,
+    "triggers": 0,
+    "functions": 3,
+    "relations": 1,
+    "sequences": 0,
+    "collations": 0,
+    "extensions": 1,
+    "constraints": 2,
+    "inheritance": 0,
+    "tablespaces": 2,
+    "default_acls": 0,
+    "publications": 0,
+    "event_triggers": 0,
+    "parameter_acls": 0,
+    "security_labels": 0,
+    "partition_bounds": 0,
+    "role_memberships": 3,
+    "extension_members": 4,
+    "publication_schemas": 0,
+    "publication_relations": 0,
+    "role_database_settings": 0
+  },
+  "alternate_formatter_changed_catalog_families": [
+    "constraints"
+  ],
+  "alternate_formatter_catalog_comparison_rejected": true,
+  "actual_semantic_change_catalog_comparison_rejected": true,
+  "clone_session_alignment": {
+    "known_source_context_only": true,
+    "fixed_set_statements": 9,
+    "actual_clone_context_equals_source": true,
+    "all28_raw_catalogs_equal_after_session_alignment": true,
+    "query_bytes_redefined": false,
+    "comparison_normalized": false,
+    "actual_missing_table_rejected": true,
+    "actual_extra_table_rejected": true,
+    "actual_acl_drift_rejected": true,
+    "all_three_structural_negatives_rolled_back": true,
+    "actual_semantic_threshold_change_still_rejected": true
+  },
+  "restore_rejected_under_different_formatter_settings": true,
+  "actual_numeric_threshold_change_rejected": true,
+  "accepted_source_boundary_rejected_after_semantic_change": true,
+  "canonical_comparison_waived": false,
+  "restored_alternate_formatter_diagnostics": {
+    "format": "PWA_CONSTRAINT_DEFINITION_DIAGNOSTICS_V1",
+    "changed_definition_rows": 1,
+    "classified_rows": 1,
+    "omitted_rows": 0,
+    "source_deparse_context": {
+      "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+      "server_version_num": 170011,
+      "time_zone": {
+        "category": "UTC",
+        "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+      },
+      "date_style": {
+        "category": "ISO, MDY",
+        "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+      },
+      "interval_style": {
+        "category": "postgres",
+        "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+      },
+      "search_path": {
+        "category": "PG_CATALOG",
+        "sha256": "63e4aeee780860a18770fabeb89cb07e354670beb02c2c5808fa131f4e01fd4a"
+      },
+      "client_encoding": {
+        "category": "UTF8",
+        "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+      },
+      "extra_float_digits": 1,
+      "standard_conforming_strings": true,
+      "quote_all_identifiers": false,
+      "bytea_output": "hex"
+    },
+    "restored_deparse_context": {
+      "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+      "server_version_num": 170011,
+      "time_zone": {
+        "category": "EUROPE_AMSTERDAM",
+        "sha256": "c147c70a2945af0f92f810a649b257b00cce0b49c22880fab3eb964240d27f6e"
+      },
+      "date_style": {
+        "category": "SQL, DMY",
+        "sha256": "1f5a6c3d1832f2d5423d328aaa94c6342329a013e093f2ef0a723afcc9859eb6"
+      },
+      "interval_style": {
+        "category": "sql_standard",
+        "sha256": "7133e46f2d2fdd6ecfc4d81774da7ca9a258b839defb4e4662dcaead8d49280e"
+      },
+      "search_path": {
+        "category": "OTHER",
+        "sha256": "efa1f375d76194fa51a3556a97e641e61685f914d446979da50a551a4333ffd7"
+      },
+      "client_encoding": {
+        "category": "UTF8",
+        "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+      },
+      "extra_float_digits": 1,
+      "standard_conforming_strings": true,
+      "quote_all_identifiers": false,
+      "bytea_output": "hex"
+    },
+    "guc_difference_flags": {
+      "server_version_changed": false,
+      "time_zone_changed": true,
+      "date_style_changed": true,
+      "interval_style_changed": true,
+      "search_path_changed": true,
+      "extra_float_digits_changed": false,
+      "standard_conforming_strings_changed": false,
+      "quote_all_identifiers_changed": false,
+      "bytea_output_changed": false,
+      "client_encoding_changed": false
+    },
+    "entries": [
+      {
+        "schema_category": "PUBLIC",
+        "kind_category": "CHECK",
+        "source_definition_sha256": "3e91684a045f27d1e7ccf068c4bf039a34ed0407401096a6a0023e32dc029786",
+        "restored_definition_sha256": "331e46c6c03a71dfd1fd869e10fd0876f215bb3f74bd4121a27fedbf34cd7d2f",
+        "flags": {
+          "temporal_cast_present": true,
+          "temporal_literal_text_changed": true,
+          "string_literal_text_changed": true,
+          "numeric_literal_text_changed": false,
+          "whitespace_only": false,
+          "case_only_outside_literals": false,
+          "parenthesis_tokens_only": false,
+          "casts_changed": false,
+          "unchanged_after_literals_redacted": true
+        }
+      }
+    ],
+    "exact_comparison_rejected": true,
+    "semantic_equivalence_proven": false
+  },
+  "actual_semantic_threshold_diagnostics": {
+    "format": "PWA_CONSTRAINT_DEFINITION_DIAGNOSTICS_V1",
+    "changed_definition_rows": 1,
+    "classified_rows": 1,
+    "omitted_rows": 0,
+    "source_deparse_context": {
+      "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+      "server_version_num": 170011,
+      "time_zone": {
+        "category": "UTC",
+        "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+      },
+      "date_style": {
+        "category": "ISO, MDY",
+        "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+      },
+      "interval_style": {
+        "category": "postgres",
+        "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+      },
+      "search_path": {
+        "category": "PG_CATALOG",
+        "sha256": "63e4aeee780860a18770fabeb89cb07e354670beb02c2c5808fa131f4e01fd4a"
+      },
+      "client_encoding": {
+        "category": "UTF8",
+        "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+      },
+      "extra_float_digits": 1,
+      "standard_conforming_strings": true,
+      "quote_all_identifiers": false,
+      "bytea_output": "hex"
+    },
+    "restored_deparse_context": {
+      "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+      "server_version_num": 170011,
+      "time_zone": {
+        "category": "UTC",
+        "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+      },
+      "date_style": {
+        "category": "ISO, MDY",
+        "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+      },
+      "interval_style": {
+        "category": "postgres",
+        "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+      },
+      "search_path": {
+        "category": "PG_CATALOG",
+        "sha256": "63e4aeee780860a18770fabeb89cb07e354670beb02c2c5808fa131f4e01fd4a"
+      },
+      "client_encoding": {
+        "category": "UTF8",
+        "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+      },
+      "extra_float_digits": 1,
+      "standard_conforming_strings": true,
+      "quote_all_identifiers": false,
+      "bytea_output": "hex"
+    },
+    "guc_difference_flags": {
+      "server_version_changed": false,
+      "time_zone_changed": false,
+      "date_style_changed": false,
+      "interval_style_changed": false,
+      "search_path_changed": false,
+      "extra_float_digits_changed": false,
+      "standard_conforming_strings_changed": false,
+      "quote_all_identifiers_changed": false,
+      "bytea_output_changed": false,
+      "client_encoding_changed": false
+    },
+    "entries": [
+      {
+        "schema_category": "PUBLIC",
+        "kind_category": "CHECK",
+        "source_definition_sha256": "3e91684a045f27d1e7ccf068c4bf039a34ed0407401096a6a0023e32dc029786",
+        "restored_definition_sha256": "08acfc37aa78f3d15c1398c54a866d5fe8cdc74df65ba753f4125b87316647ac",
+        "flags": {
+          "temporal_cast_present": true,
+          "temporal_literal_text_changed": false,
+          "string_literal_text_changed": false,
+          "numeric_literal_text_changed": true,
+          "whitespace_only": false,
+          "case_only_outside_literals": false,
+          "parenthesis_tokens_only": false,
+          "casts_changed": false,
+          "unchanged_after_literals_redacted": true
+        }
+      }
+    ],
+    "exact_comparison_rejected": true,
+    "semantic_equivalence_proven": false
+  },
+  "hosted_restore_cause_proven": false,
+  "staging_activation_proven": false,
+  "physical_device_acceptance_proven": false,
+  "owned_container_removed": true,
+  "test_source_sha256": "666e1ee3ccedf5552097dbce1b249f4026bdbd443001e596d6028cab240ec3b3",
+  "diagnostic_source_sha256": "dcec1ff6a4fc8584e8d9c8c4839aaa3f385252b39b76a773559b95d679716660"
+}

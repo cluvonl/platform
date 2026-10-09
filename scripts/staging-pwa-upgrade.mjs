@@ -76,6 +76,9 @@ export async function stagingPwaUpgrade(environment){
   const original=await collectSnapshot(bridge,{source_sha:fixed.RELEASE_SHA,migration_files:UPGRADE_FILES});
   const sourceDeparseContext=await bridge.readDeparseContext();
   report.source_deparse_context=sourceDeparseContext;
+  const sourceNormalization=await bridge.readDeparseNormalization();
+  need(sourceNormalization.phase==='capture'&&JSON.stringify(sourceNormalization.effective_context)===JSON.stringify(sourceDeparseContext),'PWA_SOURCE_PRECISION_UNPROVED');
+  report.source_deparse_normalization=sourceNormalization;
   const bootstrapRole=await bootstrapRoleFromSnapshot(bridge,original);
   report.initial_applied_prefix=original.source_history.applied_prefix;
   need(report.initial_applied_prefix>=16,'PWA_UPGRADE_ORIGINAL16_REQUIRED');
@@ -110,6 +113,9 @@ export async function stagingPwaUpgrade(environment){
   const fresh=await recheckFreshSnapshot(bridge,original);
   need(fresh.status==='SOURCE_UNCHANGED'&&fresh.same_bridge_instance===true&&fresh.fresh_transaction_ended===true
    &&fresh.exclusive_session_lock_retained===true,'INITIAL_SOURCE_DRIFT_DETECTED');
+  const freshNormalization=await bridge.readDeparseNormalization();
+  need(freshNormalization.phase==='fresh_read'&&JSON.stringify(freshNormalization.effective_context)===JSON.stringify(sourceDeparseContext),'PWA_SOURCE_PRECISION_UNPROVED');
+  report.source_fresh_deparse_normalization=freshNormalization;
   report.source_freshness={same_backend:true,full_metadata_unchanged:true,exclusive_lock_retained:true};
   let state=await bridge.readUpgradeState(),history=validateUpgradeHistory(manifest,state);
   need(history.appliedPrefix===original.source_history.applied_prefix,'INITIAL_HISTORY_DRIFT_DETECTED');

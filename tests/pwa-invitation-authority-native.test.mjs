@@ -7,7 +7,7 @@ test('owned PG17 mobile invitation rechecks authority after a proven household l
     const proof=await runOwnedInvitationAuthorityFence();
     assert.equal(proof.passed,true);
     assert.equal(proof.owned_container_removed,true);
-    assert.equal(proof.migrations,34);
+    assert.equal(proof.migrations,35);
     assert.equal(proof.scenarios.length,4);
     assert.equal(proof.scenarios[0].same_command_retry_proved,true);
     assert.equal(proof.scenarios[0].completed_key_retry_after_authority_revocation_refused,true);

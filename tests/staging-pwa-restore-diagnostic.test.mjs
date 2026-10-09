@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
-import {PWA_DEPARSE_CONTEXT_SQL,publicDeparseContext,cloneDeparseSettingsSQL,publicConstraintDefinitionDiagnostics,publicRestoreDefinitionDiagnostics,publicDeparseAlignment} from '../scripts/staging-pwa-restore-diagnostic.mjs';
+import {PWA_DEPARSE_CONTEXT_SQL,publicDeparseContext,cloneDeparseSettingsSQL,publicConstraintDefinitionDiagnostics,publicRestoreDefinitionDiagnostics,publicDeparseAlignment,publicSourceDeparseNormalization} from '../scripts/staging-pwa-restore-diagnostic.mjs';
 const hash=value=>createHash('sha256').update(value).digest('hex');
 const raw={server_version_num:170011,time_zone:'UTC',date_style:'ISO, MDY',interval_style:'postgres',search_path:'pg_catalog',extra_float_digits:1,standard_conforming_strings:true,quote_all_identifiers:false,bytea_output:'hex',client_encoding:'UTF8'};
 const row=(definition,overrides={})=>({schema:'app',relation:'synthetic_private_relation',name:'synthetic_private_constraint',kind:'c',deferrable:false,deferred:false,validated:true,definition,...overrides});
@@ -104,10 +104,40 @@ test('public error projection rejects injected fields, raw definitions, fake has
 
 test('alignment projection requires actual identical source/aligned contexts and cannot claim source writes or ignored differences',()=>{
  const source=publicDeparseContext(raw),before=publicDeparseContext({...raw,time_zone:'Europe/Amsterdam',search_path:''});
- const alignment={format:'PWA_RESTORE_DEPARSE_ALIGNMENT_V1',used:true,scope:'OWNED_CLONE_CONTROL_SESSIONS_ONLY',source_context:source,before_context:before,
-  aligned_context:source,before_constraint_diagnostics:null,exact_catalog_comparison_unchanged:true,source_settings_changed:false,
+ const alignment={format:'PWA_RESTORE_DEPARSE_ALIGNMENT_V2',used:true,scope:'OWNED_CLONE_CONTROL_SESSIONS_ONLY',source_context:source,before_context:before,
+  aligned_context:source,before_constraint_diagnostics:null,exact_catalog_comparison_unchanged:true,source_global_or_database_settings_changed:false,
   provider_archive_process_settings_changed:false,source_database_mutated:false,semantic_differences_ignored:false};
  assert.deepEqual(publicDeparseAlignment(alignment),alignment);
  for(const changed of [{...alignment,aligned_context:before},{...alignment,scope:'SOURCE'}, {...alignment,source_database_mutated:true},
   {...alignment,semantic_differences_ignored:true},{...alignment,private_sql:'synthetic-private'}])assert.equal(publicDeparseAlignment(changed),null);
+});
+
+const sourceNormalization=()=>({format:'PWA_SOURCE_DEPARSE_NORMALIZATION_V1',used:true,scope:'SOURCE_READ_ONLY_CONTROL_SESSION_ONLY',phase:'capture',
+ original_context:{...raw,extra_float_digits:0},effective_context:{...raw,extra_float_digits:3},fixed_extra_float_digits:3,transaction_local:true,
+ source_read_only_control_session_setting_changed:true,same_backend_verified:true,same_snapshot_verified:true,read_only:true,isolation:'repeatable read',
+ source_global_or_database_settings_changed:false,provider_archive_process_settings_changed:false,source_database_mutated:false,row_or_catalog_values_rewritten:false});
+
+test('source precision proof distinguishes observed zero from fixed session-local lossless precision without changing clone authority',()=>{
+ const proof=publicSourceDeparseNormalization(sourceNormalization());
+ assert.equal(proof.original_context.extra_float_digits,0);assert.equal(proof.effective_context.extra_float_digits,3);
+ assert.equal(proof.source_read_only_control_session_setting_changed,true);assert.equal(proof.source_global_or_database_settings_changed,false);
+ assert.equal(proof.scope,'SOURCE_READ_ONLY_CONTROL_SESSION_ONLY');assert.ok(Object.isFrozen(proof));
+ assert.throws(()=>cloneDeparseSettingsSQL(proof.original_context),/RESTORE_DEPARSE_PROFILE_UNSUPPORTED/);
+ assert.match(cloneDeparseSettingsSQL(proof.effective_context),/SET extra_float_digits TO 3;/);
+ const already=publicSourceDeparseNormalization({...sourceNormalization(),phase:'fresh_read',original_context:{...raw,extra_float_digits:3},source_read_only_control_session_setting_changed:false});
+ assert.equal(already.source_read_only_control_session_setting_changed,false);
+ const unknown=publicSourceDeparseNormalization({...sourceNormalization(),original_context:{...raw,extra_float_digits:0,time_zone:'synthetic_private_zone'},effective_context:{...raw,extra_float_digits:3,time_zone:'synthetic_private_zone'}});
+ assert.equal(JSON.stringify(unknown).includes('synthetic_private_zone'),false);
+});
+
+test('source precision proof cannot authorize source writes, lossy capture, another setting, foreign scope or forged snapshot evidence',()=>{
+ const good=sourceNormalization();
+ for(const change of [{effective_context:{...raw,extra_float_digits:0}},{effective_context:{...raw,extra_float_digits:3,time_zone:'Europe/Amsterdam'}},
+  {phase:'locked'},{scope:'GLOBAL_DATABASE'},{fixed_extra_float_digits:1},{transaction_local:false},{read_only:false},{isolation:'read committed'},
+  {same_backend_verified:false},{same_snapshot_verified:false},{source_read_only_control_session_setting_changed:false},
+  {source_global_or_database_settings_changed:true},{provider_archive_process_settings_changed:true},{source_database_mutated:true},{row_or_catalog_values_rewritten:true},
+  {private_setting:'synthetic-secret'},{original_context:{...good.original_context,private_setting:'synthetic-secret'}}])assert.throws(()=>publicSourceDeparseNormalization({...good,...change}),/PWA_SOURCE_PRECISION_UNPROVED/);
+ assert.throws(()=>publicSourceDeparseNormalization(Object.create(good)),/PWA_SOURCE_PRECISION_UNPROVED/);
+ let touched=false;const accessor={...good};Object.defineProperty(accessor,'original_context',{get(){touched=true;throw Error('synthetic-private');}});
+ assert.throws(()=>publicSourceDeparseNormalization(accessor),/PWA_SOURCE_PRECISION_UNPROVED/);assert.equal(touched,false);
 });

@@ -1,0 +1,115 @@
+{
+  "scope": "LOCAL_NATIVE_DESKTOP_CAPTURE_CORRECTION_READONLY",
+  "passed": true,
+  "build_id": "dfIVldUczk43niTTMO9U_",
+  "original_executed_report": {
+    "path": "docs/release/evidence/local/20261009-pwa35-sportlink-native-ui/executed-browser-results.raw.json",
+    "sha256": "95890ec9b9fad4e2c95a3433001ead3f104c68279e84f7ab107bd8316dea5af2"
+  },
+  "new_native_otp_for_owned_board_only": true,
+  "new_auth_accounts": 0,
+  "domain_commands": 0,
+  "provider_requests": 0,
+  "all181_app_table_rows_unchanged": true,
+  "old_auth_authority_and_schema_history_preserved": true,
+  "new_native_sessions": 1,
+  "top": {
+    "scroll_y": 0,
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "document_width": 1440,
+    "topbar": {
+      "top": 0,
+      "bottom": 78,
+      "left": 244,
+      "right": 1440
+    },
+    "title": {
+      "top": 138.5,
+      "bottom": 176,
+      "left": 280,
+      "right": 1404
+    },
+    "receipt": 274.890625,
+    "action": {
+      "top": 976.5,
+      "bottom": 1016,
+      "left": 8,
+      "right": 117.9375
+    },
+    "topbar_css": {
+      "position": "sticky",
+      "top": "0px"
+    }
+  },
+  "scrolled": {
+    "scroll_y": 330,
+    "viewport": {
+      "width": 1440,
+      "height": 1024
+    },
+    "document_width": 1440,
+    "topbar": {
+      "top": 0,
+      "bottom": 78,
+      "left": 244,
+      "right": 1440
+    },
+    "title": {
+      "top": -191.5,
+      "bottom": -154,
+      "left": 280,
+      "right": 1404
+    },
+    "receipt": -55.109375,
+    "action": {
+      "top": 976.5,
+      "bottom": 1016,
+      "left": 8,
+      "right": 117.9375
+    },
+    "topbar_css": {
+      "position": "sticky",
+      "top": "0px"
+    }
+  },
+  "prior_full_page_capture_scroll_provenance": "previous mobile action left document scrolled before desktop fullPage capture; capture rerun at explicit0 and scrolled viewport recorded separately",
+  "screenshots": [
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-sportlink-native-ui/screenshots/03-board-read-confirmed-top-1440.png",
+      "sha256": "79e930106addd245c9e4e4beb9f0e232b2866273ab71c37d57200bd278991d45",
+      "full_page": true,
+      "scroll_y": 0
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-sportlink-native-ui/screenshots/06-board-scrolled-viewport-1440.png",
+      "sha256": "65f28fcf4b1d1eb536c3c64398142576cb7fd61aa14791c15b630ef845f78dfb",
+      "full_page": false,
+      "scroll_y": 330
+    }
+  ],
+  "runner_sha256": "7cd6548f5e39be6149422345ef45badb8c60646cf5001a689e3260c62fbe76d2",
+  "physical_device": false,
+  "staging_verified": false,
+  "metric_field_sources": {
+    "receipt": "#sportlink-status-title heading bottom; this metric is not the read-receipt status element",
+    "action": "first button[type=submit], the sidebar sign-out button; content-form control placement was visually reviewed"
+  },
+  "visual_review": {
+    "desktop_top_header_at_page_top": true,
+    "desktop_status_receipt_visible_below_header": true,
+    "desktop_scrolled_sticky_header_at_viewport_top": true,
+    "desktop_scrolled_content_forms_visible_below_header": true,
+    "mobile390_saved_and_readreceipt_visible_with_blank_input": true,
+    "member1440_denied_no_manager_control_or_navigation": true,
+    "capture_glitch_not_product_source_defect": true
+  },
+  "raw_actual_capture_provenance": {
+    "path": "docs/release/evidence/local/20261009-pwa35-sportlink-native-ui/desktop-capture-readback.json",
+    "sha256": "af60aed3ceb945cc1774b1c9e5eb21e35e0de4b0a94994b8d1cea6052c54db3a",
+    "metrics_values_unchanged": true,
+    "metric_labels_clarified_without_new_execution": true
+  }
+}

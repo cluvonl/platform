@@ -55,6 +55,26 @@ function context(value){
  return Object.freeze({...result,extra_float_digits:row.extra_float_digits,standard_conforming_strings:row.standard_conforming_strings,
   quote_all_identifiers:row.quote_all_identifiers,bytea_output:row.bytea_output});
 }
+export function publicSourceDeparseNormalization(input){
+ const keys=['format','used','scope','phase','original_context','effective_context','fixed_extra_float_digits',
+  'transaction_local','source_read_only_control_session_setting_changed','same_backend_verified','same_snapshot_verified',
+  'read_only','isolation','source_global_or_database_settings_changed','provider_archive_process_settings_changed',
+  'source_database_mutated','row_or_catalog_values_rewritten'];
+ const row=own(input,keys);
+ if(!row||row.format!=='PWA_SOURCE_DEPARSE_NORMALIZATION_V1'||row.used!==true
+  ||row.scope!=='SOURCE_READ_ONLY_CONTROL_SESSION_ONLY'||!['capture','fresh_read'].includes(row.phase)
+  ||row.fixed_extra_float_digits!==3||row.transaction_local!==true||row.same_backend_verified!==true
+  ||row.same_snapshot_verified!==true||row.read_only!==true||row.isolation!=='repeatable read'
+  ||row.source_global_or_database_settings_changed!==false||row.provider_archive_process_settings_changed!==false
+  ||row.source_database_mutated!==false||row.row_or_catalog_values_rewritten!==false)throw Error('PWA_SOURCE_PRECISION_UNPROVED');
+ let original,effective;
+ try{original=publicDeparseContext(row.original_context);effective=publicDeparseContext(row.effective_context);}
+ catch{throw Error('PWA_SOURCE_PRECISION_UNPROVED');}
+ if(effective.extra_float_digits!==3
+  ||row.source_read_only_control_session_setting_changed!==(original.extra_float_digits!==3)
+  ||JSON.stringify(effective)!==JSON.stringify({...original,extra_float_digits:3}))throw Error('PWA_SOURCE_PRECISION_UNPROVED');
+ return Object.freeze({...row,original_context:original,effective_context:effective});
+}
 export function cloneDeparseSettingsSQL(sourceContext){
  // Reconstruct only exact native values already recognized and hashed by the
  // snapshot-bound bridge. No raw setting, caller SQL, or arbitrary identifier
@@ -137,9 +157,9 @@ export function publicRestoreDefinitionDiagnostics(input){
 }
 export function publicDeparseAlignment(input){
  const row=own(input,['format','used','scope','source_context','before_context','aligned_context','before_constraint_diagnostics',
-  'exact_catalog_comparison_unchanged','source_settings_changed','provider_archive_process_settings_changed','source_database_mutated','semantic_differences_ignored']);
- if(!row||row.format!=='PWA_RESTORE_DEPARSE_ALIGNMENT_V1'||row.used!==true||row.scope!=='OWNED_CLONE_CONTROL_SESSIONS_ONLY'
-  ||row.exact_catalog_comparison_unchanged!==true||row.source_settings_changed!==false||row.provider_archive_process_settings_changed!==false
+  'exact_catalog_comparison_unchanged','source_global_or_database_settings_changed','provider_archive_process_settings_changed','source_database_mutated','semantic_differences_ignored']);
+ if(!row||row.format!=='PWA_RESTORE_DEPARSE_ALIGNMENT_V2'||row.used!==true||row.scope!=='OWNED_CLONE_CONTROL_SESSIONS_ONLY'
+  ||row.exact_catalog_comparison_unchanged!==true||row.source_global_or_database_settings_changed!==false||row.provider_archive_process_settings_changed!==false
   ||row.source_database_mutated!==false||row.semantic_differences_ignored!==false)return null;
  const source=context(row.source_context),before=context(row.before_context),aligned=context(row.aligned_context);
  const diagnostic=publicRestoreDefinitionDiagnostics(row.before_constraint_diagnostics);

@@ -1,0 +1,257 @@
+{
+  "format": "CLUVO_LOCAL_NATIVE_SPORTLINK35_UI_PROOF_V1",
+  "scope": "LOCAL_NATIVE_PER_TENANT_CONFIG_AND_BOUNDED_SYNTHETIC_PROVIDER_READ_TEST",
+  "passed": true,
+  "source_parent": "996ba5914285d6dd19d9a23bcc4f236f839a82e3",
+  "build_id": "dfIVldUczk43niTTMO9U_",
+  "source_hashes": {
+    "lib/sportlink/contracts.ts": "d788fb7513638157958c94b182d1de5ef6d2250fc5a440f765a618641cef90c8",
+    "lib/sportlink/credentials.mjs": "7976fa1f6ec15d7b53aab618548946bb52d24df5bb24cdfec920abc9df6205b7",
+    "lib/sportlink/read-test.mjs": "ff7c7ac2889051f182d1ba651c2a02d233d5f6aa6713bb3adb9c3cdcd6f3e331",
+    "lib/sportlink/server-core.mjs": "343ff9777239e99edf009381581dc5e66f47e9796f3c8a4fb7bc078e8294816e",
+    "lib/sportlink/server.ts": "f71f65717211b3f1801650ff8991283794e6d2e2e0882f7a4ccf112fbfdc27ab",
+    "app/c/[club]/beheer/sportlink/actions.ts": "cde97885005c1f3edf0353513d280129a16fda6f64a1052a96c3455b007a6649",
+    "app/c/[club]/beheer/sportlink/page.tsx": "de13badb4e9406cdd556170078b9b3b97a05a5939d5a60986056b87fdba03a3f",
+    "app/c/[club]/layout.tsx": "6965a5416cc9fe15421d31d2aac914f491553103dbb37c50801230093b4fbb0e",
+    "components/app/secure-shell.tsx": "e594b00ddb743eb522e977501b1aa76755dd1d5a39428633c61f801d370023af",
+    "components/app/workspace-navigation.tsx": "7b4b3382393d8a361eabccf1babf2860844f2d775ca89c305edb2a1d9e28edf6",
+    "components/app/sportlink-connection-forms.tsx": "b6622a833dd1c5e5e69c893eca4f0dbe0f7b8b1ab596936deaf4a36ebf214b9b",
+    "/tmp/cluvo-pwa35-sportlink-https-stub.mjs": "e7c511f96b9b0eb182451ec0d64c07ff07bff7171ca4eee3434a78a8c2ac66c1",
+    "/tmp/cluvo-pwa35-start-local-runtime.mjs": "c13d2ba49b581a92356c331daf7508e816c0a467c15a71bf76b54089b8023ea0"
+  },
+  "migration_hashes": {
+    "20261002163042_cluvo_wp1_wp2_core.sql": "7e4efdaa139d2fe3120c43c0e7fcfe966438f154c08358734b6c555968acd32e",
+    "20261002165306_wp3_wp5_obligations_execution.sql": "1dd88883e99acd63cbea6f33c47b1c39008a6832904f1da6150374fbe1474eb7",
+    "20261002165327_wp6_wp8_collaboration_communication_policy.sql": "9707da512d46b23d8472bf222981242f8020ac3612709f536136876674b50702",
+    "20261002170949_wp1_onboarding_storage.sql": "6de61a4843cd9a3d77fccb6c0be0591c178b516518e4bb7ce9c2ae1cec3d4c03",
+    "20261002171135_wp9_wp11_finance_people_seasons.sql": "bdff3e58102376de4195840cc7cd3a02a59c7648cc19403c306ae72e96605719",
+    "20261002183000_vertical_read_models.sql": "bf50215a774296882cb5aa8067b43bb2c853bbb991968859b8ceece58d197eaf",
+    "20261002184500_assisted_member_actions.sql": "c7d74823e3be555b7115b1eab4e4180cdb48c7668680fa3a0a6b0e8420629bab",
+    "20261006180000_account_help_preferences.sql": "f6b7d1db5f420b5e5daeaf142326289dd1fb6918123c001386956f512f7755ff",
+    "20261006193000_complete_personal_intake.sql": "488d4722f830a0a2a2d35ff89a483bcd6f5e40ed3aa255d367d4346aaad22ad9",
+    "20261006210000_household_dossier_projection.sql": "0f1b29d8bbde85300f704270bc5ead062344bffe01f5688b67daa085099450a2",
+    "20261006223000_versioned_household_invitation_commands.sql": "99b456fda630c15eca25f197d971edcf8134a5181deb114c398dde852b6b62fe",
+    "20261006230000_household_invitation_cancellation.sql": "6d3738db24d2a02576fa6fa4a9273390d04872565edd66d662024df230425a1c",
+    "20261006233000_contract_household_invitation_bootstrap.sql": "1731ab3cec4921ad31e6f30a90ee21d8dc6101fa205285a51c5b65bc52e2c3f2",
+    "20261006234500_personal_intake_reconfirmation.sql": "e4f95b65789485e86131d21c0c085a83c8fc5b4195f36b4f81e24b9c6c171625",
+    "20261007010000_native_session_authority.sql": "9c165f68f413be04aa958358ec088c422dd21fea92b66e9ba84e04378817607a",
+    "20261007013000_intake_assistance_management.sql": "1512b7cbfd1fd63065fa09ad17aba0a2c71aaba1c875326f11e089175a5979c3",
+    "20261009100000_pwa_domain.sql": "18cc63b457fddea3f003bceb4d31f310291692e70485e6aa013e4091a8d47d41",
+    "20261009101000_pwa_commands.sql": "dbf600e3aabc225e5031ca83c24031c27c287cec47cce0b0f64bf81eb6e00f97",
+    "20261009102000_pwa_snapshot.sql": "969346799a4e591b7f85f8bacc4a877c1ea42dd628c3e041cf9b976f79e19ef0",
+    "20261009103000_pwa_delivery_and_receipts.sql": "73714397962f5ca54b5a94d1b6cc901ed744b8f8bcccd87fc32cd12673fbfe6f",
+    "20261009104000_pwa_buddy_integrity.sql": "c2e1bfdccf311f50bd9e0ff1686ce2301d1c65ff29b02cd78512666f0ec5305c",
+    "20261009105000_pwa_automation.sql": "7e20fdaee644e5a2f0b037f0d34001a773cf47b6b23a0294f23fddad45e5dbef",
+    "20261009106000_pwa_provider_receipts.sql": "5e6923e41dfd6d5da1ab12380f1be31b25e466eba02b685f7361b11e1ffe9eed",
+    "20261009107000_pwa_compatibility_and_cluster_scope.sql": "d60b59920adac4c45a3ec336a6a0cb27e31abb3c8aa69e0ddf5b47ed729e4486",
+    "20261009108000_pwa_repeatable_command_events.sql": "7ad42704ec974bd670deb70c14dcd13a2079f1b0d9fd6a416e0d4dcdf3859ef2",
+    "20261009109000_pwa_digest_dispatch_day.sql": "881aaf6a7ff6ed1e22604d810c1194fc140c4dfb79240e869b25feb3a9be4210",
+    "20261009110000_pwa_card_version_gate.sql": "7d237cb0e27bf8d4f27e649143a77e39dc29977279fc7bc6db6e506da52ff4cc",
+    "20261009111000_pwa_handover_checklist_integrity.sql": "2d10644befebd17fb8893d4e1363a6a4f61588bd55ac3ab45a7653d6489e3307",
+    "20261009112000_pwa_task_offer_category_seed.sql": "1e2bb5b181e7e0d4279c8270b12bfee8743cb7dcaaa0e4267256eaf689c59c17",
+    "20261009113000_pwa_nested_version_integrity.sql": "60eedfed603a1450d42524dc070e8fa4661c1bb323d55e660faef52845b98f19",
+    "20261009114000_pwa_policy_assignment_identity.sql": "afbe3c6218e2d81dae30107ec0f854f5fe0bdd87ae700da98f2b5d3165f4ad10",
+    "20261009115000_pwa_personal_action_context.sql": "10dfcebb3e8f61623586f41123e8967815e743745f991f68f84bcfd686e3a195",
+    "20261009116000_pwa_committee_planning.sql": "2bca259cd9041307c7daab5bf4e950fc0ddad72109aa180631634ce290b3e311",
+    "20261009117000_pwa_invitation_authority_fence.sql": "943eb1502da863da7d51bcd390bb58a5815896ab67a76db074638dad361d95b3",
+    "20261009118000_pwa_sportlink_connection.sql": "b4cd0ed6b44fd2bac7d22bee84a3b15f5817c6122c132a42066c49f374277b87"
+  },
+  "native_schema_count": 35,
+  "app_tables": 181,
+  "fixture_scope": {
+    "tenant_slug": "sportlink-ui-local-35",
+    "resource_namespace": "35190000",
+    "fixture_construction_only": true,
+    "new_native_auth_users": 2,
+    "new_tenant": true,
+    "canonical_board_and_member_roles_only": true
+  },
+  "browser": {
+    "name": "Chromium",
+    "version": "153.0.8010.12",
+    "headless": true
+  },
+  "native_otp": true,
+  "otp_digits": 6,
+  "local_mail_capture_only": true,
+  "synthetic_https_stub_only": true,
+  "real_provider_calls": 0,
+  "client_id_or_ciphertext_or_signatures_or_tokens_or_mail_contents_exported": false,
+  "original_app_and_auth_authority_rewrites": false,
+  "source_or_migration_edits": false,
+  "full_match_import_proven": false,
+  "complete_function_acceptance": false,
+  "physical_device": false,
+  "staging_verified": false,
+  "production_enabled": false,
+  "checks": [
+    "PRIOR_ACTUAL_NATIVE_CREATION_CONFIGURE_AND_ORIGINAL_ROWS_PRESERVED",
+    "PRIOR_NATIVE_CONFIGURE_COMMIT_AND_CURRENT_PERSISTED_STATUS_BLANK_INPUT",
+    "RELOAD_CONFIGURED_INPUT_EMPTY_NO_PLAINTEXT",
+    "EXACT_STUB_LIST_AND_ONE_ROW_PROGRAMME_NO_REAL_PROVIDER",
+    "NATIVE_SERVER_SIGNED_READ_RECEIPT_UI_VERIFIED_PREPARING_NO_IMPORT",
+    "SECOND_BROWSER_CONTEXT_SERVER_READ_SAME_CONFIGURED_SIGNED_RECEIPT_BLANK_INPUT",
+    "ORDINARY_MEMBER_UI_AND_NAV_NO_MANAGER_CONTROLS",
+    "ALL_FOUR_NATIVE_MEMBER_MANAGER_RPC_FORBIDDEN",
+    "BOARD_AND_MEMBER_FOREIGN_TENANT_NATIVE_FORBIDDEN",
+    "ONE_CONFIG_ONE_SIGNED_TEST_TWO_EXACT_PRIVATE_SAFE_AUDITS_NO_MATCH_IMPORT_OR_HOURS",
+    "ALL_ORIGINAL181_APP_PK_AND_ROW_HASHES_PRESERVED",
+    "OLD_AUTH_USER_AND_SESSION_AUTHORITY_AND_SCHEMA35_HISTORY_PRESERVED",
+    "SOURCE_BUILD_ALL35_MIGRATION_BYTES_UNCHANGED",
+    "READONLY_DESKTOP_TOP_AND_SCROLLED_NATIVE_CAPTURE_HEADER_METRICS_AND_VISUAL_REVIEW"
+  ],
+  "images": [
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-sportlink-native-ui/screenshots/02-board-configured-empty-input-390.png",
+      "sha256": "a08d16f396b7ddbea242ed76ddbed216f77d1be125913379b9f59e266f69d235",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "visually_reviewed": true
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-sportlink-native-ui/screenshots/03-board-read-confirmed-top-1440.png",
+      "sha256": "79e930106addd245c9e4e4beb9f0e232b2866273ab71c37d57200bd278991d45",
+      "viewport": {
+        "width": 1440,
+        "height": 1024
+      },
+      "full_page": true,
+      "capture_scroll_y": 0,
+      "visually_reviewed": true
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-sportlink-native-ui/screenshots/04-board-second-context-confirmed-390.png",
+      "sha256": "23084f7f1e1ad0b89b5a4af0ac914063bdd9e5782ac6cb49d109d20f0e4606c7",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "visually_reviewed": true
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-sportlink-native-ui/screenshots/05-member-denied-1440.png",
+      "sha256": "f2035abadfd5f9e2a731577d932203a6517a7ef38a63d293aa978e4ff617244f",
+      "viewport": {
+        "width": 1440,
+        "height": 1024
+      },
+      "visually_reviewed": true
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-sportlink-native-ui/screenshots/06-board-scrolled-viewport-1440.png",
+      "sha256": "65f28fcf4b1d1eb536c3c64398142576cb7fd61aa14791c15b630ef845f78dfb",
+      "viewport": {
+        "width": 1440,
+        "height": 1024
+      },
+      "full_page": false,
+      "capture_scroll_y": 330,
+      "visually_reviewed": true
+    }
+  ],
+  "errors": [],
+  "readback": {
+    "native": {
+      "audit": [
+        {
+          "action": "integration.sportlink_configured",
+          "new_version": 1,
+          "secret_fields": false,
+          "expected_version": 0
+        },
+        {
+          "action": "integration.sportlink_read_test_recorded",
+          "new_version": 2,
+          "secret_fields": false,
+          "expected_version": 1
+        }
+      ],
+      "status": "preparing",
+      "matches": 0,
+      "version": 2,
+      "ledger_entries": 0,
+      "connection_count": 1,
+      "credential_count": 1,
+      "integration_runs": 0
+    },
+    "provider_stub_request_counts": {
+      "list": 1,
+      "programme": 1,
+      "denied": 0,
+      "real_provider_calls": 0
+    },
+    "member_denials": [
+      {
+        "rpc": "sportlink_connection_state",
+        "sqlstate": "42501"
+      },
+      {
+        "rpc": "sportlink_connection_credential",
+        "sqlstate": "42501"
+      },
+      {
+        "rpc": "configure_sportlink_connection",
+        "sqlstate": "42501"
+      },
+      {
+        "rpc": "record_sportlink_connection_test",
+        "sqlstate": "42501"
+      }
+    ],
+    "confirmed_configuration_versions": [
+      1,
+      2
+    ],
+    "receipt": {
+      "code": "VERIFIED_READ_ACCESS",
+      "signature_verified_on_server_reload": true,
+      "member_import": false,
+      "duration_units_verified": false,
+      "last_success_at": null
+    },
+    "integrity": {
+      "all_original_app_rows_preserved": true,
+      "app_tables": 181,
+      "original_app_rows": 6420,
+      "all_original_auth_users_and_sessions_authority_preserved": true,
+      "original_auth_user_count": 75,
+      "original_auth_session_count": 195,
+      "migration_history_unchanged": true,
+      "new_auth_users": 2,
+      "new_native_sessions": 4,
+      "primary_execution_native_sessions_appended": 3
+    }
+  },
+  "observed_configuration_acknowledgement": "revalidated persisted state and blank input; transient inline action message was replaced",
+  "baseline_method": "first actual setup+configure compares all original181 rows; continuation excludes only owned3519 tenant/new accounts and compares the same original row count",
+  "prior_actual_setup_and_configure_proof": {
+    "path": "docs/release/evidence/local/20261009-pwa35-sportlink-native-ui/attempt-3-configure-inline-message-timeout.json",
+    "sha256": "70f8a58aafd418a9ce8b32daad23e6a3efd133ddfe9bb8e5b3aaa017a4aa1d9f"
+  },
+  "runner_sha256": "197417486d83ad6c0d4224a0532f138f7da819436590fa0b09a7677d9f31f54e",
+  "executed_primary_browser_report": {
+    "path": "docs/release/evidence/local/20261009-pwa35-sportlink-native-ui/executed-browser-results.raw.json",
+    "sha256": "95890ec9b9fad4e2c95a3433001ead3f104c68279e84f7ab107bd8316dea5af2",
+    "checks": 13,
+    "images": 4,
+    "raw_bytes_preserved": true
+  },
+  "additional_desktop_capture_report": {
+    "path": "docs/release/evidence/local/20261009-pwa35-sportlink-native-ui/desktop-capture-reviewed.json",
+    "sha256": "a419361a56043596a31c1a02725509f9a368d9dc6264599f518278562280fb95",
+    "raw_path": "docs/release/evidence/local/20261009-pwa35-sportlink-native-ui/desktop-capture-readback.json",
+    "raw_sha256": "af60aed3ceb945cc1774b1c9e5eb21e35e0de4b0a94994b8d1cea6052c54db3a",
+    "domain_commands": 0,
+    "provider_requests": 0,
+    "new_auth_accounts": 0,
+    "additional_own_board_native_otp_session": 1
+  },
+  "visual_review_complete": true,
+  "desktop_original_capture_artifact_preserved": {
+    "path": "docs/release/evidence/local/20261009-pwa35-sportlink-native-ui/screenshots/03-board-read-confirmed-1440.png",
+    "sha256": "ae8e364b4f1ac9962f50915aac636cdde222c6434eed0748e218083d12e8a342",
+    "reason": "full-page capture after mobile command retained scrollY330 positioning of sticky header; final top capture explicitly scrolls0; separately captured scrolled viewport is correct"
+  }
+}

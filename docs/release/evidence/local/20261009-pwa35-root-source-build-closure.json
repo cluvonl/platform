@@ -1,0 +1,138 @@
+{
+  "scope": "PWA35_LOCAL_SOURCE_BUILD_TEST_AND_NATIVE_PROOF_CLOSURE",
+  "observed_at": "2026-10-09T10:55:48.560014+00:00",
+  "source_parent_sha": "996ba5914285d6dd19d9a23bcc4f236f839a82e3",
+  "source_worktree_candidate": true,
+  "passed": true,
+  "build_id": "dfIVldUczk43niTTMO9U_",
+  "source_files_sha256": {
+    ".github/workflows/staging-pwa-configure-app.yml": "8f6ac5e1f4612d3fe4abaa9e617821c25a39bc49bb5f57ef423ad197cd8ff343",
+    "app/c/[club]/beheer/sportlink/actions.ts": "cde97885005c1f3edf0353513d280129a16fda6f64a1052a96c3455b007a6649",
+    "app/c/[club]/beheer/sportlink/page.tsx": "de13badb4e9406cdd556170078b9b3b97a05a5939d5a60986056b87fdba03a3f",
+    "app/c/[club]/layout.tsx": "6965a5416cc9fe15421d31d2aac914f491553103dbb37c50801230093b4fbb0e",
+    "components/app/secure-shell.tsx": "e594b00ddb743eb522e977501b1aa76755dd1d5a39428633c61f801d370023af",
+    "components/app/sportlink-connection-forms.tsx": "b6622a833dd1c5e5e69c893eca4f0dbe0f7b8b1ab596936deaf4a36ebf214b9b",
+    "components/app/workspace-navigation.tsx": "7b4b3382393d8a361eabccf1babf2860844f2d775ca89c305edb2a1d9e28edf6",
+    "lib/sportlink/contracts.ts": "d788fb7513638157958c94b182d1de5ef6d2250fc5a440f765a618641cef90c8",
+    "lib/sportlink/credentials.mjs": "7976fa1f6ec15d7b53aab618548946bb52d24df5bb24cdfec920abc9df6205b7",
+    "lib/sportlink/read-test.mjs": "ff7c7ac2889051f182d1ba651c2a02d233d5f6aa6713bb3adb9c3cdcd6f3e331",
+    "lib/sportlink/server-core.mjs": "343ff9777239e99edf009381581dc5e66f47e9796f3c8a4fb7bc078e8294816e",
+    "lib/sportlink/server.ts": "f71f65717211b3f1801650ff8991283794e6d2e2e0882f7a4ccf112fbfdc27ab",
+    "scripts/staging-pwa-native-qa-fixture.mjs": "50b050e173fceb91576e547f2710449eeca75251d8cb0d3951ea1479e7ab879d",
+    "scripts/staging-pwa-native-qa-session.mjs": "b6d882f07615a7ad1b1a737d69c204f72a77fd88f6cfc88a0459142f7717be05",
+    "scripts/staging-pwa-restore-diagnostic.mjs": "dcec1ff6a4fc8584e8d9c8c4839aaa3f385252b39b76a773559b95d679716660",
+    "scripts/staging-pwa-runtime-preflight.mjs": "c2c04bcc68fa9f39211150a9270c89a2f1d7aa7b35bb1feadd5da097b3cabfc9",
+    "scripts/staging-pwa-upgrade-files.mjs": "198c5ba8dd2483500db097260a71b91b02263ea565df24d7b55686c2aa8b196c",
+    "scripts/staging-pwa-upgrade-migrations.mjs": "9cb88a31b773a04f161ed5ec3a92506833eeb6f57c2802a45b8a268ea1840a77",
+    "scripts/staging-pwa-upgrade-restore.mjs": "5e7bef4b840c13e010d573ee897c50b9444c46f30d4e55df0265f7d080b225bb",
+    "scripts/staging-pwa-upgrade-session.mjs": "97932d5556449e59cf3fc0184274c2c1f5b3ecb1008f6ed2f5dacae42262c528",
+    "scripts/staging-pwa-upgrade.mjs": "c980f348b1a8a4d44881673d38a4a5b81832c1dbdfe6ea43d3d88787a9973af7",
+    "scripts/staging_pwa_native_qa_session.py": "b534871f590e8aea6dab4d164027de6a0b07c77f0c9c029c198799c75556378b",
+    "scripts/staging_pwa_upgrade_session.py": "d02cdaa08082a9f9f64b7f78e447d7ad5fe94d3b7778b45ba3ed605006a24cde",
+    "supabase/migrations/20261009118000_pwa_sportlink_connection.sql": "b4cd0ed6b44fd2bac7d22bee84a3b15f5817c6122c132a42066c49f374277b87",
+    "supabase/tests/pwa016_sportlink_connection.sql": "0384b7b232b36598416a6ec9c62375f67180a0012462a48bf184d2b52c2a1777",
+    "tests/helpers/pwa-owned-invitation-authority.mjs": "df208a575a857d1135b0ba22e2008baf51d92093e5efd1b9e71ac5c78e43486f",
+    "tests/helpers/pwa-owned-native-qa.mjs": "5634366064e015d8d178ee4a997d3683fdf8bebe902d55f52bfc39a068079862",
+    "tests/helpers/pwa-owned-sportlink-authority.mjs": "66a2d0f1e465ed68195cfeaa64119138830b1b024a14d895294f78c6aa5581a4",
+    "tests/helpers/staging-pwa-source-normalization-owned.py": "18aac25d3c518f873364f2151ec45cbc70fa8a7fab113ce825bef67874d2363a",
+    "tests/helpers/staging-pwa-upgrade-session-tests.py": "1627e291fc04ba7a727a41f74d0e54a82000cbd25c7243d135b41f71a534a6b2",
+    "tests/pwa-invitation-authority-native.test.mjs": "4fccc9e5cff306e839dc7c5635f71f29803fad531a7fad0dde8accc55a35dbe2",
+    "tests/pwa-source-precision-owned.test.mjs": "6b554cb7dbb69d78678d963b3c6c4d65621e163b53a38cc4a616220d29eeddcc",
+    "tests/sportlink-connection.test.mjs": "f9b4b31bee6e7a6f7f43ad3dd762a9b5d7085bce67d0450750f78f14bdcc2995",
+    "tests/sportlink-credentials.test.mjs": "39265d425bb76c28842ba8c55b301fd9cc4121f007d4d0d3c9d6f153a680b3f0",
+    "tests/staging-pwa-restore-diagnostic.test.mjs": "bc5740e25b473336a18742eb05c2bcc52a181621ffb81b235309e5937af92ed7",
+    "tests/staging-pwa-runtime-preflight.test.mjs": "90725bafda82544be75bd4cbde4fae81f796ce99f77ad0e4bf242726012b320e",
+    "tests/staging-pwa-upgrade-migrations.test.mjs": "4bbcc446baaae583d115be7475301c60c7b4a5e816be56a2d85dfc2fd5d21568",
+    "tests/staging-pwa-upgrade-native.test.mjs": "d1e3e4e9ba0fe6d1eaf7a2a9d69d9cb5013f2062bd22e5409af985fa50feb5b4",
+    "tests/staging-pwa-upgrade-restore.test.mjs": "d5836693f2096946979d951f1d3d7e68a671dc53fb94d249efe7a46282342981",
+    "tests/staging-pwa-upgrade-session.test.mjs": "3b06da2e05e2184195081b9b6edc8108e988a8d88b7662e01372605684855179"
+  },
+  "logs_sha256": {
+    "tests-final": {
+      "path": "/tmp/cluvo-pwa35-tests-final.log",
+      "sha256": "504cd83e79ac36d5bb2312f515e2165015878786345993237e339de6204aeb6e"
+    },
+    "lint-final": {
+      "path": "/tmp/cluvo-pwa35-lint-final.log",
+      "sha256": "c91eb801fa281b41c87cf03aa02b4266fd95fad82267b7d4cc077bad009163c0"
+    },
+    "types": {
+      "path": "/tmp/cluvo-pwa35-types.log",
+      "sha256": "e7a52f9cc3af5238601ae9feac967d4693ccbde0a2fcafcd306b216227091f6b"
+    },
+    "coverage": {
+      "path": "/tmp/cluvo-pwa35-coverage.log",
+      "sha256": "b9088734bffc93c81688821e36bb2b413cfefe73a957e1581292ee4ed81184b6"
+    },
+    "wp0": {
+      "path": "/tmp/cluvo-pwa35-wp0.log",
+      "sha256": "59ade0cbf7ee5d817e72bf8b27255928575141949755136db564ac479699cc0a"
+    },
+    "production-build": {
+      "path": "/tmp/cluvo-pwa35-production-build.log",
+      "sha256": "3462b20c8510adde27517afc048c06351beea73d6c2f25d4c94bc7db2d26c3c6"
+    }
+  },
+  "tests": {
+    "tests": 799,
+    "pass": 767,
+    "fail": 0,
+    "opt_in_native_tests_skipped_by_default": 32,
+    "opt_in_proofs_executed_separately": true
+  },
+  "lint_passed": true,
+  "typecheck_passed": true,
+  "coverage_passed": true,
+  "wp0_passed": true,
+  "fresh_production_build_passed": true,
+  "executed_local_proofs": [
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-ops-owned-proof.json",
+      "sha256": "69b32d3f3782076cd6d80ef50fa56ac5ba8df94d7e8acb5f47f9d9d3b6192b7a"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-all-sql-owned-proof.json",
+      "sha256": "569d9c8775a00a6a856c0b80170026c24305ad0043d3f42716920c9317c4d939"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-source-precision-closed-checks.json",
+      "sha256": "5c257c6797251d34d53e1f1826184430816c4b7b2e84b7dfab3be5a8e7e3b27e"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-source-precision-owned-proof.json",
+      "sha256": "8a4a02f118d6dab12e585a6fac3ee17053b25ffddd0b9738d20db10fa0bdc270"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-temporal-catalog-controls-owned-proof.json",
+      "sha256": "b91a086f4ac33c3f828d948c2686890021f7cb74536a773b02a2a27cc06490fc"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-local-append-proof.json",
+      "sha256": "b662002f942df76a51d8160b2343c8d1814a76f9b96c28e4329449a3af4c7b20"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-sportlink-native-ui/browser-results.json",
+      "sha256": "e1ea14ee59937dfac4c1daee75397eee14ff3cc68abb54e55f040b74f50546c8"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa34-f005-native-read/browser-results.json",
+      "sha256": "4e832c9cf2d6d156424ec7ad540013fbcd8fc21d8549a19ecb23323a35310032"
+    }
+  ],
+  "schema35_migrations": 35,
+  "native_api_functions": 89,
+  "native_api_views": 21,
+  "private_app_tables": 181,
+  "full_sql_suites": 34,
+  "full_sql_assertions": 1545,
+  "plpgsql_functions_linted": 118,
+  "sportlink_ui_checks": 14,
+  "sportlink_final_reviewed_screenshots": 5,
+  "original34_sql_unchanged": true,
+  "credential_pattern_scan_passed": true,
+  "staging_activated": false,
+  "staging_verified": false,
+  "physical_device_verified": false,
+  "complete_pwa_acceptance": false,
+  "production_enabled": false
+}

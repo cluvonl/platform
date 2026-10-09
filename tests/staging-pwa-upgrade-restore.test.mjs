@@ -200,7 +200,7 @@ test('known source formatting is aligned only in clone sessions, while semantic 
   assert.equal(alignment.used,true);assert.deepEqual(alignment.aligned_context,input.sourceDeparseContext);
   assert.equal(alignment.before_constraint_diagnostics.entries[0].flags.temporal_literal_text_changed,true);
   assert.equal(alignment.before_constraint_diagnostics.guc_difference_flags.time_zone_changed,true);
-  assert.equal(alignment.source_settings_changed,false);assert.equal(alignment.semantic_differences_ignored,false);
+  assert.equal(alignment.source_global_or_database_settings_changed,false);assert.equal(alignment.semantic_differences_ignored,false);
   assert.equal(observed.removed,true);assert.equal(observed.upgrades.length,1);assert.equal(observed.logReads,0);
  },31,{constraintDefinitionBefore:before,deparseAligned:sourceRaw});
  const restored="CHECK ((private_temporal_column > '2026-10-10 10:00:00+02'::timestamp with time zone))";
