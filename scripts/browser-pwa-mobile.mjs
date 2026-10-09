@@ -15,6 +15,7 @@ const focused=process.env.PWA_BROWSER_FOCUS==='flows';
 const options = {viewport:{width:390,height:844},locale:'nl-NL',timezoneId:'Europe/Amsterdam',reducedMotion:'reduce'};
 const accounts = ['ouder-a@example.test','ouder-b@example.test','coordinator@example.test','tenant-b@example.test'];
 const contexts = [], checks = [], matrix = [], tabletMatrix = [], consoleFailures = [];
+const authenticatedAccounts = new Set();
 const pageActors = new WeakMap();
 const fixtureId = (number) => `cb000000-0000-4000-8000-${String(number).padStart(12,'0')}`;
 let stage = 'preflight', browser, lastPage;
@@ -26,10 +27,10 @@ const sourceFiles=[...mobileSources,...appSources,...pwaSources,'components/app/
 const migrationFiles=(await readdir('supabase/migrations')).filter((file)=>file.endsWith('.sql')).sort();
 const migrationHashes=Object.fromEntries(await Promise.all(migrationFiles.map(async(file)=>[file,createHash('sha256').update(await readFile('supabase/migrations/'+file)).digest('hex')])));
 const sourceHashes=Object.fromEntries(await Promise.all(sourceFiles.map(async(file)=>[file,createHash('sha256').update(await readFile(file)).digest('hex')])));
-const fixtureFiles=['supabase/tests/pwa_browser_fixture.psql','supabase/tests/pwa_browser_batch_fixture.psql','supabase/tests/pwa_browser_document_repair.psql','supabase/tests/pwa_browser_report_grant.psql','supabase/tests/pwa_browser_action_context_fixture.psql'];
+const fixtureFiles=['supabase/tests/pwa_browser_fixture.psql','supabase/tests/pwa_browser_batch_fixture.psql','supabase/tests/pwa_browser_document_repair.psql','supabase/tests/pwa_browser_report_grant.psql','supabase/tests/pwa_browser_action_context_fixture.psql','supabase/tests/pwa_browser_planning_fixture.psql'];
 const fixtureHashes=Object.fromEntries(await Promise.all(fixtureFiles.map(async(file)=>[file,createHash('sha256').update(await readFile(file)).digest('hex')])));
 const buildId=(await readFile('.next/BUILD_ID','utf8')).trim();
-const metadata=()=>({browser:{name:'Chromium',version:browser?.version(),headless:true},platform:{os:process.platform,architecture:process.arch,timezone:options.timezoneId,locale:options.locale},build:{mode:'production',id:buildId,sourceFilesSha256:sourceHashes},database:{sourceMigrationCount:migrationFiles.length,migrationsSha256:migrationHashes,nativeAppliedSchemaAtStart:nativeSchemaAtStart},test_scope:{native_auth:true,synthetic_accounts:true,fixtureSourcesSha256:fixtureHashes,tenant:'club-a',household:fixtureId(100),cross_tenant_account:true},physical_device:false});
+const metadata=()=>({browser:{name:'Chromium',version:browser?.version(),headless:true},platform:{os:process.platform,architecture:process.arch,timezone:options.timezoneId,locale:options.locale},build:{mode:'production',id:buildId,sourceFilesSha256:sourceHashes},database:{sourceMigrationCount:migrationFiles.length,migrationsSha256:migrationHashes,nativeAppliedSchemaAtStart:nativeSchemaAtStart},test_scope:{native_auth:true,synthetic_accounts:true,fixtureSourcesSha256:fixtureHashes,tenant:'club-a',household:fixtureId(100),native_otp_users:authenticatedAccounts.size,cross_tenant_account:authenticatedAccounts.has(accounts[3])},physical_device:false});
 function setStage(value) {stage=value;console.log(JSON.stringify({phase:stage}));}
 const sql = (query) => execFileSync('docker',['exec','-i','supabase_db_cluvo-local','psql','-U','postgres','-d','postgres','-qtA','-v','ON_ERROR_STOP=1'],{input:query,encoding:'utf8'}).trim();
 function profileReadback() {
@@ -77,7 +78,7 @@ async function login(email) {
   assert.ok(token,'Actual OTP arrives in local capture.');
   await page.getByLabel('Eenmalige code').fill(token);
   await page.getByRole('button',{name:'Veilig inloggen'}).click();
-  await page.waitForURL('**/app/workspaces');authenticating=false;
+  await page.waitForURL('**/app/workspaces');authenticatedAccounts.add(email);authenticating=false;
   return {page,context};
 }
 async function appPage(page,route,club='club-a') {
@@ -118,7 +119,7 @@ async function layoutCheck(page,route,width,enlarged=false,rows=matrix) {
   }
   const actor = pageActors.get(page)?.split('@')[0] ?? 'second-device';
   const screenshotPath=`${output}/screenshots/${actor}-${route}-${width}${enlarged?'-text200':''}.png`;
-  const screenshotBytes=await page.screenshot({path:screenshotPath,fullPage:true});
+  const screenshotBytes=await page.screenshot({path:screenshotPath,fullPage:!dialogOpen});
   rows.push({actor,route,width,text200:enlarged,decorative_avatar_fits:true,no_overflow:true,nav:!dialogOpen,dialog_open:dialogOpen,club_scope:true,screenshot:{path:screenshotPath,sha256:createHash('sha256').update(screenshotBytes).digest('hex')}}); stage=priorStage;
 }
 async function eventually(query, expected) {for(let attempt=0;attempt<100;attempt++){const actual=sql(query);if(actual===expected)return;await new Promise((resolve)=>setTimeout(resolve,100));}assert.fail('Confirmed browser action has authoritative SQL readback.');}
@@ -161,7 +162,19 @@ try {
   await mkdir(output+'/screenshots',{recursive:true});
   browser=await chromium.launch({headless:true,...process.env.PWA_CHROMIUM_EXECUTABLE?{executablePath:process.env.PWA_CHROMIUM_EXECUTABLE}:{}});
   setStage('actual-mobile-otp');const {page:a,context:accountA}=await login(accounts[0]);checks.push('ACTUAL_MOBILE_OTP');
-  if(['acceptance','read-context'].includes(process.env.PWA_BROWSER_FOCUS)) {
+  if(['home','home-planning'].includes(process.env.PWA_BROWSER_FOCUS)) {
+    const {runMobileHomeFlows,runMobilePlanningFlows}=await import('./pwa-mobile-acceptance-flows.mjs');
+    const before=profileReadback();
+    const capture=async(page,route,width=390)=>{await layoutCheck(page,route,width);await layoutCheck(page,route,width,true);};
+    const cases=await runMobileHomeFlows({a,sql,appPage,eventually,fixtureId,checks,setStage,capture});
+    if(process.env.PWA_BROWSER_FOCUS==='home-planning') {
+      const {page:c}=await login(accounts[2]);
+      cases.push(...await runMobilePlanningFlows({a,c,sql,appPage,fixtureId,checks,setStage,capture}));
+    }
+    assert.deepEqual(consoleFailures,[]);checks.push('NO_HYDRATION_OR_UNCAUGHT_RENDER_ERRORS');
+    await writeFile(output+'/browser-results.json',JSON.stringify({environment:'local',...metadata(),actual_otp:true,synthetic_accounts:true,checks,cases,matrix,tabletMatrix,passed:true,whole_suite_passed:false,phase_scope:'Native Home current agreements, separate match/live activity, exact own event RSVP/reload/counts, optional explicit committee/season draft planning and privacy. Synthetic event/draft source fixtures; no publication, physical or whole V1 scope claimed.',readback:{before,after:profileReadback()},nativeDomainReadback:{before:nativeDomainAtStart,after:nativeDomainReadback()},staging_verified:false},null,2)+'\n');
+    console.log(JSON.stringify({result:'NATIVE_HOME_APPOINTMENTS_PASS',checks:checks.length,cases:cases.length,whole_suite_passed:false,environment:'local',staging_verified:false}));
+  } else if(['acceptance','read-context'].includes(process.env.PWA_BROWSER_FOCUS)) {
     setStage('independent-native-acceptance-phase');
     const {page:b}=await login(accounts[1]);
     const {page:c}=await login(accounts[2]);

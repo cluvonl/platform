@@ -5,6 +5,7 @@ export type MobileScreen = typeof MOBILE_SCREENS[number];
 export type MobileResource = {id: string; version: number};
 export type MobilePerson = MobileResource & {name: string; verified: boolean; adult: boolean; ageBand?: string; canExecute: boolean};
 export type MobileTask = MobileResource & {title: string; category: string; kind: 'club' | 'team'; startsAt: string; endsAt: string; location: string; minutes: number; capacity: number; freePlaces: number; instructions: string; minAge: number; qualification: string; cancelDays: number; teamId?: string; positionId?: string; positions?: {id: string; ordinal: number; allocationId?: string}[]; instructionVersionId?: string; taskTypeVersionId?: string; canBook: boolean; canWaitlist?: boolean; canManage?: boolean; canConfirm: boolean; state: string; requestedMinutes?: number; matchReviewed?: boolean};
+export type MobilePlanningTask = MobileResource & {state: 'draft' | 'published'; committeeId: string; committeeName: string; category: string; title: string; startsAt: string; endsAt: string; location: string; minutes: number; positions: number};
 export type MobileBooking = MobileResource & {taskId: string; positionId?: string; executorId: string; executorName: string; householdId: string; state: string; minutes: number; startsAt?: string; endsAt?: string; instructions?: string; location?: string; cancellationDeadline?: string; teamId?: string; memberName?: string; canCancel: boolean; canReplace: boolean; canPrepare: boolean; canFeedback: boolean; canConfirm: boolean; replacementRequested: boolean};
 export type MobileAllocation = MobileResource & {taskId: string; teamId: string; memberId?: string; memberName?: string; position: number; positionId?: string; clusterId?: string; clusterVersion?: number; selfUntil?: string; assignUntil?: string; canChoose: boolean; canAssign: boolean; canRequestReserve?: boolean; bookingId?: string; bookingVersion?: number; bookingState?: string; executorName?: string; countsForTeam: boolean};
 export type MobileTeamMember = MobileResource & {name: string; householdId: string; goal: number; goalVersion?: number; completed: number; planned: number; assigned: number; unallocated: number; canAdjust: boolean};
@@ -13,7 +14,7 @@ export type MobileProgress = {confirmed: number; planned: number; pending: numbe
 export type MobileActionDetail = {kind: 'work_card' | 'subtask' | 'card_mention' | 'event_mention' | 'team_task' | 'policy_question'; resourceId: string; resourceVersion?: number; parentVersion?: number; title: string; text: string; state: string; dueAt?: string; parentTitle: string; resolution?: string; creditMinutes?: number; parentKind: 'card' | 'event' | 'team' | 'policy'; parentId: string; parentHref?: string};
 export type MobileAction = MobileResource & {title: string; detail: string; label: string; due?: string; href: string; detailResource?: MobileActionDetail};
 export type MobileNotification = MobileResource & {title: string; text: string; kind: string; read: boolean; href: string};
-export type MobileCalendarEvent = MobileResource & {title: string; startsAt: string; endsAt: string | null; location: string; fieldName?: string; lockerRoom?: string; kind: 'task' | 'match' | 'event' | 'assignment'; personId?: string; personName?: string; teamName?: string; taskId?: string; bookingId?: string; allocationId?: string; description: string; canJoin: boolean; joined: boolean; attendees: number};
+export type MobileCalendarEvent = MobileResource & {title: string; startsAt: string; endsAt: string | null; location: string; fieldName?: string; lockerRoom?: string; state?: string; kind: 'task' | 'match' | 'event' | 'assignment'; personId?: string; personName?: string; teamName?: string; taskId?: string; bookingId?: string; allocationId?: string; description: string; canJoin: boolean; joined: boolean; attendees: number};
 export type MobilePolicy = MobileResource & {title: string; publishedAt: string; text: string; accepted: boolean; subjects: {id: string; name: string; accepted: boolean; canAccept?: boolean; needsOpening?: boolean; assignmentId?: string; assignmentVersion?: number; capacity?: 'self' | 'guardian'}[]};
 export type MobileCourse = MobileResource & {title: string; startsAt: string; qualification: string; capacity: number; enrolledCount: number; enrolled: boolean};
 export type MobileQualification = MobileResource & {title: string; expiresAt?: string; valid: boolean};
@@ -70,6 +71,7 @@ export type MobileSnapshot = {
   progress: MobileProgress | null;
   people: MobilePerson[];
   tasks: MobileTask[];
+  committeePlanning?: MobilePlanningTask[];
   bookings: MobileBooking[];
   allocations: MobileAllocation[];
   teams: MobileTeam[];

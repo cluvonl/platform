@@ -37,19 +37,19 @@ class NativeOwnerOperations(unittest.TestCase):
             request = json.loads(options['input'])
             self.assertEqual(set(request), {'operation', 'providers', 'sourceSha', 'workflowRunId', 'actor'})
             self.assertNotIn('PGPASSWORD', options['env'])
-            return SimpleNamespace(returncode=0, stderr=b'', stdout=b'{"preflightSql":"fixed","migrationCount":21}')
+            return SimpleNamespace(returncode=0, stderr=b'', stdout=b'{"preflightSql":"fixed","migrationCount":33}')
         with patch.object(module.subprocess, 'run', invoke):
-            self.assertEqual(module.recipe('preflight', None, {**environment, 'PGPASSWORD': 'synthetic-private'}), {'preflightSql': 'fixed','migrationCount':21})
+            self.assertEqual(module.recipe('preflight', None, {**environment, 'PGPASSWORD': 'synthetic-private'}), {'preflightSql': 'fixed','migrationCount':33})
 
     def test_preflight_requires_closed_full_history_dynamic_native_table_count_and_commit(self):
-        valid = {'scope': 'STAGING_PWA_NATIVE_QA_PREFLIGHT_V1', 'migration_count': 21, 'native_guarded_tables': 170,
+        valid = {'scope': 'STAGING_PWA_NATIVE_QA_PREFLIGHT_V1', 'migration_count': 33, 'native_guarded_tables': 180,
                  'api_only': True, 'command_owner_restricted': True, 'auth_mutations': False,
                  'v1_ready': False, 'production_enabled': False}
         for change in ({}, {'migration_count': 16}, {'native_guarded_tables': 143}, {'native_guarded_tables': True},
                        {'api_only': False}, {'extra': 'private'}):
             owner = self.fake()
             owner.run = lambda unused: [{'command': 'BEGIN'}, {'command': 'SELECT 1', 'rows': [[json.dumps({**valid, **change})]]}, {'command': 'COMMIT'}]
-            with patch.object(module, 'recipe', lambda *unused: {'preflightSql': 'fixed','migrationCount':21}):
+            with patch.object(module, 'recipe', lambda *unused: {'preflightSql': 'fixed','migrationCount':33}):
                 if change:
                     with self.assertRaises(module.Failure):
                         owner.preflight()
@@ -58,7 +58,7 @@ class NativeOwnerOperations(unittest.TestCase):
                     self.assertEqual(owner.phase, 'ready')
         owner = self.fake()
         owner.run = lambda unused: [{'command': 'ROLLBACK'}]
-        with patch.object(module, 'recipe', lambda *unused: {'preflightSql': 'fixed','migrationCount':21}), self.assertRaises(module.Failure):
+        with patch.object(module, 'recipe', lambda *unused: {'preflightSql': 'fixed','migrationCount':33}), self.assertRaises(module.Failure):
             owner.preflight()
 
     def test_committed_write_requires_same_backend_and_idle_transaction(self):

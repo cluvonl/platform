@@ -1,0 +1,46 @@
+-- LOCAL ONLY additive synthetic draft fixture. Existing grants, memberships,
+-- Auth rows, booking histories and ledger entries are never modified.
+\if :{?cluvo_native_pwa_fixture}
+\else
+\echo 'Requires explicit local synthetic fixture opt-in.'
+\quit
+\endif
+begin;
+do $fixture$
+declare
+ t uuid:='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
+ c uuid:='33333333-3333-4333-8333-333333333333';
+ season app.seasons%rowtype;
+ start_day date;
+begin
+ if current_database()<>'postgres' or current_user<>'postgres'
+  or (select count(*)from auth.users where id in('11111111-1111-4111-8111-111111111111'::uuid,c)and email like '%@example.test'and email_confirmed_at is not null)<>2
+  or not exists(select 1 from app.households where id='cb000000-0000-4000-8000-000000000100'and tenant_id=t and label='PWA lokaal testhuishouden')
+  or not exists(select 1 from supabase_migrations.schema_migrations where version='20261009116000')
+ then raise exception 'LOCAL_SYNTHETIC_PLANNING_TARGET_MISMATCH';end if;
+ select s.*into strict season from app.seasons s join app.obligations o on o.tenant_id=s.tenant_id and o.season_id=s.id where o.tenant_id=t and o.id='cb000000-0000-4000-8000-000000000600';
+ start_day:=greatest((statement_timestamp()at time zone'Europe/Amsterdam')::date+14,season.starts_on+1);
+ if start_day>season.ends_on then raise exception 'LOCAL_SYNTHETIC_PLANNING_SEASON_MISMATCH';end if;
+ if exists(select 1 from app.shifts where id='cb000000-0000-4000-8000-000000002010')then
+  if (select count(*)from app.shifts where tenant_id=t and state='draft'and version=1 and published_at is null and (
+   (id='cb000000-0000-4000-8000-000000002010'and committee_id='cb000000-0000-4000-8000-000000000300'and title='PWA exact intern conceptrooster')or
+   (id='cb000000-0000-4000-8000-000000002011'and committee_id='cb000000-0000-4000-8000-000000002020'and title='PWA afgeschermd andere commissieconcept')or
+   (id='cb000000-0000-4000-8000-000000002012'and committee_id='cb000000-0000-4000-8000-000000000300'and title='PWA concept in ander expliciet seizoen')
+  ))<>3 or exists(select 1 from app.bookings b join app.shift_positions p on p.tenant_id=b.tenant_id and p.id=b.position_id where p.shift_id in('cb000000-0000-4000-8000-000000002010','cb000000-0000-4000-8000-000000002011','cb000000-0000-4000-8000-000000002012'))
+  then raise exception 'LOCAL_SYNTHETIC_PLANNING_NAMESPACE_MISMATCH';end if;
+  return;
+ end if;
+ insert into app.committees(id,tenant_id,slug,name)values('cb000000-0000-4000-8000-000000002020',t,'pwa-other-planning','PWA andere afgeschermde commissie');
+ insert into app.task_categories(id,tenant_id,committee_id,name)values('cb000000-0000-4000-8000-000000002021',t,'cb000000-0000-4000-8000-000000002020','PWA andere planningcategorie');
+ insert into app.task_types(id,tenant_id,category_id,name)values('cb000000-0000-4000-8000-000000002022',t,'cb000000-0000-4000-8000-000000002021','PWA andere planningtaak');
+ insert into app.task_type_versions(id,tenant_id,task_type_id,revision,credit_minutes,approved_by_auth_user_id)values('cb000000-0000-4000-8000-000000002023',t,'cb000000-0000-4000-8000-000000002022',1,120,c);
+ insert into app.seasons(id,tenant_id,name,starts_on,ends_on,winter_cutoff_at,status)values('cb000000-0000-4000-8000-000000002030',t,'PWA expliciet volgend planningseizoen',season.ends_on+1,season.ends_on+365,(season.ends_on+170+time'00:00')at time zone'Europe/Amsterdam','preparing');
+ insert into app.shifts(id,tenant_id,type_version_id,committee_id,category_id,title,starts_at,ends_at,credit_minutes,cancellation_minutes,state)values
+  ('cb000000-0000-4000-8000-000000002010',t,'cb000000-0000-4000-8000-000000000721','cb000000-0000-4000-8000-000000000300','cb000000-0000-4000-8000-000000000700','PWA exact intern conceptrooster',(start_day+time'12:00')at time zone'Europe/Amsterdam',(start_day+time'14:00')at time zone'Europe/Amsterdam',120,2880,'draft'),
+  ('cb000000-0000-4000-8000-000000002011',t,'cb000000-0000-4000-8000-000000002023','cb000000-0000-4000-8000-000000002020','cb000000-0000-4000-8000-000000002021','PWA afgeschermd andere commissieconcept',(start_day+time'12:00')at time zone'Europe/Amsterdam',(start_day+time'14:00')at time zone'Europe/Amsterdam',120,2880,'draft'),
+  ('cb000000-0000-4000-8000-000000002012',t,'cb000000-0000-4000-8000-000000000721','cb000000-0000-4000-8000-000000000300','cb000000-0000-4000-8000-000000000700','PWA concept in ander expliciet seizoen',(season.ends_on+7+time'12:00')at time zone'Europe/Amsterdam',(season.ends_on+7+time'14:00')at time zone'Europe/Amsterdam',120,2880,'draft');
+ insert into app.shift_positions(id,tenant_id,shift_id,ordinal,starts_at,ends_at)select ('cb000000-0000-4000-8000-'||lpad((2040+n)::text,12,'0'))::uuid,t,s.id,n,s.starts_at,s.ends_at from app.shifts s cross join generate_series(1,2)n where s.id='cb000000-0000-4000-8000-000000002010';
+end;
+$fixture$;
+commit;
+select 'LOCAL_SYNTHETIC_PWA_PLANNING_FIXTURE'scope,3 new_drafts,1 new_other_committee,1 new_season,0 new_permissions,0 provider_calls;

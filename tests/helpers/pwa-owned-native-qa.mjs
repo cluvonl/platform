@@ -58,8 +58,8 @@ export async function runOwnedPwaNativeQa({name,socket,sql,json,lock}){
   const preflight=rows(await ownerSql.query(nativeQaPreflightSql())).at(-1);
   assert.equal(preflight.scope,'STAGING_PWA_NATIVE_QA_PREFLIGHT_V1');assert.ok(preflight.native_guarded_tables>144);
   const readonly=rows(await ownerSql.query(runtimeReadOnlyPreflightSQL())).at(-1);
-  assert.equal(readonly.scope,'STAGING_PWA_RUNTIME_READONLY32');assert.equal(readonly.transaction_read_only,true);
-  assert.equal(readonly.migration_count,32);assert.equal(readonly.database_role_superuser,false);
+  assert.equal(readonly.scope,'STAGING_PWA_RUNTIME_READONLY33');assert.equal(readonly.transaction_read_only,true);
+  assert.equal(readonly.migration_count,33);assert.equal(readonly.database_role_superuser,false);
   assert.equal(readonly.app_tables,readonly.native_guarded_tables);assert.equal(readonly.app_tables,readonly.forced_rls_tables);
   await ownerSql.query("RESET ROLE;ALTER ROLE cluvo_command_owner BYPASSRLS;SET ROLE postgres;BEGIN READ ONLY;"+`DO $runtime_role_negative$BEGIN
    BEGIN EXECUTE ${quote(runtimeReadOnlyGuardSQL())};RAISE EXCEPTION 'OWNED_RUNTIME_UNRESTRICTED_COMMAND_OWNER_ALLOWED';
@@ -71,6 +71,22 @@ export async function runOwnedPwaNativeQa({name,socket,sql,json,lock}){
    BEGIN EXECUTE ${quote(runtimeReadOnlyGuardSQL())};RAISE EXCEPTION 'OWNED_RUNTIME_UNSAFE_API_VIEW_ALLOWED';
    EXCEPTION WHEN SQLSTATE 'P0001'THEN IF SQLERRM<>'STAGING_NATIVE_QA_REFUSED'THEN RAISE;END IF;END;
   END $runtime_view_negative$;COMMIT;ALTER VIEW api.pwa_policy_assignments SET(security_invoker=true);`);
+  const planningIdentity='api.pwa_committee_planning(uuid,uuid)';
+  const apiFunctions=rows(await ownerSql.query("SELECT jsonb_build_object('functions',count(*),'invoker_functions',count(*)FILTER(WHERE NOT p.prosecdef))FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='api';")).at(-1);
+  assert.deepEqual(apiFunctions,{functions:85,invoker_functions:85});
+  for(const [change,restore]of [
+   ["CREATE FUNCTION api.pwa_unregistered_inventory_probe()RETURNS integer LANGUAGE sql STABLE SECURITY INVOKER AS 'SELECT 1';","DROP FUNCTION api.pwa_unregistered_inventory_probe();"],
+   [`ALTER FUNCTION ${planningIdentity} RENAME TO pwa_committee_planning_missing;`,`ALTER FUNCTION api.pwa_committee_planning_missing(uuid,uuid) RENAME TO pwa_committee_planning;`],
+   [`ALTER FUNCTION ${planningIdentity} VOLATILE;`,`ALTER FUNCTION ${planningIdentity} STABLE;`],
+   [`ALTER FUNCTION ${planningIdentity} SECURITY DEFINER;`,`ALTER FUNCTION ${planningIdentity} SECURITY INVOKER;`],
+   [`ALTER FUNCTION ${planningIdentity} SET search_path=public;`,`ALTER FUNCTION ${planningIdentity} SET search_path='';`],
+   [`GRANT EXECUTE ON FUNCTION ${planningIdentity} TO anon;`,`REVOKE EXECUTE ON FUNCTION ${planningIdentity} FROM anon;`],
+   [`GRANT EXECUTE ON FUNCTION ${planningIdentity} TO service_role;`,`REVOKE EXECUTE ON FUNCTION ${planningIdentity} FROM service_role;`],
+   [`REVOKE EXECUTE ON FUNCTION ${planningIdentity} FROM authenticated;`,`GRANT EXECUTE ON FUNCTION ${planningIdentity} TO authenticated;`],
+  ])await ownerSql.query(change+"BEGIN READ ONLY;"+`DO $runtime_rpc_negative$BEGIN
+   BEGIN EXECUTE ${quote(runtimeReadOnlyGuardSQL())};RAISE EXCEPTION 'OWNED_RUNTIME_UNSAFE_PLANNING_RPC_ALLOWED';
+   EXCEPTION WHEN SQLSTATE 'P0001'THEN IF SQLERRM<>'STAGING_NATIVE_QA_REFUSED'THEN RAISE;END IF;END;
+  END $runtime_rpc_negative$;COMMIT;`+restore);
   const setup=rows(await ownerSql.query('BEGIN;'+context(fixture)+fixture.mutationSql+fixture.readbackSql+'COMMIT;')).at(-1);
   assert.equal(setup.persons,3);
   // The fixed scope guard must reject an adopted foreign team before teardown.
@@ -143,6 +159,6 @@ export async function runOwnedPwaNativeQa({name,socket,sql,json,lock}){
   assert.equal(cleanup.qa_scopes_archived,2);assert.equal(cleanup.retained_answer_revisions,3);assert.equal(cleanup.retained_bookings,1);assert.equal(cleanup.retained_ledger_entries,0);
   const again=rows(await ownerSql.query('BEGIN;'+context(fixture)+fixture.teardownSql+fixture.teardownReadbackSql+'COMMIT;')).at(-1);
   assert.equal(again.status,'already_archived');
-  return {scope:'LOCAL_OWNED_PG17',readonly_runtime_configuration_guard:true,api_security_invoker_views:21,actual_unsafe_api_view_refused_in_readonly_transaction:true,actual_native_last_position_contenders:2,private_teams_and_minor_contacts:true,old_bearer_after_logout_refused:true,scoped_automation:{...scopedProof,rollback_verified:true},automation};
+  return {scope:'LOCAL_OWNED_PG17',readonly_runtime_configuration_guard:true,api_security_invoker_functions:apiFunctions.functions,actual_planning_rpc_metadata_negatives:8,api_security_invoker_views:21,actual_unsafe_api_view_refused_in_readonly_transaction:true,actual_native_last_position_contenders:2,private_teams_and_minor_contacts:true,old_bearer_after_logout_refused:true,scoped_automation:{...scopedProof,rollback_verified:true},automation};
  }catch(error){primary=error;throw error;}finally{try{await ownerSql.close();}catch(error){if(!primary)throw error;}}
 }

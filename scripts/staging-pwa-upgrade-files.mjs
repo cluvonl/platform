@@ -63,6 +63,10 @@ export const PWA_ADDITIONS=Object.freeze([
   {
     "file": "20261009115000_pwa_personal_action_context.sql",
     "sha256": "10dfcebb3e8f61623586f41123e8967815e743745f991f68f84bcfd686e3a195"
+  },
+  {
+    "file": "20261009116000_pwa_committee_planning.sql",
+    "sha256": "2bca259cd9041307c7daab5bf4e950fc0ddad72109aa180631634ce290b3e311"
   }
 ]
 .map(Object.freeze));

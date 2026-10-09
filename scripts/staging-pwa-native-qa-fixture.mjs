@@ -135,6 +135,17 @@ function schemaGuard(){
     OR EXISTS(SELECT 1 FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
       WHERE n.nspname='api' AND c.relkind='v'
         AND NOT('security_invoker=true'=ANY(coalesce(c.reloptions,ARRAY[]::text[]))))
+    OR (SELECT count(*) FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='api')<>85
+    OR EXISTS(SELECT 1 FROM (VALUES ('api.pwa_personal_action_context(uuid,uuid,bigint)'),
+      ('api.pwa_committee_planning(uuid,uuid)')) required(signature)
+      LEFT JOIN pg_proc p ON p.oid=to_regprocedure(required.signature)
+      WHERE p.oid IS NULL OR p.prosecdef OR p.provolatile<>'s'
+        OR p.proowner IS DISTINCT FROM 'postgres'::regrole::oid
+        OR p.prolang IS DISTINCT FROM (SELECT oid FROM pg_language WHERE lanname='sql')
+        OR p.proconfig IS DISTINCT FROM ARRAY['search_path=""']::text[]
+        OR NOT has_function_privilege('authenticated',p.oid,'EXECUTE')
+        OR has_function_privilege('anon',p.oid,'EXECUTE')
+        OR has_function_privilege('service_role',p.oid,'EXECUTE'))
     OR EXISTS(SELECT 1 FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='api' AND p.prosecdef)
     OR NOT EXISTS(SELECT 1 FROM pg_db_role_setting s WHERE s.setrole='authenticator'::regrole::oid
       AND s.setdatabase=(SELECT oid FROM pg_database WHERE datname='postgres')

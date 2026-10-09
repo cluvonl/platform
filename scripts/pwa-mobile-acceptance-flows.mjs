@@ -1,5 +1,97 @@
 import assert from 'node:assert/strict';
 
+export async function runMobilePlanningFlows({a,c,sql,appPage,fixtureId,checks,setStage,capture}) {
+  const tenant='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
+  const season=sql(`select season_id from app.obligations where tenant_id='${tenant}'and id='${fixtureId(600)}';`);
+  assert.match(season,/^[0-9a-f-]{36}$/);
+  const history=()=>sql(`select encode(extensions.digest(convert_to(jsonb_build_object('drafts',(select jsonb_agg(to_jsonb(s)order by s.id)from app.shifts s where s.id in('${fixtureId(2010)}','${fixtureId(2011)}','${fixtureId(2012)}')),'bookings',(select jsonb_agg(to_jsonb(b)order by b.id)from app.bookings b where tenant_id='${tenant}'),'ledger',(select jsonb_agg(to_jsonb(l)order by l.id)from app.hour_ledger_entries l where tenant_id='${tenant}'))::text,'UTF8'),'sha256'),'hex');`);
+  const before=history(),cases=[];
+  const pass=(id,description)=>{checks.push(id);cases.push({id,functionIds:['F073'],description,passed:true,environment:'local',staging_verified:false});};
+  const titles=['PWA exact intern conceptrooster','PWA afgeschermd andere commissieconcept','PWA concept in ander expliciet seizoen'];
+  setStage('native-committee-planning-exact-draft-and-published-details');
+  await appPage(c,`manage?tab=plan&season=${season}`);
+  const planning=c.locator('section.section').filter({has:c.getByRole('heading',{name:'Komende taken',exact:true})});
+  await planning.getByRole('heading',{name:titles[0],exact:true}).waitFor();
+  assert.ok(!(await c.content()).includes(titles[1])&&!(await c.content()).includes(titles[2]));
+  const published=sql(`select title from app.shifts where tenant_id='${tenant}'and committee_id='${fixtureId(300)}'and state='published'and starts_at>statement_timestamp()order by starts_at,id limit 1;`);
+  await planning.getByRole('heading',{name:published,exact:true}).waitFor();
+  for(const width of [320,390,430,1440])await capture(c,'committee-draft-and-published-planning',width);
+  await planning.locator('button.task-card').filter({has:c.getByRole('heading',{name:titles[0],exact:true})}).click();
+  const sheet=c.getByRole('dialog');await sheet.waitFor();
+  assert.equal(new URL(c.url()).searchParams.get('view'),fixtureId(2010));
+  await sheet.getByText('Concept',{exact:true}).waitFor();
+  await sheet.getByText('Dit concept is alleen zichtbaar in de bevoegde commissieplanning. Inschrijving is nog niet geopend.',{exact:true}).waitFor();
+  await sheet.getByText('120 verenigingsminuten',{exact:true}).waitFor();
+  assert.equal(await sheet.locator('form').count(),0);
+  assert.equal(await sheet.getByRole('button',{name:/Ik help mee|Inschrijving bevestigen|Publiceer/}).count(),0);
+  await capture(c,'committee-exact-readonly-draft',390);
+  pass('OWN_COMMITTEE_DRAFT_AND_PUBLISHED_PLANNING_EXACT_READONLY_DETAIL','Native coordinator sees future own draft and published tasks in the selected season; the exact draft opens its current metadata without book or publish actions.');
+  for(const id of [2011,2012]) {
+    await appPage(c,`manage?tab=plan&view=${fixtureId(id)}&season=${season}`);
+    await c.getByRole('dialog').getByRole('heading',{name:'Deze planning is niet beschikbaar',exact:true}).waitFor();
+    assert.ok(!(await c.content()).includes(titles[id===2011?1:2]));
+  }
+  await appPage(c,`manage?tab=plan&season=${fixtureId(2030)}`);
+  await c.getByRole('heading',{name:titles[2],exact:true}).waitFor();
+  assert.ok(!(await c.content()).includes(titles[0])&&!(await c.content()).includes(titles[1]));
+  await appPage(a,`manage?tab=plan&view=${fixtureId(2010)}&season=${season}`);
+  for(const title of titles)assert.ok(!(await a.content()).includes(title));
+  await appPage(a,`tasks?season=${season}`);
+  for(const title of titles)assert.ok(!(await a.content()).includes(title));
+  await appPage(c,`tasks?season=${season}`);
+  assert.equal(await c.getByRole('heading',{name:titles[0],exact:true}).count(),0);
+  assert.equal(history(),before,'Planning reads preserve all draft, booking and ledger bytes.');
+  pass('DRAFT_PLANNING_NATIVE_MEMBER_COMMITTEE_AND_SEASON_DENIALS','A member and another committee cannot read drafts; a draft in another native season appears only after explicit authorized season selection, and drafts are absent from the public market. Existing draft, booking and ledger bytes remain unchanged.');
+  return cases;
+}
+
+export async function runMobileHomeFlows({a,sql,appPage,eventually,fixtureId,checks,setStage,capture}) {
+  const tenant='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',person='a1000000-0000-4000-8000-000000000001';
+  const history=()=>sql(`select encode(extensions.digest(convert_to(jsonb_build_object('bookings',(select jsonb_agg(to_jsonb(b)order by b.id)from app.bookings b where tenant_id='${tenant}'),'ledger',(select jsonb_agg(to_jsonb(l)order by l.id)from app.hour_ledger_entries l where tenant_id='${tenant}'))::text,'UTF8'),'sha256'),'hex');`);
+  const before=history(),cases=[];
+  const pass=(id,functionIds,description)=>{checks.push(id);cases.push({id,functionIds,description,passed:true,environment:'local',staging_verified:false});};
+  const booked=JSON.parse(sql(`select row_to_json(x)from(select b.id,p.shift_id,coalesce(d.title_snapshot,s.title)title,b.starts_at_snapshot from app.bookings b join app.obligations o on o.tenant_id=b.tenant_id and o.id=b.obligation_id join app.shift_positions p on p.tenant_id=b.tenant_id and p.id=b.position_id join app.shifts s on s.tenant_id=p.tenant_id and s.id=p.shift_id left join app.pwa_booking_details d on d.tenant_id=b.tenant_id and d.booking_id=b.id where b.tenant_id='${tenant}'and o.assessed_household_id='${fixtureId(100)}'and b.state in('booked','transfer_pending','reconfirmation_required','performed_pending')and b.starts_at_snapshot>statement_timestamp()order by b.starts_at_snapshot,b.id limit 1)x;`));
+  assert.ok(booked?.id&&booked?.title);
+  assert.ok(Number(sql(`select count(*)from app.bookings where tenant_id='${tenant}'and state='cancelled'and starts_at_snapshot>statement_timestamp();`))>0);
+  assert.ok(Number(sql(`select count(*)from app.bookings where tenant_id='${tenant}'and state='transferred'and starts_at_snapshot>statement_timestamp();`))>0);
+  setStage('native-home-current-agreements-match-and-live-activity');
+  await appPage(a,'home');
+  const upcoming=a.locator('section.section').filter({has:a.getByRole('heading',{name:'Binnenkort',exact:true})});
+  await upcoming.getByRole('heading',{name:booked.title,exact:true}).waitFor();
+  assert.equal(await upcoming.getByText(/^(Afgemeld|Overgedragen)$/).count(),0);
+  assert.equal(await upcoming.locator('a.match-card').count(),2);
+  await upcoming.getByText('Wedstrijd',{exact:true}).waitFor();
+  const activity=upcoming.getByRole('link').filter({has:a.getByRole('heading',{name:'PWA lokale vrijwilligersavond',exact:true})});
+  assert.equal(await activity.count(),1);const activityUrl=new URL(await activity.getAttribute('href'),'http://127.0.0.1:3200');assert.ok(activityUrl.pathname.endsWith('/agenda'));assert.equal(activityUrl.searchParams.get('view'),fixtureId(1951));
+  assert.equal(await upcoming.getByRole('heading',{name:'PWA vervallen vrijwilligersavond',exact:true}).count(),0);
+  for(const width of [320,390,430,1440])await capture(a,'ouder-a-home-current-appointments',width);
+  await upcoming.locator('button.task-card').filter({has:a.getByRole('heading',{name:booked.title,exact:true})}).click();
+  await a.getByRole('dialog').waitFor();assert.equal(new URL(a.url()).searchParams.get('booking'),booked.id);
+  assert.equal(new URL(a.url()).searchParams.get('task'),booked.shift_id);
+  pass('HOME_CURRENT_BOOKING_ORIGINAL_TIME_AND_DISTINCT_MATCH_ACTIVITY',['F004','F007'],'Native Home shows the chronologically next current household booking, its exact detail IDs, and separate authorized match and live activity cards; cancelled activity and historical booking states are excluded.');
+  await appPage(a,'home');
+  await a.locator('section.section').filter({has:a.getByRole('heading',{name:'Binnenkort',exact:true})}).getByRole('link').filter({has:a.getByRole('heading',{name:'PWA lokale vrijwilligersavond',exact:true})}).click();
+  let sheet=a.getByRole('dialog');await sheet.waitFor();
+  assert.equal(new URL(a.url()).searchParams.get('view'),fixtureId(1951));
+  await sheet.getByText('PWA concrete vrijwilligersavond met geautoriseerde deelnamekeuze.',{exact:true}).waitFor();
+  const existing=sql(`select coalesce((select rsvp from app.event_attendees where tenant_id='${tenant}'and occurrence_id='${fixtureId(1951)}'and person_id='${person}'),'none');`);
+  if(existing==='accepted')throw Error('HOME_EVENT_FIXTURE_REQUIRES_UNJOINED_OWN_ACCOUNT');
+  setStage('native-live-activity-own-rsvp-reload-and-decline');
+  await sheet.getByRole('button',{name:'Ik ben erbij',exact:true}).click();
+  await eventually(`select rsvp from app.event_attendees where tenant_id='${tenant}'and occurrence_id='${fixtureId(1951)}'and person_id='${person}';`,'accepted');
+  await appPage(a,`agenda?view=${fixtureId(1951)}`);sheet=a.getByRole('dialog');await sheet.waitFor();
+  await sheet.getByText('1 aanmelding',{exact:true}).waitFor();
+  assert.equal(sql(`select count(*)from app.event_attendees where tenant_id='${tenant}'and occurrence_id='${fixtureId(1951)}'and rsvp='accepted';`),'1');
+  await sheet.getByRole('button',{name:'Ik kom toch niet',exact:true}).click();
+  await eventually(`select rsvp from app.event_attendees where tenant_id='${tenant}'and occurrence_id='${fixtureId(1951)}'and person_id='${person}';`,'declined');
+  assert.equal(sql(`select count(*)from app.event_attendees where tenant_id='${tenant}'and occurrence_id='${fixtureId(1951)}'and person_id='${person}';`),'1');
+  await appPage(a,`agenda?view=${fixtureId(1951)}`);await a.getByRole('dialog').getByRole('button',{name:'Ik ben erbij',exact:true}).waitFor();
+  await a.getByRole('dialog').getByText('0 aanmeldingen',{exact:true}).waitFor();
+  assert.equal(history(),before,'Reading Home and responding to an activity preserve every booking and ledger byte.');
+  pass('HOME_ACTIVITY_EXACT_DETAIL_NATIVE_OWN_RSVP_RELOAD_DECLINE',['F007','F039'],'The live Home activity opens its exact native occurrence; own attendance is confirmed, survives reload and can be declined using the rendered app, with one retained attendee row and no booking or ledger changes.');
+  return cases;
+}
+
 // Local synthetic native users only. Mutations use the rendered app; SQL is
 // readback. This supplements, and never overwrites, the earlier browser proof.
 export async function runMobileAcceptanceFlows({a,b,c,sql,appPage,eventually,fixtureId,checks,setStage,capture}) {

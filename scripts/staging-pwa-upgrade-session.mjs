@@ -9,7 +9,7 @@ import {projectTarget,databaseTarget,databaseEnvironment} from './staging-prefli
 const BRIDGE=fileURLToPath(new URL('./staging_pwa_upgrade_session.py',import.meta.url));
 const SESSION=fileURLToPath(new URL('./staging_backup_session.py',import.meta.url));
 const SESSION_PIN='e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1';
-export const PWA_UPGRADE_SESSION_CHILD_SHA256='d3f1407ac8094b83a3420f45bcc8e29c5c5a173216e1f45c7b3c5ccab9dcd339';
+export const PWA_UPGRADE_SESSION_CHILD_SHA256='04035b688c11711416046671a272bc7ad61ede229d690b25c1fb71de8a29cf39';
 const BRIDGE_PIN=PWA_UPGRADE_SESSION_CHILD_SHA256;
 const sourceBindings=new WeakMap();
 const PROJECT='fbozlbgmktkgcdfqdaaz';

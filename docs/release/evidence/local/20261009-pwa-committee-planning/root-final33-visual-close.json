@@ -1,0 +1,144 @@
+{
+  "scope": "LOCAL_FINAL33_PWA_BUILD_NATIVE_HOME_COMMITTEE_AND_VISUAL_PROOF",
+  "observed_at": "2026-10-09T07:39:05.295571+00:00",
+  "passed": true,
+  "candidate_parent_source_sha": "1efe5ff0d198fcabbeb45912256ee3af56463b60",
+  "migration_count": 33,
+  "build_id": "DjodKXFrrC5uKVgChE7vg",
+  "executed_checks": {
+    "observed_at": "2026-10-09T07:23:06.876453+00:00",
+    "phases": [
+      {
+        "phase": "lint",
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exit_code": 0,
+        "passed": true,
+        "summary": "\n> cluvo@0.1.0 lint\n> eslint .\n"
+      },
+      {
+        "phase": "typecheck",
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exit_code": 0,
+        "passed": true,
+        "summary": "\n> cluvo@0.1.0 typecheck\n> tsc --noEmit\n"
+      },
+      {
+        "phase": "node_tests",
+        "command": [
+          "npm",
+          "test"
+        ],
+        "exit_code": 0,
+        "passed": true,
+        "summary": "✔ runtime en instrumentation blokkeren production en bewaken geconfigureerde appmodus (2.383842ms)\n✔ er bestaat geen actieve productieworkflow en de template weigert altijd (17.613738ms)\nℹ tests 761\nℹ suites 0\nℹ pass 732\nℹ fail 0\nℹ cancelled 0\nℹ skipped 29\nℹ todo 0\nℹ duration_ms 9337.467489",
+        "counts": {
+          "tests": 761,
+          "pass": 732,
+          "fail": 0,
+          "skipped": 29
+        }
+      },
+      {
+        "phase": "production_build",
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exit_code": 0,
+        "passed": true,
+        "summary": "├ ƒ /invite/accept\n├ ○ /login\n└ ƒ /workspaces\n\n\nƒ Proxy (Middleware)\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n"
+      },
+      {
+        "phase": "wp0",
+        "command": [
+          "npm",
+          "run",
+          "test:wp0"
+        ],
+        "exit_code": 0,
+        "passed": true,
+        "summary": "✔ er bestaat geen actieve productieworkflow en de template weigert altijd (4.945245ms)\nℹ tests 5\nℹ suites 0\nℹ pass 5\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 69.636979\nWP0-smoke geslaagd via Next.js standalone server op http://127.0.0.1:46307."
+      },
+      {
+        "phase": "coverage",
+        "command": [
+          "npm",
+          "run",
+          "check:coverage"
+        ],
+        "exit_code": 0,
+        "passed": true,
+        "summary": "\n> cluvo@0.1.0 check:coverage\n> node scripts/coverage-matrix.mjs\n\n{\"pages\":23,\"shared_shells\":1,\"functions\":219,\"acceptance_criteria\":102,\"baseline\":{\"migrations\":7,\"app_tables\":140,\"api_function_definitions\":52,\"api_views\":16},\"current\":{\"migrations\":33,\"app_tables\":180,\"api_function_definitions\":86,\"api_views\":21}}"
+      }
+    ],
+    "build_id": "DjodKXFrrC5uKVgChE7vg",
+    "completed_at": "2026-10-09T07:23:55.671474+00:00"
+  },
+  "post_build_harness_only_change": {
+    "file": "scripts/browser-pwa-mobile.mjs",
+    "change": "Capture an open modal as the viewport instead of its inert full-page background. Runtime sources unchanged.",
+    "targeted_eslint": {
+      "command": [
+        "npx",
+        "--no-install",
+        "eslint",
+        "scripts/browser-pwa-mobile.mjs"
+      ],
+      "exit_code": 0
+    },
+    "actual_final_browser_rerun": true
+  },
+  "browser": {
+    "artifact": "docs/release/evidence/local/20261009-pwa33-final-browser/browser-results.json",
+    "sha256": "33b91dbec0789f38c117492e5eba5de8320db57ae3b96aa20a68272eb49a7f92",
+    "native_otp_users": 2,
+    "cross_tenant_account": false,
+    "executed_checks": 6,
+    "bounded_cases": 4,
+    "bounded_function_ids": [
+      "F004",
+      "F007",
+      "F039",
+      "F073"
+    ],
+    "matrix_rows": 18,
+    "all_source_fixture_migration_and_image_hashes_verified": true,
+    "actual_200_percent_text": true,
+    "manual_visual_review": [
+      "coordinator-committee-exact-readonly-draft-390.png",
+      "coordinator-committee-exact-readonly-draft-390-text200.png"
+    ],
+    "modal_viewport_capture": true,
+    "long_modal_content_scrolls": true
+  },
+  "committee_read_extension": {
+    "artifact": "docs/release/evidence/local/20261009-pwa-committee-planning/owned-planning33-proof.json",
+    "sha256": "4552655596e41c5bfb1e8d472115a6844a5bd3b5e4583a7eb58e6a000289d50e",
+    "actual_empty33_and_populated32_to33": true
+  },
+  "operational_upgrade": {
+    "artifact": "docs/release/evidence/staging/20261009-pwa33-ops-owned-proof.json",
+    "sha256": "ba73c1b8ca37ea33e5714516b133bc41397a3fc73e1ea910ff4daa02d13491cb",
+    "actual_owned_fresh16_to33": true,
+    "actual_owned_committed31_to33": true,
+    "previous_history_receipts_retained": true,
+    "operational_source_hashes_verified": true
+  },
+  "local_additive_application": {
+    "artifact": "docs/release/evidence/local/20261009-pwa-release/local116-apply-proof.json",
+    "sha256": "367a61af6ab7ac3959eea6a7067d4a4437c23cbffbbb8fb904506e26c6c64034"
+  },
+  "staging_verified": false,
+  "physical_device_verified": false,
+  "whole_acceptance_passed": false,
+  "production_enabled": false
+}

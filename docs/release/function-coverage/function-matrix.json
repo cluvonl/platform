@@ -1,6 +1,6 @@
 {
   "base_sha": "47386491859b47fbebf85c3b209724dcc20407fc",
-  "source_head": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+  "source_head": "1efe5ff0d198fcabbeb45912256ee3af56463b60",
   "worktree_dirty": true,
   "prototype_sha": "e9c1d8bca2089b0944577eed73d1bedf7e70a3b6",
   "acceptance_ready": false,
@@ -16,9 +16,9 @@
       "api_views": 16
     },
     "current": {
-      "migrations": 32,
+      "migrations": 33,
       "app_tables": 180,
-      "api_function_definitions": 85,
+      "api_function_definitions": 86,
       "api_views": 21
     }
   },
@@ -1639,6 +1639,17 @@
           "kind": "function",
           "name": "api.pwa_personal_action_context",
           "line": 5
+        }
+      ]
+    },
+    {
+      "file": "20261009116000_pwa_committee_planning.sql",
+      "sha256": "2bca259cd9041307c7daab5bf4e950fc0ddad72109aa180631634ce290b3e311",
+      "objects": [
+        {
+          "kind": "function",
+          "name": "api.pwa_committee_planning",
+          "line": 6
         }
       ]
     }

@@ -1,0 +1,41 @@
+{
+  "scope": "LOCAL_SHARED_ADDITIVE_PWA_APPLICATION",
+  "observed_at": "2026-10-09T07:23:34.476325+00:00",
+  "migration": "20261009116000_pwa_committee_planning.sql",
+  "sha256": "2bca259cd9041307c7daab5bf4e950fc0ddad72109aa180631634ce290b3e311",
+  "source_hash_verified": true,
+  "local_cli_migration_up": true,
+  "transaction_committed": true,
+  "postgrest_schema_notified": true,
+  "migration_count": 33,
+  "older_history_rows_unchanged": 32,
+  "native_sec_invoker_stable_read_verified": true,
+  "existing_auth_user_and_session_counts_unchanged": true,
+  "existing_booking_bytes_unchanged": true,
+  "existing_ledger_bytes_unchanged": true,
+  "database_reset": false,
+  "provider_calls": 0,
+  "staging_mutations": false,
+  "before": {
+    "actor": "postgres",
+    "latest": "20261009115000",
+    "database": "postgres",
+    "auth_users": 71,
+    "auth_sessions": 160,
+    "ledger_sha256": "972f1b49f357b0031ae467d96d07d9480ab926099219c3e23aa5c01b11c990c0",
+    "bookings_sha256": "095ebac56222b13eec35d2e20c259e4b4540825a5d8243a85e5c9ff49012dd2f",
+    "migration_count": 32,
+    "older_history_sha256": "256755de50a86c1f2df22253c93462363b56b3ce65f1af8ef7a590b1f2fb848e"
+  },
+  "after": {
+    "actor": "postgres",
+    "latest": "20261009116000",
+    "database": "postgres",
+    "auth_users": 71,
+    "auth_sessions": 160,
+    "ledger_sha256": "972f1b49f357b0031ae467d96d07d9480ab926099219c3e23aa5c01b11c990c0",
+    "bookings_sha256": "095ebac56222b13eec35d2e20c259e4b4540825a5d8243a85e5c9ff49012dd2f",
+    "migration_count": 33,
+    "older_history_sha256": "256755de50a86c1f2df22253c93462363b56b3ce65f1af8ef7a590b1f2fb848e"
+  }
+}

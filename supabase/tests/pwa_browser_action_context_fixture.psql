@@ -71,5 +71,24 @@ begin
  if not exists(select 1 from app.matches m where m.tenant_id=t and m.connection_id='cb000000-0000-4000-8000-000000001921'and m.source_id='pwa-local-read-context-'||d::text and m.team_id='cb000000-0000-4000-8000-000000000400'and m.starts_at=(d+time '10:30')at time zone 'Europe/Amsterdam'and m.field_name='PWA veld 2'and m.locker_room_text='PWA kleedkamer 3')then raise exception 'LOCAL_EXACT_MATCH_CONTEXT_MISMATCH';end if;
 end;
 $match$;
+-- Distinct live and cancelled club activities verify that Home preserves the
+-- next match AND the next live activity. Additive local data only: no grants,
+-- existing agreements, bookings, audit or ledger rows are changed.
+do $home_event$
+declare t uuid:='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
+begin
+ if not exists(select 1 from app.events where id='cb000000-0000-4000-8000-000000001950')then
+  insert into app.events(id,tenant_id,title,description,organizer_person_id,visibility,timezone,status)values
+   ('cb000000-0000-4000-8000-000000001950',t,'PWA lokale vrijwilligersavond','PWA concrete vrijwilligersavond met geautoriseerde deelnamekeuze.','a1000000-0000-4000-8000-000000000003','tenant','Europe/Amsterdam','active'),
+   ('cb000000-0000-4000-8000-000000001953',t,'PWA vervallen vrijwilligersavond','Deze lokale activiteit is afgelast.','a1000000-0000-4000-8000-000000000003','tenant','Europe/Amsterdam','active');
+  insert into app.event_occurrences(id,tenant_id,event_id,recurrence_key,starts_at,ends_at,local_date,state)values
+   ('cb000000-0000-4000-8000-000000001951',t,'cb000000-0000-4000-8000-000000001950','pwa-local-home-live','2027-05-01 19:00:00+02','2027-05-01 21:00:00+02','2027-05-01','scheduled'),
+   ('cb000000-0000-4000-8000-000000001954',t,'cb000000-0000-4000-8000-000000001953','pwa-local-home-cancelled','2027-04-30 19:00:00+02','2027-04-30 21:00:00+02','2027-04-30','cancelled');
+ end if;
+ if not exists(select 1 from app.events e join app.event_occurrences o on o.tenant_id=e.tenant_id and o.event_id=e.id where e.id='cb000000-0000-4000-8000-000000001950'and e.tenant_id=t and e.title='PWA lokale vrijwilligersavond'and e.visibility='tenant'and e.status='active'and o.id='cb000000-0000-4000-8000-000000001951'and o.state='scheduled'and o.starts_at='2027-05-01 19:00:00+02'::timestamptz)
+  or not exists(select 1 from app.events e join app.event_occurrences o on o.tenant_id=e.tenant_id and o.event_id=e.id where e.id='cb000000-0000-4000-8000-000000001953'and e.tenant_id=t and e.title='PWA vervallen vrijwilligersavond'and o.id='cb000000-0000-4000-8000-000000001954'and o.state='cancelled'and o.starts_at='2027-04-30 19:00:00+02'::timestamptz)
+  then raise exception 'LOCAL_HOME_ACTIVITY_NAMESPACE_MISMATCH';end if;
+end;
+$home_event$;
 commit;
 select 'LOCAL_SYNTHETIC_ACTION_CONTEXT_FIXTURE' scope,5 manual_action_count,0 new_permissions,0 provider_calls;

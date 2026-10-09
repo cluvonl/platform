@@ -32,6 +32,7 @@ function archivedSource(sql){
 
 test('closed PWA source manifest retains exact original16 and detects any suffix byte/order change',()=>{
  assert.deepEqual(UPGRADE_FILES.slice(0,16),IMMUTABLE16);
+ assert.equal(hash(JSON.stringify(UPGRADE_FILES.slice(0,32))),'e1087c300882adcf8be7a5087507c824a7cfd10bd5f66133646315dba7d10c42');
  assert.equal(manifest.migrations.length,UPGRADE_FILES.length);
  for(let index=0;index<UPGRADE_FILES.length;index++)assert.equal(hash(manifest.migrations[index].sql),UPGRADE_FILES[index].sha256);
  for(const index of [0,16,UPGRADE_FILES.length-1]){
@@ -60,21 +61,27 @@ function predecessorState(prefix=31){
   backup_artifact_id:approved.backupArtifactId,backup_artifact_sha256:approved.backupArtifactSha256});
  return value;
 }
-test('only the complete approved hosted31 predecessor can resume32 without rewriting previous receipts',()=>{
- assert.equal(UPGRADE_FILES.length,32);
+test('only the complete approved hosted31 predecessor can resume33 without rewriting previous receipts',()=>{
+ assert.equal(UPGRADE_FILES.length,33);
  const prior=predecessorState(),before=JSON.stringify(prior);
  const remaining=validateUpgradeHistory(manifest,prior);
- assert.equal(remaining.appliedPrefix,31);assert.equal(remaining.pending.length,1);
+ assert.equal(remaining.appliedPrefix,31);assert.equal(remaining.pending.length,2);
  assert.equal(JSON.stringify(prior),before);
- assert.equal(validateUpgradeHistory(manifest,predecessorState(32)).complete,true);
+ assert.equal(validateUpgradeHistory(manifest,predecessorState(32)).pending.length,1);
+ assert.equal(validateUpgradeHistory(manifest,predecessorState(33)).complete,true);
  const negative=[s=>{s.historyRows.pop();s.upgradeRows.pop();},s=>{s.upgradeRows[0]=state(31).upgradeRows[0];},
   s=>{s.upgradeRows[0].source_sha='e'.repeat(40);},s=>{s.upgradeRows[0].workflow_run_id='987';},
   s=>{s.upgradeRows[0].backup_artifact_id='999';},s=>{s.upgradeRows[0].backup_artifact_sha256='e'.repeat(64);},
   s=>{s.upgradeRows[0].manifest_sha256='f'.repeat(64);},s=>{s.upgradeRows[0].idempotency_key='foreign';},
   s=>{s.historyRows[30].single_statement_sha256='0'.repeat(64);}];
  for(const mutate of negative){const value=predecessorState();mutate(value);assert.throws(()=>validateUpgradeHistory(manifest,value));}
- const wrongLatest=predecessorState(32);Object.assign(wrongLatest.upgradeRows[15],wrongLatest.upgradeRows[14],{version:manifest.migrations[31].version,file:manifest.migrations[31].file,sha256:manifest.migrations[31].sha256,expected_version:31});
- assert.throws(()=>validateUpgradeHistory(manifest,wrongLatest));
+ for(const index of [31,32]){
+  const wrongLatest=predecessorState(index+1);
+  Object.assign(wrongLatest.upgradeRows[index-16],wrongLatest.upgradeRows[14],{version:manifest.migrations[index].version,file:manifest.migrations[index].file,sha256:manifest.migrations[index].sha256,expected_version:index});
+  assert.throws(()=>validateUpgradeHistory(manifest,wrongLatest));
+ }
+ const unapproved32=predecessorState(32);unapproved32.upgradeRows[15].manifest_sha256='e1087c300882adcf8be7a5087507c824a7cfd10bd5f66133646315dba7d10c42';
+ assert.throws(()=>validateUpgradeHistory(manifest,unapproved32));
 });
 test('writer and native gates use the same bounded predecessor lineage and reject arbitrary SQL expressions',()=>{
  const sql=upgradeReceiptLineageSQL(manifest.sha256,31);
@@ -82,7 +89,7 @@ test('writer and native gates use the same bounded predecessor lineage and rejec
  assert.match(sql.aggregateInvalidSql,/<>15/);assert.match(sql.rowInvalidSql,/BETWEEN 16 AND 30/);
  assert.throws(()=>upgradeReceiptLineageSQL(manifest.sha256,30,'e.position;COMMIT;'));
  assert.throws(()=>upgradeReceiptLineageSQL('not-a-hash',31));
- assert.throws(()=>upgradeReceiptLineageSQL(manifest.sha256,33));
+ assert.throws(()=>upgradeReceiptLineageSQL(manifest.sha256,34));
 });
 
 test('unknown, missing, duplicated and modified full-byte history or receipts fail closed',()=>{

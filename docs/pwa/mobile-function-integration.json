@@ -119,14 +119,24 @@
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 0,
+        "local_targeted_browser_checks": 1,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 0
       },
       "local_browser_evidence": [],
       "local_concurrency_evidence": [],
-      "local_database_evidence": []
+      "local_database_evidence": [],
+      "native_home_committee33_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-final-browser/browser-results.json",
+          "sha256": "33b91dbec0789f38c117492e5eba5de8320db57ae3b96aa20a68272eb49a7f92",
+          "case_id": "HOME_CURRENT_BOOKING_ORIGINAL_TIME_AND_DISTINCT_MATCH_ACTIVITY",
+          "bounded_scope": "Native Home shows the chronologically next current household booking, its exact detail IDs, and separate authorized match and live activity cards; cancelled activity and historical booking states are excluded.",
+          "staging_verified": false,
+          "physical_device_verified": false
+        }
+      ]
     },
     {
       "id": "F005",
@@ -191,14 +201,32 @@
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 0,
+        "local_targeted_browser_checks": 2,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 0
       },
       "local_browser_evidence": [],
       "local_concurrency_evidence": [],
-      "local_database_evidence": []
+      "local_database_evidence": [],
+      "native_home_committee33_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-final-browser/browser-results.json",
+          "sha256": "33b91dbec0789f38c117492e5eba5de8320db57ae3b96aa20a68272eb49a7f92",
+          "case_id": "HOME_CURRENT_BOOKING_ORIGINAL_TIME_AND_DISTINCT_MATCH_ACTIVITY",
+          "bounded_scope": "Native Home shows the chronologically next current household booking, its exact detail IDs, and separate authorized match and live activity cards; cancelled activity and historical booking states are excluded.",
+          "staging_verified": false,
+          "physical_device_verified": false
+        },
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-final-browser/browser-results.json",
+          "sha256": "33b91dbec0789f38c117492e5eba5de8320db57ae3b96aa20a68272eb49a7f92",
+          "case_id": "HOME_ACTIVITY_EXACT_DETAIL_NATIVE_OWN_RSVP_RELOAD_DECLINE",
+          "bounded_scope": "The live Home activity opens its exact native occurrence; own attendance is confirmed, survives reload and can be declined using the rendered app, with one retained attendee row and no booking or ledger changes.",
+          "staging_verified": false,
+          "physical_device_verified": false
+        }
+      ]
     },
     {
       "id": "F008",
@@ -1719,6 +1747,15 @@
           "scope": "Actual source field and locker-room metadata are shown, while a missing source end time remains explicitly unknown.",
           "staging_verified": false
         }
+      ],
+      "blocked_dependencies": [
+        {
+          "dimension": "actual_source_end_time",
+          "state": "BLOCKED_SOURCE_CONTRACT",
+          "reason": "The current native match table and verified import contract do not provide an actual end time or duration. The UI explicitly states that it was not supplied and invents no duration. This required dimension remains open until the source contract supplies verified data.",
+          "current_available_scope": "Authorized program/start/location/field/locker-room read is implemented and locally proved.",
+          "scope_reduction": false
+        }
       ]
     },
     {
@@ -1736,14 +1773,24 @@
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 0,
+        "local_targeted_browser_checks": 1,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 0
       },
       "local_browser_evidence": [],
       "local_concurrency_evidence": [],
-      "local_database_evidence": []
+      "local_database_evidence": [],
+      "native_home_committee33_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-final-browser/browser-results.json",
+          "sha256": "33b91dbec0789f38c117492e5eba5de8320db57ae3b96aa20a68272eb49a7f92",
+          "case_id": "HOME_ACTIVITY_EXACT_DETAIL_NATIVE_OWN_RSVP_RELOAD_DECLINE",
+          "bounded_scope": "The live Home activity opens its exact native occurrence; own attendance is confirmed, survives reload and can be declined using the rendered app, with one retained attendee row and no booking or ledger changes.",
+          "staging_verified": false,
+          "physical_device_verified": false
+        }
+      ]
     },
     {
       "id": "F040",
@@ -4087,19 +4134,48 @@
       "status": "implemented_targeted_acceptance_pending",
       "remaining": "Prescribed acceptance AC-F073 remains open on staging: Toont eigen gepubliceerde/conceptscope met reserveringen en taakdetails. Bestaande afspraken blijven zichtbaar. Record its exact permitted/forbidden scope, transition/readback and any required second-device assertions. Only named executed local scopes below are proven; route rendering alone does not prove this entire behavior.",
       "implementation_files": [
-        "components/mobile/club.tsx"
+        "components/mobile/club.tsx",
+        "lib/pwa/planning.mjs",
+        "lib/pwa/server.ts",
+        "supabase/migrations/20261009116000_pwa_committee_planning.sql"
       ],
       "proof_dimensions": {
         "implementation_present": true,
         "local_route_render": true,
-        "local_targeted_browser_checks": 0,
+        "local_targeted_browser_checks": 2,
         "staging": false,
         "physical_device": false,
         "local_database_assertions": 0
       },
       "local_browser_evidence": [],
       "local_concurrency_evidence": [],
-      "local_database_evidence": []
+      "local_database_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa-committee-planning/owned-planning33-proof.json",
+          "sha256": "4552655596e41c5bfb1e8d472115a6844a5bd3b5e4583a7eb58e6a000289d50e",
+          "empty_assertions": 31,
+          "upgrade_assertions": 32,
+          "scope": "Native invoker committee/season planning read and privacy; no publication or browser/staging scope."
+        }
+      ],
+      "native_home_committee33_evidence": [
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-final-browser/browser-results.json",
+          "sha256": "33b91dbec0789f38c117492e5eba5de8320db57ae3b96aa20a68272eb49a7f92",
+          "case_id": "OWN_COMMITTEE_DRAFT_AND_PUBLISHED_PLANNING_EXACT_READONLY_DETAIL",
+          "bounded_scope": "Native coordinator sees future own draft and published tasks in the selected season; the exact draft opens its current metadata without book or publish actions.",
+          "staging_verified": false,
+          "physical_device_verified": false
+        },
+        {
+          "artifact": "docs/release/evidence/local/20261009-pwa33-final-browser/browser-results.json",
+          "sha256": "33b91dbec0789f38c117492e5eba5de8320db57ae3b96aa20a68272eb49a7f92",
+          "case_id": "DRAFT_PLANNING_NATIVE_MEMBER_COMMITTEE_AND_SEASON_DENIALS",
+          "bounded_scope": "A member and another committee cannot read drafts; a draft in another native season appears only after explicit authorized season selection, and drafts are absent from the public market. Existing draft, booking and ledger bytes remain unchanged.",
+          "staging_verified": false,
+          "physical_device_verified": false
+        }
+      ]
     },
     {
       "id": "F074",
@@ -18805,6 +18881,47 @@
       "physical_device_verified": false,
       "whole_suite_passed": false,
       "limits": "Only exact authorized action/match reads, other recipient denial, human metadata labels and modal normal/200-percent layout. The earlier 13 write/read cases remain a separate historical source-bound proof; no write flow rerun is claimed here."
+    },
+    "home_committee33": {
+      "artifact": "docs/release/evidence/local/20261009-pwa33-final-browser/browser-results.json",
+      "sha256": "33b91dbec0789f38c117492e5eba5de8320db57ae3b96aa20a68272eb49a7f92",
+      "build": "DjodKXFrrC5uKVgChE7vg",
+      "result": "PASS",
+      "native_migrations": 33,
+      "native_otp_users": 2,
+      "bounded_cases": 4,
+      "bounded_function_ids": [
+        "F004",
+        "F007",
+        "F039",
+        "F073"
+      ],
+      "matrix_rows": 18,
+      "all_source_fixture_and_image_hashes_verified": true,
+      "staging_verified": false,
+      "physical_device_verified": false,
+      "whole_acceptance_passed": false,
+      "root_closure": {
+        "artifact": "docs/release/evidence/local/20261009-pwa-committee-planning/root-final33-visual-close.json",
+        "sha256": "8f31db46deb6b193d075b0e5551eff79eeb4ffc227ac56f60ed1a9c284357fff"
+      }
+    },
+    "read_extension33": {
+      "artifact": "docs/release/evidence/local/20261009-pwa-committee-planning/owned-planning33-proof.json",
+      "sha256": "4552655596e41c5bfb1e8d472115a6844a5bd3b5e4583a7eb58e6a000289d50e",
+      "source_migrations": 33,
+      "empty_sql_assertions": 31,
+      "populated32_upgrade_sql_assertions": 32,
+      "native_sql_result": "PASS",
+      "staging_verified": false
+    },
+    "operational_upgrade33": {
+      "artifact": "docs/release/evidence/staging/20261009-pwa33-ops-owned-proof.json",
+      "sha256": "ba73c1b8ca37ea33e5714516b133bc41397a3fc73e1ea910ff4daa02d13491cb",
+      "actual_owned_fresh16_to33": true,
+      "actual_owned_committed31_to33": true,
+      "previous_history_receipts_retained": true,
+      "staging_verified": false
     }
   },
   "server_command_registry": {

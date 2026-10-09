@@ -42,7 +42,7 @@ export async function verifyRuntimePromotion(environment,fetcher=fetch){
  return input;
 }
 export function runtimeReadOnlyGuardSQL(){
- need(UPGRADE_FILES.length===32,'PWA_RUNTIME_CLOSED32_REQUIRED');
+ need(UPGRADE_FILES.length===33,'PWA_RUNTIME_CLOSED33_REQUIRED');
  const guard=nativeQaSchemaGuardSql(),needle="current_setting('transaction_read_only')<>'off'";
  need(guard.split(needle).length===2,'PWA_RUNTIME_GUARD_SHAPE_CHANGED');
  return guard.replace(needle,"current_setting('transaction_read_only')<>'on'")+`
@@ -58,7 +58,7 @@ DO $readonly_runtime_lock$ BEGIN
  THEN RAISE EXCEPTION 'PWA_RUNTIME_SCHEMA_LOCK_BUSY';END IF;
 END $readonly_runtime_lock$;
 ${runtimeReadOnlyGuardSQL()}
-SELECT jsonb_build_object('scope','STAGING_PWA_RUNTIME_READONLY32','migration_count',32,
+SELECT jsonb_build_object('scope','STAGING_PWA_RUNTIME_READONLY33','migration_count',33,
  'app_tables',(SELECT count(*)FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='app'AND c.relkind='r'),
  'forced_rls_tables',(SELECT count(*)FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='app'AND c.relkind='r'AND c.relrowsecurity AND c.relforcerowsecurity),
  'native_guarded_tables',(SELECT count(*)FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='app'AND c.relkind='r'AND EXISTS(SELECT 1 FROM pg_policy p WHERE p.polrelid=c.oid AND p.polname='native_session_required'AND NOT p.polpermissive)),
@@ -66,7 +66,7 @@ SELECT jsonb_build_object('scope','STAGING_PWA_RUNTIME_READONLY32','migration_co
  'database_mutations',false,'email_sent',false,'production_enabled',false);
 COMMIT;`;}
 function verifiedReadback(value){
- const expected={scope:'STAGING_PWA_RUNTIME_READONLY32',migration_count:32,api_only:true,command_owner_restricted:true,database_role_superuser:false,transaction_read_only:true,database_mutations:false,email_sent:false,production_enabled:false};
+ const expected={scope:'STAGING_PWA_RUNTIME_READONLY33',migration_count:33,api_only:true,command_owner_restricted:true,database_role_superuser:false,transaction_read_only:true,database_mutations:false,email_sent:false,production_enabled:false};
  need(value&&Object.keys(value).length===Object.keys(expected).length+3&&Object.entries(expected).every(([key,field])=>Object.hasOwn(value,key)&&value[key]===field),'PWA_RUNTIME_SCHEMA_UNVERIFIED');
  need(['app_tables','forced_rls_tables','native_guarded_tables'].every(key=>Number.isSafeInteger(value[key])&&value[key]>=144&&value[key]<=10000)
   &&value.app_tables===value.forced_rls_tables&&value.app_tables===value.native_guarded_tables,'PWA_RUNTIME_SCHEMA_UNVERIFIED');return value;
@@ -80,7 +80,7 @@ export async function stagingPwaRuntimePreflight(environment,{execute=executeDat
   const project=projectTarget({...fixed,APP_ENV:'staging'}),target=databaseTarget(fixed.MIGRATION_DATABASE_URL,PROJECT);
   need(hash(await readSource(CA))===CA_SHA,'PWA_RUNTIME_TLS_CA_CHANGED');
   const sources=await Promise.all(UPGRADE_FILES.map(async item=>({file:item.file,bytes:await readSource(new URL('../supabase/migrations/'+item.file,import.meta.url))})));
-  const manifest=createUpgradeMigrationManifest(input.RELEASE_SHA,sources);need(manifest.migrations.length===32,'PWA_RUNTIME_CLOSED32_REQUIRED');
+  const manifest=createUpgradeMigrationManifest(input.RELEASE_SHA,sources);need(manifest.migrations.length===33,'PWA_RUNTIME_CLOSED33_REQUIRED');
   const result=await execute('psql',['--no-psqlrc','--no-password','--quiet','--tuples-only','--no-align','--set','ON_ERROR_STOP=1'],{
    env:databaseEnvironment(target,{PATH:'/usr/bin:/bin',MIGRATION_SSL_ROOT_CERT_PATH:CA}),input:'\\conninfo\n'+runtimeReadOnlyPreflightSQL(),timeout:30000,maxBuffer:250000});
   need(result.status===0&&!result.error,'PWA_RUNTIME_SCHEMA_UNVERIFIED');
