@@ -1,0 +1,69 @@
+{
+  "scope": "LOCAL_OWNED_PG17_PWA_RESTORE_TYPED_JSON_FIX",
+  "observed_at": "2026-10-09T05:15:47.158Z",
+  "source_binding": {
+    "kind": "uncommitted_fix_against_exact_main_source",
+    "baseline_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f",
+    "files": [
+      {
+        "path": "scripts/staging-pwa-upgrade-restore.mjs",
+        "sha256": "59bfa8c97aea591dd95f57f60fb865132fcc0d025dcd2af003d060ef981acd12"
+      },
+      {
+        "path": "tests/staging-pwa-upgrade-restore.test.mjs",
+        "sha256": "3e25a06fcd270f4ca115c4793a3edd562335d3e4e1be807ca8dfe1bb4305fa99"
+      },
+      {
+        "path": "tests/staging-pwa-upgrade-native.test.mjs",
+        "sha256": "a2356bebff9de94fd50f46234b0baa848d07cb08090d4f47f662c44902c1d909"
+      }
+    ]
+  },
+  "failure_reproduced": {
+    "phase": "history",
+    "code": "RESTORE_SQL_RESPONSE_UNKNOWN",
+    "original16_plain_psql_boolean": "f",
+    "applied_suffix_plain_psql_boolean": "t",
+    "legacy_json_parse_refuses_both": true
+  },
+  "fix": {
+    "typed_json_boolean_output": true,
+    "strict_boolean_shape_validation": true,
+    "raw_boolean_or_wrong_json_type_refuses_before_upgrade": true,
+    "owned_clone_cleanup_on_refusal": true
+  },
+  "checks": {
+    "targeted_restore_migration_session": {
+      "passed": 21,
+      "failed": 0
+    },
+    "actual_owned_pg17_native": {
+      "passed": 1,
+      "failed": 0,
+      "original16_to31": true,
+      "actual_suffix_history_typed_json_boolean": true,
+      "network": "none",
+      "owned_database_removed": true
+    },
+    "writer_pin_chain": {
+      "upgrade_inner_files": 6,
+      "native_inner_files": 9,
+      "all_inner_pins_match": true,
+      "upgrade_child_sha256": "916b9acc648d5ccd97d3eac13888db378f184bff0f5943e1af76d4ec1e01a848",
+      "native_child_sha256": "e7ade85e6f36deab51c5fdc18789d8e37dbb636da9f8ba8cbcfeb12e8a66d40c",
+      "both_child_pins_match": true,
+      "changes_required": false
+    },
+    "original31_migration_and_manifest_bytes_unchanged": true,
+    "original_brokers_and_configure_workflow_unchanged": true,
+    "git_diff_check_passed": true
+  },
+  "limits": {
+    "full_actual_archive_restore_executed_for_this_fix": false,
+    "hosted_restore_or_upgrade_verified_for_this_fix": false,
+    "private_values_exported": false,
+    "shared_database_mutations": false,
+    "providers_called": false,
+    "production_enabled": false
+  }
+}

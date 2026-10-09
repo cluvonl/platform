@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import {mkdtemp,writeFile,chmod,rm,readFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
-import {restoreInitialBackup,INITIAL_RESTORE_STARTUP} from '../scripts/staging-pwa-upgrade-restore.mjs';
+import {restoreInitialBackup,INITIAL_RESTORE_STARTUP,PWA_RESTORE_SUFFIX_LAYOUT_SQL} from '../scripts/staging-pwa-upgrade-restore.mjs';
 import {CATALOG_QUERIES} from '../scripts/staging-capture-catalog.mjs';
 import {aggregate} from '../scripts/staging-capture-queries.mjs';
 import {UPGRADE_FILES,createUpgradeMigrationManifest,UPGRADE_SOURCE_HISTORY_SQL} from '../scripts/staging-pwa-upgrade-migrations.mjs';
@@ -92,7 +92,10 @@ function runner(original,options={}){
   if(query===INITIAL_LAYOUT_SQL){assert.equal(role,'postgres');return ok(state(options.prefixMismatch?prefix+1:prefix).layout);}
   if(query===INITIAL_HISTORY_SQL){assert.equal(role,'postgres');const value=state(prefix).historyRows;if(options.historyMismatch&&value.length)value[0].single_statement_sha256='f'.repeat(64);return ok(value);}
   if(query===INITIAL_SOURCE_HISTORY_SQL){assert.equal(role,'postgres');const value=state(prefix).sourceRows;if(options.auditMismatch&&value.length)value[0].expected_version=1;return ok(value);}
-  if(query==="SELECT to_regclass('supabase_migrations.cluvo_pwa_upgrade_source') IS NOT NULL")return ok(prefix>16);
+  // Preserve actual psql transport shape: plain SQL booleans are t/f, whereas
+  // a JSON boolean expression serializes false/true before the JSON parser.
+  if(query==="SELECT to_regclass('supabase_migrations.cluvo_pwa_upgrade_source') IS NOT NULL")return ok(prefix>16?'t\n':'f\n');
+  if(query===PWA_RESTORE_SUFFIX_LAYOUT_SQL.replace(/;$/,''))return ok(options.suffixLayoutResponse??(prefix>16?'true\n':'false\n'));
   if(query===UPGRADE_SOURCE_HISTORY_SQL){const value=state(prefix).upgradeRows;if(options.upgradeReceiptMismatch&&value.length)value[0].manifest_sha256='f'.repeat(64);return ok(value);}
   if(query.includes('$cluvo_pwa_owner$')){
    assert.equal(role,'postgres');assert.ok(query.startsWith('SELECT pg_advisory_lock('));
@@ -151,6 +154,14 @@ test('partially applied suffix validates its actual receipt and applies only mis
   const report=await restoreInitialBackup(input,{run});assert.equal(report.non_superuser_upgrade_migrations,0);
   assert.equal(observed.upgrades.length,0);assert.equal(report.final_migration_prefix,UPGRADE_FILES.length);
  },UPGRADE_FILES.length);
+});
+
+test('suffix layout accepts only a typed JSON boolean and refuses raw psql or other JSON values before any upgrade',async()=>{
+ for(const wire of ['t\n','f\n','null','0','[]','{}','"false"','{"present":false}'])await fixture(async(input,{run,observed})=>{
+  const expected=['t\n','f\n'].includes(wire)?'RESTORE_SQL_RESPONSE_UNKNOWN':'RESTORE_SUFFIX_HISTORY_LAYOUT_UNKNOWN';
+  await assert.rejects(restoreInitialBackup(input,{run}),error=>error?.code===expected&&error.phase==='history');
+  assert.equal(observed.upgrades.length,0);assert.equal(observed.removed,true);
+ },16,{suffixLayoutResponse:wire});
 });
 
 test('history, original receipt and suffix receipt drift refuse clone upgrade and remove the owned clone',async()=>{

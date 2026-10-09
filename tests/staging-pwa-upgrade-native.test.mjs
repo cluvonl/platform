@@ -5,7 +5,7 @@ import {readFile} from 'node:fs/promises';
 import {spawnSync} from 'node:child_process';
 import {UPGRADE_FILES,createUpgradeMigrationManifest,upgradeMigrationSQL,validateUpgradeHistory,UPGRADE_SOURCE_HISTORY_SQL} from '../scripts/staging-pwa-upgrade-migrations.mjs';
 import {createInitialMigrationManifest,initialMigrationSQL,INITIAL_MIGRATION_POLICY,INITIAL_MIGRATION_LOCK_OBJECT,INITIAL_LAYOUT_SQL,INITIAL_HISTORY_SQL,INITIAL_SOURCE_HISTORY_SQL} from '../scripts/staging-initial-migrations.mjs';
-import {INITIAL_RESTORE_STARTUP} from '../scripts/staging-pwa-upgrade-restore.mjs';
+import {INITIAL_RESTORE_STARTUP,PWA_RESTORE_SUFFIX_LAYOUT_SQL} from '../scripts/staging-pwa-upgrade-restore.mjs';
 import {IMAGE} from '../scripts/pg17-capture-worker.mjs';
 import {runOwnedPwaNativeQa} from './helpers/pwa-owned-native-qa.mjs';
 
@@ -62,6 +62,10 @@ RESET ROLE;`,{role:'supabase_admin'});
   const initial=createInitialMigrationManifest(sourceSha,sources.slice(0,16));
   sql(lock+initial.migrations.map((_,index)=>localBackend(initialMigrationSQL(initial,index,context))).join('\n'));
   assert.equal(json('SELECT count(*) FROM supabase_migrations.schema_migrations;'),16);
+  const rawSuffixLayout="SELECT to_regclass('supabase_migrations.cluvo_pwa_upgrade_source') IS NOT NULL;";
+  const beforeSuffix=sql(rawSuffixLayout);
+  assert.equal(beforeSuffix,'f');assert.throws(()=>JSON.parse(beforeSuffix),SyntaxError);
+  assert.equal(json(PWA_RESTORE_SUFFIX_LAYOUT_SQL),false);
   const manifest=createUpgradeMigrationManifest(sourceSha,sources);
   const envelope=index=>localBackend(upgradeMigrationSQL(manifest,index,context));
   assert.match(sql(envelope(16),{expectedFailure:true}),/P0001/);
@@ -79,6 +83,9 @@ RESET ROLE;`,{role:'supabase_admin'});
   sql(lock+manifest.migrations.slice(16).map((_,index)=>envelope(index+16)).join('\n'));
   const readback={layout:json(INITIAL_LAYOUT_SQL),historyRows:json(INITIAL_HISTORY_SQL),sourceRows:json(INITIAL_SOURCE_HISTORY_SQL),upgradeRows:json(UPGRADE_SOURCE_HISTORY_SQL)};
   assert.equal(validateUpgradeHistory(manifest,readback).complete,true);
+  const afterSuffix=sql(rawSuffixLayout);
+  assert.equal(afterSuffix,'t');assert.throws(()=>JSON.parse(afterSuffix),SyntaxError);
+  assert.equal(json(PWA_RESTORE_SUFFIX_LAYOUT_SQL),true);
   assert.equal(readback.sourceRows.length,16);assert.equal(readback.upgradeRows.length,UPGRADE_FILES.length-16);
   for(const receipt of readback.upgradeRows){assert.equal(receipt.actor,'local-upgrade-test');assert.equal(receipt.workflow_run_id,'123');assert.equal(receipt.source_sha,sourceSha);assert.equal(receipt.backup_artifact_id,'456');}
   assert.match(sql(lock+envelope(16),{expectedFailure:true}),/P0001/);
@@ -86,7 +93,7 @@ RESET ROLE;`,{role:'supabase_admin'});
   const guards=json("SELECT jsonb_build_object('tables',count(*),'forced',count(*) FILTER(WHERE c.relrowsecurity AND c.relforcerowsecurity),'native',count(*) FILTER(WHERE EXISTS(SELECT 1 FROM pg_policy p WHERE p.polrelid=c.oid AND p.polname='native_session_required'))) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='app' AND c.relkind='r';");
   assert.equal(guards.forced,guards.tables);assert.equal(guards.native,guards.tables);
   assert.ok(guards.tables>144);
-  const proof=await runOwnedPwaNativeQa({name,socket,sql,json,lock});t.diagnostic(JSON.stringify(proof));
+  const proof=await runOwnedPwaNativeQa({name,socket,sql,json,lock});t.diagnostic(JSON.stringify({...proof,actual_suffix_history_typed_json_boolean:true}));
  }finally{
   if(created){
    const ownership=checked(['inspect',name,'--format','{{index .Config.Labels "cluvo.pwa.writer-test"}}']);

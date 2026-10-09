@@ -18,6 +18,9 @@ import {INITIAL_LAYOUT_SQL,INITIAL_HISTORY_SQL,INITIAL_SOURCE_HISTORY_SQL,INITIA
 import {PWA_ADDITIONS} from './staging-pwa-upgrade-files.mjs';
 import {createUpgradeMigrationManifest,upgradeMigrationSQL,validateUpgradeHistory,UPGRADE_SOURCE_HISTORY_SQL} from './staging-pwa-upgrade-migrations.mjs';
 const UPGRADE_FILES=Object.freeze([...IMMUTABLE16,...PWA_ADDITIONS]);
+// psql's unaligned boolean wire value is t/f. This consumer parses JSON, so
+// the fixed existence query must return a typed JSON boolean instead.
+export const PWA_RESTORE_SUFFIX_LAYOUT_SQL="SELECT to_jsonb(to_regclass('supabase_migrations.cluvo_pwa_upgrade_source') IS NOT NULL);";
 
 export const INITIAL_RESTORE_PHASES=Object.freeze(['input','image','create','start','ready','globals','restore','restore_toc','extension_owners','database','role_settings','database_acl','schema_acl',...Object.keys(CATALOG_QUERIES).map(family=>'catalog.'+family),'data','sequence','actor','history','upgrade','jobs','cleanup']);
 export const INITIAL_RESTORE_REASONS=Object.freeze(['EXTENSION_VERSION_UNAVAILABLE','EXTENSION_NOT_AVAILABLE','EXTENSION_LIBRARY_MISSING','EXTENSION_MUST_BE_PRELOADED','BACKGROUND_WORKER_REGISTRATION_FAILED','SERVER_KEY_UNAVAILABLE','CATALOG_LOOKUP_FAILED','EVENT_TRIGGER_OWNER_MISMATCH','READ_ONLY_TRANSACTION','ARCHIVE_TRUNCATED','ARCHIVE_VERSION_UNSUPPORTED','ARCHIVE_COMPRESSION_UNSUPPORTED','SERVER_DISCONNECTED','OUT_OF_MEMORY','DISK_FULL','GLOBAL_SETTING_UNSUPPORTED','STATEMENT_TIMEOUT','ROW_CONSTRAINT_VIOLATION','SCHEMA_REQUIRED','SERVER_SQLSTATE_REPORTED','UNKNOWN_PROCESS_FAILURE']);
@@ -394,7 +397,8 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
    need(typeof layout.history_present==='boolean'&&typeof layout.source_history_present==='boolean','RESTORE_HISTORY_LAYOUT_UNKNOWN');
    const historyRows=layout.history_present?await jsonSql(INITIAL_HISTORY_SQL,'postgres'):[];
    const sourceRows=layout.source_history_present?await jsonSql(INITIAL_SOURCE_HISTORY_SQL,'postgres'):[];
-   const suffixPresent=await jsonSql("SELECT to_regclass('supabase_migrations.cluvo_pwa_upgrade_source') IS NOT NULL;",'postgres');
+   const suffixPresent=await jsonSql(PWA_RESTORE_SUFFIX_LAYOUT_SQL,'postgres');
+   need(typeof suffixPresent==='boolean','RESTORE_SUFFIX_HISTORY_LAYOUT_UNKNOWN');
    const upgradeRows=suffixPresent?await jsonSql(UPGRADE_SOURCE_HISTORY_SQL,'postgres'):[];
    try{return validateUpgradeHistory(manifest,{historyRows,sourceRows,upgradeRows,layout:{schemas:layout.schemas,app_objects:layout.app_objects}});}
    catch{throw new InitialRestoreError('RESTORE_INITIAL_HISTORY_UNPROVED');}
