@@ -1,0 +1,121 @@
+{
+  "scope": "LOCAL_PWA35_KNOWN_CHECK_AST_RESTORATION_CLOSED_SOURCE_AND_OWNED_PROOFS",
+  "observed_at": "2026-10-09T11:44:32.228403+00:00",
+  "passed": true,
+  "source_parent_sha": "6029b482c06669aa37806d3aa90f70b59e6ccfd4",
+  "source_worktree_candidate": true,
+  "ops_only_change": true,
+  "runtime_build_id_unchanged": "dfIVldUczk43niTTMO9U_",
+  "source_files_sha256": {
+    "scripts/staging-pwa-check-ast-reconstruction.mjs": "34389aec47af7eb7937a11ac559e743431e7386cd8fcac52d78a0769dc8297bd",
+    "scripts/staging-pwa-upgrade-restore.mjs": "2b128aecd7e5b4b482c675d982891c0cb6b2d4facb0058c3638dac7062706e24",
+    "tests/staging-pwa-check-ast-reconstruction.test.mjs": "5010a2b28274172858f9820fc45742f16f36337c0fc4ce258eb9303ad8ddbc5c",
+    "tests/pwa-check-ast-owned.test.mjs": "161700c606f6bbd9c781a0e9fa27e86ecaf47c4fb2671fe8a1a7097fce6280cb"
+  },
+  "migration_count": 35,
+  "migration_hashes": {
+    "supabase/migrations/20261002163042_cluvo_wp1_wp2_core.sql": "7e4efdaa139d2fe3120c43c0e7fcfe966438f154c08358734b6c555968acd32e",
+    "supabase/migrations/20261002165306_wp3_wp5_obligations_execution.sql": "1dd88883e99acd63cbea6f33c47b1c39008a6832904f1da6150374fbe1474eb7",
+    "supabase/migrations/20261002165327_wp6_wp8_collaboration_communication_policy.sql": "9707da512d46b23d8472bf222981242f8020ac3612709f536136876674b50702",
+    "supabase/migrations/20261002170949_wp1_onboarding_storage.sql": "6de61a4843cd9a3d77fccb6c0be0591c178b516518e4bb7ce9c2ae1cec3d4c03",
+    "supabase/migrations/20261002171135_wp9_wp11_finance_people_seasons.sql": "bdff3e58102376de4195840cc7cd3a02a59c7648cc19403c306ae72e96605719",
+    "supabase/migrations/20261002183000_vertical_read_models.sql": "bf50215a774296882cb5aa8067b43bb2c853bbb991968859b8ceece58d197eaf",
+    "supabase/migrations/20261002184500_assisted_member_actions.sql": "c7d74823e3be555b7115b1eab4e4180cdb48c7668680fa3a0a6b0e8420629bab",
+    "supabase/migrations/20261006180000_account_help_preferences.sql": "f6b7d1db5f420b5e5daeaf142326289dd1fb6918123c001386956f512f7755ff",
+    "supabase/migrations/20261006193000_complete_personal_intake.sql": "488d4722f830a0a2a2d35ff89a483bcd6f5e40ed3aa255d367d4346aaad22ad9",
+    "supabase/migrations/20261006210000_household_dossier_projection.sql": "0f1b29d8bbde85300f704270bc5ead062344bffe01f5688b67daa085099450a2",
+    "supabase/migrations/20261006223000_versioned_household_invitation_commands.sql": "99b456fda630c15eca25f197d971edcf8134a5181deb114c398dde852b6b62fe",
+    "supabase/migrations/20261006230000_household_invitation_cancellation.sql": "6d3738db24d2a02576fa6fa4a9273390d04872565edd66d662024df230425a1c",
+    "supabase/migrations/20261006233000_contract_household_invitation_bootstrap.sql": "1731ab3cec4921ad31e6f30a90ee21d8dc6101fa205285a51c5b65bc52e2c3f2",
+    "supabase/migrations/20261006234500_personal_intake_reconfirmation.sql": "e4f95b65789485e86131d21c0c085a83c8fc5b4195f36b4f81e24b9c6c171625",
+    "supabase/migrations/20261007010000_native_session_authority.sql": "9c165f68f413be04aa958358ec088c422dd21fea92b66e9ba84e04378817607a",
+    "supabase/migrations/20261007013000_intake_assistance_management.sql": "1512b7cbfd1fd63065fa09ad17aba0a2c71aaba1c875326f11e089175a5979c3",
+    "supabase/migrations/20261009100000_pwa_domain.sql": "18cc63b457fddea3f003bceb4d31f310291692e70485e6aa013e4091a8d47d41",
+    "supabase/migrations/20261009101000_pwa_commands.sql": "dbf600e3aabc225e5031ca83c24031c27c287cec47cce0b0f64bf81eb6e00f97",
+    "supabase/migrations/20261009102000_pwa_snapshot.sql": "969346799a4e591b7f85f8bacc4a877c1ea42dd628c3e041cf9b976f79e19ef0",
+    "supabase/migrations/20261009103000_pwa_delivery_and_receipts.sql": "73714397962f5ca54b5a94d1b6cc901ed744b8f8bcccd87fc32cd12673fbfe6f",
+    "supabase/migrations/20261009104000_pwa_buddy_integrity.sql": "c2e1bfdccf311f50bd9e0ff1686ce2301d1c65ff29b02cd78512666f0ec5305c",
+    "supabase/migrations/20261009105000_pwa_automation.sql": "7e20fdaee644e5a2f0b037f0d34001a773cf47b6b23a0294f23fddad45e5dbef",
+    "supabase/migrations/20261009106000_pwa_provider_receipts.sql": "5e6923e41dfd6d5da1ab12380f1be31b25e466eba02b685f7361b11e1ffe9eed",
+    "supabase/migrations/20261009107000_pwa_compatibility_and_cluster_scope.sql": "d60b59920adac4c45a3ec336a6a0cb27e31abb3c8aa69e0ddf5b47ed729e4486",
+    "supabase/migrations/20261009108000_pwa_repeatable_command_events.sql": "7ad42704ec974bd670deb70c14dcd13a2079f1b0d9fd6a416e0d4dcdf3859ef2",
+    "supabase/migrations/20261009109000_pwa_digest_dispatch_day.sql": "881aaf6a7ff6ed1e22604d810c1194fc140c4dfb79240e869b25feb3a9be4210",
+    "supabase/migrations/20261009110000_pwa_card_version_gate.sql": "7d237cb0e27bf8d4f27e649143a77e39dc29977279fc7bc6db6e506da52ff4cc",
+    "supabase/migrations/20261009111000_pwa_handover_checklist_integrity.sql": "2d10644befebd17fb8893d4e1363a6a4f61588bd55ac3ab45a7653d6489e3307",
+    "supabase/migrations/20261009112000_pwa_task_offer_category_seed.sql": "1e2bb5b181e7e0d4279c8270b12bfee8743cb7dcaaa0e4267256eaf689c59c17",
+    "supabase/migrations/20261009113000_pwa_nested_version_integrity.sql": "60eedfed603a1450d42524dc070e8fa4661c1bb323d55e660faef52845b98f19",
+    "supabase/migrations/20261009114000_pwa_policy_assignment_identity.sql": "afbe3c6218e2d81dae30107ec0f854f5fe0bdd87ae700da98f2b5d3165f4ad10",
+    "supabase/migrations/20261009115000_pwa_personal_action_context.sql": "10dfcebb3e8f61623586f41123e8967815e743745f991f68f84bcfd686e3a195",
+    "supabase/migrations/20261009116000_pwa_committee_planning.sql": "2bca259cd9041307c7daab5bf4e950fc0ddad72109aa180631634ce290b3e311",
+    "supabase/migrations/20261009117000_pwa_invitation_authority_fence.sql": "943eb1502da863da7d51bcd390bb58a5815896ab67a76db074638dad361d95b3",
+    "supabase/migrations/20261009118000_pwa_sportlink_connection.sql": "b4cd0ed6b44fd2bac7d22bee84a3b15f5817c6122c132a42066c49f374277b87"
+  },
+  "original35_sql_unchanged": true,
+  "frozen_initial16_transport_and_catalog_sources_unchanged": true,
+  "frozen_sources_sha256": {
+    "scripts/staging_backup_session.py": "e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1",
+    "scripts/staging-capture-catalog.mjs": "658757f4480669033e996439d1ae0bd5e6ac703db1c9bd72d3051f4e274b30a4",
+    "scripts/staging-initial-migrations.mjs": "7f49cf8dcdb2eda53633dd3596486779ea2dd001d1a2813a07fa45e859784004",
+    "scripts/staging-migration-files.mjs": "83aa2aae6d4cc358965208e39e73dd0d1038ee4a6c0bc9a62675b829e30c94bd"
+  },
+  "tests": {
+    "unit_and_existing_restore": {
+      "tests": 13,
+      "pass": 13,
+      "fail": 0,
+      "skip": 0
+    },
+    "owned_native": {
+      "tests": 2,
+      "pass": 2,
+      "fail": 0,
+      "skip": 0
+    },
+    "targeted_eslint_passed": true,
+    "git_diff_check_passed": true
+  },
+  "actual_proofs": [
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-check-ast-restoration/owned-approved31-to35.json",
+      "sha256": "52a64cb19e8a30f96a5ffb52393df75f5251c41456a6f1822386c4c121fac3d9"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-check-ast-restoration/owned-null-and-dependencies.json",
+      "sha256": "ca5b719ba257658f96bf33b59dfe752d0180d571f279bcefacbb49f719e8884a"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-check-ast-restoration/initial-feasibility.json",
+      "sha256": "c9385e0abd5c851004ec349ca4bc5edf483aa56ca759d2d73553c75e56eaf15c"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/tmp/cluvo-pwa35-check-ast-unit-final.tap",
+      "sha256": "abe08bb6e705519b30655de5f4ab5037b2d4f41e7cfc7df5082b089956f2f2dc"
+    },
+    {
+      "path": "/tmp/cluvo-pwa35-check-ast-full-final2.tap",
+      "sha256": "2987f66ae6dfa175ff2b5eabec637ea209bf89140a0dfba1f70876fdc2369478"
+    },
+    {
+      "path": "/tmp/cluvo-pwa35-check-ast-null-first.tap",
+      "sha256": "66ef67e1d97fa2c9f71132de1d1c8166ba997a7143d6d2e1693a3f63c66f4216"
+    }
+  ],
+  "prior_harness_attempt": {
+    "result": "INSTRUMENTATION_CLEANUP_ID_VS_NAME_ASSERTION_FAILED",
+    "product_failure_proven": false,
+    "own_leftover_clone_marker_and_isolation_verified": true,
+    "own_leftover_clone_removed": true,
+    "final_proof_reexecuted": true
+  },
+  "claim_limits": {
+    "shared_local_mutations": false,
+    "hosted_mutations": false,
+    "real_credentials_used": false,
+    "providers_called": false,
+    "actual_hosted_restore_verified": false,
+    "production_enabled": false,
+    "full_provider_restore_verified": false
+  }
+}

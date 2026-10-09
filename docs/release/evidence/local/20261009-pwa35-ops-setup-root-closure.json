@@ -1,0 +1,90 @@
+{
+  "scope": "LOCAL_PWA35_OPS_AND_SPORTLINK_SETUP_ROOT_CLOSURE",
+  "observed_at": "2026-10-09T11:46:51.048551+00:00",
+  "passed": true,
+  "source_parent_sha": "6029b482c06669aa37806d3aa90f70b59e6ccfd4",
+  "source_worktree_candidate": true,
+  "source_files_sha256": {
+    ".github/workflows/staging-sportlink-setup.yml": "08d05dd8de7aca7f25213711c6b61981e6f5eb0eedeffaa8849b4680c696b57f",
+    "docs/pwa/staging-sportlink-setup.md": "6fe9d54b981c61e77890528a836c7a6a414cfb38279029c097f283f748e1da4a",
+    "scripts/staging-sportlink-setup-auth.mjs": "f3759ecc493ad047a2ba96834e91d53f6ff4c7148ddf72d00850b2f78186fcf4",
+    "scripts/staging-sportlink-setup-session.mjs": "c63ecd37d7d8c66e39f3a41d503c4edaf9813f6763d3b8e4baf2526325dcdb9c",
+    "scripts/staging-sportlink-setup-sql.mjs": "c96640e47052afe6aba4c031b98708ed96faf5b0e16f32b95427c4daf31891b8",
+    "scripts/staging-sportlink-setup.mjs": "ae71ad4e6aaced273c6dab362284498a5eb2e163de514b4ff41620ccd08bd9c2",
+    "scripts/staging_sportlink_setup_session.py": "b98dd86052307fc8bb513f2476ace83755b984feeb3088f9716e6e0c940b0b16",
+    "tests/staging-sportlink-auth-provider-owned.test.mjs": "8e081a222e6b26ba428642c4de78a5efa763b23ccb0adb8fcf3395297d991eb6",
+    "tests/staging-sportlink-setup-owned.test.mjs": "2056cb3acee4aa30601bfcf200ce3690039c36186eee25e29aa526c9271eab16",
+    "tests/staging-sportlink-setup.test.mjs": "55008845381bc7a8789f6fe0e5fff6fd023dbf40ce01d2201fc3a992a6d4bd3e",
+    "scripts/staging-pwa-check-ast-reconstruction.mjs": "34389aec47af7eb7937a11ac559e743431e7386cd8fcac52d78a0769dc8297bd",
+    "scripts/staging-pwa-upgrade-restore.mjs": "2b128aecd7e5b4b482c675d982891c0cb6b2d4facb0058c3638dac7062706e24",
+    "tests/staging-pwa-check-ast-reconstruction.test.mjs": "5010a2b28274172858f9820fc45742f16f36337c0fc4ce258eb9303ad8ddbc5c",
+    "tests/pwa-check-ast-owned.test.mjs": "161700c606f6bbd9c781a0e9fa27e86ecaf47c4fb2671fe8a1a7097fce6280cb"
+  },
+  "runtime_files_verified_byte_identical_to_parent": 247,
+  "runtime_build_id_reused": "dfIVldUczk43niTTMO9U_",
+  "migration_count": 35,
+  "all_migration_bytes_identical_to_parent": true,
+  "migration_manifest_sha256": "b39a9bb9d167e02e5723f0efe68bacc3df1bfeb08a03551c8efe8dcd70171466",
+  "proofs": [
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-check-ast-restoration/closed-checks.json",
+      "sha256": "c5c2c2e73e4088983c580113ce70733e98b0905774508beb914636ea51019de0"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-check-ast-primary-source-discovery.json",
+      "sha256": "514bc147065d5995fd4c52ce36889ca99621a56f6b9539c33d3a47d1a7ae1e19"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-sportlink-setup-local-closure.json",
+      "sha256": "2ed1127a3c95ea95814640775d571d606b40fcf5b3f9527cd62716ad0690f963"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-sportlink-setup-local-auth-provider-proof.json",
+      "sha256": "11cff54337bc93b6d5a954b28a6d26b56ee9f1d79cfa87841b9475c51c9b8a6d"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-check-ast-restoration/owned-approved31-to35.json",
+      "sha256": "52a64cb19e8a30f96a5ffb52393df75f5251c41456a6f1822386c4c121fac3d9"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-check-ast-restoration/owned-null-and-dependencies.json",
+      "sha256": "ca5b719ba257658f96bf33b59dfe752d0180d571f279bcefacbb49f719e8884a"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa35-check-ast-restoration/initial-feasibility.json",
+      "sha256": "c9385e0abd5c851004ec349ca4bc5edf483aa56ca759d2d73553c75e56eaf15c"
+    }
+  ],
+  "checks": {
+    "default_tests": 815,
+    "pass": 779,
+    "fail": 0,
+    "opt_in_skipped": 36,
+    "whole_lint_passed": true,
+    "python_inner7_and_child_pins_verified": true,
+    "known_check_unit_tests": 13,
+    "known_check_actual_owned_tests": 2,
+    "strict_catalog_families_preserved": 28,
+    "setup_actual_owned_and_local_auth_executed": true,
+    "bounded_credential_pattern_scan_passed": true
+  },
+  "logs": [
+    {
+      "path": "/tmp/cluvo-pwa35-revision-tests.log",
+      "sha256": "2e11b959c0d485657b48440a9ce1d220fb674c5593796555a1d5d3d6d50bdaa7"
+    },
+    {
+      "path": "/tmp/cluvo-pwa35-revision-lint.log",
+      "sha256": "c91eb801fa281b41c87cf03aa02b4266fd95fad82267b7d4cc077bad009163c0"
+    }
+  ],
+  "claim_limits": {
+    "hosted_changes_in_this_revision": false,
+    "sportlink_client_id_consumed": false,
+    "duindorp_setting_saved": false,
+    "temporary_secret_deleted": false,
+    "physical_phone_verified": false,
+    "full_pwa_accepted": false,
+    "production_enabled": false
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "scope": "PWA35_LOCAL_SPORTLINK_STAGING_SETUP_EXECUTED_CLOSURE",
+  "observed_at": "2026-10-09T11:33:36.311Z",
+  "source_sha256": {
+    ".github/workflows/staging-sportlink-setup.yml": "08d05dd8de7aca7f25213711c6b61981e6f5eb0eedeffaa8849b4680c696b57f",
+    "docs/pwa/staging-sportlink-setup.md": "6fe9d54b981c61e77890528a836c7a6a414cfb38279029c097f283f748e1da4a",
+    "scripts/staging-sportlink-setup-auth.mjs": "f3759ecc493ad047a2ba96834e91d53f6ff4c7148ddf72d00850b2f78186fcf4",
+    "scripts/staging-sportlink-setup-session.mjs": "c63ecd37d7d8c66e39f3a41d503c4edaf9813f6763d3b8e4baf2526325dcdb9c",
+    "scripts/staging-sportlink-setup-sql.mjs": "c96640e47052afe6aba4c031b98708ed96faf5b0e16f32b95427c4daf31891b8",
+    "scripts/staging-sportlink-setup.mjs": "ae71ad4e6aaced273c6dab362284498a5eb2e163de514b4ff41620ccd08bd9c2",
+    "scripts/staging_sportlink_setup_session.py": "b98dd86052307fc8bb513f2476ace83755b984feeb3088f9716e6e0c940b0b16",
+    "tests/staging-sportlink-auth-provider-owned.test.mjs": "8e081a222e6b26ba428642c4de78a5efa763b23ccb0adb8fcf3395297d991eb6",
+    "tests/staging-sportlink-setup-owned.test.mjs": "2056cb3acee4aa30601bfcf200ce3690039c36186eee25e29aa526c9271eab16",
+    "tests/staging-sportlink-setup.test.mjs": "55008845381bc7a8789f6fe0e5fff6fd023dbf40ce01d2201fc3a992a6d4bd3e"
+  },
+  "unit_tests": 8,
+  "actual_owned_fresh_migrations": 35,
+  "actual_owned_authority": true,
+  "actual_local_provider_auth": true,
+  "source_pins_verified": true,
+  "scoped_eslint_pass": true,
+  "typecheck_pass": true,
+  "hosted_requests": 0,
+  "real_credentials_used": false,
+  "production_enabled": false,
+  "auth_provider_proof": {
+    "path": "docs/release/evidence/local/20261009-pwa35-sportlink-setup-local-auth-provider-proof.json",
+    "sha256": "11cff54337bc93b6d5a954b28a6d26b56ee9f1d79cfa87841b9475c51c9b8a6d"
+  },
+  "source_parent_sha": "6029b482c06669aa37806d3aa90f70b59e6ccfd4",
+  "log_sha256": [
+    {
+      "path": "/tmp/cluvo-sportlink-setup-unit-final.log",
+      "sha256": "fa3d2f4314ecabc895af613bd5b989555942823a43ff61bdc919efe575dc9e8b"
+    },
+    {
+      "path": "/tmp/cluvo-sportlink-setup-owned-final.log",
+      "sha256": "a7ab9f6e997e796542b16edc219348a1bf0985c019cbdb66c12bb4545e597e3a"
+    },
+    {
+      "path": "/tmp/cluvo-sportlink-setup-auth-final.log",
+      "sha256": "d7f7c6140ab3c4b8f1be614e92a07b8f13b39b25bcd590bf3bc3931e6d965719"
+    }
+  ],
+  "actual_owned_executions": [
+    {
+      "scope": "LOCAL_OWNED_PG17_SPORTLINK_STAGE_SETUP",
+      "actual_migration_count": 35,
+      "network": "none",
+      "hosted_connections": 0,
+      "fresh_scope_created": true,
+      "same_key_replay_no_duplicate": true,
+      "byte_history_drift_rejected": true,
+      "slug_collision_no_adoption": true,
+      "permission_keys": [
+        "match.import"
+      ],
+      "annual_grant": true,
+      "existing_profile_and_foreign_grants_unchanged": true,
+      "native_operator_workspace": true,
+      "native_save_encrypted_readback": true,
+      "same_tenant_active_member_denied": true,
+      "foreign_denied": true,
+      "old_tenant_import_denied": true,
+      "expired_session_denied": true,
+      "new_active_session_revoked_grant_denied": true,
+      "revoked_grant_not_restored_by_replay": true,
+      "provider_requests": 0,
+      "real_credentials_used": false,
+      "production_enabled": false
+    }
+  ],
+  "staging_setup_executed": false,
+  "complete_pwa_acceptance": false,
+  "physical_device_verified": false,
+  "provider_scope_clarification": {
+    "local_native_supabase_auth_requests_executed": true,
+    "external_or_hosted_provider_requests": 0,
+    "real_sportlink_requests": 0,
+    "raw_auth_proof_provider_requests_zero_refers_to_external_sportlink_access": true
+  }
+}

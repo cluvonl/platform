@@ -1,0 +1,60 @@
+{
+  "scope": "EXACT_GITHUB_RUN_SAFE_AGGREGATES_ONLY",
+  "observed_at": "2026-10-09T11:18:52.832839+00:00",
+  "workflow_run_id": 37921449926,
+  "source_sha": "6029b482c06669aa37806d3aa90f70b59e6ccfd4",
+  "run_status": "completed",
+  "run_conclusion": "failure",
+  "run_url": "https://github.com/cluvonl/platform/actions/runs/37921449926",
+  "jobs": [
+    {
+      "name": "build",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "database-upgrade",
+      "status": "completed",
+      "conclusion": "failure"
+    },
+    {
+      "name": "pwa-native-qa",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "deploy",
+      "status": "completed",
+      "conclusion": "skipped"
+    }
+  ],
+  "downloaded_safe_aggregates": [
+    {
+      "artifact_id": 11612777065,
+      "name": "cluvo-staging-pwa-upgrade-report-6029b482c06669aa37806d3aa90f70b59e6ccfd4-37921449926-1",
+      "path": "docs/release/evidence/staging/20261009-pwa-upgrade-attempt-37921449926-gha.json",
+      "sha256": "7cef77551560f677ed87164bdebeb550ca3c0d8263ff282bc29b2b00db142b5d",
+      "bytes": 16085
+    },
+    {
+      "artifact_id": 11611574342,
+      "name": "cluvo-build-6029b482c06669aa37806d3aa90f70b59e6ccfd4",
+      "path": "docs/release/evidence/staging/20261009-pwa-release-manifest-37921449926.json",
+      "sha256": "42734f05c1b7e71357b3563164eff8e6a3525e758b1b4a0b3e03c34481564555",
+      "bytes": 6156
+    }
+  ],
+  "encrypted_custody_metadata_only": [
+    {
+      "artifact_id": 11612945441,
+      "name": "cluvo-staging-pwa-upgrade-encrypted-6029b482c06669aa37806d3aa90f70b59e6ccfd4-37921449926-1",
+      "bytes": 9981529,
+      "created_at": "2026-10-09T11:17:40Z",
+      "downloaded": false
+    }
+  ],
+  "backup_downloaded": false,
+  "private_logs_read": false,
+  "physical_device_verified": false,
+  "production_enabled": false
+}

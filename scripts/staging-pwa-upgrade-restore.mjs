@@ -8,6 +8,7 @@ import {join,isAbsolute} from 'node:path';
 import {isDeepStrictEqual} from 'node:util';
 import {executeDatabaseProcess} from './staging-database-process.mjs';
 import {CATALOG_QUERIES} from './staging-capture-catalog.mjs';
+import {knownPwaCheckAstReconstruction,PWA_CHECK_AST_SOURCE_FILE} from './staging-pwa-check-ast-reconstruction.mjs';
 import {catalogMismatchDiagnostic,publicCatalogDiagnostics} from './staging-catalog-diagnostic.mjs';
 import {PWA_DEPARSE_CONTEXT_SQL,publicDeparseContext,cloneDeparseSettingsSQL,publicConstraintDefinitionDiagnostics,publicRestoreDefinitionDiagnostics,publicDeparseAlignment} from './staging-pwa-restore-diagnostic.mjs';
 import {schemaFirstRestoreLists} from './staging-restore-toc.mjs';
@@ -184,7 +185,7 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
   need(dump.subarray(0,5).toString('ascii')==='PGDMP','RESTORE_ARCHIVE_REQUIRED');
   for(const file of UPGRADE_FILES){const bytes=await readFile(new URL('../supabase/migrations/'+file.file,import.meta.url));need(hash(bytes)===file.sha256,'IMMUTABLE16_SOURCE_BYTES_CHANGED');files.push({file,bytes});}
  }catch(error){dump?.fill(0);globals?.fill(0);throw error instanceof InitialRestoreError?error:new InitialRestoreError('RESTORE_INPUT_UNAVAILABLE');}
- let phase='input',restoreSection=null,extensionPrivilegeWarnings=0,deparseAlignment=null;
+ let phase='input',restoreSection=null,extensionPrivilegeWarnings=0,deparseAlignment=null,checkAstReconstruction=null;
  const name='cluvo-pwa-upgrade-restore-'+randomBytes(16).toString('hex'),socket=SOCKETS[executionScope];
  const command=async(args,input,maximum,timeout)=>{
   let result;try{result=await run(['--host',socket,...args],input,maximum,timeout);}catch{throw new InitialRestoreError('RESTORE_PROCESS_UNAVAILABLE',{phase,errorKind:'PROCESS_FAILURE'});}
@@ -403,6 +404,18 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
     exact_catalog_comparison_unchanged:true,source_global_or_database_settings_changed:false,provider_archive_process_settings_changed:false,source_database_mutated:false,semantic_differences_ignored:false});
    need(deparseAlignment!==null,'RESTORE_DEPARSE_ALIGNMENT_UNPROVED');
   }
+  const restoredCatalog={};
+  for(const [family,query]of Object.entries(CATALOG_QUERIES)){
+   phase='catalog.'+family;restoredCatalog[family]=await jsonSql(aggregate(query));
+  }
+  const reconstruction=knownPwaCheckAstReconstruction(original.catalog,restoredCatalog,
+   files.find(entry=>entry.file.file===PWA_CHECK_AST_SOURCE_FILE)?.bytes);
+  if(reconstruction){
+   // This fixed native DDL is confined to the same inspected network-none
+   // clone. No source/catalog row is rewritten and no mismatch is ignored.
+   const current=await inspect(id);ownership(current);isolated(current);need(current.state==='running','RESTORE_CLONE_NOT_RUNNING');
+   phase='catalog.constraints';await sql(reconstruction.sql);checkAstReconstruction=reconstruction.proof;
+  }
   const catalogMismatches=[];let definitionDiagnostics=null;
   for(const [family,query]of Object.entries(CATALOG_QUERIES)){
    phase='catalog.'+family;const actual=await jsonSql(aggregate(query));
@@ -453,7 +466,7 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
    baseline_catalog_families_verified:28,native_archive_sections_restored:3,native_restore_passes:4,native_toc_entries_preserved:lists.entries,extensions_precreated_with_source_owner:extensionsPrecreated,extension_owner_reassignments:extensionOwnerReassignments,extension_installers_removed:true,effective_acl_objects_replayed:aclObjectsReplayed,temporary_schema_usage_grants:temporarySchemaUsageGrants,temporary_reference_grants:temporaryReferenceGrants,temporary_restore_privileges_removed:true,extension_privilege_warnings:extensionPrivilegeWarnings,post_data_owner_mode:'session_authorization',bootstrap_create_exceptions:1,source_migration_prefix:baseline.appliedPrefix,
    final_migration_prefix:UPGRADE_FILES.length,non_superuser_upgrade_migrations:UPGRADE_FILES.length-baseline.appliedPrefix,app_tables:upgraded.app_tables,native_policies:upgraded.native_policies,
    network_isolated:true,background_jobs_disabled:true,source_database_mutated:false,
-   ...(deparseAlignment?{deparse_alignment:deparseAlignment}:{}),role_passwords_restored:false,provider_root_keys_restored:false,provider_services_verified:false,
+   ...(deparseAlignment?{deparse_alignment:deparseAlignment}:{}),...(checkAstReconstruction?{check_ast_reconstruction:checkAstReconstruction}:{}),role_passwords_restored:false,provider_root_keys_restored:false,provider_services_verified:false,
    full_provider_restore_verified:false,all_object_families_verified:false,live_migration_authorized:false,v1_ready:false,production_enabled:false};
  }catch(error){primary=error instanceof InitialRestoreError?error:new InitialRestoreError('INITIAL_RESTORE_UNAVAILABLE');primary.phase=phase;if(deparseAlignment)primary.deparseAlignment=deparseAlignment;}
  finally{

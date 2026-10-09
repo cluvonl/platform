@@ -1,0 +1,74 @@
+{
+  "format": "PWA_CHECK_AST_PRIMARY_SOURCE_DISCOVERY_V1",
+  "scope": "PRIMARY_SOURCE_RESEARCH_ONLY",
+  "observed_on": "2026-10-09",
+  "postgresql_source_tag": "REL_17_11",
+  "result": "SOURCE_SUPPORTED_BETWEEN_AST_ROUND_TRIP_EXPLANATION",
+  "known_public_migration": {
+    "path": "supabase/migrations/20261009100000_pwa_domain.sql",
+    "sha256": "18cc63b457fddea3f003bceb4d31f310291692e70485e6aa013e4091a8d47d41",
+    "line": 195,
+    "relation": "app.pwa_push_subscriptions",
+    "constraint": "pwa_push_subscriptions_endpoint_check",
+    "field": "endpoint"
+  },
+  "separate_failed_staging_report": {
+    "artifact": "docs/release/evidence/staging/20261009-pwa-upgrade-attempt-37921449926-gha.json",
+    "sha256": "7cef77551560f677ed87164bdebeb550ca3c0d8263ff282bc29b2b00db142b5d",
+    "source_sha": "6029b482c06669aa37806d3aa90f70b59e6ccfd4",
+    "workflow_run_id": "37921449926"
+  },
+  "known_definition_hash_pair": {
+    "source_sha256": "7c0d72ecafb4ead98076419e9b1b47bbc06885137f3388b76409f0f3a156d72b",
+    "logical_restore_sha256": "48ba42e6e666c6b5035a70176d12d0163a6a51ac1e2d080f1fb56c51f69ffc12"
+  },
+  "primary_sources": [
+    {
+      "url": "https://www.postgresql.org/docs/17/functions-info.html#FUNCTIONS-INFO-CATALOG-TABLE",
+      "finding": "pg_get_constraintdef reconstructs constraint SQL from catalog state; it does not return the original command text."
+    },
+    {
+      "url": "https://github.com/postgres/postgres/blob/REL_17_11/src/backend/parser/gram.y#L14193-L14199",
+      "finding": "BETWEEN first produces AEXPR_BETWEEN rather than BoolExpr, so a surrounding AND cannot flatten its yet-untransformed comparisons."
+    },
+    {
+      "url": "https://github.com/postgres/postgres/blob/REL_17_11/src/backend/parser/parse_expr.c#L1216-L1362",
+      "finding": "transformAExprBetween later creates an AND BoolExpr with >= and <= children. transformBoolExpr transforms and appends its arguments without flattening a transformed nested BoolExpr."
+    },
+    {
+      "url": "https://github.com/postgres/postgres/blob/REL_17_11/src/backend/parser/gram.y#L17988-L18001",
+      "finding": "makeAndExpr immediately flattens an already present left-hand AND BoolExpr during grammar parsing."
+    },
+    {
+      "url": "https://github.com/postgres/postgres/blob/REL_17_11/src/backend/parser/gram.y#L14482-L14493",
+      "finding": "Ordinary expression parentheses return the enclosed expression directly and do not introduce a wrapper that prevents AND flattening."
+    },
+    {
+      "url": "https://github.com/postgres/postgres/blob/REL_17_11/src/backend/utils/adt/ruleutils.c#L8615-L8634",
+      "finding": "The non-pretty BoolExpr deparser emits separate parentheses around each stored AND node."
+    },
+    {
+      "url": "https://github.com/postgres/postgres/blob/REL_17_11/src/bin/pg_dump/pg_dump.c#L8638-L8647",
+      "finding": "pg_dump obtains table CHECK SQL through pg_get_constraintdef rather than preserving the original BETWEEN spelling."
+    }
+  ],
+  "source_supported_inference": "The immutable BETWEEN expression can store a nested AND created after grammar parsing. Deparse expands BETWEEN to comparisons. Reparse then sees that inner AND during grammar parsing and flattens it, yielding a different grouping and reconstructed parenthesis text under identical GUCs. This explanation is inferred from the pinned primary source and the public immutable migration; this research artifact does not execute or certify a restore.",
+  "bounded_repair_candidate": {
+    "scope": "OWNED_DISPOSABLE_CLONE_ONLY",
+    "method": "Recreate only the one known CHECK using its exact immutable original BETWEEN definition through supported DDL. Require the known relation, constraint, source/restore hash pair and matching remaining catalog state before the change. Accept only an exact post-reconstruction source definition and every existing strict catalog comparison.",
+    "strict_catalog_families_required": 28,
+    "full_strict28_repair_proof_bound": false,
+    "catalog_update_allowed": false,
+    "comparison_waiver_allowed": false,
+    "source_database_mutation_allowed": false
+  },
+  "tests_executed_by_this_discovery": 0,
+  "database_connections_by_this_discovery": 0,
+  "provider_calls_by_this_discovery": 0,
+  "raw_ddl_or_provider_records_retained": false,
+  "secret_values_retained": false,
+  "hosted_restore_or_activation_proved": false,
+  "physical_device_verified": false,
+  "whole_acceptance_passed": false,
+  "production_enabled": false
+}
