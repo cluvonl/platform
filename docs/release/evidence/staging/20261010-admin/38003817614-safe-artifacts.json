@@ -1,0 +1,34 @@
+{
+  "scope": "EXACT_ADMIN_RELEASE_SAFE_AGGREGATES_ONLY",
+  "observed_at": "2026-10-09T23:35:59.184968+00:00",
+  "source_sha": "1df00e1b7c040f7e7405ef042b32c8dabf208a59",
+  "workflow_run_id": 38003817614,
+  "status": "completed",
+  "conclusion": "success",
+  "url": "https://github.com/cluvonl/platform/actions/runs/38003817614",
+  "downloaded_safe_aggregates": [
+    {
+      "artifact_id": 11651086552,
+      "name": "cluvo-staging-pwa-upgrade-report-1df00e1b7c040f7e7405ef042b32c8dabf208a59-38003817614-1",
+      "bytes": 5874,
+      "path": "38003817614-upgrade.json",
+      "sha256": "4316708395a47f5522ddc8d85c7e720f2cffe2cd26158f5db896afcef7ac15b8"
+    }
+  ],
+  "encrypted_custody_metadata_only": [
+    {
+      "artifact_id": 11650089969,
+      "name": "cluvo-staging-pwa-upgrade-encrypted-1df00e1b7c040f7e7405ef042b32c8dabf208a59-38003817614-1",
+      "bytes": 10228201,
+      "downloaded": false
+    }
+  ],
+  "production_enabled": false,
+  "jobs": [
+    {
+      "name": "upgrade",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ]
+}

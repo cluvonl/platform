@@ -160,7 +160,8 @@ function initialReceipt(original,bootstrapRole,scope){
 }
 
 async function defaultRun(args,input,maximum=8_000_000,timeout=30_000){
- return await executeDatabaseProcess('/usr/bin/docker',args,{env:ENV,input,timeout,maxBuffer:maximum});
+ return await executeDatabaseProcess('/usr/bin/docker',args,{env:ENV,input,timeout,maxBuffer:maximum,
+  allowEarlyInputClose:args.includes('pg_restore')});
 }
 
 export async function restoreInitialBackup({directory,original,bootstrapRole,executionScope='LOCAL',sourceDeparseContext=null},{run=defaultRun}={}){
@@ -185,7 +186,7 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
   need(dump.subarray(0,5).toString('ascii')==='PGDMP','RESTORE_ARCHIVE_REQUIRED');
   for(const file of UPGRADE_FILES){const bytes=await readFile(new URL('../supabase/migrations/'+file.file,import.meta.url));need(hash(bytes)===file.sha256,'IMMUTABLE16_SOURCE_BYTES_CHANGED');files.push({file,bytes});}
  }catch(error){dump?.fill(0);globals?.fill(0);throw error instanceof InitialRestoreError?error:new InitialRestoreError('RESTORE_INPUT_UNAVAILABLE');}
- let phase='input',restoreSection=null,extensionPrivilegeWarnings=0,deparseAlignment=null,checkAstReconstruction=null;
+ let phase='input',restoreSection=null,extensionPrivilegeWarnings=0,archiveInputCloses=0,deparseAlignment=null,checkAstReconstruction=null;
  const name='cluvo-pwa-upgrade-restore-'+randomBytes(16).toString('hex'),socket=SOCKETS[executionScope];
  const command=async(args,input,maximum,timeout)=>{
   let result;try{result=await run(['--host',socket,...args],input,maximum,timeout);}catch{throw new InitialRestoreError('RESTORE_PROCESS_UNAVAILABLE',{phase,errorKind:'PROCESS_FAILURE'});}
@@ -210,6 +211,7 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
    }
    throw new InitialRestoreError('RESTORE_PROCESS_FAILED',{phase,restoreSection,...processDiagnostic(result,privateServerLog)});
   }
+  if(result.inputClosedEarly===true&&args.includes('pg_restore'))archiveInputCloses++;
   return result.stdout;
  };
  const jsonCommand=async args=>{try{return JSON.parse(await command(args,undefined,200000,20000));}catch(error){throw error instanceof InitialRestoreError?error:new InitialRestoreError('RESTORE_CONTROL_RESPONSE_UNKNOWN');}};
@@ -462,6 +464,7 @@ export async function restoreInitialBackup({directory,original,bootstrapRole,exe
   const upgraded=await jsonSql("SELECT jsonb_build_object('history',(SELECT count(*) FROM supabase_migrations.schema_migrations),'app_tables',(SELECT count(*) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='app' AND c.relkind='r'),'forced_rls',(SELECT count(*) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='app' AND c.relkind='r' AND c.relrowsecurity AND c.relforcerowsecurity),'native_policies',(SELECT count(*) FROM pg_policy p JOIN pg_class c ON c.oid=p.polrelid JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='app' AND p.polname='native_session_required'));");
   need(upgraded.history===UPGRADE_FILES.length&&upgraded.app_tables>=144&&upgraded.forced_rls===upgraded.app_tables&&upgraded.native_policies===upgraded.app_tables,'RESTORE_INITIAL_UPGRADE_INCOMPLETE');
   await checkJobs();report={passed:true,scope:'PWA_STAGING_LOGICAL_RESTORE_AND_UPGRADE',logical_database_restored:true,
+   native_archive_input_closes:archiveInputCloses,
    physical_relations_verified:original.data.length,physical_rows_verified:original.data.reduce((sum,row)=>sum+row.rows,0),sequences_verified:original.sequences.length,
    baseline_catalog_families_verified:28,native_archive_sections_restored:3,native_restore_passes:4,native_toc_entries_preserved:lists.entries,extensions_precreated_with_source_owner:extensionsPrecreated,extension_owner_reassignments:extensionOwnerReassignments,extension_installers_removed:true,effective_acl_objects_replayed:aclObjectsReplayed,temporary_schema_usage_grants:temporarySchemaUsageGrants,temporary_reference_grants:temporaryReferenceGrants,temporary_restore_privileges_removed:true,extension_privilege_warnings:extensionPrivilegeWarnings,post_data_owner_mode:'session_authorization',bootstrap_create_exceptions:1,source_migration_prefix:baseline.appliedPrefix,
    final_migration_prefix:UPGRADE_FILES.length,non_superuser_upgrade_migrations:UPGRADE_FILES.length-baseline.appliedPrefix,app_tables:upgraded.app_tables,native_policies:upgraded.native_policies,

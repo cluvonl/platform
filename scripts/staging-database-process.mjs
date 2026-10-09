@@ -5,14 +5,15 @@ import {spawn} from 'node:child_process';
 export function executeDatabaseProcess(command, args, options) {
   return new Promise((resolve) => {
     const output = [], diagnostic = [];
-    let bytes = 0, failed = false, finished = false, timer, killTimer;
+    let bytes = 0, failed = false, finished = false, inputClosedEarly = false, timer, killTimer;
     const child = spawn(command, args, {env:options.env, stdio:['pipe', 'pipe', 'pipe']});
     const finish = (status) => {
       if (finished) return;
       finished = true;
       clearTimeout(timer); clearTimeout(killTimer);
+      if (inputClosedEarly && status !== 0) failed = true;
       if (failed) {child.stdin.destroy(); child.stdout.destroy(); child.stderr.destroy();}
-      resolve({status, ...(failed ? {error:true} : {}),
+      resolve({status, ...(failed ? {error:true} : {}), ...(inputClosedEarly ? {inputClosedEarly:true} : {}),
         stdout:failed ? '' : Buffer.concat(output).toString('utf8'),
         stderr:Buffer.concat(diagnostic).toString('utf8')});
     };
@@ -35,7 +36,16 @@ export function executeDatabaseProcess(command, args, options) {
     };
     child.stdout.on('data', receive(output));
     child.stderr.on('data', receive(diagnostic));
-    child.stdin.on('error', stop);
+    child.stdin.on('error', (error) => {
+      // A selective archive reader may finish before consuming table data.
+      // Opt in only for that fixed reader; exit status, stderr, output limits
+      // and timeout still determine whether the caller accepts the result.
+      if (!finished && error.code === 'EPIPE' && options.allowEarlyInputClose === true) {
+        inputClosedEarly = true;
+        return;
+      }
+      stop();
+    });
     child.stdout.on('error', stop);
     child.stderr.on('error', stop);
     child.on('error', () => {failed = true; finish(null);});

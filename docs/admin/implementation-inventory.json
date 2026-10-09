@@ -25,7 +25,7 @@
     "navigation": "Extend existing club management routes and add a separate /platform environment; keep PWA club choice at the top of Meer"
   },
   "acceptance": {
-    "state": "LOCAL_VERIFIED_STAGING_PENDING",
+    "state": "STAGING_DATABASE_UPGRADED_ACTIVATION_PENDING",
     "empty_database": "PASS: actual PostgreSQL17 fresh16 application migrations and all 55 SQL suites",
     "upgrade_from36": "PASS: pinned actual historical renderer, whole original history/receipts preserved, 24 tamper negatives, zero-SQL redeploy",
     "upgrade_from31_and35": "PASS: approved exact history and source receipts preserved",
@@ -33,11 +33,20 @@
     "last_place_cluster_race": "PASS: six actual independent-connection races with observed Lock:advisory",
     "cross_device_help_and_saved_actions": "PASS: actual independent local Supabase OTP sessions",
     "responsive_browser": "PASS: 77 real browser checks; 320/390/768/1440 pixels",
-    "javascript": "PASS: 801 executed, 41 explicitly skipped, 0 failures",
+    "javascript": "PASS: 803 executed, 42 explicitly skipped, 0 failures",
     "typecheck_build_lint": "PASS; existing unrelated local PWA evidence has 21 lint warnings",
     "database_lint": "PASS: 0 errors and 0 warnings",
-    "staging_readback": "pending exact green main promotion and deployment",
-    "first_personal_platform_mandate": "awaiting explicit named account choice; no real user grant created"
+    "staging_readback": "pending corrected exact green main promotion and app activation",
+    "first_personal_platform_mandate": "awaiting explicit named account choice; no real user grant created",
+    "staging_database_upgrade": {
+      "passed": true,
+      "source_sha": "1df00e1b7c040f7e7405ef042b32c8dabf208a59",
+      "workflow_run_id": 38003817614,
+      "previous_migrations": 36,
+      "current_migrations": 41,
+      "added_migrations": 5
+    },
+    "archive_input_regression": "PASS: actual owned PG17 19 MB selective restore, three early input closes, full restored data digest matches; failures/timeout/output limits retained"
   },
   "implementation": {
     "club": "Canonical organization, named access invitations, committee contacts/members, planning, execution, request followup, policy, training, communication, canonical reports and finance, seasons, support and immutable audit",

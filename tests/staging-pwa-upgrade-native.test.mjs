@@ -11,10 +11,51 @@ import {runOwnedPwaNativeQa} from './helpers/pwa-owned-native-qa.mjs';
 import {runOwnedSportlinkAuthority} from './helpers/pwa-owned-sportlink-authority.mjs';
 import {loadClosed31Upgrade,loadClosed35Upgrade,loadClosed36Upgrade} from './helpers/pwa-closed31-upgrade.mjs';
 import {adminBootstrapBody} from '../scripts/staging-admin-bootstrap.mjs';
+import {executeDatabaseProcess} from '../scripts/staging-database-process.mjs';
 
 const literal=value=>"'"+value.replaceAll("'","''")+"'";
 const sourceSha='a'.repeat(40),sentinel='2000-01-01T00:00:00Z';
 const context={actor:'local-upgrade-test',workflowRunId:'123',expectedBackendPid:1,expectedBackendStart:sentinel,backupArtifactId:'456',backupArtifactSha256:'b'.repeat(64)};
+
+test('actual owned PG17 selective restore accepts early archive EOF only after successful exit and verifies the full data',
+ {skip:process.env.CLUVO_PWA_UPGRADE_NATIVE_TESTS!=='owned-pg17',timeout:120000},async t=>{
+ const socket=process.env.CLUVO_PWA_UPGRADE_DOCKER_SCOPE==='hosted'?'unix:///var/run/docker.sock':'unix:///run/user/1001/docker.sock';
+ const name='cluvo-pwa-writer-test-'+randomBytes(12).toString('hex');let created=false;
+ const env={PATH:'/usr/bin:/bin',LANG:'C.UTF-8'};
+ const run=(args,input)=>spawnSync('docker',['--host',socket,...args],{input,env,timeout:60000,maxBuffer:32000000});
+ const checked=(args,input)=>{const r=run(args,input);assert.equal(r.status,0,'OWNED_ARCHIVE_PIPE_PROCESS_FAILED');assert.equal(r.stderr.length,0);return r.stdout;};
+ const sql=(query,database='postgres')=>checked(['exec','-i',name,'psql','-X','--quiet','--no-align','--tuples-only','--no-password','--set=ON_ERROR_STOP=1','-h','/restore','-U','supabase_admin','-d',database],Buffer.from(query)).toString().trim();
+ try{
+  checked(['create','--name',name,'--label','cluvo.pwa.writer-test='+name,'--network=none','--user=postgres','--log-driver=none','--tmpfs','/restore:rw,size=512m,mode=1777','--entrypoint','/bin/sh',IMAGE,'-c',INITIAL_RESTORE_STARTUP,'cluvo-owned-archive-pipe','supabase_admin']);created=true;
+  checked(['start',name]);let ready=false;
+  for(let attempt=0;attempt<100;attempt++){
+   if(run(['exec',name,'pg_isready','-h','/restore','-U','supabase_admin','-d','postgres']).status===0){ready=true;break;}
+   await new Promise(resolve=>setTimeout(resolve,100));
+  }
+  assert.equal(ready,true);
+  sql("CREATE TABLE public.archive_pipe_fixture(payload text NOT NULL); INSERT INTO public.archive_pipe_fixture SELECT string_agg(md5(g::text),'') FROM generate_series(1,600000)g;");
+  const original=sql('SELECT md5(payload) FROM public.archive_pipe_fixture;');
+  checked(['exec',name,'pg_dump','--format=custom','--compress=0','--table=public.archive_pipe_fixture','--file=/restore/archive-pipe.dump','--no-password','-h','/restore','-U','supabase_admin','-d','postgres']);
+  const archive=checked(['exec',name,'cat','/restore/archive-pipe.dump']);assert.ok(archive.length>16000000);assert.equal(archive.subarray(0,5).toString(),'PGDMP');
+  sql('CREATE DATABASE archive_pipe_target;');
+  const closes=[];
+  for(const args of [
+   ['--list'],
+   ['--exit-on-error','--single-transaction','--section=pre-data','-h','/restore','-U','supabase_admin','-d','archive_pipe_target'],
+   ['--exit-on-error','--single-transaction','--section=data','-h','/restore','-U','supabase_admin','-d','archive_pipe_target'],
+   ['--exit-on-error','--single-transaction','--section=post-data','-h','/restore','-U','supabase_admin','-d','archive_pipe_target'],
+  ]){
+   const r=await executeDatabaseProcess('/usr/bin/docker',['--host',socket,'exec','-i',name,'pg_restore',...args],{env,input:archive,timeout:30000,maxBuffer:100000,allowEarlyInputClose:true});
+   assert.equal(r.status,0);assert.equal(r.error,undefined);assert.equal(r.stderr,'');closes.push(r.inputClosedEarly===true);
+  }
+  assert.ok(closes.some(Boolean),'large selective archive actually closes stdin early');
+  assert.equal(sql('SELECT count(*) FROM public.archive_pipe_fixture;','archive_pipe_target'),'1');
+  assert.equal(sql('SELECT md5(payload) FROM public.archive_pipe_fixture;','archive_pipe_target'),original);
+  t.diagnostic(JSON.stringify({scope:'OWNED_PG17_SELECTIVE_ARCHIVE_PIPE',archive_bytes:archive.length,early_input_closes:closes.filter(Boolean).length,restore_sections:3,full_data_digest_matches:true,network:'none',source_credentials_used:false}));
+ }finally{
+  if(created){const removed=run(['rm','-f',name]);assert.equal(removed.status,0,'OWNED_ARCHIVE_PIPE_CLEANUP_REQUIRED');}
+ }
+});
 function localBackend(sql){
  assert.ok(sql.includes('OR pg_backend_pid()<>1\n'));assert.ok(sql.includes(literal(sentinel)+'::timestamptz'));
  return sql.replace('OR pg_backend_pid()<>1\n','OR pg_backend_pid()<>pg_backend_pid()\n')

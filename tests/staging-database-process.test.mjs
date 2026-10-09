@@ -52,3 +52,31 @@ test('missing executable completes through a bounded error result', async () => 
   assert.equal(result.error, true);
   assert.equal(result.stdout, '');
 });
+
+test('an early reader fails by default and succeeds only with explicit opt-in and a zero exit', async () => {
+  const input = Buffer.alloc(16 * 1024 * 1024, 65);
+  const source = "process.stdout.end('SELECTIVE_READER_COMPLETE');";
+  const strict = await run(source, {input});
+  assert.equal(strict.error, true);
+  assert.equal(strict.stdout, '');
+  const selected = await run(source, {input, allowEarlyInputClose:true});
+  assert.equal(selected.status, 0);
+  assert.equal(selected.error, undefined);
+  assert.equal(selected.inputClosedEarly, true);
+  assert.equal(selected.stdout, 'SELECTIVE_READER_COMPLETE');
+  const failed = await run("process.stderr.end('CONTROLLED_READER_FAILURE'); process.exitCode=3;", {input, allowEarlyInputClose:true});
+  assert.equal(failed.status, 3);
+  assert.equal(failed.error, true);
+  assert.equal(failed.stdout, '');
+  assert.equal(failed.stderr, 'CONTROLLED_READER_FAILURE');
+});
+
+test('early-input opt-in preserves timeout and output limits', async () => {
+  for (const pending of [run('setInterval(() => {}, 100);', {timeout:50, allowEarlyInputClose:true}),
+    run("process.stdout.end('x'.repeat(30_000));", {maxBuffer:1_000, allowEarlyInputClose:true}),
+    run("process.stderr.end('x'.repeat(30_000));", {maxBuffer:1_000, allowEarlyInputClose:true})]) {
+    const result = await pending;
+    assert.equal(result.error, true);
+    assert.equal(result.stdout, '');
+  }
+});

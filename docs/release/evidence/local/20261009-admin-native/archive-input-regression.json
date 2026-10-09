@@ -1,0 +1,15 @@
+{
+  "scope": "OWNED_PG17_SELECTIVE_ARCHIVE_PIPE",
+  "archive_bytes": 19201604,
+  "early_input_closes": 3,
+  "restore_sections": 3,
+  "full_data_digest_matches": true,
+  "network": "none",
+  "source_credentials_used": false,
+  "observed_at": "2026-10-09T23:57:10.406273+00:00",
+  "passed": true,
+  "production_enabled": false,
+  "default_early_input_close_refused": true,
+  "nonzero_exit_refused": true,
+  "timeout_and_output_limits_preserved": true
+}
