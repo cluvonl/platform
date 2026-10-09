@@ -1,0 +1,48 @@
+{
+  "environment": "staging",
+  "project_ref": "fbozlbgmktkgcdfqdaaz",
+  "observed_at": "2026-10-09T05:03:52.792Z",
+  "passed": false,
+  "database_mutations_performed": false,
+  "applied_migrations": 0,
+  "private_values_exported": false,
+  "app_activation_performed": false,
+  "email_sent": false,
+  "authenticated_native_login_verified": false,
+  "provider_services_verified": false,
+  "full_provider_restore_verified": false,
+  "o08_restore_accepted": false,
+  "v1_ready": false,
+  "production_enabled": false,
+  "execution_mode": "APPLY",
+  "source_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f",
+  "workflow_run_id": "37886207417",
+  "migration_manifest_sha256": "4d00699a669e26e0e030523c56c87a231177c5887470d6fe2903ead7164b7e4d",
+  "pg17_toolchain": {
+    "image": "public.ecr.aws/supabase/postgres@sha256:0450166354dc9c1d25f0322ac8b580774d4fb0184d2b087f6e4fe9499c66cf53",
+    "tools": {
+      "pg_dump": "17.11",
+      "pg_dumpall": "17.11",
+      "pg_restore": "17.11"
+    },
+    "workers_removed": 3,
+    "network": "none",
+    "database_connections": 0,
+    "source_calls": 0
+  },
+  "initial_applied_prefix": 16,
+  "backup_custody": {
+    "uploaded": true,
+    "remote_readback": true,
+    "artifact_id": "11596761727",
+    "archive_sha256": "89a5353692273e71c4be0657d63604bd527d5bbb44eebe024169262fb431d26f",
+    "retention_days": 30,
+    "key_profile": "cluvo-staging-pwa-upgrade-backup-hkdf-sha256-v1",
+    "plaintext_uploaded": false,
+    "secret_key_uploaded": false
+  },
+  "restore_failure_phase": "history",
+  "restore_error_topics": [],
+  "returned_session_closed": true,
+  "error": "RESTORE_SQL_RESPONSE_UNKNOWN"
+}

@@ -3,11 +3,12 @@ import assert from 'node:assert/strict';
 import {randomBytes} from 'node:crypto';
 import {readFile} from 'node:fs/promises';
 import {spawnSync} from 'node:child_process';
-import {UPGRADE_FILES,createUpgradeMigrationManifest,upgradeMigrationSQL,validateUpgradeHistory,UPGRADE_SOURCE_HISTORY_SQL} from '../scripts/staging-pwa-upgrade-migrations.mjs';
+import {UPGRADE_FILES,APPROVED_PWA_PREDECESSOR31,createUpgradeMigrationManifest,upgradeMigrationSQL,validateUpgradeHistory,UPGRADE_SOURCE_HISTORY_SQL} from '../scripts/staging-pwa-upgrade-migrations.mjs';
 import {createInitialMigrationManifest,initialMigrationSQL,INITIAL_MIGRATION_POLICY,INITIAL_MIGRATION_LOCK_OBJECT,INITIAL_LAYOUT_SQL,INITIAL_HISTORY_SQL,INITIAL_SOURCE_HISTORY_SQL} from '../scripts/staging-initial-migrations.mjs';
 import {INITIAL_RESTORE_STARTUP,PWA_RESTORE_SUFFIX_LAYOUT_SQL} from '../scripts/staging-pwa-upgrade-restore.mjs';
 import {IMAGE} from '../scripts/pg17-capture-worker.mjs';
 import {runOwnedPwaNativeQa} from './helpers/pwa-owned-native-qa.mjs';
+import {loadClosed31Upgrade} from './helpers/pwa-closed31-upgrade.mjs';
 
 const literal=value=>"'"+value.replaceAll("'","''")+"'";
 const sourceSha='a'.repeat(40),sentinel='2000-01-01T00:00:00Z';
@@ -21,7 +22,7 @@ function localBackend(sql){
 // This is an explicitly selected disposable PostgreSQL17 fixture. Its minimal
 // auth tables permit actual canonical migration SQL; it proves neither hosted
 // provider restoration nor real auth/login/mail delivery.
-test('actual owned PG17: fixed additive envelope commits whole-byte history/audit, rejects drift and rolls failures back',
+for(const lineage of ['fresh16','approved31'])test(`actual owned PG17 ${lineage}: fixed additive envelope preserves whole-byte history/audit and rejects drift`,
  {skip:process.env.CLUVO_PWA_UPGRADE_NATIVE_TESTS!=='owned-pg17',timeout:180000},async t=>{
  const socket=process.env.CLUVO_PWA_UPGRADE_DOCKER_SCOPE==='hosted'?'unix:///var/run/docker.sock':'unix:///run/user/1001/docker.sock';
  const name='cluvo-pwa-writer-test-'+randomBytes(12).toString('hex');let created=false;
@@ -80,20 +81,61 @@ RESET ROLE;`,{role:'supabase_admin'});
   assert.equal(json("SELECT to_jsonb(to_regclass('supabase_migrations.cluvo_pwa_upgrade_source') IS NULL);"),true);
   assert.equal(json("SELECT count(*) FROM app.help_topics WHERE topic_id LIKE 'pwa.%';"),0);
   sql('DROP TABLE app.pwa_instruction_versions;');
-  sql(lock+manifest.migrations.slice(16).map((_,index)=>envelope(index+16)).join('\n'));
+  let predecessorProof=null;
+  if(lineage==='approved31'){
+   assert.equal(manifest.migrations.length,32);
+   const closed=await loadClosed31Upgrade(),approved=APPROVED_PWA_PREDECESSOR31;
+   const previous=closed.createUpgradeMigrationManifest(approved.sourceSha,sources.slice(0,31));
+   assert.equal(previous.sha256,approved.manifestSha256);assert.equal(previous.migrations.length,31);
+   const previousContext={...context,workflowRunId:approved.workflowRunId,backupArtifactId:approved.backupArtifactId,backupArtifactSha256:approved.backupArtifactSha256};
+   sql(lock+previous.migrations.slice(16).map((_,index)=>localBackend(closed.upgradeMigrationSQL(previous,index+16,previousContext))).join('\n'));
+   const previousHistory=json(INITIAL_HISTORY_SQL),previousReceipts=json(UPGRADE_SOURCE_HISTORY_SQL),previousInitial=json(INITIAL_SOURCE_HISTORY_SQL);
+   const helpDigest=json("SELECT to_jsonb(md5(coalesce(jsonb_agg(to_jsonb(t)ORDER BY topic_id)::text,'')))FROM app.help_topics t;");
+   const prior={layout:json(INITIAL_LAYOUT_SQL),historyRows:previousHistory,sourceRows:previousInitial,upgradeRows:previousReceipts};
+   assert.equal(validateUpgradeHistory(manifest,prior).pending.length,1);
+   assert.equal(json("SELECT to_jsonb(to_regprocedure('api.pwa_personal_action_context(uuid,uuid,bigint)')IS NULL);"),true);
+   const firstReceipt=literal(previousReceipts[0].version);
+   const badMutations=[
+    `UPDATE supabase_migrations.cluvo_pwa_upgrade_source SET source_sha='${'e'.repeat(40)}'WHERE version=${firstReceipt};`,
+    `UPDATE supabase_migrations.cluvo_pwa_upgrade_source SET workflow_run_id='987',idempotency_key='cluvo-staging-pwa-upgrade:987:'||version WHERE version=${firstReceipt};`,
+    `UPDATE supabase_migrations.cluvo_pwa_upgrade_source SET backup_artifact_id='999'WHERE version=${firstReceipt};`,
+    `UPDATE supabase_migrations.cluvo_pwa_upgrade_source SET backup_artifact_sha256='${'e'.repeat(64)}'WHERE version=${firstReceipt};`,
+    `UPDATE supabase_migrations.cluvo_pwa_upgrade_source SET manifest_sha256='${'e'.repeat(64)}'WHERE version=${firstReceipt};`,
+    `UPDATE supabase_migrations.cluvo_pwa_upgrade_source SET manifest_sha256=${literal(manifest.sha256)}WHERE version=${firstReceipt};`,
+    `DELETE FROM supabase_migrations.cluvo_pwa_upgrade_source WHERE version=${firstReceipt};`,
+    `UPDATE supabase_migrations.schema_migrations SET statements=ARRAY['altered']::text[]WHERE version=${firstReceipt};`,
+   ];
+   for(const mutation of badMutations){
+    // All deliberate fixture corruption rolls back with the rejected envelope.
+    assert.match(sql(lock+'BEGIN;'+mutation+envelope(31),{expectedFailure:true}),/P0001/);
+    assert.deepEqual(json(INITIAL_HISTORY_SQL),previousHistory);assert.deepEqual(json(UPGRADE_SOURCE_HISTORY_SQL),previousReceipts);
+    assert.equal(json("SELECT to_jsonb(to_regprocedure('api.pwa_personal_action_context(uuid,uuid,bigint)')IS NULL);"),true);
+   }
+   sql(lock+envelope(31));
+   assert.deepEqual(json(INITIAL_HISTORY_SQL).slice(0,31),previousHistory);
+   assert.deepEqual(json(UPGRADE_SOURCE_HISTORY_SQL).slice(0,15),previousReceipts);
+   assert.deepEqual(json(INITIAL_SOURCE_HISTORY_SQL),previousInitial);
+   assert.equal(json("SELECT to_jsonb(md5(coalesce(jsonb_agg(to_jsonb(t)ORDER BY topic_id)::text,'')))FROM app.help_topics t;"),helpDigest);
+   predecessorProof={actual_closed31_renderer:true,previous_migrations:31,executed_new_migrations:1,previous_history_and_receipts_unchanged:true,
+    original16_receipts_unchanged:true,help_catalog_data_unchanged:true,actual_tamper_negatives:badMutations.length,approved_predecessor_source_sha:approved.sourceSha,approved_predecessor_manifest_sha256:approved.manifestSha256};
+  }else sql(lock+manifest.migrations.slice(16).map((_,index)=>envelope(index+16)).join('\n'));
   const readback={layout:json(INITIAL_LAYOUT_SQL),historyRows:json(INITIAL_HISTORY_SQL),sourceRows:json(INITIAL_SOURCE_HISTORY_SQL),upgradeRows:json(UPGRADE_SOURCE_HISTORY_SQL)};
   assert.equal(validateUpgradeHistory(manifest,readback).complete,true);
   const afterSuffix=sql(rawSuffixLayout);
   assert.equal(afterSuffix,'t');assert.throws(()=>JSON.parse(afterSuffix),SyntaxError);
   assert.equal(json(PWA_RESTORE_SUFFIX_LAYOUT_SQL),true);
   assert.equal(readback.sourceRows.length,16);assert.equal(readback.upgradeRows.length,UPGRADE_FILES.length-16);
-  for(const receipt of readback.upgradeRows){assert.equal(receipt.actor,'local-upgrade-test');assert.equal(receipt.workflow_run_id,'123');assert.equal(receipt.source_sha,sourceSha);assert.equal(receipt.backup_artifact_id,'456');}
+  for(const [index,receipt]of readback.upgradeRows.entries()){
+   const previous=lineage==='approved31'&&index<15;
+   assert.equal(receipt.actor,'local-upgrade-test');assert.equal(receipt.workflow_run_id,previous?APPROVED_PWA_PREDECESSOR31.workflowRunId:'123');
+   assert.equal(receipt.source_sha,previous?APPROVED_PWA_PREDECESSOR31.sourceSha:sourceSha);assert.equal(receipt.backup_artifact_id,previous?APPROVED_PWA_PREDECESSOR31.backupArtifactId:'456');
+  }
   assert.match(sql(lock+envelope(16),{expectedFailure:true}),/P0001/);
   assert.equal(json('SELECT count(*) FROM supabase_migrations.schema_migrations;'),UPGRADE_FILES.length);
   const guards=json("SELECT jsonb_build_object('tables',count(*),'forced',count(*) FILTER(WHERE c.relrowsecurity AND c.relforcerowsecurity),'native',count(*) FILTER(WHERE EXISTS(SELECT 1 FROM pg_policy p WHERE p.polrelid=c.oid AND p.polname='native_session_required'))) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='app' AND c.relkind='r';");
   assert.equal(guards.forced,guards.tables);assert.equal(guards.native,guards.tables);
   assert.ok(guards.tables>144);
-  const proof=await runOwnedPwaNativeQa({name,socket,sql,json,lock});t.diagnostic(JSON.stringify({...proof,actual_suffix_history_typed_json_boolean:true}));
+  const proof=await runOwnedPwaNativeQa({name,socket,sql,json,lock});t.diagnostic(JSON.stringify({...proof,lineage,predecessor_upgrade:predecessorProof,actual_suffix_history_typed_json_boolean:true}));
  }finally{
   if(created){
    const ownership=checked(['inspect',name,'--format','{{index .Config.Labels "cluvo.pwa.writer-test"}}']);

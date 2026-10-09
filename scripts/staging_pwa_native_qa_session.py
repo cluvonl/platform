@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parent
 PROJECT = 'fbozlbgmktkgcdfqdaaz'
 LOCK = int.from_bytes(hashlib.sha256(PROJECT.encode()).digest()[:4], 'big', signed=True)
 # Completed source bytes are pinned before this owner is promoted.
-PINS = {'staging_backup_session.py': 'e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1', 'staging-initial-migrations.mjs': '7f49cf8dcdb2eda53633dd3596486779ea2dd001d1a2813a07fa45e859784004', 'staging-migration-files.mjs': '83aa2aae6d4cc358965208e39e73dd0d1038ee4a6c0bc9a62675b829e30c94bd', 'staging-pwa-upgrade-migrations.mjs': 'f3806ede75794d7c1bebe9960eccba38cb6439add629557018d154d63f85c8a7', 'staging-pwa-upgrade-files.mjs': 'd0e103f5e99ec06daef466089492abe7e4a834383716b7808e16fbb8f2b03f4b', 'staging-pwa-native-qa-fixture.mjs': '5ccbeb012be04ac9cea6f555447aeaa2f5941b84ce14f9790161a07626bc3ea5', 'staging-pwa-native-qa-booking.mjs': 'dceee6137debb1015b982e5a2877da9f6e368a810a0ad6ac467ace28d70e85dc', 'staging-pwa-native-qa-automation.mjs': 'b99f275ccb86c8b16e7ef558891cb738718488792dd8d210414260925b26afb4', 'staging-pwa-native-qa-sql.mjs': '016f74100a15cd8f6a20dfd1cd0e4b44b1cf7aaa3484e2fd9f7239267e8d5a30'}
+PINS = {'staging_backup_session.py': 'e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1', 'staging-initial-migrations.mjs': '7f49cf8dcdb2eda53633dd3596486779ea2dd001d1a2813a07fa45e859784004', 'staging-migration-files.mjs': '83aa2aae6d4cc358965208e39e73dd0d1038ee4a6c0bc9a62675b829e30c94bd', 'staging-pwa-upgrade-migrations.mjs': '34dd250417a5b8e326eb1733f5465aa45af28e8582f5764c8b978b7c4e060cd9', 'staging-pwa-upgrade-files.mjs': '4ebf1351aa78cef90c674053e9c33725138b1d59a4c462e1cc0465fbe0ea2041', 'staging-pwa-native-qa-fixture.mjs': 'e7216ac2cc2973f20582a95cf6bc1113b2ee1b63eec9d27e442bc3815d489c36', 'staging-pwa-native-qa-booking.mjs': 'dceee6137debb1015b982e5a2877da9f6e368a810a0ad6ac467ace28d70e85dc', 'staging-pwa-native-qa-automation.mjs': 'b99f275ccb86c8b16e7ef558891cb738718488792dd8d210414260925b26afb4', 'staging-pwa-native-qa-sql.mjs': '016f74100a15cd8f6a20dfd1cd0e4b44b1cf7aaa3484e2fd9f7239267e8d5a30'}
 
 
 def verify_sources():
@@ -272,6 +272,11 @@ class NativeSession(Session):
     def count_blocked(self):
         require(self.phase == 'holding' and self.pq.PQtransactionStatus(self.connection) == TX_VALID,
                 'STAGING_NATIVE_QA_PHASE_INVALID')
+        self.check_lock()
+        # check_lock reads pg_stat_activity inside the open holder transaction.
+        # Its cached backend list can predate newly opened PostgREST connections.
+        # Refresh only monitoring state; preserve the transaction and holder lock.
+        self.run('SELECT pg_catalog.pg_stat_clear_snapshot();')
         self.check_lock()
         result = self.one_json(self.booking['blockingSql'])
         require(set(result) == {'blocked_contenders'} and type(result['blocked_contenders']) is int

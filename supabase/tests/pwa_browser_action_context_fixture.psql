@@ -1,0 +1,75 @@
+-- LOCAL ONLY additive synthetic read-context fixture. Existing histories,
+-- memberships, grants, Auth rows and ledger entries are never modified.
+\if :{?cluvo_native_pwa_fixture}
+\else
+\echo 'Requires explicit local synthetic fixture opt-in.'
+\quit
+\endif
+begin;
+do $fixture$
+declare
+ t uuid:='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
+ a uuid:='11111111-1111-4111-8111-111111111111';
+ c uuid:='33333333-3333-4333-8333-333333333333';
+ pa uuid:='a1000000-0000-4000-8000-000000000001';
+ pc uuid:='a1000000-0000-4000-8000-000000000003';
+ task_id uuid; event_id uuid; match_date date;
+begin
+ if current_database()<>'postgres' or current_user<>'postgres'
+  or (select count(*)from auth.users where id in(a,c)and email like '%@example.test')<>2
+  or not exists(select 1 from app.households where id='cb000000-0000-4000-8000-000000000100'and label='PWA lokaal testhuishouden')
+  or not exists(select 1 from supabase_migrations.schema_migrations where version='20261009115000')
+ then raise exception 'LOCAL_SYNTHETIC_ACTION_FIXTURE_TARGET_MISMATCH';end if;
+ if exists(select 1 from app.personal_action_items where id='cb000000-0000-4000-8000-000000001911')then
+  if not exists(select 1 from app.personal_action_items where id='cb000000-0000-4000-8000-000000001911'and tenant_id=t and recipient_person_id=pc and action_kind='subtask_assignment'and subtask_id='cb000000-0000-4000-8000-000000001901'and action_key='pwa.local.action-context.subtask')
+   or not exists(select 1 from app.personal_action_items where id='cb000000-0000-4000-8000-000000001912'and tenant_id=t and recipient_person_id=pc and action_kind='mention'and mention_id='cb000000-0000-4000-8000-000000001902'and action_key='pwa.local.action-context.mention')
+   or not exists(select 1 from app.personal_action_items a join app.team_tasks s on s.tenant_id=a.tenant_id and s.id=a.team_task_id where a.id='cb000000-0000-4000-8000-000000001913'and a.tenant_id=t and a.recipient_person_id=pa and a.action_kind='team_task'and a.action_key='pwa.local.action-context.team'and s.team_id='cb000000-0000-4000-8000-000000000400'and s.credit_minutes=0)
+   or not exists(select 1 from app.personal_action_items item join app.policy_questions q on q.tenant_id=item.tenant_id and q.id=item.policy_question_id where item.id='cb000000-0000-4000-8000-000000001914'and item.tenant_id=t and item.recipient_person_id=pa and item.action_kind='policy_follow_up'and item.policy_question_id='cb000000-0000-4000-8000-000000001904'and item.action_key='pwa.local.action-context.policy'and q.assignment_id='cb000000-0000-4000-8000-000000001403'and q.author_auth_user_id=a)
+   or not exists(select 1 from app.matches m join app.integration_connections x on x.tenant_id=m.tenant_id and x.id=m.connection_id where m.id='cb000000-0000-4000-8000-000000001920'and m.tenant_id=t and m.team_id='cb000000-0000-4000-8000-000000000400'and m.field_name='PWA veld 2'and m.locker_room_text='PWA kleedkamer 3'and m.source_id='pwa-local-read-context'and x.status='disabled'and x.provider='pwa_local_fixture')
+   then raise exception 'LOCAL_SYNTHETIC_ACTION_NAMESPACE_MISMATCH';end if;
+  return;
+ end if;
+ select id into strict task_id from app.team_tasks where tenant_id=t and team_id='cb000000-0000-4000-8000-000000000400'and credit_minutes=0 and title like 'PWA browser teamserie %'order by created_at desc,id limit 1;
+ select id into strict event_id from app.domain_events where tenant_id=t and aggregate_type='kanban_card'and aggregate_id='cb000000-0000-4000-8000-000000001203'order by occurred_at desc,id limit 1;
+ insert into app.kanban_card_subtasks(id,tenant_id,card_id,title,due_at)values('cb000000-0000-4000-8000-000000001901',t,'cb000000-0000-4000-8000-000000001203','PWA exacte lokale subtaak','2027-04-01 12:00:00+02');
+ insert into app.mentions(id,tenant_id,recipient_person_id,author_person_id,card_id,source_event_id,excerpt)values('cb000000-0000-4000-8000-000000001902',t,pc,pa,'cb000000-0000-4000-8000-000000001203',event_id,'PWA concrete lokale vermelding bij precies deze werkafspraak.');
+ insert into app.policy_questions(id,tenant_id,assignment_id,author_auth_user_id,author_person_id,question_text)values('cb000000-0000-4000-8000-000000001904',t,'cb000000-0000-4000-8000-000000001403',a,pa,'PWA concrete vraag over precies deze beleidsversie.');
+ insert into app.personal_action_items(id,tenant_id,recipient_person_id,action_key,action_kind,subtask_id)values('cb000000-0000-4000-8000-000000001911',t,pc,'pwa.local.action-context.subtask','subtask_assignment','cb000000-0000-4000-8000-000000001901');
+ insert into app.personal_action_items(id,tenant_id,recipient_person_id,action_key,action_kind,mention_id)values('cb000000-0000-4000-8000-000000001912',t,pc,'pwa.local.action-context.mention','mention','cb000000-0000-4000-8000-000000001902');
+ insert into app.personal_action_items(id,tenant_id,recipient_person_id,action_key,action_kind,team_task_id)values('cb000000-0000-4000-8000-000000001913',t,pa,'pwa.local.action-context.team','team_task',task_id);
+ insert into app.personal_action_items(id,tenant_id,recipient_person_id,action_key,action_kind,policy_question_id)values('cb000000-0000-4000-8000-000000001914',t,pa,'pwa.local.action-context.policy','policy_follow_up','cb000000-0000-4000-8000-000000001904');
+ select greatest(date '2027-02-10',coalesce(max((s.starts_at at time zone 'Europe/Amsterdam')::date)+7,date '2027-02-10'))into match_date from app.shifts s where tenant_id=t and title like 'PWA browser acceptatie %';
+ insert into app.integration_connections(id,tenant_id,provider,connection_key,status)values('cb000000-0000-4000-8000-000000001921',t,'pwa_local_fixture','local-read-only-match-context','disabled');
+ insert into app.integration_runs(id,tenant_id,connection_id,trigger_kind,status,source_complete,seen_count,changed_count,completed_at,requested_by_auth_user_id,idempotency_key)values('cb000000-0000-4000-8000-000000001922',t,'cb000000-0000-4000-8000-000000001921','manual','succeeded',true,1,1,statement_timestamp(),c,'cb000000-0000-4000-8000-000000001923');
+ insert into app.matches(id,tenant_id,connection_id,source_id,team_id,opponent,starts_at,is_home,location_text,field_name,locker_room_text,source_hash,last_seen_run_id)values('cb000000-0000-4000-8000-000000001920',t,'cb000000-0000-4000-8000-000000001921','pwa-local-read-context','cb000000-0000-4000-8000-000000000400','PWA synthetische tegenstander',(match_date+time '10:30')at time zone 'Europe/Amsterdam',true,'PWA lokaal sportpark','PWA veld 2','PWA kleedkamer 3',extensions.digest('pwa-local-read-context','sha256'),'cb000000-0000-4000-8000-000000001922');
+end;
+$fixture$;
+-- A separate, exact-parent mention fixture preserves any previously seeded
+-- synthetic mention while proving source-event/card identity explicitly.
+do $mention$
+declare t uuid:='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';e uuid;
+begin
+ select id into strict e from app.domain_events where tenant_id=t and aggregate_type='kanban_card'and aggregate_id='cb000000-0000-4000-8000-000000001203'order by occurred_at desc,id limit 1;
+ if not exists(select 1 from app.mentions where id='cb000000-0000-4000-8000-000000001942')then
+  insert into app.mentions(id,tenant_id,recipient_person_id,author_person_id,card_id,source_event_id,excerpt)values('cb000000-0000-4000-8000-000000001942',t,'a1000000-0000-4000-8000-000000000003','a1000000-0000-4000-8000-000000000001','cb000000-0000-4000-8000-000000001203',e,'PWA concrete lokale vermelding bij precies deze werkafspraak.');
+  insert into app.personal_action_items(id,tenant_id,recipient_person_id,action_key,action_kind,mention_id)values('cb000000-0000-4000-8000-000000001943',t,'a1000000-0000-4000-8000-000000000003','pwa.local.action-context.exact-parent-mention','mention','cb000000-0000-4000-8000-000000001942');
+ end if;
+ if not exists(select 1 from app.mentions m join app.domain_events e on e.tenant_id=m.tenant_id and e.id=m.source_event_id join app.personal_action_items a on a.tenant_id=m.tenant_id and a.mention_id=m.id where m.id='cb000000-0000-4000-8000-000000001942'and m.tenant_id=t and m.card_id='cb000000-0000-4000-8000-000000001203'and m.recipient_person_id='a1000000-0000-4000-8000-000000000003'and e.aggregate_type='kanban_card'and e.aggregate_id=m.card_id and a.id='cb000000-0000-4000-8000-000000001943'and a.recipient_person_id=m.recipient_person_id and a.action_kind='mention')then raise exception 'LOCAL_EXACT_PARENT_MENTION_MISMATCH';end if;
+end;
+$mention$;
+-- A fresh source row per next safe run date avoids reusing an executor's old
+-- occupied time slot. Older synthetic matches and integration runs remain.
+do $match$
+declare t uuid:='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';d date;r uuid;
+begin
+ select greatest(date '2027-02-10',coalesce((select max((s.starts_at at time zone 'Europe/Amsterdam')::date)+7 from app.shifts s where tenant_id=t and title like 'PWA browser acceptatie %'),date '2027-02-10'),coalesce((select max((b.starts_at_snapshot at time zone 'Europe/Amsterdam')::date)+7 from app.bookings b where tenant_id=t and executor_person_id in('a1000000-0000-4000-8000-000000000001','a1000000-0000-4000-8000-000000000002')and state in('booked','transfer_pending','reconfirmation_required','performed_pending','confirmed')),date '2027-02-10'))into d;
+ if not exists(select 1 from app.matches where tenant_id=t and connection_id='cb000000-0000-4000-8000-000000001921'and source_id='pwa-local-read-context-'||d::text)then
+  r:=gen_random_uuid();
+  insert into app.integration_runs(id,tenant_id,connection_id,trigger_kind,status,source_complete,seen_count,changed_count,completed_at,requested_by_auth_user_id,idempotency_key)values(r,t,'cb000000-0000-4000-8000-000000001921','manual','succeeded',true,1,1,statement_timestamp(),'33333333-3333-4333-8333-333333333333',gen_random_uuid());
+  insert into app.matches(tenant_id,connection_id,source_id,team_id,opponent,starts_at,is_home,location_text,field_name,locker_room_text,source_hash,last_seen_run_id)values(t,'cb000000-0000-4000-8000-000000001921','pwa-local-read-context-'||d::text,'cb000000-0000-4000-8000-000000000400','PWA synthetische tegenstander',(d+time '10:30')at time zone 'Europe/Amsterdam',true,'PWA lokaal sportpark','PWA veld 2','PWA kleedkamer 3',extensions.digest('pwa-local-read-context-'||d::text,'sha256'),r);
+ end if;
+ if not exists(select 1 from app.matches m where m.tenant_id=t and m.connection_id='cb000000-0000-4000-8000-000000001921'and m.source_id='pwa-local-read-context-'||d::text and m.team_id='cb000000-0000-4000-8000-000000000400'and m.starts_at=(d+time '10:30')at time zone 'Europe/Amsterdam'and m.field_name='PWA veld 2'and m.locker_room_text='PWA kleedkamer 3')then raise exception 'LOCAL_EXACT_MATCH_CONTEXT_MISMATCH';end if;
+end;
+$match$;
+commit;
+select 'LOCAL_SYNTHETIC_ACTION_CONTEXT_FIXTURE' scope,5 manual_action_count,0 new_permissions,0 provider_calls;

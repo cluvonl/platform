@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {readFile} from 'node:fs/promises';
 import {spawnSync} from 'node:child_process';
-import {UPGRADE_FILES,createUpgradeMigrationManifest,validateUpgradeHistory,upgradeMigrationSQL} from '../scripts/staging-pwa-upgrade-migrations.mjs';
+import {UPGRADE_FILES,APPROVED_PWA_PREDECESSOR31,createUpgradeMigrationManifest,validateUpgradeHistory,upgradeMigrationSQL,upgradeReceiptLineageSQL} from '../scripts/staging-pwa-upgrade-migrations.mjs';
 import {IMMUTABLE16} from '../scripts/staging-migration-files.mjs';
 import {initialSQLStatements} from '../scripts/staging-initial-migrations.mjs';
 import {renderFixedUpgrade} from '../scripts/staging-pwa-upgrade-sql.mjs';
@@ -51,6 +51,38 @@ test('known receipts resume exactly after original16 without executing already c
   assert.equal(history.productionEnabled,false);
  }
  const incomplete=state(16);incomplete.historyRows.pop();assert.throws(()=>validateUpgradeHistory(manifest,incomplete));
+});
+
+function predecessorState(prefix=31){
+ const value=state(prefix),approved=APPROVED_PWA_PREDECESSOR31;
+ for(const row of value.upgradeRows.slice(0,15))Object.assign(row,{manifest_sha256:approved.manifestSha256,source_sha:approved.sourceSha,
+  workflow_run_id:approved.workflowRunId,idempotency_key:'cluvo-staging-pwa-upgrade:'+approved.workflowRunId+':'+row.version,
+  backup_artifact_id:approved.backupArtifactId,backup_artifact_sha256:approved.backupArtifactSha256});
+ return value;
+}
+test('only the complete approved hosted31 predecessor can resume32 without rewriting previous receipts',()=>{
+ assert.equal(UPGRADE_FILES.length,32);
+ const prior=predecessorState(),before=JSON.stringify(prior);
+ const remaining=validateUpgradeHistory(manifest,prior);
+ assert.equal(remaining.appliedPrefix,31);assert.equal(remaining.pending.length,1);
+ assert.equal(JSON.stringify(prior),before);
+ assert.equal(validateUpgradeHistory(manifest,predecessorState(32)).complete,true);
+ const negative=[s=>{s.historyRows.pop();s.upgradeRows.pop();},s=>{s.upgradeRows[0]=state(31).upgradeRows[0];},
+  s=>{s.upgradeRows[0].source_sha='e'.repeat(40);},s=>{s.upgradeRows[0].workflow_run_id='987';},
+  s=>{s.upgradeRows[0].backup_artifact_id='999';},s=>{s.upgradeRows[0].backup_artifact_sha256='e'.repeat(64);},
+  s=>{s.upgradeRows[0].manifest_sha256='f'.repeat(64);},s=>{s.upgradeRows[0].idempotency_key='foreign';},
+  s=>{s.historyRows[30].single_statement_sha256='0'.repeat(64);}];
+ for(const mutate of negative){const value=predecessorState();mutate(value);assert.throws(()=>validateUpgradeHistory(manifest,value));}
+ const wrongLatest=predecessorState(32);Object.assign(wrongLatest.upgradeRows[15],wrongLatest.upgradeRows[14],{version:manifest.migrations[31].version,file:manifest.migrations[31].file,sha256:manifest.migrations[31].sha256,expected_version:31});
+ assert.throws(()=>validateUpgradeHistory(manifest,wrongLatest));
+});
+test('writer and native gates use the same bounded predecessor lineage and reject arbitrary SQL expressions',()=>{
+ const sql=upgradeReceiptLineageSQL(manifest.sha256,31);
+ for(const value of Object.values(APPROVED_PWA_PREDECESSOR31).filter(value=>typeof value==='string'))assert.ok(sql.rowInvalidSql.includes(value));
+ assert.match(sql.aggregateInvalidSql,/<>15/);assert.match(sql.rowInvalidSql,/BETWEEN 16 AND 30/);
+ assert.throws(()=>upgradeReceiptLineageSQL(manifest.sha256,30,'e.position;COMMIT;'));
+ assert.throws(()=>upgradeReceiptLineageSQL('not-a-hash',31));
+ assert.throws(()=>upgradeReceiptLineageSQL(manifest.sha256,33));
 });
 
 test('unknown, missing, duplicated and modified full-byte history or receipts fail closed',()=>{

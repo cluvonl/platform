@@ -22,11 +22,11 @@ let lostResponseProof, authenticating=false, nativeSchemaAtStart=null, nativeDom
 const mobileSources=(await readdir('components/mobile')).filter((file)=>/\.(tsx?|mjs|css)$/.test(file)).map((file)=>'components/mobile/'+file);
 const appSources=(await readdir('app/app',{recursive:true})).filter((file)=>/\.(tsx?|mjs|css)$/.test(file)).map((file)=>'app/app/'+file);
 const pwaSources=(await readdir('lib/pwa')).filter((file)=>/\.(tsx?|mjs)$/.test(file)).map((file)=>'lib/pwa/'+file);
-const sourceFiles=[...mobileSources,...appSources,...pwaSources,'components/app/help-provider.tsx','components/pwa/pwa-controls.tsx','components/pwa/push-subscription-control.tsx','scripts/browser-pwa-mobile.mjs','scripts/pwa-mobile-extended-flows.mjs'];
+const sourceFiles=[...mobileSources,...appSources,...pwaSources,'components/app/help-provider.tsx','components/pwa/pwa-controls.tsx','components/pwa/push-subscription-control.tsx','scripts/browser-pwa-mobile.mjs','scripts/pwa-mobile-extended-flows.mjs','scripts/pwa-mobile-acceptance-flows.mjs'];
 const migrationFiles=(await readdir('supabase/migrations')).filter((file)=>file.endsWith('.sql')).sort();
 const migrationHashes=Object.fromEntries(await Promise.all(migrationFiles.map(async(file)=>[file,createHash('sha256').update(await readFile('supabase/migrations/'+file)).digest('hex')])));
 const sourceHashes=Object.fromEntries(await Promise.all(sourceFiles.map(async(file)=>[file,createHash('sha256').update(await readFile(file)).digest('hex')])));
-const fixtureFiles=['supabase/tests/pwa_browser_fixture.psql','supabase/tests/pwa_browser_batch_fixture.psql','supabase/tests/pwa_browser_document_repair.psql','supabase/tests/pwa_browser_report_grant.psql'];
+const fixtureFiles=['supabase/tests/pwa_browser_fixture.psql','supabase/tests/pwa_browser_batch_fixture.psql','supabase/tests/pwa_browser_document_repair.psql','supabase/tests/pwa_browser_report_grant.psql','supabase/tests/pwa_browser_action_context_fixture.psql'];
 const fixtureHashes=Object.fromEntries(await Promise.all(fixtureFiles.map(async(file)=>[file,createHash('sha256').update(await readFile(file)).digest('hex')])));
 const buildId=(await readFile('.next/BUILD_ID','utf8')).trim();
 const metadata=()=>({browser:{name:'Chromium',version:browser?.version(),headless:true},platform:{os:process.platform,architecture:process.arch,timezone:options.timezoneId,locale:options.locale},build:{mode:'production',id:buildId,sourceFilesSha256:sourceHashes},database:{sourceMigrationCount:migrationFiles.length,migrationsSha256:migrationHashes,nativeAppliedSchemaAtStart:nativeSchemaAtStart},test_scope:{native_auth:true,synthetic_accounts:true,fixtureSourcesSha256:fixtureHashes,tenant:'club-a',household:fixtureId(100),cross_tenant_account:true},physical_device:false});
@@ -93,7 +93,7 @@ async function appPage(page,route,club='club-a') {
 async function layoutCheck(page,route,width,enlarged=false,rows=matrix) {
   const priorStage=stage; stage=`layout:${route}:${width}:${enlarged?'text200':'normal'}`;
   await page.setViewportSize({width,height:width===1440?1024:844});
-  await page.evaluate((large)=>{const elements=[...document.querySelectorAll('.cluvo-mobile *')].map((element)=>({element,size:parseFloat(getComputedStyle(element).fontSize)}));for(const {element,size} of elements) {if(large) {const property=element.matches('.avatar[aria-hidden="true"]')?'--avatar-font-size':'font-size'; element.dataset.pwaFontProperty=property;element.dataset.pwaOriginalFont=element.style.getPropertyValue(property);element.dataset.pwaOriginalFontPriority=element.style.getPropertyPriority(property);element.style.setProperty(property,`${size*2}px`,'important');} else if(element.dataset.pwaOriginalFont!==undefined) {element.style.setProperty(element.dataset.pwaFontProperty??'font-size',element.dataset.pwaOriginalFont,element.dataset.pwaOriginalFontPriority);delete element.dataset.pwaFontProperty;delete element.dataset.pwaOriginalFont;delete element.dataset.pwaOriginalFontPriority;}}window.scrollTo(0,0);},enlarged);
+  await page.evaluate((large)=>{const elements=[...document.querySelectorAll('.cluvo-mobile *, [role="dialog"] *')].map((element)=>({element,size:parseFloat(getComputedStyle(element).fontSize)}));for(const {element,size} of elements) {if(large) {const property=element.matches('.avatar[aria-hidden="true"]')?'--avatar-font-size':'font-size'; element.dataset.pwaFontProperty=property;element.dataset.pwaOriginalFont=element.style.getPropertyValue(property);element.dataset.pwaOriginalFontPriority=element.style.getPropertyPriority(property);element.style.setProperty(property,`${size*2}px`,'important');} else if(element.dataset.pwaOriginalFont!==undefined) {element.style.setProperty(element.dataset.pwaFontProperty??'font-size',element.dataset.pwaOriginalFont,element.dataset.pwaOriginalFontPriority);delete element.dataset.pwaFontProperty;delete element.dataset.pwaOriginalFont;delete element.dataset.pwaOriginalFontPriority;}}window.scrollTo(0,0);},enlarged);
   await page.waitForTimeout(80);
   if(!await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)) {const boxes=await page.evaluate(()=>[...document.querySelectorAll('.cluvo-mobile *')].filter((element)=>element.getBoundingClientRect().right>innerWidth+1).map((element)=>({tag:element.tagName,class:element.className,left:Math.round(element.getBoundingClientRect().left),right:Math.round(element.getBoundingClientRect().right),width:Math.round(element.getBoundingClientRect().width),font:parseFloat(getComputedStyle(element).fontSize)})).slice(0,30));await writeFile(output+'/overflow-'+route+'-'+width+'.json',JSON.stringify(boxes,null,2)+'\n');await page.screenshot({path:output+'/overflow-'+route+'-'+width+'.png',fullPage:true});}
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${route}: no horizontal page overflow at ${width}${enlarged?' enlarged':''}`);
@@ -104,11 +104,14 @@ async function layoutCheck(page,route,width,enlarged=false,rows=matrix) {
   }));
   assert.ok(avatarsFit,`${route}: decorative avatar initials stay on one line inside their circles at ${width}${enlarged?' enlarged':''}`);
   const nav=page.locator(width>800?'.desktop-rail nav':'.bottom-nav');
-  assert.equal(await nav.getByRole('link').count(),5);
-  assert.equal(await nav.locator('[aria-current="page"]').count(),1);
+  const dialogOpen=await page.getByRole('dialog').count()>0;
+  if(!dialogOpen) {
+    assert.equal(await nav.getByRole('link').count(),5);
+    assert.equal(await nav.locator('[aria-current="page"]').count(),1);
+  }
   assert.equal(await page.locator('.app-header select').count(),0,'Club selection stays on Meer.');
   assert.equal(await page.locator('#mobile-club-choice').count(),route==='more'?1:0);
-  if(width<=430) {
+  if(width<=430&&!dialogOpen) {
     for(const link of await nav.getByRole('link').all()) {const box=await link.boundingBox();assert.ok(box&&box.height>=44&&box.width>=44,'Bottom navigation touch targets are at least 44px.');}
     const safe=await nav.evaluate((element)=>({bottom:getComputedStyle(element).bottom,padding:getComputedStyle(element).paddingBottom}));
     assert.equal(safe.bottom,'0px');assert.ok(parseFloat(safe.padding)>=4);
@@ -116,7 +119,7 @@ async function layoutCheck(page,route,width,enlarged=false,rows=matrix) {
   const actor = pageActors.get(page)?.split('@')[0] ?? 'second-device';
   const screenshotPath=`${output}/screenshots/${actor}-${route}-${width}${enlarged?'-text200':''}.png`;
   const screenshotBytes=await page.screenshot({path:screenshotPath,fullPage:true});
-  rows.push({actor,route,width,text200:enlarged,decorative_avatar_fits:true,no_overflow:true,nav:true,club_scope:true,screenshot:{path:screenshotPath,sha256:createHash('sha256').update(screenshotBytes).digest('hex')}}); stage=priorStage;
+  rows.push({actor,route,width,text200:enlarged,decorative_avatar_fits:true,no_overflow:true,nav:!dialogOpen,dialog_open:dialogOpen,club_scope:true,screenshot:{path:screenshotPath,sha256:createHash('sha256').update(screenshotBytes).digest('hex')}}); stage=priorStage;
 }
 async function eventually(query, expected) {for(let attempt=0;attempt<100;attempt++){const actual=sql(query);if(actual===expected)return;await new Promise((resolve)=>setTimeout(resolve,100));}assert.fail('Confirmed browser action has authoritative SQL readback.');}
 async function nativeTask(page,id,extra={}) {const query=new URLSearchParams({task:fixtureId(id),...extra});await appPage(page,`tasks?${query}`);await page.getByRole('dialog').waitFor();}
@@ -156,9 +159,20 @@ try {
   assert.equal(sql("select count(*) from information_schema.routines where routine_schema='api' and routine_name='pwa_snapshot';"),'1');
   assert.equal(sql("select count(*) from app.households where id='cb000000-0000-4000-8000-000000000100' and label='PWA lokaal testhuishouden';"),'1','The additive native browser fixture is present.');
   await mkdir(output+'/screenshots',{recursive:true});
-  browser=await chromium.launch({headless:true});
+  browser=await chromium.launch({headless:true,...process.env.PWA_CHROMIUM_EXECUTABLE?{executablePath:process.env.PWA_CHROMIUM_EXECUTABLE}:{}});
   setStage('actual-mobile-otp');const {page:a,context:accountA}=await login(accounts[0]);checks.push('ACTUAL_MOBILE_OTP');
-  if(process.env.PWA_BROWSER_FOCUS==='extended') {
+  if(['acceptance','read-context'].includes(process.env.PWA_BROWSER_FOCUS)) {
+    setStage('independent-native-acceptance-phase');
+    const {page:b}=await login(accounts[1]);
+    const {page:c}=await login(accounts[2]);
+    const before=profileReadback();
+    const {runMobileAcceptanceFlows,runMobileReadContextFlows}=await import('./pwa-mobile-acceptance-flows.mjs');
+    const capture=async(page,route)=>{await layoutCheck(page,route,390);await layoutCheck(page,route,390,true);};
+    const cases=await (process.env.PWA_BROWSER_FOCUS==='read-context'?runMobileReadContextFlows:runMobileAcceptanceFlows)({a,b,c,sql,appPage,eventually,fixtureId,checks,setStage,capture});
+    assert.deepEqual(consoleFailures,[]);checks.push('NO_HYDRATION_OR_UNCAUGHT_RENDER_ERRORS');
+    await writeFile(output+'/browser-results.json',JSON.stringify({environment:'local',...metadata(),actual_otp:true,synthetic_accounts:true,checks,cases,matrix,tabletMatrix,passed:true,whole_suite_passed:false,phase_scope:process.env.PWA_BROWSER_FOCUS==='read-context'?'Exact authorized historical action and match reads, human action labels and modal layout including actual 200-percent text. No booking or other mutation scope claimed.':'Actual rendered public booking, waitlist, obstruction, takeover, cancellation, feedback, instruction publication, team follow-up and work-card creation with authoritative readbacks. Physical installation, push providers, invitation mail and whole V1 acceptance are not claimed.',readback:{before,after:profileReadback()},nativeDomainReadback:{before:nativeDomainAtStart,after:nativeDomainReadback()},staging_verified:false},null,2)+'\n');
+    console.log(JSON.stringify({result:'INDEPENDENT_NATIVE_ACCEPTANCE_PASS',checks:checks.length,cases:cases.length,whole_suite_passed:false,environment:'local',staging_verified:false}));
+  } else if(process.env.PWA_BROWSER_FOCUS==='extended') {
     setStage('independent-native-extended-phase');const {page:c}=await login(accounts[2]);
     const before=profileReadback();
     const {runExtendedMobileFlows,runMobileReadFlows}=await import('./pwa-mobile-extended-flows.mjs');

@@ -1,0 +1,101 @@
+{
+  "observed_at": "2026-10-09T06:34:04.569468+00:00",
+  "phases": [
+    {
+      "phase": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "summary": "\n> cluvo@0.1.0 lint\n> eslint .\n"
+    },
+    {
+      "phase": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "summary": "\n> cluvo@0.1.0 typecheck\n> tsc --noEmit\n"
+    },
+    {
+      "phase": "node_tests",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "summary": "\u2714 runtime en instrumentation blokkeren production en bewaken geconfigureerde appmodus (3.887857ms)\n\u2714 er bestaat geen actieve productieworkflow en de template weigert altijd (8.23328ms)\n\u2139 tests 748\n\u2139 suites 0\n\u2139 pass 719\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 29\n\u2139 todo 0\n\u2139 duration_ms 8937.923018",
+      "counts": {
+        "tests": 748,
+        "pass": 719,
+        "fail": 0,
+        "skipped": 29
+      }
+    },
+    {
+      "phase": "production_build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "summary": "\u251c \u0192 /invite/accept\n\u251c \u25cb /login\n\u2514 \u0192 /workspaces\n\n\n\u0192 Proxy (Middleware)\n\n\u25cb  (Static)   prerendered as static content\n\u0192  (Dynamic)  server-rendered on demand\n"
+    },
+    {
+      "phase": "wp0",
+      "command": [
+        "npm",
+        "run",
+        "test:wp0"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "summary": "\u2714 er bestaat geen actieve productieworkflow en de template weigert altijd (4.659478ms)\n\u2139 tests 5\n\u2139 suites 0\n\u2139 pass 5\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 64.509774\nWP0-smoke geslaagd via Next.js standalone server op http://127.0.0.1:33143."
+    },
+    {
+      "phase": "coverage",
+      "command": [
+        "npm",
+        "run",
+        "check:coverage"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "summary": "\n> cluvo@0.1.0 check:coverage\n> node scripts/coverage-matrix.mjs\n\n{\"pages\":23,\"shared_shells\":1,\"functions\":219,\"acceptance_criteria\":102,\"baseline\":{\"migrations\":7,\"app_tables\":140,\"api_function_definitions\":52,\"api_views\":16},\"current\":{\"migrations\":32,\"app_tables\":180,\"api_function_definitions\":85,\"api_views\":21}}"
+    }
+  ],
+  "build_id": "H_bwfQ1HQ6_htD3EtX793",
+  "completed_at": "2026-10-09T06:34:51.162969+00:00",
+  "scope": "LOCAL_FINAL32_APP_BUILD_AND_READ_CONTEXT",
+  "final_read_context32": {
+    "artifact": "docs/release/evidence/local/20261009-pwa-modal-read-context/browser-results.json",
+    "sha256": "fc168f7519caea80a2f2a714d43fc2c8cbb62a807f423953abaeb71e01f99896",
+    "result": "PASS",
+    "build": "H_bwfQ1HQ6_htD3EtX793",
+    "named_checks": 4,
+    "bounded_cases": 2,
+    "screenshot_count": 10,
+    "native_otp_users": 3,
+    "native_migrations": 32,
+    "current_read_source_sha256_verified": true,
+    "human_action_labels_verified": true,
+    "actual_portal_text200_verified": true,
+    "all_screenshots_sha256_verified": true,
+    "staging_verified": false,
+    "physical_device_verified": false,
+    "whole_suite_passed": false,
+    "limits": "Only exact authorized action/match reads, other recipient denial, human metadata labels and modal normal/200-percent layout. The earlier 13 write/read cases remain a separate historical source-bound proof; no write flow rerun is claimed here."
+  },
+  "observed_at_close": "2026-10-09T06:36:56.478244+00:00",
+  "staging_verified": false,
+  "physical_device_verified": false
+}

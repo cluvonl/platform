@@ -1,0 +1,254 @@
+{
+  "environment": "staging",
+  "project_ref": "fbozlbgmktkgcdfqdaaz",
+  "observed_at": "2026-10-09T05:31:29.553Z",
+  "passed": true,
+  "database_mutations_performed": true,
+  "applied_migrations": 15,
+  "private_values_exported": false,
+  "app_activation_performed": false,
+  "email_sent": false,
+  "authenticated_native_login_verified": false,
+  "provider_services_verified": false,
+  "full_provider_restore_verified": false,
+  "o08_restore_accepted": false,
+  "v1_ready": false,
+  "production_enabled": false,
+  "execution_mode": "APPLY",
+  "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+  "workflow_run_id": "37888304288",
+  "migration_manifest_sha256": "4d00699a669e26e0e030523c56c87a231177c5887470d6fe2903ead7164b7e4d",
+  "pg17_toolchain": {
+    "image": "public.ecr.aws/supabase/postgres@sha256:0450166354dc9c1d25f0322ac8b580774d4fb0184d2b087f6e4fe9499c66cf53",
+    "tools": {
+      "pg_dump": "17.11",
+      "pg_dumpall": "17.11",
+      "pg_restore": "17.11"
+    },
+    "workers_removed": 3,
+    "network": "none",
+    "database_connections": 0,
+    "source_calls": 0
+  },
+  "initial_applied_prefix": 16,
+  "backup_custody": {
+    "uploaded": true,
+    "remote_readback": true,
+    "artifact_id": "11597955308",
+    "archive_sha256": "013e009fcfbe1a86403bcb8dfbf58fa3ed5ec36416190edc0444112e1d3a0d6b",
+    "retention_days": 30,
+    "key_profile": "cluvo-staging-pwa-upgrade-backup-hkdf-sha256-v1",
+    "plaintext_uploaded": false,
+    "secret_key_uploaded": false
+  },
+  "restore": {
+    "passed": true,
+    "scope": "PWA_STAGING_LOGICAL_RESTORE_AND_UPGRADE",
+    "logical_database_restored": true,
+    "physical_relations_verified": 185,
+    "physical_rows_verified": 1124,
+    "sequences_verified": 2,
+    "baseline_catalog_families_verified": 28,
+    "native_archive_sections_restored": 3,
+    "native_restore_passes": 4,
+    "native_toc_entries_preserved": 3427,
+    "extensions_precreated_with_source_owner": 5,
+    "extension_owner_reassignments": 5,
+    "extension_installers_removed": true,
+    "effective_acl_objects_replayed": 201,
+    "temporary_schema_usage_grants": 65,
+    "temporary_reference_grants": 930,
+    "temporary_restore_privileges_removed": true,
+    "extension_privilege_warnings": 0,
+    "post_data_owner_mode": "session_authorization",
+    "bootstrap_create_exceptions": 1,
+    "source_migration_prefix": 16,
+    "final_migration_prefix": 31,
+    "non_superuser_upgrade_migrations": 15,
+    "app_tables": 180,
+    "native_policies": 180,
+    "network_isolated": true,
+    "background_jobs_disabled": true,
+    "source_database_mutated": false,
+    "role_passwords_restored": false,
+    "provider_root_keys_restored": false,
+    "provider_services_verified": false,
+    "full_provider_restore_verified": false,
+    "all_object_families_verified": false,
+    "live_migration_authorized": false,
+    "v1_ready": false,
+    "production_enabled": false,
+    "owned_clone_removed": true
+  },
+  "source_freshness": {
+    "same_backend": true,
+    "full_metadata_unchanged": true,
+    "exclusive_lock_retained": true
+  },
+  "final_applied_prefix": 31,
+  "native_guards": {
+    "app_tables": 180,
+    "forced_rls": 180,
+    "native_policies": 180,
+    "api_only_exposed": true,
+    "command_owner_restricted": true
+  },
+  "migration_manifest": [
+    {
+      "version": "20261002163042",
+      "file": "20261002163042_cluvo_wp1_wp2_core.sql",
+      "sha256": "7e4efdaa139d2fe3120c43c0e7fcfe966438f154c08358734b6c555968acd32e"
+    },
+    {
+      "version": "20261002165306",
+      "file": "20261002165306_wp3_wp5_obligations_execution.sql",
+      "sha256": "1dd88883e99acd63cbea6f33c47b1c39008a6832904f1da6150374fbe1474eb7"
+    },
+    {
+      "version": "20261002165327",
+      "file": "20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "sha256": "9707da512d46b23d8472bf222981242f8020ac3612709f536136876674b50702"
+    },
+    {
+      "version": "20261002170949",
+      "file": "20261002170949_wp1_onboarding_storage.sql",
+      "sha256": "6de61a4843cd9a3d77fccb6c0be0591c178b516518e4bb7ce9c2ae1cec3d4c03"
+    },
+    {
+      "version": "20261002171135",
+      "file": "20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "sha256": "bdff3e58102376de4195840cc7cd3a02a59c7648cc19403c306ae72e96605719"
+    },
+    {
+      "version": "20261002183000",
+      "file": "20261002183000_vertical_read_models.sql",
+      "sha256": "bf50215a774296882cb5aa8067b43bb2c853bbb991968859b8ceece58d197eaf"
+    },
+    {
+      "version": "20261002184500",
+      "file": "20261002184500_assisted_member_actions.sql",
+      "sha256": "c7d74823e3be555b7115b1eab4e4180cdb48c7668680fa3a0a6b0e8420629bab"
+    },
+    {
+      "version": "20261006180000",
+      "file": "20261006180000_account_help_preferences.sql",
+      "sha256": "f6b7d1db5f420b5e5daeaf142326289dd1fb6918123c001386956f512f7755ff"
+    },
+    {
+      "version": "20261006193000",
+      "file": "20261006193000_complete_personal_intake.sql",
+      "sha256": "488d4722f830a0a2a2d35ff89a483bcd6f5e40ed3aa255d367d4346aaad22ad9"
+    },
+    {
+      "version": "20261006210000",
+      "file": "20261006210000_household_dossier_projection.sql",
+      "sha256": "0f1b29d8bbde85300f704270bc5ead062344bffe01f5688b67daa085099450a2"
+    },
+    {
+      "version": "20261006223000",
+      "file": "20261006223000_versioned_household_invitation_commands.sql",
+      "sha256": "99b456fda630c15eca25f197d971edcf8134a5181deb114c398dde852b6b62fe"
+    },
+    {
+      "version": "20261006230000",
+      "file": "20261006230000_household_invitation_cancellation.sql",
+      "sha256": "6d3738db24d2a02576fa6fa4a9273390d04872565edd66d662024df230425a1c"
+    },
+    {
+      "version": "20261006233000",
+      "file": "20261006233000_contract_household_invitation_bootstrap.sql",
+      "sha256": "1731ab3cec4921ad31e6f30a90ee21d8dc6101fa205285a51c5b65bc52e2c3f2"
+    },
+    {
+      "version": "20261006234500",
+      "file": "20261006234500_personal_intake_reconfirmation.sql",
+      "sha256": "e4f95b65789485e86131d21c0c085a83c8fc5b4195f36b4f81e24b9c6c171625"
+    },
+    {
+      "version": "20261007010000",
+      "file": "20261007010000_native_session_authority.sql",
+      "sha256": "9c165f68f413be04aa958358ec088c422dd21fea92b66e9ba84e04378817607a"
+    },
+    {
+      "version": "20261007013000",
+      "file": "20261007013000_intake_assistance_management.sql",
+      "sha256": "1512b7cbfd1fd63065fa09ad17aba0a2c71aaba1c875326f11e089175a5979c3"
+    },
+    {
+      "version": "20261009100000",
+      "file": "20261009100000_pwa_domain.sql",
+      "sha256": "18cc63b457fddea3f003bceb4d31f310291692e70485e6aa013e4091a8d47d41"
+    },
+    {
+      "version": "20261009101000",
+      "file": "20261009101000_pwa_commands.sql",
+      "sha256": "dbf600e3aabc225e5031ca83c24031c27c287cec47cce0b0f64bf81eb6e00f97"
+    },
+    {
+      "version": "20261009102000",
+      "file": "20261009102000_pwa_snapshot.sql",
+      "sha256": "969346799a4e591b7f85f8bacc4a877c1ea42dd628c3e041cf9b976f79e19ef0"
+    },
+    {
+      "version": "20261009103000",
+      "file": "20261009103000_pwa_delivery_and_receipts.sql",
+      "sha256": "73714397962f5ca54b5a94d1b6cc901ed744b8f8bcccd87fc32cd12673fbfe6f"
+    },
+    {
+      "version": "20261009104000",
+      "file": "20261009104000_pwa_buddy_integrity.sql",
+      "sha256": "c2e1bfdccf311f50bd9e0ff1686ce2301d1c65ff29b02cd78512666f0ec5305c"
+    },
+    {
+      "version": "20261009105000",
+      "file": "20261009105000_pwa_automation.sql",
+      "sha256": "7e20fdaee644e5a2f0b037f0d34001a773cf47b6b23a0294f23fddad45e5dbef"
+    },
+    {
+      "version": "20261009106000",
+      "file": "20261009106000_pwa_provider_receipts.sql",
+      "sha256": "5e6923e41dfd6d5da1ab12380f1be31b25e466eba02b685f7361b11e1ffe9eed"
+    },
+    {
+      "version": "20261009107000",
+      "file": "20261009107000_pwa_compatibility_and_cluster_scope.sql",
+      "sha256": "d60b59920adac4c45a3ec336a6a0cb27e31abb3c8aa69e0ddf5b47ed729e4486"
+    },
+    {
+      "version": "20261009108000",
+      "file": "20261009108000_pwa_repeatable_command_events.sql",
+      "sha256": "7ad42704ec974bd670deb70c14dcd13a2079f1b0d9fd6a416e0d4dcdf3859ef2"
+    },
+    {
+      "version": "20261009109000",
+      "file": "20261009109000_pwa_digest_dispatch_day.sql",
+      "sha256": "881aaf6a7ff6ed1e22604d810c1194fc140c4dfb79240e869b25feb3a9be4210"
+    },
+    {
+      "version": "20261009110000",
+      "file": "20261009110000_pwa_card_version_gate.sql",
+      "sha256": "7d237cb0e27bf8d4f27e649143a77e39dc29977279fc7bc6db6e506da52ff4cc"
+    },
+    {
+      "version": "20261009111000",
+      "file": "20261009111000_pwa_handover_checklist_integrity.sql",
+      "sha256": "2d10644befebd17fb8893d4e1363a6a4f61588bd55ac3ab45a7653d6489e3307"
+    },
+    {
+      "version": "20261009112000",
+      "file": "20261009112000_pwa_task_offer_category_seed.sql",
+      "sha256": "1e2bb5b181e7e0d4279c8270b12bfee8743cb7dcaaa0e4267256eaf689c59c17"
+    },
+    {
+      "version": "20261009113000",
+      "file": "20261009113000_pwa_nested_version_integrity.sql",
+      "sha256": "60eedfed603a1450d42524dc070e8fa4661c1bb323d55e660faef52845b98f19"
+    },
+    {
+      "version": "20261009114000",
+      "file": "20261009114000_pwa_policy_assignment_identity.sql",
+      "sha256": "afbe3c6218e2d81dae30107ec0f854f5fe0bdd87ae700da98f2b5d3165f4ad10"
+    }
+  ],
+  "returned_session_closed": true
+}

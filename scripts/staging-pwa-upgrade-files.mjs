@@ -1,4 +1,4 @@
-// Closed, source-tested additive suffix. Re-pin only before first hosted application.
+// Closed additive suffix. Append reviewed migrations; existing SQL bytes stay immutable.
 export const PWA_ADDITIONS=Object.freeze([
   {
     "file": "20261009100000_pwa_domain.sql",
@@ -59,6 +59,10 @@ export const PWA_ADDITIONS=Object.freeze([
   {
     "file": "20261009114000_pwa_policy_assignment_identity.sql",
     "sha256": "afbe3c6218e2d81dae30107ec0f854f5fe0bdd87ae700da98f2b5d3165f4ad10"
+  },
+  {
+    "file": "20261009115000_pwa_personal_action_context.sql",
+    "sha256": "10dfcebb3e8f61623586f41123e8967815e743745f991f68f84bcfd686e3a195"
   }
 ]
 .map(Object.freeze));

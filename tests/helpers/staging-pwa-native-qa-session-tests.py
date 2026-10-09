@@ -71,6 +71,46 @@ class NativeOwnerOperations(unittest.TestCase):
         with self.assertRaises(module.Failure):
             owner.committed([{'command': 'COMMIT'}], identity)
 
+    def test_every_blocking_probe_refreshes_activity_without_releasing_holder_or_weakening_shape(self):
+        owner = self.fake('holding')
+        owner.pq.PQtransactionStatus = lambda unused: module.TX_VALID
+        owner.booking = {'blockingSql': 'fixed-blocking-probe'}
+        calls = []
+        owner.check_lock = lambda: calls.append('same-backend-lock')
+        owner.run = lambda sql: calls.append(sql)
+        owner.one_json = lambda sql: calls.append(sql) or {'blocked_contenders': 2}
+        for unused in range(2):
+            self.assertEqual(owner.count_blocked(), {'blocked_contenders': 2})
+        self.assertEqual(calls, ['same-backend-lock', 'SELECT pg_catalog.pg_stat_clear_snapshot();',
+                               'same-backend-lock', 'fixed-blocking-probe'] * 2)
+        self.assertEqual(owner.phase, 'holding')
+        for invalid in ({'blocked_contenders': True}, {'blocked_contenders': -1},
+                        {'blocked_contenders': 3}, {'blocked_contenders': 2, 'private': 'hidden'}):
+            owner.one_json = lambda unused: invalid
+            with self.assertRaises(module.Failure):
+                owner.count_blocked()
+
+    def test_blocking_probe_never_runs_after_uncertain_refresh_or_failed_lock_recheck(self):
+        for failure in ('refresh', 'recheck'):
+            owner = self.fake('holding')
+            owner.pq.PQtransactionStatus = lambda unused: module.TX_VALID
+            owner.booking = {'blockingSql': 'fixed-blocking-probe'}
+            calls = []
+            def check():
+                calls.append('lock')
+                if failure == 'recheck' and calls.count('lock') == 2:
+                    raise module.Failure('SESSION_OR_EXCLUSIVE_LOCK_CHANGED')
+            def run(sql):
+                calls.append(sql)
+                if failure == 'refresh':
+                    raise module.Failure('DATABASE_QUERY_FAILED')
+            owner.check_lock, owner.run = check, run
+            owner.one_json = lambda sql: calls.append('UNSAFE_PROBE')
+            with self.assertRaises(module.Failure):
+                owner.count_blocked()
+            self.assertNotIn('UNSAFE_PROBE', calls)
+            self.assertFalse(any(value in ('COMMIT;', 'ROLLBACK;') for value in calls))
+
     def test_scoped_automation_requires_ended_rollback_same_backend_and_absence_readback(self):
         expected = {'scope': 'STAGING_PWA_SCOPED_AUTOMATION_QA_V1', 'matching_positive': True,
                     'source_and_preference_revalidated': True, 'wrong_lease_owner_refused': True,

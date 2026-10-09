@@ -6,7 +6,9 @@ import {requireWorkspace} from '@/lib/auth/workspace';
 import type {HouseholdDossier} from '@/lib/data/household';
 import type {MobileSnapshot,MobileTask,MobileProgress,MobileCalendarEvent} from '@/components/mobile/types';
 import {MOBILE_SCREENS} from '@/components/mobile/types';
-import {normalizeMobilePath} from './links.mjs';
+import {actionContextParentPath,mobileActionPath,normalizeMobilePath} from './links.mjs';
+import {loadScopedMatchDetails} from './match-details.mjs';
+import {loadScopedActionDetails,scopedCardActionDetail} from './action-details.mjs';
 import {mobilePayloadSchemas} from './validation';
 import {mobilePushPublicKey} from './push-config';
 
@@ -18,6 +20,7 @@ const integer=(value:unknown,fallback=0): number => typeof value==='number'&&Num
 const yes=(value:unknown): boolean => value===true;
 const strings=(value:unknown): string[] => Array.isArray(value)?value.filter((item):item is string=>typeof item==='string'):[];
 const resource=(row:Row) => ({id:string(row.id),version:integer(row.version)});
+const actionKindLabels: Record<string,string> = {card_assignment:'Werkafspraak',subtask_assignment:'Subtaak',mention:'Vermelding',team_task:'Teamafspraak',policy_follow_up:'Vraag over beleid',choose_executor:'Uitvoerder kiezen',prepare_booking:'Taak voorbereiden',accept_handover:'Overdracht aannemen',find_replacement:'Vervanging regelen'};
 const progress=(row:Row): MobileProgress => ({confirmed:integer(row.confirmed_minutes),planned:integer(row.planned_minutes),pending:integer(row.pending_minutes),target:integer(row.effective_target_minutes),winterTarget:integer(row.effective_winter_minutes),winterConfirmed:integer(row.confirmed_before_winter_minutes),remaining:integer(row.remaining_minutes),exempt:yes(row.structurally_covered)});
 const allowedSelection=(value:string|undefined) => value===undefined?null:z.string().uuid().parse(value);
 // React cache is request-scoped. Never cache an authenticated snapshot across
@@ -35,6 +38,11 @@ const load=cache(async (club:string,householdId:string|null,seasonId:string|null
   if (snapshotResult.error||intakeResult.error||policyResult.error||workspacesResult.error||pendingResult.error||marketResult.error||!snapshotResult.data) throw new Error('Het mobiele overzicht kan nu niet veilig worden geladen. Probeer het opnieuw.');
   const raw=object(snapshotResult.data),context=object(raw.context),base=`/app/c/${encodeURIComponent(workspace.tenant_slug)}`;
   if (context.tenant_id!==workspace.tenant_id||context.person_id!==workspace.person_id) throw new Error('Het mobiele overzicht hoort niet bij deze persoonlijke toegang.');
+  const [matchDetails,actionDetails]=await Promise.all([
+    loadScopedMatchDetails(client,workspace.tenant_id,records(raw.matches)),
+    loadScopedActionDetails(client,workspace.tenant_id,records(raw.actions)),
+  ]);
+  const matches=records(matchDetails);
   const rawCapabilities=object(context.capabilities);
   const households=records(context.households),seasons=records(context.seasons);
   const selectedSeason=seasons.find((row)=>row.id===context.season_id);
@@ -79,7 +87,8 @@ const load=cache(async (club:string,householdId:string|null,seasonId:string|null
   })}));
   const agenda:MobileCalendarEvent[]=[
     ...records(raw.agenda).map((row)=>({...resource(row),title:string(row.title),startsAt:string(row.starts_at),endsAt:string(row.ends_at),location:string(row.location_name),kind:'event' as const,description:string(row.description),canJoin:yes(row.can_join),joined:row.rsvp==='accepted',attendees:integer(row.attendees)})),
-    ...records(raw.matches).map((row)=>({...resource(row),title:`${teams.find((team)=>team.id===row.team_id)?.name??'Team'} – ${string(row.opponent)}`,startsAt:string(row.starts_at),endsAt:string(row.ends_at)||null,location:string(row.location_text),kind:'match' as const,teamName:teams.find((team)=>team.id===row.team_id)?.name,description:row.is_home===true?'Thuiswedstrijd':'Uitwedstrijd',canJoin:false,joined:false,attendees:0})),
+    // The native match source has no end time. Do not invent a duration.
+    ...matches.map((row)=>({...resource(row),title:`${teams.find((team)=>team.id===row.team_id)?.name??'Team'} – ${string(row.opponent)}`,startsAt:string(row.starts_at),endsAt:null,location:string(row.location_text),fieldName:string(row.field_name)||undefined,lockerRoom:string(row.locker_room_text)||undefined,kind:'match' as const,teamName:teams.find((team)=>team.id===row.team_id)?.name,description:row.is_home===true?'Thuiswedstrijd':'Uitwedstrijd',canJoin:false,joined:false,attendees:0})),
     ...rawBookings.filter((row)=>yes(row.personal_calendar)&&!['cancelled','transferred'].includes(string(row.state))).map((row)=>({...resource(row),title:string(row.title),startsAt:string(row.starts_at),endsAt:string(row.ends_at),location:string(row.location_name),kind:'task' as const,taskId:string(row.shift_id),bookingId:string(row.id),personId:string(row.executor_person_id),personName:string(row.executor_name),description:string(row.instructions),canJoin:false,joined:true,attendees:1})),
     ...allocations.filter((row)=>yes(row.personal_calendar)&&['reserved','assigned'].includes(string(row.state))&&!rawBookings.some((booking)=>booking.allocation_id===row.id&&!['cancelled','transferred'].includes(string(booking.state)))).map((row)=>({...resource(row),title:string(row.title),startsAt:string(row.starts_at),endsAt:string(row.ends_at),location:string(row.location_name),kind:'assignment' as const,taskId:string(row.shift_id),allocationId:string(row.id),personId:string(row.member_person_id)||undefined,teamName:teams.find((team)=>team.id===row.team_id)?.name,description:'Gereserveerde teamplaats. Er is pas een boeking nadat een bevoegde uitvoerder bevestigd heeft.',canJoin:false,joined:false,attendees:0})),
   ].sort((a,b)=>a.startsAt.localeCompare(b.startsAt));
@@ -97,7 +106,12 @@ const load=cache(async (club:string,householdId:string|null,seasonId:string|null
     people:[...new Map([...people.map((row)=>({id:string(row.person_id),version:integer(row.version),name:string(row.display_name),verified:yes(row.verified),adult:yes(row.adult),ageBand:string(row.age_band,'unknown'),canExecute:executors.some((executor)=>executor.person_id===row.person_id)})),...executors.map((row)=>({id:string(row.person_id),version:integer(row.version),name:string(row.display_name),verified:yes(row.verified),adult:yes(row.adult),ageBand:string(row.age_band,'unknown'),canExecute:yes(row.can_execute)}))].map((person)=>[person.id,person])).values()],tasks,
     bookings:rawBookings.map((row)=>({...resource(row),taskId:string(row.shift_id),positionId:string(row.position_id),executorId:string(row.executor_person_id),executorName:string(row.executor_name),householdId:string(row.household_id),state:string(row.state),startsAt:string(row.starts_at),endsAt:string(row.ends_at),instructions:string(row.instructions),location:string(row.location_name),cancellationDeadline:string(row.cancellation_deadline),minutes:integer(row.credit_minutes),teamId:string(row.team_id)||undefined,memberName:string(row.member_name)||undefined,canCancel:yes(row.can_cancel),canReplace:yes(row.can_replace),canPrepare:yes(row.can_prepare),canFeedback:yes(row.can_feedback),canConfirm:yes(row.can_confirm)&&['booked','performed_pending'].includes(string(row.state))&&Date.parse(string(row.ends_at))<=Date.now(),replacementRequested:yes(row.replacement_requested)})),
     allocations:allocations.map((row)=>({...resource(row),taskId:string(row.shift_id),teamId:string(row.team_id),memberId:string(row.member_person_id)||undefined,memberName:string(row.member_name)||undefined,position:integer(row.ordinal),positionId:string(row.position_id),clusterId:string(row.cluster_id),clusterVersion:integer(row.cluster_version),selfUntil:string(row.self_until),assignUntil:string(row.assign_until),canChoose:yes(row.can_choose),canAssign:yes(row.can_assign),canRequestReserve:yes(row.can_request_reserve),bookingId:string(row.booking_id)||undefined,bookingVersion:integer(row.booking_version),bookingState:string(row.booking_state)||undefined,executorName:string(row.executor_name)||undefined,countsForTeam:yes(row.counts_for_team)})),teams,
-    actions:records(raw.actions).filter((row)=>row.state!=='completed').map((row)=>({...resource(row),title:string(row.title,string(row.action_kind)),detail:string(row.detail,string(row.description)),label:'Bekijken',due:string(row.due_at)||undefined,href:normalizeMobilePath(row.source_path,workspace.tenant_slug)})),
+    actions:records(raw.actions).filter((row)=>row.state!=='completed').map((row)=>{
+      const detailResource=actionDetails.get(string(row.id))??scopedCardActionDetail(row,raw,workspace.tenant_id);
+      const actionKind=string(row.action_kind),rowTitle=string(row.title),rowDetail=string(row.detail,string(row.description));
+      return {...resource(row),title:detailResource?.title??(rowTitle&&rowTitle!==actionKind?rowTitle:actionKindLabels[actionKind]??'Open actie'),detail:actionKindLabels[rowDetail]??rowDetail,label:'Bekijken',due:string(row.due_at)||undefined,href:mobileActionPath(row,raw,workspace.tenant_slug),
+        ...(detailResource?{detailResource:{...detailResource,parentHref:actionContextParentPath(detailResource,raw,workspace.tenant_slug,[...policyGroups.keys()])}}:{})};
+    }),
     notifications:records(raw.inbox).map((row)=>({...resource(row),title:string(row.title),text:string(row.body),kind:string(row.notification_kind,'inbox'),read:typeof row.read_at==='string',href:normalizeMobilePath(row.source_path,workspace.tenant_slug)})),agenda,
     policies:[...policyGroups].map(([id,rows])=>{
       const actorSubjects=rows.filter((row)=>yes(row.is_actor_subject));

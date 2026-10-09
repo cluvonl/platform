@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parent
 PROJECT = 'fbozlbgmktkgcdfqdaaz'
 LOCK_OBJECT = int.from_bytes(hashlib.sha256(PROJECT.encode()).digest()[:4], 'big', signed=True)
 # Regenerated from reviewed owner source before release, never from secrets.
-PINS = {'staging_backup_session.py': 'e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1', 'staging-pwa-upgrade-sql.mjs': '0337f2134a3c57128719a26287d4395ade94471ad4e8939ee70d7fc51166d242', 'staging-pwa-upgrade-migrations.mjs': 'f3806ede75794d7c1bebe9960eccba38cb6439add629557018d154d63f85c8a7', 'staging-pwa-upgrade-files.mjs': 'd0e103f5e99ec06daef466089492abe7e4a834383716b7808e16fbb8f2b03f4b', 'staging-initial-migrations.mjs': '7f49cf8dcdb2eda53633dd3596486779ea2dd001d1a2813a07fa45e859784004', 'staging-migration-files.mjs': '83aa2aae6d4cc358965208e39e73dd0d1038ee4a6c0bc9a62675b829e30c94bd'}
+PINS = {'staging_backup_session.py': 'e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1', 'staging-pwa-upgrade-sql.mjs': '0337f2134a3c57128719a26287d4395ade94471ad4e8939ee70d7fc51166d242', 'staging-pwa-upgrade-migrations.mjs': '34dd250417a5b8e326eb1733f5465aa45af28e8582f5764c8b978b7c4e060cd9', 'staging-pwa-upgrade-files.mjs': '4ebf1351aa78cef90c674053e9c33725138b1d59a4c462e1cc0465fbe0ea2041', 'staging-initial-migrations.mjs': '7f49cf8dcdb2eda53633dd3596486779ea2dd001d1a2813a07fa45e859784004', 'staging-migration-files.mjs': '83aa2aae6d4cc358965208e39e73dd0d1038ee4a6c0bc9a62675b829e30c94bd'}
 READ_OPERATIONS = {'begin_capture', 'capture_query', 'check_lock', 'end_capture',
                    'begin_fresh_read', 'fresh_read_query', 'end_fresh_read'}
 

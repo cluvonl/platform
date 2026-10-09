@@ -2,7 +2,7 @@
 // Pure fixed staging QA components. Real Auth users and sessions are created
 // only by the provider Admin/password API owner, never by these SQL components.
 import {createHash} from 'node:crypto';
-import {UPGRADE_FILES} from './staging-pwa-upgrade-migrations.mjs';
+import {UPGRADE_FILES,upgradeReceiptLineageSQL} from './staging-pwa-upgrade-migrations.mjs';
 import {INITIAL_MIGRATION_POLICY,INITIAL_MIGRATION_LOCK_OBJECT} from './staging-initial-migrations.mjs';
 
 export const NATIVE_QA_FORMAT='cluvo-pwa-native-qa-fixture-v1';
@@ -92,6 +92,7 @@ function schemaGuard(){
     entry.file.slice(0,14),entry.file.slice(15,-4),entry.file,entry.sha256,
   ].map(literal).join(',')+','+index+')').join(',');
   const manifestHash=createHash('sha256').update(JSON.stringify(UPGRADE_FILES)).digest('hex');
+  const lineage=upgradeReceiptLineageSQL(manifestHash,UPGRADE_FILES.length,'e.position');
   return `
   IF current_database()<>'postgres' OR current_user<>'postgres' OR pg_is_in_recovery()
     OR current_setting('transaction_read_only')<>'off'
@@ -101,6 +102,7 @@ function schemaGuard(){
     OR (SELECT count(*) FROM supabase_migrations.schema_migrations)<>${UPGRADE_FILES.length}
     OR (SELECT count(*) FROM supabase_migrations.cluvo_migration_source)<>16
     OR (SELECT count(*) FROM supabase_migrations.cluvo_pwa_upgrade_source)<>${UPGRADE_FILES.length-16}
+    OR ${lineage.aggregateInvalidSql}
     OR EXISTS(SELECT 1 FROM (VALUES ${expected}) e(version,name,file,sha256,position)
       LEFT JOIN supabase_migrations.schema_migrations h USING(version)
       LEFT JOIN supabase_migrations.cluvo_migration_source initial USING(version)
@@ -116,7 +118,7 @@ function schemaGuard(){
       OR coalesce(initial.workflow_run_id,suffix.workflow_run_id,'')!~'^[1-9][0-9]{0,19}$'
       OR CASE WHEN e.position<16 THEN initial.idempotency_key ELSE suffix.idempotency_key END IS DISTINCT FROM
         (CASE WHEN e.position<16 THEN 'cluvo-staging-initial16:' ELSE 'cluvo-staging-pwa-upgrade:' END||coalesce(initial.workflow_run_id,suffix.workflow_run_id)||':'||e.version)
-      OR (e.position>=16 AND (suffix.manifest_sha256 IS DISTINCT FROM '${manifestHash}'
+      OR (e.position>=16 AND (${lineage.rowInvalidSql}
         OR coalesce(suffix.backup_artifact_id,'')!~'^[1-9][0-9]{0,19}$' OR coalesce(suffix.backup_artifact_sha256,'')!~'^[0-9a-f]{64}$')))
     OR (SELECT count(*) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='app' AND c.relkind='r')<144
     OR EXISTS(SELECT 1 FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='app' AND c.relkind='r'

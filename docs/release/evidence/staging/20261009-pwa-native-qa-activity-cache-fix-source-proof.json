@@ -1,0 +1,44 @@
+{
+  "scope": "PWA_NATIVE_QA_ACTIVITY_CACHE_FIX_CLOSED_LOCAL_SOURCE_PROOF",
+  "observed_at": "2026-10-09T05:53:17.068262+00:00",
+  "baseline_committed_source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+  "candidate_source_committed": false,
+  "modified_source_hashes": {
+    "scripts/staging_pwa_native_qa_session.py": "8291f760884086eb966788217f44e0dfe269752472831613cd5c932bdf4a4a2b",
+    "scripts/staging-pwa-native-qa-session.mjs": "6491484090df5461e53dc58c86a69ce49edcdd59b441287dbf2c705ecaec64ec",
+    "tests/helpers/staging-pwa-native-qa-session-tests.py": "f68709eb92d7dc62ac346f080729c22b9f87694283a4a5413cb44a106bc943e9",
+    "tests/helpers/pwa-owned-native-qa.mjs": "0ce54d478a30869a6b432355425990a82ef7ac9af4eeb22b816b4bde6bc7c7fd",
+    "tests/staging-pwa-native-qa-activity-sql.test.mjs": "a06cc4c5496611a08a378971dcb793912b6d760a30f85cebc6c38dce0025405d",
+    "tests/helpers/pwa-activity-cache-owner.py": "2eda6f80525abb7cda14fbab8c300574964c5466d813f70ff9a0c0d817970d78"
+  },
+  "safe_owned_actual_python_proof": {
+    "path": "20261009-pwa-native-qa-activity-cache-owned-proof.json",
+    "sha256": "b363e11241768b01cc6791606d5bd3800002651fbecb4e257559834f7d2cd184",
+    "actual_patched_method": true,
+    "network": "none",
+    "actual_postgrest_http": false
+  },
+  "focused_checks": {
+    "booking_and_session_tests": {
+      "passed": 13,
+      "failed": 0,
+      "skipped": 0
+    },
+    "actual_owned_python_sql_regression": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0
+    },
+    "eslint_changed_javascript": "passed"
+  },
+  "original31_migration_bytes_unchanged": true,
+  "migration_count": 31,
+  "migration_manifest_sha256": "4d00699a669e26e0e030523c56c87a231177c5887470d6fe2903ead7164b7e4d",
+  "hosted_database_touched": false,
+  "providers_called": false,
+  "credentials_read": false,
+  "require_two_actual_contenders_unchanged": true,
+  "cache_none_alone_fix_verified": false,
+  "explicit_snapshot_refresh_verified": true,
+  "full_new_workflow_passed": false
+}

@@ -58,8 +58,8 @@ export async function runOwnedPwaNativeQa({name,socket,sql,json,lock}){
   const preflight=rows(await ownerSql.query(nativeQaPreflightSql())).at(-1);
   assert.equal(preflight.scope,'STAGING_PWA_NATIVE_QA_PREFLIGHT_V1');assert.ok(preflight.native_guarded_tables>144);
   const readonly=rows(await ownerSql.query(runtimeReadOnlyPreflightSQL())).at(-1);
-  assert.equal(readonly.scope,'STAGING_PWA_RUNTIME_READONLY31');assert.equal(readonly.transaction_read_only,true);
-  assert.equal(readonly.migration_count,31);assert.equal(readonly.database_role_superuser,false);
+  assert.equal(readonly.scope,'STAGING_PWA_RUNTIME_READONLY32');assert.equal(readonly.transaction_read_only,true);
+  assert.equal(readonly.migration_count,32);assert.equal(readonly.database_role_superuser,false);
   assert.equal(readonly.app_tables,readonly.native_guarded_tables);assert.equal(readonly.app_tables,readonly.forced_rls_tables);
   await ownerSql.query("RESET ROLE;ALTER ROLE cluvo_command_owner BYPASSRLS;SET ROLE postgres;BEGIN READ ONLY;"+`DO $runtime_role_negative$BEGIN
    BEGIN EXECUTE ${quote(runtimeReadOnlyGuardSQL())};RAISE EXCEPTION 'OWNED_RUNTIME_UNRESTRICTED_COMMAND_OWNER_ALLOWED';
@@ -113,8 +113,10 @@ export async function runOwnedPwaNativeQa({name,socket,sql,json,lock}){
    return await operation({client:client(index),accessToken});
   },revokeSession:async slot=>{assert.equal(slot,'a');sql(`DELETE FROM auth.sessions WHERE id='${sessions[0]}' AND user_id='${users[0]}';`);}};
   const owner={setupBooking:async()=>rows(await ownerSql.query('BEGIN;'+context(booking)+booking.mutationSql+booking.readbackSql+'COMMIT;')).at(-1),
-   holdLastPosition:async()=>await ownerSql.query(booking.holderSql),
-   countBlocked:async()=>rows(await ownerSql.query(booking.blockingSql)).at(-1),
+   // Match the private Python owner: its identity/lock check reads activity
+   // before the fresh independent API backends start within the holder tx.
+   holdLastPosition:async()=>await ownerSql.query(booking.holderSql+"SELECT backend_start FROM pg_stat_activity WHERE pid=pg_backend_pid();"),
+   countBlocked:async()=>{await ownerSql.query('SELECT pg_catalog.pg_stat_clear_snapshot();');return rows(await ownerSql.query(booking.blockingSql)).at(-1);},
    releaseHolder:async()=>await ownerSql.query(booking.releaseHolderSql),
    bookingReadback:async()=>rows(await ownerSql.query(booking.readbackSql)).at(-1)};
   const proof=await runPwaNativeQaApiChecks(owner,provider,workflowRunId);

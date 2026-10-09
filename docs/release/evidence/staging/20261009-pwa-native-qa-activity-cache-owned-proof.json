@@ -1,0 +1,63 @@
+{
+  "scope": "LOCAL_OWNED_PG17_ACTUAL_PRIVATE_PYTHON_ACTIVITY_CACHE_REGRESSION",
+  "observed_at": "2026-10-09T05:52:00.463Z",
+  "baseline_source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+  "image": "public.ecr.aws/supabase/postgres@sha256:0450166354dc9c1d25f0322ac8b580774d4fb0184d2b087f6e4fe9499c66cf53",
+  "network": "none",
+  "actual_postgrest_http_used": false,
+  "synthetic_minimal_lock_fixture": true,
+  "native_python_owner_sha256": "8291f760884086eb966788217f44e0dfe269752472831613cd5c932bdf4a4a2b",
+  "booking_recipe_sha256": "dceee6137debb1015b982e5a2877da9f6e368a810a0ad6ac467ace28d70e85dc",
+  "shared_database_touched": false,
+  "hosted_database_touched": false,
+  "providers_called": false,
+  "credentials_read": false,
+  "cases": [
+    {
+      "mode": "default_cache",
+      "old_cached_probe_counts": [
+        0,
+        0,
+        0
+      ],
+      "actual_fixed_python_probe_counts": [
+        2,
+        2,
+        2
+      ],
+      "same_backend": true,
+      "exclusive_lock_retained": true,
+      "holder_transaction_alive": true,
+      "two_distinct_authenticator_backends": true,
+      "actual_row_and_advisory_blocking_chain": true
+    },
+    {
+      "mode": "stats_fetch_consistency_none",
+      "old_cached_probe_counts": [
+        0,
+        0,
+        0
+      ],
+      "actual_fixed_python_probe_counts": [
+        2,
+        2,
+        2
+      ],
+      "same_backend": true,
+      "exclusive_lock_retained": true,
+      "holder_transaction_alive": true,
+      "two_distinct_authenticator_backends": true,
+      "actual_row_and_advisory_blocking_chain": true
+    }
+  ],
+  "observer": {
+    "version": 170011,
+    "superuser": false,
+    "read_all_stats": false
+  },
+  "released_contenders_completed": 4,
+  "passed": true,
+  "sessions_closed": true,
+  "owned_container_removed": true,
+  "completed_at": "2026-10-09T05:52:02.814Z"
+}

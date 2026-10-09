@@ -12,7 +12,7 @@ const environment={APP_ENV:'staging',GITHUB_REPOSITORY:'cluvonl/platform',GITHUB
  MIGRATION_DATABASE_URL:'postgresql://postgres:synthetic%24database%23password@db.'+project+'.supabase.co:5432/postgres?sslmode=require',
  SUPABASE_SECRET_KEY:'synthetic-private-server-key',INVITATION_TOKEN_SECRET:'synthetic-private-invitation-key',MAIL_ALLOWLIST:'synthetic-private@example.test',SENDGRID_API_KEY:'synthetic-private-provider-key',NODE_OPTIONS:'--inspect',PGOPTIONS:'unsafe-inherited-options'};
 const green={head_sha:release,head_branch:'main',status:'completed',conclusion:'success'};
-const database={scope:'STAGING_PWA_RUNTIME_READONLY31',migration_count:31,app_tables:170,forced_rls_tables:170,native_guarded_tables:170,api_only:true,
+const database={scope:'STAGING_PWA_RUNTIME_READONLY32',migration_count:32,app_tables:170,forced_rls_tables:170,native_guarded_tables:170,api_only:true,
  command_owner_restricted:true,database_role_superuser:false,transaction_read_only:true,database_mutations:false,email_sent:false,production_enabled:false};
 const response=(status,value)=>({status,json:async()=>value});
 function fetcher(options={},calls=[]){return async(url,request)=>{
@@ -62,7 +62,7 @@ test('a failed CI gate never reads private runtime/DB inputs, source bytes or st
  assert.equal(report.passed,false);assert.equal(report.error,'PWA_RUNTIME_TESTED_RELEASE_REQUIRED');assert.equal(touched,false);redacted(report);
 });
 
-test('actual readonly preflight validates all31 source bytes and a minimal verified-TLS process, with only zero-row public API probes',async()=>{
+test('actual readonly preflight validates all32 source bytes and a minimal verified-TLS process, with only zero-row public API probes',async()=>{
  const calls=[];let processes=0;
  const report=await stagingPwaRuntimePreflight(environment,{fetcher:fetcher({},calls),execute:async(command,args,options)=>{
   processes++;assert.equal(command,'psql');assert.deepEqual(args,['--no-psqlrc','--no-password','--quiet','--tuples-only','--no-align','--set','ON_ERROR_STOP=1']);
@@ -73,7 +73,7 @@ test('actual readonly preflight validates all31 source bytes and a minimal verif
   assert.ok(!JSON.stringify(args).includes(options.env.PGPASSWORD));return execution();
  }});
  assert.equal(report.passed,true);assert.equal(processes,1);assert.equal(report.database.transaction_read_only,true);
- assert.equal(report.migration_manifest_sha256,'4d00699a669e26e0e030523c56c87a231177c5887470d6fe2903ead7164b7e4d');
+ assert.equal(report.migration_manifest_sha256,'e1087c300882adcf8be7a5087507c824a7cfd10bd5f66133646315dba7d10c42');
  assert.equal(calls.filter(call=>call.url.includes('supabase.co')).length,4);assert.ok(calls.every(call=>!call.request.method||call.request.method==='GET'));redacted(report);
 });
 

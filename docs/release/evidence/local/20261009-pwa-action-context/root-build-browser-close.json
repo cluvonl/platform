@@ -1,0 +1,115 @@
+{
+  "observed_at": "2026-10-09T06:08:51.245326+00:00",
+  "phases": [
+    {
+      "phase": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "summary": "\n> cluvo@0.1.0 lint\n> eslint .\n"
+    },
+    {
+      "phase": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "summary": "\n> cluvo@0.1.0 typecheck\n> tsc --noEmit\n"
+    },
+    {
+      "phase": "node_tests",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "summary": "\u2714 runtime en instrumentation blokkeren production en bewaken geconfigureerde appmodus (4.674655ms)\n\u2714 er bestaat geen actieve productieworkflow en de template weigert altijd (6.873392ms)\n\u2139 tests 748\n\u2139 suites 0\n\u2139 pass 719\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 29\n\u2139 todo 0\n\u2139 duration_ms 9112.594924",
+      "counts": {
+        "tests": 748,
+        "pass": 719,
+        "fail": 0,
+        "skipped": 29
+      }
+    },
+    {
+      "phase": "production_build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "summary": "\u251c \u0192 /invite/accept\n\u251c \u25cb /login\n\u2514 \u0192 /workspaces\n\n\n\u0192 Proxy (Middleware)\n\n\u25cb  (Static)   prerendered as static content\n\u0192  (Dynamic)  server-rendered on demand\n"
+    },
+    {
+      "phase": "wp0",
+      "command": [
+        "npm",
+        "run",
+        "test:wp0"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "summary": "\u2714 er bestaat geen actieve productieworkflow en de template weigert altijd (4.647114ms)\n\u2139 tests 5\n\u2139 suites 0\n\u2139 pass 5\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 63.225035\nWP0-smoke geslaagd via Next.js standalone server op http://127.0.0.1:40103."
+    },
+    {
+      "phase": "coverage",
+      "command": [
+        "npm",
+        "run",
+        "check:coverage"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "summary": "\n> cluvo@0.1.0 check:coverage\n> node scripts/coverage-matrix.mjs\n\n{\"pages\":23,\"shared_shells\":1,\"functions\":219,\"acceptance_criteria\":102,\"baseline\":{\"migrations\":7,\"app_tables\":140,\"api_function_definitions\":52,\"api_views\":16},\"current\":{\"migrations\":32,\"app_tables\":180,\"api_function_definitions\":85,\"api_views\":21}}"
+    }
+  ],
+  "build_id": "LQmkcKwvO2bJGneYluvPp",
+  "completed_at": "2026-10-09T06:09:39.936219+00:00",
+  "limits": "Executed full lint/types/Node/build/WP0/coverage before subsequent local browser-harness and CI checkout-depth fixes. No app runtime source changed after this build. Final changed browser harness was separately linted and actually executed; exact final source CI is pending.",
+  "native_acceptance32": {
+    "artifact": "docs/release/evidence/local/20261009-pwa-native-acceptance/browser-results.json",
+    "sha256": "2ae146157a430ec5a92904ed02134542e82a13e94d651dea8db2c93c84470b47",
+    "result": "PASS",
+    "build": "LQmkcKwvO2bJGneYluvPp",
+    "native_migrations": 32,
+    "native_otp_users": 3,
+    "named_checks": 15,
+    "bounded_cases": 13,
+    "bounded_function_ids": [
+      "F001",
+      "F019",
+      "F024",
+      "F025",
+      "F026",
+      "F027",
+      "F029",
+      "F031",
+      "F038",
+      "F053",
+      "F063",
+      "F080",
+      "F081",
+      "F132",
+      "F133",
+      "F138"
+    ],
+    "screenshot_count": 10,
+    "all_screenshots_sha256_verified": true,
+    "all_tested_source_hashes_verified": true,
+    "staging_verified": false,
+    "physical_device_verified": false,
+    "whole_suite_passed": false,
+    "limits": "Manually seeded historical actions prove exact authorized reads, not their automatic projection. Dialog captures do not verify background navigation. Other prescribed function/integration/physical/provider cases remain pending."
+  },
+  "observed_at_close": "2026-10-09T06:32:09.522070+00:00"
+}

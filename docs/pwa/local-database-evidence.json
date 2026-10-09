@@ -2434,5 +2434,16 @@
     }
   ],
   "staging_verified": false,
-  "physical_device_verified": false
+  "physical_device_verified": false,
+  "append32_proof": {
+    "artifact": "docs/release/evidence/local/20261009-pwa-action-context/owned-action32-proof.json",
+    "sha256": "45042ba697969f993f775386a86146a19f89da624aeb69141fa1bbbe1b4a5c10",
+    "new_migration": "20261009115000_pwa_personal_action_context.sql",
+    "new_migration_sha256": "10dfcebb3e8f61623586f41123e8967815e743745f991f68f84bcfd686e3a195",
+    "empty32_assertions": 41,
+    "populated31_to32_assertions": 42,
+    "existing31_sources_unchanged": true,
+    "earlier_full31_suite_report_retained": true,
+    "staging_verified": false
+  }
 }

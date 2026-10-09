@@ -1,6 +1,6 @@
 {
   "base_sha": "47386491859b47fbebf85c3b209724dcc20407fc",
-  "source_head": "b9a6ed995058e623d7887fb4a56630251ff4ffb4",
+  "source_head": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
   "worktree_dirty": true,
   "prototype_sha": "e9c1d8bca2089b0944577eed73d1bedf7e70a3b6",
   "acceptance_ready": false,
@@ -16,9 +16,9 @@
       "api_views": 16
     },
     "current": {
-      "migrations": 31,
+      "migrations": 32,
       "app_tables": 180,
-      "api_function_definitions": 84,
+      "api_function_definitions": 85,
       "api_views": 21
     }
   },
@@ -1628,6 +1628,17 @@
           "kind": "view",
           "name": "api.pwa_policy_assignments",
           "line": 12
+        }
+      ]
+    },
+    {
+      "file": "20261009115000_pwa_personal_action_context.sql",
+      "sha256": "10dfcebb3e8f61623586f41123e8967815e743745f991f68f84bcfd686e3a195",
+      "objects": [
+        {
+          "kind": "function",
+          "name": "api.pwa_personal_action_context",
+          "line": 5
         }
       ]
     }
