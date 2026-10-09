@@ -1,0 +1,97 @@
+{
+  "scope": "STAGING_ACTIVE_PUBLIC_PWA_ASSETS",
+  "observed_at": "2026-10-09T12:14:27.635Z",
+  "target": "https://staging.cluvo.nl",
+  "source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+  "passed": true,
+  "checks": [
+    {
+      "path": "/api/health/live",
+      "status": 200,
+      "value": {
+        "status": "ok",
+        "service": "cluvo",
+        "mode": "app",
+        "environment": "staging",
+        "release": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef"
+      }
+    },
+    {
+      "path": "/api/health/ready",
+      "status": 200,
+      "value": {
+        "ready": true,
+        "release_ready": false,
+        "scope": "authenticated_core",
+        "checks": {
+          "database": "reachable",
+          "workers": "not_required_for_core",
+          "authorization": "rls_api"
+        }
+      }
+    },
+    {
+      "path": "/app/manifest.webmanifest",
+      "status": 200,
+      "source_bytes_match": true,
+      "sha256": "75b0243ed609dbe249b77b2d92b550e0d1f5af755c9a184e6a3e4218fd3c6408",
+      "bytes": 594
+    },
+    {
+      "path": "/app/offline.html",
+      "status": 200,
+      "source_bytes_match": true,
+      "sha256": "af9da635f7a5e98d159f76de290391e50bccca6ad9be00f5bbade9db134b167b",
+      "bytes": 1337
+    },
+    {
+      "path": "/app/push-config.json",
+      "status": 200,
+      "source_bytes_match": true,
+      "sha256": "0f4691b56a24850f3e3c92b6dbf02462600839281ee271ce1a310aa25ac7baa0",
+      "bytes": 109
+    },
+    {
+      "path": "/app/icons/icon-192.png",
+      "status": 200,
+      "source_bytes_match": true,
+      "sha256": "b4ab8524b6b0a9afeef7f543655487f35d96c5ba1e6f10eafae05a9b582762d2",
+      "bytes": 6117
+    },
+    {
+      "path": "/app/icons/icon-512.png",
+      "status": 200,
+      "source_bytes_match": true,
+      "sha256": "893c57d643b73595b91ec62b43f72bb0b82b1610988511fff640bcfb2bd5d01e",
+      "bytes": 21288
+    },
+    {
+      "path": "/app/icons/icon-maskable-512.png",
+      "status": 200,
+      "source_bytes_match": true,
+      "sha256": "7e7ae05ce208b879bf4c423be8b51130f1be1ba0a6103b9f8fb644fd843c5799",
+      "bytes": 18263
+    },
+    {
+      "path": "/app/sw.js",
+      "status": 200,
+      "source_bytes_match": true,
+      "release_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+      "scope": "/app/",
+      "sha256": "7657bc511185c9bb6d8f2c19294d1c4d2db4caf6b153733759919262a286b7d1"
+    },
+    {
+      "path": "/app/",
+      "status": 307,
+      "location": "/app/workspaces"
+    },
+    {
+      "path": "/app/login",
+      "status": 200,
+      "private_no_store": true
+    }
+  ],
+  "physical_device_verified": false,
+  "otp_delivery_verified": false,
+  "production_enabled": false
+}

@@ -61,7 +61,7 @@ export async function runOwnedSportlinkAuthority({name, socket, sql, json}) {
     'archive_mode',current_setting('archive_mode'),'temp_tablespaces',current_setting('temp_tablespaces'),
     'external_tablespaces',(SELECT count(*) FROM pg_tablespace WHERE spcname NOT IN ('pg_default','pg_global')));`, {role: 'supabase_admin'}));
   assert.ok(inventory.version >= 170000 && inventory.version < 180000);
-  assert.equal(inventory.migrations, 35);
+  assert.equal(inventory.migrations, 36);
   assert.equal(inventory.cipher_table, true);
   assert.equal(inventory.authenticator_login, true);
   assert.equal(inventory.authenticator_member, true);

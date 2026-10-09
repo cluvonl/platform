@@ -1,0 +1,35 @@
+ok 1 - team series creates four real shifts
+ok 2 - two concrete places per occurrence
+ok 3 - weekly local time survives DST
+ok 4 - original team tasks remain zero-credit
+ok 5 - real distribution proposal uses all free positions
+ok 6 - DST gap rejects entire series
+ok 7 - failed series leaves no partial tasks
+ok 8 - unreviewed credit cannot publish
+ok 9 - canonical volunteer review persists
+ok 10 - reviewed request publishes real concrete capacity
+ok 11 - approved minutes apply only to market shift
+ok 12 - approval preserves requested capacity
+ok 13 - source task still zero after approval
+ok 14 - native planning and publication create club task
+ok 15 - editable actual requirements persisted
+
+ok 16 - successor cannot accept unfinished concept
+
+
+ok 17 - only reviewed exact handover version may transfer authority
+ok 18 - named successor acquires actual team-parent authority
+ok 19 - accepted handover role is authoritative
+ok 20 - command identity survives unknown response
+ok 21 - intent key cannot change payload hash
+ok 22 - absent transaction is resolved only behind shared fence
+ok 23 - actual own push subscription persists
+ok 24 - snapshot never reveals delivery endpoint
+ok 25 - arbitrary or private push origin refused in SQL
+
+ok 26 - authorized message is stored
+ok 27 - card stores real deadline and scoped assignee
+
+ok 28 - other parent cannot read committee conversation
+ok 29 - foreign card mutation refused
+1..29

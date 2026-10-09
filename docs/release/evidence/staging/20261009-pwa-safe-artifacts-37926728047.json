@@ -1,0 +1,67 @@
+{
+  "scope": "EXACT_GITHUB_RUN_SAFE_AGGREGATES_ONLY",
+  "observed_at": "2026-10-09T12:14:08.308292+00:00",
+  "workflow_run_id": 37926728047,
+  "source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+  "run_status": "completed",
+  "run_conclusion": "success",
+  "run_url": "https://github.com/cluvonl/platform/actions/runs/37926728047",
+  "jobs": [
+    {
+      "name": "build",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "database-upgrade",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "pwa-native-qa",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "deploy",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "downloaded_safe_aggregates": [
+    {
+      "artifact_id": 11615156689,
+      "name": "cluvo-staging-pwa-native-qa-9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef-37926728047-1",
+      "path": "docs/release/evidence/staging/20261009-pwa-native-qa-attempt-37926728047-gha.json",
+      "sha256": "0ed61bb04a0d9aafe2ddda2eabd66aced4fb933015ded3b21b19bc35a2da7a7f",
+      "bytes": 3470
+    },
+    {
+      "artifact_id": 11614701877,
+      "name": "cluvo-build-9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+      "path": "docs/release/evidence/staging/20261009-pwa-release-manifest-37926728047.json",
+      "sha256": "78cd873f1192a954865c2747bc08611aaae36a0a543b6ee80194a1636320223f",
+      "bytes": 6156
+    },
+    {
+      "artifact_id": 11614354901,
+      "name": "cluvo-staging-pwa-upgrade-report-9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef-37926728047-1",
+      "path": "docs/release/evidence/staging/20261009-pwa-upgrade-attempt-37926728047-gha.json",
+      "sha256": "bd2e3fdfeba27477e088f67ed3c500526df8d782e5b3155b29fbbb1095faa99a",
+      "bytes": 24707
+    }
+  ],
+  "encrypted_custody_metadata_only": [
+    {
+      "artifact_id": 11614747678,
+      "name": "cluvo-staging-pwa-upgrade-encrypted-9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef-37926728047-1",
+      "bytes": 9981529,
+      "created_at": "2026-10-09T12:09:13Z",
+      "downloaded": false
+    }
+  ],
+  "backup_downloaded": false,
+  "private_logs_read": false,
+  "physical_device_verified": false,
+  "production_enabled": false
+}

@@ -1,0 +1,9 @@
+{"phase":"capture-original181-app-pk-row-and-old-auth-authority-baseline"}
+{"phase":"fixture-ready-native-three-local-OTP-logins"}
+{"phase":"provider-recovery-contexts-complete"}
+{"phase":"prior-actual-native-F054-command-receipt-and-existing-request-readback"}
+{"phase":"recipient-native-readback-inbox-deep-link-available-without-auto-booking"}
+{"phase":"team-parent-native-and-UI-denied-reserve-pool-even-own-team"}
+{"phase":"actual-F074-valid-future-followup-command-and-refreshed-phase"}
+{"phase":"foreign-tenant-native-snapshot-denied-and-final-own-readback"}
+{"passed":true,"checks":10,"images":9,"proof":"docs/release/evidence/local/20261009-pwa36-reserve-native-ui/browser-results.json","sha256":"a67fea7d6443916b30f431b0e327eb2d866d5fc1797d79ffa79270c156fdd288"}

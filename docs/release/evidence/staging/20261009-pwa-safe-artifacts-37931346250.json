@@ -1,0 +1,30 @@
+{
+  "scope": "EXACT_GITHUB_RUN_SAFE_AGGREGATES_ONLY",
+  "observed_at": "2026-10-09T12:50:34.915477+00:00",
+  "workflow_run_id": 37931346250,
+  "source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+  "run_status": "completed",
+  "run_conclusion": "failure",
+  "run_url": "https://github.com/cluvonl/platform/actions/runs/37931346250",
+  "jobs": [
+    {
+      "name": "browser_readback",
+      "status": "completed",
+      "conclusion": "failure"
+    }
+  ],
+  "downloaded_safe_aggregates": [
+    {
+      "artifact_id": 11616896614,
+      "name": "cluvo-staging-pwa-browser-readback-9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef-37931346250-1",
+      "path": "docs/release/evidence/staging/20261009-pwa-browser-readback-37931346250-gha.json",
+      "sha256": "fdfccab018d989ab0aea2a3953be1a7c3b7dcd4bd8960b286cb423d274294a52",
+      "bytes": 2476
+    }
+  ],
+  "encrypted_custody_metadata_only": [],
+  "backup_downloaded": false,
+  "private_logs_read": false,
+  "physical_device_verified": false,
+  "production_enabled": false
+}

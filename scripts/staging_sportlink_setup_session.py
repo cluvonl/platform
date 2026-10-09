@@ -16,7 +16,7 @@ from staging_backup_session import Session, Failure, require, TX_IDLE, TX_VALID
 ROOT = Path(__file__).resolve().parent
 PROJECT = 'fbozlbgmktkgcdfqdaaz'
 LOCK = int.from_bytes(hashlib.sha256(PROJECT.encode()).digest()[:4], 'big', signed=True)
-PINS = {'staging_backup_session.py': 'e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1', 'staging-sportlink-setup-sql.mjs': 'c96640e47052afe6aba4c031b98708ed96faf5b0e16f32b95427c4daf31891b8', 'staging-pwa-native-qa-fixture.mjs': '50b050e173fceb91576e547f2710449eeca75251d8cb0d3951ea1479e7ab879d', 'staging-pwa-upgrade-files.mjs': '198c5ba8dd2483500db097260a71b91b02263ea565df24d7b55686c2aa8b196c', 'staging-pwa-upgrade-migrations.mjs': '9cb88a31b773a04f161ed5ec3a92506833eeb6f57c2802a45b8a268ea1840a77', 'staging-initial-migrations.mjs': '7f49cf8dcdb2eda53633dd3596486779ea2dd001d1a2813a07fa45e859784004', 'staging-migration-files.mjs': '83aa2aae6d4cc358965208e39e73dd0d1038ee4a6c0bc9a62675b829e30c94bd'}
+PINS = {'staging_backup_session.py': 'e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1', 'staging-sportlink-setup-sql.mjs': '8ecc42564ebb6b5b38a424b90901d248443bae030ffb06496be526e5c38723d5', 'staging-pwa-native-qa-fixture.mjs': '50b050e173fceb91576e547f2710449eeca75251d8cb0d3951ea1479e7ab879d', 'staging-pwa-upgrade-files.mjs': 'a9b3b5c74dc7a9f8d495de2b8a8e9e3fc073052e6de726f9b462b7985a6c1b12', 'staging-pwa-upgrade-migrations.mjs': 'd931ae1ca408e755b244cf1232fa5e5fd4cbdc0f21a709fbe4ffdd4df2b878ee', 'staging-initial-migrations.mjs': '7f49cf8dcdb2eda53633dd3596486779ea2dd001d1a2813a07fa45e859784004', 'staging-migration-files.mjs': '83aa2aae6d4cc358965208e39e73dd0d1038ee4a6c0bc9a62675b829e30c94bd'}
 
 
 def verify_sources():
@@ -200,10 +200,10 @@ class SportlinkSetupSession(Session):
         self.committed(results, before)
         rows = [r['rows'] for r in results if r['command'].startswith('SELECT')]
         require(len(rows) == 1 and len(rows[0]) == 1 and len(rows[0][0]) == 1
-                and json.loads(rows[0][0][0], object_pairs_hook=duplicate_free) == {'schema35': True},
+                and json.loads(rows[0][0][0], object_pairs_hook=duplicate_free) == {'schema_target_verified': True, 'migration_count': 36},
                 'STAGING_SPORTLINK_SETUP_PREFLIGHT_UNPROVED')
         self.recipient, self.phase = recipient, 'ready'
-        return {'schema35': True}
+        return {'schema_target_verified': True, 'migration_count': 36}
 
     def provision(self):
         require(self.phase == 'ready', 'STAGING_SPORTLINK_SETUP_PHASE_REFUSED')

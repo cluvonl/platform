@@ -1,0 +1,7 @@
+{"phase":"capture-original181-app-pk-row-and-old-auth-authority-baseline"}
+{"phase":"fixture-ready-native-three-local-OTP-logins"}
+{"phase":"logins-complete"}
+{"phase":"actual-F054-reserve-selection-and-command-through-mobile-button"}
+{"phase":"second-browser-native-context-readback-same-authorized-actor-session"}
+{"phase":"recipient-native-readback-inbox-deep-link-available-without-auto-booking"}
+{"passed":false,"phase":"recipient-native-readback-inbox-deep-link-available-without-auto-booking","safe_code":"BOUNDED_LOCAL_BROWSER_ASSERTION_FAILED"}

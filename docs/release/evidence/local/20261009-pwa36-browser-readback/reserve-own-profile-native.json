@@ -1,0 +1,78 @@
+{
+  "scope": "LOCAL_PWA36_OWN_RESERVE_NATIVE_PROFILE_SINGLE_CLICK_READ_V1",
+  "environment": "local",
+  "observed_at": "2026-10-09T13:21:21.250Z",
+  "passed": true,
+  "app_fixture_mutations_performed": false,
+  "domain_server_actions_invoked": 0,
+  "existing_auth_accounts_changed": false,
+  "new_auth_users_created": 0,
+  "private_values_exported": false,
+  "private_profile_inputs_captured": false,
+  "staging_verified": false,
+  "physical_device_verified": false,
+  "v1_ready": false,
+  "production_enabled": false,
+  "source_parent": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+  "build_id": "N_Dg2FGoBXBoWfKPBnFMX",
+  "source_files": [
+    {
+      "path": "scripts/staging-pwa-browser-readback.mjs",
+      "sha256": "39f5c7cb60a1bcb2765b8e94f84730d0fda3c3851dda7213a1d284f487817500"
+    },
+    {
+      "path": "components/mobile/personal.tsx",
+      "sha256": "cbfcac76f520f2691d5fc4a632db0e82cd7a1b0d6390674d771c40af5a477f29"
+    },
+    {
+      "path": "components/mobile/route.tsx",
+      "sha256": "7016a42764c5585e889d5511b960cf62fa33fc4dadea4d887705e5d160e9c264"
+    },
+    {
+      "path": "lib/pwa/server.ts",
+      "sha256": "f835587812df507ffadfc90e51329f278d88656180263811f9ab6e106509d1a6"
+    }
+  ],
+  "browser": {
+    "engine": "Chromium",
+    "version": "153.0.8010.12",
+    "playwright": "1.63.0"
+  },
+  "route": {
+    "screen": "profile",
+    "status": 200,
+    "native_authorized": true,
+    "private_cache": true,
+    "privacy_denials": true,
+    "overflow": false
+  },
+  "readback": {
+    "provider_verified_new_reserve_identity": true,
+    "native_own_profile_revision": 1,
+    "native_practical_limitations_empty": true,
+    "single_real_browser_click_displays_available_panel": true,
+    "current_step_verified": true,
+    "native_rendered_value_matches": true,
+    "filled_intake_value_proven": false,
+    "profile_mutation_or_submission_performed": false,
+    "page_errors": 0,
+    "blocked_domain_mutation_requests": 0,
+    "blocked_foreign_requests": 0
+  },
+  "readback_passed": true,
+  "only_own_new_native_SID_removed": true,
+  "preservation": {
+    "all181_app_rows_including_new_fixture_byte_identical": true,
+    "app_tables": 181,
+    "prior_app_rows": 6694,
+    "all_prior_old_auth_users_full_bytes_and_all_prior_auth_authority_unchanged": true,
+    "prior_old_auth_user_count": 77,
+    "prior_session_count": 209,
+    "migration_history_unchanged": true,
+    "before_app_sha256": "1d52b8f2f523dd749dca115d3a128a72e1e7b43e51fc8ec436938fd428508e81",
+    "after_matched_app_sha256": "1d52b8f2f523dd749dca115d3a128a72e1e7b43e51fc8ec436938fd428508e81"
+  },
+  "build_id_after": "N_Dg2FGoBXBoWfKPBnFMX",
+  "source_hashes_unchanged": true,
+  "runner_sha256": "693a8446160b04ace4ee1f29c00a5066046c6b8ce6b877441461c4a17b5fde94"
+}

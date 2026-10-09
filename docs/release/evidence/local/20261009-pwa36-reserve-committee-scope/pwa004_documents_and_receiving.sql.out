@@ -1,0 +1,22 @@
+ok 1 - authorized exact document metadata resolves
+ok 2 - registered immutable version authorizes Storage read
+ok 3 - ACL does not authorize unrelated private paths
+
+ok 4 - other household parent does not inherit private document ACL
+ok 5 - Storage rechecks actual document ACL
+
+ok 6 - explicit central capability and own committee scope permit actual receiving teams
+ok 7 - selection carries actual immutable read version
+ok 8 - proposal counts actual suitable household executors
+ok 9 - occupied place cannot become a receiving proposal
+ok 10 - duplicate concrete place rejected
+
+ok 11 - member cannot inspect central distribution proposal
+ok 12 - user gesture binds actual push device
+ok 13 - registering push atomically enables own push preference
+ok 14 - second device preserves first subscription
+ok 15 - only named own push device revoked
+ok 16 - remaining active device keeps push enabled
+ok 17 - last owned device revokes
+ok 18 - last device revocation disables delivery preference
+1..18

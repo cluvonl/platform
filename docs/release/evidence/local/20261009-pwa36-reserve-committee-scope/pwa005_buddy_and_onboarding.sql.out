@@ -1,0 +1,79 @@
+ok 1 - unqualified native booking cannot forge a mentor waiver
+ok 2 - unqualified PWA booking needs an explicit booked qualified mentor
+ok 3 - a human cannot read private transactional mentor proofs
+ok 4 - private proof issuance cannot be invoked by the browser
+
+
+ok 5 - readmodel offers only a real qualified versioned booked mentor
+ok 6 - stale mentor version is rejected
+ok 7 - mentor from another shift is rejected
+ok 8 - all remaining hard eligibility conditions permit explicit mentor choice
+ok 9 - mentor availability never masks an unavailable executor
+ok 10 - revoked mentor qualification cannot authorize a novice
+ok 11 - explicit live mentor permits only a waitlist interest for an otherwise suitable beginner
+
+ok 12 - occupied capacity does not mask an otherwise suitable qualified transfer executor
+
+ok 13 - the real novice booking satisfies durable mentor coverage at transaction end
+
+ok 14 - the named mentor cannot cancel and leave an active novice unsupported
+
+ok 15 - qualified takeover appends a current mentor link and preserves the original choice
+ok 16 - replacement is a genuinely qualified booking of the same physical place
+ok 17 - session and transaction bound proofs are consumed before commit
+ok 18 - booking, mentor choice and takeover create no fictitious execution credit
+ok 19 - mentor substitution history is immutable
+
+ok 20 - own intake start replays the same acknowledged command
+ok 21 - intake start checks the selected household version
+
+ok 22 - another parent cannot initialize the private new household intake
+ok 23 - initialized profile belongs only to the verified current person
+ok 24 - draft initialization invents no personal answers
+
+ok 25 - future planning uses actual shift.manage action authority
+ok 26 - all newly published positions are reserved in the same atomic club command
+
+ok 27 - reserved creation creates no public booking window
+ok 28 - ordinary member cannot configure a published club contact
+
+ok 29 - organization.manage can configure the actual club contact
+
+ok 30 - authorized mobile contact readback shows the actual versioned configured address
+ok 31 - mentor substitution is important durable information for the actual novice
+
+ok 32 - OS permission alone does not establish a server push binding
+ok 33 - synthetic device binds via the actual own command
+ok 34 - own existing subscription has a database-confirmed binding
+
+ok 35 - another account cannot inherit an existing device binding
+ok 36 - binding status reauthorizes the actual tenant
+
+ok 37 - cross-club mentor or physical-place identifiers never authorize a booking
+
+ok 38 - initialized own profile can append a real private intake revision
+ok 39 - even an explicit household mandate cannot bypass the canonical sixteen-plus execution floor
+
+ok 40 - optional channel/category preferences can be disabled by their actual owner
+
+ok 41 - book-for informs the actual executor through a durable essential inbox despite optional preferences
+ok 42 - essential inbox does not override disabled email or push consent
+
+ok 43 - illness remains reportable while an actual qualified replacement is required
+ok 44 - reported mentor obstruction does not silently free the physical place
+ok 45 - a sickness report creates no execution credit
+ok 46 - all mentor and qualification constraints hold for the final actual transaction state
+
+ok 47 - an explicit offset-selected base instant remains valid during the autumn fold
+ok 48 - an inferred later fold rejects the complete series without guessing an offset
+ok 49 - ambiguous recurrence rolls back every preceding creation in its transaction
+
+ok 50 - the actual PWA interest wrapper locks and writes a published vacancy with correct private role privileges
+ok 51 - unpublished vacancy denies interest before disclosing its private version
+ok 52 - published interest checks the expected vacancy version
+ok 53 - the browser receives no direct vacancy-write grant
+
+ok 54 - a foreign-club resource identifier does not authorize an interest or private version read
+ok 55 - exactly one actual interest record is committed inside the test transaction
+ok 56 - interest alone grants no appointment, role or household exemption
+1..56

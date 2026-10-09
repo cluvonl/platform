@@ -14,9 +14,28 @@ const ORIGIN='https://staging.cluvo.nl',PROJECT='fbozlbgmktkgcdfqdaaz';
 export const BROWSER_SCREENS=Object.freeze(['home','tasks','agenda','teams','more','actions','notifications','manage','profile','household','policies','courses','opportunities','messages','settings','help','install','reports','finance','committees']);
 const LIMITS={otp_flow_verified:false,coordinator_positive_flows_verified:false,physical_device_verified:false,
  email_sent:false,personal_account_changed:false,private_values_exported:false,v1_ready:false,production_enabled:false};
+const PHASES=new Set(['context','active_release_before','toolchain','native_connection','provider','fixture','fixture_privacy',
+ 'browser_launch','actor_a_session','positive_routes','own_profile','positive_page_errors','foreign_club','foreign_household',
+ 'foreign_season','actor_b_session','minor_team','session_revocation','revoked_session','other_session','active_release_after','cleanup']);
+const OPERATIONS=new Set(['validate','connect','setup','readback','launch','session','navigation','route_status','ssr_privacy',
+ 'app_shell','active_navigation','font_readiness','dom_privacy','private_cache','overflow','profile_control','page_errors',
+ 'positive_content','revoke','claim_expiry','context_close','browser_close','fixture_teardown','provider_cleanup','connection_close']);
 class BrowserQaError extends Error{constructor(code){super(code);this.code=code;}}
 const need=(condition,code)=>{if(!condition)throw new BrowserQaError(code);};
 const successful=response=>{need(response?.error===null,'STAGING_BROWSER_NATIVE_API_FAILED');return response.data;};
+export function browserFailureDiagnostic(error,position){
+ // Never include exception messages/stacks, URLs, query strings, selectors,
+ // provider identities or any fields supplied by the private error object.
+ const name=Object.getOwnPropertyDescriptor(error??{},'name')?.value;
+ const errorClass=error instanceof BrowserQaError?'BrowserQaError':error instanceof TypeError?'TypeError'
+  :error instanceof SyntaxError?'SyntaxError':error instanceof RangeError?'RangeError'
+  :['TimeoutError','AbortError','Error'].includes(name)?name:error instanceof Error?'Error':'UnknownError';
+ return Object.freeze({phase:PHASES.has(position?.phase)?position.phase:'unknown',
+  screen:BROWSER_SCREENS.includes(position?.screen)?position.screen:null,
+  operation:OPERATIONS.has(position?.operation)?position.operation:'unknown',error_class:errorClass,
+  ...(Number.isSafeInteger(position?.response_status)&&position.response_status>=100&&position.response_status<=599
+   ?{response_status:position.response_status}:{})});
+}
 export function browserReadbackContext(environment){
  const keys=['APP_ENV','GITHUB_REPOSITORY','GITHUB_REF','GITHUB_EVENT_NAME','GITHUB_SHA','RELEASE_SHA','GITHUB_RUN_ID','GITHUB_ACTOR','STAGING_SUPABASE_PROJECT_REF','SUPABASE_URL'];
  need(environment&&typeof environment==='object','STAGING_BROWSER_CONTEXT_REQUIRED');
@@ -93,23 +112,49 @@ async function privateFixtureReadback(provider,fixture){
  }
  return canaries;
 }
-async function routeReadback(page,path,forbidden){
- const response=await page.goto(ORIGIN+path,{waitUntil:'networkidle',timeout:45000});
+export async function browserRouteReadback(page,path,forbidden,onStage=()=>{}){
+ const candidate=path.split('?')[0].split('/').at(-1),screen=BROWSER_SCREENS.includes(candidate)?candidate:null;
+ let status;
+ const stage=operation=>onStage({screen,operation,...(status?{response_status:status}:{})});
+ stage('navigation');
+ const response=await page.goto(ORIGIN+path,{waitUntil:'domcontentloaded',timeout:45000});
+ status=response?.status();stage('route_status');
  need(response&&response.status()===200&&page.url()===ORIGIN+path,'STAGING_BROWSER_ROUTE_FAILED');
+ stage('ssr_privacy');
  assertPrivateBrowserBody(await response.text(),forbidden);
- assertPrivateBrowserBody(await page.locator('body').innerText(),forbidden);
- need((await page.locator('h1').count())===1&&(await page.getByRole('navigation',{name:'Hoofdnavigatie',exact:true}).getByRole('link').count())===5,'STAGING_BROWSER_APP_SHELL_FAILED');
- need(await page.getByRole('navigation',{name:'Hoofdnavigatie',exact:true}).locator('[aria-current="page"]').count()===1,'STAGING_BROWSER_ACTIVE_NAV_FAILED');
+ // Read the actual SSR shell. Background requests/prefetches are not a page
+ // readiness signal. These waits stay bounded even when the shell is absent.
+ stage('app_shell');
+ await page.locator('h1').waitFor({state:'visible',timeout:15000});
+ const navigation=page.getByRole('navigation',{name:'Hoofdnavigatie',exact:true});
+ await navigation.waitFor({state:'visible',timeout:15000});
+ need((await page.locator('h1').count())===1&&(await navigation.getByRole('link').count())===5,'STAGING_BROWSER_APP_SHELL_FAILED');
+ stage('active_navigation');
+ need(await navigation.locator('[aria-current="page"]').count()===1,'STAGING_BROWSER_ACTIVE_NAV_FAILED');
+ stage('font_readiness');
+ await page.waitForFunction(()=>document.fonts.status==='loaded',null,{timeout:15000});
+ stage('dom_privacy');
+ assertPrivateBrowserBody(await page.locator('body').innerText({timeout:15000}),forbidden);
+ stage('private_cache');
  need(/private/.test(response.headers()['cache-control']??'')&&/no-store/.test(response.headers()['cache-control']??''),'STAGING_BROWSER_PRIVATE_CACHE_FAILED');
+ stage('overflow');
  const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth+1);
  need(!overflow,'STAGING_BROWSER_OVERFLOW');
- return {screen:path.split('/').at(-1),status:200,native_authorized:true,private_cache:true,privacy_denials:true,overflow:false};
+ return {screen,status:200,native_authorized:true,private_cache:true,privacy_denials:true,overflow:false};
 }
-async function rejectedContext(page,path,forbidden){
- const response=await page.goto(ORIGIN+path,{waitUntil:'networkidle',timeout:45000});
+export async function browserRejectedContext(page,path,forbidden,onStage=()=>{}){
+ const candidate=path.split('?')[0].split('/').at(-1),screen=BROWSER_SCREENS.includes(candidate)?candidate:null;
+ let status;
+ const stage=operation=>onStage({screen,operation,...(status?{response_status:status}:{})});
+ stage('navigation');
+ const response=await page.goto(ORIGIN+path,{waitUntil:'domcontentloaded',timeout:45000});
+ status=response?.status();stage('route_status');
  need(response,'STAGING_BROWSER_DENIAL_FAILED');
+ stage('ssr_privacy');
  assertPrivateBrowserBody(await response.text(),forbidden);
- const text=await page.locator('body').innerText();assertPrivateBrowserBody(text,forbidden);
+ stage('dom_privacy');
+ const text=await page.locator('body').innerText({timeout:15000});assertPrivateBrowserBody(text,forbidden);
+ stage('route_status');
  need(page.url().startsWith(ORIGIN+'/app/login')||response.status()===404||text.includes('Je werkruimte kon niet worden geladen'),
   'STAGING_BROWSER_DENIAL_FAILED');
  return {denied:true,private_data_hidden:true};
@@ -119,15 +164,29 @@ export async function stagingBrowserReadback(environment){
   app_fixture_mutations_performed:false,...LIMITS};
  let owner,provider,records,browser,fixtureAttempted=false,primary,closed=false;
  const contexts=[];
+ let position={phase:'context',operation:'validate'};
+ const phase=(value,operation='validate',screen=null)=>{position={phase:value,operation,screen};};
+ const routeStage=value=>{position={phase:position.phase,...value};};
+ const cleanupFailure=(error,operation)=>{
+  (report.cleanup_failures??=[]).push(browserFailureDiagnostic(error,{phase:'cleanup',operation}));
+ };
  try{
   const context=browserReadbackContext(environment);Object.assign(report,context);
+  phase('active_release_before');
   need(await activeStagingRelease(context.source_sha),'STAGING_BROWSER_ACTIVE_RELEASE_REQUIRED');
+  phase('toolchain');
   const {chromium}=await browserModule(environment);
+  phase('native_connection','connect');
   owner=await NativeQaSession.connect(environment);
+  phase('provider','setup');
   provider=await createStagingNativeQaProvider(owner,environment);records=provider.privateProviderRecords();
+  phase('fixture','setup');
   fixtureAttempted=true;report.app_fixture_mutations_performed=true;report.fixture=await owner.setupFixture(records);
+  phase('fixture_privacy','readback');
   const fixture=nativeQaFixtureIds(context.workflow_run_id),canaries=await privateFixtureReadback(provider,fixture);
+  phase('browser_launch','launch');
   browser=await chromium.launch({headless:true,env:browserProcessEnvironment(environment)});report.browser={engine:'Chromium',version:browser.version(),physical:false,viewport:{width:390,height:844}};
+  phase('actor_a_session','session');
   const a=await browser.newContext({viewport:{width:390,height:844},serviceWorkers:'block'});contexts.push(a);
   await sessionCookies(provider,'a',environment,a);const page=await a.newPage();
   const errors=[];page.on('pageerror',()=>errors.push(true));
@@ -135,57 +194,74 @@ export async function stagingBrowserReadback(environment){
   const privateCredentials=['SUPABASE_SECRET_KEY','MIGRATION_DATABASE_URL'].map(key=>environment[key]).filter(value=>typeof value==='string'&&value.length>8);
   const forbidden=[canaries[1],canaries[2],fixture.intakeB,fixture.intakeBForeign,fixture.tenantB,fixture.teamB,'pwa-minor-contact-canary@example.test',...privateCredentials];
   report.routes=[];
-  for(const screen of BROWSER_SCREENS)report.routes.push(await routeReadback(page,'/app/c/'+slugA+'/'+screen,forbidden));
-  await routeReadback(page,'/app/c/'+slugA+'/profile',forbidden);
-  await page.locator('.wizard-progress').getByRole('button',{name:'Beschikbaar',exact:true}).click();
-  need(await page.getByLabel('Praktische grenzen (optioneel)').inputValue()===canaries[0],'STAGING_BROWSER_OWN_PROFILE_POSITIVE_FAILED');
+  phase('positive_routes','navigation');
+  for(const screen of BROWSER_SCREENS)report.routes.push(await browserRouteReadback(page,'/app/c/'+slugA+'/'+screen,forbidden,routeStage));
+  phase('own_profile','navigation','profile');
+  await browserRouteReadback(page,'/app/c/'+slugA+'/profile',forbidden,routeStage);
+  phase('own_profile','profile_control','profile');
+  await page.locator('.wizard-progress').getByRole('button',{name:'Beschikbaar',exact:true}).click({timeout:15000});
+  need(await page.getByLabel('Praktische grenzen (optioneel)').inputValue({timeout:15000})===canaries[0],'STAGING_BROWSER_OWN_PROFILE_POSITIVE_FAILED');
   report.own_profile_positive=true;
+  phase('positive_page_errors','page_errors');
   report.positive_matrix_page_errors=errors.length;
   need(errors.length===0,'STAGING_BROWSER_POSITIVE_PAGE_ERROR');
-  report.foreign_club=await rejectedContext(page,'/app/c/'+slugB+'/home',[...forbidden,canaries[0]]);
-  report.foreign_household=await rejectedContext(page,'/app/c/'+slugA+'/home?household='+fixture.householdB,[canaries[1],canaries[2],...privateCredentials]);
-  report.foreign_season=await rejectedContext(page,'/app/c/'+slugA+'/home?season='+fixture.seasonB,[canaries[1],canaries[2],...privateCredentials]);
+  phase('foreign_club','navigation');
+  report.foreign_club=await browserRejectedContext(page,'/app/c/'+slugB+'/home',[...forbidden,canaries[0]],routeStage);
+  phase('foreign_household','navigation');
+  report.foreign_household=await browserRejectedContext(page,'/app/c/'+slugA+'/home?household='+fixture.householdB,[canaries[1],canaries[2],...privateCredentials],routeStage);
+  phase('foreign_season','navigation');
+  report.foreign_season=await browserRejectedContext(page,'/app/c/'+slugA+'/home?season='+fixture.seasonB,[canaries[1],canaries[2],...privateCredentials],routeStage);
+  phase('actor_b_session','session');
   const b=await browser.newContext({viewport:{width:390,height:844},serviceWorkers:'block'});contexts.push(b);
   await sessionCookies(provider,'b',environment,b);const minor=await b.newPage();
-  await routeReadback(minor,'/app/c/'+slugB+'/teams',[canaries[0],canaries[1],fixture.tenantA,fixture.teamA,'pwa-minor-contact-canary@example.test',...privateCredentials]);
-  need((await minor.locator('body').innerText()).includes('QA minor team B'),'STAGING_BROWSER_MINOR_TEAM_POSITIVE_FAILED');
+  phase('minor_team','navigation','teams');
+  await browserRouteReadback(minor,'/app/c/'+slugB+'/teams',[canaries[0],canaries[1],fixture.tenantA,fixture.teamA,'pwa-minor-contact-canary@example.test',...privateCredentials],routeStage);
+  phase('minor_team','positive_content','teams');
+  need((await minor.locator('body').innerText({timeout:15000})).includes('QA minor team B'),'STAGING_BROWSER_MINOR_TEAM_POSITIVE_FAILED');
   report.minor_team_positive_private_contacts_hidden=true;
+  phase('session_revocation','revoke');
   const oldCookies=await a.cookies();await provider.revokeSession('a');await a.clearCookies();await a.addCookies(oldCookies);
+  phase('session_revocation','claim_expiry');
   await provider.withActor('a',async({accessToken})=>{
    const claims=JSON.parse(Buffer.from(accessToken.split('.')[1],'base64url').toString('utf8'));
    need(Number.isSafeInteger(claims.exp)&&claims.exp>Math.floor(Date.now()/1000),'STAGING_BROWSER_REVOCATION_EXPIRY_UNPROVED');
   });
-  report.revoked_old_session=await rejectedContext(page,'/app/c/'+slugA+'/profile',[...canaries,...privateCredentials]);
-  await routeReadback(minor,'/app/c/'+slugB+'/teams',[canaries[0],canaries[1],fixture.tenantA,fixture.teamA,'pwa-minor-contact-canary@example.test',...privateCredentials]);
-  need((await minor.locator('body').innerText()).includes('QA minor team B'),'STAGING_BROWSER_OTHER_SESSION_POSITIVE_FAILED');
+  phase('revoked_session','navigation','profile');
+  report.revoked_old_session=await browserRejectedContext(page,'/app/c/'+slugA+'/profile',[...canaries,...privateCredentials],routeStage);
+  phase('other_session','navigation','teams');
+  await browserRouteReadback(minor,'/app/c/'+slugB+'/teams',[canaries[0],canaries[1],fixture.tenantA,fixture.teamA,'pwa-minor-contact-canary@example.test',...privateCredentials],routeStage);
+  phase('other_session','positive_content','teams');
+  need((await minor.locator('body').innerText({timeout:15000})).includes('QA minor team B'),'STAGING_BROWSER_OTHER_SESSION_POSITIVE_FAILED');
   report.other_native_session_still_active=true;
+  phase('active_release_after');
   need(await activeStagingRelease(context.source_sha),'STAGING_BROWSER_ACTIVE_RELEASE_CHANGED');
   report.active_source_before_and_after=true;report.native_provider_sessions=true;
   report.passed=true;
  }catch(error){
+  report.failure=browserFailureDiagnostic(error,position);
   primary=/^[A-Z][A-Z0-9_]{1,79}$/.test(error?.code??'')?error.code:'STAGING_BROWSER_READBACK_UNAVAILABLE';
   if(error?.code==='STAGING_NATIVE_QA_PROVIDER_CLEANUP_REQUIRED')try{report.provider=await retryStagingNativeQaProviderCleanup(error);}
-  catch{primary='STAGING_BROWSER_PROVIDER_CLEANUP_UNPROVED';}
+  catch(cleanupError){cleanupFailure(cleanupError,'provider_cleanup');primary='STAGING_BROWSER_PROVIDER_CLEANUP_UNPROVED';}
  }finally{
-  for(const context of contexts)try{await context.clearCookies();await context.close();}catch{primary='STAGING_BROWSER_CONTEXT_CLEANUP_UNPROVED';}
-  if(browser)try{await browser.close();}catch{primary='STAGING_BROWSER_CONTEXT_CLEANUP_UNPROVED';}
+  for(const context of contexts)try{await context.clearCookies();await context.close();}catch(error){cleanupFailure(error,'context_close');primary='STAGING_BROWSER_CONTEXT_CLEANUP_UNPROVED';}
+  if(browser)try{await browser.close();}catch(error){cleanupFailure(error,'browser_close');primary='STAGING_BROWSER_CONTEXT_CLEANUP_UNPROVED';}
   if(fixtureAttempted&&records)try{report.teardown=await owner.teardown();}
   catch{
    try{await owner?.close();owner=await NativeQaSession.connect(environment);report.teardown=await owner.teardown(records);}
-   catch{primary='STAGING_BROWSER_SCOPE_CLEANUP_UNPROVED';}
+   catch(error){cleanupFailure(error,'fixture_teardown');primary='STAGING_BROWSER_SCOPE_CLEANUP_UNPROVED';}
   }
   if(provider)try{
    report.provider=await provider.cleanup();
    need(report.provider.cleanup_complete===true&&report.provider.created_users===2&&report.provider.soft_deleted_users===2
     &&report.provider.globally_revoked_sessions===2,'STAGING_BROWSER_PROVIDER_CLEANUP_UNPROVED');
-  }catch{primary='STAGING_BROWSER_PROVIDER_CLEANUP_UNPROVED';}
-  if(owner)try{await owner.close();closed=true;}catch{primary='STAGING_BROWSER_CONNECTION_CLOSE_UNPROVED';}
+  }catch(error){cleanupFailure(error,'provider_cleanup');primary='STAGING_BROWSER_PROVIDER_CLEANUP_UNPROVED';}
+  if(owner)try{await owner.close();closed=true;}catch(error){cleanupFailure(error,'connection_close');primary='STAGING_BROWSER_CONNECTION_CLOSE_UNPROVED';}
   if(report.passed)try{
    const t=report.teardown;
    need(t?.scope==='STAGING_NATIVE_QA_TEARDOWN_V1'&&['archived','already_archived'].includes(t.status)&&t.qa_scopes_archived===2
     &&t.active_qa_memberships===0&&t.active_qa_grants===0&&t.retained_answer_revisions===3&&t.retained_bookings===0
     &&t.retained_ledger_entries===0&&t.teardown_audits===1&&t.histories_preserved===true,'STAGING_BROWSER_SCOPE_CLEANUP_UNPROVED');
-  }catch{primary='STAGING_BROWSER_SCOPE_CLEANUP_UNPROVED';}
+  }catch(error){cleanupFailure(error,'fixture_teardown');primary='STAGING_BROWSER_SCOPE_CLEANUP_UNPROVED';}
  }
  return {...report,passed:report.passed&&!primary,returned_session_closed:closed,...(primary?{error:primary}:{}),...LIMITS};
 }

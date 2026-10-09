@@ -1,0 +1,39 @@
+ok 1 - ciphertext table forces RLS
+ok 2 - native manager uses scoped RPC, not raw credential table
+ok 3 - no service credential lookup bypass
+ok 4 - anonymous connection access denied
+ok 5 - service role cannot configure for an actor
+ok 6 - validators are private
+
+ok 7 - member cannot read manager configuration
+ok 8 - member cannot save ciphertext configuration
+
+ok 9 - tested API actor is authenticated and not a superuser
+ok 10 - manager fixture uses a confirmed user and an actual active native session
+ok 11 - new club has no global or fixed ClientID
+ok 12 - malformed envelope rejected without mutation
+ok 13 - native manager saves own encrypted setting
+ok 14 - first setting version is one
+ok 15 - configuration does not claim a connected import
+ok 16 - same semantic ClientID retry ignores new encryption nonce
+ok 17 - same key cannot replace with another semantic credential
+ok 18 - stale update cannot overwrite the existing setting
+ok 19 - credential read is bound to its current configuration version
+ok 20 - own native manager retrieves only an encrypted envelope
+ok 21 - club A manager cannot access club B setting
+ok 22 - saving a ClientID cannot activate the import kernel
+ok 23 - read test cannot assert member import capabilities
+ok 24 - bounded test receipt recorded; fake signature is independently rejected by the server readmodel
+ok 25 - even read receipt cannot activate imports
+ok 26 - read receipt cannot manufacture last successful import
+ok 27 - timeout retry creates one connection
+ok 28 - one configuration and one bounded test audit
+ok 29 - canonical domain events committed exactly once
+ok 30 - no credential or fingerprint audit/export
+ok 31 - connectivity test imports no real data
+ok 32 - expired native session cannot view settings
+ok 33 - completed key replay does not restore expired session authority
+ok 34 - revoked manager cannot retrieve encrypted credentials
+ok 35 - completed key replay does not restore revoked mandate
+ok 36 - all negative probes preserve the confirmed connection version
+1..36

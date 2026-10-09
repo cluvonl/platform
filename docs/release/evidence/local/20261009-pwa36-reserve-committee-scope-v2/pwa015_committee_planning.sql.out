@@ -1,0 +1,38 @@
+ok 1 - planning RPC stays stable invoker with an empty search path
+ok 2 - authenticated may execute the scoped planning read
+ok 3 - anonymous role has no planning read authority
+ok 4 - server key has no planning read authority
+
+ok 5 - native coordinator reads only two own published tasks and the own future draft
+ok 6 - draft title is its exact native source
+ok 7 - reading does not publish a draft
+ok 8 - draft exposes its two actual physical places
+ok 9 - draft location is its exact native source
+ok 10 - read exposes the canonical planning value without awarding it
+ok 11 - cancelled completed and past drafts are absent from upcoming planning
+ok 12 - another committee is denied for both draft and published planning
+ok 13 - explicit next preparing season reads only its real future draft
+ok 14 - the next season never falls back to the current season
+ok 15 - foreign-tenant season does not widen planning
+ok 16 - coordinator cannot select another tenant
+ok 17 - unknown season yields no arbitrary context
+ok 18 - missing selected season yields no planning
+ok 19 - missing tenant yields no planning
+ok 20 - internal draft remains absent from the existing public market
+
+ok 21 - ordinary household member cannot read committee draft or planner metadata
+ok 22 - native RLS independently denies the same draft parent to the member
+ok 23 - member public market remains available
+
+ok 24 - other tenant coordinator reads only its own native draft
+ok 25 - other tenant coordinator cannot read the first tenant
+ok 26 - positive and negative GETs preserve every app row audit event history and ledger
+ok 27 - planning reads do not award or correct confirmed minutes
+
+ok 28 - revoked actual committee grant immediately denies both draft and published planning
+ok 29 - denied revoked-grant GET leaves all app rows unchanged
+
+ok 30 - expired actual native session cannot read still-authorized planning
+
+ok 31 - blocked native tenant membership cannot read current committee planning
+1..31

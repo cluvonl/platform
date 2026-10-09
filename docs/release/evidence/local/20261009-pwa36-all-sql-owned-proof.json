@@ -1,0 +1,489 @@
+{
+  "scope": "LOCAL_OWNED_FRESH36_ALL_SQL_AND_STATIC_DATABASE_LINT",
+  "started_at": "2026-10-09T13:04:40.493Z",
+  "result": "PASS",
+  "source_parent_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+  "source_worktree_candidate": true,
+  "application_staging_verified": false,
+  "physical_device_verified": false,
+  "complete_pwa_acceptance": false,
+  "source_migration_count": 36,
+  "actual_native_provider_auth": false,
+  "auth_fixture_kind": "Minimal compatible synthetic auth.users/auth.sessions/auth.uid inside a new owned PostgreSQL; actual hosted/local Auth provider is not invoked.",
+  "external_provider_calls": 0,
+  "shared_database_mutations": 0,
+  "hosted_database_mutations": 0,
+  "production_enabled": false,
+  "prior_shared_fixture_collision_attempt": {
+    "scope": "Previously seeded shared local database; root-reported separate CLI attempt",
+    "command": "npx supabase test db --local",
+    "fixture_users_primary_key_collision_count": 25,
+    "reported_executed_assertions": 430,
+    "full_suite_passed": false,
+    "data_reset_performed": false,
+    "proof_of_current_all_suites": false
+  },
+  "source_hashes": {
+    "20261002163042_cluvo_wp1_wp2_core.sql": "7e4efdaa139d2fe3120c43c0e7fcfe966438f154c08358734b6c555968acd32e",
+    "20261002165306_wp3_wp5_obligations_execution.sql": "1dd88883e99acd63cbea6f33c47b1c39008a6832904f1da6150374fbe1474eb7",
+    "20261002165327_wp6_wp8_collaboration_communication_policy.sql": "9707da512d46b23d8472bf222981242f8020ac3612709f536136876674b50702",
+    "20261002170949_wp1_onboarding_storage.sql": "6de61a4843cd9a3d77fccb6c0be0591c178b516518e4bb7ce9c2ae1cec3d4c03",
+    "20261002171135_wp9_wp11_finance_people_seasons.sql": "bdff3e58102376de4195840cc7cd3a02a59c7648cc19403c306ae72e96605719",
+    "20261002183000_vertical_read_models.sql": "bf50215a774296882cb5aa8067b43bb2c853bbb991968859b8ceece58d197eaf",
+    "20261002184500_assisted_member_actions.sql": "c7d74823e3be555b7115b1eab4e4180cdb48c7668680fa3a0a6b0e8420629bab",
+    "20261006180000_account_help_preferences.sql": "f6b7d1db5f420b5e5daeaf142326289dd1fb6918123c001386956f512f7755ff",
+    "20261006193000_complete_personal_intake.sql": "488d4722f830a0a2a2d35ff89a483bcd6f5e40ed3aa255d367d4346aaad22ad9",
+    "20261006210000_household_dossier_projection.sql": "0f1b29d8bbde85300f704270bc5ead062344bffe01f5688b67daa085099450a2",
+    "20261006223000_versioned_household_invitation_commands.sql": "99b456fda630c15eca25f197d971edcf8134a5181deb114c398dde852b6b62fe",
+    "20261006230000_household_invitation_cancellation.sql": "6d3738db24d2a02576fa6fa4a9273390d04872565edd66d662024df230425a1c",
+    "20261006233000_contract_household_invitation_bootstrap.sql": "1731ab3cec4921ad31e6f30a90ee21d8dc6101fa205285a51c5b65bc52e2c3f2",
+    "20261006234500_personal_intake_reconfirmation.sql": "e4f95b65789485e86131d21c0c085a83c8fc5b4195f36b4f81e24b9c6c171625",
+    "20261007010000_native_session_authority.sql": "9c165f68f413be04aa958358ec088c422dd21fea92b66e9ba84e04378817607a",
+    "20261007013000_intake_assistance_management.sql": "1512b7cbfd1fd63065fa09ad17aba0a2c71aaba1c875326f11e089175a5979c3",
+    "20261009100000_pwa_domain.sql": "18cc63b457fddea3f003bceb4d31f310291692e70485e6aa013e4091a8d47d41",
+    "20261009101000_pwa_commands.sql": "dbf600e3aabc225e5031ca83c24031c27c287cec47cce0b0f64bf81eb6e00f97",
+    "20261009102000_pwa_snapshot.sql": "969346799a4e591b7f85f8bacc4a877c1ea42dd628c3e041cf9b976f79e19ef0",
+    "20261009103000_pwa_delivery_and_receipts.sql": "73714397962f5ca54b5a94d1b6cc901ed744b8f8bcccd87fc32cd12673fbfe6f",
+    "20261009104000_pwa_buddy_integrity.sql": "c2e1bfdccf311f50bd9e0ff1686ce2301d1c65ff29b02cd78512666f0ec5305c",
+    "20261009105000_pwa_automation.sql": "7e20fdaee644e5a2f0b037f0d34001a773cf47b6b23a0294f23fddad45e5dbef",
+    "20261009106000_pwa_provider_receipts.sql": "5e6923e41dfd6d5da1ab12380f1be31b25e466eba02b685f7361b11e1ffe9eed",
+    "20261009107000_pwa_compatibility_and_cluster_scope.sql": "d60b59920adac4c45a3ec336a6a0cb27e31abb3c8aa69e0ddf5b47ed729e4486",
+    "20261009108000_pwa_repeatable_command_events.sql": "7ad42704ec974bd670deb70c14dcd13a2079f1b0d9fd6a416e0d4dcdf3859ef2",
+    "20261009109000_pwa_digest_dispatch_day.sql": "881aaf6a7ff6ed1e22604d810c1194fc140c4dfb79240e869b25feb3a9be4210",
+    "20261009110000_pwa_card_version_gate.sql": "7d237cb0e27bf8d4f27e649143a77e39dc29977279fc7bc6db6e506da52ff4cc",
+    "20261009111000_pwa_handover_checklist_integrity.sql": "2d10644befebd17fb8893d4e1363a6a4f61588bd55ac3ab45a7653d6489e3307",
+    "20261009112000_pwa_task_offer_category_seed.sql": "1e2bb5b181e7e0d4279c8270b12bfee8743cb7dcaaa0e4267256eaf689c59c17",
+    "20261009113000_pwa_nested_version_integrity.sql": "60eedfed603a1450d42524dc070e8fa4661c1bb323d55e660faef52845b98f19",
+    "20261009114000_pwa_policy_assignment_identity.sql": "afbe3c6218e2d81dae30107ec0f854f5fe0bdd87ae700da98f2b5d3165f4ad10",
+    "20261009115000_pwa_personal_action_context.sql": "10dfcebb3e8f61623586f41123e8967815e743745f991f68f84bcfd686e3a195",
+    "20261009116000_pwa_committee_planning.sql": "2bca259cd9041307c7daab5bf4e950fc0ddad72109aa180631634ce290b3e311",
+    "20261009117000_pwa_invitation_authority_fence.sql": "943eb1502da863da7d51bcd390bb58a5815896ab67a76db074638dad361d95b3",
+    "20261009118000_pwa_sportlink_connection.sql": "b4cd0ed6b44fd2bac7d22bee84a3b15f5817c6122c132a42066c49f374277b87",
+    "20261009119000_pwa_reserve_committee_scope.sql": "f7d9f77df7cde15bc23bb6408cab6f56a79031e0ee13198b2a9bf3d397f6801c"
+  },
+  "suites": [
+    {
+      "file": "001_wp1_wp2_core.sql",
+      "source_sha256": "995f56705442bc5ccd3af06483be004774da74f9d71ee813a9eef598e41d7243",
+      "assertions": 32,
+      "passed_assertions": 32,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "002_wp1_onboarding.sql",
+      "source_sha256": "30ee945d39e933f9cc6ad4cd14d7e2cc57226d48d12c5477c108f62c8afe67ea",
+      "assertions": 56,
+      "passed_assertions": 56,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "003_wp3_wp5_obligations_execution.sql",
+      "source_sha256": "d5431538c80e0faf8eb8cf4e4b6a0a3fe096458940fa0971b974a8d2b701a99f",
+      "assertions": 74,
+      "passed_assertions": 74,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "004_wp6_wp8_domain_invariants.sql",
+      "source_sha256": "17b4664a4b94bb5a7bdba659fdfb4cdb0736a6307cbd5ced585a3fd7efbd6962",
+      "assertions": 113,
+      "passed_assertions": 113,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "005_wp6_wp8_rls.sql",
+      "source_sha256": "9446b98468eb3e128a5f2b767b0969da6d9e76c2bb94c5a54e4b1e778afa5671",
+      "assertions": 30,
+      "passed_assertions": 30,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "006_vertical_read_models.sql",
+      "source_sha256": "f6678b92a6a90bedcb9f38a0f16f3aa6558f5a77203f9944c21c5aed4f91de5a",
+      "assertions": 11,
+      "passed_assertions": 11,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "007_wp9_wp11_finance_people_seasons.sql",
+      "source_sha256": "13e01659d59d927f6361d95ffd9dad10e764ff9d0bbaff270ddaaeff6b855b5b",
+      "assertions": 81,
+      "passed_assertions": 81,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "008_a29_assisted_member_actions.sql",
+      "source_sha256": "18236cdcebcae0ac09ea85a59a30e50c5c515b28ac78a8e97d1d3631e92c2ac5",
+      "assertions": 38,
+      "passed_assertions": 38,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "009_account_help_preferences.sql",
+      "source_sha256": "2514f42791eb134615e91900ed4fddc6f70bd84e5867cc5806065d4114bb5db6",
+      "assertions": 30,
+      "passed_assertions": 30,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "010_household_season_projection.sql",
+      "source_sha256": "620516e37cbd3706450e7efd9744c8206fdf2da9fe283154299ebb9eabc9c894",
+      "assertions": 11,
+      "passed_assertions": 11,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "011_complete_personal_intake.sql",
+      "source_sha256": "c114eb10f9dadc799fa659b3cac1171bf7a96db7119c0114f0518229722d4899",
+      "assertions": 65,
+      "passed_assertions": 65,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "012_household_dossier.sql",
+      "source_sha256": "8989800f981bc2902539beb0b05e532b82704916975e8cfab98d0cc014843984",
+      "assertions": 35,
+      "passed_assertions": 35,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "013_versioned_household_invitations.sql",
+      "source_sha256": "adb853bf302bca3ea63119be54cb603d66959cde29c797137d5fd2389f035f4d",
+      "assertions": 52,
+      "passed_assertions": 52,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "014_household_invitation_cancellation.sql",
+      "source_sha256": "baf88c463157934fd616ef1f0c980d2ddb41a1eb29d166b462a6941526379dc8",
+      "assertions": 44,
+      "passed_assertions": 44,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "015_invitation_api_contract.sql",
+      "source_sha256": "a5349f8b3d80802cadb5fd66e67885956a587a443edf7ce819418108a07afca4",
+      "assertions": 42,
+      "passed_assertions": 42,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "016_intake_reconfirmation.sql",
+      "source_sha256": "c96ef34475d6041809cd04b28324e85412c96c59bf0a060ce7841703f8da072a",
+      "assertions": 55,
+      "passed_assertions": 55,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "017_native_session_authority.sql",
+      "source_sha256": "add8462b431573c2113d4d58396741ae0a554443ac519b48650049ae6b28a7ea",
+      "assertions": 42,
+      "passed_assertions": 42,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "018_intake_assistance_management.sql",
+      "source_sha256": "871ce77869350f5cad4969581302b69cd4b3779d5166dfb37b5cf75b630e9602",
+      "assertions": 46,
+      "passed_assertions": 46,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "pwa001_domain_and_privacy.sql",
+      "source_sha256": "9d62e31e7fe1ec74b9ba42bac749f147fcad047b0d4e055949a758933b01d332",
+      "assertions": 33,
+      "passed_assertions": 33,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "pwa002_coordination_and_history.sql",
+      "source_sha256": "643395b4a842bb1d005a170179ea0b20a27285a05fa5e34baf32bc199e5f2164",
+      "assertions": 29,
+      "passed_assertions": 29,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "pwa003_tally_delivery_and_cursor.sql",
+      "source_sha256": "e84aced24ddd78d65fda5936d4db1013cfb5396156f1b9018a941c04f14e577d",
+      "assertions": 26,
+      "passed_assertions": 26,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "pwa004_documents_and_receiving.sql",
+      "source_sha256": "19dcafc01da0d32195146aa5276df8d5ff07c707298d2fa57540da807524ce0a",
+      "assertions": 18,
+      "passed_assertions": 18,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "pwa005_buddy_and_onboarding.sql",
+      "source_sha256": "fd820ed200502d41c7df4ce93183a45c1adbdf0473c28626b13f887691c976b2",
+      "assertions": 56,
+      "passed_assertions": 56,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "pwa006_compatibility_and_cluster_scope.sql",
+      "source_sha256": "e0fc975ca9526368f6b4ac628ad38cfcd00816cb858e2cd896e8c58bcee3d166",
+      "assertions": 45,
+      "passed_assertions": 45,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "pwa007_repeatable_commands.sql",
+      "source_sha256": "d0d14bdd1b6ebc276d96bdd4beac543d95d96a35f86a5689fe779fb104fce647",
+      "assertions": 41,
+      "passed_assertions": 41,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "pwa008_digest_dispatch_day.sql",
+      "source_sha256": "2507357448b8108b53ba8adafe1e3e79b315e21312d89c283746f8b5e4e6d506",
+      "assertions": 28,
+      "passed_assertions": 28,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "pwa009_card_version_gate.sql",
+      "source_sha256": "eaa9cdffae74afef0cbf023e26c245c0595c47d0ca1744aa0b3e2e1a331ad3fe",
+      "assertions": 34,
+      "passed_assertions": 34,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "pwa010_handover_checklist_integrity.sql",
+      "source_sha256": "8c386daf9b36fb9ed1361b4eb529db5c66b0b4a8a45e02f2c3acf51a236d54cd",
+      "assertions": 36,
+      "passed_assertions": 36,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "pwa011_task_offer_category_seed.sql",
+      "source_sha256": "2c90363f0ab8e3ba258764788c53e52e159c09aa90dba971137f599561f31fd0",
+      "assertions": 26,
+      "passed_assertions": 26,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "pwa012_nested_version_integrity.sql",
+      "source_sha256": "f7664b86f44ff92d496bf3edb02fe8d73772392cc85126c340e9d5f84f204f8f",
+      "assertions": 74,
+      "passed_assertions": 74,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "pwa013_policy_assignment_identity.sql",
+      "source_sha256": "5e14faf522d13a4a749e38885743787ca52578e33f980277a1198c3869fecabc",
+      "assertions": 134,
+      "passed_assertions": 134,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "pwa014_personal_action_context.sql",
+      "source_sha256": "f77bdf79ab40b79f857e9b995d2519ffe34667787e12d1620c45e6e8354a2399",
+      "assertions": 41,
+      "passed_assertions": 41,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "pwa015_committee_planning.sql",
+      "source_sha256": "46faf6fb5a0ebba165012c25f4311f7262a0e0176690ed33f3aeba8ba0da472b",
+      "assertions": 31,
+      "passed_assertions": 31,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "pwa016_sportlink_connection.sql",
+      "source_sha256": "0384b7b232b36598416a6ec9c62375f67180a0012462a48bf184d2b52c2a1777",
+      "assertions": 36,
+      "passed_assertions": 36,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    },
+    {
+      "file": "pwa017_reserve_committee_scope.sql",
+      "source_sha256": "94a9597ad3519565ccde31f236be6ec8bae76904d2ef61e3453fcd902d98f4a9",
+      "assertions": 67,
+      "passed_assertions": 67,
+      "result": "PASS",
+      "plan_complete": true,
+      "skipped_assertions": 0,
+      "all_app_and_auth_rows_rolled_back": true
+    }
+  ],
+  "db_lint": {
+    "schemas": [
+      "app",
+      "api",
+      "internal"
+    ],
+    "actual_installed_cli_query_executed": true,
+    "cli_version": "2.119.0",
+    "analyzed_functions": 118,
+    "installed_cli_issues": 0,
+    "strict_function_tb_issues": 0,
+    "result": "PASS",
+    "trigger_returntype_2279_excluded": true,
+    "query_sha256": "04b27527649b29ff4e29b4d28804026460ae8028856a42d45192e9a119444849"
+  },
+  "owned_runtime": {
+    "container_name": "cluvo-pwa-all-sql-test-13b0bd972175a8be4e695842",
+    "image": "public.ecr.aws/supabase/postgres@sha256:0450166354dc9c1d25f0322ac8b580774d4fb0184d2b087f6e4fe9499c66cf53",
+    "image_id": "sha256:0450166354dc9c1d25f0322ac8b580774d4fb0184d2b087f6e4fe9499c66cf53",
+    "network": "none",
+    "published_ports": 0,
+    "bind_mounts": 0,
+    "database_storage": "owned /restore tmpfs 512m",
+    "user": "postgres",
+    "log_driver": "none",
+    "startup_sha256": "2b727da55311b553c157ee93c82a829210e4d62ca600fda3ef50812d19fc4cc3",
+    "bootstrap_role": "supabase_admin",
+    "role_override": "Explicit fixture role switches in canonical tests; no client demo role."
+  },
+  "owned_cleanup_verified": true,
+  "earlier_owned_helper_attempt": {
+    "result": "HARNESS_GUARD_REJECTED_VALID_PACKED_ROLLBACK",
+    "canonical_suites_passed_before_guard": 27,
+    "app_and_auth_rows_rolled_back": true,
+    "owned_cleanup_verified": true,
+    "failure_code": "SUITE_TRANSACTION_ROLLBACK_REQUIRED_pwa010_handover_checklist_integrity.sql",
+    "product_or_sql_source_changed": false
+  },
+  "limits": "Fresh immutable SQL source install plus every canonical rolled-back pgTAP SQL suite and actual static function analysis only. No migration-lineage/approved-history envelope, external Auth provider, real Sportlink data, physical device, complete browser flow or staging deployment is claimed.",
+  "installed_cli_lint_query_sha256": "04b27527649b29ff4e29b4d28804026460ae8028856a42d45192e9a119444849",
+  "installed_cli_version": "2.119.0",
+  "owned_roles": {
+    "anon": {
+      "bypassrls": false,
+      "superuser": false
+    },
+    "postgres": {
+      "bypassrls": true,
+      "superuser": false
+    },
+    "service_role": {
+      "bypassrls": true,
+      "superuser": false
+    },
+    "authenticated": {
+      "bypassrls": false,
+      "superuser": false
+    }
+  },
+  "baseline_readback": {
+    "app_tables": 181,
+    "synthetic_auth_tables": 2,
+    "all_tables_fingerprint_sha256": "9ff4605edfb728aa5db8344984b83f8071e66d5fb7f8574d2529ef8d111fefa5",
+    "auth_users": 0,
+    "auth_sessions": 0
+  },
+  "all_sql_suites": 35,
+  "all_sql_assertions": 1612,
+  "pwa_sql_suites": 17,
+  "pwa_sql_assertions": 755,
+  "final_readback_matches_baseline": true,
+  "finished_at": "2026-10-09T13:05:16.825Z",
+  "helper_sha256": "88259a4c3de58f216ba53a7d87e94c6ca6e03f0592e785fd33f5771f67eccd26"
+}

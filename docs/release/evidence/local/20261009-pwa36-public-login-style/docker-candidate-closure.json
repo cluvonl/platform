@@ -1,0 +1,177 @@
+{
+  "scope": "CANDIDATE36_DOCKER_STANDALONE_AUTH_STYLE_CLOSURE",
+  "observed_at": "2026-10-09T13:37:45.161738+00:00",
+  "passed": true,
+  "git_base": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+  "worktree_candidate_schema_count": 36,
+  "image_id": "sha256:225ff75365e40b467f50fdca5239e252a572fc7e0e769787adbd7bbd260bf0c1",
+  "runtime_metadata": {
+    "build_id": "_bMuB-gzlr2TL_3jW8Mht",
+    "node": "v24.21.0",
+    "next": "16.3.8",
+    "uid": 1000,
+    "cwd": "/workspace"
+  },
+  "candidate_changed_source_files_sha256": {
+    ".dockerignore": "8c1afc94b6c035dde4145ec979346e2b89b1f255f2d03d8ecc0e6bb3fad126a3",
+    ".github/workflows/staging-pwa-configure-app.yml": "4ff6f6d79d4808f5b0aacbbe2671a6361679711bc4531ac29d033ae2cfdb954a",
+    "Dockerfile": "f544f549bbee16d254e21be23a46f1fd4adeaffd715cb4610ed8fc87a17dbf8e",
+    "app/globals.css": "a17773e5266a5ca426c60405499e122488783a15321ecd06aa000c133140dc55",
+    "app/layout.tsx": "50995a0d8785ea83161a5d63f358a2d8b7adf0d756629414f0882003c9ef8f12",
+    "components/auth/auth-shell.tsx": "3fe996232b7368c32d61db179bd1f8a47316371e3516e08c4fd1fe01d73e7777",
+    "components/auth/otp-forms.tsx": "68f0f71bf4415151c3347e5d59a8287e4a5cfa4fda6e4a678599e846f849d415",
+    "components/mobile/club.tsx": "a810fe4066b6b9ab3559ab3044c8592ce028cf399a359c966b08496f19a4646d",
+    "components/mobile/committee-followup.tsx": "e9a130163e3856f9c95f59f2330de8023ba2ca1163166e7f965cb1094528fad9",
+    "components/mobile/types.ts": "a9cbbbecb62e97dcc9d0a993a8571696d9f0557f75aa71fe3e4fc2726272dfc1",
+    "components/pwa/pwa-controls.tsx": "d366c98d338a8f4332010b5f10f8265bfa8a44ec944776e4dab3dada4d1add9e",
+    "lib/pwa/server.ts": "f835587812df507ffadfc90e51329f278d88656180263811f9ab6e106509d1a6",
+    "next.config.ts": "d588edcf0a375d7ae7ccb42c97097954622431bcde92d613eed41fc01b92e04d",
+    "package-lock.json": "6dcc4cadfb96a9fdc0539a5899619526beb13a66f454a37390366b3678f35dc0",
+    "package.json": "97762ed69364da17f9c3282e5ab5821f5bfb6fce7c4dbb17fa27baed93ba6445",
+    "scripts/public-auth-style-smoke.mjs": "79a1d1cc10885921bb1c20707d9fa6d687a563805039d4f08cb284ccba6155a3",
+    "scripts/staging-pwa-browser-readback.mjs": "39f5c7cb60a1bcb2765b8e94f84730d0fda3c3851dda7213a1d284f487817500",
+    "scripts/staging-pwa-native-qa-session.mjs": "741f8ded76ac4785e80cf60512604322eab9b134ac971ecade965b3af34eb3a6",
+    "scripts/staging-pwa-runtime-preflight.mjs": "20cf4b61c8800cae78e06e4d2aac8fb49b929d7914308f18b019934ba3677694",
+    "scripts/staging-pwa-upgrade-files.mjs": "a9b3b5c74dc7a9f8d495de2b8a8e9e3fc073052e6de726f9b462b7985a6c1b12",
+    "scripts/staging-pwa-upgrade-migrations.mjs": "d931ae1ca408e755b244cf1232fa5e5fd4cbdc0f21a709fbe4ffdd4df2b878ee",
+    "scripts/staging-pwa-upgrade-session.mjs": "39508574455a449269dd210ea7ca76f0c024565b6dc957c404b88934a9cacb6c",
+    "scripts/staging-sportlink-setup-session.mjs": "5595de15165c3a7f24a79260c2f8c356640ce980b10362d556f1d8938b711c7a",
+    "scripts/staging-sportlink-setup-sql.mjs": "8ecc42564ebb6b5b38a424b90901d248443bae030ffb06496be526e5c38723d5",
+    "scripts/staging-sportlink-setup.mjs": "3634526695803972c6a96e895b99f947d810e336901d0f72ffcd646119ed16b6",
+    "scripts/staging_pwa_native_qa_session.py": "61d353adf00b67e358ccffa1cc9d6cdeeacf395201be33c9f33883cb7c40cdb0",
+    "scripts/staging_pwa_upgrade_session.py": "7f19aa305cb43745df2f063736dbe65738526922bcd07f967986acbe3b0ed33d",
+    "scripts/staging_sportlink_setup_session.py": "18b4ff9a3c5fee9f357042546ed3476bc5b98ab620c8d45fc9a985e48494f32d",
+    "scripts/wp0-smoke.mjs": "43df5131d2c9451cd24349904c9c2623f95a8a596e70ca795201e28e5da33a12",
+    "supabase/migrations/20261009119000_pwa_reserve_committee_scope.sql": "f7d9f77df7cde15bc23bb6408cab6f56a79031e0ee13198b2a9bf3d397f6801c",
+    "supabase/tests/pwa017_reserve_committee_scope.sql": "94a9597ad3519565ccde31f236be6ec8bae76904d2ef61e3453fcd902d98f4a9",
+    "tests/helpers/pwa-closed31-upgrade.mjs": "c6d65067cb02f869caf97af4f9d4ea133adf42f47a1c8cdfd3aebf12869142ff",
+    "tests/helpers/pwa-owned-native-qa.mjs": "d8bbcf48df9b1e3c4a032fae9a3823e8072bf3af4d615cf22d1f3a14de9b9cc6",
+    "tests/helpers/pwa-owned-sportlink-authority.mjs": "682d5cb0adb5fd0bbaa5b20f241d4fa9ad5bcc1ce4b68987327a3601dcea5654",
+    "tests/public-auth-style-smoke.test.mjs": "f9bbd51ce20bd13d3cefa09c145e821c728971c48f27a1fc62f15ed3b950d15f",
+    "tests/pwa-check-ast-owned.test.mjs": "9416647322194e412608f4cf6fdf1f6fa47dd7fa4a22fad65e611f6dc1b06167",
+    "tests/staging-pwa-browser-readback.test.mjs": "575fc0f79db4af59b90149058efe31eec0f2c7b72521a3c14799653e3678d66a",
+    "tests/staging-pwa-release-workflow.test.mjs": "e73627402c5a5487a0b8bc0f64136a5c9c819d10538678cdfba9a22052dd9249",
+    "tests/staging-pwa-runtime-preflight.test.mjs": "28dcb4484bdbfaa6301d0541d4d5197f31f72655ecf6bd112a3993668fc07647",
+    "tests/staging-pwa-upgrade-migrations.test.mjs": "1cb2f284bdf81a2ebbdca58dffc388ab2d2558d156d0c816a2f575b5be9c5a45",
+    "tests/staging-pwa-upgrade-native.test.mjs": "762513933929b73a3d9cefc86a40b04edf035eda3588d4b0e4926e92d761f313",
+    "tests/staging-sportlink-auth-provider-owned.test.mjs": "5ed08a2c571819bb4a5d885e3802479718dacb4810630e976521f77a79d3b09f",
+    "tests/staging-sportlink-setup-owned.test.mjs": "63b40c595952e46c0fddb51f250bfca44a4b9e96213c47b949822b8059c919c3"
+  },
+  "docker_build_exit_code": 0,
+  "docker_build_log_sha256": "e1ae8a69fbc5c530e341fa0a2051953333e3d48e11145bfb8a0e3acede9a307f",
+  "build_typecheck_passed": true,
+  "build_default_tests": {
+    "total": 829,
+    "passed": 789,
+    "failed": 0,
+    "skipped_opt_in_native": 40
+  },
+  "fresh_next_build_passed": true,
+  "runner_wp0_smoke_passed": true,
+  "runner_gate_network": "none",
+  "runner_gate_uid": "node",
+  "runner_gate_actual_public_auth": {
+    "scope": "PUBLIC_AUTH_SSR_LINKED_STYLE_SMOKE_V1",
+    "passed": true,
+    "routes": [
+      {
+        "path": "/login",
+        "passed": true,
+        "stylesheets": [
+          "/_next/static/css/8dddb2beece50728.css"
+        ],
+        "status": 200,
+        "html_sha256": "976b62344d531f489b66f6f7d27a9212e1e887d7ec19fd5ccd97cecaafe5c0d3",
+        "auth_shell": true,
+        "primary_control": true,
+        "style_rules": {
+          "body": true,
+          "auth_screen": true,
+          "auth_card": true,
+          "auth_primary": true
+        }
+      },
+      {
+        "path": "/app/login",
+        "passed": true,
+        "stylesheets": [
+          "/_next/static/css/8dddb2beece50728.css",
+          "/_next/static/css/5351f63f9a741345.css"
+        ],
+        "status": 200,
+        "html_sha256": "9cab15012a0b8a43d79c3747507b903cb97619d45967898c4863cc162739afa1",
+        "auth_shell": true,
+        "primary_control": true,
+        "style_rules": {
+          "body": true,
+          "auth_screen": true,
+          "auth_card": true,
+          "auth_primary": true
+        }
+      },
+      {
+        "path": "/app/auth/verify",
+        "passed": true,
+        "stylesheets": [
+          "/_next/static/css/8dddb2beece50728.css",
+          "/_next/static/css/5351f63f9a741345.css"
+        ],
+        "status": 200,
+        "html_sha256": "c855878877bf34d07cd145a2081e2486bc59ecd4caecda539ff7865d99a3d041",
+        "auth_shell": true,
+        "primary_control": true,
+        "style_rules": {
+          "body": true,
+          "auth_screen": true,
+          "auth_card": true,
+          "auth_primary": true
+        }
+      }
+    ],
+    "stylesheets": [
+      {
+        "path": "/_next/static/css/8dddb2beece50728.css",
+        "passed": true,
+        "status": 200,
+        "content_type_valid": true,
+        "bytes": 190919,
+        "sha256": "86f2adfd9dbb118fce97783d598d9af05038d9adacd5a1df0a505e480faba697"
+      },
+      {
+        "path": "/_next/static/css/5351f63f9a741345.css",
+        "passed": true,
+        "status": 200,
+        "content_type_valid": true,
+        "bytes": 1391,
+        "sha256": "c4fc7fa9be011de32282aa1becc07cb74178a788ed3e0a5310f631576a71a4a3"
+      }
+    ],
+    "authenticated": false,
+    "provider_requests_performed": false,
+    "private_values_exported": false,
+    "production_enabled": false,
+    "v1_ready": false
+  },
+  "prior_local_attempt": {
+    "docker_build_failed_before_compile": "ENOSPC",
+    "post_style_default_unit_attempt_failed_from_disk_exhaustion": true,
+    "own_completed_test_build_copies_and_regenerable_cache_only_removed": true,
+    "final_complete_unit_retry": {
+      "total": 829,
+      "passed": 789,
+      "failed": 0,
+      "skipped": 40
+    },
+    "other_workspace_resources_removed": false
+  },
+  "native_db_mutations": false,
+  "provider_requests": false,
+  "image_published": false,
+  "staging_deployed": false,
+  "physical_acceptance": false,
+  "production_enabled": false,
+  "limits": [
+    "Uncommitted local candidate image, with source hashes; hosted exact-commit publication and staging readback remain separate.",
+    "Credentialless public auth styles only; private native domain evidence is recorded separately."
+  ]
+}

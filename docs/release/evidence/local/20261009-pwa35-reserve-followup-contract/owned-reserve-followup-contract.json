@@ -1,0 +1,213 @@
+{
+  "scope": "LOCAL_OWNED_PG17_F054_F074_NATIVE_BOUNDARIES",
+  "source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+  "observed_at": "2026-10-09T12:18:40.332Z",
+  "passed": true,
+  "migration_count": 35,
+  "migration_manifest_sha256": "b39a9bb9d167e02e5723f0efe68bacc3df1bfeb08a03551c8efe8dcd70171466",
+  "migration_hashes": {
+    "20261002163042_cluvo_wp1_wp2_core.sql": "7e4efdaa139d2fe3120c43c0e7fcfe966438f154c08358734b6c555968acd32e",
+    "20261002165306_wp3_wp5_obligations_execution.sql": "1dd88883e99acd63cbea6f33c47b1c39008a6832904f1da6150374fbe1474eb7",
+    "20261002165327_wp6_wp8_collaboration_communication_policy.sql": "9707da512d46b23d8472bf222981242f8020ac3612709f536136876674b50702",
+    "20261002170949_wp1_onboarding_storage.sql": "6de61a4843cd9a3d77fccb6c0be0591c178b516518e4bb7ce9c2ae1cec3d4c03",
+    "20261002171135_wp9_wp11_finance_people_seasons.sql": "bdff3e58102376de4195840cc7cd3a02a59c7648cc19403c306ae72e96605719",
+    "20261002183000_vertical_read_models.sql": "bf50215a774296882cb5aa8067b43bb2c853bbb991968859b8ceece58d197eaf",
+    "20261002184500_assisted_member_actions.sql": "c7d74823e3be555b7115b1eab4e4180cdb48c7668680fa3a0a6b0e8420629bab",
+    "20261006180000_account_help_preferences.sql": "f6b7d1db5f420b5e5daeaf142326289dd1fb6918123c001386956f512f7755ff",
+    "20261006193000_complete_personal_intake.sql": "488d4722f830a0a2a2d35ff89a483bcd6f5e40ed3aa255d367d4346aaad22ad9",
+    "20261006210000_household_dossier_projection.sql": "0f1b29d8bbde85300f704270bc5ead062344bffe01f5688b67daa085099450a2",
+    "20261006223000_versioned_household_invitation_commands.sql": "99b456fda630c15eca25f197d971edcf8134a5181deb114c398dde852b6b62fe",
+    "20261006230000_household_invitation_cancellation.sql": "6d3738db24d2a02576fa6fa4a9273390d04872565edd66d662024df230425a1c",
+    "20261006233000_contract_household_invitation_bootstrap.sql": "1731ab3cec4921ad31e6f30a90ee21d8dc6101fa205285a51c5b65bc52e2c3f2",
+    "20261006234500_personal_intake_reconfirmation.sql": "e4f95b65789485e86131d21c0c085a83c8fc5b4195f36b4f81e24b9c6c171625",
+    "20261007010000_native_session_authority.sql": "9c165f68f413be04aa958358ec088c422dd21fea92b66e9ba84e04378817607a",
+    "20261007013000_intake_assistance_management.sql": "1512b7cbfd1fd63065fa09ad17aba0a2c71aaba1c875326f11e089175a5979c3",
+    "20261009100000_pwa_domain.sql": "18cc63b457fddea3f003bceb4d31f310291692e70485e6aa013e4091a8d47d41",
+    "20261009101000_pwa_commands.sql": "dbf600e3aabc225e5031ca83c24031c27c287cec47cce0b0f64bf81eb6e00f97",
+    "20261009102000_pwa_snapshot.sql": "969346799a4e591b7f85f8bacc4a877c1ea42dd628c3e041cf9b976f79e19ef0",
+    "20261009103000_pwa_delivery_and_receipts.sql": "73714397962f5ca54b5a94d1b6cc901ed744b8f8bcccd87fc32cd12673fbfe6f",
+    "20261009104000_pwa_buddy_integrity.sql": "c2e1bfdccf311f50bd9e0ff1686ce2301d1c65ff29b02cd78512666f0ec5305c",
+    "20261009105000_pwa_automation.sql": "7e20fdaee644e5a2f0b037f0d34001a773cf47b6b23a0294f23fddad45e5dbef",
+    "20261009106000_pwa_provider_receipts.sql": "5e6923e41dfd6d5da1ab12380f1be31b25e466eba02b685f7361b11e1ffe9eed",
+    "20261009107000_pwa_compatibility_and_cluster_scope.sql": "d60b59920adac4c45a3ec336a6a0cb27e31abb3c8aa69e0ddf5b47ed729e4486",
+    "20261009108000_pwa_repeatable_command_events.sql": "7ad42704ec974bd670deb70c14dcd13a2079f1b0d9fd6a416e0d4dcdf3859ef2",
+    "20261009109000_pwa_digest_dispatch_day.sql": "881aaf6a7ff6ed1e22604d810c1194fc140c4dfb79240e869b25feb3a9be4210",
+    "20261009110000_pwa_card_version_gate.sql": "7d237cb0e27bf8d4f27e649143a77e39dc29977279fc7bc6db6e506da52ff4cc",
+    "20261009111000_pwa_handover_checklist_integrity.sql": "2d10644befebd17fb8893d4e1363a6a4f61588bd55ac3ab45a7653d6489e3307",
+    "20261009112000_pwa_task_offer_category_seed.sql": "1e2bb5b181e7e0d4279c8270b12bfee8743cb7dcaaa0e4267256eaf689c59c17",
+    "20261009113000_pwa_nested_version_integrity.sql": "60eedfed603a1450d42524dc070e8fa4661c1bb323d55e660faef52845b98f19",
+    "20261009114000_pwa_policy_assignment_identity.sql": "afbe3c6218e2d81dae30107ec0f854f5fe0bdd87ae700da98f2b5d3165f4ad10",
+    "20261009115000_pwa_personal_action_context.sql": "10dfcebb3e8f61623586f41123e8967815e743745f991f68f84bcfd686e3a195",
+    "20261009116000_pwa_committee_planning.sql": "2bca259cd9041307c7daab5bf4e950fc0ddad72109aa180631634ce290b3e311",
+    "20261009117000_pwa_invitation_authority_fence.sql": "943eb1502da863da7d51bcd390bb58a5815896ab67a76db074638dad361d95b3",
+    "20261009118000_pwa_sportlink_connection.sql": "b4cd0ed6b44fd2bac7d22bee84a3b15f5817c6122c132a42066c49f374277b87"
+  },
+  "runner_sha256": "d5a971f6802db48abe922235f29807041fb20a5af435fe635eb49bee5c4aebd7",
+  "fixture_source": {
+    "path": "supabase/tests/pwa007_repeatable_commands.sql",
+    "sha256": "d0d14bdd1b6ebc276d96bdd4beac543d95d96a35f86a5689fe779fb104fce647",
+    "scope": "CANONICAL_SYNTHETIC_BASELINE_ONLY_IN_NEW_OWNED_DB"
+  },
+  "network": "none",
+  "ports_exposed": false,
+  "native_SQL_confirmed_auth_and_session_fixtures": true,
+  "native_auth_provider": false,
+  "claimed_signed_provider_JWT": false,
+  "app_tables_checked": 181,
+  "source_or_product_edits": false,
+  "shared_database_connections": 0,
+  "hosted_connections": 0,
+  "provider_calls": 0,
+  "real_emails_sent": 0,
+  "checks": [
+    {
+      "id": "PURE_COMMITTEE_COORDINATOR_READS_EXACT_OWN_PENDING_CLUSTER_NOT_FOREIGN_TENANT",
+      "passed": true,
+      "native_permissions": {
+        "manage_team": false,
+        "manage_shift": true,
+        "review_match": false
+      },
+      "scoped_cluster_count": 1
+    },
+    {
+      "id": "PURE_COORDINATOR_NATIVE_VERSIONED_DEADLINE_UPDATE_AND_READBACK_NO_BOOKING_OR_CREDIT",
+      "passed": true
+    },
+    {
+      "id": "STALE_DEADLINE_UPDATE_PRESERVES_EVERY_APP_ROW",
+      "passed": true,
+      "sqlstate": "40001",
+      "all_app_rows_unchanged": true
+    },
+    {
+      "id": "ORDINARY_PARENT_NO_FOLLOWUP_AUTHORITY",
+      "passed": true,
+      "sqlstate": "42501",
+      "all_app_rows_unchanged": true
+    },
+    {
+      "id": "RESERVE_REQUEST_BEFORE_COMMITTEE_DEADLINE_DENIED",
+      "passed": true,
+      "sqlstate": "55000",
+      "all_app_rows_unchanged": true
+    },
+    {
+      "id": "POST_DEADLINE_PURE_TEAM_PARENT_HAS_RESERVE_CONTROL_PURE_COMMITTEE_ACTORS_DO_NOT",
+      "passed": true,
+      "team_parent_permissions": {
+        "manage_team": true,
+        "manage_shift": false,
+        "review_match": false
+      },
+      "pure_volunteer_permissions": {
+        "manage_team": false,
+        "manage_shift": false,
+        "review_match": false
+      },
+      "pure_coordinator_permissions": {
+        "manage_team": false,
+        "manage_shift": true,
+        "review_match": false
+      },
+      "observed_contract_gap": true
+    },
+    {
+      "id": "PURE_COMMITTEE_COORDINATOR_RESERVE_REQUEST_FORBIDDEN_AFTER_DEADLINE",
+      "passed": true,
+      "sqlstate": "42501",
+      "all_app_rows_unchanged": true
+    },
+    {
+      "id": "PURE_VOLUNTEER_COMMITTEE_RESERVE_REQUEST_FORBIDDEN_AFTER_DEADLINE",
+      "passed": true,
+      "sqlstate": "42501",
+      "all_app_rows_unchanged": true
+    },
+    {
+      "id": "STALE_ALLOCATION_RESERVE_REQUEST_DENIED",
+      "passed": true,
+      "sqlstate": "40001",
+      "all_app_rows_unchanged": true
+    },
+    {
+      "id": "NON_OPTED_IN_OR_OCCUPIED_RESERVE_DENIED",
+      "passed": true,
+      "sqlstate": "42501",
+      "all_app_rows_unchanged": true
+    },
+    {
+      "id": "ACTUAL_POST_DEADLINE_OPTED_IN_ELIGIBLE_REQUEST_DELIVERED_TO_OWN_INBOX_NOT_AUTOMATIC_BOOKING_OR_AUTHORITY",
+      "passed": true,
+      "actor_scope": "PURE_TEAM_PARENT_ONLY",
+      "readback": {
+        "requests": 1,
+        "booking_count": 0,
+        "request_state": "requested",
+        "allocation_state": "assigned",
+        "new_person_grants": 0,
+        "recipient_notifications": 1
+      }
+    },
+    {
+      "id": "SAME_KEY_RESERVE_REQUEST_REPLAY_HAS_NO_SECOND_INBOX_OR_AUDIT",
+      "passed": true
+    },
+    {
+      "id": "FRESH_KEY_REQUEST_STILL_DEDUPLICATES_DURABLE_RESERVE_RECIPIENT_NO_BOOKING",
+      "passed": true
+    },
+    {
+      "id": "SCOPED_COORDINATOR_TEAMPLACE_INSTRUCTION_REVISIONS_RETAIN_OLD_BODY_WITHOUT_RETROACTIVE_CREDIT",
+      "passed": true
+    }
+  ],
+  "schema_history_preserved": {
+    "count": 35,
+    "sha256": "daf1689d9a2f24509af8f0bbf00294d3503be0720f9039bdebceb5f24f34089d"
+  },
+  "canonical_function_definition_sha256": {
+    "internal.pwa_snapshot(uuid,uuid,uuid)": "68e140c900e3b75946414006b7ae086561488fc09f19b3d6ffc9f179abccc73b",
+    "internal.pwa_executor_fits(uuid,uuid,uuid)": "92d298f716bf4db9f7e6169f99ef83f63ba34112315685f17b77b5dbf26157d5",
+    "internal.pwa_command(uuid,text,uuid,bigint,jsonb,uuid)": "ed025ece75d0dd4f90cdfce222dd33042d86f5f5c24d336a206d3082e9af4e1a"
+  },
+  "authority_obligations_bookings_and_hourledger_preserved": true,
+  "final_request_state": {
+    "requests": 1,
+    "booking_count": 0,
+    "request_state": "requested",
+    "allocation_state": "assigned",
+    "new_person_grants": 0,
+    "recipient_notifications": 1
+  },
+  "observed_gap": {
+    "id": "F054_PLAIN_COMMITTEE_CANNOT_REQUEST_RESERVE_PURE_TEAM_PARENT_CAN",
+    "concrete": true,
+    "pure_coordinator": {
+      "manage_team": false,
+      "manage_shift": true,
+      "review_match": false
+    },
+    "pure_volunteer_committee": {
+      "manage_team": false,
+      "manage_shift": false,
+      "review_match": false
+    },
+    "pure_team_parent": {
+      "manage_team": true,
+      "manage_shift": false,
+      "review_match": false
+    },
+    "correct_committee_phase": true,
+    "existing_local_positive_SQL_used_compound_coordinator_teamparent": true,
+    "domain_authority_changed": false,
+    "needs_root_canon_decision": true
+  },
+  "F055_bounded_instruction_revision_positive": true,
+  "F078_new_case_executed": false,
+  "F054_F074_full_function_acceptance": false,
+  "staging_verified": false,
+  "physical_device_verified": false,
+  "production_enabled": false,
+  "owned_container_removed": true
+}

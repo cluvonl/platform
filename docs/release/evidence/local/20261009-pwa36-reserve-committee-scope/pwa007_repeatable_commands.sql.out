@@ -1,0 +1,51 @@
+ok 1 - A dismisses own versioned topic
+ok 2 - fresh acknowledgement of unchanged seen topic is a valid command
+
+ok 3 - B independently dismisses the same versioned topic
+
+ok 4 - A reads its own explanations as reset
+ok 5 - A reset does not delete B preference despite household progress sharing
+
+ok 6 - B can reset after A in the same tenant
+ok 7 - another explicit own reset succeeds even with no seen rows
+ok 8 - same reset key replays the original receipt
+ok 9 - caller cannot address another person preference resource
+ok 10 - delegated person payload cannot reset someone else preferences
+ok 11 - own-account acknowledgement still reauthorizes tenant
+ok 12 - B marks its actual own inbox read
+ok 13 - B own inbox row is marked
+ok 14 - B bulk inbox mutation leaves A row unread
+
+ok 15 - A bulk read succeeds after B in the same tenant
+ok 16 - another explicit empty bulk read succeeds
+ok 17 - revoking already absent own device remains a valid acknowledgement
+ok 18 - fresh-key repeated missing-device revoke also succeeds
+
+ok 19 - first actual attendance batch confirms partial performed minutes
+ok 20 - second independent attendance batch confirms actual no-show without shared-tenant event conflict
+ok 21 - same batch key replays without another confirmation or award
+ok 22 - independent batches preserve exact performed ledger minutes
+ok 23 - two original confirmations remain exactly once after batch replay
+ok 24 - fresh resets create their own immutable events; same-key replay adds none
+ok 25 - each actual reset keeps its own actor audit exactly once
+ok 26 - different parents receive distinct completed-command event identities
+ok 27 - repeatable events identify their actual completed command
+ok 28 - independent attendance batches append separate command events
+
+ok 29 - first distribution updates the actual selected allocation
+ok 30 - second different distribution succeeds for unchanged team metadata
+ok 31 - actual eligible opted-in reserve receives its request
+ok 32 - another explicit reserve request has a separate command identity
+ok 33 - no fake team version is introduced to avoid a command event conflict
+ok 34 - both independent allocation versions are actual assignment changes
+ok 35 - repeat acknowledgement does not duplicate the durable reserve recipient
+
+ok 36 - existing own intake initialization acknowledges the actual profile
+ok 37 - fresh-key own intake initialization is also safe
+ok 38 - repeated initialization preserves existing private answers
+
+ok 39 - A accepts its exact actual policy assignment
+
+ok 40 - B independent acceptance succeeds after A tenant acknowledgement
+ok 41 - both exact policy acceptance records survive independently
+1..41

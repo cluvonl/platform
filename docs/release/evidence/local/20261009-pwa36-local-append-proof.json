@@ -1,0 +1,42 @@
+{
+  "scope": "GUARDED_EXISTING_LOCAL_SCHEMA35_TO36_APPEND_ONLY",
+  "observed_at": "2026-10-09T13:03:00.283248+00:00",
+  "parent_source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+  "passed": true,
+  "existing_migrations": 35,
+  "appended_migration": {
+    "file": "20261009119000_pwa_reserve_committee_scope.sql",
+    "sha256": "f7d9f77df7cde15bc23bb6408cab6f56a79031e0ee13198b2a9bf3d397f6801c"
+  },
+  "manifest_sha256": "0a2f59322b0d6e652b0e9561a9a748f08aef45d969a00c77ab1d697b55769d44",
+  "final_migrations": 36,
+  "old_migration_history_preserved": true,
+  "original35_SQL_source_bytes_preserved": true,
+  "app_tables": 181,
+  "all_native_app_rows_and_full_auth_users_sessions_unchanged": true,
+  "reset_performed": false,
+  "staging_mutations": false,
+  "provider_called": false,
+  "production_enabled": false,
+  "native_inventory_guard": {
+    "api_views": 21,
+    "app_tables": 181,
+    "forced_rls": 181,
+    "api_functions": 89
+  },
+  "before_app_rows_sha256": "a0faf629b1950191f78aef9fc3e7878290dae4088f923bac19691dab83d34c32",
+  "after_app_rows_sha256": "a0faf629b1950191f78aef9fc3e7878290dae4088f923bac19691dab83d34c32",
+  "old_history_sha256": "a52125cd11c2a045167210b29aeffd45c57eedcbdf5af3f849c4810ec24f4f59",
+  "final_history_sha256": "f7ec1579dbdbeab6d2d9f190e5193c0f367d81e5eaafef956f32439cfea4348a",
+  "authority_aggregate_hashes": {
+    "users": {
+      "rows": 77,
+      "sha256": "84cf2877781742acc46f96db9acbe89eada4449123d340a7659df4b1b6e90816"
+    },
+    "sessions": {
+      "rows": 199,
+      "sha256": "57d5356f1b49b979b166ffde99bc2e9c910716d91b9d80a27a3bd3424111e569"
+    }
+  },
+  "helper_sha256": "cf87d49ee22e3afb97e15f887ec6e5b4ff4501857fbdf46c18a1ea5b0ce0f0f3"
+}

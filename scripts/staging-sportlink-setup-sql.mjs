@@ -29,7 +29,7 @@ function fields(value,names){
  }catch{throw Object.assign(Error('STAGING_SPORTLINK_SETUP_INPUT_INVALID'),{code:'STAGING_SPORTLINK_SETUP_INPUT_INVALID'});}
 }
 export function sportlinkSetupSchemaGuardSql(){
- need(UPGRADE_FILES.length===35&&UPGRADE_FILES.at(-1).file==='20261009118000_pwa_sportlink_connection.sql','STAGING_SPORTLINK_SETUP_SCHEMA_REQUIRED');
+ need(UPGRADE_FILES.length===36&&UPGRADE_FILES.at(-1).file==='20261009119000_pwa_reserve_committee_scope.sql','STAGING_SPORTLINK_SETUP_SCHEMA_REQUIRED');
  // Reuse only the frozen pure byte-history/native-RLS guard. No QA identity,
  // fixture, provider factory, password, session or cleanup route is used.
  return nativeQaSchemaGuardSql().replaceAll('STAGING_NATIVE_QA_REFUSED','STAGING_SPORTLINK_SETUP_SCHEMA_REFUSED')+`
@@ -178,7 +178,7 @@ export function sportlinkSetupSessionSql(authUserId,sessionId){
  need(UUID.test(authUserId??'')&&UUID.test(sessionId??''));
  return `SELECT jsonb_build_object('identity_confirmed',EXISTS(SELECT 1 FROM auth.users WHERE id=${literal(authUserId)} AND email_confirmed_at IS NOT NULL AND deleted_at IS NULL AND (banned_until IS NULL OR banned_until<=statement_timestamp())),
  'new_session_active',EXISTS(SELECT 1 FROM auth.sessions WHERE id=${literal(sessionId)} AND user_id=${literal(authUserId)} AND (not_after IS NULL OR not_after>statement_timestamp())),
- 'exact_scope',EXISTS(SELECT 1 FROM app.tenant_memberships WHERE id='${f.membership}' AND tenant_id='${f.tenant}' AND auth_user_id=${literal(authUserId)} AND status='active')));`;
+ 'exact_scope',EXISTS(SELECT 1 FROM app.tenant_memberships WHERE id='${f.membership}' AND tenant_id='${f.tenant}' AND auth_user_id=${literal(authUserId)} AND status='active'));`;
 }
 export function sportlinkSetupReadbackSql(authUserId,sessionId){
  need(UUID.test(authUserId??'')&&UUID.test(sessionId??''));
@@ -208,7 +208,7 @@ export function sportlinkSetupPrivateRecipe(value){
  const setup=buildStagingSportlinkSetup({recipient:v.recipient,sourceSha:v.sourceSha,workflowRunId:v.workflowRunId,actor:v.actor,expectedVersion:0});
  if(['preflight','provision'].includes(v.operation)){
   need(v.authUserId===null&&v.sessionId===null);
-  return v.operation==='provision'?setup:{sql:`BEGIN READ WRITE;${setup.guardSql}SELECT jsonb_build_object('schema35',true);COMMIT;`};
+  return v.operation==='provision'?setup:{sql:`BEGIN READ WRITE;${setup.guardSql}SELECT jsonb_build_object('schema_target_verified',true,'migration_count',36);COMMIT;`};
  }
  if(v.operation==='stable'){need(v.sessionId===null);return {sql:sportlinkSetupStableAccountSql(v.authUserId)};}
  return {sql:v.operation==='session'?sportlinkSetupSessionSql(v.authUserId,v.sessionId):sportlinkSetupReadbackSql(v.authUserId,v.sessionId)};

@@ -8,7 +8,7 @@ import {validatedStagingContext} from './staging-session-probe.mjs';
 import {buildStagingSportlinkSetup} from './staging-sportlink-setup-sql.mjs';
 
 const CHILD=fileURLToPath(new URL('./staging_sportlink_setup_session.py',import.meta.url));
-export const SPORTLINK_SETUP_CHILD_SHA256='b98dd86052307fc8bb513f2476ace83755b984feeb3088f9716e6e0c940b0b16';
+export const SPORTLINK_SETUP_CHILD_SHA256='18b4ff9a3c5fee9f357042546ed3476bc5b98ab620c8d45fc9a985e48494f32d';
 const hash=value=>createHash('sha256').update(value).digest('hex');
 const need=(v,code)=>{if(!v)throw Object.assign(Error(code),{code});};
 export class SportlinkSetupSession{
@@ -59,7 +59,7 @@ export class SportlinkSetupSession{
     &&['TLSv1.2','TLSv1.3'].includes(transport.client_tls_protocol),'STAGING_SPORTLINK_SETUP_TLS_UNPROVED');
    need(hash(await readFile(CHILD))===SPORTLINK_SETUP_CHILD_SHA256,'STAGING_SPORTLINK_SETUP_SOURCE_CHANGED');
    const preflight=await owner.#request('preflight',owner.#recipient);
-   need(preflight?.schema35===true&&Object.keys(preflight).length===1,'STAGING_SPORTLINK_SETUP_SCHEMA_UNPROVED');
+   need(preflight?.schema_target_verified===true&&preflight.migration_count===36&&Object.keys(preflight).length===2,'STAGING_SPORTLINK_SETUP_SCHEMA_UNPROVED');
    return owner;
   }catch(error){await owner.close();throw error;}
  }

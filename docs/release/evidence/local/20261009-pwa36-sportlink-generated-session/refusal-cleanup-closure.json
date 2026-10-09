@@ -1,0 +1,14 @@
+{
+  "scope": "LOCAL_OWNED_GENERATED_SESSION_REFUSAL_CLEANUP_FOLLOWUP",
+  "passed": true,
+  "aggregate": "provider-native-generated-session-refusal-cleanup.json",
+  "sha256": "2ddd3e3ad30b0ebeb9f94baf52eba7cb8358d82983c03251dbcbde3ce00c9c7e",
+  "log_sha256": "e5c6758b731d816d8f181ceef69fd20c4523e4dc8ea1e41918a32418893a9c55",
+  "limits": {
+    "failed_historical_staging_attempt_cleanup_verified": false,
+    "actual_staging_setup_retry": false,
+    "current36_full_owned_setup_verified": false,
+    "physical_device_verified": false,
+    "production_enabled": false
+  }
+}

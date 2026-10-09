@@ -1,6 +1,6 @@
 {
   "base_sha": "47386491859b47fbebf85c3b209724dcc20407fc",
-  "source_head": "996ba5914285d6dd19d9a23bcc4f236f839a82e3",
+  "source_head": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
   "worktree_dirty": true,
   "prototype_sha": "e9c1d8bca2089b0944577eed73d1bedf7e70a3b6",
   "acceptance_ready": false,
@@ -16,7 +16,7 @@
       "api_views": 16
     },
     "current": {
-      "migrations": 35,
+      "migrations": 36,
       "app_tables": 181,
       "api_function_definitions": 90,
       "api_views": 21
@@ -1688,6 +1688,11 @@
           "line": 205
         }
       ]
+    },
+    {
+      "file": "20261009119000_pwa_reserve_committee_scope.sql",
+      "sha256": "f7d9f77df7cde15bc23bb6408cab6f56a79031e0ee13198b2a9bf3d397f6801c",
+      "objects": []
     }
   ],
   "route_compatibility": {

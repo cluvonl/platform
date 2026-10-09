@@ -1,0 +1,76 @@
+{
+  "scope": "LOCAL_PWA36_BROWSER_READBACK_READINESS_DIAGNOSTICS_V1",
+  "observed_at": "2026-10-09T12:59:23.270Z",
+  "environment": "local",
+  "source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+  "source_files": [
+    {
+      "path": "scripts/staging-pwa-browser-readback.mjs",
+      "sha256": "39f5c7cb60a1bcb2765b8e94f84730d0fda3c3851dda7213a1d284f487817500"
+    },
+    {
+      "path": "tests/staging-pwa-browser-readback.test.mjs",
+      "sha256": "575fc0f79db4af59b90149058efe31eec0f2c7b72521a3c14799653e3678d66a"
+    }
+  ],
+  "passed": true,
+  "proof_mode": "actual_Chromium_with_all_requests_locally_intercepted",
+  "toolchain": {
+    "playwright": "1.63.0",
+    "browser": "Chromium",
+    "browser_version": "153.0.8010.12",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    }
+  },
+  "tests": {
+    "command": "PWA_BROWSER_TEST_MODULE=<fixed-playwright-1.63.0-module> node --test tests/staging-pwa-browser-readback.test.mjs",
+    "total": 8,
+    "passed": 8,
+    "failed": 0,
+    "skipped": 0
+  },
+  "lint": {
+    "command": "npx eslint scripts/staging-pwa-browser-readback.mjs tests/staging-pwa-browser-readback.test.mjs",
+    "passed": true
+  },
+  "proved": [
+    "delayed_visible_shell_passes_while_background_request_prevents_networkidle",
+    "allowlisted_timeout_error_class_without_private_message_or_stack",
+    "positive_final_route_and_status_refusal",
+    "SSR_and_DOM_foreign_canary_refusal",
+    "five_link_app_shell_refusal",
+    "active_navigation_refusal",
+    "private_no_store_cache_required",
+    "overflow_refusal",
+    "explicit_context_denial_required",
+    "foreign_query_identifiers_absent_from_diagnostics",
+    "invalid_staging_context_refused_before_private_access",
+    "browser_process_environment_excludes_private_credentials"
+  ],
+  "previous_staging_observation": {
+    "workflow_run_id": "37931346250",
+    "source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+    "passed": false,
+    "confirmed_completed_screens": [
+      "home",
+      "tasks"
+    ],
+    "inferred_next_screen": "agenda",
+    "failed_screen_confirmed": false,
+    "failed_operation_confirmed": false,
+    "original_error": "STAGING_BROWSER_READBACK_UNAVAILABLE",
+    "cause_established": false,
+    "safe_evidence": "docs/release/evidence/staging/20261009-pwa-browser-readback-37931346250-gha.json"
+  },
+  "staging_verified": false,
+  "native_Cluvo_SSR_retested": false,
+  "provider_or_database_access_performed": false,
+  "app_fixture_mutations_performed": false,
+  "domain_server_actions_invoked": 0,
+  "physical_device_verified": false,
+  "private_values_exported": false,
+  "production_enabled": false,
+  "v1_ready": false
+}

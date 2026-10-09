@@ -1,0 +1,45 @@
+ok 1 - direct native preparation rejects empty
+ok 2 - direct native preparation rejects missing
+ok 3 - direct native preparation rejects null
+ok 4 - direct native preparation rejects scalar string
+ok 5 - direct native preparation rejects scalar boolean
+ok 6 - direct native preparation rejects object
+ok 7 - direct native preparation rejects four choices
+ok 8 - direct native preparation rejects six choices
+ok 9 - direct native preparation rejects null choice
+ok 10 - direct native preparation rejects string choice
+ok 11 - direct native preparation rejects number choice
+ok 12 - direct native preparation rejects object choice
+ok 13 - direct native preparation rejects nested choice
+ok 14 - direct native preparation rejects unchecked ready choice
+ok 15 - draft also requires exactly five typed choices
+ok 16 - invalid preparations leave no handover rows
+ok 17 - rejected preparations create no successful mutation audit
+
+ok 18 - five choices never supply missing team authority
+
+ok 19 - five unchecked choices remain a valid draft
+ok 20 - draft persists all five boolean positions
+
+ok 21 - named successor cannot accept a draft
+
+
+ok 22 - another parent cannot take the named successor authority
+
+ok 23 - another tenant cannot accept a known handover id
+
+ok 24 - valid choices do not loosen expected version
+ok 25 - named successor accepts exact ready five-check version
+ok 26 - same key replays confirmed authority transfer without duplicating grants
+ok 27 - five-check acceptance supplies actual team-parent authority
+ok 28 - accepted history preserves the ready record
+ok 29 - exact replay grants the new role once
+ok 30 - table independently rejects empty array under SQL NULL semantics
+ok 31 - table rejects null choices in draft too
+ok 32 - native actor has no direct handover INSERT bypass
+
+ok 33 - acceptance guard separately rejects legacy empty ready checklist
+ok 34 - legacy malformed acceptance grants no authority
+ok 35 - legacy failure does not overwrite malformed historical record
+ok 36 - legacy failed acceptance creates no successful transfer audit
+1..36

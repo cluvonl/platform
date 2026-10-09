@@ -1,0 +1,201 @@
+{
+  "scope": "LOCAL_NATIVE_RESERVE36_BROWSER_CLOSURE_ONLY",
+  "source_parent": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+  "build_id": "N_Dg2FGoBXBoWfKPBnFMX",
+  "proof": {
+    "path": "docs/release/evidence/local/20261009-pwa36-reserve-native-ui/browser-results.json",
+    "sha256": "a67fea7d6443916b30f431b0e327eb2d866d5fc1797d79ffa79270c156fdd288"
+  },
+  "SQL36_proof": {
+    "path": "docs/release/evidence/local/20261009-pwa36-reserve-committee-scope-v2/owned-reserve-committee-scope.json",
+    "sha256": "9117c6e28f4de7c21efe1a35e14b2bf801b16977fd3506df74ccd6872191c8bb"
+  },
+  "native_actual_UI_commands": {
+    "request_reserve": "completed, allocation version1, 1 request/1 recipient notification",
+    "set_followup": "completed, cluster version1\u21922; reloaded actual future phase removes reserve action"
+  },
+  "native_sessions": {
+    "three_actual_browser_UI_6digit_OTP_logins_prior_attempt_bound": true,
+    "final_read_and_F074_recovery_sessions": "local existing-only generateLink recovery\u2192publishable verifyOtp; signed provider nativeSID; no emails/globalSignOut/forgedJWT",
+    "second_browser_context": "separate Chromium context sharing existing native coordinator cookies; server reauthorizes each read"
+  },
+  "original_preservation": {
+    "before_first_fixture_all181_old_PK_row_bytes_auth_authority_preserved": {
+      "all_original_app_rows_preserved": true,
+      "app_tables": 181,
+      "original_app_rows": 6538,
+      "all_original_auth_users_and_sessions_authority_preserved": true,
+      "original_auth_user_count": 77,
+      "original_auth_session_count": 199,
+      "migration_history_unchanged": true,
+      "new_auth_users": 3,
+      "new_native_sessions": 3
+    },
+    "final_all181_old_PK_row_bytes_excluding_owned_new_fixture_only": {
+      "all_original_app_rows_preserved": true,
+      "app_tables": 181,
+      "original_app_rows": 6538,
+      "all_original_auth_users_and_sessions_authority_preserved": true,
+      "original_auth_user_count": 80,
+      "original_auth_session_count": 206,
+      "migration_history_unchanged": true,
+      "new_auth_users": 0,
+      "new_native_sessions": 3
+    },
+    "ledger_and_bookings_old_rows_preserved": true,
+    "old36_migration_history_unchanged": true
+  },
+  "visual_review": {
+    "all9_PNGs_inspected": true,
+    "widths": [
+      320,
+      390,
+      430,
+      1440
+    ],
+    "horizontal_overflow_detected": false,
+    "desktop_top_scroll_capture": true,
+    "observations": [
+      "Own eligible reserve checkbox and concrete-place action present only in committee scope.",
+      "Recipient sees one personal reserve notification and exact task invitation without a booking.",
+      "Team parent sees no committee management controls.",
+      "Valid future followup dates refresh to Zelf kiezen and remove reserve request action.",
+      "At320 the long Commissieoverzicht heading wraps; fullPage screenshots show viewport-fixed bottom navigation at its native viewport position."
+    ]
+  },
+  "artifact_hashes": {
+    "attempt-1791551475242-safe-failed.json": "e289c1d39bc04e1a0a603a8f72d9c6650a6e61cf3953d6dc09b5374e97e28ce0",
+    "attempt-1791551625430-safe-failed.json": "494e32c3555d98a438420ddc62e03f75212f2d5fd38b0d93445649e09081e0e4",
+    "attempt-1791551743302-safe-failed.json": "5a6978c906c16c7aadaf704ceb7baf78927a44f03ac877fe917e943e4d2e010f",
+    "browser-results.json": "a67fea7d6443916b30f431b0e327eb2d866d5fc1797d79ffa79270c156fdd288",
+    "final-runner.mjs": "ab7baa652e028c8e829292ea9ffc39d6c186ff8c7de10d9a3ab917a853bdfe8d",
+    "final-safe-output.log": "040181f5d5136ca3cda144f5dc5f08321ca28b50c1e033fa32afd390a36d9a79",
+    "first-attempt-runner.mjs": "a79f7c5ed9f589623efc1f0e2f0ca9b2243467e182032e10841eabaecf53ff80",
+    "first-attempt-safe-output.log": "18fbb6718cc89cbe0a93514aa448343a631db0ef39811b8dfd17da613af3c781",
+    "owned-new-fixture.sql": "28188fa474a7e6549891b09d1610a44264ea35b291535615fa18ce01263d3899",
+    "second-attempt-runner.mjs": "ac73aefe5121bfe04774056e96a83de7c2f08004821addda9d1f85ffc54d2157",
+    "second-attempt-safe-output.log": "1073f2a20b1b22ed894e139c6ffa388a7be656d094129a4b9ea1a05e5bd1f095",
+    "third-attempt-runner.mjs": "b31510b24213daabb504f3eddac51e42012670c1c4078a2ebbb989116b8644da",
+    "third-attempt-safe-output.log": "c53d9483263ef9f8f47e4c4b39f6e817a6f55563cd8976270299f0c7b4b4a280"
+  },
+  "images": [
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-reserve-native-ui/screenshots/01-coordinator-selected-390.png",
+      "sha256": "3eeba8a27665aab864b097599fe6712c7e20cd295b506d033b56305f36bd4677",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scroll_position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-reserve-native-ui/screenshots/02-coordinator-reload-320.png",
+      "sha256": "fa0a47379fdb7980a1904c89bc5dac1feccc6e9edad1299c7c61a1d792cb3ebb",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "scroll_position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-reserve-native-ui/screenshots/02-coordinator-reload-430.png",
+      "sha256": "fb64d20e09bbb6143ad33e29cc6b7d7ce6463ac350ae56314659b6d97e70b9d5",
+      "viewport": {
+        "width": 430,
+        "height": 844
+      },
+      "scroll_position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-reserve-native-ui/screenshots/02-coordinator-reload-1440.png",
+      "sha256": "b70e21094632353ebecd4a6563a235771b806bcfbc49cb99595f53749821ffac",
+      "viewport": {
+        "width": 1440,
+        "height": 1024
+      },
+      "scroll_position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-reserve-native-ui/screenshots/03-second-browser-reload-390.png",
+      "sha256": "aaa73c5c658be9fd41f6e0ea4062e80b1685fd2d4271604f1cdeb6ef98caa914",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scroll_position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-reserve-native-ui/screenshots/04-reserve-own-inbox-390.png",
+      "sha256": "3aa07e1fbc678a07ce85cba3fc5dc829a4d1eeba63f0c015382b6b7397cc0d01",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scroll_position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-reserve-native-ui/screenshots/05-reserve-authorized-task-not-booked-390.png",
+      "sha256": "7aa74abc985354de134a3f294b321e930c6fc332cea431dd10defd3d449e949b",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scroll_position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-reserve-native-ui/screenshots/06-parent-no-committee-controls-390.png",
+      "sha256": "dd0a6d1dd2d3bbef3214b42555da30580f2edc60444636aeaf047d08f2366fbd",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scroll_position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-reserve-native-ui/screenshots/07-followup-saved-future-phase-390.png",
+      "sha256": "d7bce609bcfd96dde40e2850b3f5fd9f3285d7323c29cc3d6b8bb2bd752be5a0",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scroll_position": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  ],
+  "limits": {
+    "native_live_auth_used": true,
+    "fixture_construction_only_not_formal_grant_or_award_proof": true,
+    "shared_old_app_rows_modified": false,
+    "product_source_edits": false,
+    "hosted_provider_emails_or_production_calls": false,
+    "staging_F054_F074_readback_proven": false,
+    "whole_F054_F074_or147_scope_acceptance": false,
+    "physical_device_acceptance": false
+  }
+}

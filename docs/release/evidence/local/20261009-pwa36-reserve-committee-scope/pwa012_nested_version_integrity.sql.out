@@ -1,0 +1,87 @@
+ok 1 - native coordinator publishes the actual target version before propagation
+ok 2 - propagation rejects null nested version at the native API
+ok 3 - propagation rejects zero nested version at the native API
+ok 4 - propagation rejects negative nested version at the native API
+ok 5 - propagation rejects string nested version at the native API
+ok 6 - propagation rejects boolean nested version at the native API
+ok 7 - propagation rejects fractional nested version at the native API
+ok 8 - propagation rejects an omitted captured target version
+ok 9 - propagation rejects the actual prior target version
+ok 10 - rejected propagation preserves every immutable instruction version scope audit receipt and ledger
+
+ok 11 - correct nested versions do not grant an ordinary member instruction authority
+
+ok 12 - correct nested versions do not cross the native tenant boundary
+ok 13 - unauthorized propagation also leaves all durable state unchanged
+ok 14 - correctly captured propagation replays the same completed command
+ok 15 - target version reflects exactly its two actual instruction publications
+ok 16 - source version changes once for the actual bulk publication
+ok 17 - correct propagation and replay retain exactly two immutable instruction records
+
+ok 18 - real team parent first assigns the actual reserved member position
+ok 19 - distribution rejects null captured allocation version
+ok 20 - distribution rejects zero captured allocation version
+ok 21 - distribution rejects negative captured allocation version
+ok 22 - distribution rejects string captured allocation version
+ok 23 - distribution rejects boolean captured allocation version
+ok 24 - distribution rejects fractional captured allocation version
+ok 25 - distribution rejects an omitted captured allocation version
+ok 26 - distribution rejects the actual previous allocation version
+ok 27 - one missing nested version rolls back the whole distribution including an earlier valid item
+ok 28 - failed bulk distribution preserves assignment versions members immutable audit command receipts and hours
+
+ok 29 - correct allocation version does not grant a player team parent authority
+
+ok 30 - unauthorized allocation changes leave the same full historical fingerprint
+ok 31 - correct captured reallocation replays without another assignment
+ok 32 - real reallocation increments only the chosen position once
+ok 33 - readback contains the actual chosen member
+ok 34 - no team metadata version is forged by the bulk command
+ok 35 - the failed mixed batch leaves its second allocation reserved at version one
+
+ok 36 - PWA acceptance rejects a null element in the expected version vector
+ok 37 - PWA acceptance rejects a zero element in the expected version vector
+ok 38 - PWA acceptance rejects a negative element in the expected version vector
+ok 39 - PWA acceptance rejects a string element in the expected version vector
+ok 40 - PWA acceptance rejects a boolean element in the expected version vector
+ok 41 - PWA acceptance rejects a fractional element in the expected version vector
+ok 42 - PWA acceptance rejects a missing version vector
+ok 43 - PWA acceptance rejects a null version vector
+ok 44 - PWA acceptance rejects a empty version vector
+ok 45 - PWA acceptance rejects a wrong length version vector
+ok 46 - canonical API rejects missing canonical vector without a web form
+ok 47 - canonical API rejects null canonical element without a web form
+ok 48 - canonical API rejects empty canonical vector without a web form
+ok 49 - canonical API rejects wrong canonical length without a web form
+ok 50 - canonical API rejects zero canonical version without a web form
+ok 51 - canonical API rejects negative canonical version without a web form
+ok 52 - canonical API rejects canonical lower bound zero without a web form
+ok 53 - canonical API rejects multidimensional canonical vector without a web form
+ok 54 - canonical API rejects assignment lower bound zero
+ok 55 - canonical API rejects multidimensional assignment IDs
+ok 56 - canonical API rejects null assignment ID
+ok 57 - PWA policy acceptance still rejects a nonnull stale version
+ok 58 - canonical policy comparison still rejects an incorrect captured assignment version
+ok 59 - one null version denies an entire multi-person policy vector before any acceptance
+ok 60 - invalid policy vectors preserve exact opened assignments acceptance history rights audits and receipts
+
+ok 61 - another parent cannot accept the other adult exact policy despite a correct vector
+
+ok 62 - another club native session cannot accept this tenant policy
+
+ok 63 - cross adult and cross club policy attempts retain the same whole durable history
+ok 64 - valid PWA vector binds exact document revision independently of assignment version
+ok 65 - same policy command key replays its actual confirmed acceptance
+
+ok 66 - valid direct canonical API vector confirms only the other parent own exact policy
+ok 67 - direct canonical policy replay does not append another acceptance
+ok 68 - both parents own acceptance proofs remain exactly once
+ok 69 - only actual valid acceptance increments each assignment version
+ok 70 - instruction assignment and policy corrections never invent performed ledger credit
+
+
+ok 71 - all 50 public PWA action branches independently reject a null top level version
+ok 72 - canonical attendance retains its existing independent null version rejection
+ok 73 - all null top level guards and the canonical attendance guard preserve ledger audit scope and receipt history
+ok 74 - both narrowed native functions retain canonical owner definer volatility and empty search path
+1..74

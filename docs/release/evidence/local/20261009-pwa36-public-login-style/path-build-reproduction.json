@@ -1,0 +1,246 @@
+{
+  "scope": "EXACT_9AE_DOCKER_WORKDIR_AUTH_STYLE_REPRODUCTION",
+  "observed_at": "2026-10-09T13:31:04.776614+00:00",
+  "source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+  "base_image": "node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
+  "same_dependencies": true,
+  "source_patch_used_in_variants": false,
+  "helper_source_sha256": "79a1d1cc10885921bb1c20707d9fa6d687a563805039d4f08cb284ccba6155a3",
+  "variants": [
+    {
+      "build_cwd": "/app",
+      "exact_source_files_verified": 2099,
+      "source_bytes_equal": true,
+      "build_exit_code": 0,
+      "build_id": "uH4m2_wl5H63V49zHryYJ",
+      "network": "none",
+      "client_reference_manifest_sha256": "ca240cdb29708f2a1d3dab9c7a048bec8594f27f8a908ea86d7f3fae07ba3be4",
+      "entry_css_files": {
+        "/app/": [],
+        "/app/app/layout": [
+          {
+            "inlined": false,
+            "path": "static/css/5351f63f9a741345.css"
+          }
+        ],
+        "/app/app/page": [],
+        "/app/app/app/layout": [
+          {
+            "inlined": false,
+            "path": "static/css/5351f63f9a741345.css"
+          }
+        ],
+        "/app/app/app/page": [],
+        "/app/app/app/login/page": [
+          {
+            "inlined": false,
+            "path": "static/css/5351f63f9a741345.css"
+          }
+        ]
+      },
+      "actual_standalone_http_smoke": {
+        "scope": "PUBLIC_AUTH_SSR_LINKED_STYLE_SMOKE_V1",
+        "passed": false,
+        "routes": [
+          {
+            "path": "/login",
+            "passed": false,
+            "stylesheets": [
+              "/_next/static/css/5351f63f9a741345.css"
+            ],
+            "status": 200,
+            "html_sha256": "971e00ab74a20fc6f1c28969f73771464400e41e022c592928cf72c24c154325",
+            "auth_shell": true,
+            "primary_control": true,
+            "style_rules": {
+              "body": false,
+              "auth_screen": false,
+              "auth_card": false,
+              "auth_primary": false
+            },
+            "error": "PUBLIC_AUTH_STYLE_RULES_MISSING"
+          },
+          {
+            "path": "/app/login",
+            "passed": false,
+            "stylesheets": [
+              "/_next/static/css/5351f63f9a741345.css"
+            ],
+            "status": 200,
+            "html_sha256": "66ffb9edcea8d4b6caa9ed2d1172c46e0dc02ac6e32d7f4eecc3f43a4d050e2d",
+            "auth_shell": true,
+            "primary_control": true,
+            "style_rules": {
+              "body": false,
+              "auth_screen": false,
+              "auth_card": false,
+              "auth_primary": false
+            },
+            "error": "PUBLIC_AUTH_STYLE_RULES_MISSING"
+          },
+          {
+            "path": "/app/auth/verify",
+            "passed": false,
+            "stylesheets": [
+              "/_next/static/css/5351f63f9a741345.css"
+            ],
+            "status": 200,
+            "html_sha256": "fa9fafca3c71e5b42bc0f3b30b294715be7e9bdbfe2669057c8d3d16bd0a4793",
+            "auth_shell": true,
+            "primary_control": true,
+            "style_rules": {
+              "body": false,
+              "auth_screen": false,
+              "auth_card": false,
+              "auth_primary": false
+            },
+            "error": "PUBLIC_AUTH_STYLE_RULES_MISSING"
+          }
+        ],
+        "stylesheets": [
+          {
+            "path": "/_next/static/css/5351f63f9a741345.css",
+            "passed": true,
+            "status": 200,
+            "content_type_valid": true,
+            "bytes": 1391,
+            "sha256": "c4fc7fa9be011de32282aa1becc07cb74178a788ed3e0a5310f631576a71a4a3"
+          }
+        ],
+        "authenticated": false,
+        "provider_requests_performed": false,
+        "private_values_exported": false,
+        "production_enabled": false,
+        "v1_ready": false
+      },
+      "build_log_sha256": "c03be5fb5bd772e28381fee94df7e97b970742dfa16aa0bd56f22fec06572cd8"
+    },
+    {
+      "build_cwd": "/workspace",
+      "exact_source_files_verified": 2099,
+      "source_bytes_equal": true,
+      "build_exit_code": 0,
+      "build_id": "TR-WdAre4b2CZE4NGMf04",
+      "network": "none",
+      "client_reference_manifest_sha256": "9c5d1f12e2d9178e564f98b5f1c8396c7c069a727ba3b8390d5dfec4ab7cb3e9",
+      "entry_css_files": {
+        "/workspace/": [],
+        "/workspace/app/layout": [
+          {
+            "inlined": false,
+            "path": "static/css/1d7bfca937fbee4e.css"
+          }
+        ],
+        "/workspace/app/page": [],
+        "/workspace/app/app/layout": [
+          {
+            "inlined": false,
+            "path": "static/css/5351f63f9a741345.css"
+          }
+        ],
+        "/workspace/app/app/page": [],
+        "/workspace/app/app/login/page": [
+          {
+            "inlined": false,
+            "path": "static/css/5351f63f9a741345.css"
+          }
+        ]
+      },
+      "actual_standalone_http_smoke": {
+        "scope": "PUBLIC_AUTH_SSR_LINKED_STYLE_SMOKE_V1",
+        "passed": true,
+        "routes": [
+          {
+            "path": "/login",
+            "passed": true,
+            "stylesheets": [
+              "/_next/static/css/1d7bfca937fbee4e.css"
+            ],
+            "status": 200,
+            "html_sha256": "0a56d50e63938ec2bc7048e82c5e9475ce861247ba9db865697faceb87b05107",
+            "auth_shell": true,
+            "primary_control": true,
+            "style_rules": {
+              "body": true,
+              "auth_screen": true,
+              "auth_card": true,
+              "auth_primary": true
+            }
+          },
+          {
+            "path": "/app/login",
+            "passed": true,
+            "stylesheets": [
+              "/_next/static/css/1d7bfca937fbee4e.css",
+              "/_next/static/css/5351f63f9a741345.css"
+            ],
+            "status": 200,
+            "html_sha256": "1eb3837cdd00e651c1c5b624c4c237d8fdc0114843f66bf74cdf00fcf8adb923",
+            "auth_shell": true,
+            "primary_control": true,
+            "style_rules": {
+              "body": true,
+              "auth_screen": true,
+              "auth_card": true,
+              "auth_primary": true
+            }
+          },
+          {
+            "path": "/app/auth/verify",
+            "passed": true,
+            "stylesheets": [
+              "/_next/static/css/1d7bfca937fbee4e.css",
+              "/_next/static/css/5351f63f9a741345.css"
+            ],
+            "status": 200,
+            "html_sha256": "e43c3b8735a7188ff5f6749cd54f10e138f7c0fb026f24625e5acea10550183f",
+            "auth_shell": true,
+            "primary_control": true,
+            "style_rules": {
+              "body": true,
+              "auth_screen": true,
+              "auth_card": true,
+              "auth_primary": true
+            }
+          }
+        ],
+        "stylesheets": [
+          {
+            "path": "/_next/static/css/1d7bfca937fbee4e.css",
+            "passed": true,
+            "status": 200,
+            "content_type_valid": true,
+            "bytes": 190884,
+            "sha256": "162a8668f2f08ad10fb2e2e168ce74b4dc62cc1dde4dc299ae8078a69c290225"
+          },
+          {
+            "path": "/_next/static/css/5351f63f9a741345.css",
+            "passed": true,
+            "status": 200,
+            "content_type_valid": true,
+            "bytes": 1391,
+            "sha256": "c4fc7fa9be011de32282aa1becc07cb74178a788ed3e0a5310f631576a71a4a3"
+          }
+        ],
+        "authenticated": false,
+        "provider_requests_performed": false,
+        "private_values_exported": false,
+        "production_enabled": false,
+        "v1_ready": false
+      },
+      "build_log_sha256": "ecff49d7a4748bd4db351df5a9cb82efea984e86b078c8acb204b92ea41e8114"
+    }
+  ],
+  "negative_missing_styles_reproduced": true,
+  "positive_all_three_public_auth_routes": true,
+  "native_auth_or_database_mutations": false,
+  "owned_runtime_containers_removed": true,
+  "staging_fix_deployed": false,
+  "physical_acceptance": false,
+  "production_enabled": false,
+  "limits": [
+    "Exact old9ae package; candidate36 final image gate remains separate.",
+    "Same source and dependencies in both variants; only build/runtime directory changed.",
+    "Empty-configuration invitation route was separately observed HTTP500 from its existing configuration guard and is not one of the credentialless smoke routes."
+  ]
+}

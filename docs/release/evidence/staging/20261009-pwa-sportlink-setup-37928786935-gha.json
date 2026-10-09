@@ -1,0 +1,26 @@
+{
+  "scope": "STAGING_SPORTLINK_OPERATOR_SETUP_V1",
+  "observed_at": "2026-10-09T12:16:03.741Z",
+  "passed": false,
+  "production_enabled": false,
+  "email_sent": false,
+  "signup_performed": false,
+  "password_changed": false,
+  "real_members_imported": false,
+  "match_import_performed": false,
+  "provider_import_activated": false,
+  "normal_user_otp_verified": false,
+  "physical_device_verified": false,
+  "private_values_exported": false,
+  "created_session_closed": false,
+  "old_sessions_preserved": false,
+  "source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+  "workflow_run_id": "37928786935",
+  "schema35_verified": true,
+  "operator_scope": "created",
+  "permission_keys": [
+    "match.import"
+  ],
+  "annual_grant": true,
+  "error": "STAGING_SPORTLINK_SETUP_AUTH_REFUSED_NATIVE_SESSION"
+}

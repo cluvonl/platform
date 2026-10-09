@@ -29,7 +29,7 @@ const element=(value,index,code)=>{
 const first16=(array,code)=>Array.from({length:16},(_,index)=>element(array,index,code));
 
 // Approved from the completed hosted31 safe aggregate. Earlier receipts are
-// immutable: only this complete, byte-identical predecessor can accompany34.
+// immutable: only this complete, byte-identical predecessor can accompany36.
 export const APPROVED_PWA_PREDECESSOR31=Object.freeze({
  appliedPrefix:31,
  manifestSha256:'4d00699a669e26e0e030523c56c87a231177c5887470d6fe2903ead7164b7e4d',
@@ -39,9 +39,24 @@ export const APPROVED_PWA_PREDECESSOR31=Object.freeze({
  backupArtifactSha256:'013e009fcfbe1a86403bcb8dfbf58fa3ed5ec36416190edc0444112e1d3a0d6b',
 });
 function predecessor31(manifestHash){
- if(UPGRADE_FILES.length!==35||manifestHash===APPROVED_PWA_PREDECESSOR31.manifestSha256)return null;
+ if(UPGRADE_FILES.length!==36||manifestHash===APPROVED_PWA_PREDECESSOR31.manifestSha256)return null;
  need(digest(JSON.stringify(UPGRADE_FILES.slice(0,31)))===APPROVED_PWA_PREDECESSOR31.manifestSha256,'PWA_UPGRADE_PREDECESSOR_BYTES_CHANGED');
  return APPROVED_PWA_PREDECESSOR31;
+}
+// The completed hosted35 run appended exactly four receipts to approved31.
+// A fresh or partial historical35 cohort is not this approved predecessor.
+export const APPROVED_PWA_PREDECESSOR35=Object.freeze({
+ appliedPrefix:35,
+ manifestSha256:'b39a9bb9d167e02e5723f0efe68bacc3df1bfeb08a03551c8efe8dcd70171466',
+ sourceSha:'9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef',
+ workflowRunId:'37926728047',
+ backupArtifactId:'11614747678',
+ backupArtifactSha256:'1b0f925b0238fa66a9c6247b56b30a9fc31ff2108f21edc14da41130aa471198',
+});
+function predecessor35(manifestHash){
+ if(UPGRADE_FILES.length!==36||manifestHash===APPROVED_PWA_PREDECESSOR35.manifestSha256)return null;
+ need(digest(JSON.stringify(UPGRADE_FILES.slice(0,35)))===APPROVED_PWA_PREDECESSOR35.manifestSha256,'PWA_UPGRADE_PREDECESSOR_BYTES_CHANGED');
+ return APPROVED_PWA_PREDECESSOR35;
 }
 function predecessorReceipt(receipt,approved){
  return approved!==null&&receipt.manifest_sha256===approved.manifestSha256
@@ -50,12 +65,12 @@ function predecessorReceipt(receipt,approved){
 }
 
 // Shared by the fixed writer and native/read-only schema gates. Position is a
-// closed generator expression, never caller SQL. A partial or mixed historical
-// manifest cannot be recognized as the completed hosted predecessor.
+// closed generator expression, never caller SQL. Historical cohorts must be
+// complete; the exact hosted35 cohort also requires the complete approved31.
 export function upgradeReceiptLineageSQL(manifestHash,appliedPrefix,position='expected.position'){
  need(hash(manifestHash)&&Number.isSafeInteger(appliedPrefix)&&appliedPrefix>=16&&appliedPrefix<=UPGRADE_FILES.length
   &&['expected.position','e.position'].includes(position),'PWA_UPGRADE_LINEAGE_INPUT_INVALID');
- const approved=predecessor31(manifestHash);
+ const approved=predecessor31(manifestHash),approved35=predecessor35(manifestHash);
  const current=`suffix.manifest_sha256 IS NOT DISTINCT FROM ${literal(manifestHash)}`;
  if(!approved)return Object.freeze({rowInvalidSql:`NOT(${current})`,aggregateInvalidSql:'false'});
  const count=`(SELECT count(*) FROM supabase_migrations.cluvo_pwa_upgrade_source WHERE manifest_sha256=${literal(approved.manifestSha256)})`;
@@ -64,8 +79,16 @@ export function upgradeReceiptLineageSQL(manifestHash,appliedPrefix,position='ex
  AND suffix.workflow_run_id IS NOT DISTINCT FROM ${literal(approved.workflowRunId)}
  AND suffix.backup_artifact_id IS NOT DISTINCT FROM ${literal(approved.backupArtifactId)}
  AND suffix.backup_artifact_sha256 IS NOT DISTINCT FROM ${literal(approved.backupArtifactSha256)})`;
- return Object.freeze({rowInvalidSql:`NOT(${current} OR ${previous})`,
+ if(!approved35)return Object.freeze({rowInvalidSql:`NOT(${current} OR ${previous})`,
   aggregateInvalidSql:`(${count}>0 AND (${appliedPrefix}<31 OR ${count}<>15))`});
+ const count35=`(SELECT count(*) FROM supabase_migrations.cluvo_pwa_upgrade_source WHERE manifest_sha256=${literal(approved35.manifestSha256)})`;
+ const previous35=`(${position} BETWEEN 31 AND 34 AND suffix.manifest_sha256 IS NOT DISTINCT FROM ${literal(approved35.manifestSha256)}
+ AND suffix.source_sha IS NOT DISTINCT FROM ${literal(approved35.sourceSha)}
+ AND suffix.workflow_run_id IS NOT DISTINCT FROM ${literal(approved35.workflowRunId)}
+ AND suffix.backup_artifact_id IS NOT DISTINCT FROM ${literal(approved35.backupArtifactId)}
+ AND suffix.backup_artifact_sha256 IS NOT DISTINCT FROM ${literal(approved35.backupArtifactSha256)})`;
+ return Object.freeze({rowInvalidSql:`NOT(${current} OR ${previous} OR ${previous35})`,
+  aggregateInvalidSql:`((${count}>0 AND (${appliedPrefix}<31 OR ${count}<>15)) OR (${count35}>0 AND (${appliedPrefix}<35 OR ${count35}<>4 OR ${count}<>15)))`});
 }
 
 export function createUpgradeMigrationManifest(sourceSha,sources){
@@ -106,16 +129,21 @@ export function validateUpgradeHistory(input,state){
  validateInitialHistory(initial,{historyRows:first16(state.historyRows,'PWA_UPGRADE_HISTORY_INVALID'),sourceRows:state.sourceRows,layout:state.layout});
  const appliedPrefix=state.historyRows.length;
  need(state.sourceRows.length===16&&state.upgradeRows.length===appliedPrefix-16,'PWA_UPGRADE_RECEIPT_INCOMPLETE');
- const approved=predecessor31(manifest.sha256);
+ const approved=predecessor31(manifest.sha256),approved35=predecessor35(manifest.sha256);
  const historical=Array.from({length:state.upgradeRows.length},(_,index)=>record(element(state.upgradeRows,index,'PWA_UPGRADE_RECEIPT_CHANGED'),['manifest_sha256'],'PWA_UPGRADE_RECEIPT_CHANGED'))
   .filter(receipt=>receipt.manifest_sha256!==manifest.sha256);
- if(historical.length)need(approved!==null&&appliedPrefix>=31&&historical.length===15,'PWA_UPGRADE_RECEIPT_CHANGED');
+ if(historical.length){
+  const count31=historical.filter(receipt=>receipt.manifest_sha256===approved?.manifestSha256).length;
+  const count35=historical.filter(receipt=>receipt.manifest_sha256===approved35?.manifestSha256).length;
+  need(approved!==null&&historical.length===count31+count35&&appliedPrefix>=31&&count31===15
+   &&(count35===0||(approved35!==null&&appliedPrefix>=35&&count35===4)),'PWA_UPGRADE_RECEIPT_CHANGED');
+ }
  for(let index=16;index<appliedPrefix;index++){
   const expected=manifest.migrations[index],history=record(element(state.historyRows,index,'PWA_UPGRADE_HISTORY_INVALID'),['version','name','statement_count','single_statement_sha256'],'PWA_UPGRADE_HISTORY_INVALID');
   const receipt=record(element(state.upgradeRows,index-16,'PWA_UPGRADE_RECEIPT_CHANGED'),['version','file','sha256','source_sha','actor','scope','expected_version','workflow_run_id','idempotency_key','manifest_sha256','backup_artifact_id','backup_artifact_sha256'],'PWA_UPGRADE_RECEIPT_CHANGED');
   need(history?.version===expected.version&&history.name===expected.name&&history.statement_count===1&&history.single_statement_sha256===expected.sha256,'PWA_UPGRADE_HISTORY_CHANGED');
   need(receipt?.version===expected.version&&receipt.file===expected.file&&receipt.sha256===expected.sha256&&sha(receipt.source_sha)&&actor(receipt.actor)&&receipt.scope==='staging'&&receipt.expected_version===index&&run(receipt.workflow_run_id)&&receipt.idempotency_key===key(receipt.workflow_run_id,expected.version)
-   &&(receipt.manifest_sha256===manifest.sha256||(index<31&&predecessorReceipt(receipt,approved)))&&run(receipt.backup_artifact_id)&&hash(receipt.backup_artifact_sha256),'PWA_UPGRADE_RECEIPT_CHANGED');
+   &&(receipt.manifest_sha256===manifest.sha256||(index<31&&predecessorReceipt(receipt,approved))||(index>=31&&index<35&&predecessorReceipt(receipt,approved35)))&&run(receipt.backup_artifact_id)&&hash(receipt.backup_artifact_sha256),'PWA_UPGRADE_RECEIPT_CHANGED');
  }
  return Object.freeze({appliedPrefix,pending:Object.freeze(manifest.migrations.slice(appliedPrefix)),complete:appliedPrefix===manifest.migrations.length,productionEnabled:false});
 }

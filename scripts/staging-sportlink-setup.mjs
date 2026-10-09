@@ -74,7 +74,7 @@ export async function runStagingSportlinkSetup(environment){
   need(environment.SUPABASE_SECRET_KEY?.startsWith('sb_secret_')&&environment.SUPABASE_PUBLISHABLE_KEY?.startsWith('sb_publishable_'),'STAGING_SPORTLINK_SETUP_KEYS_REFUSED');
   need(await activeStagingRelease(scope.sourceSha),'STAGING_SPORTLINK_SETUP_ACTIVE_RELEASE_REQUIRED');
   const {chromium}=await browserToolchain(environment);
-  owner=await SportlinkSetupSession.connect(environment);report.schema35_verified=true;
+  owner=await SportlinkSetupSession.connect(environment);report.schema_target_verified=true;report.migration_count=36;
   const provisioned=await owner.provision();
   need(provisioned.tenant_id===f.tenant&&provisioned.tenant_slug===f.slug&&provisioned.person_id===f.person
    &&['created','already_configured'].includes(provisioned.outcome)&&provisioned.permission_count===1,'STAGING_SPORTLINK_SETUP_SCOPE_UNPROVED');

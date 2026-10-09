@@ -1,0 +1,48 @@
+ok 1 - new personal action RPC stays stable security invoker with an empty search path
+ok 2 - authenticated may execute the narrow read contract
+ok 3 - anonymous role has no action read authority
+ok 4 - server key has no action read authority
+
+ok 5 - native view exposes the five actual owned legacy actions
+ok 6 - native subtask action resolves its actual child kind
+ok 7 - native subtask action resolves its exact child ID
+ok 8 - native subtask action resolves the actual authorized parent card
+ok 9 - subtask content comes from the real source
+ok 10 - native card mention is distinct from an activity mention
+ok 11 - card mention reads its actual authorized excerpt
+ok 12 - card mention resolves its exact parent card
+ok 13 - unversioned mention source does not invent a version
+ok 14 - card mention reads its actual parent version
+ok 15 - native activity mention resolves its actual child kind
+ok 16 - activity mention resolves the exact occurrence rather than another event
+ok 17 - activity mention reads its actual authorized excerpt
+ok 18 - team task resolves the actual authorized team
+ok 19 - team task reads actual native instructions
+ok 20 - team task read cannot invent attendance or hour credit
+ok 21 - policy follow-up reads the exact authorized assignment
+ok 22 - policy follow-up resolves its historical policy version
+ok 23 - policy question content is the actual authorized body
+ok 24 - zero expected version does not resolve an action
+ok 25 - negative expected version does not resolve an action
+ok 26 - stale expected version does not resolve an action
+ok 27 - missing expected version does not resolve an action
+ok 28 - unknown exact action never selects another source
+ok 29 - foreign tenant selector does not resolve an owned action
+ok 30 - all app rows, ledger, policy opening/history and audit remain byte-equivalent after positive and negative GET reads
+ok 31 - returned body excludes identity, contact, session and push secrets
+
+ok 32 - same-household other parent inherits none of the five assigned action contexts
+
+ok 33 - coordinator source access alone does not grant another actor assigned actions
+
+ok 34 - foreign native actor receives no body for the five known action IDs
+
+ok 35 - actual subtask source rights remain available for the inactive action test
+ok 36 - dismissed exact action is denied even with a current version and live source access
+
+ok 37 - revoked source access preserves the owned action history
+ok 38 - all five source forms stop returning content after their actual source rights are revoked
+ok 39 - old unexpired claims lose native action visibility after session revocation
+ok 40 - old native claims cannot restore any context after actual session revocation
+ok 41 - action context reads and scope revocation do not write attendance credit
+1..41

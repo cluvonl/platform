@@ -1,0 +1,67 @@
+{
+  "scope": "CURRENT36_OWNED_NATIVE_SPORTLINK_OPERATOR_SETUP_AND_EXACT_SESSION_RECIPES",
+  "observed_at": "2026-10-09T13:08:48.620128+00:00",
+  "passed": true,
+  "source_parent_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+  "source_worktree_candidate": true,
+  "source_files_sha256": {
+    "scripts/staging-sportlink-setup-sql.mjs": "8ecc42564ebb6b5b38a424b90901d248443bae030ffb06496be526e5c38723d5",
+    "tests/staging-sportlink-setup-owned.test.mjs": "63b40c595952e46c0fddb51f250bfca44a4b9e96213c47b949822b8059c919c3",
+    "scripts/staging-sportlink-setup-auth.mjs": "f3759ecc493ad047a2ba96834e91d53f6ff4c7148ddf72d00850b2f78186fcf4",
+    "tests/staging-sportlink-auth-provider-owned.test.mjs": "5ed08a2c571819bb4a5d885e3802479718dacb4810630e976521f77a79d3b09f",
+    "supabase/migrations/20261009119000_pwa_reserve_committee_scope.sql": "f7d9f77df7cde15bc23bb6408cab6f56a79031e0ee13198b2a9bf3d397f6801c",
+    "scripts/staging-pwa-upgrade-files.mjs": "a9b3b5c74dc7a9f8d495de2b8a8e9e3fc073052e6de726f9b462b7985a6c1b12"
+  },
+  "manifest_sha256": "0a2f59322b0d6e652b0e9561a9a748f08aef45d969a00c77ab1d697b55769d44",
+  "actual_native_setup": {
+    "scope": "LOCAL_OWNED_PG17_SPORTLINK_STAGE_SETUP",
+    "actual_migration_count": 36,
+    "network": "none",
+    "hosted_connections": 0,
+    "fresh_scope_created": true,
+    "same_key_replay_no_duplicate": true,
+    "byte_history_drift_rejected": true,
+    "slug_collision_no_adoption": true,
+    "exact_generated_session_readback_sql_executed": true,
+    "new_session_active_verified": true,
+    "wrong_identity_or_missing_session_denied": true,
+    "exact_generated_close_readback_executed": true,
+    "old_sessions_and_account_preserved": true,
+    "encrypted_save_native_audit_readback": true,
+    "permission_keys": [
+      "match.import"
+    ],
+    "annual_grant": true,
+    "existing_profile_and_foreign_grants_unchanged": true,
+    "native_operator_workspace": true,
+    "native_save_encrypted_readback": true,
+    "same_tenant_active_member_denied": true,
+    "foreign_denied": true,
+    "old_tenant_import_denied": true,
+    "expired_session_denied": true,
+    "new_active_session_revoked_grant_denied": true,
+    "revoked_grant_not_restored_by_replay": true,
+    "provider_requests": 0,
+    "real_credentials_used": false,
+    "production_enabled": false
+  },
+  "tests": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0
+  },
+  "log_sha256": "8cc41dc43cfc9eafd98dda1c685ee672ef83416fdba23daec66bfb617709ad6a",
+  "local_provider_auth_proof": {
+    "path": "provider-native-generated-session-refusal-cleanup.json",
+    "sha256": "2ddd3e3ad30b0ebeb9f94baf52eba7cb8358d82983c03251dbcbde3ce00c9c7e"
+  },
+  "limits": {
+    "actual_stage_setup_retry": false,
+    "real_client_id_stored": false,
+    "real_provider_read_test": false,
+    "failed_historical_stage_session_cleanup_verified": false,
+    "physical_device": false,
+    "production_enabled": false
+  }
+}

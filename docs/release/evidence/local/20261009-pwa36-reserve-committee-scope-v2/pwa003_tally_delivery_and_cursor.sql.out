@@ -1,0 +1,32 @@
+ok 1 - concrete member assignment
+
+ok 2 - regular cancellation cannot silently remove team occupancy
+
+ok 3 - actual canonical confirmation succeeds
+ok 4 - exactly one confirmed team execution
+ok 5 - team count and household minute ledger remain independent
+ok 6 - native correction appends decisions and ledger correction
+ok 7 - corrected no-show removes count through causal negative entry
+ok 8 - original team tally retained
+ok 9 - ledger reversal leaves original unrelated confirmed minutes
+ok 10 - team tally cannot be overwritten
+
+ok 11 - authorized canonical evidence contains actual posted record
+ok 12 - cross-tenant ledger evidence refused
+ok 13 - evidence omits Auth identities
+
+ok 14 - snapshot bounds each authorized conversation
+ok 15 - native cursor page has fixed maximum
+ok 16 - keyset continuation has remaining distinct rows
+ok 17 - null limit cannot unbound cursor
+ok 18 - oversized cursor limit refused
+
+ok 19 - different parent cannot use authorized cursor identity
+ok 20 - private worker leases concrete delivery targets
+ok 21 - provider acceptance is recorded against exact worker lease
+ok 22 - completed delivery cannot double-record same lease
+ok 23 - expired external-send lease is never automatically replayed
+ok 24 - expired outcome stays explicitly unknown
+ok 25 - provider attempt history is append-only
+ok 26 - human JWT cannot impersonate provider worker
+1..26

@@ -1,0 +1,254 @@
+{
+  "scope": "PUBLIC_STAGING_VS_LOCAL_LOGIN_CSS_READONLY_DIAGNOSTIC_V1",
+  "observed_at": "2026-10-09T13:18:17.260Z",
+  "source_parent": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+  "local_build_id": "N_Dg2FGoBXBoWfKPBnFMX",
+  "authenticated": false,
+  "credentials_used": false,
+  "app_or_auth_mutations_performed": false,
+  "physical_device_verified": false,
+  "production_enabled": false,
+  "v1_ready": false,
+  "private_values_exported": false,
+  "passed": true,
+  "observations": [
+    {
+      "target": "staging",
+      "final_path": "/app/login",
+      "status": 200,
+      "css": [
+        {
+          "path": "/_next/static/css/5351f63f9a741345.css",
+          "status": 200,
+          "content_type": "text/css; charset=UTF-8",
+          "cache_control": "public, max-age=31536000, immutable",
+          "bytes": 1391,
+          "sha256": "c4fc7fa9be011de32282aa1becc07cb74178a788ed3e0a5310f631576a71a4a3",
+          "auth_page_rule_present": false,
+          "auth_submit_rule_present": false
+        }
+      ],
+      "css_request_failures": [],
+      "dom": {
+        "stylesheets": [
+          {
+            "path": "/_next/static/css/5351f63f9a741345.css",
+            "loaded": true
+          }
+        ],
+        "style_nodes": 0,
+        "auth_page_count": 0,
+        "auth_heading_count": 1,
+        "horizontal_overflow": false,
+        "elements": [
+          {
+            "selector": "body",
+            "tag": "BODY",
+            "display": "block",
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(0, 0, 0)",
+            "font_family": "\"Times New Roman\"",
+            "font_size": "16px",
+            "font_weight": "400",
+            "padding": "0px",
+            "border_radius": "0px",
+            "width": 374,
+            "height": 844
+          },
+          null,
+          {
+            "selector": ".auth-card",
+            "tag": "DIV",
+            "display": "block",
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(0, 0, 0)",
+            "font_family": "\"Times New Roman\"",
+            "font_size": "16px",
+            "font_weight": "400",
+            "padding": "0px",
+            "border_radius": "0px",
+            "width": 374,
+            "height": 361
+          },
+          null,
+          {
+            "selector": "h1",
+            "tag": "H1",
+            "display": "block",
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(0, 0, 0)",
+            "font_family": "\"Times New Roman\"",
+            "font_size": "32px",
+            "font_weight": "700",
+            "padding": "0px",
+            "border_radius": "0px",
+            "width": 374,
+            "height": 37
+          },
+          {
+            "selector": "input[type=\"email\"]",
+            "tag": "INPUT",
+            "display": "inline-block",
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(0, 0, 0)",
+            "font_family": "Arial",
+            "font_size": "16px",
+            "font_weight": "400",
+            "padding": "1px 2px",
+            "border_radius": "0px",
+            "width": 215,
+            "height": 24
+          },
+          {
+            "selector": "button[type=\"submit\"]",
+            "tag": "BUTTON",
+            "display": "inline-block",
+            "background": "rgb(239, 239, 239)",
+            "color": "rgb(0, 0, 0)",
+            "font_family": "Arial",
+            "font_size": "13.3333px",
+            "font_weight": "400",
+            "padding": "1px 6px",
+            "border_radius": "0px",
+            "width": 137,
+            "height": 21
+          }
+        ]
+      },
+      "domain_mutation_requests_blocked": 0,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa36-public-login-style/staging-login-390.png",
+        "sha256": "e089cc68e145340efc9a3f17d1c0f22be6a9f30ec7cdc2c62fed5d86c0c9fe3a"
+      }
+    },
+    {
+      "target": "local",
+      "final_path": "/app/login",
+      "status": 200,
+      "css": [
+        {
+          "path": "/_next/static/css/5351f63f9a741345.css",
+          "status": 200,
+          "content_type": "text/css; charset=UTF-8",
+          "cache_control": "public, max-age=31536000, immutable",
+          "bytes": 1391,
+          "sha256": "c4fc7fa9be011de32282aa1becc07cb74178a788ed3e0a5310f631576a71a4a3",
+          "auth_page_rule_present": false,
+          "auth_submit_rule_present": false
+        },
+        {
+          "path": "/_next/static/css/1d7bfca937fbee4e.css",
+          "status": 200,
+          "content_type": "text/css; charset=UTF-8",
+          "cache_control": "public, max-age=31536000, immutable",
+          "bytes": 190884,
+          "sha256": "162a8668f2f08ad10fb2e2e168ce74b4dc62cc1dde4dc299ae8078a69c290225",
+          "auth_page_rule_present": false,
+          "auth_submit_rule_present": false
+        }
+      ],
+      "css_request_failures": [],
+      "dom": {
+        "stylesheets": [
+          {
+            "path": "/_next/static/css/1d7bfca937fbee4e.css",
+            "loaded": true
+          },
+          {
+            "path": "/_next/static/css/5351f63f9a741345.css",
+            "loaded": true
+          }
+        ],
+        "style_nodes": 0,
+        "auth_page_count": 0,
+        "auth_heading_count": 1,
+        "horizontal_overflow": false,
+        "elements": [
+          {
+            "selector": "body",
+            "tag": "BODY",
+            "display": "block",
+            "background": "rgb(245, 246, 247)",
+            "color": "rgb(32, 36, 38)",
+            "font_family": "Inter, Arial, Helvetica, sans-serif",
+            "font_size": "16px",
+            "font_weight": "400",
+            "padding": "0px",
+            "border_radius": "0px",
+            "width": 390,
+            "height": 844
+          },
+          null,
+          {
+            "selector": ".auth-card",
+            "tag": "DIV",
+            "display": "block",
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(32, 36, 38)",
+            "font_family": "Inter, Arial, Helvetica, sans-serif",
+            "font_size": "16px",
+            "font_weight": "400",
+            "padding": "26px 20px",
+            "border_radius": "18px",
+            "width": 362,
+            "height": 571
+          },
+          null,
+          {
+            "selector": "h1",
+            "tag": "H1",
+            "display": "block",
+            "background": "rgba(0, 0, 0, 0)",
+            "color": "rgb(32, 36, 38)",
+            "font_family": "Inter, Arial, Helvetica, sans-serif",
+            "font_size": "30px",
+            "font_weight": "650",
+            "padding": "0px",
+            "border_radius": "0px",
+            "width": 320,
+            "height": 38
+          },
+          {
+            "selector": "input[type=\"email\"]",
+            "tag": "INPUT",
+            "display": "block",
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(32, 36, 38)",
+            "font_family": "Inter, Arial, Helvetica, sans-serif",
+            "font_size": "15px",
+            "font_weight": "400",
+            "padding": "13px 14px",
+            "border_radius": "10px",
+            "width": 320,
+            "height": 50
+          },
+          {
+            "selector": "button[type=\"submit\"]",
+            "tag": "BUTTON",
+            "display": "block",
+            "background": "rgb(244, 95, 73)",
+            "color": "rgb(255, 255, 255)",
+            "font_family": "Inter, Arial, Helvetica, sans-serif",
+            "font_size": "16px",
+            "font_weight": "800",
+            "padding": "14px 18px",
+            "border_radius": "10px",
+            "width": 320,
+            "height": 52
+          }
+        ]
+      },
+      "domain_mutation_requests_blocked": 0,
+      "screenshot": {
+        "path": "docs/release/evidence/local/20261009-pwa36-public-login-style/local-login-390.png",
+        "sha256": "669fa089a6c546661915fc81f2b67d2fd5811b65d9daca22f9f327c21e285bc7"
+      }
+    }
+  ],
+  "browser": {
+    "engine": "Chromium",
+    "version": "153.0.8010.12",
+    "playwright": "1.63.0"
+  },
+  "runner_sha256": "224f89146044a101fdde3f53de2c68c9d4bf8ae7d2f15b3f075f07b27278f9cd"
+}

@@ -8,11 +8,11 @@ import {IMAGE} from '../scripts/pg17-capture-worker.mjs';
 import {INITIAL_RESTORE_STARTUP} from '../scripts/staging-pwa-upgrade-restore.mjs';
 import {UPGRADE_FILES,createUpgradeMigrationManifest,upgradeMigrationSQL} from '../scripts/staging-pwa-upgrade-migrations.mjs';
 import {createInitialMigrationManifest,initialMigrationSQL,INITIAL_MIGRATION_POLICY,INITIAL_MIGRATION_LOCK_OBJECT} from '../scripts/staging-initial-migrations.mjs';
-import {buildStagingSportlinkSetup,SPORTLINK_SETUP_SCOPE,sportlinkSetupStableAccountSql} from '../scripts/staging-sportlink-setup-sql.mjs';
+import {buildStagingSportlinkSetup,SPORTLINK_SETUP_SCOPE,sportlinkSetupStableAccountSql,sportlinkSetupSessionSql,sportlinkSetupReadbackSql} from '../scripts/staging-sportlink-setup-sql.mjs';
 import {sealSportlinkCredential,openSportlinkCredential} from '../lib/sportlink/credentials.mjs';
 
 const literal=v=>"'"+String(v).replaceAll("'","''")+"'",f=SPORTLINK_SETUP_SCOPE;
-test('actual owned fresh35: narrow staging scope, replay, no adoption and native actor/foreign/member/revocation fences',
+test('actual owned fresh36: narrow staging scope, replay, no adoption and native actor/foreign/member/revocation fences',
  {skip:process.env.CLUVO_SPORTLINK_SETUP_NATIVE_TESTS!=='owned-pg17',timeout:180000},async t=>{
  const socket=process.env.CLUVO_SPORTLINK_SETUP_DOCKER_SCOPE==='hosted'?'unix:///var/run/docker.sock':'unix:///run/user/1001/docker.sock';
  const name='cluvo-sportlink-setup-owned-'+randomBytes(12).toString('hex'),env={PATH:'/usr/bin:/bin',LANG:'C.UTF-8'};
@@ -91,6 +91,17 @@ INSERT INTO app.access_grants(id,tenant_id,auth_user_id,role_id,scope_kind,grant
   const second=sql(provision()).split('\n').filter(l=>l.startsWith('{')).map(JSON.parse).at(-1);assert.equal(second.outcome,'already_configured');
   assert.deepEqual(oldScope(),original);
   assert.deepEqual(json(sportlinkSetupStableAccountSql(actor)),originalStable);
+  // Execute the exact private session/readback recipes, including the query
+  // that failed on hosted staging. A separate provider callback oracle alone
+  // cannot establish that these generated native SQL statements are valid.
+  const callbackSession=randomUUID();sql(`INSERT INTO auth.sessions(id,user_id) VALUES('${callbackSession}','${actor}');`);
+  assert.deepEqual(json(sportlinkSetupSessionSql(actor,callbackSession)),{identity_confirmed:true,new_session_active:true,exact_scope:true});
+  assert.deepEqual(json(sportlinkSetupSessionSql(member,callbackSession)),{identity_confirmed:true,new_session_active:false,exact_scope:false});
+  assert.deepEqual(json(sportlinkSetupSessionSql(actor,randomUUID())),{identity_confirmed:true,new_session_active:false,exact_scope:true});
+  assert.deepEqual(json(sportlinkSetupReadbackSql(actor,callbackSession)),{connection_count:0,configured:false,test_code:null,native_audit_actor:true,native_save_audits:0,native_test_audits:0,new_session_absent:false});
+  sql(`DELETE FROM auth.sessions WHERE id='${callbackSession}' AND user_id='${actor}';`);
+  assert.equal(json(sportlinkSetupReadbackSql(actor,callbackSession)).new_session_absent,true);
+  assert.deepEqual(json(sportlinkSetupStableAccountSql(actor)),originalStable);
   const checks=json(`SELECT jsonb_build_object('roles',(SELECT array_agg(p.permission_key) FROM app.access_grants g JOIN app.role_permissions p ON p.tenant_id=g.tenant_id AND p.role_id=g.role_id WHERE g.tenant_id='${f.tenant}'),
  'audits',(SELECT count(*) FROM app.audit_events WHERE tenant_id='${f.tenant}'),'events',(SELECT count(*) FROM app.domain_events WHERE tenant_id='${f.tenant}'),
  'commands',(SELECT count(*) FROM app.idempotency_records WHERE tenant_id='${f.tenant}'),'annual',(SELECT ends_at=starts_at+interval '1 year' AND renewed_at IS NULL FROM app.access_grants WHERE id='${f.grant}'),
@@ -105,6 +116,7 @@ INSERT INTO app.access_grants(id,tenant_id,auth_user_id,role_id,scope_kind,grant
   assert.equal(save.ok,true);assert.equal(save.version,1);
   const credential=nativeJson(actor,session,`SELECT api.sportlink_connection_credential('${f.tenant}','${connection}',1);`);
   assert.equal(openSportlinkCredential(credential.credential_envelope,credential.credential_fingerprint,testSecret,{tenantId:f.tenant,connectionId:connection}),fakeClientId);
+  assert.deepEqual(json(sportlinkSetupReadbackSql(actor,callbackSession)),{connection_count:1,configured:true,test_code:null,native_audit_actor:true,native_save_audits:1,native_test_audits:0,new_session_absent:true});
   const memberPerson=randomUUID(),memberLink=randomUUID(),memberMembership=randomUUID(),memberGrant=randomUUID();
   // Make the denial an actual ordinary member of this same tenant. These
   // separate owned fixture rows are removed before testing bootstrap replay.
@@ -128,8 +140,10 @@ DELETE FROM app.tenant_memberships WHERE id='${memberMembership}';DELETE FROM ap
   assert.equal(json(`SELECT count(*) FROM app.audit_events WHERE action='staging.sportlink_operator_scope_created' AND tenant_id='${f.tenant}';`),1);
   assert.equal(json(`SELECT count(*) FROM app.access_grants WHERE id='${f.grant}' AND revoked_at IS NOT NULL AND version=2;`),1);
   assert.deepEqual(oldScope(),original);guard();
-  t.diagnostic(JSON.stringify({scope:'LOCAL_OWNED_PG17_SPORTLINK_STAGE_SETUP',actual_migration_count:35,network:'none',hosted_connections:0,
+  t.diagnostic(JSON.stringify({scope:'LOCAL_OWNED_PG17_SPORTLINK_STAGE_SETUP',actual_migration_count:36,network:'none',hosted_connections:0,
    fresh_scope_created:true,same_key_replay_no_duplicate:true,byte_history_drift_rejected:true,slug_collision_no_adoption:true,
+   exact_generated_session_readback_sql_executed:true,new_session_active_verified:true,wrong_identity_or_missing_session_denied:true,
+   exact_generated_close_readback_executed:true,old_sessions_and_account_preserved:true,encrypted_save_native_audit_readback:true,
    permission_keys:['match.import'],annual_grant:true,existing_profile_and_foreign_grants_unchanged:true,native_operator_workspace:true,
    native_save_encrypted_readback:true,same_tenant_active_member_denied:true,foreign_denied:true,old_tenant_import_denied:true,expired_session_denied:true,new_active_session_revoked_grant_denied:true,
    revoked_grant_not_restored_by_replay:true,provider_requests:0,real_credentials_used:false,production_enabled:false}));

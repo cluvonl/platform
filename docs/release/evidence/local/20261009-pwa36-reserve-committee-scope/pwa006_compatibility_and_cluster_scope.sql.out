@@ -1,0 +1,55 @@
+ok 1 - new tenants seed central club authority for board and volunteers
+ok 2 - central distribution does not broaden team-task management
+ok 3 - volatile automation guard remains private
+ok 4 - service key cannot call the worker guard
+ok 5 - worker guard correctly describes its volatile recovery check
+
+ok 6 - plain committee coordinator has no central distribution
+ok 7 - plain coordinator receives no receiving-team profile/count scope
+ok 8 - plain coordinator cannot reserve club positions in readmodel
+ok 9 - plain coordinator cannot atomically create a self-distributed club task
+ok 10 - plain coordinator cannot atomically create an assigned club task
+ok 11 - plain coordinator cannot reserve an existing club place
+ok 12 - plain coordinator cannot inspect central household-fit aggregates
+ok 13 - only the authorized public task was persisted
+ok 14 - denied commands create no cluster
+ok 15 - denied commands reserve no position
+
+ok 16 - coordinator plus own-team parent remains noncentral
+ok 17 - own-team management remains independently authorized
+ok 18 - own-team parent can still set its real team goal
+ok 19 - hybrid coordinator/team parent cannot distribute club tasks
+ok 20 - hybrid coordinator/team parent cannot reserve club places even for its own team
+ok 21 - hybrid denials create zero clusters
+ok 22 - hybrid denials reserve zero positions
+
+ok 23 - actual board tenant grant enables central distribution
+ok 24 - central receiving capability does not imply managing another team
+ok 25 - central native grant can preview real receiving teams
+ok 26 - central board commands persist both concrete clusters
+ok 27 - central creation and existing reservation atomically reserve three actual positions
+ok 28 - central authority can receive club work without a team-parent grant
+
+ok 29 - central reserved creation never exposes a public booking window
+ok 30 - central catalogue adds no cross-tenant actor access
+
+ok 31 - central club authority alone cannot answer a private household question
+
+ok 32 - actual volunteer committee tenant grant also enables central distribution
+ok 33 - central volunteers can create real self-distributed club work
+ok 34 - answer checks the exact private question version
+ok 35 - native reviewer answers using the typed question-recipient query
+ok 36 - same answer key replays its acknowledged result
+ok 37 - one durable answer notification is addressed to the actual question owner
+ok 38 - question open and answered states append once despite replay
+ok 39 - another parent receives no private answer notification
+
+ok 40 - owner reads exact answer and append-only question history
+ok 41 - owner native inbox reads exactly one actual question deep link
+
+ok 42 - shared household progress grant does not reveal another person private question
+ok 43 - another native account inbox excludes the private answer
+
+ok 44 - central authority still requires an actual source-committee manage grant
+ok 45 - central distribution cannot replace revoked source-committee planning authority
+1..45

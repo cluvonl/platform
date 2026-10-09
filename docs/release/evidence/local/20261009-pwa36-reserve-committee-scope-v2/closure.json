@@ -1,0 +1,95 @@
+{
+  "scope": "LOCAL_OWNED_RESERVE_COMMITTEE_TEAM_HOUSEHOLD_AND_DAILY_FANOUT_CLOSURE_V2",
+  "source_parent_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+  "new_migration": {
+    "file": "20261009119000_pwa_reserve_committee_scope.sql",
+    "sha256": "f7d9f77df7cde15bc23bb6408cab6f56a79031e0ee13198b2a9bf3d397f6801c"
+  },
+  "files_sha256": {
+    "supabase/migrations/20261009119000_pwa_reserve_committee_scope.sql": "f7d9f77df7cde15bc23bb6408cab6f56a79031e0ee13198b2a9bf3d397f6801c",
+    "supabase/tests/pwa017_reserve_committee_scope.sql": "94a9597ad3519565ccde31f236be6ec8bae76904d2ef61e3453fcd902d98f4a9",
+    "lib/pwa/server.ts": "f835587812df507ffadfc90e51329f278d88656180263811f9ab6e106509d1a6",
+    "components/mobile/types.ts": "a9cbbbecb62e97dcc9d0a993a8571696d9f0557f75aa71fe3e4fc2726272dfc1",
+    "components/mobile/club.tsx": "a810fe4066b6b9ab3559ab3044c8592ce028cf399a359c966b08496f19a4646d",
+    "components/mobile/committee-followup.tsx": "e9a130163e3856f9c95f59f2330de8023ba2ca1163166e7f965cb1094528fad9"
+  },
+  "proof": {
+    "path": "docs/release/evidence/local/20261009-pwa36-reserve-committee-scope-v2/owned-reserve-committee-scope.json",
+    "sha256": "9117c6e28f4de7c21efe1a35e14b2bf801b16977fd3506df74ccd6872191c8bb"
+  },
+  "executed_suites": {
+    "new_pwa017_assertions": 67,
+    "unchanged_prior_pwa_suite_count": 16,
+    "unchanged_prior_pwa_assertions": 688
+  },
+  "actual_blocked_contenders": [
+    {
+      "id": "ACTUAL_ALLOCATION_LOCK_WAIT_THEN_COMMITTEE_GRANT_REVOCATION_DENIES_NO_WRITES",
+      "passed": true,
+      "actual_blocked_contenders": 1,
+      "sqlstate": "42501",
+      "all_app_rows_after_fixture_unchanged": true
+    },
+    {
+      "id": "ACTUAL_ALLOCATION_LOCK_WAIT_THEN_SESSION_EXPIRY_DENIES_NO_WRITES",
+      "passed": true,
+      "actual_blocked_contenders": 1,
+      "sqlstate": "42501",
+      "all_app_rows_after_fixture_unchanged": true
+    },
+    {
+      "id": "ACTUAL_CLUSTER_LOCK_WAIT_READS_COMMITTED_NEW_DEADLINE_AND_DENIES_PREMATURE_REQUEST",
+      "passed": true,
+      "actual_blocked_contenders": 1,
+      "sqlstate": "55000"
+    },
+    {
+      "id": "ACTUAL_TWO_BLOCKED_NATIVE_COMMANDS_CONFIRM_SEPARATE_RECEIPTS_ONE_RESERVE_NOTIFICATION_PER_PLACE_PERSON_LOCAL_DAY_NO_EXTRA_AUTHORITY_OR_BOOKING_CREDIT",
+      "passed": true,
+      "actual_blocked_contenders": 2,
+      "day_state": {
+        "requests": 1,
+        "notifications": 1
+      }
+    }
+  ],
+  "runtime_verification": {
+    "eslint_4_modified_UI_server_files_passed": true,
+    "npm_run_typecheck_passed": true,
+    "browser_executed_for_this_candidate": false
+  },
+  "historical_first_candidate_119": {
+    "path": "docs/release/evidence/local/20261009-pwa36-reserve-committee-scope/closure.json",
+    "claim": "historical unpublished attempt; revised V2 covers team-household and current-payload daily fanout"
+  },
+  "artifact_hashes": {
+    "executed-safe-output.log": "511afc74768014106ce3fef7f678c5c62e2ee3748d5b8fb61db2549f0134c337",
+    "owned-reserve-committee-scope.json": "9117c6e28f4de7c21efe1a35e14b2bf801b16977fd3506df74ccd6872191c8bb",
+    "owned-runner.mjs": "500730230fe947dfd841d5f4a5e3ad46640b197d8bfd408e4709a2660e1a0ec2",
+    "pwa001_domain_and_privacy.sql.out": "cc28a709f9f0aeac308176cb0379d1bdbbbc9e6f7e21fb50c0a69df1b2745a75",
+    "pwa002_coordination_and_history.sql.out": "ea06de8535d4dcaf2766964e640d72db7f33aa491dd5b705173001982f9422df",
+    "pwa003_tally_delivery_and_cursor.sql.out": "128bc66da0722f2030d54dec1777e2eb79997fc6070236045c007c2b1400a5d9",
+    "pwa004_documents_and_receiving.sql.out": "584baab5ff2335de1c243b523f9b034b9e79a5846da4744fe86f15f8fffaafe4",
+    "pwa005_buddy_and_onboarding.sql.out": "5cc585a6e3109eef4607a9d5c454098a1f4b38a1cfc9759a82eb3deb39fa4cd2",
+    "pwa006_compatibility_and_cluster_scope.sql.out": "079ee2effc91a1e9b15f9e69c017bd3b9c3660fb79d9187ad2378204a26f1df2",
+    "pwa007_repeatable_commands.sql.out": "95b296b4393a2d612493b01cb05df6e163642cfeb8c71d6b2c5a62568f189d84",
+    "pwa008_digest_dispatch_day.sql.out": "c32be3427f1895c298208982fb3593aa5981cda5b15f5314a4c2d62cb81da60b",
+    "pwa009_card_version_gate.sql.out": "361fd5a88333e235f08f81628b23e246edce2b0af57792cddd10a5079c2284aa",
+    "pwa010_handover_checklist_integrity.sql.out": "034685c2a186316aa054328839917b93e100d2ef508dc408e329fc084af47dee",
+    "pwa011_task_offer_category_seed.sql.out": "24b22b115c88b9ddae0fdd2326eb75b725a0a4f1f4afc5395e16cfe402d005a8",
+    "pwa012_nested_version_integrity.sql.out": "5e3044099f4ada4201d6ef9b15a56b40145bb911791623266a48ac4d3b3c01b1",
+    "pwa013_policy_assignment_identity.sql.out": "6b2ae280ef7ae67816002aa248bd57f8ec2c1388f88d62ec9b9421fc09a1fcfd",
+    "pwa014_personal_action_context.sql.out": "381297957523b799cc11b30ca7633617233cfecec95b71174abedfc3593f8631",
+    "pwa015_committee_planning.sql.out": "2ac91898b1519e10b8176dbfc31a71eb40cf254c8fd17d60d3f0578a4ab3a604",
+    "pwa016_sportlink_connection.sql.out": "349156301ade1e6549ef40501e16f5752ccd19c85c364e9655c9149fbe5c01d2",
+    "pwa017_reserve_committee_scope.sql.out": "8d9fc8b5c0afb3afeca9adb9f5d4fd657a23eb7d65f2e0e32aea20d0bde499d3"
+  },
+  "limits": {
+    "hosted_or_shared_database_changes": false,
+    "provider_calls": false,
+    "staging_browser_acceptance": false,
+    "whole_F054_F074_acceptance": false,
+    "physical_device_acceptance": false,
+    "financial_or_hour_awards": false
+  }
+}

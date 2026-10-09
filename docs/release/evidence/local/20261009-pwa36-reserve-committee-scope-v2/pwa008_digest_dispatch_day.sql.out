@@ -1,0 +1,29 @@
+ok 1 - four real email targets leased without external requests
+ok 2 - real source is still an eligible future free shift
+ok 3 - actual current tenant calendar day differs from UTC
+ok 4 - historical digest timezone snapshot remains unchanged
+ok 5 - previous-day queued digest cannot dispatch today
+ok 6 - today digest dispatches using current club timezone rather than UTC or snapshot
+ok 7 - known previous-day 429 is recorded through native receipt path
+ok 8 - unknown previous-day outcome is retained through native receipt path
+ok 9 - known 429 keeps historical digest failed
+ok 10 - unknown keeps historical digest unknown
+ok 11 - second worker can lease only due known-failed target, never in-flight or unknown
+ok 12 - known 429 retry from an old day is denied immediately before provider
+ok 13 - unknown target is never automatically replayed
+ok 14 - other worker cannot revalidate today target leased to first worker
+ok 15 - old queued digest is cancelled with durable acknowledgement
+ok 16 - old known failure is cancelled after revalidation rejects it
+ok 17 - synthetic current-day provider acceptance records one native receipt
+ok 18 - current digest now has real receipt state without actual provider claim
+ok 19 - all historical calendar slots remain reserved
+ok 20 - same-day second digest cannot reserve another slot after acceptance
+ok 21 - unknown outcome never releases its historical daily slot
+ok 22 - second worker cannot replay accepted, cancelled or unknown targets
+ok 23 - current slot has exactly one accepted attempt
+ok 24 - dispatch day correction cannot erase receipt history
+ok 25 - all initial leases, known failure, retry lease, unknown and terminal receipts are append-only
+ok 26 - authenticated cannot invoke private dispatch revalidation
+ok 27 - service role cannot bypass native automation gate
+ok 28 - command owner cannot invoke private worker gate
+1..28

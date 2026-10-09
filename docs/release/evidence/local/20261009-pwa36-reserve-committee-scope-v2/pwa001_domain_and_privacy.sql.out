@@ -1,0 +1,39 @@
+ok 1 - authorized complete mobile snapshot executes
+ok 2 - identity comes only from verified actor
+ok 3 - foreign tenant snapshot denied
+ok 4 - member cannot read financial transactions
+ok 5 - snapshot excludes Auth source data
+ok 6 - push endpoints and secrets not directly readable
+ok 7 - server key has no human PWA command authority
+ok 8 - actor override and unknown payload fields refused
+ok 9 - preferences commit durable version
+ok 10 - unknown response retry returns same receipt
+ok 11 - changed payload cannot reuse command key
+ok 12 - own command status readback confirms commit
+ok 13 - versioned explanation persists
+ok 14 - unknown help topic rejected
+ok 15 - own course enrollment commits
+
+ok 16 - other actor cannot see command receipt
+ok 17 - help preferences separated between parents
+ok 18 - last occupied course place rejects other account
+
+ok 19 - team parent assigns actual child without booking executor
+ok 20 - team goal zero is valid and durable
+
+ok 21 - reserved concrete place disappears from public market
+ok 22 - legacy public booking cannot bypass reservation
+ok 23 - authorized household chooses executor and books reserved place
+ok 24 - preparation is durable and does not confirm execution
+ok 25 - practical household question is separate from formal exception
+
+ok 26 - other parent cannot read private practical question
+ok 27 - planning/preparation creates no team execution credit
+ok 28 - planning/preparation creates no confirmed household minutes
+ok 29 - transaction reservation authorization never persists
+ok 30 - terminal confirmed place cannot be rebooked
+ok 31 - all new PWA relations force RLS
+
+ok 32 - revoked native session cannot read PWA snapshot
+ok 33 - revoked native session cannot mutate PWA
+1..33

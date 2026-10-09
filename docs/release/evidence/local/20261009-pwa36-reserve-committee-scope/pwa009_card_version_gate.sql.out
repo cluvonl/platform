@@ -1,0 +1,40 @@
+ok 1 - dispatcher retains definer owner, volatility and empty path
+ok 2 - public dispatcher remains security invoker
+ok 3 - anonymous role has no internal command authority
+
+ok 4 - manager reply reaches actual dispatcher without unassigned record error
+ok 5 - card update returns actual new version
+ok 6 - stale card version is rejected
+ok 7 - reply version uses actual card version
+ok 8 - checklist requires item version even when supplied version matches card
+ok 9 - checklist completion increments item version
+ok 10 - stale checklist item cannot be cleared
+ok 11 - current checklist version may clear completion
+
+ok 12 - assigned viewer can reply through native own-person scope
+ok 13 - exact reply replay returns original receipt
+ok 14 - same reply key cannot change content
+ok 15 - assigned actor reads only the explicitly assigned card
+ok 16 - assignment does not authorize manager-only deadline change
+
+ok 17 - other parent cannot read the private commission card
+ok 18 - other parent cannot reply
+ok 19 - other parent cannot update
+ok 20 - other parent cannot change checklist
+
+ok 21 - coordinator role does not cross committee
+ok 22 - coordinator role does not cross club
+{"sub":"33333333-3333-4333-8333-333333333333","session_id":"99999999-9999-4999-8999-999999999999","role":"authenticated"}
+ok 23 - spoofed session cannot use the repaired path
+ok 24 - replay and negative writes create no extra reply
+ok 25 - reply author is the native actor person
+ok 26 - actual card column reads back after update
+ok 27 - denied deadline mutation rolls back preceding card update
+ok 28 - failed mutations do not increment card version
+ok 29 - successful update appends exactly one history row
+ok 30 - history binds actual manager and card version
+ok 31 - checklist readback preserves explicit cleared state
+ok 32 - replayed reply retains one actual event
+ok 33 - reply contents stay outside audit payload
+ok 34 - card mutations create no confirmed hour credit
+1..34

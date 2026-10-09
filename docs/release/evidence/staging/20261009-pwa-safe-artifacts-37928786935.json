@@ -1,0 +1,30 @@
+{
+  "scope": "EXACT_GITHUB_RUN_SAFE_AGGREGATES_ONLY",
+  "observed_at": "2026-10-09T12:17:44.753949+00:00",
+  "workflow_run_id": 37928786935,
+  "source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+  "run_status": "completed",
+  "run_conclusion": "failure",
+  "run_url": "https://github.com/cluvonl/platform/actions/runs/37928786935",
+  "jobs": [
+    {
+      "name": "setup",
+      "status": "completed",
+      "conclusion": "failure"
+    }
+  ],
+  "downloaded_safe_aggregates": [
+    {
+      "artifact_id": 11615755667,
+      "name": "cluvo-staging-sportlink-setup-9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef-37928786935-1",
+      "path": "docs/release/evidence/staging/20261009-pwa-sportlink-setup-37928786935-gha.json",
+      "sha256": "5acfcf11a90ebb8ae3a0ad2981e21ff56008438f5a6ab6b4771cc7a96066e3ce",
+      "bytes": 809
+    }
+  ],
+  "encrypted_custody_metadata_only": [],
+  "backup_downloaded": false,
+  "private_logs_read": false,
+  "physical_device_verified": false,
+  "production_enabled": false
+}

@@ -8,6 +8,7 @@ import {readFile,writeFile} from 'node:fs/promises';
 import {isDeepStrictEqual} from 'node:util';
 import {createClient} from '@supabase/supabase-js';
 import {createLocalExistingSportlinkOperatorSession,closeSportlinkOperatorSession} from '../scripts/staging-sportlink-setup-auth.mjs';
+import {sportlinkSetupSessionSql} from '../scripts/staging-sportlink-setup-sql.mjs';
 
 test('actual owned local Auth: recovery is existing-only, verified native session, local logout preserves old users/sessions',
  {skip:process.env.CLUVO_SPORTLINK_AUTH_PROVIDER_NATIVE_TESTS!=='owned-local-provider',timeout:90000},async t=>{
@@ -37,11 +38,32 @@ test('actual owned local Auth: recovery is existing-only, verified native sessio
   const created=await admin.auth.admin.createUser({email,email_confirm:true,app_metadata:{cluvo_sportlink_setup_proof:nonce}});
   need(created.error===null&&created.data?.user?.app_metadata?.cluvo_sportlink_setup_proof===nonce&&created.data.user.email===email,'OWNED_AUTH_USER_CREATE_FAILED');user=created.data.user;
   session=await createLocalExistingSportlinkOperatorSession({admin,client,recipient:email,authUserId:user.id,projectUrl:api,
-   verifyNativeSession:async(uid,sid)=>{need(uid===user.id,'OWNED_PROVIDER_IDENTITY_REQUIRED');need(json("SELECT to_jsonb(EXISTS(SELECT 1 FROM auth.sessions WHERE id="+literal(sid)+" AND user_id="+literal(uid)+" AND(not_after IS NULL OR not_after>now())))"),'PROVIDER_NATIVE_SESSION_REQUIRED');}});
+   verifyNativeSession:async(uid,sid)=>{
+    need(uid===user.id,'OWNED_PROVIDER_IDENTITY_REQUIRED');
+    // Execute the production-generated query on the real local Auth session.
+    // This new fake account has no fixed Duindorp membership: false scope is
+    // a deliberate negative control, not an operational provisioning claim.
+    const native=json(sportlinkSetupSessionSql(uid,sid));
+    assert.deepEqual(native,{identity_confirmed:true,new_session_active:true,exact_scope:false});
+   }});
   preserve(baseline,snapshot());await closeSportlinkOperatorSession(admin,session);
   need(json('SELECT count(*) FROM auth.sessions WHERE id='+literal(session.sessionId))===0,'CREATED_PROVIDER_SESSION_DELETE_REQUIRED');preserve(baseline,snapshot());
+  // The failed hosted attempt stopped inside this callback. Reproduce a
+  // native-verification refusal on our new fake identity and establish that
+  // the adapter closes that issued session while preserving every old one.
+  let refusedSession;
+  await assert.rejects(createLocalExistingSportlinkOperatorSession({admin,client,recipient:email,authUserId:user.id,projectUrl:api,
+   verifyNativeSession:async(uid,sid)=>{
+    need(uid===user.id,'OWNED_PROVIDER_IDENTITY_REQUIRED');refusedSession=sid;
+    assert.deepEqual(json(sportlinkSetupSessionSql(uid,sid)),{identity_confirmed:true,new_session_active:true,exact_scope:false});
+    throw Error('OWNED_NATIVE_VERIFICATION_REFUSAL');
+   }}),error=>error.code==='STAGING_SPORTLINK_SETUP_AUTH_REFUSED_NATIVE_SESSION');
+  need(typeof refusedSession==='string','REFUSED_NATIVE_SESSION_PROOF_REQUIRED');
+  need(json('SELECT count(*) FROM auth.sessions WHERE id='+literal(refusedSession))===0,'REFUSED_PROVIDER_SESSION_DELETE_REQUIRED');preserve(baseline,snapshot());
   proof={scope:'LOCAL_OWNED_SPORTLINK_SETUP_AUTH_PROVIDER_CONTRACT',passed:true,unknown_recovery_no_signup:true,new_fake_identity_only:true,
    genuine_admin_issued_recovery_session:true,provider_get_user_and_verified_claims:true,native_session_row_verified:true,
+   exact_generated_session_sql_executed:true,absent_staging_membership_negative_control:true,staging_scope_provisioned:false,
+   native_verification_refusal_cleanup_verified:true,refused_issued_session_absent:true,
    explicit_local_signout_only:true,created_session_absent:true,all_original_users_and_sessions_preserved:true,
    email_sent:false,password_changed:false,real_credentials_used:false,hosted_requests:0,provider_requests:0,production_enabled:false};
  }finally{
@@ -56,5 +78,6 @@ test('actual owned local Auth: recovery is existing-only, verified native sessio
  need(proof,'LOCAL_PROVIDER_PROOF_REQUIRED');proof.owned_identity_and_sessions_removed=true;
  proof.test_source_sha256=createHash('sha256').update(await readFile(new URL(import.meta.url))).digest('hex');
  proof.auth_adapter_sha256=createHash('sha256').update(await readFile(new URL('../scripts/staging-sportlink-setup-auth.mjs',import.meta.url))).digest('hex');
+ proof.setup_sql_sha256=createHash('sha256').update(await readFile(new URL('../scripts/staging-sportlink-setup-sql.mjs',import.meta.url))).digest('hex');
  await writeFile('/tmp/cluvo-sportlink-setup-auth-provider-owned-proof.json',JSON.stringify(proof,null,2)+'\n',{mode:0o600});t.diagnostic(JSON.stringify(proof));
 });

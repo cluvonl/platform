@@ -1,0 +1,3188 @@
+{
+  "format": "cluvo-pwa-staging-rollout-journal-v1",
+  "scope": "STAGING_PUBLIC_ROLLOUT_OBSERVATIONS",
+  "created_at": "2026-10-09T05:02:06.298Z",
+  "target": {
+    "repository": "cluvonl/platform",
+    "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+    "origin": "https://staging.cluvo.nl",
+    "production_enabled": false,
+    "initial_source_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f"
+  },
+  "promotion": {
+    "state": "reported_complete",
+    "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+    "ci_run_id": 37887779712,
+    "basis": "Root reports exact promotion helper SUCCESS. Verify exact promotion from main step remains separately visible in public workflow metadata."
+  },
+  "readback": {
+    "native_browser": {
+      "state": "pending"
+    },
+    "configuration": {
+      "state": "pending"
+    },
+    "delivery": {
+      "state": "pending"
+    }
+  },
+  "physical_validation": {
+    "state": "pending",
+    "basis": "No physical-device result supplied; browser and SQL proof do not attest physical installation or push.",
+    "planned_android_device": {
+      "model": "Samsung S24",
+      "reported_os": "nieuwste android versie",
+      "os_version_verified": false,
+      "browser_version_verified": false,
+      "basis": "User hardware availability reply; no device test yet",
+      "physical_execution_verified": false
+    },
+    "iphone_available": "awaiting_user_hardware_answer"
+  },
+  "events": [
+    {
+      "observed_at": "2026-10-09T05:02:06.298Z",
+      "kind": "public_workflow_and_health_observation",
+      "source_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f",
+      "ci_status": "completed",
+      "ci_conclusion": "success",
+      "full_staging_status": "in_progress",
+      "full_staging_conclusion": null,
+      "push_duplicate_conclusion": "cancelled",
+      "activation_state": "pending",
+      "observed_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4"
+    },
+    {
+      "observed_at": "2026-10-09T05:08:41.982Z",
+      "kind": "public_workflow_and_health_observation",
+      "source_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f",
+      "ci_status": "completed",
+      "ci_conclusion": "success",
+      "full_staging_status": "completed",
+      "full_staging_conclusion": "failure",
+      "push_duplicate_conclusion": "cancelled",
+      "activation_state": "pending",
+      "observed_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4"
+    },
+    {
+      "observed_at": "2026-10-09T05:09:29.318909+00:00",
+      "kind": "root_reported_failed_actual_gate",
+      "workflow_run_id": 37886207417,
+      "source_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f",
+      "gate": "database-upgrade",
+      "phase": "history",
+      "error_code": "RESTORE_SQL_RESPONSE_UNKNOWN",
+      "applied_migrations": 0,
+      "database_mutations_performed": false,
+      "native_qa_performed": false,
+      "deploy_performed": false,
+      "activation_performed": false
+    },
+    {
+      "observed_at": "2026-10-09T05:12:10.251693+00:00",
+      "kind": "exact_safe_gha_aggregate_copy",
+      "workflow_run_id": 37886207417,
+      "source_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f",
+      "relative_path": "20261009-pwa-upgrade-attempt-37886207417-gha.json",
+      "sha256": "5ab2f855129d5b9145386f72a70823a4af49fc32bfdfd68ad1d6b80259370c94",
+      "root_reported_provenance_retained": true
+    },
+    {
+      "observed_at": "2026-10-09T05:17:33.321Z",
+      "kind": "root_reported_new_ops_candidate_with_public_ci_metadata",
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "parent_source_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f",
+      "ci_run_id": 37887779712,
+      "ci_status": "in_progress",
+      "ci_conclusion": null,
+      "staging_source_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f",
+      "observed_active_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4",
+      "promotion_state": "pending"
+    },
+    {
+      "observed_at": "2026-10-09T05:19:42.374Z",
+      "kind": "root_reported_new_ops_candidate_with_public_ci_metadata",
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "parent_source_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f",
+      "ci_run_id": 37887779712,
+      "ci_status": "in_progress",
+      "ci_conclusion": null,
+      "staging_source_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f",
+      "observed_active_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4",
+      "promotion_state": "pending"
+    },
+    {
+      "observed_at": "2026-10-09T05:20:32.236Z",
+      "kind": "root_reported_new_ops_candidate_with_public_ci_metadata",
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "parent_source_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f",
+      "ci_run_id": 37887779712,
+      "ci_status": "in_progress",
+      "ci_conclusion": null,
+      "staging_source_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f",
+      "observed_active_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4",
+      "promotion_state": "pending"
+    },
+    {
+      "observed_at": "2026-10-09T05:21:25.256Z",
+      "kind": "root_reported_new_ops_candidate_with_public_ci_metadata",
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "parent_source_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f",
+      "ci_run_id": 37887779712,
+      "ci_status": "in_progress",
+      "ci_conclusion": null,
+      "staging_source_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f",
+      "observed_active_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4",
+      "promotion_state": "pending"
+    },
+    {
+      "observed_at": "2026-10-09T05:22:34.385Z",
+      "kind": "root_reported_new_ops_candidate_with_public_ci_metadata",
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "parent_source_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f",
+      "ci_run_id": 37887779712,
+      "ci_status": "completed",
+      "ci_conclusion": "success",
+      "staging_source_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f",
+      "observed_active_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4",
+      "promotion_state": "pending"
+    },
+    {
+      "observed_at": "2026-10-09T05:24:06.777Z",
+      "kind": "public_full_staging_gate_and_health_observation",
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "workflow_run_id": 37888304288,
+      "workflow_status": "pending",
+      "workflow_conclusion": null,
+      "job_changes": [],
+      "push_duplicate_conclusion": null,
+      "activation_state": "pending",
+      "observed_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4"
+    },
+    {
+      "observed_at": "2026-10-09T05:25:32.187579+00:00",
+      "kind": "separate_actual_local_restore_fix_provenance",
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "local_proof": "20261009-pwa-restore-fix-local-archive-proof.json",
+      "hosted_gate_claim": false
+    },
+    {
+      "observed_at": "2026-10-09T05:26:38.826Z",
+      "kind": "public_full_staging_gate_and_health_observation",
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "workflow_run_id": 37888304288,
+      "workflow_status": "in_progress",
+      "workflow_conclusion": null,
+      "job_changes": [
+        {
+          "name": "build",
+          "status": "in_progress",
+          "conclusion": null
+        }
+      ],
+      "push_duplicate_conclusion": "cancelled",
+      "activation_state": "pending",
+      "observed_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4"
+    },
+    {
+      "observed_at": "2026-10-09T05:28:03.302Z",
+      "kind": "public_full_staging_gate_and_health_observation",
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "workflow_run_id": 37888304288,
+      "workflow_status": "in_progress",
+      "workflow_conclusion": null,
+      "job_changes": [],
+      "push_duplicate_conclusion": "cancelled",
+      "activation_state": "pending",
+      "observed_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4"
+    },
+    {
+      "observed_at": "2026-10-09T05:29:04.923Z",
+      "kind": "public_full_staging_gate_and_health_observation",
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "workflow_run_id": 37888304288,
+      "workflow_status": "in_progress",
+      "workflow_conclusion": null,
+      "job_changes": [],
+      "push_duplicate_conclusion": "cancelled",
+      "activation_state": "pending",
+      "observed_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4"
+    },
+    {
+      "observed_at": "2026-10-09T05:30:13.926Z",
+      "kind": "public_full_staging_gate_and_health_observation",
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "workflow_run_id": 37888304288,
+      "workflow_status": "in_progress",
+      "workflow_conclusion": null,
+      "job_changes": [],
+      "push_duplicate_conclusion": "cancelled",
+      "activation_state": "pending",
+      "observed_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4"
+    },
+    {
+      "observed_at": "2026-10-09T05:31:23.250Z",
+      "kind": "public_full_staging_gate_and_health_observation",
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "workflow_run_id": 37888304288,
+      "workflow_status": "in_progress",
+      "workflow_conclusion": null,
+      "job_changes": [
+        {
+          "name": "build",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "database-upgrade",
+          "status": "in_progress",
+          "conclusion": null
+        }
+      ],
+      "push_duplicate_conclusion": "cancelled",
+      "activation_state": "pending",
+      "observed_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4"
+    },
+    {
+      "observed_at": "2026-10-09T05:32:35.120Z",
+      "kind": "public_full_staging_gate_and_health_observation",
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "workflow_run_id": 37888304288,
+      "workflow_status": "in_progress",
+      "workflow_conclusion": null,
+      "job_changes": [],
+      "push_duplicate_conclusion": "cancelled",
+      "activation_state": "pending",
+      "observed_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4"
+    },
+    {
+      "observed_at": "2026-10-09T05:33:40.719106+00:00",
+      "kind": "safe_public_release_manifest_provenance",
+      "workflow_run_id": 37888304288,
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "path": "20261009-pwa-release-manifest-37888304288.json",
+      "sha256": "98ba1ec732aebafb1041e0600c0fbb20c5cde23fedcf59fcbc4bf23a035e0f58",
+      "runtime_activation_claim": false
+    },
+    {
+      "observed_at": "2026-10-09T05:33:51.567Z",
+      "kind": "public_full_staging_gate_and_health_observation",
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "workflow_run_id": 37888304288,
+      "workflow_status": "in_progress",
+      "workflow_conclusion": null,
+      "job_changes": [],
+      "push_duplicate_conclusion": "cancelled",
+      "activation_state": "pending",
+      "observed_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4"
+    },
+    {
+      "observed_at": "2026-10-09T05:35:08.045Z",
+      "kind": "public_full_staging_gate_and_health_observation",
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "workflow_run_id": 37888304288,
+      "workflow_status": "in_progress",
+      "workflow_conclusion": null,
+      "job_changes": [],
+      "push_duplicate_conclusion": "cancelled",
+      "activation_state": "pending",
+      "observed_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4"
+    },
+    {
+      "observed_at": "2026-10-09T05:36:15.189Z",
+      "kind": "public_full_staging_gate_and_health_observation",
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "workflow_run_id": 37888304288,
+      "workflow_status": "in_progress",
+      "workflow_conclusion": null,
+      "job_changes": [],
+      "push_duplicate_conclusion": "cancelled",
+      "activation_state": "pending",
+      "observed_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4"
+    },
+    {
+      "observed_at": "2026-10-09T05:37:22.776040+00:00",
+      "kind": "root_reported_public_artifact_metadata_only",
+      "workflow_run_id": 37888304288,
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "build_artifact_id": 11597328411,
+      "encrypted_custody_artifact_id": 11597955308,
+      "encrypted_custody_size_bytes": 7961997,
+      "encrypted_content_downloaded": false,
+      "restore_or_apply_claim": false
+    },
+    {
+      "observed_at": "2026-10-09T05:37:24.198Z",
+      "kind": "public_full_staging_gate_and_health_observation",
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "workflow_run_id": 37888304288,
+      "workflow_status": "in_progress",
+      "workflow_conclusion": null,
+      "job_changes": [],
+      "push_duplicate_conclusion": "cancelled",
+      "activation_state": "pending",
+      "observed_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4"
+    },
+    {
+      "observed_at": "2026-10-09T05:39:40.196779+00:00",
+      "kind": "hosted_database_upgrade_safe_aggregate_verified",
+      "workflow_run_id": 37888304288,
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "report_sha256": "30408586c08da2213562df05d42fddd6e1b6921600bb291af8d0385302aa7789",
+      "passed": true,
+      "initial_applied_prefix": 16,
+      "applied_migrations": 15,
+      "final_applied_prefix": 31,
+      "encrypted_backup_downloaded_here": false,
+      "activation_verified": false,
+      "native_browser_verified": false,
+      "provider_services_verified": false,
+      "production_enabled": false
+    },
+    {
+      "observed_at": "2026-10-09T05:39:41.844Z",
+      "kind": "public_full_staging_gate_and_health_observation",
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "workflow_run_id": 37888304288,
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "job_changes": [
+        {
+          "name": "database-upgrade",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "pwa-native-qa",
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "name": "deploy",
+          "status": "completed",
+          "conclusion": "skipped"
+        }
+      ],
+      "push_duplicate_conclusion": "cancelled",
+      "activation_state": "pending",
+      "observed_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4"
+    },
+    {
+      "observed_at": "2026-10-09T05:40:11.904026+00:00",
+      "kind": "full_workflow_failed_after_successful_database_upgrade",
+      "workflow_run_id": 37888304288,
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "database_upgrade": "success",
+      "pwa_native_qa": "failure",
+      "deploy": "skipped",
+      "app_activation_verified": false,
+      "active_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4",
+      "reason": "public job metadata only; exact native QA failure cause pending safe root report"
+    },
+    {
+      "observed_at": "2026-10-09T05:41:59.900913+00:00",
+      "kind": "safe_native_qa_failure_aggregate_exact_copy",
+      "workflow_run_id": 37888304288,
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "error_code": "STAGING_NATIVE_QA_ACTUAL_OVERLAP_UNPROVED",
+      "report_sha256": "c480c0d2098856d6da83470b4144fb46d45c8a5aa142e56251ba706516701de2",
+      "cleanup_reported_complete": true,
+      "private_logs_read": false,
+      "database_queries_here": false,
+      "app_activation_verified": false
+    },
+    {
+      "observed_at": "2026-10-09T05:53:17.068262+00:00",
+      "kind": "actual_owned_native_qa_activity_cache_fix_proof",
+      "baseline_source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "native_python_owner_sha256": "8291f760884086eb966788217f44e0dfe269752472831613cd5c932bdf4a4a2b",
+      "old_cached_counts": [
+        0,
+        0,
+        0
+      ],
+      "actual_fixed_counts": [
+        2,
+        2,
+        2
+      ],
+      "observer_backend_and_lock_preserved": true,
+      "original31_unchanged": true,
+      "hosted_qa_pass_claim": false,
+      "app_activation_claim": false
+    },
+    {
+      "observed_at": "2026-10-09T06:10:10.706182+00:00",
+      "kind": "closed_owned_pwa32_operational_source_proof",
+      "target_migration_count": 32,
+      "migration_manifest_sha256": "e1087c300882adcf8be7a5087507c824a7cfd10bd5f66133646315dba7d10c42",
+      "original31_unchanged": true,
+      "actual_owned_fresh16_and_approved31_cases": 2,
+      "actual_sql_lineage_negatives": 8,
+      "actual_native_blocked_contenders_per_case": 2,
+      "new_hosted32_upgrade_claim": false,
+      "app_activation_claim": false
+    },
+    {
+      "observed_at": "2026-10-09T06:12:13.540498+00:00",
+      "kind": "root_reported_local32_verification_and_sharedlocal_apply",
+      "basis": "root actual local report; separate from hosted staging",
+      "node_total": 748,
+      "node_passed": 719,
+      "node_skipped": 29,
+      "lint_types_build_wp0_coverage": "passed",
+      "local_migration_count": 32,
+      "previous31_history_auth_bookings_ledger_preserved": true,
+      "hosted_staging_migration_prefix_still_last_verified": 31,
+      "target_runtime_activation_claim": false
+    },
+    {
+      "observed_at": "2026-10-09T06:40:33.814374+00:00",
+      "kind": "root_reported_pwa32_main_candidate_committed",
+      "source_sha": "1efe5ff0d198fcabbeb45912256ee3af56463b60",
+      "workflow_run_id": 37894603540,
+      "basis": "root completed commit/push report; public CI head independently observed matches",
+      "public_ci_status_observed": "in_progress",
+      "public_verify_steps_observed_success": [
+        "npm ci",
+        "lint",
+        "typecheck"
+      ],
+      "public_verify_current_step_observed": "npm test",
+      "staging_promotion_claim": false,
+      "hosted32_upgrade_claim": false,
+      "app_activation_claim": false,
+      "previous_hosted_prefix_last_verified": 31
+    },
+    {
+      "observed_at": "2026-10-09T06:41:12.297Z",
+      "kind": "public_ci_candidate_observation",
+      "source_sha": "1efe5ff0d198fcabbeb45912256ee3af56463b60",
+      "workflow_run_id": 37894603540,
+      "workflow_url": "https://github.com/cluvonl/platform/actions/runs/37894603540",
+      "event": "push",
+      "observation": {
+        "status": "in_progress",
+        "conclusion": null,
+        "jobs": [
+          {
+            "name": "verify",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/cluvonl/platform/actions/runs/37894603540/job/113702975998",
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm ci --no-audit --no-fund",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm run lint",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm run typecheck",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm test",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm run build",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm run test:wp0",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "name": "database",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/cluvonl/platform/actions/runs/37894603540/job/113703555545",
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm ci --no-audit --no-fund",
+                "status": "in_progress",
+                "conclusion": null
+              },
+              {
+                "name": "Prove the closed additive writer and native PWA contracts in an owned PostgreSQL17 database",
+                "status": "pending",
+                "conclusion": null
+              },
+              {
+                "name": "Migrations, pgTAP and database lint",
+                "status": "pending",
+                "conclusion": null
+              },
+              {
+                "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "pending",
+                "conclusion": null
+              },
+              {
+                "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "pending",
+                "conclusion": null
+              }
+            ]
+          }
+        ]
+      },
+      "scope": "read_only_public_GitHub_metadata",
+      "promotion_claim": false,
+      "hosted32_upgrade_claim": false,
+      "activation_claim": false
+    },
+    {
+      "observed_at": "2026-10-09T06:42:06.896Z",
+      "kind": "public_ci_candidate_observation",
+      "source_sha": "1efe5ff0d198fcabbeb45912256ee3af56463b60",
+      "workflow_run_id": 37894603540,
+      "workflow_url": "https://github.com/cluvonl/platform/actions/runs/37894603540",
+      "event": "push",
+      "observation": {
+        "status": "in_progress",
+        "conclusion": null,
+        "jobs": [
+          {
+            "name": "verify",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/cluvonl/platform/actions/runs/37894603540/job/113702975998",
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm ci --no-audit --no-fund",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm run lint",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm run typecheck",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm test",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm run build",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm run test:wp0",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "name": "database",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/cluvonl/platform/actions/runs/37894603540/job/113703555545",
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm ci --no-audit --no-fund",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Prove the closed additive writer and native PWA contracts in an owned PostgreSQL17 database",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Migrations, pgTAP and database lint",
+                "status": "in_progress",
+                "conclusion": null
+              },
+              {
+                "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "pending",
+                "conclusion": null
+              },
+              {
+                "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "pending",
+                "conclusion": null
+              }
+            ]
+          }
+        ]
+      },
+      "scope": "read_only_public_GitHub_metadata",
+      "promotion_claim": false,
+      "hosted32_upgrade_claim": false,
+      "activation_claim": false
+    },
+    {
+      "observed_at": "2026-10-09T06:45:14.949Z",
+      "kind": "public_ci_candidate_observation",
+      "source_sha": "1efe5ff0d198fcabbeb45912256ee3af56463b60",
+      "workflow_run_id": 37894603540,
+      "workflow_url": "https://github.com/cluvonl/platform/actions/runs/37894603540",
+      "event": "push",
+      "observation": {
+        "status": "completed",
+        "conclusion": "success",
+        "jobs": [
+          {
+            "name": "verify",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/cluvonl/platform/actions/runs/37894603540/job/113702975998",
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm ci --no-audit --no-fund",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm run lint",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm run typecheck",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm test",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm run build",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm run test:wp0",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "name": "database",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/cluvonl/platform/actions/runs/37894603540/job/113703555545",
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm ci --no-audit --no-fund",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Prove the closed additive writer and native PWA contracts in an owned PostgreSQL17 database",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Migrations, pgTAP and database lint",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success"
+              }
+            ]
+          }
+        ]
+      },
+      "scope": "read_only_public_GitHub_metadata",
+      "promotion_claim": false,
+      "hosted32_upgrade_claim": false,
+      "activation_claim": false
+    },
+    {
+      "observed_at": "2026-10-09T06:53:57.070Z",
+      "kind": "root_reported_pwa32_exact_promotion_manual_dispatch",
+      "source_sha": "1efe5ff0d198fcabbeb45912256ee3af56463b60",
+      "workflow_run_id": 37895642510,
+      "duplicate_push_run_id": 37895635339,
+      "basis": "root completed exact promotion and manual dispatch report; public head/event separately verified",
+      "ci_run_id": 37894603540,
+      "ci_conclusion": "success",
+      "duplicate_cancellation_requested": true,
+      "duplicate_cancellation_completed_claim": false,
+      "last_verified_hosted_prefix": 31,
+      "hosted32_upgrade_claim": false,
+      "activation_claim": false
+    },
+    {
+      "observed_at": "2026-10-09T06:53:57.070Z",
+      "kind": "public_pwa32_manual_staging_observation",
+      "source_sha": "1efe5ff0d198fcabbeb45912256ee3af56463b60",
+      "workflow_run_id": 37895642510,
+      "workflow_url": "https://github.com/cluvonl/platform/actions/runs/37895642510",
+      "event": "workflow_dispatch",
+      "observation": {
+        "status": "in_progress",
+        "conclusion": null,
+        "jobs": [
+          {
+            "name": "build",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/cluvonl/platform/actions/runs/37895642510/job/113706689436",
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Verify exact promotion from main",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm ci --no-audit --no-fund",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm run check",
+                "status": "in_progress",
+                "conclusion": null
+              },
+              {
+                "name": "Verify staging database artifact",
+                "status": "pending",
+                "conclusion": null
+              },
+              {
+                "name": "Build and publish immutable image",
+                "status": "pending",
+                "conclusion": null
+              },
+              {
+                "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+                "status": "pending",
+                "conclusion": null
+              },
+              {
+                "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "pending",
+                "conclusion": null
+              },
+              {
+                "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "pending",
+                "conclusion": null
+              }
+            ]
+          }
+        ]
+      },
+      "scope": "read_only_public_GitHub_metadata",
+      "hosted32_upgrade_claim": false,
+      "activation_claim": false
+    },
+    {
+      "observed_at": "2026-10-09T06:53:57.071Z",
+      "kind": "public_pwa32_duplicate_push_observation",
+      "source_sha": "1efe5ff0d198fcabbeb45912256ee3af56463b60",
+      "workflow_run_id": 37895635339,
+      "workflow_url": "https://github.com/cluvonl/platform/actions/runs/37895635339",
+      "event": "push",
+      "observation": {
+        "status": "completed",
+        "conclusion": "cancelled",
+        "jobs": [
+          {
+            "name": "build",
+            "status": "completed",
+            "conclusion": "cancelled",
+            "url": "https://github.com/cluvonl/platform/actions/runs/37895635339/job/113706236888",
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Verify exact promotion from main",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm ci --no-audit --no-fund",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm run check",
+                "status": "completed",
+                "conclusion": "cancelled"
+              },
+              {
+                "name": "Verify staging database artifact",
+                "status": "completed",
+                "conclusion": "skipped"
+              },
+              {
+                "name": "Build and publish immutable image",
+                "status": "completed",
+                "conclusion": "skipped"
+              },
+              {
+                "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+                "status": "completed",
+                "conclusion": "skipped"
+              },
+              {
+                "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "skipped"
+              },
+              {
+                "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "name": "database-upgrade",
+            "status": "completed",
+            "conclusion": "cancelled",
+            "url": "https://github.com/cluvonl/platform/actions/runs/37895635339/job/113706687947",
+            "steps": []
+          },
+          {
+            "name": "pwa-native-qa",
+            "status": "completed",
+            "conclusion": "cancelled",
+            "url": "https://github.com/cluvonl/platform/actions/runs/37895635339/job/113706687986",
+            "steps": []
+          },
+          {
+            "name": "deploy",
+            "status": "completed",
+            "conclusion": "cancelled",
+            "url": "https://github.com/cluvonl/platform/actions/runs/37895635339/job/113706688887",
+            "steps": []
+          }
+        ]
+      },
+      "scope": "read_only_public_GitHub_metadata",
+      "hosted32_upgrade_claim": false,
+      "activation_claim": false
+    },
+    {
+      "observed_at": "2026-10-09T06:54:45.613Z",
+      "kind": "public_pwa32_manual_staging_observation",
+      "source_sha": "1efe5ff0d198fcabbeb45912256ee3af56463b60",
+      "workflow_run_id": 37895642510,
+      "workflow_url": "https://github.com/cluvonl/platform/actions/runs/37895642510",
+      "event": "workflow_dispatch",
+      "observation": {
+        "status": "in_progress",
+        "conclusion": null,
+        "jobs": [
+          {
+            "name": "build",
+            "status": "in_progress",
+            "conclusion": null,
+            "url": "https://github.com/cluvonl/platform/actions/runs/37895642510/job/113706689436",
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Verify exact promotion from main",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm ci --no-audit --no-fund",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm run check",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Verify staging database artifact",
+                "status": "in_progress",
+                "conclusion": null
+              },
+              {
+                "name": "Build and publish immutable image",
+                "status": "pending",
+                "conclusion": null
+              },
+              {
+                "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+                "status": "pending",
+                "conclusion": null
+              },
+              {
+                "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "pending",
+                "conclusion": null
+              },
+              {
+                "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "pending",
+                "conclusion": null
+              }
+            ]
+          }
+        ]
+      },
+      "scope": "read_only_public_GitHub_metadata",
+      "hosted32_upgrade_claim": false,
+      "activation_claim": false
+    },
+    {
+      "observed_at": "2026-10-09T06:55:44.398534+00:00",
+      "kind": "root_reported_pwa32_manual_cancel_requested_for_home_regression",
+      "source_sha": "1efe5ff0d198fcabbeb45912256ee3af56463b60",
+      "workflow_run_id": 37895642510,
+      "basis": "root requested cancellation during build Verify staging database artifact for confirmed Home F004/F007 live-booking/date regression; public completion still pending",
+      "cancellation_completed_claim": false,
+      "database_job_started_at_request": false,
+      "hosted32_upgrade_claim": false,
+      "activation_claim": false,
+      "next_source_pending": true
+    },
+    {
+      "observed_at": "2026-10-09T06:56:33.325Z",
+      "kind": "public_pwa32_manual_staging_observation",
+      "source_sha": "1efe5ff0d198fcabbeb45912256ee3af56463b60",
+      "workflow_run_id": 37895642510,
+      "workflow_url": "https://github.com/cluvonl/platform/actions/runs/37895642510",
+      "event": "workflow_dispatch",
+      "observation": {
+        "status": "completed",
+        "conclusion": "cancelled",
+        "jobs": [
+          {
+            "name": "build",
+            "status": "completed",
+            "conclusion": "cancelled",
+            "url": "https://github.com/cluvonl/platform/actions/runs/37895642510/job/113706689436",
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Verify exact promotion from main",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm ci --no-audit --no-fund",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm run check",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Verify staging database artifact",
+                "status": "completed",
+                "conclusion": "cancelled"
+              },
+              {
+                "name": "Build and publish immutable image",
+                "status": "completed",
+                "conclusion": "skipped"
+              },
+              {
+                "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+                "status": "completed",
+                "conclusion": "skipped"
+              },
+              {
+                "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "skipped"
+              },
+              {
+                "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "name": "database-upgrade",
+            "status": "completed",
+            "conclusion": "cancelled",
+            "url": "https://github.com/cluvonl/platform/actions/runs/37895642510/job/113707853967",
+            "steps": []
+          },
+          {
+            "name": "pwa-native-qa",
+            "status": "completed",
+            "conclusion": "cancelled",
+            "url": "https://github.com/cluvonl/platform/actions/runs/37895642510/job/113707854535",
+            "steps": []
+          },
+          {
+            "name": "deploy",
+            "status": "completed",
+            "conclusion": "cancelled",
+            "url": "https://github.com/cluvonl/platform/actions/runs/37895642510/job/113707854880",
+            "steps": []
+          }
+        ]
+      },
+      "scope": "read_only_public_GitHub_metadata",
+      "hosted32_upgrade_claim": false,
+      "activation_claim": false
+    },
+    {
+      "observed_at": "2026-10-09T06:56:55.712994+00:00",
+      "kind": "public_pwa32_manual_cancelled_before_hosted_jobs",
+      "source_sha": "1efe5ff0d198fcabbeb45912256ee3af56463b60",
+      "workflow_run_id": 37895642510,
+      "conclusion": "cancelled",
+      "basis": "public GitHub completed/cancelled metadata; build cancelled and hosted jobs have no steps; public artifact metadata total_count=0",
+      "safe_aggregate_artifacts_available": 0,
+      "artifacts_downloaded": false,
+      "database_upgrade_executed": false,
+      "native_qa_executed": false,
+      "deploy_executed": false,
+      "hosted32_upgrade_claim": false,
+      "activation_claim": false,
+      "watch_finished": true
+    },
+    {
+      "observed_at": "2026-10-09T07:16:00.180841+00:00",
+      "kind": "root_reported_pwa33_committee_planning_read_contract_pending",
+      "basis": "root assigned missing F073 native read contract/UI and closed33 ops preparation after pre-hosted cancellation of37895642510",
+      "last_verified_hosted_prefix": 31,
+      "target_migration_count": 33,
+      "new_migrations_from_hosted31": [
+        "20261009115000_pwa_personal_action_context.sql",
+        "20261009116000_pwa_committee_planning.sql"
+      ],
+      "planning_signature": "api.pwa_committee_planning(uuid,uuid)",
+      "new_source_committed_claim": false,
+      "closed33_owned_proof_completed_claim": false,
+      "hosted33_upgrade_claim": false,
+      "activation_claim": false
+    },
+    {
+      "observed_at": "2026-10-09T07:23:41.832485+00:00",
+      "kind": "actual_local_owned_pwa33_ops_closed",
+      "basis": "actually executed labelled network-none PG17 writer/native/automation/readonly and private Python tests; no hosted read/write/provider calls",
+      "proof_path": "20261009-pwa33-ops-owned-proof.json",
+      "proof_sha256": "ba73c1b8ca37ea33e5714516b133bc41397a3fc73e1ea910ff4daa02d13491cb",
+      "migration_manifest_sha256": "3153f4cffbf47c1c8d0821e0fa80c4bc5146964a188a4ee21a71c3e1de6b1090",
+      "target_migration_count": 33,
+      "actual_cases": [
+        "fresh16_to33",
+        "frozen_8762_approved31_to33"
+      ],
+      "approved31_previous_history_and_15_receipts_preserved": true,
+      "actual_new_migrations_from_approved31": 2,
+      "all_previous32_source_bytes_unchanged": true,
+      "api_security_invoker_functions": 85,
+      "api_security_invoker_views": 21,
+      "forced_native_app_tables": 180,
+      "actual_blocked_contenders_per_case": 2,
+      "focused_test_passed": 44,
+      "private_python_owner_test_passed": 1,
+      "shared_database_mutations": false,
+      "hosted_database_mutations": false,
+      "providers_called": false,
+      "last_verified_hosted_prefix": 31,
+      "new_source_committed_claim": false,
+      "hosted33_upgrade_claim": false,
+      "activation_claim": false
+    },
+    {
+      "observed_at": "2026-10-09T07:41:34.642761+00:00",
+      "event": "SOURCE33_COMMITTED_MAIN_CI_STARTED",
+      "source_sha": "71bd79daf4548c974c2467bf53e0aced99b51543",
+      "ci_run_id": 37900306551,
+      "basis": "actual local commit and successful main push; exact GitHub main-push CI metadata",
+      "runtime_activation_verified": false,
+      "hosted33_upgrade_verified": false
+    },
+    {
+      "observed_at": "2026-10-09T07:48:32.934831+00:00",
+      "event": "SOURCE33_CI_SUCCESS_EXACT_PROMOTION_FULL_MANUAL_DISPATCH",
+      "source_sha": "71bd79daf4548c974c2467bf53e0aced99b51543",
+      "ci_run_id": 37900306551,
+      "ci_jobs": [
+        "verify",
+        "database"
+      ],
+      "ci_conclusion": "success",
+      "full_manual_run_id": 37901073542,
+      "same_sha_push_duplicate": {
+        "run_id": 37901065148,
+        "event": "push",
+        "cancel_requested": true
+      },
+      "basis": "successful promote-staging helper and actual workflow_dispatch response and exact GitHub metadata",
+      "hosted_upgrade_verified": false,
+      "app_activation_verified": false
+    },
+    {
+      "observed_at": "2026-10-09T08:05:59.683060+00:00",
+      "event": "SOURCE33_RESTORE_CONSTRAINT_DEFINITION_GATE_FAILED_BEFORE_APPLY",
+      "source_sha": "71bd79daf4548c974c2467bf53e0aced99b51543",
+      "workflow_run_id": 37901073542,
+      "run_conclusion": "failure",
+      "actual_initial_prefix": 31,
+      "applied_migrations": 0,
+      "database_mutations_performed": false,
+      "app_activation_performed": false,
+      "error": "RESTORE_CATALOG_MISMATCH",
+      "restore_failure_phase": "catalog.constraints",
+      "restore_catalog_mismatches": [
+        {
+          "family": "constraints",
+          "source_rows": 1784,
+          "restored_rows": 1784,
+          "missing_rows": 0,
+          "extra_rows": 0,
+          "changed_rows": 1,
+          "changed_fields": [
+            "definition"
+          ],
+          "acl_missing_entries": 0,
+          "acl_extra_entries": 0
+        }
+      ],
+      "backup_custody": {
+        "uploaded": true,
+        "remote_readback": true,
+        "artifact_id": "11602748978",
+        "archive_sha256": "426ec63defd557fb12be3fd5f8cd43a1b6deb6b5d0b0e5ab9644965d91b03e75",
+        "retention_days": 30,
+        "key_profile": "cluvo-staging-pwa-upgrade-backup-hkdf-sha256-v1",
+        "plaintext_uploaded": false,
+        "secret_key_uploaded": false
+      },
+      "backup_downloaded": false,
+      "safe_report": {
+        "path": "docs/release/evidence/staging/20261009-pwa-upgrade-attempt-37901073542-gha.json",
+        "sha256": "b9a98c3d2ff75aee9b9d13664298e0d716f12dac6df5c061c85b7e70eb86f53b"
+      },
+      "safe_artifact_receipt": {
+        "path": "docs/release/evidence/staging/20261009-pwa-safe-artifacts-37901073542.json",
+        "sha256": "6e0fdf7eb184ce3997c80abc1907552980910ae4efd04d296abf81686749d36b"
+      },
+      "private_definitions_or_identity_exported": false,
+      "known_cause_proved": false
+    },
+    {
+      "observed_at": "2026-10-09T08:40:36.414047+00:00",
+      "action": "coherent_read_display_and_strict_owned_clone_restore_fix_committed_and_pushed",
+      "source_sha": "174615bd8c0aeda5c0161a022312b14b66fb2a5f",
+      "ci_run_id": 37906290774,
+      "local_tests": {
+        "pass": 747,
+        "opt_in_skipped": 30,
+        "fail": 0
+      },
+      "literal_catalog_normalization_or_bypass": false,
+      "hosted_cause_claim": false,
+      "production_enabled": false
+    },
+    {
+      "observed_at": "2026-10-09T08:46:50.658827+00:00",
+      "action": "exact_green_ci_promotion_and_full_manual_staging_dispatch",
+      "source_sha": "174615bd8c0aeda5c0161a022312b14b66fb2a5f",
+      "ci_run_id": 37906290774,
+      "ci_conclusion": "success",
+      "workflow_run_id": 37907029030,
+      "duplicate_push_run_cancelled": 37907017457,
+      "hosted_mutations_not_yet_observed": true,
+      "production_enabled": false
+    },
+    {
+      "observed_at": "2026-10-09T08:52:22.959578+00:00",
+      "action": "cancel_exact_full_stage_run_during_build_before_hosted_upgrade_job_observed",
+      "workflow_run_id": 37907029030,
+      "source_sha": "174615bd8c0aeda5c0161a022312b14b66fb2a5f",
+      "reason": "Mobile invitation wrapper calls the earlier internal command rather than the post-lock author recheck wrapper; actual owned grant-revocation-after-wait probe pending.",
+      "security_bug_proven": false,
+      "hosted_database_upgrade_job_observed": false,
+      "app_activation_observed": false,
+      "production_enabled": false
+    },
+    {
+      "observed_at": "2026-10-09T08:55:47.127772+00:00",
+      "action": "full_manual_cancellation_confirmed_with_zero_hosted_upgrade_native_qa_deploy_steps",
+      "workflow_run_id": 37907029030,
+      "source_sha": "174615bd8c0aeda5c0161a022312b14b66fb2a5f",
+      "artifact_upload_skipped": true,
+      "safe_aggregates_downloaded": 0,
+      "encrypted_custody_artifacts": 0,
+      "safe_report": {
+        "path": "docs/release/evidence/staging/20261009-pwa-safe-artifacts-37907029030.json",
+        "sha256": "1962122181e075255d7dcccd84bace690ceac4bf45004df00b0f1c6d4e29b6ac"
+      },
+      "production_enabled": false
+    },
+    {
+      "observed_at": "2026-10-09T09:24:14.207076+00:00",
+      "action": "canonical_mobile_invitation_guard_append34_and_actual_native_ui_proofs_committed_and_pushed",
+      "source_sha": "996ba5914285d6dd19d9a23bcc4f236f839a82e3",
+      "ci_run_id": 37910968489,
+      "actual_local_native_authority_cases": 4,
+      "actual_native_buddy_cases": 10,
+      "actual_native_mobile_invitation_cases": 4,
+      "original33_migration_bytes_unchanged": true,
+      "shared_local_old_history_app_rows_preserved_during_append34": true,
+      "production_enabled": false
+    },
+    {
+      "observed_at": "2026-10-09T11:00:17.074006+00:00",
+      "action": "per_club_sportlink35_and_readonly_source_precision_closed_local_proofs_committed_and_pushed",
+      "source_sha": "6029b482c06669aa37806d3aa90f70b59e6ccfd4",
+      "ci_run_id": 37920817878,
+      "actual_default_tests_passed": 767,
+      "actual_owned_all_sql_assertions": 1545,
+      "actual_native_sportlink_ui_checks": 14,
+      "source_sql_prefix34_unchanged": true,
+      "hosted_sql35_applied": false,
+      "staging_app35_activated": false,
+      "production_enabled": false
+    },
+    {
+      "observed_at": "2026-10-09T11:04:40.264888+00:00",
+      "action": "exact35_main_ci_success_promoted_full_manual_dispatched_and_duplicate_push_cancel_requested",
+      "source_sha": "6029b482c06669aa37806d3aa90f70b59e6ccfd4",
+      "ci_run_id": 37920817878,
+      "full_manual_run_id": 37921449926,
+      "duplicate_push_run_id": 37921439425,
+      "private_credentials_read": false,
+      "production_enabled": false
+    },
+    {
+      "observed_at": "2026-10-09T11:23:25.279658+00:00",
+      "action": "full35_restore_refused_single_endpoint_between_roundtrip_constraint_definition_before_any_hosted_mutation",
+      "source_sha": "6029b482c06669aa37806d3aa90f70b59e6ccfd4",
+      "full_manual_run_id": 37921449926,
+      "source_precision_transaction_local_only_verified": true,
+      "all_restore_contexts_aligned": true,
+      "changed_constraint_rows": 1,
+      "applied_migrations": 0,
+      "app_activation_performed": false,
+      "backup_downloaded": false,
+      "private_logs_read": false,
+      "production_enabled": false
+    },
+    {
+      "observed_at": "2026-10-09T11:48:35.838985+00:00",
+      "type": "PWA35_OPS_REPAIR_AND_NATIVE_DUINDORP_SETUP_PUSHED",
+      "source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+      "local_actual_strict28_restore_passed": true,
+      "default_tests": 815,
+      "passed": 779,
+      "failed": 0,
+      "optin_skipped": 36,
+      "whole_lint_passed": true,
+      "hosted_changes_performed": false
+    },
+    {
+      "observed_at": "2026-10-09T11:56:04.236089+00:00",
+      "type": "PWA35_OPS_EXACT_CI_PROMOTION_MANUAL_RELEASE_DISPATCHED",
+      "source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+      "ci_run_id": 37925974324,
+      "manual_run_id": 37926728047,
+      "manual_event_verified": true,
+      "duplicate_push_cancel_requested": 37926707626,
+      "hosted_changes_at_observation": false
+    },
+    {
+      "observed_at": "2026-10-09T12:09:36.654057+00:00",
+      "type": "PWA35_OPS_FULL_UPGRADE_RUNNING_CUSTODY_METADATA_ONLY",
+      "source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+      "manual_run_id": 37926728047,
+      "encrypted_artifact_id": 11614747678,
+      "ciphertext_downloaded": false,
+      "private_logs_read": false,
+      "upgrade_final_outcome_unknown": true
+    },
+    {
+      "observed_at": "2026-10-09T12:32:16.566628+00:00",
+      "type": "PWA35_FULL_RELEASE_AND_PUBLIC_READBACK_VERIFIED_WITH_FOLLOWUP_GAPS",
+      "source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+      "workflow_run_id": 37926728047,
+      "full_release_passed": true,
+      "database_prefix": 35,
+      "public_checks": 11,
+      "reserve_authority_gap_actual_owned_confirmed": true,
+      "sportlink_setup_run": 37928786935,
+      "sportlink_scope_created": true,
+      "sportlink_native_session_sql_failed": true,
+      "temporary_secret_kept_for_verified_retry": true,
+      "physical_device_verified": false,
+      "full_pwa_accepted": false
+    },
+    {
+      "observed_at": "2026-10-09T12:52:38.778275+00:00",
+      "kind": "actual_staging_runtime_configuration_import_success",
+      "source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+      "workflow_run_id": 37931065236,
+      "workflow_event": "workflow_dispatch",
+      "workflow_conclusion": "success",
+      "previous_config_version": 2,
+      "config_version": 3,
+      "database_readonly_guard_passed": true,
+      "fixed_broker_import_passed": true,
+      "rollback_compatibility_allowlist": [
+        "b9a6ed995058e623d7887fb4a56630251ff4ffb4",
+        "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef"
+      ],
+      "actual_app_rollback_executed": false,
+      "production_enabled": false
+    },
+    {
+      "observed_at": "2026-10-09T12:52:38.778275+00:00",
+      "kind": "actual_active_image_browser_attempt_partial_failure",
+      "source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+      "workflow_run_id": 37931346250,
+      "workflow_event": "workflow_dispatch",
+      "workflow_conclusion": "failure",
+      "aggregate_path": "docs/release/evidence/staging/20261009-pwa-browser-readback-37931346250-gha.json",
+      "aggregate_sha256": "fdfccab018d989ab0aea2a3953be1a7c3b7dcd4bd8960b286cb423d274294a52",
+      "routes_passed": [
+        "home",
+        "tasks"
+      ],
+      "whole_twenty_routes_passed": false,
+      "error": "STAGING_BROWSER_READBACK_UNAVAILABLE",
+      "failure_operation_unclassified": true,
+      "native_qa_scopes_archived": 2,
+      "native_qa_active_grants": 0,
+      "native_qa_active_memberships": 0,
+      "own_provider_user_cleanup_complete": true,
+      "personal_account_changed": false,
+      "database_session_closed": true,
+      "physical_device_verified": false,
+      "production_enabled": false
+    },
+    {
+      "observed_at": "2026-10-09T13:27:24.212810+00:00",
+      "kind": "physical_chrome_installation_reported_login_unstyled_confirmed_public",
+      "user_reported_device": "Samsung S24",
+      "user_reported_installation_succeeded": true,
+      "exact_android_chrome_versions_verified": false,
+      "login_styling_failed_browser_and_standalone": true,
+      "public_readonly_comparison": {
+        "path": "docs/release/evidence/local/20261009-pwa36-public-login-style/comparison.json",
+        "sha256": "aa978fc37a22bb6ad9c30d1090f68b8b069973c152d1fb3a9d38a1bcbc2139f1"
+      },
+      "fresh_browser_reproduced_without_service_worker": true,
+      "staging_global_stylesheet_missing": true,
+      "complete_physical_acceptance": false,
+      "production_enabled": false
+    }
+  ],
+  "observation_limits": {
+    "github_metadata_only": true,
+    "public_health_only": true,
+    "database_connections": 0,
+    "credential_reads": 0,
+    "provider_calls": 0,
+    "encrypted_backup_artifact_downloads": 0,
+    "workflow_dispatches": 0,
+    "branch_modifications": 0,
+    "commits": 0,
+    "safe_root_provided_aggregate_copies": 1
+  },
+  "updated_at": "2026-10-09T12:32:16.566628+00:00",
+  "ci": {
+    "run_id": 37887779712,
+    "workflow": "CI",
+    "event": "push",
+    "url": "https://github.com/cluvonl/platform/actions/runs/37887779712",
+    "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+    "source_matches_target": true,
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-10-09T05:16:14Z",
+    "updated_at": "2026-10-09T05:21:49Z",
+    "jobs": [
+      {
+        "name": "verify",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/cluvonl/platform/actions/runs/37887779712/job/113681537795",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm ci --no-audit --no-fund",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run lint",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run typecheck",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm test",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run build",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run test:wp0",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "name": "database",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/cluvonl/platform/actions/runs/37887779712/job/113681994126",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm ci --no-audit --no-fund",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Prove the closed additive writer and native PWA contracts in an owned PostgreSQL17 database",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Migrations, pgTAP and database lint",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ]
+  },
+  "full_staging_workflow": {
+    "run_id": 37888304288,
+    "workflow": "Staging",
+    "event": "workflow_dispatch",
+    "url": "https://github.com/cluvonl/platform/actions/runs/37888304288",
+    "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+    "source_matches_target": true,
+    "status": "completed",
+    "conclusion": "failure",
+    "created_at": "2026-10-09T05:22:57Z",
+    "updated_at": "2026-10-09T05:38:58Z",
+    "jobs": [
+      {
+        "name": "build",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/cluvonl/platform/actions/runs/37888304288/job/113683581417",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify exact promotion from main",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm ci --no-audit --no-fund",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run check",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify staging database artifact",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Build and publish immutable image",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "name": "database-upgrade",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/cluvonl/platform/actions/runs/37888304288/job/113685208777",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify the exact tested main promotion",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Retrieve the fixed public official artifact uploader",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Pull the pinned PostgreSQL17 toolchain before connecting",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Preserve, restore, fence and apply the fixed PWA suffix",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Retrieve the fixed public official artifact uploader",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "name": "pwa-native-qa",
+        "status": "completed",
+        "conclusion": "failure",
+        "url": "https://github.com/cluvonl/platform/actions/runs/37888304288/job/113686984680",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify the current tested staging promotion before provider access",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm ci --no-audit --no-fund",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Prove PWA native privacy, dispatcher, last-place overlap, scoped automation rollback and logout",
+            "status": "completed",
+            "conclusion": "failure"
+          },
+          {
+            "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "status": "completed",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "name": "deploy",
+        "status": "completed",
+        "conclusion": "skipped",
+        "url": "https://github.com/cluvonl/platform/actions/runs/37888304288/job/113687215568",
+        "steps": []
+      }
+    ]
+  },
+  "superseded_workflows": [
+    {
+      "run_id": 37888298911,
+      "workflow": "Staging",
+      "event": "push",
+      "url": "https://github.com/cluvonl/platform/actions/runs/37888298911",
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "source_matches_target": true,
+      "status": "completed",
+      "conclusion": "cancelled",
+      "created_at": "2026-10-09T05:22:52Z",
+      "updated_at": "2026-10-09T05:24:27Z",
+      "jobs": [
+        {
+          "name": "build",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/cluvonl/platform/actions/runs/37888298911/job/113683192638",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Verify exact promotion from main",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm ci --no-audit --no-fund",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm run check",
+              "status": "completed",
+              "conclusion": "cancelled"
+            },
+            {
+              "name": "Verify staging database artifact",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "Build and publish immutable image",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "name": "database-upgrade",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/cluvonl/platform/actions/runs/37888298911/job/113683579901",
+          "steps": []
+        },
+        {
+          "name": "pwa-native-qa",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/cluvonl/platform/actions/runs/37888298911/job/113683580604",
+          "steps": []
+        },
+        {
+          "name": "deploy",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "url": "https://github.com/cluvonl/platform/actions/runs/37888298911/job/113683581058",
+          "steps": []
+        }
+      ],
+      "replacement_run_id": 37888304288,
+      "cancellation_requested_by_root": true,
+      "replacement_reason": "Avoid duplicate push build; manual workflow repeats all mandatory staging checks."
+    }
+  ],
+  "public_health": {
+    "live": {
+      "path": "/api/health/live",
+      "http_status": 200,
+      "observed_at": "2026-10-09T05:39:40.443Z",
+      "body": {
+        "status": "ok",
+        "service": "cluvo",
+        "mode": "app",
+        "environment": "staging",
+        "release": "b9a6ed995058e623d7887fb4a56630251ff4ffb4"
+      }
+    },
+    "ready": {
+      "path": "/api/health/ready",
+      "http_status": 200,
+      "observed_at": "2026-10-09T05:39:41.843Z",
+      "body": {
+        "ready": true,
+        "release_ready": false,
+        "scope": "authenticated_core",
+        "checks": {
+          "database": "reachable",
+          "workers": "not_required_for_core",
+          "authorization": "rls_api"
+        }
+      }
+    }
+  },
+  "activation": {
+    "state": "pending",
+    "basis": "Public probes have not yet demonstrated the target source active.",
+    "target_source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+    "observed_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4",
+    "full_workflow_complete": true,
+    "full_workflow_success": false
+  },
+  "attempts": [
+    {
+      "workflow_run_id": 37886207417,
+      "source_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f",
+      "state": "failed_before_upgrade_or_activation",
+      "failed_gate": "database-upgrade",
+      "error_code": "RESTORE_SQL_RESPONSE_UNKNOWN",
+      "phase": "history",
+      "safe_aggregate_report": "20261009-pwa-upgrade-attempt-37886207417-root-reported.json",
+      "basis": "root_reported_actual_result; public workflow conclusion independently verified",
+      "gha_aggregate_provenance": {
+        "path": "20261009-pwa-upgrade-attempt-37886207417-gha.json",
+        "sha256": "5ab2f855129d5b9145386f72a70823a4af49fc32bfdfd68ad1d6b80259370c94",
+        "exact_byte_copy": true,
+        "source": "root supplied locally downloaded safe GitHub Actions aggregate report",
+        "encrypted_backup_downloaded_here": false
+      }
+    },
+    {
+      "workflow_run_id": 37888304288,
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "state": "database_upgraded_native_qa_failed_before_activation",
+      "database_upgrade": {
+        "passed": true,
+        "initial_applied_prefix": 16,
+        "applied_migrations": 15,
+        "final_applied_prefix": 31,
+        "database_mutations_performed": true,
+        "migration_manifest_sha256": "4d00699a669e26e0e030523c56c87a231177c5887470d6fe2903ead7164b7e4d",
+        "native_guards": {
+          "app_tables": 180,
+          "forced_rls": 180,
+          "native_policies": 180,
+          "api_only_exposed": true,
+          "command_owner_restricted": true
+        },
+        "source_freshness": {
+          "same_backend": true,
+          "full_metadata_unchanged": true,
+          "exclusive_lock_retained": true
+        },
+        "restore": {
+          "passed": true,
+          "scope": "PWA_STAGING_LOGICAL_RESTORE_AND_UPGRADE",
+          "logical_database_restored": true,
+          "physical_relations_verified": 185,
+          "physical_rows_verified": 1124,
+          "sequences_verified": 2,
+          "baseline_catalog_families_verified": 28,
+          "native_archive_sections_restored": 3,
+          "native_restore_passes": 4,
+          "native_toc_entries_preserved": 3427,
+          "extensions_precreated_with_source_owner": 5,
+          "extension_owner_reassignments": 5,
+          "extension_installers_removed": true,
+          "effective_acl_objects_replayed": 201,
+          "temporary_schema_usage_grants": 65,
+          "temporary_reference_grants": 930,
+          "temporary_restore_privileges_removed": true,
+          "extension_privilege_warnings": 0,
+          "post_data_owner_mode": "session_authorization",
+          "bootstrap_create_exceptions": 1,
+          "source_migration_prefix": 16,
+          "final_migration_prefix": 31,
+          "non_superuser_upgrade_migrations": 15,
+          "app_tables": 180,
+          "native_policies": 180,
+          "network_isolated": true,
+          "background_jobs_disabled": true,
+          "source_database_mutated": false,
+          "role_passwords_restored": false,
+          "provider_root_keys_restored": false,
+          "provider_services_verified": false,
+          "full_provider_restore_verified": false,
+          "all_object_families_verified": false,
+          "live_migration_authorized": false,
+          "v1_ready": false,
+          "production_enabled": false,
+          "owned_clone_removed": true
+        },
+        "backup_custody": {
+          "uploaded": true,
+          "remote_readback": true,
+          "artifact_id": "11597955308",
+          "archive_sha256": "013e009fcfbe1a86403bcb8dfbf58fa3ed5ec36416190edc0444112e1d3a0d6b",
+          "retention_days": 30,
+          "key_profile": "cluvo-staging-pwa-upgrade-backup-hkdf-sha256-v1",
+          "plaintext_uploaded": false,
+          "secret_key_uploaded": false
+        },
+        "app_activation_performed": false,
+        "private_values_exported": false,
+        "production_enabled": false,
+        "v1_ready": false
+      },
+      "gha_aggregate_provenance": {
+        "path": "20261009-pwa-upgrade-attempt-37888304288-gha.json",
+        "sha256": "30408586c08da2213562df05d42fddd6e1b6921600bb291af8d0385302aa7789",
+        "exact_bytes_verified": true,
+        "source": "root supplied locally downloaded safe GitHub Actions aggregate report",
+        "encrypted_backup_downloaded_here": false
+      },
+      "basis": "root reported completed hosted gate; exact safe aggregate bytes and source binding independently verified locally; native QA/deploy/readbacks remain pending",
+      "workflow_conclusion": "failure",
+      "failed_gate": "pwa-native-qa",
+      "failure_reason": "STAGING_NATIVE_QA_ACTUAL_OVERLAP_UNPROVED",
+      "deploy": "skipped",
+      "native_qa_aggregate_provenance": {
+        "path": "20261009-pwa-native-qa-attempt-37888304288-gha.json",
+        "sha256": "c480c0d2098856d6da83470b4144fb46d45c8a5aa142e56251ba706516701de2",
+        "exact_byte_copy": true,
+        "source": "root supplied locally downloaded safe GitHub Actions aggregate report",
+        "private_logs_read": false
+      }
+    }
+  ],
+  "previous_source_observations": [
+    {
+      "source_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f",
+      "archived_at": "2026-10-09T05:17:33.321Z",
+      "ci": {
+        "run_id": 37885740862,
+        "workflow": "CI",
+        "event": "push",
+        "url": "https://github.com/cluvonl/platform/actions/runs/37885740862",
+        "source_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f",
+        "source_matches_target": true,
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-09T04:50:23Z",
+        "updated_at": "2026-10-09T04:55:48Z",
+        "jobs": [
+          {
+            "name": "verify",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/cluvonl/platform/actions/runs/37885740862/job/113675228331",
+            "started_at": "2026-10-09T04:50:26Z",
+            "completed_at": "2026-10-09T04:51:48Z",
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm ci --no-audit --no-fund",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm run lint",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm run typecheck",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm test",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm run build",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm run test:wp0",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "name": "database",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/cluvonl/platform/actions/runs/37885740862/job/113675572797",
+            "started_at": "2026-10-09T04:51:51Z",
+            "completed_at": "2026-10-09T04:55:48Z",
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm ci --no-audit --no-fund",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Prove the closed additive writer and native PWA contracts in an owned PostgreSQL17 database",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Migrations, pgTAP and database lint",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success"
+              }
+            ]
+          }
+        ]
+      },
+      "promotion": {
+        "state": "reported_complete",
+        "basis": "root reported exact promotion from main; workflow Verify exact promotion from main metadata is independently recorded"
+      },
+      "full_staging_workflow": {
+        "run_id": 37886207417,
+        "workflow": "Staging",
+        "event": "workflow_dispatch",
+        "url": "https://github.com/cluvonl/platform/actions/runs/37886207417",
+        "source_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f",
+        "source_matches_target": true,
+        "status": "completed",
+        "conclusion": "failure",
+        "created_at": "2026-10-09T04:56:25Z",
+        "updated_at": "2026-10-09T05:07:03Z",
+        "jobs": [
+          {
+            "name": "build",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/cluvonl/platform/actions/runs/37886207417/job/113677019798",
+            "started_at": "2026-10-09T04:57:59Z",
+            "completed_at": "2026-10-09T05:03:20Z",
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Verify exact promotion from main",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm ci --no-audit --no-fund",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run npm run check",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Verify staging database artifact",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Build and publish immutable image",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "name": "database-upgrade",
+            "status": "completed",
+            "conclusion": "failure",
+            "url": "https://github.com/cluvonl/platform/actions/runs/37886207417/job/113678341120",
+            "started_at": "2026-10-09T05:03:24Z",
+            "completed_at": "2026-10-09T05:07:02Z",
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Verify the exact tested main promotion",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Retrieve the fixed public official artifact uploader",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Pull the pinned PostgreSQL17 toolchain before connecting",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Preserve, restore, fence and apply the fixed PWA suffix",
+                "status": "completed",
+                "conclusion": "failure"
+              },
+              {
+                "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                "status": "completed",
+                "conclusion": "skipped"
+              },
+              {
+                "name": "Post Retrieve the fixed public official artifact uploader",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "name": "pwa-native-qa",
+            "status": "completed",
+            "conclusion": "skipped",
+            "url": "https://github.com/cluvonl/platform/actions/runs/37886207417/job/113679240444",
+            "started_at": "2026-10-09T05:07:02Z",
+            "completed_at": "2026-10-09T05:07:02Z",
+            "steps": []
+          },
+          {
+            "name": "deploy",
+            "status": "completed",
+            "conclusion": "skipped",
+            "url": "https://github.com/cluvonl/platform/actions/runs/37886207417/job/113679241075",
+            "started_at": "2026-10-09T05:07:02Z",
+            "completed_at": "2026-10-09T05:07:02Z",
+            "steps": []
+          }
+        ]
+      },
+      "superseded_workflows": [
+        {
+          "run_id": 37886202192,
+          "workflow": "Staging",
+          "event": "push",
+          "url": "https://github.com/cluvonl/platform/actions/runs/37886202192",
+          "source_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f",
+          "source_matches_target": true,
+          "status": "completed",
+          "conclusion": "cancelled",
+          "created_at": "2026-10-09T04:56:21Z",
+          "updated_at": "2026-10-09T04:57:56Z",
+          "jobs": [
+            {
+              "name": "build",
+              "status": "completed",
+              "conclusion": "cancelled",
+              "url": "https://github.com/cluvonl/platform/actions/runs/37886202192/job/113676649242",
+              "started_at": "2026-10-09T04:56:24Z",
+              "completed_at": "2026-10-09T04:57:55Z",
+              "steps": [
+                {
+                  "name": "Set up job",
+                  "status": "completed",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                  "status": "completed",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact promotion from main",
+                  "status": "completed",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                  "status": "completed",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Run npm ci --no-audit --no-fund",
+                  "status": "completed",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Run npm run check",
+                  "status": "completed",
+                  "conclusion": "cancelled"
+                },
+                {
+                  "name": "Verify staging database artifact",
+                  "status": "completed",
+                  "conclusion": "skipped"
+                },
+                {
+                  "name": "Build and publish immutable image",
+                  "status": "completed",
+                  "conclusion": "skipped"
+                },
+                {
+                  "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+                  "status": "completed",
+                  "conclusion": "skipped"
+                },
+                {
+                  "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+                  "status": "completed",
+                  "conclusion": "skipped"
+                },
+                {
+                  "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+                  "status": "completed",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Complete job",
+                  "status": "completed",
+                  "conclusion": "success"
+                }
+              ]
+            },
+            {
+              "name": "pwa-native-qa",
+              "status": "completed",
+              "conclusion": "cancelled",
+              "url": "https://github.com/cluvonl/platform/actions/runs/37886202192/job/113677018469",
+              "started_at": "2026-10-09T04:57:56Z",
+              "completed_at": "2026-10-09T04:57:56Z",
+              "steps": []
+            },
+            {
+              "name": "database-upgrade",
+              "status": "completed",
+              "conclusion": "cancelled",
+              "url": "https://github.com/cluvonl/platform/actions/runs/37886202192/job/113677018706",
+              "started_at": "2026-10-09T04:57:56Z",
+              "completed_at": "2026-10-09T04:57:55Z",
+              "steps": []
+            },
+            {
+              "name": "deploy",
+              "status": "completed",
+              "conclusion": "cancelled",
+              "url": "https://github.com/cluvonl/platform/actions/runs/37886202192/job/113677019618",
+              "started_at": "2026-10-09T04:57:56Z",
+              "completed_at": "2026-10-09T04:57:56Z",
+              "steps": []
+            }
+          ],
+          "replacement_run_id": 37886207417,
+          "replacement_reason": "Root cancelled push-only duplicate in favour of the identical source manual build and all staging gates.",
+          "basis": "root reported reason; cancelled conclusion independently observed"
+        }
+      ],
+      "activation": {
+        "state": "pending",
+        "basis": "The reported restore history gate failed before any upgrade or activation; public health still serves the previous source.",
+        "target_source_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f",
+        "observed_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4",
+        "full_workflow_complete": true,
+        "full_workflow_success": false
+      }
+    },
+    {
+      "observed_at": "2026-10-09T08:40:36.414047+00:00",
+      "superseded_current_release33": {
+        "source_sha": "71bd79daf4548c974c2467bf53e0aced99b51543",
+        "state": "restore_catalog_constraint_definition_gate_failed_no_mutations",
+        "ci_run_id": 37900306551,
+        "migration_count": 33,
+        "local_proof": {
+          "path": "../local/20261009-pwa-committee-planning/root-final33-visual-close.json",
+          "sha256": "8f31db46deb6b193d075b0e5551eff79eeb4ffc227ac56f60ed1a9c284357fff"
+        },
+        "hosted_predecessor": {
+          "migration_count": 31,
+          "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+          "workflow_run_id": 37888304288
+        },
+        "previous_active_app_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4",
+        "runtime_activation_verified": false,
+        "physical_device_verified": false,
+        "whole_acceptance_passed": false,
+        "production_enabled": false,
+        "ci_conclusion": "success",
+        "exact_staging_promotion_verified": true,
+        "workflow_run_id": 37901073542,
+        "event": "workflow_dispatch",
+        "workflow_conclusion": "failure",
+        "hosted33_upgrade_verified": false,
+        "applied_migrations": 0,
+        "safe_failure_report": "docs/release/evidence/staging/20261009-pwa-upgrade-attempt-37901073542-gha.json",
+        "actual_cause_diagnostic_pending": true
+      }
+    }
+  ],
+  "source_state": {
+    "main_source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+    "staging_source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+    "active_source_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4",
+    "basis": "Exact promotion reported successful by root; target workflow source independently read from GitHub; active release comes only from public health."
+  },
+  "operations_fix": {
+    "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+    "parent_source_sha": "afa79ef8c478313bb43e179d183d995fb3ba615f",
+    "scope": "restore helper, two regression tests and separate proof only",
+    "pwa_ui_changed": false,
+    "migrations_changed": false,
+    "closed31_manifest_sha256": "4d00699a669e26e0e030523c56c87a231177c5887470d6fe2903ead7164b7e4d",
+    "basis": "root_reported narrow ops fix; prior independent closed31 hash review retained"
+  },
+  "local_restore_fix_provenance": {
+    "path": "20261009-pwa-restore-fix-local-archive-proof.json",
+    "sha256": "02cb4e44998a35ded2a6eef7b8c41d8af602d1b3bbc54c2cdda9213959b5f6d9",
+    "scope": "LOCAL_OWNED_PG17_ACTUAL_ARCHIVE_RESTORE_TYPED_JSON_FIX",
+    "source_binding": {
+      "kind": "exact_committed_restore_helper_bytes",
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "helper_sha256": "59bfa8c97aea591dd95f57f60fb865132fcc0d025dcd2af003d060ef981acd12"
+    },
+    "restore_helper_sha256": "59bfa8c97aea591dd95f57f60fb865132fcc0d025dcd2af003d060ef981acd12",
+    "basis": "Actual owned network-isolated local archive/restore proof supplied by root; not a hosted restore or activation result.",
+    "source_fixture_native_users": 0,
+    "source_fixture_native_sessions": 0,
+    "actual_full_restore": {
+      "passed": true,
+      "scope": "PWA_STAGING_LOGICAL_RESTORE_AND_UPGRADE",
+      "logical_database_restored": true,
+      "physical_relations_verified": 149,
+      "physical_rows_verified": 225,
+      "sequences_verified": 0,
+      "baseline_catalog_families_verified": 28,
+      "native_archive_sections_restored": 3,
+      "native_restore_passes": 4,
+      "native_toc_entries_preserved": 2689,
+      "extensions_precreated_with_source_owner": 2,
+      "extension_owner_reassignments": 2,
+      "extension_installers_removed": true,
+      "effective_acl_objects_replayed": 172,
+      "temporary_schema_usage_grants": 24,
+      "temporary_reference_grants": 447,
+      "temporary_restore_privileges_removed": true,
+      "extension_privilege_warnings": 0,
+      "post_data_owner_mode": "session_authorization",
+      "bootstrap_create_exceptions": 1,
+      "source_migration_prefix": 16,
+      "final_migration_prefix": 31,
+      "non_superuser_upgrade_migrations": 15,
+      "app_tables": 180,
+      "native_policies": 180,
+      "network_isolated": true,
+      "background_jobs_disabled": true,
+      "source_database_mutated": false,
+      "role_passwords_restored": false,
+      "provider_root_keys_restored": false,
+      "provider_services_verified": false,
+      "full_provider_restore_verified": false,
+      "all_object_families_verified": false,
+      "live_migration_authorized": false,
+      "v1_ready": false,
+      "production_enabled": false,
+      "owned_clone_removed": true
+    },
+    "source_data_after_restore_unchanged": true,
+    "hosted_backup_downloaded": false,
+    "hosted_writes": false,
+    "providers_called": false
+  },
+  "release_manifest_provenance": {
+    "state": "public_manifest_bytes_verified",
+    "workflow_run_id": 37888304288,
+    "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+    "path": "20261009-pwa-release-manifest-37888304288.json",
+    "sha256": "98ba1ec732aebafb1041e0600c0fbb20c5cde23fedcf59fcbc4bf23a035e0f58",
+    "image": "ghcr.io/cluvonl/platform@sha256:3b4b5e4db348ddeae7a71ac525510ab3916d5d37a7dc89c40c0b619d5d2c5599",
+    "closed31_manifest_sha256": "4d00699a669e26e0e030523c56c87a231177c5887470d6fe2903ead7164b7e4d",
+    "source_migration_count": 31,
+    "runtime_activation_verified": false,
+    "basis": "Root downloaded public build manifest and checked all31 sourcehashes; local exact manifest bytes independently SHA256 verified. Earlier attempt manifest left untouched."
+  },
+  "current_attempt_artifact_metadata": {
+    "workflow_run_id": 37888304288,
+    "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+    "build_artifact_id": 11597328411,
+    "encrypted_custody": {
+      "artifact_id": 11597955308,
+      "created_at": "2026-10-09T05:35:25Z",
+      "size_bytes": 7961997,
+      "name": "cluvo-staging-pwa-upgrade-encrypted-8762f2284eb980cdbe0d5478a533a6f893b5d409-37888304288-1",
+      "state": "created_metadata_observed",
+      "content_downloaded_here": false,
+      "remote_readback_verified": true,
+      "remote_readback_basis": {
+        "path": "20261009-pwa-upgrade-attempt-37888304288-gha.json",
+        "sha256": "30408586c08da2213562df05d42fddd6e1b6921600bb291af8d0385302aa7789",
+        "exact_bytes_verified": true,
+        "source": "root supplied locally downloaded safe GitHub Actions aggregate report",
+        "encrypted_backup_downloaded_here": false
+      }
+    },
+    "basis": "Root supplied safe public GitHub artifact metadata only. No ciphertext, plaintext or key read or downloaded; no restore/apply result inferred."
+  },
+  "gate_evidence": {
+    "database_upgrade": {
+      "workflow_run_id": 37888304288,
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "state": "passed",
+      "report": {
+        "path": "20261009-pwa-upgrade-attempt-37888304288-gha.json",
+        "sha256": "30408586c08da2213562df05d42fddd6e1b6921600bb291af8d0385302aa7789",
+        "exact_bytes_verified": true,
+        "source": "root supplied locally downloaded safe GitHub Actions aggregate report",
+        "encrypted_backup_downloaded_here": false
+      },
+      "final_migration_prefix": 31,
+      "app_activation_performed": false
+    },
+    "pwa_native_qa": {
+      "workflow_run_id": 37888304288,
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "state": "failed",
+      "basis": "public GitHub run/job metadata; no raw logs read",
+      "failure_reason": "STAGING_NATIVE_QA_ACTUAL_OVERLAP_UNPROVED",
+      "report": {
+        "path": "20261009-pwa-native-qa-attempt-37888304288-gha.json",
+        "sha256": "c480c0d2098856d6da83470b4144fb46d45c8a5aa142e56251ba706516701de2",
+        "exact_byte_copy": true,
+        "source": "root supplied locally downloaded safe GitHub Actions aggregate report",
+        "private_logs_read": false
+      },
+      "root_reported_cleanup": {
+        "synthetic_users": 2,
+        "global_revoke_and_soft_delete_complete": true,
+        "clubs_archived": 2,
+        "active_qa_grants": 0,
+        "retained_bookings": 1,
+        "retained_profile_revisions": 3,
+        "retained_ledger_entries": 0,
+        "personal_accounts_changed": false,
+        "email_sent": false,
+        "production_enabled": false,
+        "basis": "root safe aggregate summary; exact raw safe report separately preserved"
+      }
+    },
+    "deploy": {
+      "workflow_run_id": 37888304288,
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "state": "skipped",
+      "basis": "public GitHub run/job metadata"
+    }
+  },
+  "native_qa_cache_fix_local_provenance": {
+    "path": "20261009-pwa-native-qa-activity-cache-fix-source-proof.json",
+    "sha256": "b887cdbdbe6fc2febf9f4a5541d6fb2918e76c4b7ae99ea18fff7e47f8d3ca15",
+    "state": "closed_local_proof; next hosted QA execution pending",
+    "baseline_committed_source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+    "candidate_source_committed": false,
+    "source31_unchanged": true
+  },
+  "pending_pwa32_local_source_provenance": {
+    "path": "20261009-pwa32-ops-owned-proof.json",
+    "sha256": "b7249e45f4c97c327505005033d2416583285c0abb053b9e8f2f19608291a430",
+    "source_committed": false,
+    "state": "closed_actual_owned_proofs; main CI/promotion/hosted32 upgrade/nativeQA/deploy pending",
+    "migration_manifest_sha256": "e1087c300882adcf8be7a5087507c824a7cfd10bd5f66133646315dba7d10c42",
+    "previous_hosted_prefix": 31,
+    "target_migration_count": 32,
+    "current_hosted32_verified": false
+  },
+  "root_reported_local32_checks": {
+    "observed_at": "2026-10-09T06:12:13.540498+00:00",
+    "basis": "root message; local only, no new hosted inference",
+    "lint": "passed",
+    "types": "passed",
+    "node_tests": {
+      "total": 748,
+      "passed": 719,
+      "skipped": 29,
+      "failed": 0
+    },
+    "production_build": "passed",
+    "wp0": "passed",
+    "coverage_migration_count": 32,
+    "preserved_local_database_schema": 32,
+    "previous31_history_auth_bookings_ledger_bytes_preserved": true,
+    "actual_cli_upgrade_reported": true,
+    "new_hosted32_upgrade_verified": false,
+    "app_activation_verified": false
+  },
+  "current_release33": {
+    "source_sha": "174615bd8c0aeda5c0161a022312b14b66fb2a5f",
+    "state": "full_manual_cancelled_before_hosted_steps_mobile_invitation_probe_pending",
+    "ci_run_id": 37906290774,
+    "migration_count": 33,
+    "local_proof": {
+      "path": "docs/release/evidence/local/20261009-pwa33-read-restore-final-closure.json",
+      "sha256": "23a309980afb1d543b906960f3d8e8531ca79a07cee2c1577ff5d03cb0d3da6d"
+    },
+    "hosted_predecessor": {
+      "migration_count": 31,
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "workflow_run_id": 37888304288
+    },
+    "previous_active_app_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4",
+    "runtime_activation_verified": false,
+    "physical_device_verified": false,
+    "whole_acceptance_passed": false,
+    "production_enabled": false,
+    "ci_conclusion": "success",
+    "exact_staging_promotion_verified": true,
+    "workflow_run_id": 37907029030,
+    "event": "workflow_dispatch",
+    "workflow_conclusion": "cancelled",
+    "hosted_database_upgrade_steps": 0,
+    "native_qa_steps": 0,
+    "deploy_steps": 0,
+    "hosted33_upgrade_verified": false
+  },
+  "observation_limits_basis": "Historical initial read-only observer limits; subsequent root mutations and proof are separately recorded in dated events and current_release33. These are not cumulative root execution counts.",
+  "current_release34": {
+    "source_sha": "996ba5914285d6dd19d9a23bcc4f236f839a82e3",
+    "state": "full_manual_restore_profile_rejected_before_hosted_migrations",
+    "ci_run_id": 37910968489,
+    "migration_count": 34,
+    "local_proof": {
+      "path": "docs/release/evidence/local/20261009-pwa34-final-closure.json",
+      "sha256": "fb2ca067f67968723b172769f1042ba34939660b8e5d7aba4e55a746ae642f74"
+    },
+    "hosted_predecessor": {
+      "migration_count": 31,
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "workflow_run_id": 37888304288
+    },
+    "previous_active_app_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4",
+    "runtime_activation_verified": false,
+    "physical_device_verified": false,
+    "whole_acceptance_passed": false,
+    "production_enabled": false,
+    "ci_conclusion": "success",
+    "promotion_verified": true,
+    "full_manual_run_id": 37911876949,
+    "full_manual_run_url": "https://github.com/cluvonl/platform/actions/runs/37911876949",
+    "full_manual_event": "workflow_dispatch",
+    "duplicate_push_run_id": 37911867349,
+    "duplicate_push_cancel_requested": true,
+    "updated_at": "2026-10-09T09:48:34.822382+00:00",
+    "duplicate_push_conclusion": "cancelled",
+    "device_available": {
+      "model": "Samsung S24",
+      "os_user_description": "nieuwste android versie",
+      "os_version_verified": false,
+      "browser_version_verified": false,
+      "physical_test_executed": false
+    },
+    "full_manual_conclusion": "failure",
+    "failure_code": "RESTORE_DEPARSE_PROFILE_UNSUPPORTED",
+    "applied_migrations": 0,
+    "database_mutations_performed": false,
+    "app_activation_performed": false,
+    "backup_custody": {
+      "uploaded": true,
+      "remote_readback": true,
+      "artifact_id": "11607681202",
+      "archive_sha256": "2979eb0b849c7594172cfb9b7df981b3888dcf9af5d427ae41c9c8a46c1669eb",
+      "retention_days": 30,
+      "key_profile": "cluvo-staging-pwa-upgrade-backup-hkdf-sha256-v1",
+      "plaintext_uploaded": false,
+      "secret_key_uploaded": false
+    },
+    "safe_report": {
+      "path": "docs/release/evidence/staging/20261009-pwa-upgrade-attempt-37911876949-gha.json",
+      "sha256": "3bcdd5e9895d2bc4e768d9c2c57f600e97a265c41ed00893bc57894231662e1f"
+    }
+  },
+  "current_release35": {
+    "source_sha": "6029b482c06669aa37806d3aa90f70b59e6ccfd4",
+    "state": "full_manual_exact_constraint_restore_mismatch_before_hosted_migrations",
+    "ci_run_id": 37920817878,
+    "migration_count": 35,
+    "manifest_sha256": "b39a9bb9d167e02e5723f0efe68bacc3df1bfeb08a03551c8efe8dcd70171466",
+    "local_proof": {
+      "path": "docs/release/evidence/local/20261009-pwa35-root-source-build-closure.json",
+      "sha256": "c96974732e784f1c5e2f854f4b5bb42bbf7696dde35363208949e07e8e5cd0b3"
+    },
+    "hosted_predecessor": {
+      "migration_count": 31,
+      "source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+      "workflow_run_id": 37888304288
+    },
+    "previous_active_app_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4",
+    "runtime_activation_verified": false,
+    "physical_device_verified": false,
+    "whole_acceptance_passed": false,
+    "production_enabled": false,
+    "device_available": {
+      "model": "Samsung S24",
+      "os_user_description": "nieuwste android versie",
+      "os_version_verified": false,
+      "browser_version_verified": false,
+      "physical_test_executed": false
+    },
+    "duindorp_sv_staging_configuration_authorized": true,
+    "duindorp_sv_existing_hosted_tenant_present_at_readonly_lookup": false,
+    "temporary_secure_client_id_input_pending": false,
+    "updated_at": "2026-10-09T11:23:25.279658+00:00",
+    "ci_conclusion": "success",
+    "promotion_verified": true,
+    "full_manual_run_id": 37921449926,
+    "full_manual_run_url": "https://github.com/cluvonl/platform/actions/runs/37921449926",
+    "full_manual_event": "workflow_dispatch",
+    "duplicate_push_run_id": 37921439425,
+    "duplicate_push_cancel_requested": true,
+    "temporary_environment_secret_presence_verified": true,
+    "full_manual_conclusion": "failure",
+    "error": "RESTORE_CATALOG_MISMATCH",
+    "applied_migrations": 0,
+    "database_mutations_performed": false,
+    "app_activation_performed": false,
+    "returned_session_closed": true,
+    "source_deparse_normalization_verified": true,
+    "restore_contexts_aligned": true,
+    "restore_constraint_changed_definition_rows": 1,
+    "backup_custody": {
+      "uploaded": true,
+      "remote_readback": true,
+      "artifact_id": "11612945441",
+      "archive_sha256": "e5b78cc5cd3c2519cb0ba3196896793aa688a09819745b8493c0ca64515a0026",
+      "retention_days": 30,
+      "key_profile": "cluvo-staging-pwa-upgrade-backup-hkdf-sha256-v1",
+      "plaintext_uploaded": false,
+      "secret_key_uploaded": false
+    },
+    "safe_report": {
+      "path": "docs/release/evidence/staging/20261009-pwa-upgrade-attempt-37921449926-gha.json",
+      "sha256": "7cef77551560f677ed87164bdebeb550ca3c0d8263ff282bc29b2b00db142b5d"
+    },
+    "duplicate_push_conclusion": "cancelled"
+  },
+  "current_release35_ops": {
+    "source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+    "state": "active_staging35_reserve_authority_and_setup_sql_followup_pending",
+    "migration_count": 35,
+    "manifest_sha256": "b39a9bb9d167e02e5723f0efe68bacc3df1bfeb08a03551c8efe8dcd70171466",
+    "local_proof": {
+      "path": "docs/release/evidence/local/20261009-pwa35-ops-setup-root-closure.json",
+      "sha256": "1f01655a175d908aadafcbe8ea6265005753063928b7b3aab5db2ff50469f690"
+    },
+    "runtime_bytes_unchanged_from6029": true,
+    "known_check_reconstruction_local_strict28_proven": true,
+    "previous_active_app_sha": "b9a6ed995058e623d7887fb4a56630251ff4ffb4",
+    "hosted_initial_prefix": 31,
+    "duindorp_sv_staging_configuration_authorized": true,
+    "temporary_environment_secret_presence_verified": true,
+    "temporary_secret_consumed": false,
+    "temporary_secret_deleted": false,
+    "runtime_activation_verified": true,
+    "physical_device_verified": false,
+    "whole_acceptance_passed": false,
+    "production_enabled": false,
+    "updated_at": "2026-10-09T12:52:38.778275+00:00",
+    "ci_run_id": 37925974324,
+    "ci_conclusion": "success",
+    "promotion_verified": true,
+    "full_manual_run_id": 37926728047,
+    "full_manual_event": "workflow_dispatch",
+    "full_manual_run_url": "https://github.com/cluvonl/platform/actions/runs/37926728047",
+    "duplicate_push_run_id": 37926707626,
+    "duplicate_push_cancel_requested": true,
+    "duplicate_push_conclusion": "cancelled",
+    "encrypted_custody_metadata_only": {
+      "artifact_id": 11614747678,
+      "bytes": 9981529,
+      "artifact_present": true,
+      "downloaded": false,
+      "remote_readback_verified": false
+    },
+    "full_manual_conclusion": "success",
+    "applied_migrations": 4,
+    "hosted_final_prefix": 35,
+    "restore_strict_catalog_families": 28,
+    "restore_physical_relations": 222,
+    "restore_physical_rows": 1512,
+    "restore_check_ast_reconstruction_verified": true,
+    "backup_custody": {
+      "uploaded": true,
+      "remote_readback": true,
+      "artifact_id": "11614747678",
+      "archive_sha256": "1b0f925b0238fa66a9c6247b56b30a9fc31ff2108f21edc14da41130aa471198",
+      "retention_days": 30,
+      "key_profile": "cluvo-staging-pwa-upgrade-backup-hkdf-sha256-v1",
+      "plaintext_uploaded": false,
+      "secret_key_uploaded": false
+    },
+    "native_qa_passed": true,
+    "native_two_last_position_one_success": true,
+    "public_readback_passed": true,
+    "public_readback_checks": 11,
+    "safe_release_reports": [
+      {
+        "path": "docs/release/evidence/staging/20261009-pwa-upgrade-attempt-37926728047-gha.json",
+        "sha256": "bd2e3fdfeba27477e088f67ed3c500526df8d782e5b3155b29fbbb1095faa99a"
+      },
+      {
+        "path": "docs/release/evidence/staging/20261009-pwa-native-qa-attempt-37926728047-gha.json",
+        "sha256": "0ed61bb04a0d9aafe2ddda2eabd66aced4fb933015ded3b21b19bc35a2da7a7f"
+      },
+      {
+        "path": "docs/release/evidence/staging/20261009-pwa-release-manifest-37926728047.json",
+        "sha256": "78cd873f1192a954865c2747bc08611aaae36a0a543b6ee80194a1636320223f"
+      },
+      {
+        "path": "docs/release/evidence/staging/20261009-pwa-public-readback.json",
+        "sha256": "0f38f3b951b84c6b6f48f19a7e90dc697c0907ed09d542c57583a89ebdca3b75"
+      }
+    ],
+    "sportlink_setup_attempt": {
+      "run_id": 37928786935,
+      "passed": false,
+      "operator_scope": "created",
+      "scope_permissions": [
+        "match.import"
+      ],
+      "error": "STAGING_SPORTLINK_SETUP_AUTH_REFUSED_NATIVE_SESSION",
+      "client_id_stored": false,
+      "provider_read_test_done": false,
+      "new_session_cleanup_verified": false,
+      "old_sessions_preservation_verified": false,
+      "temporary_secret_deleted": false,
+      "safe_report_sha256": "5acfcf11a90ebb8ae3a0ad2981e21ff56008438f5a6ab6b4771cc7a96066e3ce"
+    },
+    "runtime_configuration": {
+      "observed_at": "2026-10-09T12:52:38.778275+00:00",
+      "kind": "actual_staging_runtime_configuration_import_success",
+      "source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+      "workflow_run_id": 37931065236,
+      "workflow_event": "workflow_dispatch",
+      "workflow_conclusion": "success",
+      "previous_config_version": 2,
+      "config_version": 3,
+      "database_readonly_guard_passed": true,
+      "fixed_broker_import_passed": true,
+      "rollback_compatibility_allowlist": [
+        "b9a6ed995058e623d7887fb4a56630251ff4ffb4",
+        "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef"
+      ],
+      "actual_app_rollback_executed": false,
+      "production_enabled": false
+    },
+    "browser_readback_attempt": {
+      "observed_at": "2026-10-09T12:52:38.778275+00:00",
+      "kind": "actual_active_image_browser_attempt_partial_failure",
+      "source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+      "workflow_run_id": 37931346250,
+      "workflow_event": "workflow_dispatch",
+      "workflow_conclusion": "failure",
+      "aggregate_path": "docs/release/evidence/staging/20261009-pwa-browser-readback-37931346250-gha.json",
+      "aggregate_sha256": "fdfccab018d989ab0aea2a3953be1a7c3b7dcd4bd8960b286cb423d274294a52",
+      "routes_passed": [
+        "home",
+        "tasks"
+      ],
+      "whole_twenty_routes_passed": false,
+      "error": "STAGING_BROWSER_READBACK_UNAVAILABLE",
+      "failure_operation_unclassified": true,
+      "native_qa_scopes_archived": 2,
+      "native_qa_active_grants": 0,
+      "native_qa_active_memberships": 0,
+      "own_provider_user_cleanup_complete": true,
+      "personal_account_changed": false,
+      "database_session_closed": true,
+      "physical_device_verified": false,
+      "production_enabled": false
+    }
+  }
+}

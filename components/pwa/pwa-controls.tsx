@@ -110,6 +110,6 @@ export function InstallAppControl({compact = false}: {compact?: boolean} = {}) {
       catch {setShowHelp(true);}
       finally {clearInstallEvent(); setBusy(false);}
     }}><Download size={18} />{installEvent && !isIos ? 'Cluvo installeren' : 'Cluvo op je beginscherm'}</button>
-    {showHelp ? <p className="cluvo-pwa-install-help">{isIos ? 'Open deze pagina in Safari. Tik op Delen, eventueel via Meer, en kies Zet op beginscherm. Schakel Open als webapp in als je die keuze ziet. Tik op Voeg toe en open daarna Cluvo via het nieuwe icoon.' : 'Open het menu van je browser. Kies in Chrome Installeren en snelkoppeling maken en daarna Installeren. In andere versies kan dit App installeren of Toevoegen aan beginscherm heten. Je kunt Cluvo ook gewoon in de browser gebruiken.'}</p> : null}
+    {showHelp ? <p className="cluvo-pwa-install-help">{isIos ? 'Open deze pagina in Safari. Tik op Delen, eventueel via Meer, en kies Zet op beginscherm. Schakel Open als webapp in als je die keuze ziet. Tik op Voeg toe en open daarna Cluvo via het nieuwe icoon.' : 'Open het menu van je browser. Kies in Chrome Installeren en snelkoppeling maken en daarna Installeren. In andere versies kan dit App installeren of Toevoegen aan beginscherm heten. Blokkeert Samsung Internet de installatie met een waarschuwing over een oudere Android-versie? Open deze pagina in een bijgewerkte Google Chrome en installeer daar. Laat de beveiliging van je telefoon ingeschakeld. Je kunt Cluvo ook gewoon in de browser gebruiken.'}</p> : null}
   </section>;
 }

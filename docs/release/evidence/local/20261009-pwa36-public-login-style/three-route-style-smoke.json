@@ -1,0 +1,185 @@
+{
+  "scope": "PUBLIC_AUTH_STYLE_HELPER_ACTUAL_CURRENT_BUILD_AND_STAGE_FAILURE_V1",
+  "observed_at": "2026-10-09T13:28:59.036Z",
+  "build_id": "N_Dg2FGoBXBoWfKPBnFMX",
+  "source_files": [
+    {
+      "path": "scripts/public-auth-style-smoke.mjs",
+      "sha256": "79a1d1cc10885921bb1c20707d9fa6d687a563805039d4f08cb284ccba6155a3"
+    },
+    {
+      "path": "scripts/wp0-smoke.mjs",
+      "sha256": "43df5131d2c9451cd24349904c9c2623f95a8a596e70ca795201e28e5da33a12"
+    },
+    {
+      "path": "tests/public-auth-style-smoke.test.mjs",
+      "sha256": "f9bbd51ce20bd13d3cefa09c145e821c728971c48f27a1fc62f15ed3b950d15f"
+    }
+  ],
+  "results": [
+    {
+      "target": "local",
+      "scope": "PUBLIC_AUTH_SSR_LINKED_STYLE_SMOKE_V1",
+      "passed": true,
+      "routes": [
+        {
+          "path": "/login",
+          "passed": true,
+          "stylesheets": [
+            "/_next/static/css/1d7bfca937fbee4e.css"
+          ],
+          "status": 200,
+          "html_sha256": "eb7569aabb8d0a02b50ab8a2f69f685e666756496dc11fd14d0611d17b350633",
+          "auth_shell": true,
+          "primary_control": true,
+          "style_rules": {
+            "body": true,
+            "auth_screen": true,
+            "auth_card": true,
+            "auth_primary": true
+          }
+        },
+        {
+          "path": "/app/login",
+          "passed": true,
+          "stylesheets": [
+            "/_next/static/css/1d7bfca937fbee4e.css",
+            "/_next/static/css/5351f63f9a741345.css"
+          ],
+          "status": 200,
+          "html_sha256": "ab5559e09f895b9099b2e6e7ff50246f4db5dc6a6066bddb54ef90163a3e134f",
+          "auth_shell": true,
+          "primary_control": true,
+          "style_rules": {
+            "body": true,
+            "auth_screen": true,
+            "auth_card": true,
+            "auth_primary": true
+          }
+        },
+        {
+          "path": "/app/auth/verify",
+          "passed": true,
+          "stylesheets": [
+            "/_next/static/css/1d7bfca937fbee4e.css",
+            "/_next/static/css/5351f63f9a741345.css"
+          ],
+          "status": 200,
+          "html_sha256": "13f4aa4c20aeb296887a18b9ac784dd5d83619f16f52db7e55ef68f13e6fbc9f",
+          "auth_shell": true,
+          "primary_control": true,
+          "style_rules": {
+            "body": true,
+            "auth_screen": true,
+            "auth_card": true,
+            "auth_primary": true
+          }
+        }
+      ],
+      "stylesheets": [
+        {
+          "path": "/_next/static/css/1d7bfca937fbee4e.css",
+          "passed": true,
+          "status": 200,
+          "content_type_valid": true,
+          "bytes": 190884,
+          "sha256": "162a8668f2f08ad10fb2e2e168ce74b4dc62cc1dde4dc299ae8078a69c290225"
+        },
+        {
+          "path": "/_next/static/css/5351f63f9a741345.css",
+          "passed": true,
+          "status": 200,
+          "content_type_valid": true,
+          "bytes": 1391,
+          "sha256": "c4fc7fa9be011de32282aa1becc07cb74178a788ed3e0a5310f631576a71a4a3"
+        }
+      ],
+      "authenticated": false,
+      "provider_requests_performed": false,
+      "private_values_exported": false,
+      "production_enabled": false,
+      "v1_ready": false
+    },
+    {
+      "target": "staging",
+      "scope": "PUBLIC_AUTH_SSR_LINKED_STYLE_SMOKE_V1",
+      "passed": false,
+      "routes": [
+        {
+          "path": "/login",
+          "passed": false,
+          "stylesheets": [
+            "/_next/static/css/5351f63f9a741345.css"
+          ],
+          "status": 200,
+          "html_sha256": "a17b4deb1969c0c5eb3048be970d0c9f936500e8dacb2515a9d65be21dac4d84",
+          "auth_shell": true,
+          "primary_control": true,
+          "style_rules": {
+            "body": false,
+            "auth_screen": false,
+            "auth_card": false,
+            "auth_primary": false
+          },
+          "error": "PUBLIC_AUTH_STYLE_RULES_MISSING"
+        },
+        {
+          "path": "/app/login",
+          "passed": false,
+          "stylesheets": [
+            "/_next/static/css/5351f63f9a741345.css"
+          ],
+          "status": 200,
+          "html_sha256": "f5b9ed3cde8202be1f246bb55d408aa3dcc34cdfdd7fc116897b63607ebc52bf",
+          "auth_shell": true,
+          "primary_control": true,
+          "style_rules": {
+            "body": false,
+            "auth_screen": false,
+            "auth_card": false,
+            "auth_primary": false
+          },
+          "error": "PUBLIC_AUTH_STYLE_RULES_MISSING"
+        },
+        {
+          "path": "/app/auth/verify",
+          "passed": false,
+          "stylesheets": [
+            "/_next/static/css/5351f63f9a741345.css"
+          ],
+          "status": 200,
+          "html_sha256": "2864597df36c30881fa8c00e90eca69aa6c6ea19565b018486115c11597ae9fb",
+          "auth_shell": true,
+          "primary_control": true,
+          "style_rules": {
+            "body": false,
+            "auth_screen": false,
+            "auth_card": false,
+            "auth_primary": false
+          },
+          "error": "PUBLIC_AUTH_STYLE_RULES_MISSING"
+        }
+      ],
+      "stylesheets": [
+        {
+          "path": "/_next/static/css/5351f63f9a741345.css",
+          "passed": true,
+          "status": 200,
+          "content_type_valid": true,
+          "bytes": 1391,
+          "sha256": "c4fc7fa9be011de32282aa1becc07cb74178a788ed3e0a5310f631576a71a4a3"
+        }
+      ],
+      "authenticated": false,
+      "provider_requests_performed": false,
+      "private_values_exported": false,
+      "production_enabled": false,
+      "v1_ready": false
+    }
+  ],
+  "local_passed": true,
+  "current_staging_failure_reproduced": true,
+  "fix_deployed": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

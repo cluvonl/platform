@@ -8,6 +8,7 @@ export type MobileTask = MobileResource & {title: string; category: string; kind
 export type MobilePlanningTask = MobileResource & {state: 'draft' | 'published'; committeeId: string; committeeName: string; category: string; title: string; startsAt: string; endsAt: string; location: string; minutes: number; positions: number};
 export type MobileBooking = MobileResource & {taskId: string; positionId?: string; executorId: string; executorName: string; householdId: string; state: string; minutes: number; startsAt?: string; endsAt?: string; instructions?: string; location?: string; cancellationDeadline?: string; teamId?: string; memberName?: string; canCancel: boolean; canReplace: boolean; canPrepare: boolean; canFeedback: boolean; canConfirm: boolean; replacementRequested: boolean};
 export type MobileAllocation = MobileResource & {taskId: string; teamId: string; memberId?: string; memberName?: string; position: number; positionId?: string; clusterId?: string; clusterVersion?: number; selfUntil?: string; assignUntil?: string; canChoose: boolean; canAssign: boolean; canRequestReserve?: boolean; bookingId?: string; bookingVersion?: number; bookingState?: string; executorName?: string; countsForTeam: boolean};
+export type MobileCommitteeAllocation = MobileResource & {taskId: string; teamId: string; committeeId: string; clusterId: string; clusterVersion: number; positionId: string; position: number; title: string; startsAt: string; endsAt: string; state: string; selfUntil: string; assignUntil: string; canRequestReserve: boolean};
 export type MobileTeamMember = MobileResource & {name: string; householdId: string; goal: number; goalVersion?: number; completed: number; planned: number; assigned: number; unallocated: number; canAdjust: boolean};
 export type MobileTeam = MobileResource & {name: string; parentName: string; goal: number; goalVersion?: number; handoverVersion?: number; canManage: boolean; members: MobileTeamMember[]};
 export type MobileProgress = {confirmed: number; planned: number; pending: number; target: number; winterTarget: number; winterConfirmed: number; remaining: number; exempt: boolean};
@@ -54,6 +55,7 @@ export type MobileSnapshot = {
   receivingTeams?: (MobileResource & {name: string})[];
   canManageClubClusters?: boolean;
   reservePreview?: {positionId: string; taskId: string; canReserve: boolean; reason: string}[];
+  committeeAllocations?: MobileCommitteeAllocation[];
   committeeClusters?: (MobileResource & {teamId: string; committeeId: string; title: string; selfUntil: string; assignUntil: string; canFollowup: boolean})[];
   distributionProposals?: {teamId: string; assignments: {allocationId: string; expectedVersion: number; memberId: string; reason: string}[]}[];
   pendingCommands?: {idempotencyKey: string; command: string}[];

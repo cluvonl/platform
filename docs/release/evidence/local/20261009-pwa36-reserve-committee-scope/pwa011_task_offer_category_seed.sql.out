@@ -1,0 +1,29 @@
+ok 1 - all three newly created tenants get their own task offer category
+ok 2 - new tenant receives actual canonical copy
+ok 3 - news category is optional and starts at actual version one
+ok 4 - category identities are tenant bound rather than shared
+ok 5 - browser cannot invoke private seeding function
+ok 6 - service role cannot invoke private seeding function
+ok 7 - no new command owner seed RPC privilege
+ok 8 - seed uses existing migration authority with empty search path and no definer escalation
+ok 9 - notification category native forced RLS remains enabled
+
+ok 10 - current member reads actual own default category
+ok 11 - member cannot read another club category
+ok 12 - seed does not grant browser direct category INSERT
+ok 13 - seed does not create a browser tenant creation route
+ok 14 - category default never supplies missing planning authority
+
+ok 15 - actual first publication succeeds and exact key replays without another shift
+ok 16 - known default category cannot authorize cross-tenant publication
+ok 17 - first publication and replay preserve one actual shift
+ok 18 - canonical publication really changed shift state
+ok 19 - actual public shift has the requested two places
+ok 20 - publication preserves actual eligibility rules
+ok 21 - publication has immutable actual preparation text
+ok 22 - public first task introduces no hidden reservation
+ok 23 - registered category opt-out remains unchanged by publication
+ok 24 - PWA optional email and news consent remain unchanged
+ok 25 - canonical first-publication outbox respects existing email opt-out
+ok 26 - publishing a task does not award execution minutes
+1..26

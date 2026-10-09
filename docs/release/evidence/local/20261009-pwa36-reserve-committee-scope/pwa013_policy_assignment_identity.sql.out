@@ -1,0 +1,140 @@
+ok 1 - own actor sees own three exact documents plus the explicitly authorized child assignment
+ok 2 - assigned club document title is canonical
+ok 3 - second document retains a distinct exact identity
+ok 4 - multiple document titles are distinct rather than a generic policy label
+ok 5 - assigned policy revision is not latest document revision four
+ok 6 - assignment expected version remains distinct from document revision
+ok 7 - body follows assigned historical version rather than unassigned draft
+ok 8 - unassigned draft and foreign club canaries are absent
+ok 9 - published own offered assignment exposes actual native acceptance capability
+ok 10 - explicit verified guardian has actual child acceptance capability
+ok 11 - retired assigned exact body remains readable
+ok 12 - retired historical assignment remains read only
+ok 13 - same household other adult and foreign household or tenant assignments remain private
+ok 14 - direct canonical read registration rejects missing expected version
+ok 15 - direct canonical read registration rejects zero expected version
+ok 16 - direct canonical read registration rejects negative expected version
+ok 17 - open_policy rejects missing vectors in the native API
+ok 18 - open_policy rejects null vector in the native API
+ok 19 - open_policy rejects empty vector in the native API
+ok 20 - open_policy rejects wrong length vector in the native API
+ok 21 - open_policy rejects null element in the native API
+ok 22 - open_policy rejects zero element in the native API
+ok 23 - open_policy rejects negative element in the native API
+ok 24 - open_policy rejects string element in the native API
+ok 25 - open_policy rejects boolean element in the native API
+ok 26 - open_policy rejects fractional element in the native API
+ok 27 - open_policy rejects null assignment in the native API
+ok 28 - open_policy rejects boolean assignment in the native API
+ok 29 - open_policy rejects malformed assignment in the native API
+ok 30 - open_policy rejects duplicate assignments in the native API
+ok 31 - open_policy rejects document ID instead of assigned text version
+ok 32 - open_policy rejects latest unassigned draft
+ok 33 - open_policy rejects assignment version instead of policy revision
+ok 34 - open_policy rejects zero document revision
+ok 35 - open_policy cannot bind two distinct text versions to one body identity
+ok 36 - open_policy cannot act for the other adult despite shared household access
+ok 37 - open_policy cannot act for another household child
+ok 38 - open_policy cannot bind an assignment from another tenant
+ok 39 - open_policy checks captured assignment version independently of body revision
+ok 40 - accept_policy rejects missing vectors in the native API
+ok 41 - accept_policy rejects null vector in the native API
+ok 42 - accept_policy rejects empty vector in the native API
+ok 43 - accept_policy rejects wrong length vector in the native API
+ok 44 - accept_policy rejects null element in the native API
+ok 45 - accept_policy rejects zero element in the native API
+ok 46 - accept_policy rejects negative element in the native API
+ok 47 - accept_policy rejects string element in the native API
+ok 48 - accept_policy rejects boolean element in the native API
+ok 49 - accept_policy rejects fractional element in the native API
+ok 50 - accept_policy rejects null assignment in the native API
+ok 51 - accept_policy rejects boolean assignment in the native API
+ok 52 - accept_policy rejects malformed assignment in the native API
+ok 53 - accept_policy rejects duplicate assignments in the native API
+ok 54 - accept_policy rejects document ID instead of assigned text version
+ok 55 - accept_policy rejects latest unassigned draft
+ok 56 - accept_policy rejects assignment version instead of policy revision
+ok 57 - accept_policy rejects zero document revision
+ok 58 - accept_policy cannot bind two distinct text versions to one body identity
+ok 59 - accept_policy cannot act for the other adult despite shared household access
+ok 60 - accept_policy cannot act for another household child
+ok 61 - accept_policy cannot bind an assignment from another tenant
+ok 62 - accept_policy checks captured assignment version independently of body revision
+ok 63 - acceptance cannot automatically mark a merely offered document as opened
+ok 64 - one stale selected child rolls back an earlier valid first read atomically
+ok 65 - all invalid identity and typed version attempts preserve data history receipts audit notifications and ledger
+
+ok 66 - follow up actor reads only the seven authorized tenant assignments
+ok 67 - oversight read authority grants neither a represented subject nor acceptance capability for other members
+ok 68 - follow up cannot open another adult text without a native mandate
+ok 69 - follow up cannot accept another adult text without a native mandate
+
+ok 70 - second parent reads only its own two documents
+ok 71 - household parent access alone cannot open the child policy
+
+ok 72 - other club actor reads only its own policy identity
+ok 73 - native foreign club actor sees zero assignments for tenant A
+ok 74 - other tenant native session cannot open this club document
+
+ok 75 - oversight household and tenant authorization failures leave immutable history intact
+ok 76 - revoked guardian mandate hides the child assignment
+ok 77 - revoked guardian cannot open the child document
+ok 78 - expired guardian mandate hides the child assignment
+ok 79 - oversight may read an expired guardian assignment but cannot act
+ok 80 - separate follow up authority cannot replace expired guardian authority
+ok 81 - oversight plus revoked guardian remains read only
+ok 82 - unconfirmed native account cannot read policy data
+ok 83 - unconfirmed native account cannot open a document
+ok 84 - expired native session cannot read policy identity
+ok 85 - expired native session cannot mark reading
+ok 86 - expired own exact text remains readable with actual subject identity
+ok 87 - expired exact text cannot produce a new PWA read acknowledgement
+ok 88 - retired historical text cannot produce a new PWA read acknowledgement
+ok 89 - expired and retired read-status failures preserve history receipts audit and notifications
+ok 90 - direct canonical API retains actual correctly versioned reading without acceptance
+ok 91 - direct canonical reading replays its actual original captured version
+ok 92 - direct canonical read increments the actual assignment once
+ok 93 - durable native intent accepts the explicit open action without storing policy payload
+ok 94 - actual document click opens the own offered assignment
+ok 95 - opening increments actual assignment version once while body revision remains three
+ok 96 - opening alone creates no acceptance
+ok 97 - native opening appends one actual assignment history event
+ok 98 - policy read acknowledgement creates no own inbox or provider notification
+ok 99 - identical open key replays the original assignment receipt after its version changed
+ok 100 - native receipt resolves the actual opening command as confirmed
+ok 101 - opening a mixed already read and new guardian vector records only actual new reads
+ok 102 - reopening does not invent an assignment version increment
+ok 103 - explicit verified guardian actually opens the selected child text
+ok 104 - new child read obtains its actual next assignment version
+ok 105 - overlapping read vector still creates no adult or child acceptance
+ok 106 - three actual first reads have three canonical immutable history events
+ok 107 - another key cannot silently upgrade the old child assignment version
+ok 108 - self capacity cannot silently accept a child alongside an adult
+ok 109 - wrong visible document identity cannot accept a correctly versioned opened assignment
+ok 110 - stale read mixed capacity and wrong body failures preserve opened history atomically
+ok 111 - explicit own acceptance binds body revision three and assignment version six
+ok 112 - same exact acceptance key replays without duplicate history
+ok 113 - verified guardian separately accepts the already opened child exact body
+ok 114 - own and verified child acceptance produce exactly two records
+ok 115 - accepted immutable hashes refer to the exact assigned body
+ok 116 - opening and acceptance never fabricate hour credits
+ok 117 - accepted own assignment retains actual subject identity and is exposed read only
+ok 118 - accepted exact body cannot be rewritten as a new read acknowledgement
+ok 119 - retired assigned exact text remains readable but cannot be newly accepted
+
+ok 120 - second parent explicitly opens its own club policy
+ok 121 - second parent separately opens its own other exact document
+ok 122 - unchanged canonical batch intentionally accepts multiple exact document versions
+ok 123 - native batch retains two-document behavior without changing PWA exact body guard
+ok 124 - different readers and overlapping opens have distinct actual command event identities
+ok 125 - only two PWA acceptances notify while all four PWA read acknowledgements remain silent
+ok 126 - policy identity projection uses native invoker RLS
+ok 127 - projection appends five identity and capability columns to the fourteen existing fields
+ok 128 - projection exposes no Auth or reviewer identifiers
+ok 129 - private arbitrary-person action helper remains unavailable to JWT roles
+ok 130 - minimal current actor capability wrapper is available only to authenticated
+ok 131 - current actor helper preserves native command owner and empty search path
+ok 132 - new policy view grants no writes or anonymous service read shortcut
+ok 133 - all underlying policy tables retain forced RLS
+ok 134 - JWT actor cannot write policy read status directly
+1..134

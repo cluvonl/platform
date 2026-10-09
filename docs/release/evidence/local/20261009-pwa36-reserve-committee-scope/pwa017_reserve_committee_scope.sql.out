@@ -1,0 +1,60 @@
+ok 1 - pure committee coordinator uses actual native session and only committee mandate
+ok 2 - committee scope does not grant team allocation/progress visibility
+ok 3 - own concrete committee place is available independently of team membership
+ok 4 - reserve request disabled before assignment deadline
+ok 5 - private reserve pool absent before committee phase
+ok 6 - pre-deadline request rejected with every app row unchanged
+ok 7 - same pure coordinator updates concrete cluster deadlines
+ok 8 - F074 deadline update reads back actual cluster version
+
+ok 9 - pure team parent has team authority but no committee authority
+ok 10 - team-parent membership grants no committee read projection
+ok 11 - team parent cannot inspect the opt-in reserve pool
+ok 12 - own team allocation does not imply reserve action capability
+ok 13 - pure team-parent reserve request denied without any app write
+
+ok 14 - ordinary opted-in recipient cannot issue committee requests
+
+ok 15 - foreign tenant actor cannot act on club A allocation
+ok 16 - foreign tenant read contains no club A allocation
+
+ok 17 - different committee mandate grants no concrete allocation scope
+ok 18 - different committee mandate grants no private reserve candidates
+ok 19 - same-tenant coordinator for a different committee cannot request reserve help
+
+ok 20 - post-deadline pure coordinator gets actual reserve capability
+ok 21 - only eligible opted-in executor is projected
+ok 22 - candidate identity matches native eligible voluntary person
+ok 23 - committee place projection has no member, household, profile, progress or Auth fields
+ok 24 - candidate projection contains no private answers or contact fields
+ok 25 - stale allocation version rejected without writes
+ok 26 - null expected version rejected before resource mutation
+ok 27 - missing recipient array cannot create a vacuous request event
+ok 28 - null recipient list rejected without writes
+ok 29 - empty recipient list rejected without writes
+ok 30 - suitable but non-opted-in executor cannot be invited from reserve pool
+ok 31 - cross-tenant person cannot be invited
+ok 32 - confirmed receipt binds exact allocation resource
+ok 33 - invitation preserves actual allocation version
+ok 34 - same key replays exact confirmed receipt
+ok 35 - fresh explicit repeat request retains one durable reserve recipient
+
+ok 36 - named recipient sees exact own voluntary reserve request
+ok 37 - recipient readback binds actual allocation
+
+ok 38 - other household parent cannot inspect recipient reserve inbox
+ok 39 - durable request deduplicates allocation and recipient
+ok 40 - each deliberate new request notifies actual recipient; same-key replay does not
+ok 41 - reserve invitation creates no booking
+ok 42 - all original booking history preserved
+ok 43 - invitation creates no additional authority
+ok 44 - invitation does not increase obligations
+ok 45 - reserve and deadline actions fabricate no confirmed minutes
+
+ok 46 - revoked coordinator loses concrete committee projection
+ok 47 - revoked coordinator loses private candidate projection
+ok 48 - revoked coordinator cannot issue new reserve request
+ok 49 - revoked coordinator cannot retrieve old successful command as authorization
+ok 50 - all app tables retain forced RLS
+ok 51 - command retains native restricted owner and empty search path
+1..51

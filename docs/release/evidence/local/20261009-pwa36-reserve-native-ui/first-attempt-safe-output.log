@@ -1,0 +1,7 @@
+{"phase":"capture-original181-app-pk-row-and-old-auth-authority-baseline"}
+{"phase":"new-owned-native-auth-users-only"}
+{"phase":"guarded-new-f360-fixture-construction-no-existing-authority-rewrites"}
+{"phase":"fixture-ready-native-three-local-OTP-logins"}
+{"phase":"logins-complete"}
+{"phase":"actual-F074-followup-dates-native-command-through-mobile-form"}
+{"passed":false,"phase":"actual-F074-followup-dates-native-command-through-mobile-form","safe_code":"BOUNDED_LOCAL_BROWSER_ASSERTION_FAILED"}

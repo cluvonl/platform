@@ -1,0 +1,166 @@
+{
+  "scope": "LOCAL_OWNED_PG17_INT037_INVITATION_TOKEN_CONTRACT",
+  "source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+  "observed_at": "2026-10-09T12:00:18.253Z",
+  "passed": true,
+  "migration_count": 35,
+  "migration_manifest_sha256": "b39a9bb9d167e02e5723f0efe68bacc3df1bfeb08a03551c8efe8dcd70171466",
+  "migration_hashes": {
+    "20261002163042_cluvo_wp1_wp2_core.sql": "7e4efdaa139d2fe3120c43c0e7fcfe966438f154c08358734b6c555968acd32e",
+    "20261002165306_wp3_wp5_obligations_execution.sql": "1dd88883e99acd63cbea6f33c47b1c39008a6832904f1da6150374fbe1474eb7",
+    "20261002165327_wp6_wp8_collaboration_communication_policy.sql": "9707da512d46b23d8472bf222981242f8020ac3612709f536136876674b50702",
+    "20261002170949_wp1_onboarding_storage.sql": "6de61a4843cd9a3d77fccb6c0be0591c178b516518e4bb7ce9c2ae1cec3d4c03",
+    "20261002171135_wp9_wp11_finance_people_seasons.sql": "bdff3e58102376de4195840cc7cd3a02a59c7648cc19403c306ae72e96605719",
+    "20261002183000_vertical_read_models.sql": "bf50215a774296882cb5aa8067b43bb2c853bbb991968859b8ceece58d197eaf",
+    "20261002184500_assisted_member_actions.sql": "c7d74823e3be555b7115b1eab4e4180cdb48c7668680fa3a0a6b0e8420629bab",
+    "20261006180000_account_help_preferences.sql": "f6b7d1db5f420b5e5daeaf142326289dd1fb6918123c001386956f512f7755ff",
+    "20261006193000_complete_personal_intake.sql": "488d4722f830a0a2a2d35ff89a483bcd6f5e40ed3aa255d367d4346aaad22ad9",
+    "20261006210000_household_dossier_projection.sql": "0f1b29d8bbde85300f704270bc5ead062344bffe01f5688b67daa085099450a2",
+    "20261006223000_versioned_household_invitation_commands.sql": "99b456fda630c15eca25f197d971edcf8134a5181deb114c398dde852b6b62fe",
+    "20261006230000_household_invitation_cancellation.sql": "6d3738db24d2a02576fa6fa4a9273390d04872565edd66d662024df230425a1c",
+    "20261006233000_contract_household_invitation_bootstrap.sql": "1731ab3cec4921ad31e6f30a90ee21d8dc6101fa205285a51c5b65bc52e2c3f2",
+    "20261006234500_personal_intake_reconfirmation.sql": "e4f95b65789485e86131d21c0c085a83c8fc5b4195f36b4f81e24b9c6c171625",
+    "20261007010000_native_session_authority.sql": "9c165f68f413be04aa958358ec088c422dd21fea92b66e9ba84e04378817607a",
+    "20261007013000_intake_assistance_management.sql": "1512b7cbfd1fd63065fa09ad17aba0a2c71aaba1c875326f11e089175a5979c3",
+    "20261009100000_pwa_domain.sql": "18cc63b457fddea3f003bceb4d31f310291692e70485e6aa013e4091a8d47d41",
+    "20261009101000_pwa_commands.sql": "dbf600e3aabc225e5031ca83c24031c27c287cec47cce0b0f64bf81eb6e00f97",
+    "20261009102000_pwa_snapshot.sql": "969346799a4e591b7f85f8bacc4a877c1ea42dd628c3e041cf9b976f79e19ef0",
+    "20261009103000_pwa_delivery_and_receipts.sql": "73714397962f5ca54b5a94d1b6cc901ed744b8f8bcccd87fc32cd12673fbfe6f",
+    "20261009104000_pwa_buddy_integrity.sql": "c2e1bfdccf311f50bd9e0ff1686ce2301d1c65ff29b02cd78512666f0ec5305c",
+    "20261009105000_pwa_automation.sql": "7e20fdaee644e5a2f0b037f0d34001a773cf47b6b23a0294f23fddad45e5dbef",
+    "20261009106000_pwa_provider_receipts.sql": "5e6923e41dfd6d5da1ab12380f1be31b25e466eba02b685f7361b11e1ffe9eed",
+    "20261009107000_pwa_compatibility_and_cluster_scope.sql": "d60b59920adac4c45a3ec336a6a0cb27e31abb3c8aa69e0ddf5b47ed729e4486",
+    "20261009108000_pwa_repeatable_command_events.sql": "7ad42704ec974bd670deb70c14dcd13a2079f1b0d9fd6a416e0d4dcdf3859ef2",
+    "20261009109000_pwa_digest_dispatch_day.sql": "881aaf6a7ff6ed1e22604d810c1194fc140c4dfb79240e869b25feb3a9be4210",
+    "20261009110000_pwa_card_version_gate.sql": "7d237cb0e27bf8d4f27e649143a77e39dc29977279fc7bc6db6e506da52ff4cc",
+    "20261009111000_pwa_handover_checklist_integrity.sql": "2d10644befebd17fb8893d4e1363a6a4f61588bd55ac3ab45a7653d6489e3307",
+    "20261009112000_pwa_task_offer_category_seed.sql": "1e2bb5b181e7e0d4279c8270b12bfee8743cb7dcaaa0e4267256eaf689c59c17",
+    "20261009113000_pwa_nested_version_integrity.sql": "60eedfed603a1450d42524dc070e8fa4661c1bb323d55e660faef52845b98f19",
+    "20261009114000_pwa_policy_assignment_identity.sql": "afbe3c6218e2d81dae30107ec0f854f5fe0bdd87ae700da98f2b5d3165f4ad10",
+    "20261009115000_pwa_personal_action_context.sql": "10dfcebb3e8f61623586f41123e8967815e743745f991f68f84bcfd686e3a195",
+    "20261009116000_pwa_committee_planning.sql": "2bca259cd9041307c7daab5bf4e950fc0ddad72109aa180631634ce290b3e311",
+    "20261009117000_pwa_invitation_authority_fence.sql": "943eb1502da863da7d51bcd390bb58a5815896ab67a76db074638dad361d95b3",
+    "20261009118000_pwa_sportlink_connection.sql": "b4cd0ed6b44fd2bac7d22bee84a3b15f5817c6122c132a42066c49f374277b87"
+  },
+  "runner_sha256": "44f53ab042b5bc001dd4d2afc53879693cce968d40edebcb35514effd3fc5b44",
+  "network": "none",
+  "ports_exposed": false,
+  "app_tables_checked": 181,
+  "native_sql_authenticated_role_and_confirmed_session_fixture": true,
+  "native_auth_provider_used": false,
+  "claimed_signed_provider_JWT": false,
+  "shared_database_connections": 0,
+  "hosted_connections": 0,
+  "provider_calls": 0,
+  "real_emails_sent": 0,
+  "private_invitation_tokens_or_token_hashes_exported": false,
+  "source_or_product_files_edited": false,
+  "fixture_time_shift_scope": "ONLY_OWN_DISPOSABLE_INVITATION_AFTER_NATIVE_CREATION",
+  "schema_history_preserved": {
+    "count": 35,
+    "sha256": "daf1689d9a2f24509af8f0bbf00294d3503be0720f9039bdebceb5f24f34089d"
+  },
+  "canonical_function_definition_sha256": {
+    "internal.accept_household_invitation(text)": "0ab2b1f9d77b5712802c9af6c610f29a90a36e13077ac03b14be8dbc9137bd09",
+    "internal.household_invitation_context(text)": "c8d3a0532f5866f7db566a48c6df9b89ccd8f9fe0eed16cb5660cffe32ae1704",
+    "api.accept_household_invitation_v2(text,bigint,uuid)": "9aa4939c49f96c7cf1dbeece79b146dd0fb81bca1655a5ac89f9497d996e32d1",
+    "internal.accept_household_invitation_v2(text,bigint,uuid)": "f8cb64bed66d59843a190d8cbfcdde6f509547f99cacc54303d273e0c1ebb07e"
+  },
+  "checks": [
+    {
+      "id": "VALID_PENDING_TOKEN_ONLY_VERIFIED_MATCHING_ACTOR_NO_AUTHORITY_BEFORE_CONSENT",
+      "passed": true
+    },
+    {
+      "id": "FORGED_TOKEN_DIRECT_NATIVE_ACCEPTANCE_DENIED",
+      "passed": true,
+      "sqlstate": "42501",
+      "all_app_rows_unchanged": true
+    },
+    {
+      "id": "WRONG_VERIFIED_ACTOR_CANNOT_CONSUME_REAL_TOKEN",
+      "passed": true,
+      "sqlstate": "42501",
+      "all_app_rows_unchanged": true
+    },
+    {
+      "id": "EXPLICIT_NATIVE_ACCEPTANCE_ONE_SCOPED_BOOKING_GRANT_NO_DOSSIER_PROGRESS_CONTACTS_INVITES_OR_MINUTES",
+      "passed": true,
+      "readback": {
+        "grants": [
+          {
+            "book": true,
+            "invite": false,
+            "revoked": false,
+            "contacts": false,
+            "progress": false
+          }
+        ],
+        "ledger": 0,
+        "intakes": 1,
+        "memberships": 1,
+        "obligations": 0,
+        "person_links": 1,
+        "household_links": 1
+      }
+    },
+    {
+      "id": "SAME_KEY_LOST_RESPONSE_REPLAY_EXACT_RECEIPT_ALL_ROWS_UNCHANGED",
+      "passed": true
+    },
+    {
+      "id": "CONSUMED_TOKEN_NEW_KEY_OLD_VERSION_STALE_NO_AUTHORITY_CHANGE",
+      "passed": true,
+      "sqlstate": "40001",
+      "all_app_rows_unchanged": true
+    },
+    {
+      "id": "SAME_RECIPIENT_CONSUMED_TOKEN_CURRENT_VERSION_NEW_KEY_IS_NOOP_ONLY_COMMAND_RECEIPT",
+      "passed": true,
+      "authority_audit_domain_history_and_ledger_unchanged": true
+    },
+    {
+      "id": "CONSUMED_TOKEN_DIFFERENT_ACTOR_DENIED",
+      "passed": true,
+      "sqlstate": "42501",
+      "all_app_rows_unchanged": true
+    },
+    {
+      "id": "EXPIRED_REAL_TOKEN_CONTEXT_NULL_DIRECT_NATIVE_ACCEPTANCE_DENIED",
+      "passed": true,
+      "sqlstate": "42501",
+      "all_app_rows_unchanged": true
+    },
+    {
+      "id": "REPLAY_AFTER_NATIVE_SESSION_REVOCATION_DENIED_WITHOUT_RENEWAL",
+      "passed": true,
+      "sqlstate": "42501",
+      "all_app_rows_unchanged": true
+    }
+  ],
+  "final_readback": {
+    "grants": 1,
+    "ledger": 0,
+    "acceptances": 1,
+    "obligations": 0,
+    "domain_acceptances": 1
+  },
+  "historical_browser_proof": {
+    "path": "docs/release/evidence/local/20261009-pwa34-f092-native/browser-results.json",
+    "sha256": "7f4c0ec4257171206211273152e4b9ab605e87da897690a29441bb83ab4e3f37",
+    "source_sha": "174615bd8c0aeda5c0161a022312b14b66fb2a5f",
+    "schema_count": 34,
+    "native_auth_provider_used": true,
+    "local_mail_capture_only": true,
+    "expired_actual_consent_post_denied": true,
+    "forged_cookie_neutral_no_consent": true,
+    "same_key_lost_response_replay_one_grant": true,
+    "whole_function_acceptance": false,
+    "source_compatibility_not_assumed": true
+  },
+  "physical_device_verified": false,
+  "staging_verified": false,
+  "whole_integration_acceptance": false,
+  "production_enabled": false,
+  "owned_container_removed": true
+}

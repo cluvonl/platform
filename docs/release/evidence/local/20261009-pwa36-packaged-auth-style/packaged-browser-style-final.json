@@ -1,0 +1,1049 @@
+{
+  "scope": "LOCAL_PACKAGED_CANDIDATE_PUBLIC_AUTH_STYLE_BROWSER_V1",
+  "observed_at": "2026-10-09T13:43:33.074Z",
+  "passed": true,
+  "staging_fix_deployed": false,
+  "staging_verified": false,
+  "physical_device_verified": false,
+  "real_installation_verified": false,
+  "auth_or_provider_requests_performed": false,
+  "screenshot_motion_preference": "reduce",
+  "credentials_used": false,
+  "domain_server_actions_invoked": 0,
+  "private_values_exported": false,
+  "v1_ready": false,
+  "production_enabled": false,
+  "cases": [
+    {
+      "route": "/app/login",
+      "status": 200,
+      "width": 320,
+      "height": 844,
+      "standalone_emulated": false,
+      "standalone_emulation": null,
+      "text200": false,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": false
+      },
+      "actual_text_pixels": null,
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    },
+    {
+      "route": "/app/login",
+      "status": 200,
+      "width": 320,
+      "height": 844,
+      "standalone_emulated": false,
+      "standalone_emulation": null,
+      "text200": true,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": false
+      },
+      "actual_text_pixels": {
+        "before": {
+          "heading": 30,
+          "primary": 16
+        },
+        "after": {
+          "heading": 60,
+          "primary": 32
+        }
+      },
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    },
+    {
+      "route": "/app/login",
+      "status": 200,
+      "width": 390,
+      "height": 844,
+      "standalone_emulated": false,
+      "standalone_emulation": null,
+      "text200": false,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": false
+      },
+      "actual_text_pixels": null,
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    },
+    {
+      "route": "/app/login",
+      "status": 200,
+      "width": 390,
+      "height": 844,
+      "standalone_emulated": false,
+      "standalone_emulation": null,
+      "text200": true,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": false
+      },
+      "actual_text_pixels": {
+        "before": {
+          "heading": 30,
+          "primary": 16
+        },
+        "after": {
+          "heading": 60,
+          "primary": 32
+        }
+      },
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    },
+    {
+      "route": "/app/login",
+      "status": 200,
+      "width": 430,
+      "height": 844,
+      "standalone_emulated": false,
+      "standalone_emulation": null,
+      "text200": false,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": false
+      },
+      "actual_text_pixels": null,
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    },
+    {
+      "route": "/app/login",
+      "status": 200,
+      "width": 430,
+      "height": 844,
+      "standalone_emulated": false,
+      "standalone_emulation": null,
+      "text200": true,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": false
+      },
+      "actual_text_pixels": {
+        "before": {
+          "heading": 30,
+          "primary": 16
+        },
+        "after": {
+          "heading": 60,
+          "primary": 32
+        }
+      },
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    },
+    {
+      "route": "/app/auth/verify",
+      "status": 200,
+      "width": 320,
+      "height": 844,
+      "standalone_emulated": false,
+      "standalone_emulation": null,
+      "text200": false,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": false
+      },
+      "actual_text_pixels": null,
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    },
+    {
+      "route": "/app/auth/verify",
+      "status": 200,
+      "width": 320,
+      "height": 844,
+      "standalone_emulated": false,
+      "standalone_emulation": null,
+      "text200": true,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": false
+      },
+      "actual_text_pixels": {
+        "before": {
+          "heading": 30,
+          "primary": 16
+        },
+        "after": {
+          "heading": 60,
+          "primary": 32
+        }
+      },
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    },
+    {
+      "route": "/app/auth/verify",
+      "status": 200,
+      "width": 390,
+      "height": 844,
+      "standalone_emulated": false,
+      "standalone_emulation": null,
+      "text200": false,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": false
+      },
+      "actual_text_pixels": null,
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    },
+    {
+      "route": "/app/auth/verify",
+      "status": 200,
+      "width": 390,
+      "height": 844,
+      "standalone_emulated": false,
+      "standalone_emulation": null,
+      "text200": true,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": false
+      },
+      "actual_text_pixels": {
+        "before": {
+          "heading": 30,
+          "primary": 16
+        },
+        "after": {
+          "heading": 60,
+          "primary": 32
+        }
+      },
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    },
+    {
+      "route": "/app/auth/verify",
+      "status": 200,
+      "width": 430,
+      "height": 844,
+      "standalone_emulated": false,
+      "standalone_emulation": null,
+      "text200": false,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": false
+      },
+      "actual_text_pixels": null,
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    },
+    {
+      "route": "/app/auth/verify",
+      "status": 200,
+      "width": 430,
+      "height": 844,
+      "standalone_emulated": false,
+      "standalone_emulation": null,
+      "text200": true,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": false
+      },
+      "actual_text_pixels": {
+        "before": {
+          "heading": 30,
+          "primary": 16
+        },
+        "after": {
+          "heading": 60,
+          "primary": 32
+        }
+      },
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    },
+    {
+      "route": "/app/login",
+      "status": 200,
+      "width": 320,
+      "height": 844,
+      "standalone_emulated": true,
+      "standalone_emulation": "navigator_and_matchMedia_signal",
+      "text200": false,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": true
+      },
+      "actual_text_pixels": null,
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    },
+    {
+      "route": "/app/login",
+      "status": 200,
+      "width": 320,
+      "height": 844,
+      "standalone_emulated": true,
+      "standalone_emulation": "navigator_and_matchMedia_signal",
+      "text200": true,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": true
+      },
+      "actual_text_pixels": {
+        "before": {
+          "heading": 30,
+          "primary": 16
+        },
+        "after": {
+          "heading": 60,
+          "primary": 32
+        }
+      },
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    },
+    {
+      "route": "/app/login",
+      "status": 200,
+      "width": 390,
+      "height": 844,
+      "standalone_emulated": true,
+      "standalone_emulation": "navigator_and_matchMedia_signal",
+      "text200": false,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": true
+      },
+      "actual_text_pixels": null,
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    },
+    {
+      "route": "/app/login",
+      "status": 200,
+      "width": 390,
+      "height": 844,
+      "standalone_emulated": true,
+      "standalone_emulation": "navigator_and_matchMedia_signal",
+      "text200": true,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": true
+      },
+      "actual_text_pixels": {
+        "before": {
+          "heading": 30,
+          "primary": 16
+        },
+        "after": {
+          "heading": 60,
+          "primary": 32
+        }
+      },
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    },
+    {
+      "route": "/app/login",
+      "status": 200,
+      "width": 430,
+      "height": 844,
+      "standalone_emulated": true,
+      "standalone_emulation": "navigator_and_matchMedia_signal",
+      "text200": false,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": true
+      },
+      "actual_text_pixels": null,
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    },
+    {
+      "route": "/app/login",
+      "status": 200,
+      "width": 430,
+      "height": 844,
+      "standalone_emulated": true,
+      "standalone_emulation": "navigator_and_matchMedia_signal",
+      "text200": true,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": true
+      },
+      "actual_text_pixels": {
+        "before": {
+          "heading": 30,
+          "primary": 16
+        },
+        "after": {
+          "heading": 60,
+          "primary": 32
+        }
+      },
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    },
+    {
+      "route": "/app/auth/verify",
+      "status": 200,
+      "width": 320,
+      "height": 844,
+      "standalone_emulated": true,
+      "standalone_emulation": "navigator_and_matchMedia_signal",
+      "text200": false,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": true
+      },
+      "actual_text_pixels": null,
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    },
+    {
+      "route": "/app/auth/verify",
+      "status": 200,
+      "width": 320,
+      "height": 844,
+      "standalone_emulated": true,
+      "standalone_emulation": "navigator_and_matchMedia_signal",
+      "text200": true,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": true
+      },
+      "actual_text_pixels": {
+        "before": {
+          "heading": 30,
+          "primary": 16
+        },
+        "after": {
+          "heading": 60,
+          "primary": 32
+        }
+      },
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    },
+    {
+      "route": "/app/auth/verify",
+      "status": 200,
+      "width": 390,
+      "height": 844,
+      "standalone_emulated": true,
+      "standalone_emulation": "navigator_and_matchMedia_signal",
+      "text200": false,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": true
+      },
+      "actual_text_pixels": null,
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    },
+    {
+      "route": "/app/auth/verify",
+      "status": 200,
+      "width": 390,
+      "height": 844,
+      "standalone_emulated": true,
+      "standalone_emulation": "navigator_and_matchMedia_signal",
+      "text200": true,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": true
+      },
+      "actual_text_pixels": {
+        "before": {
+          "heading": 30,
+          "primary": 16
+        },
+        "after": {
+          "heading": 60,
+          "primary": 32
+        }
+      },
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    },
+    {
+      "route": "/app/auth/verify",
+      "status": 200,
+      "width": 430,
+      "height": 844,
+      "standalone_emulated": true,
+      "standalone_emulation": "navigator_and_matchMedia_signal",
+      "text200": false,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": true
+      },
+      "actual_text_pixels": null,
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    },
+    {
+      "route": "/app/auth/verify",
+      "status": 200,
+      "width": 430,
+      "height": 844,
+      "standalone_emulated": true,
+      "standalone_emulation": "navigator_and_matchMedia_signal",
+      "text200": true,
+      "computed_styles": {
+        "body_font": "Inter, Arial, Helvetica, sans-serif",
+        "body_background": "rgb(245, 246, 247)",
+        "screen_display": "grid",
+        "card_background": "rgb(255, 255, 255)",
+        "card_radius": "18px",
+        "card_padding": "26px 20px",
+        "button_background": "rgb(244, 95, 73)",
+        "button_color": "rgb(255, 255, 255)",
+        "button_radius": "10px",
+        "heading_font_pixels": 30,
+        "primary_font_pixels": 16,
+        "all_visible_user_inputs_empty": true,
+        "standalone_signal": true
+      },
+      "actual_text_pixels": {
+        "before": {
+          "heading": 30,
+          "primary": 16
+        },
+        "after": {
+          "heading": 60,
+          "primary": 32
+        }
+      },
+      "no_horizontal_overflow": true,
+      "inputs_empty": true,
+      "read_only": true
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/login-320-browser.png",
+      "sha256": "29ff3de2d72dc4bda6693771999b252b5b92237361d0c4e6118e6502c28d3ca7"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/login-320-browser-text200.png",
+      "sha256": "048a80488d44abdf3e2a0bdd10ecb1bd8d806f692d38e6d1be291b16b97fd799"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/login-390-browser.png",
+      "sha256": "93e10eb31582542270975a258690cc8ee9c9436b421b38cef5cb9bbcc10a71cd"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/login-390-browser-text200.png",
+      "sha256": "cfaf1967b335ce33641f56ccea375ab4e9ca096273f51b6575e3352695aa016c"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/login-430-browser.png",
+      "sha256": "a3609f1f113ecfce9c3b26e5cedc161e500b50af455b43ae317734ad0c34f544"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/login-430-browser-text200.png",
+      "sha256": "094d2877e6ea3436de0a501b02dc4dda6411ed92dcfcb0e4b6fe249dce058527"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/otp-320-browser.png",
+      "sha256": "d8bcea22237a740fa8aabaafbd5d82fad9bdbcdaff7af3de250731b4a24b2c79"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/otp-320-browser-text200.png",
+      "sha256": "7301e6d94889466873d56e4c69809a5220a870ac145d859c4bd1d80ad6e28495"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/otp-390-browser.png",
+      "sha256": "e5fa2abbf055a147fbc778201b7ce00cd0aa920a64a4341035bb59d9ff16e166"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/otp-390-browser-text200.png",
+      "sha256": "b8a08c0809a99450c4bfc82c62cc7a836a2acf4100bdce123ead36b7f7e820f7"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/otp-430-browser.png",
+      "sha256": "a3b951f51fe3038f945beefd9fddb2d15c70d684887490cfc0ef3a73899341a8"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/otp-430-browser-text200.png",
+      "sha256": "83383cbbc45712fc384ec43a06db33275229aa9ae2473b496317d615e0f9fbf0"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/login-320-standalone.png",
+      "sha256": "5ba163c4248e7dbb51d2317891bb0a3cb28596f421824e72c29da2fd07fb51b8"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/login-320-standalone-text200.png",
+      "sha256": "fcdf830789821345718d1512b2e2adb7d8d2b514fb083230a04c84934d90271e"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/login-390-standalone.png",
+      "sha256": "ddbce5e77a4c868007dd26619b3bc5d1fac62bf5a9591133bf11f6de50f0f710"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/login-390-standalone-text200.png",
+      "sha256": "eaf2e74a2c72237ffcd4a87d264679e87cd51f0445e8e75d35d64bc0279cce58"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/login-430-standalone.png",
+      "sha256": "ef1f8fac70d79a3f9972f72063b9f8d0ddaca25644f8341ebbf244a61487e499"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/login-430-standalone-text200.png",
+      "sha256": "d6c3b86761a502cc5b4b93a1e0071422326fef810e8d22ab5e9249937a82fc3b"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/otp-320-standalone.png",
+      "sha256": "d8bcea22237a740fa8aabaafbd5d82fad9bdbcdaff7af3de250731b4a24b2c79"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/otp-320-standalone-text200.png",
+      "sha256": "7301e6d94889466873d56e4c69809a5220a870ac145d859c4bd1d80ad6e28495"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/otp-390-standalone.png",
+      "sha256": "e5fa2abbf055a147fbc778201b7ce00cd0aa920a64a4341035bb59d9ff16e166"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/otp-390-standalone-text200.png",
+      "sha256": "b8a08c0809a99450c4bfc82c62cc7a836a2acf4100bdce123ead36b7f7e820f7"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/otp-430-standalone.png",
+      "sha256": "a3b951f51fe3038f945beefd9fddb2d15c70d684887490cfc0ef3a73899341a8"
+    },
+    {
+      "path": "docs/release/evidence/local/20261009-pwa36-packaged-auth-style/screenshots-stable/otp-430-standalone-text200.png",
+      "sha256": "83383cbbc45712fc384ec43a06db33275229aa9ae2473b496317d615e0f9fbf0"
+    }
+  ],
+  "image": {
+    "id": "sha256:225ff75365e40b467f50fdca5239e252a572fc7e0e769787adbd7bbd260bf0c1",
+    "user": "node",
+    "working_directory": "/workspace"
+  },
+  "build_id": "_bMuB-gzlr2TL_3jW8Mht",
+  "live": {
+    "environment": "test",
+    "mode": "prototype",
+    "release": "local-style-image-proof"
+  },
+  "auth_style_smoke": {
+    "scope": "PUBLIC_AUTH_SSR_LINKED_STYLE_SMOKE_V1",
+    "passed": true,
+    "routes": [
+      {
+        "path": "/login",
+        "passed": true,
+        "stylesheets": [
+          "/_next/static/css/8dddb2beece50728.css"
+        ],
+        "status": 200,
+        "html_sha256": "976b62344d531f489b66f6f7d27a9212e1e887d7ec19fd5ccd97cecaafe5c0d3",
+        "auth_shell": true,
+        "primary_control": true,
+        "style_rules": {
+          "body": true,
+          "auth_screen": true,
+          "auth_card": true,
+          "auth_primary": true
+        }
+      },
+      {
+        "path": "/app/login",
+        "passed": true,
+        "stylesheets": [
+          "/_next/static/css/8dddb2beece50728.css",
+          "/_next/static/css/5351f63f9a741345.css"
+        ],
+        "status": 200,
+        "html_sha256": "9cab15012a0b8a43d79c3747507b903cb97619d45967898c4863cc162739afa1",
+        "auth_shell": true,
+        "primary_control": true,
+        "style_rules": {
+          "body": true,
+          "auth_screen": true,
+          "auth_card": true,
+          "auth_primary": true
+        }
+      },
+      {
+        "path": "/app/auth/verify",
+        "passed": true,
+        "stylesheets": [
+          "/_next/static/css/8dddb2beece50728.css",
+          "/_next/static/css/5351f63f9a741345.css"
+        ],
+        "status": 200,
+        "html_sha256": "c855878877bf34d07cd145a2081e2486bc59ecd4caecda539ff7865d99a3d041",
+        "auth_shell": true,
+        "primary_control": true,
+        "style_rules": {
+          "body": true,
+          "auth_screen": true,
+          "auth_card": true,
+          "auth_primary": true
+        }
+      }
+    ],
+    "stylesheets": [
+      {
+        "path": "/_next/static/css/8dddb2beece50728.css",
+        "passed": true,
+        "status": 200,
+        "content_type_valid": true,
+        "bytes": 190919,
+        "sha256": "86f2adfd9dbb118fce97783d598d9af05038d9adacd5a1df0a505e480faba697"
+      },
+      {
+        "path": "/_next/static/css/5351f63f9a741345.css",
+        "passed": true,
+        "status": 200,
+        "content_type_valid": true,
+        "bytes": 1391,
+        "sha256": "c4fc7fa9be011de32282aa1becc07cb74178a788ed3e0a5310f631576a71a4a3"
+      }
+    ],
+    "authenticated": false,
+    "provider_requests_performed": false,
+    "private_values_exported": false,
+    "production_enabled": false,
+    "v1_ready": false
+  },
+  "packaged_source_files": [
+    {
+      "path": "scripts/wp0-smoke.mjs",
+      "sha256": "43df5131d2c9451cd24349904c9c2623f95a8a596e70ca795201e28e5da33a12"
+    },
+    {
+      "path": "scripts/public-auth-style-smoke.mjs",
+      "sha256": "79a1d1cc10885921bb1c20707d9fa6d687a563805039d4f08cb284ccba6155a3"
+    },
+    {
+      "path": "scripts/runtime-guard.mjs",
+      "sha256": "ea4a37122120852ba77b602384ada9b65a6b82e0cd922b4f1e246338442365ec"
+    }
+  ],
+  "local_source_files": [
+    {
+      "path": "Dockerfile",
+      "sha256": "f544f549bbee16d254e21be23a46f1fd4adeaffd715cb4610ed8fc87a17dbf8e"
+    },
+    {
+      "path": "scripts/public-auth-style-smoke.mjs",
+      "sha256": "79a1d1cc10885921bb1c20707d9fa6d687a563805039d4f08cb284ccba6155a3"
+    },
+    {
+      "path": "scripts/wp0-smoke.mjs",
+      "sha256": "43df5131d2c9451cd24349904c9c2623f95a8a596e70ca795201e28e5da33a12"
+    }
+  ],
+  "browser": {
+    "name": "Chromium",
+    "version": "153.0.8010.12",
+    "playwright": "1.63.0"
+  },
+  "last_computed_styles": {
+    "route": "/app/auth/verify",
+    "width": 430,
+    "standalone_emulated": true,
+    "text200": true,
+    "body_font": "Inter, Arial, Helvetica, sans-serif",
+    "body_background": "rgb(245, 246, 247)",
+    "screen_display": "grid",
+    "card_background": "rgb(255, 255, 255)",
+    "card_radius": "18px",
+    "card_padding": "26px 20px",
+    "button_background": "rgb(244, 95, 73)",
+    "button_color": "rgb(255, 255, 255)",
+    "button_radius": "10px",
+    "heading_font_pixels": 30,
+    "primary_font_pixels": 16,
+    "all_visible_user_inputs_empty": true,
+    "standalone_signal": true
+  },
+  "request_observation": {
+    "domain_mutation_requests": 0,
+    "foreign_requests": 0,
+    "page_errors": 0
+  },
+  "readback_passed": true,
+  "only_own_container_removed": true,
+  "runner_sha256": "ee8e515db02679de8fa3db959830a469b1017c157ffce975fb444b1167e4cfb2"
+}

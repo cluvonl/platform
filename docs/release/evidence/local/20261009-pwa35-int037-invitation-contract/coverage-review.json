@@ -1,0 +1,96 @@
+{
+  "scope": "BOUNDED_INT037_EXISTING_NATIVE_BROWSER_PLUS_CURRENT_OWNED_SQL_COVERAGE",
+  "source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+  "observed_at": "2026-10-09T12:01:38.112920+00:00",
+  "integration_id": "INT-037",
+  "function_id": "F092",
+  "whole_integration_acceptance": false,
+  "new_native_proof": {
+    "path": "docs/release/evidence/local/20261009-pwa35-int037-invitation-contract/owned-invitation-token-contract.json",
+    "sha256": "c68c500c947c1b802e63a251612dbc0c9b94071e241f5dbe7401996a0103d78c",
+    "actual_checks": 10,
+    "passed": true,
+    "network": "none",
+    "migration_count": 35,
+    "manifest_sha256": "b39a9bb9d167e02e5723f0efe68bacc3df1bfeb08a03551c8efe8dcd70171466",
+    "owned_container_removed": true
+  },
+  "historical_browser_proof": {
+    "path": "docs/release/evidence/local/20261009-pwa34-f092-native/browser-results.json",
+    "sha256": "7f4c0ec4257171206211273152e4b9ab605e87da897690a29441bb83ab4e3f37",
+    "source_sha": "174615bd8c0aeda5c0161a022312b14b66fb2a5f",
+    "schema_count": 34,
+    "native_provider_and_local_mail_used": true,
+    "passed": true,
+    "whole_suite_passed": false,
+    "checks_reused": [
+      "MOBILE_FORGED_TOKEN_NEUTRAL_NO_CONSENT",
+      "MOBILE_WRONG_VERIFIED_ACCOUNT_NEUTRAL_NO_CONSENT",
+      "MOBILE_ACCEPTANCE_LOST_RESPONSE_SAME_KEY_ONE_GRANT",
+      "EXPIRED_ORIGINAL_CONSENT_POST_DENIED"
+    ],
+    "expired_original_consent_post_scope": "Previously rendered explicit-consent form is posted after guarded expiry of its own invitation; no membership, profile, person link or household grant created.",
+    "new_and_existing_recipient_explicit_consent_and_reload": true,
+    "reexecution_claimed": false
+  },
+  "historical34_migration_prefix_current_bytes_identical": true,
+  "bounded_runtime_source_binding": {
+    "app/app/invite/accept/page.tsx": {
+      "current_sha256": "82f318dfd024296753da2a7f19911a637bada364156ae98a1d9266526ddb847c",
+      "historical_browser_sha256": "82f318dfd024296753da2a7f19911a637bada364156ae98a1d9266526ddb847c",
+      "identical": true
+    },
+    "app/invite/accept/actions.ts": {
+      "current_sha256": "512c62134f97a737b8546c28256650b055f6ac596ecbb725506d8b509a3e7cea",
+      "historical_browser_sha256": "512c62134f97a737b8546c28256650b055f6ac596ecbb725506d8b509a3e7cea",
+      "identical": true
+    },
+    "components/auth/accept-invitation-form.tsx": {
+      "current_sha256": "6d168b91bbd82a5ab60b841138f7c0634e851d84861262be733ba9c0ab03a00b",
+      "historical_browser_sha256": "6d168b91bbd82a5ab60b841138f7c0634e851d84861262be733ba9c0ab03a00b",
+      "identical": true
+    },
+    "app/auth/confirm/route.ts": {
+      "current_sha256": "71c28d63c26df790254d9b78d3e72bd466309bb613f368180d75d4e708b78824",
+      "historical_browser_sha256": "71c28d63c26df790254d9b78d3e72bd466309bb613f368180d75d4e708b78824",
+      "identical": true
+    },
+    "lib/domain/mail-recipient.mjs": {
+      "current_sha256": "c4f7535a5a76bdd3006a58d31bed827a9f3f9f819d35bb7ce51306c193a8d138",
+      "historical_browser_sha256": "c4f7535a5a76bdd3006a58d31bed827a9f3f9f819d35bb7ce51306c193a8d138",
+      "identical": true
+    },
+    "lib/pwa/actions.ts": {
+      "current_sha256": "d0f79fc5a186ddb3d62ab9a2a8ee3e4e7a405a663758830d9e21508ada8dcd1b",
+      "historical_browser_sha256": "d0f79fc5a186ddb3d62ab9a2a8ee3e4e7a405a663758830d9e21508ada8dcd1b",
+      "identical": true
+    }
+  },
+  "token_reuse_contract": {
+    "same_actor_same_key": "Exact original receipt; no database change.",
+    "same_actor_new_key_old_version": "40001 STALE_VERSION; no database change.",
+    "same_actor_new_key_current_version": "Canonical no-op acknowledgement, new idempotency receipt only; authority/audit/domain history unchanged.",
+    "different_verified_actor": "42501; no consent or rights.",
+    "expired_real_token": "42501 and null context; no app-table change.",
+    "forged_unknown_token": "42501 and null context; no app-table change.",
+    "revoked_native_session": "42501 even completed-key replay; no renewal."
+  },
+  "limits": {
+    "new_auth_fixture_is_direct_native_sql_not_provider_signed_JWT": true,
+    "new_browser_run": false,
+    "new_HMAC_generation_test": false,
+    "old_browser_HMAC_server_path_not_modified": true,
+    "hosted_or_staging_verified": false,
+    "physical_device_verified": false,
+    "hosted_eight_digit_OTP_verified": false,
+    "external_provider_calls": 0,
+    "real_emails_sent": 0,
+    "shared_data_mutations": 0,
+    "product_or_migration_edits": 0,
+    "full_F092_or_INT037_acceptance_claimed": false
+  },
+  "artifacts": {
+    "owned-runner.mjs": "44f53ab042b5bc001dd4d2afc53879693cce968d40edebcb35514effd3fc5b44",
+    "executed-safe-output.log": "fa1c82d6e627175ddff98b36e1b57a7a1cf4d7152add176c15a1767c05188fc3"
+  }
+}

@@ -4,6 +4,7 @@ import {readFile} from 'node:fs/promises';
 import {runInNewContext} from 'node:vm';
 
 const source=await readFile(new URL('../.github/workflows/staging.yml',import.meta.url),'utf8');
+const ci=await readFile(new URL('../.github/workflows/ci.yml',import.meta.url),'utf8');
 const jobs=Object.fromEntries([...source.slice(source.indexOf('jobs:\n')+6).matchAll(/^  ([a-z][a-z-]*):\n([\s\S]*?)(?=^  [a-z][a-z-]*:\n|$(?![\s\S]))/gm)].map(match=>[match[1],match[2]]));
 const condition=job=>job.match(/^    if: (.*)(?:\n((?:      .*\n)*))?/m);
 function enabled(name,event='workflow_dispatch',options={}){
@@ -20,6 +21,21 @@ function activate(event,failed=[]){
  for(const name of Object.keys(jobs))states[name]=!enabled(name,event)||dependencies(name).some(dep=>states[dep]!=='success')?'skipped':failed.includes(name)?'failure':'success';
  return states;
 }
+
+test('CI owned lineage proof receives fixed historical Git objects before testing without credential persistence or runtime fetch fallback',async()=>{
+ const ciJobs=Object.fromEntries([...ci.slice(ci.indexOf('jobs:\n')+6).matchAll(/^  ([a-z][a-z-]*):\n([\s\S]*?)(?=^  [a-z][a-z-]*:\n|$(?![\s\S]))/gm)].map(match=>[match[1],match[2]]));
+ for(const name of ['verify','database']){
+  const checkout=ciJobs[name].match(/- uses: actions\/checkout@[0-9a-f]{40}[^\n]*\n([\s\S]*?)(?=\n      -)/)?.[1];assert.ok(checkout);
+  assert.match(checkout,/fetch-depth: 0/);assert.match(checkout,/persist-credentials: false/);
+ }
+ assert.match(ciJobs.database,/CLUVO_PWA_UPGRADE_NATIVE_TESTS: owned-pg17/);
+ assert.match(ciJobs.database,/node --test tests\/staging-pwa-upgrade-native.test.mjs/);
+ assert.match(jobs.build,/fetch-depth: 0/);
+ const helper=await readFile(new URL('./helpers/pwa-closed31-upgrade.mjs',import.meta.url),'utf8');
+ assert.match(helper,/APPROVED_PWA_PREDECESSOR35.sourceSha|loadClosedUpgrade\(APPROVED_PWA_PREDECESSOR35,pins35\)/);
+ assert.match(helper,/\['show',approved.sourceSha\+':scripts\/'\+file\]/);
+ assert.doesNotMatch(helper,/\['fetch'|\['pull'|process\.env|process\.argv/);
+});
 
 test('the real staging job DAG activates only after a manual exact-source build, additive upgrade and PWA native QA',()=>{
  assert.deepEqual(Object.keys(jobs),['build','database-upgrade','pwa-native-qa','deploy']);

@@ -1,29 +1,19 @@
 import { once } from 'node:events';
-import { access, readFile } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
 import { createServer } from 'node:net';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn } from 'node:child_process';
+import {publicAuthStyleSmoke,selectWp0Runtime} from './public-auth-style-smoke.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const guard = join(root, 'scripts', 'runtime-guard.mjs');
-const nextBin = join(root, 'node_modules', 'next', 'dist', 'bin', 'next');
-const buildId = join(root, '.next', 'BUILD_ID');
 const release = 'wp0-smoke';
 const startupTimeoutMs = 30_000;
 const requestTimeoutMs = 3_000;
 
 let child;
 let stopping;
-
-async function exists(path) {
-  try {
-    await access(path);
-    return true;
-  } catch {
-    return false;
-  }
-}
 
 async function freePort() {
   const server = createServer();
@@ -42,37 +32,8 @@ async function freePort() {
 }
 
 async function command() {
-  const standaloneCandidates = [
-    {
-      server: join(root, 'server.js'),
-      build: join(root, '.next', 'BUILD_ID'),
-    },
-    {
-      server: join(root, '.next', 'standalone', 'server.js'),
-      build: join(root, '.next', 'standalone', '.next', 'BUILD_ID'),
-    },
-  ];
-  for (const candidate of standaloneCandidates) {
-    if ((await exists(candidate.server)) && (await exists(candidate.build))) {
-      return {
-        label: 'Next.js standalone server',
-        args: ['--import', guard, candidate.server],
-        buildId: candidate.build,
-      };
-    }
-  }
-
-  if ((await exists(buildId)) && (await exists(nextBin))) {
-    return {
-      label: 'Next.js production server',
-      args: ['--import', guard, nextBin, 'start'],
-      buildId,
-    };
-  }
-
-  throw new Error(
-    'Geen gebouwde Next.js-app gevonden. Voer eerst `npm run build` uit.',
-  );
+  const selected=await selectWp0Runtime(root);
+  return {...selected,args:['--import',guard,selected.server,...(selected.nextStart?['start']:[])]};
 }
 
 function appendLog(buffer, chunk) {
@@ -236,6 +197,10 @@ try {
       'runtime-config: ontbrekende configuratie moet expliciet worden geweigerd',
     );
   });
+
+  const authStyles=await publicAuthStyleSmoke(baseUrl,{timeoutMs:requestTimeoutMs});
+  console.log(JSON.stringify(authStyles));
+  assert(authStyles.passed,'PUBLIC_AUTH_STYLE_SMOKE_FAILED');
 
   // Lees het build-ID zodat een ontbrekende of halfgeschreven build niet stilzwijgend slaagt.
   assert(

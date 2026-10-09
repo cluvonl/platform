@@ -1,0 +1,88 @@
+{
+  "scope": "STAGING_RUNTIME_CONFIGURATION_EXACT_WORKFLOW_METADATA",
+  "observed_at": "2026-10-09T13:08:12.853348+00:00",
+  "workflow_run_id": 37931065236,
+  "source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+  "event": "workflow_dispatch",
+  "status": "completed",
+  "conclusion": "success",
+  "url": "https://github.com/cluvonl/platform/actions/runs/37931065236",
+  "jobs": [
+    {
+      "name": "verify_database",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify exact current tested promotion before private configuration access",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify closed35 history, native privacy and public Auth using read-only access",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "configure",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Import verified PWA runtime through the unchanged fixed root broker",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "root_dispatch_inputs": {
+    "expected_active_source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+    "expected_config_version": 2,
+    "compatible_rollback_shas": [
+      "b9a6ed995058e623d7887fb4a56630251ff4ffb4",
+      "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef"
+    ]
+  },
+  "root_reported_result": {
+    "fixed_broker_import_completed": true,
+    "next_configuration_version": 3,
+    "configuration_version_direct_readback": false
+  },
+  "limits": {
+    "raw_private_job_logs_read": false,
+    "private_configuration_downloaded": false,
+    "actual_application_rollback_executed": false,
+    "full_pwa_acceptance": false,
+    "production_enabled": false
+  }
+}

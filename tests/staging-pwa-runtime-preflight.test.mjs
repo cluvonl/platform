@@ -12,7 +12,7 @@ const environment={APP_ENV:'staging',GITHUB_REPOSITORY:'cluvonl/platform',GITHUB
  MIGRATION_DATABASE_URL:'postgresql://postgres:synthetic%24database%23password@db.'+project+'.supabase.co:5432/postgres?sslmode=require',
  SUPABASE_SECRET_KEY:'synthetic-private-server-key',INVITATION_TOKEN_SECRET:'synthetic-private-invitation-key',MAIL_ALLOWLIST:'synthetic-private@example.test',SENDGRID_API_KEY:'synthetic-private-provider-key',NODE_OPTIONS:'--inspect',PGOPTIONS:'unsafe-inherited-options'};
 const green={head_sha:release,head_branch:'main',status:'completed',conclusion:'success'};
-const database={scope:'STAGING_PWA_RUNTIME_READONLY35',migration_count:35,app_tables:181,forced_rls_tables:181,native_guarded_tables:181,api_only:true,
+const database={scope:'STAGING_PWA_RUNTIME_READONLY36',migration_count:36,app_tables:181,forced_rls_tables:181,native_guarded_tables:181,api_only:true,
  command_owner_restricted:true,database_role_superuser:false,transaction_read_only:true,database_mutations:false,email_sent:false,production_enabled:false};
 const response=(status,value)=>({status,json:async()=>value});
 function fetcher(options={},calls=[]){return async(url,request)=>{
@@ -50,6 +50,15 @@ test('runtime inputs bind the existing version, both compatible sources and a ma
  assert.throws(()=>runtimeConfigurationInputs(accessor));assert.equal(invoked,false);
 });
 
+test('configuration version3 accepts the active hosted35 source and exact new release without certifying an app rollback',()=>{
+ const hosted35='9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef';
+ const result=runtimeConfigurationInputs({...environment,EXPECTED_ACTIVE_SOURCE_SHA:hosted35,EXPECTED_CONFIG_VERSION:'3',
+  COMPATIBLE_ROLLBACK_SHAS:JSON.stringify([hosted35,release])});
+ assert.equal(result.EXPECTED_CONFIG_VERSION,'3');assert.deepEqual(result.rollback,[hosted35,release]);
+ assert.throws(()=>runtimeConfigurationInputs({...environment,EXPECTED_ACTIVE_SOURCE_SHA:hosted35,EXPECTED_CONFIG_VERSION:'3',
+  COMPATIBLE_ROLLBACK_SHAS:JSON.stringify([hosted35,release,'6029b482c06669aa37806d3aa90f70b59e6ccfd4'])}));
+});
+
 test('actual release verifier rejects either moving branch and every incomplete or failed CI state',async()=>{
  await verifyRuntimePromotion(environment,fetcher());
  for(const options of [{main:active},{staging:active},{runs:[]},...['head_sha','head_branch','status','conclusion'].map(key=>({runs:[{...green,[key]:{head_sha:active,head_branch:'staging',status:'in_progress',conclusion:'failure'}[key]}]}))])await assert.rejects(verifyRuntimePromotion(environment,fetcher(options)),/PWA_RUNTIME_TESTED_RELEASE_REQUIRED/);
@@ -62,7 +71,7 @@ test('a failed CI gate never reads private runtime/DB inputs, source bytes or st
  assert.equal(report.passed,false);assert.equal(report.error,'PWA_RUNTIME_TESTED_RELEASE_REQUIRED');assert.equal(touched,false);redacted(report);
 });
 
-test('actual readonly preflight validates all35 source bytes and a minimal verified-TLS process, with only zero-row public API probes',async()=>{
+test('actual readonly preflight validates all36 source bytes and a minimal verified-TLS process, with only zero-row public API probes',async()=>{
  const calls=[];let processes=0;
  const report=await stagingPwaRuntimePreflight(environment,{fetcher:fetcher({},calls),execute:async(command,args,options)=>{
   processes++;assert.equal(command,'psql');assert.deepEqual(args,['--no-psqlrc','--no-password','--quiet','--tuples-only','--no-align','--set','ON_ERROR_STOP=1']);
@@ -73,7 +82,7 @@ test('actual readonly preflight validates all35 source bytes and a minimal verif
   assert.ok(!JSON.stringify(args).includes(options.env.PGPASSWORD));return execution();
  }});
  assert.equal(report.passed,true);assert.equal(processes,1);assert.equal(report.database.transaction_read_only,true);
- assert.equal(report.migration_manifest_sha256,'b39a9bb9d167e02e5723f0efe68bacc3df1bfeb08a03551c8efe8dcd70171466');
+ assert.equal(report.migration_manifest_sha256,'0a2f59322b0d6e652b0e9561a9a748f08aef45d969a00c77ab1d697b55769d44');
  assert.equal(calls.filter(call=>call.url.includes('supabase.co')).length,4);assert.ok(calls.every(call=>!call.request.method||call.request.method==='GET'));redacted(report);
 });
 

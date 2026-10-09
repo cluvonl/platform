@@ -1,0 +1,1347 @@
+{
+  "format": "CLUVO_PWA36_LOCAL_OPERATIONS_UPGRADE_CLOSURE_V1",
+  "observed_at": "2026-10-09T12:40:37.418233+00:00",
+  "scope": "LOCAL_OWNED_NETWORK_NONE_PG17_AND_DIRECTED_UNIT_CHECKS",
+  "passed": true,
+  "migration_count": 36,
+  "migration_manifest_sha256": "8451863f6d5de0e579ef91dec3f1e28f811322882bfb48b40276f6b84d8d5341",
+  "migration_source_files": [
+    {
+      "file": "20261002163042_cluvo_wp1_wp2_core.sql",
+      "sha256": "7e4efdaa139d2fe3120c43c0e7fcfe966438f154c08358734b6c555968acd32e"
+    },
+    {
+      "file": "20261002165306_wp3_wp5_obligations_execution.sql",
+      "sha256": "1dd88883e99acd63cbea6f33c47b1c39008a6832904f1da6150374fbe1474eb7"
+    },
+    {
+      "file": "20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "sha256": "9707da512d46b23d8472bf222981242f8020ac3612709f536136876674b50702"
+    },
+    {
+      "file": "20261002170949_wp1_onboarding_storage.sql",
+      "sha256": "6de61a4843cd9a3d77fccb6c0be0591c178b516518e4bb7ce9c2ae1cec3d4c03"
+    },
+    {
+      "file": "20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "sha256": "bdff3e58102376de4195840cc7cd3a02a59c7648cc19403c306ae72e96605719"
+    },
+    {
+      "file": "20261002183000_vertical_read_models.sql",
+      "sha256": "bf50215a774296882cb5aa8067b43bb2c853bbb991968859b8ceece58d197eaf"
+    },
+    {
+      "file": "20261002184500_assisted_member_actions.sql",
+      "sha256": "c7d74823e3be555b7115b1eab4e4180cdb48c7668680fa3a0a6b0e8420629bab"
+    },
+    {
+      "file": "20261006180000_account_help_preferences.sql",
+      "sha256": "f6b7d1db5f420b5e5daeaf142326289dd1fb6918123c001386956f512f7755ff"
+    },
+    {
+      "file": "20261006193000_complete_personal_intake.sql",
+      "sha256": "488d4722f830a0a2a2d35ff89a483bcd6f5e40ed3aa255d367d4346aaad22ad9"
+    },
+    {
+      "file": "20261006210000_household_dossier_projection.sql",
+      "sha256": "0f1b29d8bbde85300f704270bc5ead062344bffe01f5688b67daa085099450a2"
+    },
+    {
+      "file": "20261006223000_versioned_household_invitation_commands.sql",
+      "sha256": "99b456fda630c15eca25f197d971edcf8134a5181deb114c398dde852b6b62fe"
+    },
+    {
+      "file": "20261006230000_household_invitation_cancellation.sql",
+      "sha256": "6d3738db24d2a02576fa6fa4a9273390d04872565edd66d662024df230425a1c"
+    },
+    {
+      "file": "20261006233000_contract_household_invitation_bootstrap.sql",
+      "sha256": "1731ab3cec4921ad31e6f30a90ee21d8dc6101fa205285a51c5b65bc52e2c3f2"
+    },
+    {
+      "file": "20261006234500_personal_intake_reconfirmation.sql",
+      "sha256": "e4f95b65789485e86131d21c0c085a83c8fc5b4195f36b4f81e24b9c6c171625"
+    },
+    {
+      "file": "20261007010000_native_session_authority.sql",
+      "sha256": "9c165f68f413be04aa958358ec088c422dd21fea92b66e9ba84e04378817607a"
+    },
+    {
+      "file": "20261007013000_intake_assistance_management.sql",
+      "sha256": "1512b7cbfd1fd63065fa09ad17aba0a2c71aaba1c875326f11e089175a5979c3"
+    },
+    {
+      "file": "20261009100000_pwa_domain.sql",
+      "sha256": "18cc63b457fddea3f003bceb4d31f310291692e70485e6aa013e4091a8d47d41"
+    },
+    {
+      "file": "20261009101000_pwa_commands.sql",
+      "sha256": "dbf600e3aabc225e5031ca83c24031c27c287cec47cce0b0f64bf81eb6e00f97"
+    },
+    {
+      "file": "20261009102000_pwa_snapshot.sql",
+      "sha256": "969346799a4e591b7f85f8bacc4a877c1ea42dd628c3e041cf9b976f79e19ef0"
+    },
+    {
+      "file": "20261009103000_pwa_delivery_and_receipts.sql",
+      "sha256": "73714397962f5ca54b5a94d1b6cc901ed744b8f8bcccd87fc32cd12673fbfe6f"
+    },
+    {
+      "file": "20261009104000_pwa_buddy_integrity.sql",
+      "sha256": "c2e1bfdccf311f50bd9e0ff1686ce2301d1c65ff29b02cd78512666f0ec5305c"
+    },
+    {
+      "file": "20261009105000_pwa_automation.sql",
+      "sha256": "7e20fdaee644e5a2f0b037f0d34001a773cf47b6b23a0294f23fddad45e5dbef"
+    },
+    {
+      "file": "20261009106000_pwa_provider_receipts.sql",
+      "sha256": "5e6923e41dfd6d5da1ab12380f1be31b25e466eba02b685f7361b11e1ffe9eed"
+    },
+    {
+      "file": "20261009107000_pwa_compatibility_and_cluster_scope.sql",
+      "sha256": "d60b59920adac4c45a3ec336a6a0cb27e31abb3c8aa69e0ddf5b47ed729e4486"
+    },
+    {
+      "file": "20261009108000_pwa_repeatable_command_events.sql",
+      "sha256": "7ad42704ec974bd670deb70c14dcd13a2079f1b0d9fd6a416e0d4dcdf3859ef2"
+    },
+    {
+      "file": "20261009109000_pwa_digest_dispatch_day.sql",
+      "sha256": "881aaf6a7ff6ed1e22604d810c1194fc140c4dfb79240e869b25feb3a9be4210"
+    },
+    {
+      "file": "20261009110000_pwa_card_version_gate.sql",
+      "sha256": "7d237cb0e27bf8d4f27e649143a77e39dc29977279fc7bc6db6e506da52ff4cc"
+    },
+    {
+      "file": "20261009111000_pwa_handover_checklist_integrity.sql",
+      "sha256": "2d10644befebd17fb8893d4e1363a6a4f61588bd55ac3ab45a7653d6489e3307"
+    },
+    {
+      "file": "20261009112000_pwa_task_offer_category_seed.sql",
+      "sha256": "1e2bb5b181e7e0d4279c8270b12bfee8743cb7dcaaa0e4267256eaf689c59c17"
+    },
+    {
+      "file": "20261009113000_pwa_nested_version_integrity.sql",
+      "sha256": "60eedfed603a1450d42524dc070e8fa4661c1bb323d55e660faef52845b98f19"
+    },
+    {
+      "file": "20261009114000_pwa_policy_assignment_identity.sql",
+      "sha256": "afbe3c6218e2d81dae30107ec0f854f5fe0bdd87ae700da98f2b5d3165f4ad10"
+    },
+    {
+      "file": "20261009115000_pwa_personal_action_context.sql",
+      "sha256": "10dfcebb3e8f61623586f41123e8967815e743745f991f68f84bcfd686e3a195"
+    },
+    {
+      "file": "20261009116000_pwa_committee_planning.sql",
+      "sha256": "2bca259cd9041307c7daab5bf4e950fc0ddad72109aa180631634ce290b3e311"
+    },
+    {
+      "file": "20261009117000_pwa_invitation_authority_fence.sql",
+      "sha256": "943eb1502da863da7d51bcd390bb58a5815896ab67a76db074638dad361d95b3"
+    },
+    {
+      "file": "20261009118000_pwa_sportlink_connection.sql",
+      "sha256": "b4cd0ed6b44fd2bac7d22bee84a3b15f5817c6122c132a42066c49f374277b87"
+    },
+    {
+      "file": "20261009119000_pwa_reserve_committee_scope.sql",
+      "sha256": "5e59f9833dcad7d0aff3d4a7b3cfc3586e48e01e457cff36cb2e2d9b39edba18"
+    }
+  ],
+  "original35_migration_bytes_unchanged_from": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+  "frozen_initial16_transport_catalog_bytes_unchanged": true,
+  "approved_hosted35_lineage_source": {
+    "file": "docs/release/evidence/staging/20261009-pwa-upgrade-attempt-37926728047-gha.json",
+    "sha256": "bd2e3fdfeba27477e088f67ed3c500526df8d782e5b3155b29fbbb1095faa99a",
+    "scope": "HISTORICAL_SAFE_AGGREGATE_REFERENCE_ONLY",
+    "live_readback_performed_by_this_task": false
+  },
+  "bound_operations_source_files": [
+    {
+      "file": ".github/workflows/staging-pwa-configure-app.yml",
+      "sha256": "4ff6f6d79d4808f5b0aacbbe2671a6361679711bc4531ac29d033ae2cfdb954a"
+    },
+    {
+      "file": "scripts/staging-initial-migrations.mjs",
+      "sha256": "7f49cf8dcdb2eda53633dd3596486779ea2dd001d1a2813a07fa45e859784004"
+    },
+    {
+      "file": "scripts/staging-migration-files.mjs",
+      "sha256": "83aa2aae6d4cc358965208e39e73dd0d1038ee4a6c0bc9a62675b829e30c94bd"
+    },
+    {
+      "file": "scripts/staging-pwa-native-qa-automation.mjs",
+      "sha256": "b99f275ccb86c8b16e7ef558891cb738718488792dd8d210414260925b26afb4"
+    },
+    {
+      "file": "scripts/staging-pwa-native-qa-booking.mjs",
+      "sha256": "dceee6137debb1015b982e5a2877da9f6e368a810a0ad6ac467ace28d70e85dc"
+    },
+    {
+      "file": "scripts/staging-pwa-native-qa-fixture.mjs",
+      "sha256": "50b050e173fceb91576e547f2710449eeca75251d8cb0d3951ea1479e7ab879d"
+    },
+    {
+      "file": "scripts/staging-pwa-native-qa-session.mjs",
+      "sha256": "440c1d55b81aa18d2ab63586f44fea4242c1652d301e255744d7d9ed8a777215"
+    },
+    {
+      "file": "scripts/staging-pwa-native-qa-sql.mjs",
+      "sha256": "016f74100a15cd8f6a20dfd1cd0e4b44b1cf7aaa3484e2fd9f7239267e8d5a30"
+    },
+    {
+      "file": "scripts/staging-pwa-runtime-preflight.mjs",
+      "sha256": "20cf4b61c8800cae78e06e4d2aac8fb49b929d7914308f18b019934ba3677694"
+    },
+    {
+      "file": "scripts/staging-pwa-upgrade-files.mjs",
+      "sha256": "2541666715c5265dc8fad88b72878224efe5e0de7af3a0bc850d588d5f47cfcc"
+    },
+    {
+      "file": "scripts/staging-pwa-upgrade-migrations.mjs",
+      "sha256": "d931ae1ca408e755b244cf1232fa5e5fd4cbdc0f21a709fbe4ffdd4df2b878ee"
+    },
+    {
+      "file": "scripts/staging-pwa-upgrade-session.mjs",
+      "sha256": "0a9dc7c0ec045b220f62a3dbb0ba7d26ab78817e237710c5091a6b37ec4ec811"
+    },
+    {
+      "file": "scripts/staging-pwa-upgrade-sql.mjs",
+      "sha256": "0337f2134a3c57128719a26287d4395ade94471ad4e8939ee70d7fc51166d242"
+    },
+    {
+      "file": "scripts/staging-sportlink-setup-session.mjs",
+      "sha256": "771552825794d16e1108af46538f45e001d026ae5ad575cdb92bf6fc05ee95b0"
+    },
+    {
+      "file": "scripts/staging-sportlink-setup-sql.mjs",
+      "sha256": "8ecc42564ebb6b5b38a424b90901d248443bae030ffb06496be526e5c38723d5"
+    },
+    {
+      "file": "scripts/staging_backup_session.py",
+      "sha256": "e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1"
+    },
+    {
+      "file": "scripts/staging_pwa_native_qa_session.py",
+      "sha256": "cac1847098cce0445d89e651fcc43325157ccd848f81ca9085e66c3c91067e2f"
+    },
+    {
+      "file": "scripts/staging_pwa_upgrade_session.py",
+      "sha256": "4f30eb243d0ffefef384dff2ca61df8020fb63ba1eccdcac3f28838dd3a86d53"
+    },
+    {
+      "file": "scripts/staging_sportlink_setup_session.py",
+      "sha256": "2c97a45d7d1295798c14871330102995b9f4e9abc66b5291f4a369c5840f829f"
+    },
+    {
+      "file": "tests/helpers/pwa-closed31-upgrade.mjs",
+      "sha256": "c6d65067cb02f869caf97af4f9d4ea133adf42f47a1c8cdfd3aebf12869142ff"
+    },
+    {
+      "file": "tests/helpers/pwa-owned-native-qa.mjs",
+      "sha256": "d8bbcf48df9b1e3c4a032fae9a3823e8072bf3af4d615cf22d1f3a14de9b9cc6"
+    },
+    {
+      "file": "tests/helpers/pwa-owned-sportlink-authority.mjs",
+      "sha256": "682d5cb0adb5fd0bbaa5b20f241d4fa9ad5bcc1ce4b68987327a3601dcea5654"
+    },
+    {
+      "file": "tests/pwa-check-ast-owned.test.mjs",
+      "sha256": "9416647322194e412608f4cf6fdf1f6fa47dd7fa4a22fad65e611f6dc1b06167"
+    },
+    {
+      "file": "tests/staging-pwa-release-workflow.test.mjs",
+      "sha256": "e73627402c5a5487a0b8bc0f64136a5c9c819d10538678cdfba9a22052dd9249"
+    },
+    {
+      "file": "tests/staging-pwa-runtime-preflight.test.mjs",
+      "sha256": "b50db6513d274b2901c8ed2dc2e7bb6da4cbb737c8110378ab8e66d04f45e10d"
+    },
+    {
+      "file": "tests/staging-pwa-upgrade-migrations.test.mjs",
+      "sha256": "1cb2f284bdf81a2ebbdca58dffc388ab2d2558d156d0c816a2f575b5be9c5a45"
+    },
+    {
+      "file": "tests/staging-pwa-upgrade-native.test.mjs",
+      "sha256": "762513933929b73a3d9cefc86a40b04edf035eda3588d4b0e4926e92d761f313"
+    }
+  ],
+  "owned_changed_files": [
+    ".github/workflows/staging-pwa-configure-app.yml",
+    "scripts/staging-pwa-upgrade-files.mjs",
+    "scripts/staging-pwa-upgrade-migrations.mjs",
+    "scripts/staging-pwa-runtime-preflight.mjs",
+    "scripts/staging-pwa-upgrade-session.mjs",
+    "scripts/staging-pwa-native-qa-session.mjs",
+    "scripts/staging-sportlink-setup-session.mjs",
+    "scripts/staging_pwa_upgrade_session.py",
+    "scripts/staging_pwa_native_qa_session.py",
+    "scripts/staging_sportlink_setup_session.py",
+    "tests/helpers/pwa-closed31-upgrade.mjs",
+    "tests/helpers/pwa-owned-native-qa.mjs",
+    "tests/helpers/pwa-owned-sportlink-authority.mjs",
+    "tests/pwa-check-ast-owned.test.mjs",
+    "tests/staging-pwa-release-workflow.test.mjs",
+    "tests/staging-pwa-runtime-preflight.test.mjs",
+    "tests/staging-pwa-upgrade-migrations.test.mjs",
+    "tests/staging-pwa-upgrade-native.test.mjs"
+  ],
+  "source_pin_verification": [
+    {
+      "child": "scripts/staging_pwa_upgrade_session.py",
+      "child_sha256": "4f30eb243d0ffefef384dff2ca61df8020fb63ba1eccdcac3f28838dd3a86d53",
+      "parent": "scripts/staging-pwa-upgrade-session.mjs",
+      "inner_pinned_module_count": 6,
+      "inner_pins": {
+        "staging_backup_session.py": "e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1",
+        "staging-pwa-upgrade-sql.mjs": "0337f2134a3c57128719a26287d4395ade94471ad4e8939ee70d7fc51166d242",
+        "staging-pwa-upgrade-migrations.mjs": "d931ae1ca408e755b244cf1232fa5e5fd4cbdc0f21a709fbe4ffdd4df2b878ee",
+        "staging-pwa-upgrade-files.mjs": "2541666715c5265dc8fad88b72878224efe5e0de7af3a0bc850d588d5f47cfcc",
+        "staging-initial-migrations.mjs": "7f49cf8dcdb2eda53633dd3596486779ea2dd001d1a2813a07fa45e859784004",
+        "staging-migration-files.mjs": "83aa2aae6d4cc358965208e39e73dd0d1038ee4a6c0bc9a62675b829e30c94bd"
+      },
+      "all_inner_and_child_pins_verified": true
+    },
+    {
+      "child": "scripts/staging_pwa_native_qa_session.py",
+      "child_sha256": "cac1847098cce0445d89e651fcc43325157ccd848f81ca9085e66c3c91067e2f",
+      "parent": "scripts/staging-pwa-native-qa-session.mjs",
+      "inner_pinned_module_count": 9,
+      "inner_pins": {
+        "staging_backup_session.py": "e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1",
+        "staging-initial-migrations.mjs": "7f49cf8dcdb2eda53633dd3596486779ea2dd001d1a2813a07fa45e859784004",
+        "staging-migration-files.mjs": "83aa2aae6d4cc358965208e39e73dd0d1038ee4a6c0bc9a62675b829e30c94bd",
+        "staging-pwa-upgrade-migrations.mjs": "d931ae1ca408e755b244cf1232fa5e5fd4cbdc0f21a709fbe4ffdd4df2b878ee",
+        "staging-pwa-upgrade-files.mjs": "2541666715c5265dc8fad88b72878224efe5e0de7af3a0bc850d588d5f47cfcc",
+        "staging-pwa-native-qa-fixture.mjs": "50b050e173fceb91576e547f2710449eeca75251d8cb0d3951ea1479e7ab879d",
+        "staging-pwa-native-qa-booking.mjs": "dceee6137debb1015b982e5a2877da9f6e368a810a0ad6ac467ace28d70e85dc",
+        "staging-pwa-native-qa-automation.mjs": "b99f275ccb86c8b16e7ef558891cb738718488792dd8d210414260925b26afb4",
+        "staging-pwa-native-qa-sql.mjs": "016f74100a15cd8f6a20dfd1cd0e4b44b1cf7aaa3484e2fd9f7239267e8d5a30"
+      },
+      "all_inner_and_child_pins_verified": true
+    },
+    {
+      "child": "scripts/staging_sportlink_setup_session.py",
+      "child_sha256": "2c97a45d7d1295798c14871330102995b9f4e9abc66b5291f4a369c5840f829f",
+      "parent": "scripts/staging-sportlink-setup-session.mjs",
+      "inner_pinned_module_count": 7,
+      "inner_pins": {
+        "staging_backup_session.py": "e2623e24a311c9a888e13146db4ff31b6be9e65abd8e8d37032762b9c618f1e1",
+        "staging-sportlink-setup-sql.mjs": "8ecc42564ebb6b5b38a424b90901d248443bae030ffb06496be526e5c38723d5",
+        "staging-pwa-native-qa-fixture.mjs": "50b050e173fceb91576e547f2710449eeca75251d8cb0d3951ea1479e7ab879d",
+        "staging-pwa-upgrade-files.mjs": "2541666715c5265dc8fad88b72878224efe5e0de7af3a0bc850d588d5f47cfcc",
+        "staging-pwa-upgrade-migrations.mjs": "d931ae1ca408e755b244cf1232fa5e5fd4cbdc0f21a709fbe4ffdd4df2b878ee",
+        "staging-initial-migrations.mjs": "7f49cf8dcdb2eda53633dd3596486779ea2dd001d1a2813a07fa45e859784004",
+        "staging-migration-files.mjs": "83aa2aae6d4cc358965208e39e73dd0d1038ee4a6c0bc9a62675b829e30c94bd"
+      },
+      "all_inner_and_child_pins_verified": true
+    }
+  ],
+  "directed_unit_execution": {
+    "summary": {
+      "tests": 53,
+      "pass": 53,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "test_files": [
+      "tests/staging-pwa-upgrade-migrations.test.mjs",
+      "tests/staging-pwa-runtime-preflight.test.mjs",
+      "tests/staging-pwa-upgrade-session.test.mjs",
+      "tests/staging-pwa-native-qa-session.test.mjs",
+      "tests/staging-pwa-native-qa-fixture.test.mjs",
+      "tests/staging-pwa-upgrade-restore.test.mjs",
+      "tests/staging-pwa-release-workflow.test.mjs"
+    ],
+    "config_version3_input_binding_checked": true,
+    "runtime_rollback_verified": false
+  },
+  "actual_owned_upgrade_execution": {
+    "summary": {
+      "tests": 3,
+      "pass": 3,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "test_file": "tests/staging-pwa-upgrade-native.test.mjs",
+    "lineage_results": [
+      {
+        "scope": "LOCAL_OWNED_PG17",
+        "readonly_runtime_configuration_guard": true,
+        "api_security_invoker_functions": 89,
+        "actual_planning_rpc_metadata_negatives": 8,
+        "api_security_invoker_views": 21,
+        "actual_unsafe_api_view_refused_in_readonly_transaction": true,
+        "actual_native_last_position_contenders": 2,
+        "private_teams_and_minor_contacts": true,
+        "old_bearer_after_logout_refused": true,
+        "scoped_automation": {
+          "scope": "STAGING_PWA_SCOPED_AUTOMATION_QA_V1",
+          "provider_called": false,
+          "matching_positive": true,
+          "source_run_actor_bound": true,
+          "global_scheduler_called": false,
+          "actual_synthetic_imports": 4,
+          "wrong_lease_owner_refused": true,
+          "unchanged_import_deduplicated": true,
+          "source_and_preference_revalidated": true,
+          "incomplete_import_preserves_success": true,
+          "source_change_preserves_booked_shift": true,
+          "rollback_verified": true
+        },
+        "automation": {
+          "unknown_slot_retained": true,
+          "immutable_provider_receipt": true,
+          "essential_operational_inbox": true,
+          "daily_cap_actual_concurrency": true,
+          "daily_cap_and_late_candidates": true,
+          "browser_private_worker_refused": true,
+          "native_approved_versioned_rules": true,
+          "dispatch_rebuild_current_matching": true,
+          "seven_day_and_24hour_source_reminders": true,
+          "verified_operational_and_team_binding": true,
+          "actual_fixture_match_import_and_local_slots": true
+        },
+        "lineage": "fresh16",
+        "predecessor_upgrade": null,
+        "actual_native_guard_inventory": {
+          "forced": 181,
+          "native": 181,
+          "tables": 181
+        },
+        "actual_migration_count": 36,
+        "actual_suffix_history_typed_json_boolean": true,
+        "actual36_redeploy_pending_sql": 0,
+        "redeploy_history_and_receipts_unchanged": true,
+        "sportlink_native_privacy_command_assertions": 36,
+        "sportlink_suite_rolled_back": true,
+        "sportlink_native_authority_fence": {
+          "scope": "LOCAL_OWNED_PG17_SPORTLINK_AUTHORITY_FENCE",
+          "passed": true,
+          "migrations": 36,
+          "guarded_container_reused": true,
+          "container_lifecycle_owned_by_caller": true,
+          "network": "none",
+          "postgres_writes_on_tmpfs": true,
+          "native_claims_and_confirmed_auth_fixture": true,
+          "structural_ciphertext_fixture_only": true,
+          "structural_receipt_fixture_only": true,
+          "provider_access_proved": false,
+          "provider_called": false,
+          "shared_database_connections": 0,
+          "production_enabled": false,
+          "scenarios": [
+            {
+              "kind": "authorized_configuration_retry",
+              "elapsed_ms": 425,
+              "exit_status": 0,
+              "sqlstate": null,
+              "error_code": null,
+              "native_actor_proved": true,
+              "same_command_retry_proved": true,
+              "wait_proof": null,
+              "readback": {
+                "audits": 1,
+                "events": 1,
+                "matches": 0,
+                "last_test": null,
+                "connections": 1,
+                "credentials": 1,
+                "ledger_rows": 0,
+                "capabilities": {},
+                "grant_revoked": false,
+                "grant_version": 1,
+                "last_success_at": null,
+                "session_expired": false,
+                "configured_audits": 1,
+                "configured_events": 1,
+                "connection_status": "preparing",
+                "connection_version": 1,
+                "record_test_commands": 0,
+                "recorded_test_audits": 0,
+                "recorded_test_events": 0,
+                "completed_configuration_commands": 1
+              }
+            },
+            {
+              "kind": "configure_grant_revoked_while_waiting",
+              "elapsed_ms": 605,
+              "exit_status": 3,
+              "sqlstate": "42501",
+              "error_code": "FORBIDDEN",
+              "native_actor_proved": true,
+              "same_command_retry_proved": false,
+              "wait_proof": {
+                "holder_backend_pid": 754,
+                "contender_backend_pid": 767,
+                "observer_backend_pids": [
+                  775,
+                  782,
+                  796
+                ],
+                "actual_blocked_contenders": 1,
+                "independent_observer_confirmations": 2,
+                "holder_is_actual_blocker": true,
+                "native_call_matches": true,
+                "wait_event_type": "Lock",
+                "wait_observed_before_revocation": true,
+                "wait_observed_after_revocation": true,
+                "independent_revocation_committed_while_blocked": true
+              },
+              "readback": {
+                "audits": 0,
+                "events": 0,
+                "matches": 0,
+                "last_test": null,
+                "connections": 0,
+                "credentials": 0,
+                "ledger_rows": 0,
+                "capabilities": null,
+                "grant_revoked": true,
+                "grant_version": 2,
+                "last_success_at": null,
+                "session_expired": false,
+                "configured_audits": 0,
+                "configured_events": 0,
+                "connection_status": null,
+                "connection_version": null,
+                "record_test_commands": 0,
+                "recorded_test_audits": 0,
+                "recorded_test_events": 0,
+                "completed_configuration_commands": 0
+              }
+            },
+            {
+              "kind": "record_test_session_expired_while_waiting",
+              "elapsed_ms": 689,
+              "exit_status": 3,
+              "sqlstate": "42501",
+              "error_code": "FORBIDDEN",
+              "native_actor_proved": true,
+              "same_command_retry_proved": false,
+              "wait_proof": {
+                "holder_backend_pid": 831,
+                "contender_backend_pid": 845,
+                "observer_backend_pids": [
+                  851,
+                  858,
+                  872
+                ],
+                "actual_blocked_contenders": 1,
+                "independent_observer_confirmations": 2,
+                "holder_is_actual_blocker": true,
+                "native_call_matches": true,
+                "wait_event_type": "Lock",
+                "wait_observed_before_revocation": true,
+                "wait_observed_after_revocation": true,
+                "independent_revocation_committed_while_blocked": true
+              },
+              "readback": {
+                "audits": 1,
+                "events": 1,
+                "matches": 0,
+                "last_test": null,
+                "connections": 1,
+                "credentials": 1,
+                "ledger_rows": 0,
+                "capabilities": {},
+                "grant_revoked": false,
+                "grant_version": 1,
+                "last_success_at": null,
+                "session_expired": true,
+                "configured_audits": 1,
+                "configured_events": 1,
+                "connection_status": "preparing",
+                "connection_version": 1,
+                "record_test_commands": 0,
+                "recorded_test_audits": 0,
+                "recorded_test_events": 0,
+                "completed_configuration_commands": 1
+              }
+            }
+          ]
+        }
+      },
+      {
+        "scope": "LOCAL_OWNED_PG17",
+        "readonly_runtime_configuration_guard": true,
+        "api_security_invoker_functions": 89,
+        "actual_planning_rpc_metadata_negatives": 8,
+        "api_security_invoker_views": 21,
+        "actual_unsafe_api_view_refused_in_readonly_transaction": true,
+        "actual_native_last_position_contenders": 2,
+        "private_teams_and_minor_contacts": true,
+        "old_bearer_after_logout_refused": true,
+        "scoped_automation": {
+          "scope": "STAGING_PWA_SCOPED_AUTOMATION_QA_V1",
+          "provider_called": false,
+          "matching_positive": true,
+          "source_run_actor_bound": true,
+          "global_scheduler_called": false,
+          "actual_synthetic_imports": 4,
+          "wrong_lease_owner_refused": true,
+          "unchanged_import_deduplicated": true,
+          "source_and_preference_revalidated": true,
+          "incomplete_import_preserves_success": true,
+          "source_change_preserves_booked_shift": true,
+          "rollback_verified": true
+        },
+        "automation": {
+          "unknown_slot_retained": true,
+          "immutable_provider_receipt": true,
+          "essential_operational_inbox": true,
+          "daily_cap_actual_concurrency": true,
+          "daily_cap_and_late_candidates": true,
+          "browser_private_worker_refused": true,
+          "native_approved_versioned_rules": true,
+          "dispatch_rebuild_current_matching": true,
+          "seven_day_and_24hour_source_reminders": true,
+          "verified_operational_and_team_binding": true,
+          "actual_fixture_match_import_and_local_slots": true
+        },
+        "lineage": "approved31",
+        "predecessor_upgrade": {
+          "actual_closed31_renderer": true,
+          "actual_closed35_renderer": false,
+          "previous_migrations": 31,
+          "executed_new_migrations": 5,
+          "previous_history_and_receipts_unchanged": true,
+          "original16_receipts_unchanged": true,
+          "help_catalog_data_unchanged": true,
+          "actual_tamper_negatives": 8,
+          "approved_predecessor_source_sha": "8762f2284eb980cdbe0d5478a533a6f893b5d409",
+          "approved_predecessor_manifest_sha256": "4d00699a669e26e0e030523c56c87a231177c5887470d6fe2903ead7164b7e4d"
+        },
+        "actual_native_guard_inventory": {
+          "forced": 181,
+          "native": 181,
+          "tables": 181
+        },
+        "actual_migration_count": 36,
+        "actual_suffix_history_typed_json_boolean": true,
+        "actual36_redeploy_pending_sql": 0,
+        "redeploy_history_and_receipts_unchanged": true,
+        "sportlink_native_privacy_command_assertions": 36,
+        "sportlink_suite_rolled_back": true,
+        "sportlink_native_authority_fence": {
+          "scope": "LOCAL_OWNED_PG17_SPORTLINK_AUTHORITY_FENCE",
+          "passed": true,
+          "migrations": 36,
+          "guarded_container_reused": true,
+          "container_lifecycle_owned_by_caller": true,
+          "network": "none",
+          "postgres_writes_on_tmpfs": true,
+          "native_claims_and_confirmed_auth_fixture": true,
+          "structural_ciphertext_fixture_only": true,
+          "structural_receipt_fixture_only": true,
+          "provider_access_proved": false,
+          "provider_called": false,
+          "shared_database_connections": 0,
+          "production_enabled": false,
+          "scenarios": [
+            {
+              "kind": "authorized_configuration_retry",
+              "elapsed_ms": 419,
+              "exit_status": 0,
+              "sqlstate": null,
+              "error_code": null,
+              "native_actor_proved": true,
+              "same_command_retry_proved": true,
+              "wait_proof": null,
+              "readback": {
+                "audits": 1,
+                "events": 1,
+                "matches": 0,
+                "last_test": null,
+                "connections": 1,
+                "credentials": 1,
+                "ledger_rows": 0,
+                "capabilities": {},
+                "grant_revoked": false,
+                "grant_version": 1,
+                "last_success_at": null,
+                "session_expired": false,
+                "configured_audits": 1,
+                "configured_events": 1,
+                "connection_status": "preparing",
+                "connection_version": 1,
+                "record_test_commands": 0,
+                "recorded_test_audits": 0,
+                "recorded_test_events": 0,
+                "completed_configuration_commands": 1
+              }
+            },
+            {
+              "kind": "configure_grant_revoked_while_waiting",
+              "elapsed_ms": 618,
+              "exit_status": 3,
+              "sqlstate": "42501",
+              "error_code": "FORBIDDEN",
+              "native_actor_proved": true,
+              "same_command_retry_proved": false,
+              "wait_proof": {
+                "holder_backend_pid": 1259,
+                "contender_backend_pid": 1272,
+                "observer_backend_pids": [
+                  1280,
+                  1287,
+                  1301
+                ],
+                "actual_blocked_contenders": 1,
+                "independent_observer_confirmations": 2,
+                "holder_is_actual_blocker": true,
+                "native_call_matches": true,
+                "wait_event_type": "Lock",
+                "wait_observed_before_revocation": true,
+                "wait_observed_after_revocation": true,
+                "independent_revocation_committed_while_blocked": true
+              },
+              "readback": {
+                "audits": 0,
+                "events": 0,
+                "matches": 0,
+                "last_test": null,
+                "connections": 0,
+                "credentials": 0,
+                "ledger_rows": 0,
+                "capabilities": null,
+                "grant_revoked": true,
+                "grant_version": 2,
+                "last_success_at": null,
+                "session_expired": false,
+                "configured_audits": 0,
+                "configured_events": 0,
+                "connection_status": null,
+                "connection_version": null,
+                "record_test_commands": 0,
+                "recorded_test_audits": 0,
+                "recorded_test_events": 0,
+                "completed_configuration_commands": 0
+              }
+            },
+            {
+              "kind": "record_test_session_expired_while_waiting",
+              "elapsed_ms": 712,
+              "exit_status": 3,
+              "sqlstate": "42501",
+              "error_code": "FORBIDDEN",
+              "native_actor_proved": true,
+              "same_command_retry_proved": false,
+              "wait_proof": {
+                "holder_backend_pid": 1342,
+                "contender_backend_pid": 1356,
+                "observer_backend_pids": [
+                  1363,
+                  1370,
+                  1384
+                ],
+                "actual_blocked_contenders": 1,
+                "independent_observer_confirmations": 2,
+                "holder_is_actual_blocker": true,
+                "native_call_matches": true,
+                "wait_event_type": "Lock",
+                "wait_observed_before_revocation": true,
+                "wait_observed_after_revocation": true,
+                "independent_revocation_committed_while_blocked": true
+              },
+              "readback": {
+                "audits": 1,
+                "events": 1,
+                "matches": 0,
+                "last_test": null,
+                "connections": 1,
+                "credentials": 1,
+                "ledger_rows": 0,
+                "capabilities": {},
+                "grant_revoked": false,
+                "grant_version": 1,
+                "last_success_at": null,
+                "session_expired": true,
+                "configured_audits": 1,
+                "configured_events": 1,
+                "connection_status": "preparing",
+                "connection_version": 1,
+                "record_test_commands": 0,
+                "recorded_test_audits": 0,
+                "recorded_test_events": 0,
+                "completed_configuration_commands": 1
+              }
+            }
+          ]
+        }
+      },
+      {
+        "scope": "LOCAL_OWNED_PG17",
+        "readonly_runtime_configuration_guard": true,
+        "api_security_invoker_functions": 89,
+        "actual_planning_rpc_metadata_negatives": 8,
+        "api_security_invoker_views": 21,
+        "actual_unsafe_api_view_refused_in_readonly_transaction": true,
+        "actual_native_last_position_contenders": 2,
+        "private_teams_and_minor_contacts": true,
+        "old_bearer_after_logout_refused": true,
+        "scoped_automation": {
+          "scope": "STAGING_PWA_SCOPED_AUTOMATION_QA_V1",
+          "provider_called": false,
+          "matching_positive": true,
+          "source_run_actor_bound": true,
+          "global_scheduler_called": false,
+          "actual_synthetic_imports": 4,
+          "wrong_lease_owner_refused": true,
+          "unchanged_import_deduplicated": true,
+          "source_and_preference_revalidated": true,
+          "incomplete_import_preserves_success": true,
+          "source_change_preserves_booked_shift": true,
+          "rollback_verified": true
+        },
+        "automation": {
+          "unknown_slot_retained": true,
+          "immutable_provider_receipt": true,
+          "essential_operational_inbox": true,
+          "daily_cap_actual_concurrency": true,
+          "daily_cap_and_late_candidates": true,
+          "browser_private_worker_refused": true,
+          "native_approved_versioned_rules": true,
+          "dispatch_rebuild_current_matching": true,
+          "seven_day_and_24hour_source_reminders": true,
+          "verified_operational_and_team_binding": true,
+          "actual_fixture_match_import_and_local_slots": true
+        },
+        "lineage": "known35",
+        "predecessor_upgrade": {
+          "actual_closed31_renderer": true,
+          "actual_closed35_renderer": true,
+          "previous_migrations": 35,
+          "executed_new_migrations": 1,
+          "previous_history_and_receipts_unchanged": true,
+          "original16_receipts_unchanged": true,
+          "help_catalog_data_unchanged": true,
+          "actual_tamper_negatives": 16,
+          "approved_predecessor_source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+          "approved_predecessor_manifest_sha256": "b39a9bb9d167e02e5723f0efe68bacc3df1bfeb08a03551c8efe8dcd70171466"
+        },
+        "actual_native_guard_inventory": {
+          "forced": 181,
+          "native": 181,
+          "tables": 181
+        },
+        "actual_migration_count": 36,
+        "actual_suffix_history_typed_json_boolean": true,
+        "actual36_redeploy_pending_sql": 0,
+        "redeploy_history_and_receipts_unchanged": true,
+        "sportlink_native_privacy_command_assertions": 36,
+        "sportlink_suite_rolled_back": true,
+        "sportlink_native_authority_fence": {
+          "scope": "LOCAL_OWNED_PG17_SPORTLINK_AUTHORITY_FENCE",
+          "passed": true,
+          "migrations": 36,
+          "guarded_container_reused": true,
+          "container_lifecycle_owned_by_caller": true,
+          "network": "none",
+          "postgres_writes_on_tmpfs": true,
+          "native_claims_and_confirmed_auth_fixture": true,
+          "structural_ciphertext_fixture_only": true,
+          "structural_receipt_fixture_only": true,
+          "provider_access_proved": false,
+          "provider_called": false,
+          "shared_database_connections": 0,
+          "production_enabled": false,
+          "scenarios": [
+            {
+              "kind": "authorized_configuration_retry",
+              "elapsed_ms": 435,
+              "exit_status": 0,
+              "sqlstate": null,
+              "error_code": null,
+              "native_actor_proved": true,
+              "same_command_retry_proved": true,
+              "wait_proof": null,
+              "readback": {
+                "audits": 1,
+                "events": 1,
+                "matches": 0,
+                "last_test": null,
+                "connections": 1,
+                "credentials": 1,
+                "ledger_rows": 0,
+                "capabilities": {},
+                "grant_revoked": false,
+                "grant_version": 1,
+                "last_success_at": null,
+                "session_expired": false,
+                "configured_audits": 1,
+                "configured_events": 1,
+                "connection_status": "preparing",
+                "connection_version": 1,
+                "record_test_commands": 0,
+                "recorded_test_audits": 0,
+                "recorded_test_events": 0,
+                "completed_configuration_commands": 1
+              }
+            },
+            {
+              "kind": "configure_grant_revoked_while_waiting",
+              "elapsed_ms": 650,
+              "exit_status": 3,
+              "sqlstate": "42501",
+              "error_code": "FORBIDDEN",
+              "native_actor_proved": true,
+              "same_command_retry_proved": false,
+              "wait_proof": {
+                "holder_backend_pid": 1375,
+                "contender_backend_pid": 1388,
+                "observer_backend_pids": [
+                  1396,
+                  1403,
+                  1417
+                ],
+                "actual_blocked_contenders": 1,
+                "independent_observer_confirmations": 2,
+                "holder_is_actual_blocker": true,
+                "native_call_matches": true,
+                "wait_event_type": "Lock",
+                "wait_observed_before_revocation": true,
+                "wait_observed_after_revocation": true,
+                "independent_revocation_committed_while_blocked": true
+              },
+              "readback": {
+                "audits": 0,
+                "events": 0,
+                "matches": 0,
+                "last_test": null,
+                "connections": 0,
+                "credentials": 0,
+                "ledger_rows": 0,
+                "capabilities": null,
+                "grant_revoked": true,
+                "grant_version": 2,
+                "last_success_at": null,
+                "session_expired": false,
+                "configured_audits": 0,
+                "configured_events": 0,
+                "connection_status": null,
+                "connection_version": null,
+                "record_test_commands": 0,
+                "recorded_test_audits": 0,
+                "recorded_test_events": 0,
+                "completed_configuration_commands": 0
+              }
+            },
+            {
+              "kind": "record_test_session_expired_while_waiting",
+              "elapsed_ms": 713,
+              "exit_status": 3,
+              "sqlstate": "42501",
+              "error_code": "FORBIDDEN",
+              "native_actor_proved": true,
+              "same_command_retry_proved": false,
+              "wait_proof": {
+                "holder_backend_pid": 1452,
+                "contender_backend_pid": 1466,
+                "observer_backend_pids": [
+                  1473,
+                  1486,
+                  1500
+                ],
+                "actual_blocked_contenders": 1,
+                "independent_observer_confirmations": 2,
+                "holder_is_actual_blocker": true,
+                "native_call_matches": true,
+                "wait_event_type": "Lock",
+                "wait_observed_before_revocation": true,
+                "wait_observed_after_revocation": true,
+                "independent_revocation_committed_while_blocked": true
+              },
+              "readback": {
+                "audits": 1,
+                "events": 1,
+                "matches": 0,
+                "last_test": null,
+                "connections": 1,
+                "credentials": 1,
+                "ledger_rows": 0,
+                "capabilities": {},
+                "grant_revoked": false,
+                "grant_version": 1,
+                "last_success_at": null,
+                "session_expired": true,
+                "configured_audits": 1,
+                "configured_events": 1,
+                "connection_status": "preparing",
+                "connection_version": 1,
+                "record_test_commands": 0,
+                "recorded_test_audits": 0,
+                "recorded_test_events": 0,
+                "completed_configuration_commands": 1
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "zero_pending_migration_envelopes_on36_redeploy": true,
+    "redeploy_readback_and_advisory_lock_queries_executed": true,
+    "minimal_synthetic_auth_fixture_only": true
+  },
+  "actual_owned_strict28_archive_execution": {
+    "summary": {
+      "tests": 2,
+      "pass": 2,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "test_file": "tests/pwa-check-ast-owned.test.mjs",
+    "diagnostics": [
+      {
+        "scope": "LOCAL_OWNED_PG17_CLOSED31_EXACT_CHECK_AST_RESTORE_TO36",
+        "observed_at": "2026-10-09T12:38:01.263Z",
+        "baseline_source_sha": "6029b482c06669aa37806d3aa90f70b59e6ccfd4",
+        "restore_helper_sha256": "2b128aecd7e5b4b482c675d982891c0cb6b2d4facb0058c3638dac7062706e24",
+        "actual_pg_dump": true,
+        "actual_pg_dumpall_no_role_passwords": true,
+        "source_fixture": "owned-empty-auth-storage-approved31-with-synthetic-endpoint-and-comment",
+        "native_shaped_storage_fixture": true,
+        "missing_storage_warning_explained": true,
+        "strict_restore_warning_refusal_preserved": true,
+        "source_fixture_native_users": 0,
+        "source_fixture_native_sessions": 0,
+        "actual_full_restore": {
+          "passed": true,
+          "scope": "PWA_STAGING_LOGICAL_RESTORE_AND_UPGRADE",
+          "logical_database_restored": true,
+          "physical_relations_verified": 186,
+          "physical_rows_verified": 385,
+          "sequences_verified": 0,
+          "baseline_catalog_families_verified": 28,
+          "native_archive_sections_restored": 3,
+          "native_restore_passes": 4,
+          "native_toc_entries_preserved": 3343,
+          "extensions_precreated_with_source_owner": 2,
+          "extension_owner_reassignments": 2,
+          "extension_installers_removed": true,
+          "effective_acl_objects_replayed": 210,
+          "temporary_schema_usage_grants": 24,
+          "temporary_reference_grants": 558,
+          "temporary_restore_privileges_removed": true,
+          "extension_privilege_warnings": 0,
+          "post_data_owner_mode": "session_authorization",
+          "bootstrap_create_exceptions": 1,
+          "source_migration_prefix": 31,
+          "final_migration_prefix": 36,
+          "non_superuser_upgrade_migrations": 5,
+          "app_tables": 181,
+          "native_policies": 181,
+          "network_isolated": true,
+          "background_jobs_disabled": true,
+          "source_database_mutated": false,
+          "deparse_alignment": {
+            "format": "PWA_RESTORE_DEPARSE_ALIGNMENT_V2",
+            "used": true,
+            "scope": "OWNED_CLONE_CONTROL_SESSIONS_ONLY",
+            "source_context": {
+              "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+              "server_version_num": 170011,
+              "time_zone": {
+                "category": "UTC",
+                "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+              },
+              "date_style": {
+                "category": "ISO, MDY",
+                "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+              },
+              "interval_style": {
+                "category": "postgres",
+                "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+              },
+              "search_path": {
+                "category": "PG_CATALOG",
+                "sha256": "63e4aeee780860a18770fabeb89cb07e354670beb02c2c5808fa131f4e01fd4a"
+              },
+              "client_encoding": {
+                "category": "UTF8",
+                "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+              },
+              "extra_float_digits": 3,
+              "standard_conforming_strings": true,
+              "quote_all_identifiers": false,
+              "bytea_output": "hex"
+            },
+            "before_context": {
+              "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+              "server_version_num": 170011,
+              "time_zone": {
+                "category": "UTC",
+                "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+              },
+              "date_style": {
+                "category": "ISO, MDY",
+                "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+              },
+              "interval_style": {
+                "category": "postgres",
+                "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+              },
+              "search_path": {
+                "category": "EMPTY",
+                "sha256": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+              },
+              "client_encoding": {
+                "category": "UTF8",
+                "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+              },
+              "extra_float_digits": 1,
+              "standard_conforming_strings": true,
+              "quote_all_identifiers": false,
+              "bytea_output": "hex"
+            },
+            "aligned_context": {
+              "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+              "server_version_num": 170011,
+              "time_zone": {
+                "category": "UTC",
+                "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+              },
+              "date_style": {
+                "category": "ISO, MDY",
+                "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+              },
+              "interval_style": {
+                "category": "postgres",
+                "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+              },
+              "search_path": {
+                "category": "PG_CATALOG",
+                "sha256": "63e4aeee780860a18770fabeb89cb07e354670beb02c2c5808fa131f4e01fd4a"
+              },
+              "client_encoding": {
+                "category": "UTF8",
+                "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+              },
+              "extra_float_digits": 3,
+              "standard_conforming_strings": true,
+              "quote_all_identifiers": false,
+              "bytea_output": "hex"
+            },
+            "before_constraint_diagnostics": {
+              "format": "PWA_CONSTRAINT_DEFINITION_DIAGNOSTICS_V1",
+              "changed_definition_rows": 1,
+              "classified_rows": 1,
+              "omitted_rows": 0,
+              "source_deparse_context": {
+                "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+                "server_version_num": 170011,
+                "time_zone": {
+                  "category": "UTC",
+                  "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+                },
+                "date_style": {
+                  "category": "ISO, MDY",
+                  "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+                },
+                "interval_style": {
+                  "category": "postgres",
+                  "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+                },
+                "search_path": {
+                  "category": "PG_CATALOG",
+                  "sha256": "63e4aeee780860a18770fabeb89cb07e354670beb02c2c5808fa131f4e01fd4a"
+                },
+                "client_encoding": {
+                  "category": "UTF8",
+                  "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+                },
+                "extra_float_digits": 3,
+                "standard_conforming_strings": true,
+                "quote_all_identifiers": false,
+                "bytea_output": "hex"
+              },
+              "restored_deparse_context": {
+                "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+                "server_version_num": 170011,
+                "time_zone": {
+                  "category": "UTC",
+                  "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+                },
+                "date_style": {
+                  "category": "ISO, MDY",
+                  "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+                },
+                "interval_style": {
+                  "category": "postgres",
+                  "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+                },
+                "search_path": {
+                  "category": "EMPTY",
+                  "sha256": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+                },
+                "client_encoding": {
+                  "category": "UTF8",
+                  "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+                },
+                "extra_float_digits": 1,
+                "standard_conforming_strings": true,
+                "quote_all_identifiers": false,
+                "bytea_output": "hex"
+              },
+              "guc_difference_flags": {
+                "server_version_changed": false,
+                "time_zone_changed": false,
+                "date_style_changed": false,
+                "interval_style_changed": false,
+                "search_path_changed": true,
+                "extra_float_digits_changed": true,
+                "standard_conforming_strings_changed": false,
+                "quote_all_identifiers_changed": false,
+                "bytea_output_changed": false,
+                "client_encoding_changed": false
+              },
+              "entries": [
+                {
+                  "schema_category": "APP",
+                  "kind_category": "CHECK",
+                  "source_definition_sha256": "7c0d72ecafb4ead98076419e9b1b47bbc06885137f3388b76409f0f3a156d72b",
+                  "restored_definition_sha256": "48ba42e6e666c6b5035a70176d12d0163a6a51ac1e2d080f1fb56c51f69ffc12",
+                  "flags": {
+                    "temporal_cast_present": false,
+                    "temporal_literal_text_changed": false,
+                    "string_literal_text_changed": false,
+                    "numeric_literal_text_changed": false,
+                    "whitespace_only": false,
+                    "case_only_outside_literals": false,
+                    "parenthesis_tokens_only": true,
+                    "casts_changed": false,
+                    "unchanged_after_literals_redacted": false
+                  }
+                }
+              ],
+              "exact_comparison_rejected": true,
+              "semantic_equivalence_proven": false
+            },
+            "exact_catalog_comparison_unchanged": true,
+            "source_global_or_database_settings_changed": false,
+            "provider_archive_process_settings_changed": false,
+            "source_database_mutated": false,
+            "semantic_differences_ignored": false
+          },
+          "check_ast_reconstruction": {
+            "format": "PWA_OWNED_CLONE_CHECK_AST_RECONSTRUCTION_V1",
+            "used": true,
+            "scope": "OWNED_CLONE_ONLY",
+            "known_check_count": 1,
+            "original_migration_sha256": "18cc63b457fddea3f003bceb4d31f310291692e70485e6aa013e4091a8d47d41",
+            "source_definition_sha256": "7c0d72ecafb4ead98076419e9b1b47bbc06885137f3388b76409f0f3a156d72b",
+            "restored_definition_sha256": "48ba42e6e666c6b5035a70176d12d0163a6a51ac1e2d080f1fb56c51f69ffc12",
+            "other27_catalog_families_equal_before_repair": true,
+            "other_constraint_rows_and_fields_equal_before_repair": true,
+            "captured_source_sql_executed": false,
+            "system_catalog_update_performed": false,
+            "source_database_mutated": false,
+            "known_check_comment_preserved_and_rechecked": true,
+            "drop_cascade_used": false,
+            "exact_catalog_comparison_unchanged": true,
+            "semantic_differences_ignored": false
+          },
+          "role_passwords_restored": false,
+          "provider_root_keys_restored": false,
+          "provider_services_verified": false,
+          "full_provider_restore_verified": false,
+          "all_object_families_verified": false,
+          "live_migration_authorized": false,
+          "v1_ready": false,
+          "production_enabled": false,
+          "owned_clone_removed": true
+        },
+        "raw_constraint_AST_exact": true,
+        "known_constraint_comment_preserved": true,
+        "actual_native_negative_guards": [
+          "numeric",
+          "regex",
+          "validated",
+          "acl",
+          "physical_data_no_upgrade"
+        ],
+        "own_negative_fixture_mutations_rolled_back": true,
+        "source_data_after_restore_unchanged": true,
+        "private_values_exported": false,
+        "hosted_backup_downloaded": false,
+        "hosted_writes": false,
+        "providers_called": false,
+        "source_owned_clone_removed": true,
+        "private_archive_files_removed": true
+      },
+      {
+        "scope": "OWNED_NETWORK_NONE_PG17_CHECK_AST_ROUNDTRIP_FEASIBILITY",
+        "passed": true,
+        "source_definition_sha256": "7c0d72ecafb4ead98076419e9b1b47bbc06885137f3388b76409f0f3a156d72b",
+        "restored_definition_sha256": "48ba42e6e666c6b5035a70176d12d0163a6a51ac1e2d080f1fb56c51f69ffc12",
+        "clone_fixed_definition_sha256": "7c0d72ecafb4ead98076419e9b1b47bbc06885137f3388b76409f0f3a156d72b",
+        "source_ast_sha256": "d80b77a26ccd8b2468d67f6fd7f7d715b6c2243744c768d1de4609468c23735e",
+        "restored_ast_sha256": "b14b43171419b4347f74f5bc1121edcd2113bb617e397eb2623d0e102efc04a7",
+        "clone_fixed_ast_sha256": "d80b77a26ccd8b2468d67f6fd7f7d715b6c2243744c768d1de4609468c23735e",
+        "raw_ast_exact_after_recreate": true,
+        "actual_pg_dump_pg_restore": true,
+        "immutable_between_expression_recreated": true,
+        "data_sha_preserved": true,
+        "source_unchanged": true,
+        "bounds_and_provider_host_regex_negatives": 4,
+        "network": "none",
+        "shared_database_mutations": false,
+        "hosted_database_mutations": false,
+        "external_provider_calls": 0,
+        "full28_catalogs_exact_after_reconstruction": true,
+        "null_comment_preserved": true,
+        "native_inherited_check_dependency_repair_refused": true,
+        "native_drop_without_cascade_dependency_error": "42P16",
+        "production_enabled": false,
+        "owned_container_removed": true
+      }
+    ]
+  },
+  "earlier_failed_attempt": {
+    "summary": {
+      "tests": 3,
+      "pass": 0,
+      "fail": 3,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "reason": "OWNED_SPORTLINK_HELPER_EXPECTED35_ACTUAL36",
+    "minimal_helper_target_corrected": true,
+    "full_native_suite_passed": false
+  },
+  "scoped_eslint": {
+    "passed": true,
+    "checked_files": 14,
+    "output_empty": true
+  },
+  "execution_log_sha256": {
+    "directed": "2575e7fe5afdabaae4b4e1e09f45b851948866d176cfbec9d02affad0c58e59d",
+    "native": "6bcc97ca1e88538eddf29a5ce44baa2681c30226c34b2c2e063f679a62ed25e5",
+    "strict28": "1b128af0cb5b8732b36b08eb9c968981b5fc8fe09846ae6797b4899d098a812b",
+    "first_native": "17ef505a94a0ec2673a59064ebe405341dd803bbe92571645abcc143e467e9a3",
+    "eslint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "eslint_extra": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "build_executed": false,
+  "ui_browser_executed_by_this_task": false,
+  "shared_database_connections": 0,
+  "hosted_database_mutations": false,
+  "external_provider_calls": 0,
+  "provider_restore_verified": false,
+  "private_values_exported": false,
+  "hardware_acceptance": false,
+  "staging_acceptance": false,
+  "full_pwa_acceptance": false,
+  "v1_ready": false,
+  "production_enabled": false
+}

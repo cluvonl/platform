@@ -1,0 +1,72 @@
+{
+  "scope": "LOCAL_OWNED_EXACT_GENERATED_SPORTLINK_SESSION_SQL_REGRESSION",
+  "observed_at": "2026-10-09T12:51:58.767089+00:00",
+  "passed": true,
+  "approved35_source_sha": "9ae1d3b0cefb0fb6f19c586b6dcfd611131366ef",
+  "native_fixture": "new network-none PG17 tmpfs owned clone",
+  "before": {
+    "exact_source_sql_sha256": "c96640e47052afe6aba4c031b98708ed96faf5b0e16f32b95427c4daf31891b8",
+    "executed_generated_session_query": true,
+    "passed": false,
+    "sqlstate": "42601",
+    "log_sha256": "a73289d87123a2115d9e0ca27c8d3f9d0ceb8e624b49e7111a2839459aa8a834"
+  },
+  "after35": {
+    "exact_source_sql_sha256": "5249c33e2194e4c88f816d7df00a5440437a3fb724080f4e4158674caefb1100",
+    "change": "remove one excess closing parenthesis from generated session SQL only",
+    "passed": true,
+    "test_source_sha256": "081128ac26b973bdcddca626388252e0e95425dd58f2af8990ce241019cc057a",
+    "log_sha256": "581384fea08295db0cca02e1e1148dfe8e30f46fc8e9785912c29d1700508fb6",
+    "native_aggregate": {
+      "scope": "LOCAL_OWNED_PG17_SPORTLINK_STAGE_SETUP",
+      "actual_migration_count": 35,
+      "network": "none",
+      "hosted_connections": 0,
+      "fresh_scope_created": true,
+      "same_key_replay_no_duplicate": true,
+      "byte_history_drift_rejected": true,
+      "slug_collision_no_adoption": true,
+      "exact_generated_session_readback_sql_executed": true,
+      "new_session_active_verified": true,
+      "wrong_identity_or_missing_session_denied": true,
+      "exact_generated_close_readback_executed": true,
+      "old_sessions_and_account_preserved": true,
+      "encrypted_save_native_audit_readback": true,
+      "permission_keys": [
+        "match.import"
+      ],
+      "annual_grant": true,
+      "existing_profile_and_foreign_grants_unchanged": true,
+      "native_operator_workspace": true,
+      "native_save_encrypted_readback": true,
+      "same_tenant_active_member_denied": true,
+      "foreign_denied": true,
+      "old_tenant_import_denied": true,
+      "expired_session_denied": true,
+      "new_active_session_revoked_grant_denied": true,
+      "revoked_grant_not_restored_by_replay": true,
+      "provider_requests": 0,
+      "real_credentials_used": false,
+      "production_enabled": false
+    }
+  },
+  "current36_local_auth": {
+    "proof": "provider-native-generated-session.json",
+    "sha256": "309ca5a26a2df76e685c5ff831fd17346bb348f85a84f88ea944d14d307c12fe",
+    "log_sha256": "37c4e3304c847176f09f307ffba14bbd3b86b6802f7e580b9a6eba4eb3557c81",
+    "exact_generated_native_session_sql_executed": true,
+    "absent_duindorp_membership_negative": true,
+    "created_fake_user_only": true,
+    "new_session_cleanup_verified": true,
+    "original_users_sessions_preserved": true
+  },
+  "limits": {
+    "current36_full_owned_setup_verified": false,
+    "hosted_setup_retry_performed": false,
+    "real_client_id_stored": false,
+    "real_provider_read_access_verified": false,
+    "failed_hosted_attempt_cleanup_readback_verified": false,
+    "email_sent": false,
+    "production_enabled": false
+  }
+}

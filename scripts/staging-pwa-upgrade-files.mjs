@@ -75,6 +75,10 @@ export const PWA_ADDITIONS=Object.freeze([
   {
     "file": "20261009118000_pwa_sportlink_connection.sql",
     "sha256": "b4cd0ed6b44fd2bac7d22bee84a3b15f5817c6122c132a42066c49f374277b87"
+  },
+  {
+    "file": "20261009119000_pwa_reserve_committee_scope.sql",
+    "sha256": "f7d9f77df7cde15bc23bb6408cab6f56a79031e0ee13198b2a9bf3d397f6801c"
   }
 ]
 .map(Object.freeze));
