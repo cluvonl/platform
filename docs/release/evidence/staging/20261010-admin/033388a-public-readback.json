@@ -1,0 +1,31 @@
+{
+  "scope": "ADMIN_STAGING_PUBLIC_READBACK",
+  "observed_at": "2026-10-10T00:23:14.945Z",
+  "source_sha": "033388a1321d6ce1b30f20d2fedb2f5df165d66a",
+  "live_status": "ok",
+  "environment": "staging",
+  "mode": "app",
+  "ready": true,
+  "readiness_scope": "authenticated_core",
+  "checks": {
+    "database": "reachable",
+    "workers": "not_required_for_core",
+    "authorization": "rls_api"
+  },
+  "login_status": 200,
+  "styles": [
+    {
+      "status": 200,
+      "content_type": "text/css; charset=UTF-8",
+      "bytes": 190955
+    },
+    {
+      "status": 200,
+      "content_type": "text/css; charset=UTF-8",
+      "bytes": 5575
+    }
+  ],
+  "private_values_exported": false,
+  "physical_device_verified": false,
+  "production_enabled": false
+}

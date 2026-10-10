@@ -1,0 +1,34 @@
+{
+  "scope": "EXACT_ADMIN_RELEASE_SAFE_AGGREGATES_ONLY",
+  "observed_at": "2026-10-10T00:05:46.503449+00:00",
+  "source_sha": "033388a1321d6ce1b30f20d2fedb2f5df165d66a",
+  "workflow_run_id": 38007477390,
+  "status": "completed",
+  "conclusion": "cancelled",
+  "url": "https://github.com/cluvonl/platform/actions/runs/38007477390",
+  "downloaded_safe_aggregates": [],
+  "encrypted_custody_metadata_only": [],
+  "production_enabled": false,
+  "jobs": [
+    {
+      "name": "build",
+      "status": "completed",
+      "conclusion": "cancelled"
+    },
+    {
+      "name": "database-upgrade",
+      "status": "completed",
+      "conclusion": "cancelled"
+    },
+    {
+      "name": "deploy",
+      "status": "completed",
+      "conclusion": "cancelled"
+    },
+    {
+      "name": "pwa-native-qa",
+      "status": "completed",
+      "conclusion": "cancelled"
+    }
+  ]
+}

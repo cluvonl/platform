@@ -138,6 +138,13 @@ try{
  // No reload on the supported device: native authority polling closes its children.
  await supportPage.waitForFunction(()=>!document.querySelector('.cluvo-admin'),{},{timeout:25000});assert.equal(sql("select count(*)from app.platform_support_requests where employee_auth_user_id='55555555-5555-4555-8555-555555555555'and state='revoked';"),'1');mark('Mounted support context closes after native revocation without reload');await supportPage.close();
  await visit(platform.page,'/platform/overview');await platform.page.waitForTimeout(16000);assert.ok(await platform.page.locator('.cluvo-admin').count()>0);mark('Authorized platform context remains stable after native authority recheck');
+ // Every administrative list/tab is checked at each viewport. Cockpit labels
+ // and unknown report values need the same width checks as form screens.
+ for(const width of [320,390,768,1440])for(const [page,paths]of [[admin.page,clubRoutes.map(route=>'/c/club-a/beheer/'+route)],[platform.page,['overview','tenants','staff','defaults','integrations','support','audit'].map(route=>'/platform/'+route)]])for(const path of paths){
+  await page.setViewportSize({width,height:1000});await visit(page,path);await page.evaluate(()=>document.fonts.ready);
+  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`Responsive overflow at ${width}: ${path}`);
+  mark('Administrative route fits viewport',{path,width});
+ }
  for(const width of [320,390,768,1440])for(const [page,path]of [[admin.page,'/c/club-a/beheer/planning'],[platform.page,'/platform/tenants']]){
   await page.setViewportSize({width,height:1000});await visit(page,path);await page.evaluate(()=>document.fonts.ready);
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No page overflow');

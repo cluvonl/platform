@@ -1,0 +1,24 @@
+{
+  "scope": "EXACT_ADMIN_RELEASE_SAFE_AGGREGATES_ONLY",
+  "observed_at": "2026-10-10T00:05:45.233913+00:00",
+  "source_sha": "033388a1321d6ce1b30f20d2fedb2f5df165d66a",
+  "workflow_run_id": 38006898806,
+  "status": "completed",
+  "conclusion": "success",
+  "url": "https://github.com/cluvonl/platform/actions/runs/38006898806",
+  "downloaded_safe_aggregates": [],
+  "encrypted_custody_metadata_only": [],
+  "production_enabled": false,
+  "jobs": [
+    {
+      "name": "verify",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "database",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ]
+}

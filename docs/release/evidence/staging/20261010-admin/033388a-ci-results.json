@@ -1,0 +1,32 @@
+{
+  "scope": "ADMIN_MAIN_CI_RESULTS",
+  "source_sha": "033388a1321d6ce1b30f20d2fedb2f5df165d66a",
+  "workflow_run_id": 38006898806,
+  "sql_summaries": [
+    "Files=55, Tests=2060, 31 wallclock secs ( 0.24 usr  0.08 sys +  0.36 cusr  0.30 csys =  0.98 CPU)"
+  ],
+  "js_test_totals": [
+    "\u2139 tests 845",
+    "\u2139 pass 803",
+    "\u2139 fail 0",
+    "\u2139 skipped 42",
+    "\u2139 tests 5",
+    "\u2139 pass 5",
+    "\u2139 fail 0",
+    "\u2139 skipped 0",
+    "\u2139 tests 5",
+    "\u2139 pass 5",
+    "\u2139 fail 0",
+    "\u2139 skipped 0"
+  ],
+  "database_lint_pass": true,
+  "native_archive_regression": {
+    "scope": "OWNED_PG17_SELECTIVE_ARCHIVE_PIPE",
+    "archive_bytes": 19201604,
+    "early_input_closes": 3,
+    "restore_sections": 3,
+    "full_data_digest_matches": true,
+    "network": "none",
+    "source_credentials_used": false
+  }
+}

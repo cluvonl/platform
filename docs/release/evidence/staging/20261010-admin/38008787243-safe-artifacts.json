@@ -1,0 +1,27 @@
+{
+  "scope": "EXACT_ADMIN_RELEASE_SAFE_AGGREGATES_ONLY",
+  "observed_at": "2026-10-10T00:25:56.324279+00:00",
+  "source_sha": "033388a1321d6ce1b30f20d2fedb2f5df165d66a",
+  "workflow_run_id": 38008787243,
+  "status": "completed",
+  "conclusion": "failure",
+  "url": "https://github.com/cluvonl/platform/actions/runs/38008787243",
+  "downloaded_safe_aggregates": [
+    {
+      "artifact_id": 11652751320,
+      "name": "cluvo-staging-pwa-browser-readback-033388a1321d6ce1b30f20d2fedb2f5df165d66a-38008787243-1",
+      "bytes": 1453,
+      "path": "38008787243-browser.json",
+      "sha256": "9e25af78462fc5430d0ae25cd5da5df8f9d2689fd4c1b7b5598db6140b2def01"
+    }
+  ],
+  "encrypted_custody_metadata_only": [],
+  "production_enabled": false,
+  "jobs": [
+    {
+      "name": "browser_readback",
+      "status": "completed",
+      "conclusion": "failure"
+    }
+  ]
+}

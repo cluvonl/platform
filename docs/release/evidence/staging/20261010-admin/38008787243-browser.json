@@ -1,0 +1,271 @@
+{
+  "scope": "STAGING_PWA_ACTIVE_IMAGE_BROWSER_READBACK_V1",
+  "observed_at": "2026-10-10T00:23:49.162Z",
+  "passed": false,
+  "app_fixture_mutations_performed": true,
+  "otp_flow_verified": false,
+  "coordinator_positive_flows_verified": false,
+  "physical_device_verified": false,
+  "email_sent": false,
+  "personal_account_changed": false,
+  "private_values_exported": false,
+  "v1_ready": false,
+  "production_enabled": false,
+  "source_sha": "033388a1321d6ce1b30f20d2fedb2f5df165d66a",
+  "workflow_run_id": "38008787243",
+  "fixture": {
+    "scope": "STAGING_NATIVE_QA_FIXTURE_V1",
+    "status": "created",
+    "persons": 3,
+    "tenants": 2,
+    "v1_ready": false,
+    "mail_sent": false,
+    "setup_audits": 1,
+    "member_grants": 3,
+    "auth_mutations": false,
+    "setup_commands": 1,
+    "base_households": 2,
+    "intake_profiles": 3,
+    "production_enabled": false,
+    "qa_fixture_version": 1,
+    "foreign_obligations": 1,
+    "native_session_proven": false,
+    "initial_answers_created": 0
+  },
+  "browser": {
+    "engine": "Chromium",
+    "version": "153.0.8010.12",
+    "physical": false,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    }
+  },
+  "routes": [
+    {
+      "screen": "home",
+      "status": 200,
+      "native_authorized": true,
+      "private_cache": true,
+      "privacy_denials": true,
+      "overflow": false
+    },
+    {
+      "screen": "tasks",
+      "status": 200,
+      "native_authorized": true,
+      "private_cache": true,
+      "privacy_denials": true,
+      "overflow": false
+    },
+    {
+      "screen": "agenda",
+      "status": 200,
+      "native_authorized": true,
+      "private_cache": true,
+      "privacy_denials": true,
+      "overflow": false
+    },
+    {
+      "screen": "teams",
+      "status": 200,
+      "native_authorized": true,
+      "private_cache": true,
+      "privacy_denials": true,
+      "overflow": false
+    },
+    {
+      "screen": "more",
+      "status": 200,
+      "native_authorized": true,
+      "private_cache": true,
+      "privacy_denials": true,
+      "overflow": false
+    },
+    {
+      "screen": "actions",
+      "status": 200,
+      "native_authorized": true,
+      "private_cache": true,
+      "privacy_denials": true,
+      "overflow": false
+    },
+    {
+      "screen": "notifications",
+      "status": 200,
+      "native_authorized": true,
+      "private_cache": true,
+      "privacy_denials": true,
+      "overflow": false
+    },
+    {
+      "screen": "manage",
+      "status": 200,
+      "native_authorized": true,
+      "private_cache": true,
+      "privacy_denials": true,
+      "overflow": false
+    },
+    {
+      "screen": "profile",
+      "status": 200,
+      "native_authorized": true,
+      "private_cache": true,
+      "privacy_denials": true,
+      "overflow": false
+    },
+    {
+      "screen": "household",
+      "status": 200,
+      "native_authorized": true,
+      "private_cache": true,
+      "privacy_denials": true,
+      "overflow": false
+    },
+    {
+      "screen": "policies",
+      "status": 200,
+      "native_authorized": true,
+      "private_cache": true,
+      "privacy_denials": true,
+      "overflow": false
+    },
+    {
+      "screen": "courses",
+      "status": 200,
+      "native_authorized": true,
+      "private_cache": true,
+      "privacy_denials": true,
+      "overflow": false
+    },
+    {
+      "screen": "opportunities",
+      "status": 200,
+      "native_authorized": true,
+      "private_cache": true,
+      "privacy_denials": true,
+      "overflow": false
+    },
+    {
+      "screen": "messages",
+      "status": 200,
+      "native_authorized": true,
+      "private_cache": true,
+      "privacy_denials": true,
+      "overflow": false
+    },
+    {
+      "screen": "settings",
+      "status": 200,
+      "native_authorized": true,
+      "private_cache": true,
+      "privacy_denials": true,
+      "overflow": false
+    },
+    {
+      "screen": "help",
+      "status": 200,
+      "native_authorized": true,
+      "private_cache": true,
+      "privacy_denials": true,
+      "overflow": false
+    },
+    {
+      "screen": "install",
+      "status": 200,
+      "native_authorized": true,
+      "private_cache": true,
+      "privacy_denials": true,
+      "overflow": false
+    },
+    {
+      "screen": "reports",
+      "status": 200,
+      "native_authorized": true,
+      "private_cache": true,
+      "privacy_denials": true,
+      "overflow": false
+    },
+    {
+      "screen": "finance",
+      "status": 200,
+      "native_authorized": true,
+      "private_cache": true,
+      "privacy_denials": true,
+      "overflow": false
+    },
+    {
+      "screen": "committees",
+      "status": 200,
+      "native_authorized": true,
+      "private_cache": true,
+      "privacy_denials": true,
+      "overflow": false
+    }
+  ],
+  "own_profile_positive": true,
+  "positive_matrix_page_errors": 0,
+  "foreign_club": {
+    "denied": true,
+    "private_data_hidden": true
+  },
+  "foreign_household": {
+    "denied": true,
+    "private_data_hidden": true
+  },
+  "foreign_season": {
+    "denied": true,
+    "private_data_hidden": true
+  },
+  "minor_team_positive_private_contacts_hidden": true,
+  "administration_fixture": {
+    "scope": "STAGING_ADMIN_QA_ACCESS_V1",
+    "auth_mutations": false,
+    "expiry_minutes": 30,
+    "owned_club_grants": 1,
+    "production_enabled": false,
+    "explicit_permissions": 15,
+    "private_dossier_rights": false,
+    "platform_grants_created": 0
+  },
+  "administration_routes": [],
+  "failure": {
+    "phase": "admin_routes",
+    "screen": null,
+    "operation": "route_status",
+    "error_class": "BrowserQaError",
+    "response_status": 200
+  },
+  "teardown": {
+    "scope": "STAGING_NATIVE_QA_TEARDOWN_V1",
+    "status": "archived",
+    "v1_ready": false,
+    "mail_sent": false,
+    "auth_mutations": false,
+    "teardown_audits": 1,
+    "active_qa_grants": 0,
+    "retained_bookings": 0,
+    "production_enabled": false,
+    "qa_scopes_archived": 2,
+    "histories_preserved": true,
+    "active_qa_memberships": 0,
+    "native_session_proven": false,
+    "retained_ledger_entries": 0,
+    "retained_answer_revisions": 3
+  },
+  "provider": {
+    "scope": "STAGING_NATIVE_QA_PROVIDER_V1",
+    "created_users": 2,
+    "password_sign_ins": 2,
+    "provider_verified_users": 2,
+    "globally_revoked_sessions": 2,
+    "soft_deleted_users": 2,
+    "mail_sent": 0,
+    "native_session_proven": false,
+    "cleanup_complete": true,
+    "v1_ready": false,
+    "production_enabled": false
+  },
+  "returned_session_closed": true,
+  "error": "STAGING_ADMIN_BROWSER_OVERFLOW"
+}

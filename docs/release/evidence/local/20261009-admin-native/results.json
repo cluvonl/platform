@@ -358,6 +358,942 @@
       "status": "PASS"
     },
     {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/cockpit",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/organization",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/organization?part=locations",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/organization?part=settings",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/people",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/people?part=households",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/access",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/committees",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/teams",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/planning",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/planning?part=catalogue",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/planning?part=calendar",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/execution",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/requests",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/policies",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/courses",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/courses?part=qualifications",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/communication",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/communication?part=templates",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports?part=winter",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports?part=annual",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports?part=report_teams",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports?part=report_occupancy",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports?part=fund",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/requests?part=vacancies",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/requests?part=volunteer_roles",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/finance",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/finance?part=fund",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/seasons",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/support",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/support?part=audit",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/overview",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/tenants",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/staff",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/defaults",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/integrations",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/support",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/audit",
+      "width": 320
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/cockpit",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/organization",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/organization?part=locations",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/organization?part=settings",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/people",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/people?part=households",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/access",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/committees",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/teams",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/planning",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/planning?part=catalogue",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/planning?part=calendar",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/execution",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/requests",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/policies",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/courses",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/courses?part=qualifications",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/communication",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/communication?part=templates",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports?part=winter",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports?part=annual",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports?part=report_teams",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports?part=report_occupancy",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports?part=fund",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/requests?part=vacancies",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/requests?part=volunteer_roles",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/finance",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/finance?part=fund",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/seasons",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/support",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/support?part=audit",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/overview",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/tenants",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/staff",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/defaults",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/integrations",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/support",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/audit",
+      "width": 390
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/cockpit",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/organization",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/organization?part=locations",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/organization?part=settings",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/people",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/people?part=households",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/access",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/committees",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/teams",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/planning",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/planning?part=catalogue",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/planning?part=calendar",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/execution",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/requests",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/policies",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/courses",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/courses?part=qualifications",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/communication",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/communication?part=templates",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports?part=winter",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports?part=annual",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports?part=report_teams",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports?part=report_occupancy",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports?part=fund",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/requests?part=vacancies",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/requests?part=volunteer_roles",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/finance",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/finance?part=fund",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/seasons",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/support",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/support?part=audit",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/overview",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/tenants",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/staff",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/defaults",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/integrations",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/support",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/audit",
+      "width": 768
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/cockpit",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/organization",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/organization?part=locations",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/organization?part=settings",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/people",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/people?part=households",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/access",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/committees",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/teams",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/planning",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/planning?part=catalogue",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/planning?part=calendar",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/execution",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/requests",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/policies",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/courses",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/courses?part=qualifications",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/communication",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/communication?part=templates",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports?part=winter",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports?part=annual",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports?part=report_teams",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports?part=report_occupancy",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/reports?part=fund",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/requests?part=vacancies",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/requests?part=volunteer_roles",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/finance",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/finance?part=fund",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/seasons",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/support",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/support?part=audit",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/overview",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/tenants",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/staff",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/defaults",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/integrations",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/support",
+      "width": 1440
+    },
+    {
+      "name": "Administrative route fits viewport",
+      "status": "PASS",
+      "path": "/platform/audit",
+      "width": 1440
+    },
+    {
       "name": "Responsive native page",
       "status": "PASS",
       "path": "/c/club-a/beheer/planning",

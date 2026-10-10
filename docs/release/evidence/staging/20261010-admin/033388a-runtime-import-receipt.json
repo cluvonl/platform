@@ -1,0 +1,10 @@
+{
+  "workflow_run_id": 38007506330,
+  "receipt": {
+    "status": "configured",
+    "config_version": 5,
+    "source_sha": "033388a1321d6ce1b30f20d2fedb2f5df165d66a",
+    "production_enabled": false,
+    "database_mutations": false
+  }
+}

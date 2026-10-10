@@ -25,18 +25,18 @@
     "navigation": "Extend existing club management routes and add a separate /platform environment; keep PWA club choice at the top of Meer"
   },
   "acceptance": {
-    "state": "STAGING_DATABASE_UPGRADED_ACTIVATION_PENDING",
+    "state": "STAGING_DEPLOYED_RESPONSIVE_CORRECTION_PENDING",
     "empty_database": "PASS: actual PostgreSQL17 fresh16 application migrations and all 55 SQL suites",
     "upgrade_from36": "PASS: pinned actual historical renderer, whole original history/receipts preserved, 24 tamper negatives, zero-SQL redeploy",
     "upgrade_from31_and35": "PASS: approved exact history and source receipts preserved",
     "negative_rls_and_delegation": "PASS: 448 administration assertions plus existing native privacy suites",
     "last_place_cluster_race": "PASS: six actual independent-connection races with observed Lock:advisory",
     "cross_device_help_and_saved_actions": "PASS: actual independent local Supabase OTP sessions",
-    "responsive_browser": "PASS: 77 real browser checks; 320/390/768/1440 pixels",
+    "responsive_browser": "PASS: 233 actual native browser checks, including all 39 administrative routes/tabs at 320/390/768/1440 pixels",
     "javascript": "PASS: 803 executed, 42 explicitly skipped, 0 failures",
     "typecheck_build_lint": "PASS; existing unrelated local PWA evidence has 21 lint warnings",
     "database_lint": "PASS: 0 errors and 0 warnings",
-    "staging_readback": "pending corrected exact green main promotion and app activation",
+    "staging_readback": "20 PWA routes and privacy passed on active 033388a; admin cockpit overflow found and corrected locally; final exact green promotion/readback pending",
     "first_personal_platform_mandate": "awaiting explicit named account choice; no real user grant created",
     "staging_database_upgrade": {
       "passed": true,
@@ -46,7 +46,15 @@
       "current_migrations": 41,
       "added_migrations": 5
     },
-    "archive_input_regression": "PASS: actual owned PG17 19 MB selective restore, three early input closes, full restored data digest matches; failures/timeout/output limits retained"
+    "archive_input_regression": "PASS: actual owned PG17 19 MB selective restore, three early input closes, full restored data digest matches; failures/timeout/output limits retained",
+    "staging_app_deployment": {
+      "passed": true,
+      "source_sha": "033388a1321d6ce1b30f20d2fedb2f5df165d66a",
+      "workflow_run_id": 38007561852,
+      "native_provider_qa_passed": true,
+      "current_migrations": 41,
+      "additional_migrations_applied": 0
+    }
   },
   "implementation": {
     "club": "Canonical organization, named access invitations, committee contacts/members, planning, execution, request followup, policy, training, communication, canonical reports and finance, seasons, support and immutable audit",
