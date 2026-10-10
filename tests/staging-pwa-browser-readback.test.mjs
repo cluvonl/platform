@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {dirname,isAbsolute,join} from 'node:path';
 import {pathToFileURL} from 'node:url';
-import {assertPrivateBrowserBody,BROWSER_SCREENS,browserFailureDiagnostic,browserProcessEnvironment,browserReadbackContext,
+import {adminRouteReadback,assertPrivateBrowserBody,BROWSER_SCREENS,browserFailureDiagnostic,browserProcessEnvironment,browserReadbackContext,
  browserRejectedContext,browserRouteReadback,stagingBrowserReadback} from '../scripts/staging-pwa-browser-readback.mjs';
 
 const sha='a'.repeat(40);
@@ -60,6 +60,39 @@ const shell=`<main><h1>Gezinsagenda</h1></main><nav aria-label="Hoofdnavigatie">
  .map(screen=>`<a href="${screen}"${screen==='agenda'?' aria-current="page"':''}>${screen}</a>`).join('')}</nav>`;
 const documentHtml=(content,script='')=>`<!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>${content}${script}</body></html>`;
 const browserOptions={skip:!browserToolchain,timeout:60000};
+
+test('actual Chromium checks the administrative title alongside embedded native headings and retains every gate',browserOptions,async()=>{
+ await fixtureBrowser(async browser=>{
+  const adminPath='/c/local-synthetic-fixture/beheer/committees';
+  const adminShell='<div class="cluvo-admin"><div class="page-title"><h1 style="font-family:Inter,sans-serif">Commissies</h1></div><div class="admin-native"><h1>Commissiewerkruimte</h1></div></div>';
+  for(const item of [
+   {body:adminShell,pass:true},
+   {body:adminShell+'<input value="foreign-private-canary">',code:'STAGING_BROWSER_PRIVATE_DATA_LEAK',operation:'ssr_privacy'},
+   {body:adminShell,cache:'public, max-age=60',code:'STAGING_ADMIN_BROWSER_PRIVATE_CACHE_FAILED',operation:'private_cache'},
+   {body:adminShell+'<div style="width:900px">Overflow fixture</div>',code:'STAGING_ADMIN_BROWSER_OVERFLOW',operation:'overflow'},
+   {body:adminShell.replace('Inter,sans-serif','serif'),code:'STAGING_ADMIN_BROWSER_STYLE_FAILED',operation:'overflow'},
+   {body:'<div class="cluvo-admin"><div class="admin-native"><h1>Commissiewerkruimte</h1></div></div>',timeout:true,operation:'app_shell'},
+  ]){
+   const context=await browser.newContext({viewport:{width:390,height:844},serviceWorkers:'block'});
+   try{
+    await context.route('**/*',route=>new URL(route.request().url()).origin===origin
+     ?route.fulfill({status:200,headers:{'cache-control':item.cache??'private, no-store'},contentType:'text/html',body:documentHtml(item.body)})
+     :route.abort());
+    const page=await context.newPage();let position={phase:'admin_routes'};
+    const result=await adminRouteReadback(page,adminPath,['foreign-private-canary'],value=>{position={phase:'admin_routes',...value};})
+     .then(value=>value,error=>error);
+    if(item.pass){
+     assert.deepEqual(result,{section:'committees',status:200,native_authorized:true,private_cache:true,overflow:false});
+     assert.equal(await page.locator('.cluvo-admin h1').count(),2);
+    }else{
+     if(item.timeout)assert.equal(result.name,'TimeoutError');else assert.equal(result.code,item.code);
+     assert.equal(position.operation,item.operation);
+     assert.equal(JSON.stringify(browserFailureDiagnostic(result,position)).includes('foreign-private-canary'),false);
+    }
+   }finally{await context.close();}
+  }
+ });
+});
 
 test('actual Chromium reads a delayed shell while an unrelated request keeps networkidle unavailable',browserOptions,async()=>{
  await fixtureBrowser(async browser=>{

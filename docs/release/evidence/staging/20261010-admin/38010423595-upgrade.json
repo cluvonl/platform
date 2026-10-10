@@ -1,0 +1,686 @@
+{
+  "environment": "staging",
+  "project_ref": "fbozlbgmktkgcdfqdaaz",
+  "observed_at": "2026-10-10T00:54:51.466Z",
+  "passed": true,
+  "database_mutations_performed": false,
+  "applied_migrations": 0,
+  "private_values_exported": false,
+  "app_activation_performed": false,
+  "email_sent": false,
+  "authenticated_native_login_verified": false,
+  "provider_services_verified": false,
+  "full_provider_restore_verified": false,
+  "o08_restore_accepted": false,
+  "v1_ready": false,
+  "production_enabled": false,
+  "execution_mode": "APPLY",
+  "source_sha": "bfcfbc210d38748698f04a6602234a1f7aceb998",
+  "workflow_run_id": "38010423595",
+  "migration_manifest_sha256": "50b9d494b967681b5a88b8e1e15480ddc0966394a1a51b2e916dedc25efb6173",
+  "pg17_toolchain": {
+    "image": "public.ecr.aws/supabase/postgres@sha256:0450166354dc9c1d25f0322ac8b580774d4fb0184d2b087f6e4fe9499c66cf53",
+    "tools": {
+      "pg_dump": "17.11",
+      "pg_dumpall": "17.11",
+      "pg_restore": "17.11"
+    },
+    "workers_removed": 3,
+    "network": "none",
+    "database_connections": 0,
+    "source_calls": 0
+  },
+  "source_deparse_context": {
+    "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+    "server_version_num": 170011,
+    "time_zone": {
+      "category": "UTC",
+      "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+    },
+    "date_style": {
+      "category": "ISO, MDY",
+      "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+    },
+    "interval_style": {
+      "category": "postgres",
+      "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+    },
+    "search_path": {
+      "category": "PG_CATALOG",
+      "sha256": "63e4aeee780860a18770fabeb89cb07e354670beb02c2c5808fa131f4e01fd4a"
+    },
+    "client_encoding": {
+      "category": "UTF8",
+      "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+    },
+    "extra_float_digits": 3,
+    "standard_conforming_strings": true,
+    "quote_all_identifiers": false,
+    "bytea_output": "hex"
+  },
+  "source_deparse_normalization": {
+    "format": "PWA_SOURCE_DEPARSE_NORMALIZATION_V1",
+    "used": true,
+    "scope": "SOURCE_READ_ONLY_CONTROL_SESSION_ONLY",
+    "phase": "capture",
+    "original_context": {
+      "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+      "server_version_num": 170011,
+      "time_zone": {
+        "category": "UTC",
+        "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+      },
+      "date_style": {
+        "category": "ISO, MDY",
+        "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+      },
+      "interval_style": {
+        "category": "postgres",
+        "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+      },
+      "search_path": {
+        "category": "PG_CATALOG",
+        "sha256": "63e4aeee780860a18770fabeb89cb07e354670beb02c2c5808fa131f4e01fd4a"
+      },
+      "client_encoding": {
+        "category": "UTF8",
+        "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+      },
+      "extra_float_digits": 0,
+      "standard_conforming_strings": true,
+      "quote_all_identifiers": false,
+      "bytea_output": "hex"
+    },
+    "effective_context": {
+      "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+      "server_version_num": 170011,
+      "time_zone": {
+        "category": "UTC",
+        "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+      },
+      "date_style": {
+        "category": "ISO, MDY",
+        "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+      },
+      "interval_style": {
+        "category": "postgres",
+        "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+      },
+      "search_path": {
+        "category": "PG_CATALOG",
+        "sha256": "63e4aeee780860a18770fabeb89cb07e354670beb02c2c5808fa131f4e01fd4a"
+      },
+      "client_encoding": {
+        "category": "UTF8",
+        "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+      },
+      "extra_float_digits": 3,
+      "standard_conforming_strings": true,
+      "quote_all_identifiers": false,
+      "bytea_output": "hex"
+    },
+    "fixed_extra_float_digits": 3,
+    "transaction_local": true,
+    "source_read_only_control_session_setting_changed": true,
+    "same_backend_verified": true,
+    "same_snapshot_verified": true,
+    "read_only": true,
+    "isolation": "repeatable read",
+    "source_global_or_database_settings_changed": false,
+    "provider_archive_process_settings_changed": false,
+    "source_database_mutated": false,
+    "row_or_catalog_values_rewritten": false
+  },
+  "initial_applied_prefix": 41,
+  "backup_custody": {
+    "uploaded": true,
+    "remote_readback": true,
+    "artifact_id": "11653635804",
+    "archive_sha256": "8b8e19e19e944bd5f140458cd7cc449ca6ba3e4d49e94a93f03d83beca416e20",
+    "retention_days": 30,
+    "key_profile": "cluvo-staging-pwa-upgrade-backup-hkdf-sha256-v1",
+    "plaintext_uploaded": false,
+    "secret_key_uploaded": false
+  },
+  "restore": {
+    "passed": true,
+    "scope": "PWA_STAGING_LOGICAL_RESTORE_AND_UPGRADE",
+    "logical_database_restored": true,
+    "native_archive_input_closes": 1,
+    "physical_relations_verified": 233,
+    "physical_rows_verified": 3555,
+    "sequences_verified": 2,
+    "baseline_catalog_families_verified": 28,
+    "native_archive_sections_restored": 3,
+    "native_restore_passes": 4,
+    "native_toc_entries_preserved": 4389,
+    "extensions_precreated_with_source_owner": 5,
+    "extension_owner_reassignments": 5,
+    "extension_installers_removed": true,
+    "effective_acl_objects_replayed": 261,
+    "temporary_schema_usage_grants": 65,
+    "temporary_reference_grants": 1170,
+    "temporary_restore_privileges_removed": true,
+    "extension_privilege_warnings": 0,
+    "post_data_owner_mode": "session_authorization",
+    "bootstrap_create_exceptions": 1,
+    "source_migration_prefix": 41,
+    "final_migration_prefix": 41,
+    "non_superuser_upgrade_migrations": 0,
+    "app_tables": 191,
+    "native_policies": 191,
+    "network_isolated": true,
+    "background_jobs_disabled": true,
+    "source_database_mutated": false,
+    "deparse_alignment": {
+      "format": "PWA_RESTORE_DEPARSE_ALIGNMENT_V2",
+      "used": true,
+      "scope": "OWNED_CLONE_CONTROL_SESSIONS_ONLY",
+      "source_context": {
+        "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+        "server_version_num": 170011,
+        "time_zone": {
+          "category": "UTC",
+          "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+        },
+        "date_style": {
+          "category": "ISO, MDY",
+          "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+        },
+        "interval_style": {
+          "category": "postgres",
+          "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+        },
+        "search_path": {
+          "category": "PG_CATALOG",
+          "sha256": "63e4aeee780860a18770fabeb89cb07e354670beb02c2c5808fa131f4e01fd4a"
+        },
+        "client_encoding": {
+          "category": "UTF8",
+          "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+        },
+        "extra_float_digits": 3,
+        "standard_conforming_strings": true,
+        "quote_all_identifiers": false,
+        "bytea_output": "hex"
+      },
+      "before_context": {
+        "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+        "server_version_num": 170011,
+        "time_zone": {
+          "category": "UTC",
+          "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+        },
+        "date_style": {
+          "category": "ISO, MDY",
+          "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+        },
+        "interval_style": {
+          "category": "postgres",
+          "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+        },
+        "search_path": {
+          "category": "EMPTY",
+          "sha256": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+        },
+        "client_encoding": {
+          "category": "UTF8",
+          "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+        },
+        "extra_float_digits": 1,
+        "standard_conforming_strings": true,
+        "quote_all_identifiers": false,
+        "bytea_output": "hex"
+      },
+      "aligned_context": {
+        "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+        "server_version_num": 170011,
+        "time_zone": {
+          "category": "UTC",
+          "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+        },
+        "date_style": {
+          "category": "ISO, MDY",
+          "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+        },
+        "interval_style": {
+          "category": "postgres",
+          "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+        },
+        "search_path": {
+          "category": "PG_CATALOG",
+          "sha256": "63e4aeee780860a18770fabeb89cb07e354670beb02c2c5808fa131f4e01fd4a"
+        },
+        "client_encoding": {
+          "category": "UTF8",
+          "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+        },
+        "extra_float_digits": 3,
+        "standard_conforming_strings": true,
+        "quote_all_identifiers": false,
+        "bytea_output": "hex"
+      },
+      "before_constraint_diagnostics": {
+        "format": "PWA_CONSTRAINT_DEFINITION_DIAGNOSTICS_V1",
+        "changed_definition_rows": 1,
+        "classified_rows": 1,
+        "omitted_rows": 0,
+        "source_deparse_context": {
+          "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+          "server_version_num": 170011,
+          "time_zone": {
+            "category": "UTC",
+            "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+          },
+          "date_style": {
+            "category": "ISO, MDY",
+            "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+          },
+          "interval_style": {
+            "category": "postgres",
+            "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+          },
+          "search_path": {
+            "category": "PG_CATALOG",
+            "sha256": "63e4aeee780860a18770fabeb89cb07e354670beb02c2c5808fa131f4e01fd4a"
+          },
+          "client_encoding": {
+            "category": "UTF8",
+            "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+          },
+          "extra_float_digits": 3,
+          "standard_conforming_strings": true,
+          "quote_all_identifiers": false,
+          "bytea_output": "hex"
+        },
+        "restored_deparse_context": {
+          "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+          "server_version_num": 170011,
+          "time_zone": {
+            "category": "UTC",
+            "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+          },
+          "date_style": {
+            "category": "ISO, MDY",
+            "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+          },
+          "interval_style": {
+            "category": "postgres",
+            "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+          },
+          "search_path": {
+            "category": "EMPTY",
+            "sha256": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+          },
+          "client_encoding": {
+            "category": "UTF8",
+            "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+          },
+          "extra_float_digits": 1,
+          "standard_conforming_strings": true,
+          "quote_all_identifiers": false,
+          "bytea_output": "hex"
+        },
+        "guc_difference_flags": {
+          "server_version_changed": false,
+          "time_zone_changed": false,
+          "date_style_changed": false,
+          "interval_style_changed": false,
+          "search_path_changed": true,
+          "extra_float_digits_changed": true,
+          "standard_conforming_strings_changed": false,
+          "quote_all_identifiers_changed": false,
+          "bytea_output_changed": false,
+          "client_encoding_changed": false
+        },
+        "entries": [
+          {
+            "schema_category": "APP",
+            "kind_category": "CHECK",
+            "source_definition_sha256": "7c0d72ecafb4ead98076419e9b1b47bbc06885137f3388b76409f0f3a156d72b",
+            "restored_definition_sha256": "48ba42e6e666c6b5035a70176d12d0163a6a51ac1e2d080f1fb56c51f69ffc12",
+            "flags": {
+              "temporal_cast_present": false,
+              "temporal_literal_text_changed": false,
+              "string_literal_text_changed": false,
+              "numeric_literal_text_changed": false,
+              "whitespace_only": false,
+              "case_only_outside_literals": false,
+              "parenthesis_tokens_only": true,
+              "casts_changed": false,
+              "unchanged_after_literals_redacted": false
+            }
+          }
+        ],
+        "exact_comparison_rejected": true,
+        "semantic_equivalence_proven": false
+      },
+      "exact_catalog_comparison_unchanged": true,
+      "source_global_or_database_settings_changed": false,
+      "provider_archive_process_settings_changed": false,
+      "source_database_mutated": false,
+      "semantic_differences_ignored": false
+    },
+    "check_ast_reconstruction": {
+      "format": "PWA_OWNED_CLONE_CHECK_AST_RECONSTRUCTION_V1",
+      "used": true,
+      "scope": "OWNED_CLONE_ONLY",
+      "known_check_count": 1,
+      "original_migration_sha256": "18cc63b457fddea3f003bceb4d31f310291692e70485e6aa013e4091a8d47d41",
+      "source_definition_sha256": "7c0d72ecafb4ead98076419e9b1b47bbc06885137f3388b76409f0f3a156d72b",
+      "restored_definition_sha256": "48ba42e6e666c6b5035a70176d12d0163a6a51ac1e2d080f1fb56c51f69ffc12",
+      "other27_catalog_families_equal_before_repair": true,
+      "other_constraint_rows_and_fields_equal_before_repair": true,
+      "captured_source_sql_executed": false,
+      "system_catalog_update_performed": false,
+      "source_database_mutated": false,
+      "known_check_comment_preserved_and_rechecked": true,
+      "drop_cascade_used": false,
+      "exact_catalog_comparison_unchanged": true,
+      "semantic_differences_ignored": false
+    },
+    "role_passwords_restored": false,
+    "provider_root_keys_restored": false,
+    "provider_services_verified": false,
+    "full_provider_restore_verified": false,
+    "all_object_families_verified": false,
+    "live_migration_authorized": false,
+    "v1_ready": false,
+    "production_enabled": false,
+    "owned_clone_removed": true
+  },
+  "source_fresh_deparse_normalization": {
+    "format": "PWA_SOURCE_DEPARSE_NORMALIZATION_V1",
+    "used": true,
+    "scope": "SOURCE_READ_ONLY_CONTROL_SESSION_ONLY",
+    "phase": "fresh_read",
+    "original_context": {
+      "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+      "server_version_num": 170011,
+      "time_zone": {
+        "category": "UTC",
+        "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+      },
+      "date_style": {
+        "category": "ISO, MDY",
+        "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+      },
+      "interval_style": {
+        "category": "postgres",
+        "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+      },
+      "search_path": {
+        "category": "PG_CATALOG",
+        "sha256": "63e4aeee780860a18770fabeb89cb07e354670beb02c2c5808fa131f4e01fd4a"
+      },
+      "client_encoding": {
+        "category": "UTF8",
+        "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+      },
+      "extra_float_digits": 0,
+      "standard_conforming_strings": true,
+      "quote_all_identifiers": false,
+      "bytea_output": "hex"
+    },
+    "effective_context": {
+      "format": "PWA_RESTORE_DEPARSE_CONTEXT_V1",
+      "server_version_num": 170011,
+      "time_zone": {
+        "category": "UTC",
+        "sha256": "7e5f76c94a635c217e282f79db4fc7ee4bfd9b64044166714067602cc4be620c"
+      },
+      "date_style": {
+        "category": "ISO, MDY",
+        "sha256": "76e17b6f4496048d98ca33556a356cf9fda6083b10c5bc80166c4fd7d8161bb7"
+      },
+      "interval_style": {
+        "category": "postgres",
+        "sha256": "a942b37ccfaf5a813b1432caa209a43b9d144e47ad0de1549c289c253e556cd5"
+      },
+      "search_path": {
+        "category": "PG_CATALOG",
+        "sha256": "63e4aeee780860a18770fabeb89cb07e354670beb02c2c5808fa131f4e01fd4a"
+      },
+      "client_encoding": {
+        "category": "UTF8",
+        "sha256": "e7d919aedae5006dfd4db8bf281ac4a3f84525aebf8e725c56b399d1cb9ec1bc"
+      },
+      "extra_float_digits": 3,
+      "standard_conforming_strings": true,
+      "quote_all_identifiers": false,
+      "bytea_output": "hex"
+    },
+    "fixed_extra_float_digits": 3,
+    "transaction_local": true,
+    "source_read_only_control_session_setting_changed": true,
+    "same_backend_verified": true,
+    "same_snapshot_verified": true,
+    "read_only": true,
+    "isolation": "repeatable read",
+    "source_global_or_database_settings_changed": false,
+    "provider_archive_process_settings_changed": false,
+    "source_database_mutated": false,
+    "row_or_catalog_values_rewritten": false
+  },
+  "source_freshness": {
+    "same_backend": true,
+    "full_metadata_unchanged": true,
+    "exclusive_lock_retained": true
+  },
+  "final_applied_prefix": 41,
+  "native_guards": {
+    "app_tables": 191,
+    "forced_rls": 191,
+    "native_policies": 191,
+    "api_only_exposed": true,
+    "command_owner_restricted": true
+  },
+  "migration_manifest": [
+    {
+      "version": "20261002163042",
+      "file": "20261002163042_cluvo_wp1_wp2_core.sql",
+      "sha256": "7e4efdaa139d2fe3120c43c0e7fcfe966438f154c08358734b6c555968acd32e"
+    },
+    {
+      "version": "20261002165306",
+      "file": "20261002165306_wp3_wp5_obligations_execution.sql",
+      "sha256": "1dd88883e99acd63cbea6f33c47b1c39008a6832904f1da6150374fbe1474eb7"
+    },
+    {
+      "version": "20261002165327",
+      "file": "20261002165327_wp6_wp8_collaboration_communication_policy.sql",
+      "sha256": "9707da512d46b23d8472bf222981242f8020ac3612709f536136876674b50702"
+    },
+    {
+      "version": "20261002170949",
+      "file": "20261002170949_wp1_onboarding_storage.sql",
+      "sha256": "6de61a4843cd9a3d77fccb6c0be0591c178b516518e4bb7ce9c2ae1cec3d4c03"
+    },
+    {
+      "version": "20261002171135",
+      "file": "20261002171135_wp9_wp11_finance_people_seasons.sql",
+      "sha256": "bdff3e58102376de4195840cc7cd3a02a59c7648cc19403c306ae72e96605719"
+    },
+    {
+      "version": "20261002183000",
+      "file": "20261002183000_vertical_read_models.sql",
+      "sha256": "bf50215a774296882cb5aa8067b43bb2c853bbb991968859b8ceece58d197eaf"
+    },
+    {
+      "version": "20261002184500",
+      "file": "20261002184500_assisted_member_actions.sql",
+      "sha256": "c7d74823e3be555b7115b1eab4e4180cdb48c7668680fa3a0a6b0e8420629bab"
+    },
+    {
+      "version": "20261006180000",
+      "file": "20261006180000_account_help_preferences.sql",
+      "sha256": "f6b7d1db5f420b5e5daeaf142326289dd1fb6918123c001386956f512f7755ff"
+    },
+    {
+      "version": "20261006193000",
+      "file": "20261006193000_complete_personal_intake.sql",
+      "sha256": "488d4722f830a0a2a2d35ff89a483bcd6f5e40ed3aa255d367d4346aaad22ad9"
+    },
+    {
+      "version": "20261006210000",
+      "file": "20261006210000_household_dossier_projection.sql",
+      "sha256": "0f1b29d8bbde85300f704270bc5ead062344bffe01f5688b67daa085099450a2"
+    },
+    {
+      "version": "20261006223000",
+      "file": "20261006223000_versioned_household_invitation_commands.sql",
+      "sha256": "99b456fda630c15eca25f197d971edcf8134a5181deb114c398dde852b6b62fe"
+    },
+    {
+      "version": "20261006230000",
+      "file": "20261006230000_household_invitation_cancellation.sql",
+      "sha256": "6d3738db24d2a02576fa6fa4a9273390d04872565edd66d662024df230425a1c"
+    },
+    {
+      "version": "20261006233000",
+      "file": "20261006233000_contract_household_invitation_bootstrap.sql",
+      "sha256": "1731ab3cec4921ad31e6f30a90ee21d8dc6101fa205285a51c5b65bc52e2c3f2"
+    },
+    {
+      "version": "20261006234500",
+      "file": "20261006234500_personal_intake_reconfirmation.sql",
+      "sha256": "e4f95b65789485e86131d21c0c085a83c8fc5b4195f36b4f81e24b9c6c171625"
+    },
+    {
+      "version": "20261007010000",
+      "file": "20261007010000_native_session_authority.sql",
+      "sha256": "9c165f68f413be04aa958358ec088c422dd21fea92b66e9ba84e04378817607a"
+    },
+    {
+      "version": "20261007013000",
+      "file": "20261007013000_intake_assistance_management.sql",
+      "sha256": "1512b7cbfd1fd63065fa09ad17aba0a2c71aaba1c875326f11e089175a5979c3"
+    },
+    {
+      "version": "20261009100000",
+      "file": "20261009100000_pwa_domain.sql",
+      "sha256": "18cc63b457fddea3f003bceb4d31f310291692e70485e6aa013e4091a8d47d41"
+    },
+    {
+      "version": "20261009101000",
+      "file": "20261009101000_pwa_commands.sql",
+      "sha256": "dbf600e3aabc225e5031ca83c24031c27c287cec47cce0b0f64bf81eb6e00f97"
+    },
+    {
+      "version": "20261009102000",
+      "file": "20261009102000_pwa_snapshot.sql",
+      "sha256": "969346799a4e591b7f85f8bacc4a877c1ea42dd628c3e041cf9b976f79e19ef0"
+    },
+    {
+      "version": "20261009103000",
+      "file": "20261009103000_pwa_delivery_and_receipts.sql",
+      "sha256": "73714397962f5ca54b5a94d1b6cc901ed744b8f8bcccd87fc32cd12673fbfe6f"
+    },
+    {
+      "version": "20261009104000",
+      "file": "20261009104000_pwa_buddy_integrity.sql",
+      "sha256": "c2e1bfdccf311f50bd9e0ff1686ce2301d1c65ff29b02cd78512666f0ec5305c"
+    },
+    {
+      "version": "20261009105000",
+      "file": "20261009105000_pwa_automation.sql",
+      "sha256": "7e20fdaee644e5a2f0b037f0d34001a773cf47b6b23a0294f23fddad45e5dbef"
+    },
+    {
+      "version": "20261009106000",
+      "file": "20261009106000_pwa_provider_receipts.sql",
+      "sha256": "5e6923e41dfd6d5da1ab12380f1be31b25e466eba02b685f7361b11e1ffe9eed"
+    },
+    {
+      "version": "20261009107000",
+      "file": "20261009107000_pwa_compatibility_and_cluster_scope.sql",
+      "sha256": "d60b59920adac4c45a3ec336a6a0cb27e31abb3c8aa69e0ddf5b47ed729e4486"
+    },
+    {
+      "version": "20261009108000",
+      "file": "20261009108000_pwa_repeatable_command_events.sql",
+      "sha256": "7ad42704ec974bd670deb70c14dcd13a2079f1b0d9fd6a416e0d4dcdf3859ef2"
+    },
+    {
+      "version": "20261009109000",
+      "file": "20261009109000_pwa_digest_dispatch_day.sql",
+      "sha256": "881aaf6a7ff6ed1e22604d810c1194fc140c4dfb79240e869b25feb3a9be4210"
+    },
+    {
+      "version": "20261009110000",
+      "file": "20261009110000_pwa_card_version_gate.sql",
+      "sha256": "7d237cb0e27bf8d4f27e649143a77e39dc29977279fc7bc6db6e506da52ff4cc"
+    },
+    {
+      "version": "20261009111000",
+      "file": "20261009111000_pwa_handover_checklist_integrity.sql",
+      "sha256": "2d10644befebd17fb8893d4e1363a6a4f61588bd55ac3ab45a7653d6489e3307"
+    },
+    {
+      "version": "20261009112000",
+      "file": "20261009112000_pwa_task_offer_category_seed.sql",
+      "sha256": "1e2bb5b181e7e0d4279c8270b12bfee8743cb7dcaaa0e4267256eaf689c59c17"
+    },
+    {
+      "version": "20261009113000",
+      "file": "20261009113000_pwa_nested_version_integrity.sql",
+      "sha256": "60eedfed603a1450d42524dc070e8fa4661c1bb323d55e660faef52845b98f19"
+    },
+    {
+      "version": "20261009114000",
+      "file": "20261009114000_pwa_policy_assignment_identity.sql",
+      "sha256": "afbe3c6218e2d81dae30107ec0f854f5fe0bdd87ae700da98f2b5d3165f4ad10"
+    },
+    {
+      "version": "20261009115000",
+      "file": "20261009115000_pwa_personal_action_context.sql",
+      "sha256": "10dfcebb3e8f61623586f41123e8967815e743745f991f68f84bcfd686e3a195"
+    },
+    {
+      "version": "20261009116000",
+      "file": "20261009116000_pwa_committee_planning.sql",
+      "sha256": "2bca259cd9041307c7daab5bf4e950fc0ddad72109aa180631634ce290b3e311"
+    },
+    {
+      "version": "20261009117000",
+      "file": "20261009117000_pwa_invitation_authority_fence.sql",
+      "sha256": "943eb1502da863da7d51bcd390bb58a5815896ab67a76db074638dad361d95b3"
+    },
+    {
+      "version": "20261009118000",
+      "file": "20261009118000_pwa_sportlink_connection.sql",
+      "sha256": "b4cd0ed6b44fd2bac7d22bee84a3b15f5817c6122c132a42066c49f374277b87"
+    },
+    {
+      "version": "20261009119000",
+      "file": "20261009119000_pwa_reserve_committee_scope.sql",
+      "sha256": "f7d9f77df7cde15bc23bb6408cab6f56a79031e0ee13198b2a9bf3d397f6801c"
+    },
+    {
+      "version": "20261009120000",
+      "file": "20261009120000_platform_administration.sql",
+      "sha256": "93a0e0fb3cd31f69cb44b807bae49c156898c548ede41801a482bc70cbb9aaea"
+    },
+    {
+      "version": "20261009121000",
+      "file": "20261009121000_club_administration.sql",
+      "sha256": "e7d2700ed947ccb1f470304698e5c115e84f6ea10ffe5f9aa4b9408144384a9e"
+    },
+    {
+      "version": "20261009122000",
+      "file": "20261009122000_administration_authority_fence.sql",
+      "sha256": "2815b49b9d3e6d2bb8cce86e85ebbfa7da3eec59f083ea1b469b35fcfa98fbd5"
+    },
+    {
+      "version": "20261009123000",
+      "file": "20261009123000_admin_template_delivery.sql",
+      "sha256": "e7c6b3eebdeef07fef0c2c33d4b3e0e4244f4d5d2bd79ca2f02b6215c710a7a6"
+    },
+    {
+      "version": "20261009124000",
+      "file": "20261009124000_admin_durable_commands.sql",
+      "sha256": "e5d5234e9a67578e8fae93ae50e014d36899f781e049273f20eaf33032fde38e"
+    }
+  ],
+  "returned_session_closed": true
+}

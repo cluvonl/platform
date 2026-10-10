@@ -1,0 +1,20 @@
+{
+  "scope": "LOCAL_ADMIN_PRIMARY_TITLE_REGRESSION_V1",
+  "source_before_correction": "bfcfbc210d38748698f04a6602234a1f7aceb998",
+  "native_otp_session": true,
+  "local_synthetic_database_only": true,
+  "route": "/c/club-a/beheer/committees",
+  "headings": 2,
+  "strict_locator_rejected": true,
+  "strict_mode": true,
+  "primary_title_count": 1,
+  "browser_toolchain": "playwright@1.63.0",
+  "targeted_browser_tests": {
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0
+  },
+  "production_enabled": false,
+  "physical_device_verified": false,
+  "private_values_exported": false
+}

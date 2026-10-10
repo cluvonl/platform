@@ -162,18 +162,27 @@ export async function browserRejectedContext(page,path,forbidden,onStage=()=>{})
   'STAGING_BROWSER_DENIAL_FAILED');
  return {denied:true,private_data_hidden:true};
 }
-async function adminRouteReadback(page,path,forbidden,onStage){
+export async function adminRouteReadback(page,path,forbidden,onStage){
  onStage({operation:'navigation'});
  const response=await page.goto(ORIGIN+path,{waitUntil:'domcontentloaded',timeout:45000});
  onStage({operation:'route_status',response_status:response?.status()});
  need(response?.status()===200&&page.url()===ORIGIN+path,'STAGING_ADMIN_BROWSER_ROUTE_FAILED');
+ onStage({operation:'ssr_privacy',response_status:response.status()});
  assertPrivateBrowserBody(await response.text(),forbidden);
- await page.locator('.cluvo-admin h1').waitFor({state:'visible',timeout:15000});
+ // Native committee/team workspaces retain their own headings. Check the
+ // single administrative page title, rather than all embedded headings.
+ onStage({operation:'app_shell',response_status:response.status()});
+ const title=page.locator('.cluvo-admin > .page-title h1');
+ await title.waitFor({state:'visible',timeout:15000});
+ onStage({operation:'font_readiness',response_status:response.status()});
  await page.waitForFunction(()=>document.fonts.status==='loaded',null,{timeout:15000});
+ onStage({operation:'dom_privacy',response_status:response.status()});
  assertPrivateBrowserBody(await page.locator('body').innerText(),forbidden);
+ onStage({operation:'private_cache',response_status:response.status()});
  need(/private/.test(response.headers()['cache-control']??'')&&/no-store/.test(response.headers()['cache-control']??''),'STAGING_ADMIN_BROWSER_PRIVATE_CACHE_FAILED');
+ onStage({operation:'overflow',response_status:response.status()});
  need(!await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),'STAGING_ADMIN_BROWSER_OVERFLOW');
- need(await page.locator('.cluvo-admin h1').evaluate(el=>getComputedStyle(el).fontFamily.toLowerCase().includes('inter')),'STAGING_ADMIN_BROWSER_STYLE_FAILED');
+ need(await title.evaluate(el=>getComputedStyle(el).fontFamily.toLowerCase().includes('inter')),'STAGING_ADMIN_BROWSER_STYLE_FAILED');
  return {section:path.split('?')[0].split('/').at(-1),status:200,native_authorized:true,private_cache:true,overflow:false};
 }
 async function adminDeniedReadback(page,path,forbidden,onStage){
