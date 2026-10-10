@@ -27,7 +27,7 @@ export function SecureShell({workspace, seasonName, canManageSportlink = false, 
         <span className="brand-caption">JOUW CLUB. SAMEN.</span>
         <Link href="/workspaces" className="club-switch"><span className="club-monogram" style={{borderColor:clubAccent}}>{clubLogo?<Image src={clubLogo} alt={`Logo ${workspace.tenant_name}`} width={32} height={32} unoptimized style={{objectFit:'contain'}}/>:workspace.tenant_name.slice(0, 1)}</span><span><b>{workspace.tenant_name}</b><small>{seasonName ? `Seizoen ${seasonName}` : 'Seizoen nog niet ingericht'}</small></span><ChevronDown size={16} /></Link>
       </SidebarHeader>
-      <SidebarContent><WorkspaceNavigation base={base} canConfirmAttendance={canConfirmAttendance} canManageSportlink={canManageSportlink} />{clubAdmin&&<AdminNavigation items={clubSections.filter(([section])=>clubSectionAllowed(clubAdmin,section)).map(([section,label,group])=>({path:`${base}/beheer/${section}`,label,group}))}/>}</SidebarContent>
+      <SidebarContent><WorkspaceNavigation base={base} canConfirmAttendance={canConfirmAttendance} canManageSportlink={canManageSportlink} />{clubAdmin&&<AdminNavigation items={[...clubSections.filter(([section])=>clubSectionAllowed(clubAdmin,section)).map(([section,label,group])=>({path:`${base}/beheer/${section}`,label,group})),{path:`${base}/beheer/kennisbank`,label:'Kennisbank beheer',group:'HULP'}]}/>}</SidebarContent>
       <SidebarFooter>
         <Link className="profile-link" href={`${base}/intake`}><Avatar name={workspace.display_name} /><span><b>{workspace.display_name}</b><small>{roleLabel}</small></span><Settings size={15} /></Link>
         <form action={signOutAction}><button type="submit" className="help-link"><LogOut size={17} /> Uitloggen</button></form>

@@ -9,6 +9,7 @@ import {NativeQaSession} from './staging-pwa-native-qa-session.mjs';
 import {createStagingNativeQaProvider,retryStagingNativeQaProviderCleanup} from './staging-pwa-native-qa-provider.mjs';
 import {nativeQaFixtureIds} from './staging-pwa-native-qa-fixture.mjs';
 import {activeStagingRelease} from './staging-pwa-release-health.mjs';
+import {knowledgeRouteProof,knowledgeDeniedProof} from './knowledge-browser-proof.mjs';
 
 const ORIGIN='https://staging.cluvo.nl',PROJECT='fbozlbgmktkgcdfqdaaz';
 export const BROWSER_SCREENS=Object.freeze(['home','tasks','agenda','teams','more','actions','notifications','manage','profile','household','policies','courses','opportunities','messages','settings','help','install','reports','finance','committees']);
@@ -19,7 +20,7 @@ const LIMITS={otp_flow_verified:false,coordinator_positive_flows_verified:false,
 const PHASES=new Set(['context','active_release_before','toolchain','native_connection','provider','fixture','fixture_privacy',
  'browser_launch','actor_a_session','positive_routes','own_profile','positive_page_errors','foreign_club','foreign_household',
  'foreign_season','actor_b_session','minor_team','admin_fixture','admin_routes','admin_save','admin_second_device','admin_denials',
- 'session_revocation','revoked_session','other_session','active_release_after','cleanup']);
+ 'knowledge_routes','session_revocation','revoked_session','other_session','active_release_after','cleanup']);
 const OPERATIONS=new Set(['validate','connect','setup','readback','launch','session','navigation','route_status','ssr_privacy',
  'app_shell','active_navigation','font_readiness','dom_privacy','private_cache','overflow','profile_control','page_errors',
  'positive_content','form_ready','save','revoke','claim_expiry','context_close','browser_close','fixture_teardown','provider_cleanup','connection_close']);
@@ -263,6 +264,15 @@ export async function stagingBrowserReadback(environment){
   phase('admin_routes','navigation');report.administration_routes=[];
   for(const section of ADMIN_BROWSER_SECTIONS)
    report.administration_routes.push(await adminRouteReadback(page,'/c/'+slugA+'/beheer/'+section,forbidden,routeStage));
+  phase('knowledge_routes','navigation');
+  report.knowledge={routes:[],denials:[],physical_device:false,platform_positive:false};
+  for(const [path,surface]of [[`/app/c/${slugA}/help/leden/urenstand`,'personal'],[`/app/c/${slugA}/help?q=winterdoel`,'personal'],[`/c/${slugA}/beheer/kennisbank`,'club'],[`/c/${slugA}/beheer/kennisbank/teamouders/teamoverdracht`,'club'],[`/c/${slugA}/beheer/kennisbank/commissies/uitvoering`,'club']])
+   report.knowledge.routes.push(await knowledgeRouteProof(page,ORIGIN,path,surface,forbidden));
+  need((await page.locator('.kb-article').innerText()).includes('Bevestigen na uitvoering'),'STAGING_KNOWLEDGE_CONTENT_REQUIRED');
+  for(const path of [`/app/c/${slugA}/help/financien/financiele-verwerking`,`/c/${slugA}/beheer/kennisbank/financien/financiele-verwerking`,'/platform/kennisbank/platform/platformrechten'])
+   report.knowledge.denials.push(await knowledgeDeniedProof(page,ORIGIN,path,forbidden));
+  report.knowledge.denials.push(await knowledgeDeniedProof(minor,ORIGIN,`/c/${slugA}/beheer/kennisbank`,[canaries[0],canaries[1],...privateCredentials]));
+  report.knowledge.verified=true;
   phase('admin_save','navigation');
   await adminRouteReadback(page,'/c/'+slugA+'/beheer/organization?part=locations',forbidden,routeStage);
   const panel=page.locator('.admin-form-panel').filter({has:page.getByRole('heading',{name:'Locatie',exact:true})});

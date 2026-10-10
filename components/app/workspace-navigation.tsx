@@ -3,7 +3,7 @@
 import {useEffect, useState} from 'react';
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
-import {ClipboardCheck, Database, LayoutDashboard, Search, Store, UserRound} from 'lucide-react';
+import {BookOpen, ClipboardCheck, Database, LayoutDashboard, Search, Store, UserRound} from 'lucide-react';
 import {SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarTrigger, useSidebar} from '@/components/ui/sidebar';
 import {Avatar, Badge, Input, Modal} from '@/components/cluvo/ui';
 
@@ -12,6 +12,7 @@ function navigationItems(canConfirmAttendance: boolean, canManageSportlink: bool
     {path: 'overzicht', label: 'Overzicht', icon: LayoutDashboard, group: 'MIJN CLUB'},
     {path: 'taken', label: 'Takenmarkt', icon: Store, group: 'MIJN CLUB'},
     {path: 'intake', label: 'Mijn profiel en intake', icon: UserRound, group: 'MIJN CLUB'},
+    {path: 'kennisbank', label: 'Kennisbank', icon: BookOpen, group: 'MIJN CLUB'},
     ...(canConfirmAttendance ? [{path: 'beheer/presentie', label: 'Presentie', icon: ClipboardCheck, group: 'SAMEN ORGANISEREN'}] : []),
     ...(canManageSportlink ? [{path: 'beheer/sportlink', label: 'Sportlink & wedstrijden', icon: Database, group: 'SAMEN ORGANISEREN'}] : []),
   ];

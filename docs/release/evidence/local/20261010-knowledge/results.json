@@ -1,0 +1,1377 @@
+{
+  "scope": "LOCAL_NATIVE_KNOWLEDGE_BROWSER_PROOF",
+  "passed": true,
+  "controls_only": false,
+  "articles": 101,
+  "checks": [
+    {
+      "name": "Independent native OTP session",
+      "status": "PASS",
+      "actor": "coordinator"
+    },
+    {
+      "name": "Independent native OTP session",
+      "status": "PASS",
+      "actor": "ouder-a"
+    },
+    {
+      "name": "Independent native OTP session",
+      "status": "PASS",
+      "actor": "platform"
+    },
+    {
+      "name": "Independent native OTP session",
+      "status": "PASS",
+      "actor": "tenant-b"
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/starten",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/inloggen",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/urenstand",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/huishouden",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/gescheiden-ouders",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/extra-uitvoerder",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/profiel",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/taak-boeken",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/passend-aanbod",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/wachtlijst",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/taak-voorbereiden",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/afmelden",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/overnemen",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/teamplaats",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/agenda",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/beleid",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/opleidingen",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/vaste-functie",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/acties",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/berichten",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/meldingen",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/installeren",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/online-status",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/uren-vraag",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/winter-hulp",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/hulpvragen",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/privacy",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/teamouders/teamouder-start",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/teamouders/teamdoelen",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/teamouders/teamtaak-maken",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/teamouders/verdeling",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/teamouders/teamplaats-controle",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/teamouders/deadlines",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/teamouders/reservehulp",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/teamouders/teamuren-aanvragen",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/teamouders/teamoverdracht",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/teamouders/teamfeedback",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/commissies/commissie-start",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/commissies/commissieplanning",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/commissies/taakcatalogus",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/commissies/concepten-sjablonen",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/commissies/clusters",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/commissies/wijzigingsimpact",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/commissies/uitvoering",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/commissies/uitvoering-correctie",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/commissies/werkkaarten",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/commissies/documenten",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/commissies/commissieberichten",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/commissies/instructie-feedback",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/commissies/wedstrijdvoorstellen",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/coordinatie/portefeuille",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/coordinatie/vragen-opvolgen",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/coordinatie/intakehulp",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/coordinatie/passend-aanbod-beoordelen",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/coordinatie/werkdruk",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/coordinatie/vacature-opvolging",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/vrijwilligerscommissie/dossierkoppelingen",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/vrijwilligerscommissie/winterplanning",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/vrijwilligerscommissie/uitzonderingen",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/vrijwilligerscommissie/uurvragen-beoordelen",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/vrijwilligerscommissie/functie-erkennen",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/vrijwilligerscommissie/teamuren-review",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/vrijwilligerscommissie/wedstrijdzaken",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/bestuur/beheer-start",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/bestuur/vereniging-inrichten",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/bestuur/personen-beheer",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/bestuur/toegang-beheer",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/bestuur/afspraken-instellingen",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/bestuur/functiecatalogus",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/bestuur/beleid-publiceren",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/bestuur/opleiding-beheer",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/bestuur/berichttemplates",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/bestuur/communicatieregels",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/bestuur/verzendlog",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/bestuur/sportlink",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/bestuur/ledenimport",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/bestuur/rapporten",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/bestuur/seizoen-inrichten",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/bestuur/seizoenssluiting",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/bestuur/seizoensovergang",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/bestuur/bestuursescalatie",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/bestuur/supporttoestemming",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/financien/financiele-basis",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/financien/financiele-voorbereiding",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/financien/financiele-goedkeuring",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/financien/financiele-verwerking",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/financien/betalingen",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/financien/financiele-herziening",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/financien/vrijwilligerspot",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/platform/kennisbank/platform/platform-start",
+      "environment": "platform",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/platform/kennisbank/platform/platformoverzicht",
+      "environment": "platform",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/platform/kennisbank/platform/tenant-inrichten",
+      "environment": "platform",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/platform/kennisbank/platform/tenant-uitnodigingen",
+      "environment": "platform",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/platform/kennisbank/platform/tenant-status",
+      "environment": "platform",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/platform/kennisbank/platform/tenant-seizoen",
+      "environment": "platform",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/platform/kennisbank/platform/tenant-modules",
+      "environment": "platform",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/platform/kennisbank/platform/platformrechten",
+      "environment": "platform",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/platform/kennisbank/platform/platformstandaarden",
+      "environment": "platform",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/platform/kennisbank/platform/integraties-platform",
+      "environment": "platform",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/platform/kennisbank/platform/support-platform",
+      "environment": "platform",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/platform/kennisbank/platform/platformaudit",
+      "environment": "platform",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help",
+      "width": 320,
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/urenstand",
+      "width": 320,
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/kennisbank",
+      "width": 320,
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank",
+      "width": 320,
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/teamouders/teamoverdracht",
+      "width": 320,
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/platform/kennisbank",
+      "width": 320,
+      "environment": "platform",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/platform/kennisbank/platform/platformrechten",
+      "width": 320,
+      "environment": "platform",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help",
+      "width": 390,
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/urenstand",
+      "width": 390,
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/kennisbank",
+      "width": 390,
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank",
+      "width": 390,
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/teamouders/teamoverdracht",
+      "width": 390,
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/platform/kennisbank",
+      "width": 390,
+      "environment": "platform",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/platform/kennisbank/platform/platformrechten",
+      "width": 390,
+      "environment": "platform",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help",
+      "width": 768,
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/urenstand",
+      "width": 768,
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/kennisbank",
+      "width": 768,
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank",
+      "width": 768,
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/teamouders/teamoverdracht",
+      "width": 768,
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/platform/kennisbank",
+      "width": 768,
+      "environment": "platform",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/platform/kennisbank/platform/platformrechten",
+      "width": 768,
+      "environment": "platform",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help",
+      "width": 1440,
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/urenstand",
+      "width": 1440,
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/kennisbank",
+      "width": 1440,
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank",
+      "width": 1440,
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank/teamouders/teamoverdracht",
+      "width": 1440,
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/platform/kennisbank",
+      "width": 1440,
+      "environment": "platform",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/platform/kennisbank/platform/platformrechten",
+      "width": 1440,
+      "environment": "platform",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help?household=a3000000-0000-4000-8000-000000000001&season=a5000000-0000-4000-8000-000000000001",
+      "width": 390,
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "GET search returns permitted member article and preserves question route",
+      "status": "PASS"
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Role filter and multiword search narrow authorized results",
+      "status": "PASS"
+    },
+    {
+      "name": "Unauthorized direct knowledge route",
+      "status": "PASS",
+      "path": "/app/c/club-a/help/financien/financiele-verwerking",
+      "denied": true,
+      "article_hidden": true
+    },
+    {
+      "name": "Unauthorized direct knowledge route",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/kennisbank/financien/financiele-verwerking",
+      "denied": true,
+      "article_hidden": true
+    },
+    {
+      "name": "Unauthorized direct knowledge route",
+      "status": "PASS",
+      "path": "/platform/kennisbank/platform/platformrechten",
+      "denied": true,
+      "article_hidden": true
+    },
+    {
+      "name": "Unauthorized direct knowledge route",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/kennisbank",
+      "denied": true,
+      "article_hidden": true
+    },
+    {
+      "name": "Unauthorized direct knowledge route",
+      "status": "PASS",
+      "path": "/c/club-a/beheer/kennisbank/platform/platformrechten",
+      "denied": true,
+      "article_hidden": true
+    },
+    {
+      "name": "Unauthorized direct knowledge route",
+      "status": "PASS",
+      "path": "/app/c/club-a/help/leden/urenstand/extra",
+      "denied": true,
+      "article_hidden": true
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank",
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Actual scoped grant yields only its permitted manuals",
+      "status": "PASS"
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/app/c/club-a/help/leden/urenstand",
+      "environment": "personal",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Article contents anchors work",
+      "status": "PASS"
+    },
+    {
+      "name": "Article fits with enlarged text",
+      "status": "PASS"
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/c/club-a/beheer/kennisbank",
+      "width": 1440,
+      "environment": "club",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/platform/kennisbank",
+      "width": 390,
+      "environment": "platform",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Authorized knowledge route",
+      "status": 200,
+      "path": "/platform/kennisbank/platform/platformstandaarden",
+      "environment": "platform",
+      "private_cache": true,
+      "styled": true,
+      "overflow": false
+    },
+    {
+      "name": "Mounted platform article closes after native grant revocation",
+      "status": "PASS"
+    },
+    {
+      "name": "No browser page errors",
+      "status": "PASS"
+    }
+  ],
+  "otp_flow_verified": true,
+  "actual_native_sessions": true,
+  "source_files_sha256": {
+    "components/knowledge/knowledge-bank.tsx": "d02a2d7c786422dd2c25cbaf61b908ca7461b857da1f2bcb0fc0cc6e3b0a97f2",
+    "components/knowledge/knowledge.css": "4b0c92adca635daaf71ff6d8fb74500c40713b15351b03aea2b8fc08ad86d918",
+    "components/mobile/route.tsx": "5202c25bd876282bc515cd8a6a5c2426e8443793f7f8990c943908db5035f102",
+    "components/mobile/screens.tsx": "bc3499546f644d095c2e561c11aa747e70fee015bfe7b8bfcd89208b29f30046",
+    "lib/knowledge/model.mjs": "d8fcdc76b758ec7abd887f2769d7380711606a46c342a1d2d522ad3c0e7e98b2",
+    "lib/knowledge/server.ts": "d7611f62c3b960d898c46d234497dde042c16c5f7040856e9e4961e7ba193ea4",
+    "scripts/knowledge-browser-proof.mjs": "f73c6b02410f3088361eb602e8a533eb206eb99d9f4574cad01d9763213fa212",
+    "scripts/browser-knowledge-native.mjs": "c3150d80674f850a5b94724c917da8a5c817d11140bc751a3c8da77692f7b77e",
+    "lib/knowledge/content/personal.mjs": "7fffd1dd1442d90aa56165a64cabc34cf838c2f0c6dd9748cb2ee21af3b96a1f",
+    "lib/knowledge/content/teams.mjs": "3c0c701584c12e506ed90f01c8ad552200706209c7bf742b22404a8070e4b760",
+    "lib/knowledge/content/committees.mjs": "587db2d7f61acad872348d2b0fe96262a06d5baa4ec64887c78d6af1ec0ddde7",
+    "lib/knowledge/content/coordination.mjs": "e26a18c728e8ebfb80d2a794bb842023633a72f0967a9f56bbadea5393768d9a",
+    "lib/knowledge/content/review.mjs": "8097165ac80810b4d8afe48b2d42221d95d1efc684718c3c60a0ee21a6b6a034",
+    "lib/knowledge/content/governance.mjs": "c8b15fa58aaf384413a4ae7ed0723bf274e5c89aa051ae0e7aa379717e44a878",
+    "lib/knowledge/content/finance.mjs": "4a789d13e70b3e51f4fcc2dedf5fc6178817e808f267925bfbe6a79a0def433d",
+    "lib/knowledge/content/platform.mjs": "42eeaaad2eaf7c704242365ab0edb2b04a349621566346dd592ab18585606d5b"
+  },
+  "production_enabled": false,
+  "email_sent_remote": false,
+  "physical_device": false,
+  "remote_data_changed": false
+}

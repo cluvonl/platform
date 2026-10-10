@@ -10,7 +10,7 @@ import {Avatar, Drawer, enterMobileScope, Tag, useSheetQuery} from './primitives
 import type {MobileScreen, MobileSnapshot} from './types';
 
 const navigation = [{screen: 'home', label: 'Home', icon: House}, {screen: 'tasks', label: 'Taken', icon: ClipboardList}, {screen: 'agenda', label: 'Agenda', icon: CalendarDays}, {screen: 'teams', label: 'Teams', icon: Users}, {screen: 'more', label: 'Meer', icon: LayoutGrid}] as const;
-export const screenLabels: Record<MobileScreen, string> = {home: 'Home', tasks: 'Taken', agenda: 'Gezinsagenda', teams: 'Mijn teams', more: 'Meer', actions: 'Mijn acties', notifications: 'Meldingen', manage: 'Commissieoverzicht', profile: 'Mijn profiel', household: 'Ons huishouden', policies: 'Beleid & afspraken', courses: 'Opleidingen', opportunities: 'Vaste vrijwilligersfuncties', messages: 'Berichten', settings: 'Instellingen', help: 'Hulp', install: 'Cluvo installeren', reports: 'Inzicht in inzet', finance: 'Vrijwilligerspot', committees: 'Samen organiseren'};
+export const screenLabels: Record<MobileScreen, string> = {home: 'Home', tasks: 'Taken', agenda: 'Gezinsagenda', teams: 'Mijn teams', more: 'Meer', actions: 'Mijn acties', notifications: 'Meldingen', manage: 'Commissieoverzicht', profile: 'Mijn profiel', household: 'Ons huishouden', policies: 'Beleid & afspraken', courses: 'Opleidingen', opportunities: 'Vaste vrijwilligersfuncties', messages: 'Berichten', settings: 'Instellingen', help: 'Hulp en kennisbank', install: 'Cluvo installeren', reports: 'Inzicht in inzet', finance: 'Vrijwilligerspot', committees: 'Samen organiseren'};
 export function MobileShell({snapshot, children}: {snapshot: MobileSnapshot; children: React.ReactNode}) {
   const pathname = usePathname();
   const router = useRouter();

@@ -1,0 +1,4426 @@
+{
+  "version": "2026-10-10.1",
+  "scope": "ROLE_BASED_KNOWLEDGE_DOCUMENTATION",
+  "production_enabled": false,
+  "article_count": 101,
+  "word_count": 17667,
+  "books": [
+    {
+      "id": "leden",
+      "title": "Leden, ouders en uitvoerders",
+      "environment": "personal",
+      "articles": [
+        "starten",
+        "inloggen",
+        "urenstand",
+        "huishouden",
+        "gescheiden-ouders",
+        "extra-uitvoerder",
+        "profiel",
+        "taak-boeken",
+        "passend-aanbod",
+        "wachtlijst",
+        "taak-voorbereiden",
+        "afmelden",
+        "overnemen",
+        "teamplaats",
+        "agenda",
+        "beleid",
+        "opleidingen",
+        "vaste-functie",
+        "acties",
+        "berichten",
+        "meldingen",
+        "installeren",
+        "online-status",
+        "uren-vraag",
+        "winter-hulp",
+        "hulpvragen",
+        "privacy"
+      ]
+    },
+    {
+      "id": "teamouders",
+      "title": "Teamouders",
+      "environment": "club",
+      "articles": [
+        "teamouder-start",
+        "teamdoelen",
+        "teamtaak-maken",
+        "verdeling",
+        "teamplaats-controle",
+        "deadlines",
+        "reservehulp",
+        "teamuren-aanvragen",
+        "teamoverdracht",
+        "teamfeedback"
+      ]
+    },
+    {
+      "id": "commissies",
+      "title": "Commissies en taakverantwoordelijken",
+      "environment": "club",
+      "articles": [
+        "commissie-start",
+        "commissieplanning",
+        "taakcatalogus",
+        "concepten-sjablonen",
+        "clusters",
+        "wijzigingsimpact",
+        "uitvoering",
+        "uitvoering-correctie",
+        "werkkaarten",
+        "documenten",
+        "commissieberichten",
+        "instructie-feedback",
+        "wedstrijdvoorstellen"
+      ]
+    },
+    {
+      "id": "coordinatie",
+      "title": "Vrijwilligerscoördinatie",
+      "environment": "club",
+      "articles": [
+        "portefeuille",
+        "vragen-opvolgen",
+        "intakehulp",
+        "passend-aanbod-beoordelen",
+        "werkdruk",
+        "vacature-opvolging"
+      ]
+    },
+    {
+      "id": "vrijwilligerscommissie",
+      "title": "Vrijwilligerscommissie",
+      "environment": "club",
+      "articles": [
+        "dossierkoppelingen",
+        "winterplanning",
+        "uitzonderingen",
+        "uurvragen-beoordelen",
+        "functie-erkennen",
+        "teamuren-review",
+        "wedstrijdzaken"
+      ]
+    },
+    {
+      "id": "bestuur",
+      "title": "Bestuur en verenigingsbeheer",
+      "environment": "club",
+      "articles": [
+        "beheer-start",
+        "vereniging-inrichten",
+        "personen-beheer",
+        "toegang-beheer",
+        "afspraken-instellingen",
+        "functiecatalogus",
+        "beleid-publiceren",
+        "opleiding-beheer",
+        "berichttemplates",
+        "communicatieregels",
+        "verzendlog",
+        "sportlink",
+        "ledenimport",
+        "rapporten",
+        "seizoen-inrichten",
+        "seizoenssluiting",
+        "seizoensovergang",
+        "bestuursescalatie",
+        "supporttoestemming"
+      ]
+    },
+    {
+      "id": "financien",
+      "title": "Financieel beheer",
+      "environment": "club",
+      "articles": [
+        "financiele-basis",
+        "financiele-voorbereiding",
+        "financiele-goedkeuring",
+        "financiele-verwerking",
+        "betalingen",
+        "financiele-herziening",
+        "vrijwilligerspot"
+      ]
+    },
+    {
+      "id": "platform",
+      "title": "Platformbeheer",
+      "environment": "platform",
+      "articles": [
+        "platform-start",
+        "platformoverzicht",
+        "tenant-inrichten",
+        "tenant-uitnodigingen",
+        "tenant-status",
+        "tenant-seizoen",
+        "tenant-modules",
+        "platformrechten",
+        "platformstandaarden",
+        "integraties-platform",
+        "support-platform",
+        "platformaudit"
+      ]
+    }
+  ],
+  "canonical_acceptance": {
+    "A01": [
+      "urenstand"
+    ],
+    "A02": [
+      "urenstand"
+    ],
+    "A03": [
+      "winterplanning"
+    ],
+    "A04": [
+      "uren-vraag",
+      "uitvoering-correctie"
+    ],
+    "A05": [
+      "functie-erkennen"
+    ],
+    "A06": [
+      "functie-erkennen"
+    ],
+    "A07": [
+      "huishouden"
+    ],
+    "A08": [
+      "intakehulp",
+      "extra-uitvoerder"
+    ],
+    "A09": [
+      "gescheiden-ouders",
+      "privacy"
+    ],
+    "A10": [
+      "dossierkoppelingen"
+    ],
+    "A11": [
+      "inloggen",
+      "toegang-beheer"
+    ],
+    "A12": [
+      "teamuren-review"
+    ],
+    "A13": [
+      "taak-boeken",
+      "wachtlijst"
+    ],
+    "A14": [
+      "overnemen"
+    ],
+    "A15": [
+      "afmelden",
+      "afspraken-instellingen"
+    ],
+    "A16": [
+      "commissieplanning",
+      "concepten-sjablonen"
+    ],
+    "A17": [
+      "concepten-sjablonen",
+      "wijzigingsimpact"
+    ],
+    "A18": [
+      "wedstrijdvoorstellen",
+      "agenda"
+    ],
+    "A19": [
+      "sportlink"
+    ],
+    "A20": [
+      "meldingen",
+      "communicatieregels"
+    ],
+    "A21": [
+      "berichttemplates",
+      "verzendlog"
+    ],
+    "A22": [
+      "beleid",
+      "beleid-publiceren"
+    ],
+    "A23": [
+      "beleid",
+      "beleid-publiceren"
+    ],
+    "A24": [
+      "werkkaarten",
+      "acties"
+    ],
+    "A25": [
+      "commissieberichten",
+      "documenten",
+      "privacy"
+    ],
+    "A26": [
+      "uitzonderingen",
+      "financiele-basis",
+      "financiele-verwerking"
+    ],
+    "A27": [
+      "wachtlijst",
+      "reservehulp",
+      "opleidingen",
+      "werkdruk",
+      "passend-aanbod-beoordelen"
+    ],
+    "A28": [
+      "instructie-feedback",
+      "vrijwilligerspot"
+    ],
+    "A29": [
+      "intakehulp",
+      "uitvoering-correctie"
+    ],
+    "A30": [
+      "seizoensovergang",
+      "rapporten"
+    ]
+  },
+  "canonical_proposals": {
+    "10": [
+      "wachtlijst",
+      "reservehulp"
+    ],
+    "11": [
+      "opleidingen",
+      "taak-boeken"
+    ],
+    "12": [
+      "vaste-functie",
+      "vacature-opvolging"
+    ],
+    "13": [
+      "passend-aanbod-beoordelen"
+    ],
+    "14": [
+      "werkdruk"
+    ],
+    "15": [
+      "acties"
+    ],
+    "16": [
+      "werkkaarten",
+      "commissieberichten"
+    ],
+    "17": [
+      "werkkaarten"
+    ],
+    "18": [
+      "acties",
+      "commissieberichten"
+    ],
+    "19": [
+      "instructie-feedback",
+      "vrijwilligerspot"
+    ],
+    "20": [
+      "opleidingen",
+      "opleiding-beheer"
+    ],
+    "21": [
+      "intakehulp"
+    ],
+    "22": [
+      "uitvoering",
+      "uitvoering-correctie"
+    ],
+    "23": [
+      "financiele-verwerking"
+    ],
+    "24": [
+      "uitzonderingen"
+    ],
+    "25": [
+      "beleid",
+      "beleid-publiceren"
+    ],
+    "26": [
+      "berichttemplates",
+      "verzendlog"
+    ],
+    "27": [
+      "seizoensovergang"
+    ],
+    "28": [
+      "rapporten"
+    ],
+    "01": [
+      "urenstand",
+      "functie-erkennen"
+    ],
+    "02": [
+      "dossierkoppelingen",
+      "huishouden"
+    ],
+    "03": [
+      "starten",
+      "toegang-beheer"
+    ],
+    "04": [
+      "concepten-sjablonen"
+    ],
+    "05": [
+      "wedstrijdvoorstellen"
+    ],
+    "06": [
+      "wijzigingsimpact",
+      "wedstrijdvoorstellen"
+    ],
+    "07": [
+      "sportlink"
+    ],
+    "08": [
+      "passend-aanbod",
+      "taak-boeken"
+    ],
+    "09": [
+      "passend-aanbod"
+    ]
+  },
+  "screens": {
+    "home": [
+      "starten",
+      "urenstand",
+      "acties"
+    ],
+    "tasks": [
+      "taak-boeken",
+      "teamplaats",
+      "afmelden",
+      "wachtlijst",
+      "overnemen"
+    ],
+    "agenda": [
+      "agenda"
+    ],
+    "teams": [
+      "teamplaats",
+      "teamouder-start",
+      "verdeling",
+      "teamdoelen",
+      "teamoverdracht"
+    ],
+    "more": [
+      "starten"
+    ],
+    "actions": [
+      "acties"
+    ],
+    "notifications": [
+      "meldingen"
+    ],
+    "manage": [
+      "commissieplanning",
+      "uitvoering",
+      "teamuren-review",
+      "vragen-opvolgen"
+    ],
+    "profile": [
+      "profiel"
+    ],
+    "household": [
+      "huishouden",
+      "urenstand",
+      "extra-uitvoerder",
+      "uren-vraag"
+    ],
+    "policies": [
+      "beleid"
+    ],
+    "courses": [
+      "opleidingen"
+    ],
+    "opportunities": [
+      "vaste-functie"
+    ],
+    "messages": [
+      "berichten"
+    ],
+    "settings": [
+      "meldingen",
+      "privacy",
+      "online-status"
+    ],
+    "help": [
+      "hulpvragen"
+    ],
+    "install": [
+      "installeren"
+    ],
+    "reports": [
+      "rapporten"
+    ],
+    "finance": [
+      "vrijwilligerspot"
+    ],
+    "committees": [
+      "commissie-start",
+      "werkkaarten",
+      "documenten"
+    ]
+  },
+  "club_sections": {
+    "cockpit": [
+      "beheer-start"
+    ],
+    "organization": [
+      "vereniging-inrichten",
+      "afspraken-instellingen"
+    ],
+    "people": [
+      "personen-beheer",
+      "dossierkoppelingen"
+    ],
+    "access": [
+      "toegang-beheer"
+    ],
+    "committees": [
+      "commissie-start",
+      "documenten"
+    ],
+    "teams": [
+      "teamouder-start",
+      "teamdoelen",
+      "verdeling"
+    ],
+    "planning": [
+      "commissieplanning",
+      "taakcatalogus",
+      "clusters",
+      "wijzigingsimpact"
+    ],
+    "execution": [
+      "uitvoering",
+      "uitvoering-correctie"
+    ],
+    "requests": [
+      "vragen-opvolgen",
+      "uitzonderingen",
+      "uurvragen-beoordelen",
+      "teamuren-review",
+      "functie-erkennen"
+    ],
+    "policies": [
+      "beleid-publiceren"
+    ],
+    "courses": [
+      "opleiding-beheer"
+    ],
+    "communication": [
+      "berichttemplates",
+      "communicatieregels",
+      "verzendlog"
+    ],
+    "reports": [
+      "rapporten"
+    ],
+    "finance": [
+      "financiele-basis",
+      "financiele-verwerking",
+      "vrijwilligerspot"
+    ],
+    "seasons": [
+      "seizoen-inrichten",
+      "seizoenssluiting",
+      "seizoensovergang"
+    ],
+    "support": [
+      "supporttoestemming"
+    ]
+  },
+  "platform_sections": {
+    "overview": [
+      "platformoverzicht"
+    ],
+    "tenants": [
+      "tenant-inrichten",
+      "tenant-uitnodigingen",
+      "tenant-status",
+      "tenant-modules"
+    ],
+    "staff": [
+      "platformrechten"
+    ],
+    "defaults": [
+      "platformstandaarden"
+    ],
+    "integrations": [
+      "integraties-platform"
+    ],
+    "support": [
+      "support-platform"
+    ],
+    "audit": [
+      "platformaudit"
+    ]
+  },
+  "commands": {
+    "mobile": {
+      "book_shift": [
+        "taak-boeken"
+      ],
+      "accept_transfer": [
+        "overnemen"
+      ],
+      "open_transfer": [
+        "overnemen"
+      ],
+      "set_team_goal": [
+        "teamdoelen"
+      ],
+      "reserve_cluster": [
+        "clusters"
+      ],
+      "assign_member": [
+        "verdeling"
+      ],
+      "apply_distribution": [
+        "verdeling"
+      ],
+      "set_followup": [
+        "deadlines"
+      ],
+      "request_reserve": [
+        "reservehulp"
+      ],
+      "prepare_handover": [
+        "teamoverdracht"
+      ],
+      "save_handover_draft": [
+        "teamoverdracht"
+      ],
+      "accept_handover": [
+        "teamoverdracht"
+      ],
+      "revoke_handover": [
+        "teamoverdracht"
+      ],
+      "save_feedback": [
+        "taak-voorbereiden"
+      ],
+      "prepare_booking": [
+        "taak-voorbereiden"
+      ],
+      "ask_question": [
+        "hulpvragen"
+      ],
+      "answer_question": [
+        "vragen-opvolgen"
+      ],
+      "take_question": [
+        "vragen-opvolgen"
+      ],
+      "create_channel": [
+        "commissieberichten"
+      ],
+      "send_message": [
+        "commissieberichten"
+      ],
+      "mark_inbox_read": [
+        "meldingen"
+      ],
+      "mark_all_inbox_read": [
+        "meldingen"
+      ],
+      "save_preferences": [
+        "meldingen"
+      ],
+      "dismiss_help": [
+        "privacy"
+      ],
+      "reset_help": [
+        "privacy"
+      ],
+      "enroll_course": [
+        "opleidingen"
+      ],
+      "withdraw_course": [
+        "opleidingen"
+      ],
+      "open_policy": [
+        "beleid"
+      ],
+      "accept_policy": [
+        "beleid"
+      ],
+      "rsvp_event": [
+        "agenda"
+      ],
+      "create_card": [
+        "werkkaarten"
+      ],
+      "update_card": [
+        "werkkaarten"
+      ],
+      "check_card_item": [
+        "werkkaarten"
+      ],
+      "reply_card": [
+        "werkkaarten"
+      ],
+      "publish_instructions": [
+        "instructie-feedback"
+      ],
+      "report_obstruction": [
+        "afmelden"
+      ],
+      "cancel_booking": [
+        "afmelden"
+      ],
+      "create_team_task": [
+        "teamtaak-maken"
+      ],
+      "create_club_task": [
+        "commissieplanning"
+      ],
+      "review_team_credit": [
+        "teamuren-review"
+      ],
+      "publish_team_credit": [
+        "teamuren-review"
+      ],
+      "save_push_subscription": [
+        "installeren"
+      ],
+      "revoke_push_subscription": [
+        "installeren"
+      ],
+      "confirm_attendance": [
+        "uitvoering"
+      ],
+      "confirm_attendance_batch": [
+        "uitvoering"
+      ],
+      "join_waitlist": [
+        "wachtlijst"
+      ],
+      "express_interest": [
+        "vaste-functie"
+      ],
+      "start_profile": [
+        "profiel"
+      ],
+      "save_profile": [
+        "profiel"
+      ],
+      "save_club_contact": [
+        "vereniging-inrichten"
+      ],
+      "invite_executor": [
+        "extra-uitvoerder"
+      ]
+    },
+    "club": {
+      "take_hour_dispute": [
+        "uurvragen-beoordelen"
+      ],
+      "resolve_hour_dispute": [
+        "uurvragen-beoordelen"
+      ],
+      "save_volunteer_role": [
+        "functiecatalogus"
+      ],
+      "revise_volunteer_role": [
+        "functiecatalogus"
+      ],
+      "save_vacancy": [
+        "functiecatalogus"
+      ],
+      "set_vacancy_state": [
+        "functiecatalogus"
+      ],
+      "follow_vacancy_interest": [
+        "vacature-opvolging"
+      ],
+      "recognize_vacancy_appointment": [
+        "functie-erkennen"
+      ],
+      "confirm_attendance": [
+        "uitvoering"
+      ],
+      "correct_attendance_award": [
+        "uitvoering-correctie"
+      ],
+      "save_template_draft": [
+        "berichttemplates"
+      ],
+      "preview_template": [
+        "berichttemplates"
+      ],
+      "queue_template_test": [
+        "berichttemplates"
+      ],
+      "approve_template": [
+        "berichttemplates"
+      ],
+      "publish_template": [
+        "berichttemplates"
+      ],
+      "prepare_assessment": [
+        "financiele-voorbereiding"
+      ],
+      "approve_assessment": [
+        "financiele-goedkeuring"
+      ],
+      "finalize_assessment": [
+        "financiele-verwerking"
+      ],
+      "review_exception": [
+        "uitzonderingen"
+      ],
+      "finalize_exception": [
+        "uitzonderingen"
+      ],
+      "close_season": [
+        "seizoenssluiting"
+      ],
+      "rollover_season": [
+        "seizoensovergang"
+      ],
+      "post_fund_entry": [
+        "vrijwilligerspot"
+      ],
+      "save_organization": [
+        "vereniging-inrichten"
+      ],
+      "save_location": [
+        "vereniging-inrichten"
+      ],
+      "save_committee_contact": [
+        "commissie-start"
+      ],
+      "add_committee_member": [
+        "commissie-start"
+      ],
+      "end_committee_member": [
+        "commissie-start"
+      ],
+      "save_committee": [
+        "commissie-start"
+      ],
+      "save_team": [
+        "personen-beheer"
+      ],
+      "save_person": [
+        "personen-beheer"
+      ],
+      "save_household": [
+        "personen-beheer"
+      ],
+      "link_household_person": [
+        "personen-beheer"
+      ],
+      "add_team_member": [
+        "personen-beheer"
+      ],
+      "end_team_member": [
+        "personen-beheer"
+      ],
+      "invite_access": [
+        "toegang-beheer"
+      ],
+      "cancel_access_invitation": [
+        "toegang-beheer"
+      ],
+      "grant_access": [
+        "toegang-beheer"
+      ],
+      "revoke_access": [
+        "toegang-beheer"
+      ],
+      "consent_support": [
+        "supporttoestemming"
+      ],
+      "end_support": [
+        "supporttoestemming"
+      ],
+      "save_category": [
+        "taakcatalogus"
+      ],
+      "save_task_type": [
+        "taakcatalogus"
+      ],
+      "revise_task_type": [
+        "taakcatalogus"
+      ],
+      "save_course": [
+        "opleiding-beheer"
+      ],
+      "save_qualification_type": [
+        "opleiding-beheer"
+      ],
+      "save_course_session": [
+        "opleiding-beheer"
+      ],
+      "register_qualification": [
+        "opleiding-beheer"
+      ],
+      "revoke_qualification": [
+        "opleiding-beheer"
+      ],
+      "certify_enrollment": [
+        "opleiding-beheer"
+      ],
+      "save_policy_draft": [
+        "beleid-publiceren"
+      ],
+      "publish_policy": [
+        "beleid-publiceren"
+      ],
+      "save_season": [
+        "seizoen-inrichten"
+      ],
+      "save_settings": [
+        "afspraken-instellingen"
+      ]
+    },
+    "platform": {
+      "retry_delivery": [
+        "integraties-platform"
+      ],
+      "invite_administrator": [
+        "tenant-uitnodigingen"
+      ],
+      "cancel_administrator_invitation": [
+        "tenant-uitnodigingen"
+      ],
+      "onboard_administrator": [
+        "tenant-inrichten"
+      ],
+      "create_tenant": [
+        "tenant-inrichten"
+      ],
+      "update_tenant": [
+        "tenant-inrichten"
+      ],
+      "onboard_season": [
+        "tenant-seizoen"
+      ],
+      "set_tenant_status": [
+        "tenant-status"
+      ],
+      "grant_staff": [
+        "platformrechten"
+      ],
+      "revoke_staff": [
+        "platformrechten"
+      ],
+      "set_module": [
+        "tenant-modules"
+      ],
+      "save_default": [
+        "platformstandaarden"
+      ],
+      "request_support": [
+        "support-platform"
+      ],
+      "revoke_support": [
+        "support-platform"
+      ]
+    }
+  },
+  "reference_functions": {
+    "P00.F01": {
+      "title": "Vereniging en seizoen",
+      "articles": [
+        "starten",
+        "inloggen",
+        "privacy",
+        "online-status",
+        "installeren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P00.F02": {
+      "title": "Menu en rolwerkruimte",
+      "articles": [
+        "starten",
+        "inloggen",
+        "privacy",
+        "online-status",
+        "installeren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P00.F03": {
+      "title": "Zoeken en snel openen",
+      "articles": [
+        "starten",
+        "inloggen",
+        "privacy",
+        "online-status",
+        "installeren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P00.F04": {
+      "title": "Ongelezen meldingen",
+      "articles": [
+        "starten",
+        "inloggen",
+        "privacy",
+        "online-status",
+        "installeren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P00.F05": {
+      "title": "Mijn profiel",
+      "articles": [
+        "starten",
+        "inloggen",
+        "privacy",
+        "online-status",
+        "installeren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P00.F06": {
+      "title": "Uitlegbanners tonen",
+      "articles": [
+        "starten",
+        "inloggen",
+        "privacy",
+        "online-status",
+        "installeren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P00.F07": {
+      "title": "Uitlegbanner afsluiten",
+      "articles": [
+        "starten",
+        "inloggen",
+        "privacy",
+        "online-status",
+        "installeren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P00.F08": {
+      "title": "Zichtbaarheid zonder flits",
+      "articles": [
+        "starten",
+        "inloggen",
+        "privacy",
+        "online-status",
+        "installeren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P00.F09": {
+      "title": "Responsief menu",
+      "articles": [
+        "starten",
+        "inloggen",
+        "privacy",
+        "online-status",
+        "installeren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P00.F10": {
+      "title": "Mobiele demopreview",
+      "articles": [
+        "starten",
+        "inloggen",
+        "privacy",
+        "online-status",
+        "installeren"
+      ],
+      "interpretation": "REFERENCE_DEMO_ONLY_NOT_RUNTIME"
+    },
+    "P00.F11": {
+      "title": "Hulp en prototype-informatie",
+      "articles": [
+        "starten",
+        "inloggen",
+        "privacy",
+        "online-status",
+        "installeren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P00.F12": {
+      "title": "Formulieren en feedback",
+      "articles": [
+        "starten",
+        "inloggen",
+        "privacy",
+        "online-status",
+        "installeren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P00.F13": {
+      "title": "Herstelbare navigatie",
+      "articles": [
+        "starten",
+        "inloggen",
+        "privacy",
+        "online-status",
+        "installeren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P00.F14": {
+      "title": "Uitloggen en sessie",
+      "articles": [
+        "starten",
+        "inloggen",
+        "privacy",
+        "online-status",
+        "installeren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P00.F15": {
+      "title": "Demodata en echte gegevens",
+      "articles": [
+        "starten",
+        "inloggen",
+        "privacy",
+        "online-status",
+        "installeren"
+      ],
+      "interpretation": "REFERENCE_DEMO_ONLY_NOT_RUNTIME"
+    },
+    "P00.F16": {
+      "title": "Installatie en offline",
+      "articles": [
+        "starten",
+        "inloggen",
+        "privacy",
+        "online-status",
+        "installeren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P01.F01": {
+      "title": "Persoonlijke voortgang",
+      "articles": [
+        "urenstand",
+        "acties",
+        "agenda",
+        "passend-aanbod"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P01.F02": {
+      "title": "Verenigingstotalen",
+      "articles": [
+        "urenstand",
+        "acties",
+        "agenda",
+        "passend-aanbod"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P01.F03": {
+      "title": "Dit vraagt je aandacht",
+      "articles": [
+        "urenstand",
+        "acties",
+        "agenda",
+        "passend-aanbod"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P01.F04": {
+      "title": "Passende taken ontdekken",
+      "articles": [
+        "urenstand",
+        "acties",
+        "agenda",
+        "passend-aanbod"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P01.F05": {
+      "title": "Komende activiteiten en wedstrijden",
+      "articles": [
+        "urenstand",
+        "acties",
+        "agenda",
+        "passend-aanbod"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P01.F06": {
+      "title": "Mijn teams",
+      "articles": [
+        "urenstand",
+        "acties",
+        "agenda",
+        "passend-aanbod"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P01.F07": {
+      "title": "Aandacht en clubmomenten",
+      "articles": [
+        "urenstand",
+        "acties",
+        "agenda",
+        "passend-aanbod"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P02.F01": {
+      "title": "Open verenigingstaken",
+      "articles": [
+        "taak-boeken",
+        "wachtlijst",
+        "passend-aanbod",
+        "vaste-functie"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P02.F02": {
+      "title": "Zoeken en categorieën",
+      "articles": [
+        "taak-boeken",
+        "wachtlijst",
+        "passend-aanbod",
+        "vaste-functie"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P02.F03": {
+      "title": "Korte en passende taken",
+      "articles": [
+        "taak-boeken",
+        "wachtlijst",
+        "passend-aanbod",
+        "vaste-functie"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P02.F04": {
+      "title": "Taakdetails",
+      "articles": [
+        "taak-boeken",
+        "wachtlijst",
+        "passend-aanbod",
+        "vaste-functie"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P02.F05": {
+      "title": "Uitvoerder kiezen",
+      "articles": [
+        "taak-boeken",
+        "wachtlijst",
+        "passend-aanbod",
+        "vaste-functie"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P02.F06": {
+      "title": "Instructies erkennen en boeken",
+      "articles": [
+        "taak-boeken",
+        "wachtlijst",
+        "passend-aanbod",
+        "vaste-functie"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P02.F07": {
+      "title": "Wachtlijst",
+      "articles": [
+        "taak-boeken",
+        "wachtlijst",
+        "passend-aanbod",
+        "vaste-functie"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P02.F08": {
+      "title": "Taak aanpassen",
+      "articles": [
+        "taak-boeken",
+        "wachtlijst",
+        "passend-aanbod",
+        "vaste-functie"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P02.F09": {
+      "title": "Passende taak aanvragen",
+      "articles": [
+        "taak-boeken",
+        "wachtlijst",
+        "passend-aanbod",
+        "vaste-functie"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P02.F10": {
+      "title": "Vaste vrijwilligersfunctie verkennen",
+      "articles": [
+        "taak-boeken",
+        "wachtlijst",
+        "passend-aanbod",
+        "vaste-functie"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P03.F01": {
+      "title": "Komende verenigingstaken",
+      "articles": [
+        "taak-voorbereiden",
+        "uitvoering",
+        "afmelden",
+        "uren-vraag"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P03.F02": {
+      "title": "Te bevestigen en historie",
+      "articles": [
+        "taak-voorbereiden",
+        "uitvoering",
+        "afmelden",
+        "uren-vraag"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P03.F03": {
+      "title": "Toegewezen teamplaatsen",
+      "articles": [
+        "taak-voorbereiden",
+        "uitvoering",
+        "afmelden",
+        "uren-vraag"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P03.F04": {
+      "title": "Taken via mijn teams",
+      "articles": [
+        "taak-voorbereiden",
+        "uitvoering",
+        "afmelden",
+        "uren-vraag"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P03.F05": {
+      "title": "Uitvoering bevestigen",
+      "articles": [
+        "taak-voorbereiden",
+        "uitvoering",
+        "afmelden",
+        "uren-vraag"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P03.F06": {
+      "title": "Niet verschenen registreren",
+      "articles": [
+        "taak-voorbereiden",
+        "uitvoering",
+        "afmelden",
+        "uren-vraag"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P03.F07": {
+      "title": "Afmelden binnen afspraak",
+      "articles": [
+        "taak-voorbereiden",
+        "uitvoering",
+        "afmelden",
+        "uren-vraag"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P03.F08": {
+      "title": "Ziekte of verhindering melden",
+      "articles": [
+        "taak-voorbereiden",
+        "uitvoering",
+        "afmelden",
+        "uren-vraag"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P03.F09": {
+      "title": "Overname vragen",
+      "articles": [
+        "taak-voorbereiden",
+        "uitvoering",
+        "afmelden",
+        "uren-vraag"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P03.F10": {
+      "title": "Urenvraag en correctie",
+      "articles": [
+        "taak-voorbereiden",
+        "uitvoering",
+        "afmelden",
+        "uren-vraag"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P03.F11": {
+      "title": "Ervaring delen",
+      "articles": [
+        "taak-voorbereiden",
+        "uitvoering",
+        "afmelden",
+        "uren-vraag"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P04.F01": {
+      "title": "Een huishoudmeter",
+      "articles": [
+        "huishouden",
+        "teamplaats",
+        "agenda"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P04.F02": {
+      "title": "Meters per kind en team",
+      "articles": [
+        "huishouden",
+        "teamplaats",
+        "agenda"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P04.F03": {
+      "title": "Gecombineerde tijdlijn",
+      "articles": [
+        "huishouden",
+        "teamplaats",
+        "agenda"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P04.F04": {
+      "title": "Komend en historie",
+      "articles": [
+        "huishouden",
+        "teamplaats",
+        "agenda"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P04.F05": {
+      "title": "Planningswaarschuwingen",
+      "articles": [
+        "huishouden",
+        "teamplaats",
+        "agenda"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P04.F06": {
+      "title": "Uitvoerder kiezen",
+      "articles": [
+        "huishouden",
+        "teamplaats",
+        "agenda"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P04.F07": {
+      "title": "Afspraak en overname bekijken",
+      "articles": [
+        "huishouden",
+        "teamplaats",
+        "agenda"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P04.F08": {
+      "title": "Terugblik op uitvoering",
+      "articles": [
+        "huishouden",
+        "teamplaats",
+        "agenda"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P05.F01": {
+      "title": "Open overnameverzoeken",
+      "articles": [
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P05.F02": {
+      "title": "Passende vervanger kiezen",
+      "articles": [
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P05.F03": {
+      "title": "Definitief overnemen",
+      "articles": [
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P05.F04": {
+      "title": "Wederzijds ruilen",
+      "articles": [
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P05.F05": {
+      "title": "Verlopen of gewijzigde ruil",
+      "articles": [
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P06.F01": {
+      "title": "Maandkalender en lagen",
+      "articles": [
+        "agenda",
+        "commissieberichten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P06.F02": {
+      "title": "Kalenderitem openen",
+      "articles": [
+        "agenda",
+        "commissieberichten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P06.F03": {
+      "title": "Activiteit maken",
+      "articles": [
+        "agenda",
+        "commissieberichten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P06.F04": {
+      "title": "Locatieconflict controleren",
+      "articles": [
+        "agenda",
+        "commissieberichten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P06.F05": {
+      "title": "Aanwezigheid bij activiteit",
+      "articles": [
+        "agenda",
+        "commissieberichten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P06.F06": {
+      "title": "Herhaling van activiteiten",
+      "articles": [
+        "agenda",
+        "commissieberichten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P07.F01": {
+      "title": "Wedstrijdprogramma filteren",
+      "articles": [
+        "sportlink",
+        "wedstrijdvoorstellen",
+        "wijzigingsimpact"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P07.F02": {
+      "title": "Nu synchroniseren",
+      "articles": [
+        "sportlink",
+        "wedstrijdvoorstellen",
+        "wijzigingsimpact"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P07.F03": {
+      "title": "Taakvoorstellen bij thuiswedstrijd",
+      "articles": [
+        "sportlink",
+        "wedstrijdvoorstellen",
+        "wijzigingsimpact"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P07.F04": {
+      "title": "Wijzigingsgevolgen bekijken",
+      "articles": [
+        "sportlink",
+        "wedstrijdvoorstellen",
+        "wijzigingsimpact"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P07.F05": {
+      "title": "Tijden behouden en informeren",
+      "articles": [
+        "sportlink",
+        "wedstrijdvoorstellen",
+        "wijzigingsimpact"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P08.F01": {
+      "title": "Rooster per commissie en datum",
+      "articles": [
+        "commissieplanning",
+        "concepten-sjablonen",
+        "clusters"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P08.F02": {
+      "title": "Verenigingstaak maken",
+      "articles": [
+        "commissieplanning",
+        "concepten-sjablonen",
+        "clusters"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P08.F03": {
+      "title": "Vrije markt of team kiezen",
+      "articles": [
+        "commissieplanning",
+        "concepten-sjablonen",
+        "clusters"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P08.F04": {
+      "title": "Taak openen en bewerken",
+      "articles": [
+        "commissieplanning",
+        "concepten-sjablonen",
+        "clusters"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P08.F05": {
+      "title": "Tijdblok verplaatsen of verlengen",
+      "articles": [
+        "commissieplanning",
+        "concepten-sjablonen",
+        "clusters"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P08.F06": {
+      "title": "Roostersjabloon toepassen",
+      "articles": [
+        "commissieplanning",
+        "concepten-sjablonen",
+        "clusters"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P08.F07": {
+      "title": "Concepten publiceren",
+      "articles": [
+        "commissieplanning",
+        "concepten-sjablonen",
+        "clusters"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P08.F08": {
+      "title": "Vrije plaatsen clusteren",
+      "articles": [
+        "commissieplanning",
+        "concepten-sjablonen",
+        "clusters"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P08.F09": {
+      "title": "Teamadvies bij cluster",
+      "articles": [
+        "commissieplanning",
+        "concepten-sjablonen",
+        "clusters"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P08.F10": {
+      "title": "Clusterbezetting volgen",
+      "articles": [
+        "commissieplanning",
+        "concepten-sjablonen",
+        "clusters"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P08.F11": {
+      "title": "Cluster vrijgeven",
+      "articles": [
+        "commissieplanning",
+        "concepten-sjablonen",
+        "clusters"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P09.F01": {
+      "title": "Dossiers zoeken en filteren",
+      "articles": [
+        "dossierkoppelingen",
+        "extra-uitvoerder",
+        "uitzonderingen",
+        "functie-erkennen",
+        "winterplanning",
+        "intakehulp"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P09.F02": {
+      "title": "Nieuw huishouddossier",
+      "articles": [
+        "dossierkoppelingen",
+        "extra-uitvoerder",
+        "uitzonderingen",
+        "functie-erkennen",
+        "winterplanning",
+        "intakehulp"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P09.F03": {
+      "title": "Huishouddossier openen",
+      "articles": [
+        "dossierkoppelingen",
+        "extra-uitvoerder",
+        "uitzonderingen",
+        "functie-erkennen",
+        "winterplanning",
+        "intakehulp"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P09.F04": {
+      "title": "Personen en verificatie",
+      "articles": [
+        "dossierkoppelingen",
+        "extra-uitvoerder",
+        "uitzonderingen",
+        "functie-erkennen",
+        "winterplanning",
+        "intakehulp"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P09.F05": {
+      "title": "Extra uitvoerder uitnodigen",
+      "articles": [
+        "dossierkoppelingen",
+        "extra-uitvoerder",
+        "uitzonderingen",
+        "functie-erkennen",
+        "winterplanning",
+        "intakehulp"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P09.F06": {
+      "title": "Individuele afspraak aanvragen",
+      "articles": [
+        "dossierkoppelingen",
+        "extra-uitvoerder",
+        "uitzonderingen",
+        "functie-erkennen",
+        "winterplanning",
+        "intakehulp"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P09.F07": {
+      "title": "Aanvragen beoordelen",
+      "articles": [
+        "dossierkoppelingen",
+        "extra-uitvoerder",
+        "uitzonderingen",
+        "functie-erkennen",
+        "winterplanning",
+        "intakehulp"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P09.F08": {
+      "title": "Vaste vrijwilligersrol erkennen",
+      "articles": [
+        "dossierkoppelingen",
+        "extra-uitvoerder",
+        "uitzonderingen",
+        "functie-erkennen",
+        "winterplanning",
+        "intakehulp"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P09.F09": {
+      "title": "Einde rol opvolgen",
+      "articles": [
+        "dossierkoppelingen",
+        "extra-uitvoerder",
+        "uitzonderingen",
+        "functie-erkennen",
+        "winterplanning",
+        "intakehulp"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P09.F10": {
+      "title": "Huishoudens koppelen splitsen herstellen",
+      "articles": [
+        "dossierkoppelingen",
+        "extra-uitvoerder",
+        "uitzonderingen",
+        "functie-erkennen",
+        "winterplanning",
+        "intakehulp"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P09.F11": {
+      "title": "Wintertekort passend plannen",
+      "articles": [
+        "dossierkoppelingen",
+        "extra-uitvoerder",
+        "uitzonderingen",
+        "functie-erkennen",
+        "winterplanning",
+        "intakehulp"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P09.F12": {
+      "title": "Dossierhistorie",
+      "articles": [
+        "dossierkoppelingen",
+        "extra-uitvoerder",
+        "uitzonderingen",
+        "functie-erkennen",
+        "winterplanning",
+        "intakehulp"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P09.F13": {
+      "title": "CSV-overzicht exporteren",
+      "articles": [
+        "dossierkoppelingen",
+        "extra-uitvoerder",
+        "uitzonderingen",
+        "functie-erkennen",
+        "winterplanning",
+        "intakehulp"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P10.F01": {
+      "title": "Commissie kiezen",
+      "articles": [
+        "commissie-start",
+        "documenten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P10.F02": {
+      "title": "Actueel werk bekijken",
+      "articles": [
+        "commissie-start",
+        "documenten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P10.F03": {
+      "title": "Commissielid toevoegen",
+      "articles": [
+        "commissie-start",
+        "documenten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P10.F04": {
+      "title": "Coordinator wijzigen",
+      "articles": [
+        "commissie-start",
+        "documenten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P10.F05": {
+      "title": "Documenten en instructies zoeken",
+      "articles": [
+        "commissie-start",
+        "documenten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P10.F06": {
+      "title": "Kennis toevoegen",
+      "articles": [
+        "commissie-start",
+        "documenten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P10.F07": {
+      "title": "Documentversie bewerken",
+      "articles": [
+        "commissie-start",
+        "documenten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P10.F08": {
+      "title": "Document downloaden",
+      "articles": [
+        "commissie-start",
+        "documenten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P11.F01": {
+      "title": "Bord en commissie kiezen",
+      "articles": [
+        "werkkaarten",
+        "documenten",
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P11.F02": {
+      "title": "Kaart maken",
+      "articles": [
+        "werkkaarten",
+        "documenten",
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P11.F03": {
+      "title": "Kolom maken en ordenen",
+      "articles": [
+        "werkkaarten",
+        "documenten",
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P11.F04": {
+      "title": "Kaart verplaatsen en afronden",
+      "articles": [
+        "werkkaarten",
+        "documenten",
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P11.F05": {
+      "title": "Omschrijving en planning bewerken",
+      "articles": [
+        "werkkaarten",
+        "documenten",
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P11.F06": {
+      "title": "Meerdere uitvoerders en aanspreekpunt",
+      "articles": [
+        "werkkaarten",
+        "documenten",
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P11.F07": {
+      "title": "Checklist en subtaken",
+      "articles": [
+        "werkkaarten",
+        "documenten",
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P11.F08": {
+      "title": "Reacties en mentions",
+      "articles": [
+        "werkkaarten",
+        "documenten",
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P11.F09": {
+      "title": "Bijlage toevoegen en downloaden",
+      "articles": [
+        "werkkaarten",
+        "documenten",
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P11.F10": {
+      "title": "Agenda of verenigingstaak koppelen",
+      "articles": [
+        "werkkaarten",
+        "documenten",
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P11.F11": {
+      "title": "Historie en toegankelijk openen",
+      "articles": [
+        "werkkaarten",
+        "documenten",
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P12.F01": {
+      "title": "Team kiezen en statusmeters",
+      "articles": [
+        "teamouder-start",
+        "teamtaak-maken",
+        "teamdoelen",
+        "verdeling",
+        "reservehulp",
+        "teamoverdracht",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P12.F02": {
+      "title": "Besloten teamtakenmarkt",
+      "articles": [
+        "teamouder-start",
+        "teamtaak-maken",
+        "teamdoelen",
+        "verdeling",
+        "reservehulp",
+        "teamoverdracht",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P12.F03": {
+      "title": "Inschrijfwijze per cluster",
+      "articles": [
+        "teamouder-start",
+        "teamtaak-maken",
+        "teamdoelen",
+        "verdeling",
+        "reservehulp",
+        "teamoverdracht",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P12.F04": {
+      "title": "Teamplanning en clusters",
+      "articles": [
+        "teamouder-start",
+        "teamtaak-maken",
+        "teamdoelen",
+        "verdeling",
+        "reservehulp",
+        "teamoverdracht",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P12.F05": {
+      "title": "Plaats aan lid toewijzen",
+      "articles": [
+        "teamouder-start",
+        "teamtaak-maken",
+        "teamdoelen",
+        "verdeling",
+        "reservehulp",
+        "teamoverdracht",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P12.F06": {
+      "title": "Toewijzing opnieuw vrijmaken",
+      "articles": [
+        "teamouder-start",
+        "teamtaak-maken",
+        "teamdoelen",
+        "verdeling",
+        "reservehulp",
+        "teamoverdracht",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P12.F07": {
+      "title": "Huishouden kiest uitvoerder",
+      "articles": [
+        "teamouder-start",
+        "teamtaak-maken",
+        "teamdoelen",
+        "verdeling",
+        "reservehulp",
+        "teamoverdracht",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P12.F08": {
+      "title": "Vrijwillig extra helpen",
+      "articles": [
+        "teamouder-start",
+        "teamtaak-maken",
+        "teamdoelen",
+        "verdeling",
+        "reservehulp",
+        "teamoverdracht",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P12.F09": {
+      "title": "Verhindering en vervanging",
+      "articles": [
+        "teamouder-start",
+        "teamtaak-maken",
+        "teamdoelen",
+        "verdeling",
+        "reservehulp",
+        "teamoverdracht",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P12.F10": {
+      "title": "Eigen teamtaak publiceren",
+      "articles": [
+        "teamouder-start",
+        "teamtaak-maken",
+        "teamdoelen",
+        "verdeling",
+        "reservehulp",
+        "teamoverdracht",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P12.F11": {
+      "title": "Wekelijks herhalen",
+      "articles": [
+        "teamouder-start",
+        "teamtaak-maken",
+        "teamdoelen",
+        "verdeling",
+        "reservehulp",
+        "teamoverdracht",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P12.F12": {
+      "title": "Verenigingsuren aanvragen",
+      "articles": [
+        "teamouder-start",
+        "teamtaak-maken",
+        "teamdoelen",
+        "verdeling",
+        "reservehulp",
+        "teamoverdracht",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P12.F13": {
+      "title": "Teamdoel per seizoen",
+      "articles": [
+        "teamouder-start",
+        "teamtaak-maken",
+        "teamdoelen",
+        "verdeling",
+        "reservehulp",
+        "teamoverdracht",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P12.F14": {
+      "title": "Individuele doelafwijking",
+      "articles": [
+        "teamouder-start",
+        "teamtaak-maken",
+        "teamdoelen",
+        "verdeling",
+        "reservehulp",
+        "teamoverdracht",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P12.F15": {
+      "title": "Voortgang per lid",
+      "articles": [
+        "teamouder-start",
+        "teamtaak-maken",
+        "teamdoelen",
+        "verdeling",
+        "reservehulp",
+        "teamoverdracht",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P12.F16": {
+      "title": "Huishoudvoortgang van team",
+      "articles": [
+        "teamouder-start",
+        "teamtaak-maken",
+        "teamdoelen",
+        "verdeling",
+        "reservehulp",
+        "teamoverdracht",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P12.F17": {
+      "title": "Slim verdeelvoorstel",
+      "articles": [
+        "teamouder-start",
+        "teamtaak-maken",
+        "teamdoelen",
+        "verdeling",
+        "reservehulp",
+        "teamoverdracht",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P12.F18": {
+      "title": "Voorstel aanpassen en bevestigen",
+      "articles": [
+        "teamouder-start",
+        "teamtaak-maken",
+        "teamdoelen",
+        "verdeling",
+        "reservehulp",
+        "teamoverdracht",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P12.F19": {
+      "title": "Deadlines en escalatie",
+      "articles": [
+        "teamouder-start",
+        "teamtaak-maken",
+        "teamdoelen",
+        "verdeling",
+        "reservehulp",
+        "teamoverdracht",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P12.F20": {
+      "title": "Passende reservepool benaderen",
+      "articles": [
+        "teamouder-start",
+        "teamtaak-maken",
+        "teamdoelen",
+        "verdeling",
+        "reservehulp",
+        "teamoverdracht",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P12.F21": {
+      "title": "Overdracht voorbereiden en aannemen",
+      "articles": [
+        "teamouder-start",
+        "teamtaak-maken",
+        "teamdoelen",
+        "verdeling",
+        "reservehulp",
+        "teamoverdracht",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P12.F22": {
+      "title": "Feedback en instructie verbeteren",
+      "articles": [
+        "teamouder-start",
+        "teamtaak-maken",
+        "teamdoelen",
+        "verdeling",
+        "reservehulp",
+        "teamoverdracht",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P13.F01": {
+      "title": "Volgende stappen berekenen",
+      "articles": [
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P13.F02": {
+      "title": "Acties ordenen en ontdubbelen",
+      "articles": [
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P13.F03": {
+      "title": "Direct uitvoerder kiezen",
+      "articles": [
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P13.F04": {
+      "title": "Direct vervanging verdelen",
+      "articles": [
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P13.F05": {
+      "title": "Uitvoering controleren",
+      "articles": [
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P13.F06": {
+      "title": "Teamstap openen",
+      "articles": [
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P13.F07": {
+      "title": "Persoonlijke kaarten",
+      "articles": [
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P14.F01": {
+      "title": "Gesprekskanaal kiezen",
+      "articles": [
+        "berichten",
+        "meldingen",
+        "communicatieregels",
+        "verzendlog"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P14.F02": {
+      "title": "Bericht plaatsen",
+      "articles": [
+        "berichten",
+        "meldingen",
+        "communicatieregels",
+        "verzendlog"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P14.F03": {
+      "title": "Gerichte mention",
+      "articles": [
+        "berichten",
+        "meldingen",
+        "communicatieregels",
+        "verzendlog"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P14.F04": {
+      "title": "Persoonlijke inbox",
+      "articles": [
+        "berichten",
+        "meldingen",
+        "communicatieregels",
+        "verzendlog"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P14.F05": {
+      "title": "Openen en gelezen markeren",
+      "articles": [
+        "berichten",
+        "meldingen",
+        "communicatieregels",
+        "verzendlog"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P14.F06": {
+      "title": "Persoonlijke meldingsvoorkeuren",
+      "articles": [
+        "berichten",
+        "meldingen",
+        "communicatieregels",
+        "verzendlog"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P14.F07": {
+      "title": "Echte verzending en logstatus",
+      "articles": [
+        "berichten",
+        "meldingen",
+        "communicatieregels",
+        "verzendlog"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P15.F01": {
+      "title": "Actueel beleid aanbieden",
+      "articles": [
+        "beleid",
+        "beleid-publiceren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P15.F02": {
+      "title": "Lezen en downloaden",
+      "articles": [
+        "beleid",
+        "beleid-publiceren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P15.F03": {
+      "title": "Eigen actief akkoord",
+      "articles": [
+        "beleid",
+        "beleid-publiceren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P15.F04": {
+      "title": "Kinderen vertegenwoordigen",
+      "articles": [
+        "beleid",
+        "beleid-publiceren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P15.F05": {
+      "title": "Vraag stellen",
+      "articles": [
+        "beleid",
+        "beleid-publiceren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P15.F06": {
+      "title": "Nieuwe versie publiceren",
+      "articles": [
+        "beleid",
+        "beleid-publiceren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P15.F07": {
+      "title": "Herinnering sturen",
+      "articles": [
+        "beleid",
+        "beleid-publiceren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P15.F08": {
+      "title": "Versiehistorie raadplegen",
+      "articles": [
+        "beleid",
+        "beleid-publiceren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P16.F01": {
+      "title": "Momenten van aandacht",
+      "articles": [
+        "instructie-feedback",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P16.F02": {
+      "title": "Nieuw waarderingsmoment",
+      "articles": [
+        "instructie-feedback",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P16.F03": {
+      "title": "Waarderingsactie afronden",
+      "articles": [
+        "instructie-feedback",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P16.F04": {
+      "title": "Conceptbericht maken",
+      "articles": [
+        "instructie-feedback",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P16.F05": {
+      "title": "Persoonlijke terugblik",
+      "articles": [
+        "instructie-feedback",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P16.F06": {
+      "title": "Voorkeur zelf onthouden",
+      "articles": [
+        "instructie-feedback",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P16.F07": {
+      "title": "Feedback-inbox beheren",
+      "articles": [
+        "instructie-feedback",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P16.F08": {
+      "title": "Instructie en vervolgaanbod",
+      "articles": [
+        "instructie-feedback",
+        "teamfeedback"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P17.F01": {
+      "title": "Opleidingsaanbod",
+      "articles": [
+        "opleidingen",
+        "opleiding-beheer"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P17.F02": {
+      "title": "Inschrijven en afmelden",
+      "articles": [
+        "opleidingen",
+        "opleiding-beheer"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P17.F03": {
+      "title": "Geverifieerd certificaat vastleggen",
+      "articles": [
+        "opleidingen",
+        "opleiding-beheer"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P17.F04": {
+      "title": "Buddy en reservebereidheid",
+      "articles": [
+        "opleidingen",
+        "opleiding-beheer"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P17.F05": {
+      "title": "Verval en toekomstige afspraken",
+      "articles": [
+        "opleidingen",
+        "opleiding-beheer"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P18.F01": {
+      "title": "Vaste functies verkennen",
+      "articles": [
+        "vaste-functie",
+        "vacature-opvolging",
+        "functie-erkennen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P18.F02": {
+      "title": "Functie openen",
+      "articles": [
+        "vaste-functie",
+        "vacature-opvolging",
+        "functie-erkennen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P18.F03": {
+      "title": "Interesse aangeven",
+      "articles": [
+        "vaste-functie",
+        "vacature-opvolging",
+        "functie-erkennen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P18.F04": {
+      "title": "Kennismaking opvolgen",
+      "articles": [
+        "vaste-functie",
+        "vacature-opvolging",
+        "functie-erkennen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P18.F05": {
+      "title": "Erkende aanstelling verbinden",
+      "articles": [
+        "vaste-functie",
+        "vacature-opvolging",
+        "functie-erkennen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P19.F01": {
+      "title": "Huishouduren en resterende inzet",
+      "articles": [
+        "rapporten",
+        "werkdruk",
+        "passend-aanbod-beoordelen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P19.F02": {
+      "title": "Commissiebezetting",
+      "articles": [
+        "rapporten",
+        "werkdruk",
+        "passend-aanbod-beoordelen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P19.F03": {
+      "title": "Winteroverzicht",
+      "articles": [
+        "rapporten",
+        "werkdruk",
+        "passend-aanbod-beoordelen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P19.F04": {
+      "title": "Passend aanbod beoordelen",
+      "articles": [
+        "rapporten",
+        "werkdruk",
+        "passend-aanbod-beoordelen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P19.F05": {
+      "title": "Overbelasting signaleren",
+      "articles": [
+        "rapporten",
+        "werkdruk",
+        "passend-aanbod-beoordelen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P19.F06": {
+      "title": "CSV-export en bronstatus",
+      "articles": [
+        "rapporten",
+        "werkdruk",
+        "passend-aanbod-beoordelen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P20.F01": {
+      "title": "Potstand en beschikbaar budget",
+      "articles": [
+        "financiele-basis",
+        "financiele-verwerking",
+        "betalingen",
+        "financiele-herziening",
+        "vrijwilligerspot"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P20.F02": {
+      "title": "Budgetpost toevoegen",
+      "articles": [
+        "financiele-basis",
+        "financiele-verwerking",
+        "betalingen",
+        "financiele-herziening",
+        "vrijwilligerspot"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P20.F03": {
+      "title": "Afrekenvoorstel berekenen",
+      "articles": [
+        "financiele-basis",
+        "financiele-verwerking",
+        "betalingen",
+        "financiele-herziening",
+        "vrijwilligerspot"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P20.F04": {
+      "title": "Blokkades en onderbouwing",
+      "articles": [
+        "financiele-basis",
+        "financiele-verwerking",
+        "betalingen",
+        "financiele-herziening",
+        "vrijwilligerspot"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P20.F05": {
+      "title": "Goedkeuren en definitief verwerken",
+      "articles": [
+        "financiele-basis",
+        "financiele-verwerking",
+        "betalingen",
+        "financiele-herziening",
+        "vrijwilligerspot"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P20.F06": {
+      "title": "Afkoop onderscheiden",
+      "articles": [
+        "financiele-basis",
+        "financiele-verwerking",
+        "betalingen",
+        "financiele-herziening",
+        "vrijwilligerspot"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P20.F07": {
+      "title": "Betaalstatus registreren",
+      "articles": [
+        "financiele-basis",
+        "financiele-verwerking",
+        "betalingen",
+        "financiele-herziening",
+        "vrijwilligerspot"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P20.F08": {
+      "title": "Onbetaalde en betaalde correcties",
+      "articles": [
+        "financiele-basis",
+        "financiele-verwerking",
+        "betalingen",
+        "financiele-herziening",
+        "vrijwilligerspot"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P20.F09": {
+      "title": "Financiële export",
+      "articles": [
+        "financiele-basis",
+        "financiele-verwerking",
+        "betalingen",
+        "financiele-herziening",
+        "vrijwilligerspot"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P21.F01": {
+      "title": "Template kiezen en versie lezen",
+      "articles": [
+        "berichttemplates",
+        "communicatieregels",
+        "verzendlog"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P21.F02": {
+      "title": "Template bewerken",
+      "articles": [
+        "berichttemplates",
+        "communicatieregels",
+        "verzendlog"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P21.F03": {
+      "title": "Variabelen invoegen",
+      "articles": [
+        "berichttemplates",
+        "communicatieregels",
+        "verzendlog"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P21.F04": {
+      "title": "Persoonlijke preview",
+      "articles": [
+        "berichttemplates",
+        "communicatieregels",
+        "verzendlog"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P21.F05": {
+      "title": "Test versturen",
+      "articles": [
+        "berichttemplates",
+        "communicatieregels",
+        "verzendlog"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P21.F06": {
+      "title": "Goedkeuren en publiceren",
+      "articles": [
+        "berichttemplates",
+        "communicatieregels",
+        "verzendlog"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P21.F07": {
+      "title": "Dupliceren en nieuw template",
+      "articles": [
+        "berichttemplates",
+        "communicatieregels",
+        "verzendlog"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P21.F08": {
+      "title": "Automatische regels",
+      "articles": [
+        "berichttemplates",
+        "communicatieregels",
+        "verzendlog"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P21.F09": {
+      "title": "Segment samenstellen",
+      "articles": [
+        "berichttemplates",
+        "communicatieregels",
+        "verzendlog"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P21.F10": {
+      "title": "Campagneconcept maken",
+      "articles": [
+        "berichttemplates",
+        "communicatieregels",
+        "verzendlog"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P21.F11": {
+      "title": "Verzendlog",
+      "articles": [
+        "berichttemplates",
+        "communicatieregels",
+        "verzendlog"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P22.F01": {
+      "title": "Standaard verdelingswijze",
+      "articles": [
+        "afspraken-instellingen",
+        "functiecatalogus",
+        "sportlink",
+        "ledenimport",
+        "toegang-beheer",
+        "installeren",
+        "seizoensovergang"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P22.F02": {
+      "title": "Vereniging en seizoen",
+      "articles": [
+        "afspraken-instellingen",
+        "functiecatalogus",
+        "sportlink",
+        "ledenimport",
+        "toegang-beheer",
+        "installeren",
+        "seizoensovergang"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P22.F03": {
+      "title": "Uren en financiële basis",
+      "articles": [
+        "afspraken-instellingen",
+        "functiecatalogus",
+        "sportlink",
+        "ledenimport",
+        "toegang-beheer",
+        "installeren",
+        "seizoensovergang"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P22.F04": {
+      "title": "Termijnen en reminders",
+      "articles": [
+        "afspraken-instellingen",
+        "functiecatalogus",
+        "sportlink",
+        "ledenimport",
+        "toegang-beheer",
+        "installeren",
+        "seizoensovergang"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P22.F05": {
+      "title": "Vrijwilligersrolcatalogus",
+      "articles": [
+        "afspraken-instellingen",
+        "functiecatalogus",
+        "sportlink",
+        "ledenimport",
+        "toegang-beheer",
+        "installeren",
+        "seizoensovergang"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P22.F06": {
+      "title": "Actieve rollen en einde",
+      "articles": [
+        "afspraken-instellingen",
+        "functiecatalogus",
+        "sportlink",
+        "ledenimport",
+        "toegang-beheer",
+        "installeren",
+        "seizoensovergang"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P22.F07": {
+      "title": "Sportlinkmomenten en status",
+      "articles": [
+        "afspraken-instellingen",
+        "functiecatalogus",
+        "sportlink",
+        "ledenimport",
+        "toegang-beheer",
+        "installeren",
+        "seizoensovergang"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P22.F08": {
+      "title": "Gecontroleerde CSV-import",
+      "articles": [
+        "afspraken-instellingen",
+        "functiecatalogus",
+        "sportlink",
+        "ledenimport",
+        "toegang-beheer",
+        "installeren",
+        "seizoensovergang"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P22.F09": {
+      "title": "Toegang en verificatie",
+      "articles": [
+        "afspraken-instellingen",
+        "functiecatalogus",
+        "sportlink",
+        "ledenimport",
+        "toegang-beheer",
+        "installeren",
+        "seizoensovergang"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P22.F10": {
+      "title": "PWA installeren",
+      "articles": [
+        "afspraken-instellingen",
+        "functiecatalogus",
+        "sportlink",
+        "ledenimport",
+        "toegang-beheer",
+        "installeren",
+        "seizoensovergang"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P22.F11": {
+      "title": "Demogegevens herstellen",
+      "articles": [
+        "afspraken-instellingen",
+        "functiecatalogus",
+        "sportlink",
+        "ledenimport",
+        "toegang-beheer",
+        "installeren",
+        "seizoensovergang"
+      ],
+      "interpretation": "REFERENCE_DEMO_ONLY_NOT_RUNTIME"
+    },
+    "P22.F12": {
+      "title": "Seizoensovergang voorbereiden",
+      "articles": [
+        "afspraken-instellingen",
+        "functiecatalogus",
+        "sportlink",
+        "ledenimport",
+        "toegang-beheer",
+        "installeren",
+        "seizoensovergang"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P22.F13": {
+      "title": "Seizoensstanden raadplegen",
+      "articles": [
+        "afspraken-instellingen",
+        "functiecatalogus",
+        "sportlink",
+        "ledenimport",
+        "toegang-beheer",
+        "installeren",
+        "seizoensovergang"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P22.F14": {
+      "title": "Wijzigingslog",
+      "articles": [
+        "afspraken-instellingen",
+        "functiecatalogus",
+        "sportlink",
+        "ledenimport",
+        "toegang-beheer",
+        "installeren",
+        "seizoensovergang"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P23.F01": {
+      "title": "Persoon en dossiercontext kiezen",
+      "articles": [
+        "profiel",
+        "intakehulp"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P23.F02": {
+      "title": "Ervaring en begeleiding",
+      "articles": [
+        "profiel",
+        "intakehulp"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P23.F03": {
+      "title": "Talenten en voorkeuren",
+      "articles": [
+        "profiel",
+        "intakehulp"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P23.F04": {
+      "title": "Beschikbaarheid en grenzen",
+      "articles": [
+        "profiel",
+        "intakehulp"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P23.F05": {
+      "title": "Controleren en opslaan",
+      "articles": [
+        "profiel",
+        "intakehulp"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "P23.F06": {
+      "title": "Jaarlijks herbevestigen en profiel openen",
+      "articles": [
+        "profiel",
+        "intakehulp"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    }
+  },
+  "mobile_functions": {
+    "F001": {
+      "title": "Volgende actie",
+      "articles": [
+        "starten",
+        "urenstand",
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F002": {
+      "title": "Huishoudmeter",
+      "articles": [
+        "starten",
+        "urenstand",
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F003": {
+      "title": "Kinderstanden",
+      "articles": [
+        "starten",
+        "urenstand",
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F004": {
+      "title": "Binnenkort",
+      "articles": [
+        "starten",
+        "urenstand",
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F005": {
+      "title": "Passende verenigingstaken",
+      "articles": [
+        "starten",
+        "urenstand",
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F006": {
+      "title": "Vaste vrijwilligersfunctie",
+      "articles": [
+        "starten",
+        "urenstand",
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F007": {
+      "title": "Verenigingsactiviteit",
+      "articles": [
+        "starten",
+        "urenstand",
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F008": {
+      "title": "Commissievariant",
+      "articles": [
+        "starten",
+        "urenstand",
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F009": {
+      "title": "Taken-tabs",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F010": {
+      "title": "Marktkeuze",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F011": {
+      "title": "Zoeken",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F012": {
+      "title": "Filters",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F013": {
+      "title": "Taakkaart",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F014": {
+      "title": "Actueel en historie",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F015": {
+      "title": "Uitvoerder nodig",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F016": {
+      "title": "Overnemen",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F017": {
+      "title": "Geen passend aanbod",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F018": {
+      "title": "Taakvoorwaarden en instructies",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F019": {
+      "title": "Gezinswedstrijdwaarschuwing",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F020": {
+      "title": "Uitvoerder kiezen",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F021": {
+      "title": "Maatje kiezen",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F022": {
+      "title": "Instructie en extra inzet bevestigen",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F023": {
+      "title": "Inschrijving bevestigen",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F024": {
+      "title": "Wachtlijst",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F025": {
+      "title": "Overname bevestigen",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F026": {
+      "title": "Verhindering melden",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F027": {
+      "title": "Afmelden binnen termijn",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F028": {
+      "title": "Taak voorbereiden",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F029": {
+      "title": "Vraag over taak of uren",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F030": {
+      "title": "Uitvoering bevestigen",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F031": {
+      "title": "Terugblik delen",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F032": {
+      "title": "Sluiten en terug naar overzicht",
+      "articles": [
+        "taak-boeken",
+        "teamplaats",
+        "afmelden",
+        "wachtlijst",
+        "overnemen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F033": {
+      "title": "Week navigeren",
+      "articles": [
+        "agenda"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F034": {
+      "title": "Dag kiezen",
+      "articles": [
+        "agenda"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F035": {
+      "title": "Agenda-lagen",
+      "articles": [
+        "agenda"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F036": {
+      "title": "Persoonfilter",
+      "articles": [
+        "agenda"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F037": {
+      "title": "Taak of toewijzing openen",
+      "articles": [
+        "agenda"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F038": {
+      "title": "Wedstrijddetail",
+      "articles": [
+        "agenda"
+      ],
+      "interpretation": "SOURCE_END_TIME_UNCONFIRMED"
+    },
+    "F039": {
+      "title": "Clubactiviteit deelname",
+      "articles": [
+        "agenda"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F040": {
+      "title": "Kalenderbestand",
+      "articles": [
+        "agenda"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F041": {
+      "title": "Leegselectie herstellen",
+      "articles": [
+        "agenda"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F042": {
+      "title": "Team kiezen",
+      "articles": [
+        "teamplaats",
+        "teamouder-start",
+        "verdeling",
+        "teamdoelen",
+        "teamoverdracht"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F043": {
+      "title": "Teammarkt",
+      "articles": [
+        "teamplaats",
+        "teamouder-start",
+        "verdeling",
+        "teamdoelen",
+        "teamoverdracht"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F044": {
+      "title": "Teamafspraken lezen",
+      "articles": [
+        "teamplaats",
+        "teamouder-start",
+        "verdeling",
+        "teamdoelen",
+        "teamoverdracht"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F045": {
+      "title": "Voortgang per kind",
+      "articles": [
+        "teamplaats",
+        "teamouder-start",
+        "verdeling",
+        "teamdoelen",
+        "teamoverdracht"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F046": {
+      "title": "Standaard seizoensdoel",
+      "articles": [
+        "teamplaats",
+        "teamouder-start",
+        "verdeling",
+        "teamdoelen",
+        "teamoverdracht"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F047": {
+      "title": "Persoonlijke teamafspraak",
+      "articles": [
+        "teamplaats",
+        "teamouder-start",
+        "verdeling",
+        "teamdoelen",
+        "teamoverdracht"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F048": {
+      "title": "Teamtaak maken",
+      "articles": [
+        "teamplaats",
+        "teamouder-start",
+        "verdeling",
+        "teamdoelen",
+        "teamoverdracht"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F049": {
+      "title": "Verenigingsminuten aanvragen",
+      "articles": [
+        "teamplaats",
+        "teamouder-start",
+        "verdeling",
+        "teamdoelen",
+        "teamoverdracht"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F050": {
+      "title": "Slim verdeelvoorstel",
+      "articles": [
+        "teamplaats",
+        "teamouder-start",
+        "verdeling",
+        "teamdoelen",
+        "teamoverdracht"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F051": {
+      "title": "Handmatig aan lid toewijzen",
+      "articles": [
+        "teamplaats",
+        "teamouder-start",
+        "verdeling",
+        "teamdoelen",
+        "teamoverdracht"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F052": {
+      "title": "Bezetting per plaats",
+      "articles": [
+        "teamplaats",
+        "teamouder-start",
+        "verdeling",
+        "teamdoelen",
+        "teamoverdracht"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F053": {
+      "title": "Deadlines instellen",
+      "articles": [
+        "teamplaats",
+        "teamouder-start",
+        "verdeling",
+        "teamdoelen",
+        "teamoverdracht"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F054": {
+      "title": "Reservehulp vragen",
+      "articles": [
+        "teamplaats",
+        "teamouder-start",
+        "verdeling",
+        "teamdoelen",
+        "teamoverdracht"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F055": {
+      "title": "Feedback en instructies",
+      "articles": [
+        "teamplaats",
+        "teamouder-start",
+        "verdeling",
+        "teamdoelen",
+        "teamoverdracht"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F056": {
+      "title": "Overdracht voorbereiden",
+      "articles": [
+        "teamplaats",
+        "teamouder-start",
+        "verdeling",
+        "teamdoelen",
+        "teamoverdracht"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F057": {
+      "title": "Overdracht aannemen",
+      "articles": [
+        "teamplaats",
+        "teamouder-start",
+        "verdeling",
+        "teamdoelen",
+        "teamoverdracht"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F058": {
+      "title": "Mijn vereniging dropdown",
+      "articles": [
+        "starten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F059": {
+      "title": "Profielkaart",
+      "articles": [
+        "starten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F060": {
+      "title": "Persoonlijke links",
+      "articles": [
+        "starten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F061": {
+      "title": "Verenigingslinks",
+      "articles": [
+        "starten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F062": {
+      "title": "App en hulp",
+      "articles": [
+        "starten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F063": {
+      "title": "Actielijst",
+      "articles": [
+        "acties"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F064": {
+      "title": "Ongelezen of alles",
+      "articles": [
+        "meldingen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F065": {
+      "title": "Melding openen",
+      "articles": [
+        "meldingen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F066": {
+      "title": "Alles gelezen",
+      "articles": [
+        "meldingen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F067": {
+      "title": "Oude routes herkennen",
+      "articles": [
+        "meldingen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F068": {
+      "title": "Planning uitvoering aanvragen",
+      "articles": [
+        "commissieplanning",
+        "uitvoering",
+        "teamuren-review",
+        "vragen-opvolgen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F069": {
+      "title": "Verenigingstaak maken",
+      "articles": [
+        "commissieplanning",
+        "uitvoering",
+        "teamuren-review",
+        "vragen-opvolgen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F070": {
+      "title": "Verdelingswijze kiezen",
+      "articles": [
+        "commissieplanning",
+        "uitvoering",
+        "teamuren-review",
+        "vragen-opvolgen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F071": {
+      "title": "Vrije plaatsen clusteren",
+      "articles": [
+        "commissieplanning",
+        "uitvoering",
+        "teamuren-review",
+        "vragen-opvolgen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F072": {
+      "title": "Teamvoorstel bekijken",
+      "articles": [
+        "commissieplanning",
+        "uitvoering",
+        "teamuren-review",
+        "vragen-opvolgen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F073": {
+      "title": "Komende taken",
+      "articles": [
+        "commissieplanning",
+        "uitvoering",
+        "teamuren-review",
+        "vragen-opvolgen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F074": {
+      "title": "Teams met opvolging",
+      "articles": [
+        "commissieplanning",
+        "uitvoering",
+        "teamuren-review",
+        "vragen-opvolgen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F075": {
+      "title": "Uitvoeringen selecteren",
+      "articles": [
+        "commissieplanning",
+        "uitvoering",
+        "teamuren-review",
+        "vragen-opvolgen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F076": {
+      "title": "Uitvoering bevestigen",
+      "articles": [
+        "commissieplanning",
+        "uitvoering",
+        "teamuren-review",
+        "vragen-opvolgen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F077": {
+      "title": "Niet uitgevoerd",
+      "articles": [
+        "commissieplanning",
+        "uitvoering",
+        "teamuren-review",
+        "vragen-opvolgen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F078": {
+      "title": "Wedstrijdzaken beoordelen",
+      "articles": [
+        "commissieplanning",
+        "uitvoering",
+        "teamuren-review",
+        "vragen-opvolgen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F079": {
+      "title": "Verenigingsminuten vooraf goedkeuren",
+      "articles": [
+        "commissieplanning",
+        "uitvoering",
+        "teamuren-review",
+        "vragen-opvolgen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F080": {
+      "title": "Praktische terugblikken",
+      "articles": [
+        "commissieplanning",
+        "uitvoering",
+        "teamuren-review",
+        "vragen-opvolgen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F081": {
+      "title": "Instructie verbeteren",
+      "articles": [
+        "commissieplanning",
+        "uitvoering",
+        "teamuren-review",
+        "vragen-opvolgen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F082": {
+      "title": "Huishoudvragen oppakken",
+      "articles": [
+        "commissieplanning",
+        "uitvoering",
+        "teamuren-review",
+        "vragen-opvolgen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F083": {
+      "title": "Ervaring kiezen",
+      "articles": [
+        "profiel"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F084": {
+      "title": "Taakvoorkeuren",
+      "articles": [
+        "profiel"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F085": {
+      "title": "Talenten",
+      "articles": [
+        "profiel"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F086": {
+      "title": "Beschikbaarheid",
+      "articles": [
+        "profiel"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F087": {
+      "title": "Reservepool",
+      "articles": [
+        "profiel"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F088": {
+      "title": "Wizard navigeren",
+      "articles": [
+        "profiel"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F089": {
+      "title": "Profiel opslaan",
+      "articles": [
+        "profiel"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F090": {
+      "title": "Huishoud- en kindstanden",
+      "articles": [
+        "huishouden",
+        "urenstand",
+        "extra-uitvoerder",
+        "uren-vraag"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F091": {
+      "title": "Personen bekijken",
+      "articles": [
+        "huishouden",
+        "urenstand",
+        "extra-uitvoerder",
+        "uren-vraag"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F092": {
+      "title": "Extra uitvoerder uitnodigen",
+      "articles": [
+        "huishouden",
+        "urenstand",
+        "extra-uitvoerder",
+        "uren-vraag"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F093": {
+      "title": "Uren uitsplitsen",
+      "articles": [
+        "huishouden",
+        "urenstand",
+        "extra-uitvoerder",
+        "uren-vraag"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F094": {
+      "title": "Historie openen",
+      "articles": [
+        "huishouden",
+        "urenstand",
+        "extra-uitvoerder",
+        "uren-vraag"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F095": {
+      "title": "Huishoudafspraak bekijken",
+      "articles": [
+        "huishouden",
+        "urenstand",
+        "extra-uitvoerder",
+        "uren-vraag"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F096": {
+      "title": "Persoonlijke afspraak aanvragen",
+      "articles": [
+        "huishouden",
+        "urenstand",
+        "extra-uitvoerder",
+        "uren-vraag"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F097": {
+      "title": "Mijn vragen",
+      "articles": [
+        "huishouden",
+        "urenstand",
+        "extra-uitvoerder",
+        "uren-vraag"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F098": {
+      "title": "Documentenlijst",
+      "articles": [
+        "beleid"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F099": {
+      "title": "Lezen",
+      "articles": [
+        "beleid"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F100": {
+      "title": "Namens kiezen",
+      "articles": [
+        "beleid"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F101": {
+      "title": "Akkoord vastleggen",
+      "articles": [
+        "beleid"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F102": {
+      "title": "Eigen kwalificaties",
+      "articles": [
+        "opleidingen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F103": {
+      "title": "Cursus inschrijven",
+      "articles": [
+        "opleidingen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F104": {
+      "title": "Cursus afmelden",
+      "articles": [
+        "opleidingen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F105": {
+      "title": "Maatjevoorkeur",
+      "articles": [
+        "opleidingen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F106": {
+      "title": "Vacatures bekijken",
+      "articles": [
+        "vaste-functie"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F107": {
+      "title": "Interesse doorgeven",
+      "articles": [
+        "vaste-functie"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F108": {
+      "title": "Interesse herkennen",
+      "articles": [
+        "vaste-functie"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F109": {
+      "title": "Kanaal kiezen",
+      "articles": [
+        "berichten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F110": {
+      "title": "Gesprek lezen",
+      "articles": [
+        "berichten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F111": {
+      "title": "Bericht plaatsen",
+      "articles": [
+        "berichten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F112": {
+      "title": "Meldingsvoorkeuren",
+      "articles": [
+        "meldingen",
+        "privacy",
+        "online-status"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F113": {
+      "title": "Beginscherminstallatie",
+      "articles": [
+        "meldingen",
+        "privacy",
+        "online-status"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F114": {
+      "title": "Uitleg opnieuw tonen",
+      "articles": [
+        "meldingen",
+        "privacy",
+        "online-status"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F115": {
+      "title": "Profiel controleren",
+      "articles": [
+        "meldingen",
+        "privacy",
+        "online-status"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F116": {
+      "title": "Demorol en persoon",
+      "articles": [
+        "meldingen",
+        "privacy",
+        "online-status"
+      ],
+      "interpretation": "REFERENCE_DEMO_ONLY_NOT_RUNTIME"
+    },
+    "F117": {
+      "title": "Offline proberen",
+      "articles": [
+        "meldingen",
+        "privacy",
+        "online-status"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F118": {
+      "title": "Demo herstellen",
+      "articles": [
+        "meldingen",
+        "privacy",
+        "online-status"
+      ],
+      "interpretation": "REFERENCE_DEMO_ONLY_NOT_RUNTIME"
+    },
+    "F119": {
+      "title": "FAQ openen",
+      "articles": [
+        "hulpvragen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F120": {
+      "title": "Vraagonderwerp kiezen",
+      "articles": [
+        "hulpvragen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F121": {
+      "title": "Vraag indienen",
+      "articles": [
+        "hulpvragen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F122": {
+      "title": "Installatiestatus",
+      "articles": [
+        "installeren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F123": {
+      "title": "Android installatieknop",
+      "articles": [
+        "installeren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F124": {
+      "title": "iPhone installatiehulp",
+      "articles": [
+        "installeren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F125": {
+      "title": "Android handmatige hulp",
+      "articles": [
+        "installeren"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F126": {
+      "title": "Seizoens- en wintertotalen",
+      "articles": [
+        "rapporten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F127": {
+      "title": "Openbare plaatsen",
+      "articles": [
+        "rapporten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F128": {
+      "title": "Huishoudvoortgang",
+      "articles": [
+        "rapporten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F129": {
+      "title": "CSV downloaden",
+      "articles": [
+        "rapporten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F130": {
+      "title": "Potstand",
+      "articles": [
+        "vrijwilligerspot"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F131": {
+      "title": "Transactielijst",
+      "articles": [
+        "vrijwilligerspot"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F132": {
+      "title": "Commissie kiezen",
+      "articles": [
+        "commissie-start",
+        "werkkaarten",
+        "documenten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F133": {
+      "title": "Werkafspraken of instructies",
+      "articles": [
+        "commissie-start",
+        "werkkaarten",
+        "documenten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F134": {
+      "title": "Werkafspraak openen",
+      "articles": [
+        "commissie-start",
+        "werkkaarten",
+        "documenten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F135": {
+      "title": "Status aanpassen",
+      "articles": [
+        "commissie-start",
+        "werkkaarten",
+        "documenten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F136": {
+      "title": "Checklist bijwerken",
+      "articles": [
+        "commissie-start",
+        "werkkaarten",
+        "documenten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F137": {
+      "title": "Reactie plaatsen",
+      "articles": [
+        "commissie-start",
+        "werkkaarten",
+        "documenten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F138": {
+      "title": "Werkafspraak maken",
+      "articles": [
+        "commissie-start",
+        "werkkaarten",
+        "documenten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F139": {
+      "title": "Document lezen",
+      "articles": [
+        "commissie-start",
+        "werkkaarten",
+        "documenten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F140": {
+      "title": "Hoofdnavigatie",
+      "articles": [
+        "starten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F141": {
+      "title": "Zoeken in Cluvo",
+      "articles": [
+        "starten"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F142": {
+      "title": "Header-meldingen",
+      "articles": [
+        "meldingen"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F143": {
+      "title": "Header-profiel",
+      "articles": [
+        "profiel"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F144": {
+      "title": "Uitlegbanner sluiten",
+      "articles": [
+        "privacy"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F145": {
+      "title": "Bottom sheet",
+      "articles": [
+        "taak-boeken"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F146": {
+      "title": "Offline- en mutatiestatus",
+      "articles": [
+        "online-status"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    },
+    "F147": {
+      "title": "Laden leeg fout conflict",
+      "articles": [
+        "online-status"
+      ],
+      "interpretation": "DOCUMENTED_WITH_CURRENT_UI_LIMITS"
+    }
+  },
+  "source_sha256": {
+    "docs/canon/RELEASECANON-V1.txt": "c7e6b44d1a5151a922fb7db6a8ea127b64b03bf19e1bd235cea78f944e20cdb5",
+    "docs/release/function-coverage/function-matrix.json": "2e469566f30844a6b108a0b19bd9d5330c22ed8f4b0654db561daff1ef166f5e",
+    "docs/pwa/mobile-function-integration.json": "9c9a7e44137aec9950b76cb738345e6df5b12088301197032891ae1af0041502",
+    "lib/admin/contracts.ts": "0c420e51ab721837d6efac1ab666fb1cd4738b8ae65751f0f6a2494571568baf",
+    "lib/pwa/validation.ts": "d35954a1a441f802f66eb1edc1b36a35cb1ee6996064525aab82b52f090e62c5",
+    "lib/admin/server.ts": "85a0fe71ed037fe333f9498a1b22efe6fa6afe873aca5fe4f64fd89d9e1a6094",
+    "lib/pwa/server.ts": "49878e9c690eac7b614fee365c60396f57c59c3ceb5aaa8c5027774f06977f1c",
+    "components/mobile/types.ts": "7c1debed813b8e4c649b1bfae36d226a3b723866ee19842196424c4f5986ea12",
+    "components/admin/native-workspace.tsx": "9c2b1de1cf43553cfc3cdbf10fa0f8b304420caa1e06cd0781bbc88059a09088"
+  },
+  "limitations": [
+    "Documentation coverage does not imply full functional or physical-device acceptance.",
+    "The historical inventories predate the deployed administration and remain provenance, not current acceptance status.",
+    "Source match duration is unconfirmed; no match end time is invented.",
+    "Demo identity/reset controls are intentionally absent.",
+    "Hosted positive platform access requires a separately authorized personal mandate; local native synthetic platform proof is separate."
+  ]
+}
